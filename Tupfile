@@ -1,0 +1,6 @@
+warnings = -Wall -Wextra
+mmcu = atmega328p
+
+: foreach src/*.c |> avr-gcc -ffunction-sections $(warnings) -mmcu=$(mmcu) -g -std=c99 -Os -c -o %o %f |> tmp/%B.o
+
+: tmp/*.o |> avr-ar rcs %o %f |> libnbavr.a
