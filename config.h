@@ -9,5 +9,6 @@
 
 //#define INCLUDE_SERIAL
 //#define INCLUDE_MILLIS
+//#define INCLUDE_TWI
 
 #endif

@@ -4,5 +4,6 @@
 #include "src/millis.h"
 #include "src/serial.h"
 #include "src/ringbuffer.h"
+#include "src/twi.h"
 
 #endif
