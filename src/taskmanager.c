@@ -33,13 +33,13 @@ TaskManager* taskManagerInit(uint8_t maxTasks) {
     return taskManager;
 }
 
-bool taskManagerAddTask(TaskManager* taskManager, TaskFunction taskFunction, TaskInit taskInit, const char* id, TaskPriority priority) {
+bool taskManagerAddTask(TaskManager* taskManager, TaskFunction taskFunction, void* data, const char* id, TaskPriority priority) {
     for(uint8_t i = 0; i < taskManager->maxTasks; i++) {
         Task* task = &taskManager->tasks[i];
 
         if(task->taskFunction == NULL) {
             task->taskFunction = taskFunction;
-            task->data = (taskInit != NULL) ? taskInit() : NULL;
+            task->data = data;
             task->id = id;
             task->priority = priority;
             task->active = true;

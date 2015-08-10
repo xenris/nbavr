@@ -16,12 +16,11 @@ typedef enum {
     PRIORITY_LOW = 20,
 } TaskPriority;
 
-typedef void* (*TaskInit)(void);
 typedef bool (*TaskFunction)(void*);
 typedef struct TaskManager TaskManager;
 
 TaskManager* taskManagerInit(uint8_t maxTasks);
-bool taskManagerAddTask(TaskManager* taskManager, TaskFunction taskFunction, TaskInit taskInit, const char* id, TaskPriority priority);
+bool taskManagerAddTask(TaskManager* taskManager, TaskFunction taskFunction, void* data, const char* id, TaskPriority priority);
 void taskManagerRun(TaskManager* taskManager);
 
 #endif
