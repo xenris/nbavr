@@ -8,7 +8,6 @@
 
 #include "../config.h"
 #include "ringbuffer.h"
-#include "millis.h"
 
 void serialInit();
 void serialStdioInit();

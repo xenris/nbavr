@@ -16,9 +16,14 @@ typedef struct TaskManager {
 
 void taskManagerCheckForCrashes();
 
+static volatile uint32_t mMillis;
 static Task* mCurrentTask;
 
 TaskManager* taskManagerInit(uint8_t maxTasks) {
+    TIMSK1 |= _BV(OCIE1A);
+    OCR1A = 16000;
+    TCCR1B = _BV(CS10) | _BV(WGM12);
+
     MCUSR &= (uint8_t)~_BV(WDRF);
     wdt_enable(WDTO_2S);
 
@@ -57,6 +62,12 @@ void taskManagerRun(TaskManager* taskManager) {
     while(true) {
         wdt_reset();
 
+        uint32_t millis;
+
+        ATOMIC_BLOCK(ATOMIC_FORCEON) {
+            millis = mMillis;
+        }
+
         for(uint8_t i = 0; i < taskManager->maxTasks; i++) {
             Task* task = &taskManager->tasks[i];
 
@@ -64,7 +75,7 @@ void taskManagerRun(TaskManager* taskManager) {
                 if((priorityIndex % task->priority) == 0) {
                     mCurrentTask = task;
 
-                    task->active = task->taskFunction(task->data);
+                    task->active = task->taskFunction(task->data, millis);
                 }
             }
 
@@ -107,4 +118,8 @@ ISR(WDT_vect, ISR_NAKED) {
 
     // Second watchdog timeout triggers a full reset.
     while(true);
+}
+
+ISR(TIMER1_COMPA_vect) {
+    mMillis++;
 }

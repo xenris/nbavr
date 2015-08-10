@@ -96,9 +96,9 @@ void serialPutChar(char c, FILE* stream) {
         return;
     }
 
-    const uint32_t timeout = millis() + 5;
+//    const uint32_t timeout = millis() + 5;
 
-    while(!serialSendByte(c) && (millis() < timeout));
+//    while(!serialSendByte(c) && (millis() < timeout));
 }
 
 // XXX This function blocks indefinitely.
