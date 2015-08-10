@@ -1,5 +1,6 @@
 #include "taskmanager.h"
 
+#define MAX_TASK_TIME 20
 
 typedef struct Task {
     bool active;
@@ -14,26 +15,21 @@ typedef struct TaskManager {
     Task* tasks;
 } TaskManager;
 
-void taskManagerCheckForCrashes();
+static void taskManagerProcessTask(Task* task, uint32_t millis);
 
 static volatile uint32_t mMillis;
 static Task* mCurrentTask;
+static jmp_buf mHaltJmp;
+static uint8_t mTaskTimeCounter;
 
 TaskManager* taskManagerInit(uint8_t maxTasks) {
     TIMSK1 |= _BV(OCIE1A);
     OCR1A = 16000;
     TCCR1B = _BV(CS10) | _BV(WGM12);
 
-    MCUSR &= (uint8_t)~_BV(WDRF);
-    wdt_enable(WDTO_2S);
-
-    taskManagerCheckForCrashes();
-
     TaskManager* taskManager = calloc(1, sizeof(TaskManager));
     taskManager->maxTasks = maxTasks;
     taskManager->tasks = calloc(maxTasks, sizeof(Task));
-
-    WDTCSR |= _BV(WDIE);
 
     return taskManager;
 }
@@ -42,7 +38,7 @@ bool taskManagerAddTask(TaskManager* taskManager, TaskFunction taskFunction, voi
     for(uint8_t i = 0; i < taskManager->maxTasks; i++) {
         Task* task = &taskManager->tasks[i];
 
-        if(task->taskFunction == NULL) {
+        if(!task->active) {
             task->taskFunction = taskFunction;
             task->data = data;
             task->id = id;
@@ -60,8 +56,6 @@ void taskManagerRun(TaskManager* taskManager) {
     uint8_t priorityIndex = 1;
 
     while(true) {
-        wdt_reset();
-
         uint32_t millis;
 
         ATOMIC_BLOCK(ATOMIC_FORCEON) {
@@ -73,13 +67,9 @@ void taskManagerRun(TaskManager* taskManager) {
 
             if(task->active) {
                 if((priorityIndex % task->priority) == 0) {
-                    mCurrentTask = task;
-
-                    task->active = task->taskFunction(task->data, millis);
+                    taskManagerProcessTask(task, millis);
                 }
             }
-
-            mCurrentTask = NULL;
         }
 
         // priorityIndex counts from 1 to PRIORITY_LOW.
@@ -87,39 +77,26 @@ void taskManagerRun(TaskManager* taskManager) {
     }
 }
 
-void taskManagerCheckForCrashes() {
-    uint16_t addr = eeprom_read_word((uint16_t*)0);
-
-    if(addr != 0xFFFF) {
-        uint8_t str[20];
-        eeprom_read_block(str, (uint8_t*)2, 20);
-        str[19] = 0;
-
-        printf("Halt occurred during task \"%s\" at address: %x\n", str, addr);
-
-        while(true);
-    }
-}
-
-ISR(WDT_vect, ISR_NAKED) {
-    register uint8_t* stackptr = (uint8_t*)SP;
-
-    stackptr++;
-
-    uint16_t addr = (*stackptr << 8) | *(stackptr + 1);
-    addr *= 2;
-
-    eeprom_write_word((uint16_t*)0, addr);
-    if((mCurrentTask != NULL) && (mCurrentTask->id != NULL)) {
-        eeprom_write_block(mCurrentTask->id, (uint8_t*)2, strlen(mCurrentTask->id) + 1);
+static void taskManagerProcessTask(Task* task, uint32_t millis) {
+    // Save state in case the task halts.
+    if(setjmp(mHaltJmp)) {
+        // The folloing task halted if this is running.
+        mCurrentTask = NULL;
+        printf("Task \"%s\" was stopped because it was taking too long.\n", task->id);
+        task->active = false;
     } else {
-        eeprom_write_block("NULL", (uint8_t*)2, strlen("NULL") + 1);
+        mTaskTimeCounter = 0;
+        mCurrentTask = task;
+        task->active = task->taskFunction(task->data, millis);
+        mCurrentTask = NULL;
     }
-
-    // Second watchdog timeout triggers a full reset.
-    while(true);
 }
 
 ISR(TIMER1_COMPA_vect) {
     mMillis++;
+    mTaskTimeCounter++;
+
+    if((mCurrentTask != NULL) && (mTaskTimeCounter >= MAX_TASK_TIME)) {
+        longjmp(mHaltJmp, 1);
+    }
 }
