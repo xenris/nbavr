@@ -14,6 +14,7 @@
 //  Cons:
 //      Requires using malloc, which can make things a bit messier... I think.
 
+#include "../config.h"
 #include <stdbool.h>
 #include <stdint.h>
 
