@@ -8,7 +8,6 @@
 //  manually add or remove them.
 
 //#define INCLUDE_SERIAL
-//#define INCLUDE_TWI
 
 #define RING_BUFFER_SIZE 128
 

@@ -5,26 +5,31 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stddef.h>
 #include <util/twi.h>
-#include <avr/interrupt.h>
+
+#include "taskmanager.h"
+
+typedef enum {
+    TWI_READ = TW_READ,
+    TWI_WRITE = TW_WRITE,
+} TWIDirection;
 
 typedef struct TWIAction {
-    uint8_t rw;
+    TWIDirection rw;
     uint8_t addr;
     uint8_t count;
     uint8_t* data;
     struct TWIAction* next;
 } TWIAction;
 
+#define TWI_QUEUED 0
 #define TWI_BUSY 1
 #define TWI_SUCCESS 2
 #define TWI_FAIL 3
 
-#define TWI_READ TW_READ
-#define TWI_WRITE TW_WRITE
-
-void twiInit(uint16_t kHz);
-bool twiDoAction(TWIAction* action, uint8_t* status);
+void twiInit(TaskManager* taskManager, uint16_t kHz);
+bool twiDoAction(TWIAction* action, volatile uint8_t* status);
 
 #endif
