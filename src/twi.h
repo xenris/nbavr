@@ -16,6 +16,13 @@ typedef enum {
     TWI_WRITE = TW_WRITE,
 } TWIDirection;
 
+typedef enum {
+    TWI_QUEUED,
+    TWI_BUSY,
+    TWI_SUCCESS,
+    TWI_FAIL,
+} TWIResult;
+
 typedef struct TWIAction {
     TWIDirection rw;
     uint8_t addr;
@@ -24,12 +31,7 @@ typedef struct TWIAction {
     struct TWIAction* next;
 } TWIAction;
 
-#define TWI_QUEUED 0
-#define TWI_BUSY 1
-#define TWI_SUCCESS 2
-#define TWI_FAIL 3
-
 void twiInit(TaskManager* taskManager, uint16_t kHz);
-bool twiDoAction(TWIAction* action, volatile uint8_t* status);
+bool twiDoAction(TWIAction* action, volatile TWIResult* result);
 
 #endif

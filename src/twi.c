@@ -14,13 +14,13 @@ typedef struct {
     bool ready;
     uint8_t dataIndex;
     TWIAction* action;
-    volatile uint8_t* status;
+    volatile TWIResult* result;
 } TWIData;
 
 bool twiTask(void* data, uint32_t millis);
 
 static TWIAction* mNextAction;
-static volatile uint8_t* mNextStatus;
+static volatile TWIResult* mNextResult;
 
 void twiInit(TaskManager* taskManager, uint16_t kHz) {
     const uint32_t scaleFactor = 1;
@@ -44,11 +44,11 @@ bool twiTask(void* data, uint32_t millis) {
         twiData->ready = false;
         twiData->dataIndex = 0;
         twiData->action = mNextAction;
-        twiData->status = mNextStatus;
-        *twiData->status = TWI_BUSY;
+        twiData->result = mNextResult;
+        *twiData->result = TWI_BUSY;
 
         mNextAction = NULL;
-        mNextStatus = NULL;
+        mNextResult = NULL;
 
         twiSendStart();
     }
@@ -84,25 +84,25 @@ bool twiTask(void* data, uint32_t millis) {
                     twiData->dataIndex = 0;
                     twiSendStart();
                 } else {
-                    *twiData->status = TWI_SUCCESS;
+                    *twiData->result = TWI_SUCCESS;
                     twiSendStop();
                 }
             }
             break;
         case TW_MT_SLA_NACK:
         case TW_MT_DATA_NACK:
-            *twiData->status = TWI_FAIL;
+            *twiData->result = TWI_FAIL;
             twiSendStop();
             break;
         case TW_MT_ARB_LOST: // and TW_MR_ARB_LOST
-            *twiData->status = TWI_FAIL;
+            *twiData->result = TWI_FAIL;
             twiClearInt();
             break;
         case TW_MR_SLA_ACK:
             twiSendACK();
             break;
         case TW_MR_SLA_NACK:
-            *twiData->status = TWI_FAIL;
+            *twiData->result = TWI_FAIL;
             twiSendStop();
             break;
         case TW_MR_DATA_ACK:
@@ -121,7 +121,7 @@ bool twiTask(void* data, uint32_t millis) {
             if(twiData->action != NULL) {
                 twiSendStart();
             } else {
-                *twiData->status = TWI_SUCCESS;
+                *twiData->result = TWI_SUCCESS;
                 twiSendStop();
             }
             break;
@@ -144,26 +144,26 @@ bool twiTask(void* data, uint32_t millis) {
         case TW_NO_INFO:
             break;
         case TW_BUS_ERROR:
-            *twiData->status = TWI_FAIL;
+            *twiData->result = TWI_FAIL;
             twiClearError();
             break;
     }
 
-    twiData->ready = (*twiData->status != TWI_BUSY);
+    twiData->ready = (*twiData->result != TWI_BUSY);
 
     return true;
 }
 
-bool twiDoAction(TWIAction* action, volatile uint8_t* status) {
+bool twiDoAction(TWIAction* action, volatile TWIResult* result) {
     if(mNextAction != NULL) {
-        *status = TWI_FAIL;
+        *result = TWI_FAIL;
         return false;
     }
 
     mNextAction = action;
-    mNextStatus = status;
+    mNextResult = result;
 
-    *status = TWI_QUEUED;
+    *result = TWI_QUEUED;
 
     return true;
 }
