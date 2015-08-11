@@ -3,16 +3,16 @@
 // setbaud.h provides UBRRH_VALUE, UBRRL_VALUE, and USE_2X.
 #include <util/setbaud.h>
 
-void enableDataRegisterEmptyInterrupts();
-void disableDataRegisterEmptyInterrupts();
 void serialPutChar(char c, FILE* stream);
 char serialGetChar(FILE* stream);
+
+bool serialTask(void* data, uint32_t millis);
 
 static RingBuffer mOutBuffer;
 static RingBuffer mInBuffer;
 static FILE mSerialFILE;
 
-void serialInit() {
+void serialInit(TaskManager* taskManager) {
     // Set baud rate as defined by BAUD.
     UBRR0H = UBRRH_VALUE;
     UBRR0L = UBRRL_VALUE;
@@ -26,8 +26,10 @@ void serialInit() {
 
     // 8-bit data packets.
     UCSR0C = _BV(UCSZ01) | _BV(UCSZ00);
-    // Enable RX, TX, and RX interrupt.
-    UCSR0B = _BV(RXEN0) | _BV(TXEN0) | _BV(RXCIE0);
+    // Enable RX, TX.
+    UCSR0B = _BV(RXEN0) | _BV(TXEN0);
+
+    taskManagerAddTask(taskManager, serialTask, 0, "serialTask", PRIORITY_HIGH);
 }
 
 void serialStdioInit() {
@@ -38,54 +40,34 @@ void serialStdioInit() {
     stderr = &mSerialFILE;
 }
 
-bool serialSendByte(uint8_t c) {
-    bool success;
+bool serialTask(void* data, uint32_t millis) {
+    (void)data;
+    (void)millis;
 
-    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        success = ringBufferPush(&mOutBuffer, c);
+    if(UCSR0A & _BV(UDRE0)) {
+        uint8_t data;
+
+        if(ringBufferPop(&mOutBuffer, &data)) {
+            UDR0 = data;
+        }
     }
 
-    enableDataRegisterEmptyInterrupts();
+    if(UCSR0A & _BV(RXC0)) {
+        const uint8_t data = UDR0;
 
-    return success;
+        ringBufferPush(&mInBuffer, data);
+    }
+
+    return true;
+}
+
+bool serialSendByte(uint8_t c) {
+    return ringBufferPush(&mOutBuffer, c);
 }
 
 bool serialReceiveByte(uint8_t* c) {
-    bool success;
-
-    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        success = ringBufferPop(&mInBuffer, c);
-    }
-
-    return success;
+    return ringBufferPop(&mInBuffer, c);
 }
-
-void enableDataRegisterEmptyInterrupts() {
-    UCSR0B |= _BV(UDRIE0);
-}
-
-void disableDataRegisterEmptyInterrupts() {
-    UCSR0B &= (uint8_t)~(_BV(UDRIE0));
-}
-
-#ifdef INCLUDE_SERIAL
-
-ISR(USART_RX_vect) {
-    const uint8_t data = UDR0;
-    ringBufferPush(&mInBuffer, data);
-}
-
-ISR(USART_UDRE_vect) {
-    uint8_t data;
-
-    if(ringBufferPop(&mOutBuffer, &data)) {
-        UDR0 = data;
-    } else {
-        disableDataRegisterEmptyInterrupts();
-    }
-}
-
-#endif
 
 void serialPutChar(char c, FILE* stream) {
     if(c == '\n') {
@@ -95,10 +77,6 @@ void serialPutChar(char c, FILE* stream) {
     if(serialSendByte(c)) {
         return;
     }
-
-//    const uint32_t timeout = millis() + 5;
-
-//    while(!serialSendByte(c) && (millis() < timeout));
 }
 
 // XXX This function blocks indefinitely.

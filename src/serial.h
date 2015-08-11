@@ -1,15 +1,14 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
-#include <avr/interrupt.h>
 #include <avr/io.h>
-#include <util/atomic.h>
 #include <stdio.h>
 
 #include "../config.h"
 #include "ringbuffer.h"
+#include "taskmanager.h"
 
-void serialInit();
+void serialInit(TaskManager* taskManager);
 void serialStdioInit();
 bool serialSendByte(uint8_t b);
 bool serialReceiveByte(uint8_t* b);
