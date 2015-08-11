@@ -18,10 +18,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#ifndef RING_BUFFER_SIZE
-    #define RING_BUFFER_SIZE 64
-#endif
-
 typedef struct {
     uint8_t data[RING_BUFFER_SIZE];
     uint8_t head;
