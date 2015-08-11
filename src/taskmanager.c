@@ -34,13 +34,13 @@ TaskManager* taskManagerInit(uint8_t maxTasks) {
     return taskManager;
 }
 
-bool taskManagerAddTask(TaskManager* taskManager, TaskFunction taskFunction, void* data, const char* id, TaskPriority priority) {
+bool taskManagerAddTask(TaskManager* taskManager, TaskFunction taskFunction, uint16_t dataSize, const char* id, TaskPriority priority) {
     for(uint8_t i = 0; i < taskManager->maxTasks; i++) {
         Task* task = &taskManager->tasks[i];
 
         if(!task->active) {
             task->taskFunction = taskFunction;
-            task->data = data;
+            task->data = (dataSize > 0) ? calloc(1, dataSize) : NULL;
             task->id = id;
             task->priority = priority;
             task->active = true;
@@ -89,6 +89,10 @@ static void taskManagerProcessTask(Task* task, uint32_t millis) {
         mCurrentTask = task;
         task->active = task->taskFunction(task->data, millis);
         mCurrentTask = NULL;
+    }
+
+    if(!task->active) {
+        free(task->data);
     }
 }
 
