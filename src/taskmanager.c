@@ -6,6 +6,7 @@ typedef struct Task {
     bool active;
     TaskFunction taskFunction;
     void* data;
+    uint16_t dataSize;
     const char* id;
     TaskPriority priority;
 } Task;
@@ -49,6 +50,7 @@ bool taskManagerAddTask(TaskManager* taskManager, TaskFunction taskFunction, uin
             } else {
                 task->data = NULL;
             }
+            task->dataSize = dataSize;
             task->id = id;
             task->priority = priority;
             task->active = true;
@@ -81,8 +83,8 @@ static void taskManagerProcessTask(Task* task, uint32_t millis) {
     if(setjmp(mHaltJmp)) {
         // The folloing task halted if this is running.
         mCurrentTask = NULL;
-        printf("Task \"%s\" was stopped because it was taking too long.\n", task->id);
-        task->active = false;
+        printf("Task \"%s\" was reset because it was taking too long.\n", task->id);
+        memset(task->data, 0, task->dataSize);
     } else {
         mTaskTimeCounter = 0;
         mCurrentTask = task;
