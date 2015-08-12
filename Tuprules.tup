@@ -1,0 +1,3 @@
+LIB_CFLAGS = -I$(TUP_CWD)
+LIB_LDFLAGS = -L$(TUP_CWD) -lnbavr
+LIB_LIBFILE = $(TUP_CWD)/libnbavr.a
