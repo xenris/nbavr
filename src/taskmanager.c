@@ -41,7 +41,14 @@ bool taskManagerAddTask(TaskManager* taskManager, TaskFunction taskFunction, uin
 
         if(!task->active) {
             task->taskFunction = taskFunction;
-            task->data = (dataSize > 0) ? calloc(1, dataSize) : NULL;
+            if(dataSize > 0) {
+                task->data = calloc(1, dataSize);
+                if(task->data == NULL) {
+                    return false;
+                }
+            } else {
+                task->data = NULL;
+            }
             task->id = id;
             task->priority = priority;
             task->active = true;
