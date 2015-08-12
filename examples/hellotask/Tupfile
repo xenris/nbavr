@@ -1,0 +1,16 @@
+warnings = -Wall -Wextra -Werror
+mmcu = atmega328p
+
+# "-ffunction-sections" and "-Wl,-gc-sections" make the compiler and linker only include functions which are needed.
+
+# Compile source to object code.
+: foreach src/*.c |> avr-gcc -ffunction-sections -Ilib/nbavr/ $(warnings) -mmcu=$(mmcu) -g -std=gnu99 -Os -c -o %o %f |> tmp/%B.o
+
+# Compile object code to elf
+: tmp/*.o lib/nbavr/libnbavr.a |> avr-gcc -Wl,-gc-sections -mmcu=$(mmcu) -g -Llib/nbavr/ -o %o %f -lnbavr |> gen/firmware.elf
+
+# Convert elf to hex
+: gen/firmware.elf |> avr-objcopy -O ihex %f %o |> gen/firmware.hex
+
+# Decompile elf to asm, for debugging.
+: gen/firmware.elf |> avr-objdump -S --architecture=avr --disassemble %f > %o |> gen/firmware.asm
