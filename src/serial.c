@@ -29,7 +29,7 @@ void serialInit(TaskManager* taskManager) {
     // Enable RX, TX.
     UCSR0B = _BV(RXEN0) | _BV(TXEN0);
 
-    taskManagerAddTask(taskManager, serialTask, 0, "serialTask", PRIORITY_HIGH);
+    taskManagerAddTask(taskManager, serialTask, 0, "serialTask", PRIORITY_DRIVER);
 }
 
 void serialStdioInit() {

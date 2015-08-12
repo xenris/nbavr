@@ -28,7 +28,7 @@ void twiInit(TaskManager* taskManager, uint16_t kHz) {
 
     twiEnable();
 
-    taskManagerAddTask(taskManager, twiTask, sizeof(TWIData), "twiTask", PRIORITY_HIGH);
+    taskManagerAddTask(taskManager, twiTask, sizeof(TWIData), "twiTask", PRIORITY_DRIVER);
 }
 
 bool twiTask(void* data, uint32_t millis) {
