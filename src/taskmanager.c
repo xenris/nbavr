@@ -16,6 +16,7 @@ typedef struct TaskManager {
 } TaskManager;
 
 static void taskManagerProcessTask(Task* task, uint32_t millis);
+static Task* getRandomActiveTask(TaskManager* taskManager);
 
 static volatile uint32_t mMillis;
 static Task* mCurrentTask;
@@ -53,27 +54,18 @@ bool taskManagerAddTask(TaskManager* taskManager, TaskFunction taskFunction, uin
 }
 
 void taskManagerRun(TaskManager* taskManager) {
-    uint8_t priorityIndex = 1;
-
     while(true) {
-        uint32_t millis;
+        Task* task = getRandomActiveTask(taskManager);
 
-        ATOMIC_BLOCK(ATOMIC_FORCEON) {
-            millis = mMillis;
-        }
+        if(task != NULL) {
+            uint32_t millis;
 
-        for(uint8_t i = 0; i < taskManager->maxTasks; i++) {
-            Task* task = &taskManager->tasks[i];
-
-            if(task->active) {
-                if((priorityIndex % task->priority) == 0) {
-                    taskManagerProcessTask(task, millis);
-                }
+            ATOMIC_BLOCK(ATOMIC_FORCEON) {
+                millis = mMillis;
             }
-        }
 
-        // priorityIndex counts from 1 to PRIORITY_LOW.
-        priorityIndex = (priorityIndex % PRIORITY_LOW) + 1;
+            taskManagerProcessTask(task, millis);
+        }
     }
 }
 
@@ -94,6 +86,59 @@ static void taskManagerProcessTask(Task* task, uint32_t millis) {
     if(!task->active) {
         free(task->data);
     }
+}
+
+static Task* getRandomActiveTask(TaskManager* taskManager) {
+    int sum = 0;
+    for(uint8_t i = 0; i < taskManager->maxTasks; i++) {
+        Task* task = &taskManager->tasks[i];
+
+        if(task->active) {
+            sum += (PRIORITY_LOW + 1) - task->priority;
+        }
+    }
+
+    if(sum == 0) {
+        return NULL;
+    }
+
+    int r = (rand() % sum) + 1;
+    int t = 0;
+
+    for(uint8_t i = 0; i < taskManager->maxTasks; i++) {
+        Task* task = &taskManager->tasks[i];
+
+        if(task->active) {
+            t += (PRIORITY_LOW + 1) - task->priority;
+
+            if(t >= r) {
+                return task;
+            }
+        }
+    }
+
+    return NULL;
+
+// XXX This system takes up HEAPS of cpu time
+// If something like this could be done with only integers that would be better.
+//    Task* result = NULL;
+//    float k = 0;
+
+//    for(uint8_t i = 0; i < taskManager->maxTasks; i++) {
+//        Task* task = &taskManager->tasks[i];
+
+//        if(task->active) {
+//            const float r = (float)rand() / (float)RAND_MAX;
+//            const float p = (PRIORITY_LOW + 1) - task->priority;
+//            k += p;
+
+//            if((p / k) >= r) {
+//                result = task;
+//            }
+//        }
+//    }
+
+//    return result;
 }
 
 ISR(TIMER1_COMPA_vect) {
