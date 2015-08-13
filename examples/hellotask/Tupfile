@@ -1,6 +1,6 @@
-include_rules
+# Tupfile
 
-# "-ffunction-sections" and "-Wl,-gc-sections" make the compiler and linker only include functions which are needed.
+include_rules
 
 # Compile source to object code.
 : foreach src/*.c |> avr-gcc $(CFLAGS) -c -o %o %f |> tmp/%B.o
