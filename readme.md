@@ -5,8 +5,9 @@ Non-blocking AVR.
 Created by Henry Shepperd (hshepperd@gmail.com)
 
 ## Aim
-A set of libraries for AVR microprocessors which are assured to never block.\
-Plus a simple and reliable real time os which provides the ability to run tasks (fake threads) atomically (in terms of both time and memory), including the ability to reset any tasks which crash/halt.
+A set of libraries for AVR microprocessors which are assured to never block.
+
+Plus a simple and reliable real time OS which provides the ability to run tasks (fake threads) atomically (in terms of both time and memory), and has the ability to reset tasks if they happen to crash/halt.
 
 ## TaskManager (real time os)
 * The task manager is nonpreemptive, which means all tasks share the same stack and each task step has to return before the next task can start. This has the advantage that less RAM is required, and that every task is atomic relative to each other.
