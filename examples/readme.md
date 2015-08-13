@@ -12,12 +12,16 @@
 * a terminal
 * picocom
 
-## Setup
+## Building the examples
 
+### Method 1
+1. Clone nbavr.
+2. Look in Tuprules.tup in nbavr's root directory.
+3. Run "tup init", then "tup" to compile the library and all of its examples.
+4. Look in examples/[example]/gen/ for the hex file.
+
+### Method 2
 1. Copy one of the examples to somewhere convenient.
-2. Clone nbavr into the lib/nbavr/ directory.
-3. Remove the underscore from Tupfile_
-4. Read build.sh and change it to suit your setup.
-5. Read Tupfile and lib/nbavr/Tupfile and change them to suit your setup.
-6. Start monitoring serial output from another terminal (picocom /dev/ttyACM1).
-7. Run build.sh -u to compile and upload to a device.
+2. Clone nbavr into lib/nbavr/.
+3. Look at build.sh and Tuprules.tup in the example's root directory.
+4. Run build.sh -u to compile and upload to a device.

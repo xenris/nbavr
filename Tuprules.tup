@@ -1,3 +1,25 @@
+# Tuprules
+
+ifndef mmcu
+    mmcu = atmega328p
+endif
+
+ifndef freq
+    freq = 16000000
+endif
+
 LIB_CFLAGS = -I$(TUP_CWD)
+LIB_CFLAGS += -Wall
+LIB_CFLAGS += -Wextra
+LIB_CFLAGS += -Werror
+LIB_CFLAGS += -ffunction-sections
+LIB_CFLAGS += -g
+LIB_CFLAGS += -std=c99
+LIB_CFLAGS += -Os
+LIB_CFLAGS += -mmcu=$(mmcu)
+LIB_CFLAGS += -DF_CPU=$(freq)
+LIB_CFLAGS += -Wl,-gc-sections
+
 LIB_LDFLAGS = -L$(TUP_CWD) -lnbavr
+
 LIB_LIBFILE = $(TUP_CWD)/libnbavr.a

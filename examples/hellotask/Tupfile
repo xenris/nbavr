@@ -1,17 +1,14 @@
 include_rules
 
-warnings = -Wall -Wextra -Werror
-mmcu = atmega328p
-
 # "-ffunction-sections" and "-Wl,-gc-sections" make the compiler and linker only include functions which are needed.
 
 # Compile source to object code.
-: foreach src/*.c |> avr-gcc $(LIB_CFLAGS) -ffunction-sections $(warnings) -mmcu=$(mmcu) -g -std=gnu99 -Os -c -o %o %f |> tmp/%B.o
+: foreach src/*.c |> avr-gcc $(CFLAGS) -c -o %o %f |> tmp/%B.o
 
-# Compile object code to elf
-: tmp/*.o | $(LIB_LIBFILE) |> avr-gcc -Wl,-gc-sections -mmcu=$(mmcu) -g -o %o %f $(LIB_LDFLAGS) |> gen/firmware.elf
+# Compile object code to elf.
+: tmp/*.o | $(LIBFILES) |> avr-gcc $(CFLAGS) -o %o %f $(LDFLAGS) |> gen/firmware.elf
 
-# Convert elf to hex
+# Convert elf to hex.
 : gen/firmware.elf |> avr-objcopy -O ihex %f %o |> gen/firmware.hex
 
 # Decompile elf to asm, for debugging.

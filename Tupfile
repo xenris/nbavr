@@ -1,6 +1,9 @@
-warnings = -Wall -Wextra -Werror
-mmcu = atmega328p
+# Tupfile
 
-: foreach src/*.c |> avr-gcc -ffunction-sections $(warnings) -mmcu=$(mmcu) -g -std=c99 -Os -c -o %o %f |> tmp/%B.o
+include_rules
 
+# Compile source to object code.
+: foreach src/*.c |> avr-gcc $(LIB_CFLAGS) -c -o %o %f |> tmp/%B.o
+
+# Archive object code into a library.
 : tmp/*.o |> avr-ar rcs %o %f |> libnbavr.a
