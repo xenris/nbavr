@@ -45,8 +45,32 @@ void taskManagerRun(TaskManager* taskManager);
 typedef bool (*TaskFunction)(void* data, uint32_t millis);
 ```
 
-## Example
-(todo)
+## Recommended tools
+* git
+* avr-gcc
+* avr-binutils
+* avr-libc
+* avrdude
+* tup
+* bash
+* a terminal
+* picocom
+
+## Building
+Running build.sh will compile the library and all the examples.
+
+## Running the examples
+
+### Method 1
+1. Clone nbavr.
+2. Check that Tuprules.tup and build.sh are correct for your setup.
+3. Run "build.sh -u hellotask" to compile and upload hellotask to a device.
+
+### Method 2
+1. Copy one of the examples to somewhere convenient.
+2. Clone nbavr into lib/nbavr/.
+3. Check that Tuprules.tup and build.sh are correct for your setup.
+4. Run build.sh -u to compile and upload to a device.
 
 ## Interrupts and hardware used
 The task manager uses the 16bit timer/counter1 to run .
