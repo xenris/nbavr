@@ -1,0 +1,26 @@
+# Tuprules
+
+ifeq ($(LIB_CFLAGS),)
+    mmcu = atmega328p
+
+    freq = 16000000
+
+    CFLAGS = -Ilib/nbavr/
+    CFLAGS += -Wall
+    CFLAGS += -Wextra
+    CFLAGS += -Werror
+    CFLAGS += -ffunction-sections
+    CFLAGS += -g
+    CFLAGS += -std=c99
+    CFLAGS += -Os
+    CFLAGS += -mmcu=$(mmcu)
+    CFLAGS += -DF_CPU=$(freq)
+
+    LDFLAGS = -Llib/nbavr/ -lnbavr
+
+    LIBFILES = lib/nbavr/libnbavr.a
+else
+    CFLAGS = $(LIB_CFLAGS)
+    LDFLAGS = $(LIB_LDFLAGS)
+    LIBFILES = $(LIB_LIBFILE)
+endif

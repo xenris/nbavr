@@ -1,58 +1,123 @@
 #include "ringbuffer.h"
 
-uint8_t ringBufferNext(uint8_t i);
+typedef struct RingBuffer {
+    uint8_t* data;
+    uint8_t size;
+    uint8_t head;
+    uint8_t tail;
+    bool overflowed;
+} RingBuffer;
 
-bool ringBufferPush(RingBuffer* buffer, uint8_t in) {
-    const uint8_t nextHead = ringBufferNext(buffer->head);
+static uint8_t ringBufferNext(RingBuffer* ringBuffer, uint8_t i);
 
-    if(nextHead == buffer->tail) {
+RingBuffer* ringBufferCreate(uint8_t size) {
+    RingBuffer* ringBuffer = calloc(1, sizeof(RingBuffer));
+
+    if(ringBuffer == NULL) {
+        return NULL;
+    }
+
+    ringBuffer->data = calloc(size, sizeof(uint8_t));
+
+    if(ringBuffer->data == NULL) {
+        free(ringBuffer);
+        return NULL;
+    }
+
+    ringBuffer->size = size;
+
+    return ringBuffer;
+}
+
+bool ringBufferPush(RingBuffer* ringBuffer, uint8_t in) {
+    const uint8_t nextHead = ringBufferNext(ringBuffer, ringBuffer->head);
+
+    if(nextHead == ringBuffer->tail) {
+        ringBuffer->overflowed = true;
         return false;
     }
 
-    buffer->data[buffer->head] = in;
-    buffer->head = nextHead;
+    ringBuffer->data[ringBuffer->head] = in;
+    ringBuffer->head = nextHead;
 
     return true;
 }
 
-bool ringBufferPop(RingBuffer* buffer, uint8_t* out) {
-    if(buffer->tail == buffer->head) {
+bool ringBufferPop(RingBuffer* ringBuffer, uint8_t* out) {
+    if(ringBuffer->tail == ringBuffer->head) {
         return false;
     }
 
-    const uint8_t nextTail = ringBufferNext(buffer->tail);
+    const uint8_t nextTail = ringBufferNext(ringBuffer, ringBuffer->tail);
 
-    *out = buffer->data[buffer->tail];
-    buffer->tail = nextTail;
+    *out = ringBuffer->data[ringBuffer->tail];
+    ringBuffer->tail = nextTail;
 
     return true;
 }
 
-bool ringBufferPeek(RingBuffer* buffer, uint8_t* out) {
-    if(buffer->tail == buffer->head) {
+bool ringBufferPeek(RingBuffer* ringBuffer, uint8_t* out) {
+    if(ringBuffer->tail == ringBuffer->head) {
         return false;
     }
 
-    *out = buffer->data[buffer->tail];
+    *out = ringBuffer->data[ringBuffer->tail];
 
     return true;
 }
 
-bool ringBufferFull(RingBuffer* buffer) {
-    const uint8_t nextHead = ringBufferNext(buffer->head);
+bool ringBufferFull(RingBuffer* ringBuffer) {
+    const uint8_t nextHead = ringBufferNext(ringBuffer, ringBuffer->head);
 
-    return (nextHead == buffer->tail);
+    return (nextHead == ringBuffer->tail);
 }
 
-bool ringBufferEmpty(RingBuffer* buffer) {
-    return (buffer->head == buffer->tail);
+bool ringBufferEmpty(RingBuffer* ringBuffer) {
+    return (ringBuffer->head == ringBuffer->tail);
 }
 
-void ringBufferClear(RingBuffer* buffer) {
-    buffer->head = 0;
-    buffer->tail = 0;
+void ringBufferClear(RingBuffer* ringBuffer) {
+    ringBuffer->head = 0;
+    ringBuffer->tail = 0;
+    ringBuffer->overflowed = false;
 }
 
-uint8_t ringBufferNext(uint8_t i) {
-    return (i + 1) % RING_BUFFER_SIZE;
+uint8_t ringBufferUsed(RingBuffer* ringBuffer) {
+    const uint8_t head = ringBuffer->head;
+    const uint8_t tail = ringBuffer->tail;
+    const uint8_t size = ringBuffer->size;
+
+    if(head >= tail) {
+        return head - tail;
+    } else {
+        return (size - tail) + head;
+    }
+}
+
+uint8_t ringBufferUnused(RingBuffer* ringBuffer) {
+    int16_t diff = ringBuffer->tail - ringBuffer->head;
+
+    if(diff < 0) {
+        diff += ringBuffer->size;
+    }
+
+    return diff;
+
+    const uint8_t head = ringBuffer->head;
+    const uint8_t tail = ringBuffer->tail;
+    const uint8_t size = ringBuffer->size;
+
+    if(head >= tail) {
+        return (size - head) + tail;
+    } else {
+        return tail - head;
+    }
+}
+
+bool ringBufferHasOverflowed(RingBuffer* ringBuffer) {
+    return ringBuffer->overflowed;
+}
+
+static uint8_t ringBufferNext(RingBuffer* ringBuffer, uint8_t i) {
+    return (i + 1) % ringBuffer->size;
 }

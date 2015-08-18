@@ -1,11 +1,8 @@
 #ifndef TWI_H
 #define TWI_H
 
-#include "../config.h"
-
 #include <stdint.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include <stddef.h>
 #include <util/twi.h>
 

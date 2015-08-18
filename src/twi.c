@@ -62,7 +62,7 @@ bool twiTask(void* data, uint32_t millis) {
     // XXX What to do here? Presumably this will only happen in slave mode,
     //  right? So it should be safe to enter the switch with a NULL action...?
     if(twiData->action == NULL) {
-        printf("DEBUG: action == NULL (file %s, line: %i)\n", __FILE__, __LINE__);
+//        printf("DEBUG: action == NULL (file %s, line: %i)\n", __FILE__, __LINE__);
     }
 
     switch(twStatus) {

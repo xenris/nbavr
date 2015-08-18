@@ -3,16 +3,18 @@
 // setbaud.h provides UBRRH_VALUE, UBRRL_VALUE, and USE_2X.
 #include <util/setbaud.h>
 
-void serialPutChar(char c, FILE* stream);
-char serialGetChar(FILE* stream);
+typedef struct {
+    bool initialised;
+    OutputStream** outputStreams;
+    InputStream** inputStreams;
+
+    uint8_t currentInputStream;
+    uint8_t currentOutputStream;
+} SerialData;
 
 bool serialTask(void* data, uint32_t millis);
 
-static RingBuffer mOutBuffer;
-static RingBuffer mInBuffer;
-static FILE mSerialFILE;
-
-void serialInit(TaskManager* taskManager) {
+const char* serialInit(TaskManager* taskManager) {
     // Set baud rate as defined by BAUD.
     UBRR0H = UBRRH_VALUE;
     UBRR0L = UBRRL_VALUE;
@@ -29,63 +31,45 @@ void serialInit(TaskManager* taskManager) {
     // Enable RX, TX.
     UCSR0B = _BV(RXEN0) | _BV(TXEN0);
 
-    taskManagerAddTask(taskManager, serialTask, 0, "serialTask", PRIORITY_DRIVER);
-}
+    const char* serialTaskId = "serialTask";
 
-void serialStdioInit() {
-    fdev_setup_stream(&mSerialFILE, serialPutChar, serialGetChar, _FDEV_SETUP_RW);
+    taskManagerAddTask(taskManager, serialTask, sizeof(SerialData), serialTaskId, PRIORITY_DRIVER);
 
-    stdin = &mSerialFILE;
-    stdout = &mSerialFILE;
-    stderr = &mSerialFILE;
+    return serialTaskId;
 }
 
 bool serialTask(void* data, uint32_t millis) {
-    (void)data;
+    SerialData* serialData = data;
     (void)millis;
 
+    if(!serialData->initialised) {
+        serialData->initialised = true;
+        serialData->outputStreams = getOutputStreams();
+        serialData->inputStreams = getInputStreams();
+    }
+
     if(UCSR0A & _BV(UDRE0)) {
+        InputStream* inputStream = serialData->inputStreams[serialData->currentInputStream];
         uint8_t data;
 
-        if(ringBufferPop(&mOutBuffer, &data)) {
+        if((inputStream != NULL) && inputStreamPop(inputStream, &data)) {
             UDR0 = data;
+        } else {
+            serialData->currentInputStream = (serialData->currentInputStream + 1) % 6;
         }
     }
 
     if(UCSR0A & _BV(RXC0)) {
         const uint8_t data = UDR0;
 
-        ringBufferPush(&mInBuffer, data);
+        for(uint8_t i = 0; i < 6; i++) {
+            OutputStream* outputStream = serialData->outputStreams[i];
+
+            if(outputStream != NULL) {
+                outputStreamPush(outputStream, data);
+            }
+        }
     }
 
     return true;
-}
-
-bool serialSendByte(uint8_t c) {
-    return ringBufferPush(&mOutBuffer, c);
-}
-
-bool serialReceiveByte(uint8_t* c) {
-    return ringBufferPop(&mInBuffer, c);
-}
-
-void serialPutChar(char c, FILE* stream) {
-    if(c == '\n') {
-        serialPutChar('\r', stream);
-    }
-
-    if(serialSendByte(c)) {
-        return;
-    }
-}
-
-// XXX This function blocks indefinitely.
-char serialGetChar(FILE* stream __attribute__ ((unused))) {
-    uint8_t c;
-
-    while(!serialReceiveByte(&c));
-
-    c = (c == '\r') ? '\n' : c;
-
-    return (char)c;
 }

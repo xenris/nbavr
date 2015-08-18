@@ -2,6 +2,8 @@
 
 #define MAX_TASK_TIME 20
 
+// FIXME Streams are a fixed magic number.
+
 typedef struct Task {
     bool active;
     TaskFunction taskFunction;
@@ -9,6 +11,8 @@ typedef struct Task {
     uint16_t dataSize;
     const char* id;
     TaskPriority priority;
+    InputStream* inputStreams[6];
+    OutputStream* outputStreams[6];
 } Task;
 
 typedef struct TaskManager {
@@ -16,6 +20,7 @@ typedef struct TaskManager {
     Task* tasks;
 } TaskManager;
 
+Task* findTaskById(TaskManager* taskManager, const char* id);
 static void taskManagerProcessTask(Task* task, uint32_t millis);
 static Task* getRandomActiveTask(TaskManager* taskManager);
 
@@ -62,6 +67,128 @@ bool taskManagerAddTask(TaskManager* taskManager, TaskFunction taskFunction, uin
     return false;
 }
 
+bool taskManagerAddStream(TaskManager* taskManager, const char* fromId, const char* toId, const char* streamId, uint8_t bufferSize) {
+    Task* fromTask = findTaskById(taskManager, fromId);
+    Task* toTask = findTaskById(taskManager, toId);
+
+    if((fromTask == NULL) || (toTask == NULL)) {
+        return false;
+    }
+
+    RingBuffer* ringBuffer = ringBufferCreate(bufferSize);
+
+    if(ringBuffer == NULL) {
+        return false;
+    }
+
+    OutputStream* outputStream = outputStreamCreate(streamId, ringBuffer);
+
+    if(outputStream == NULL) {
+        free(ringBuffer);
+        return false;
+    }
+
+    InputStream* inputStream = inputStreamCreate(streamId, ringBuffer);
+
+    if(inputStream == NULL) {
+        free(ringBuffer);
+        free(outputStream);
+        return false;
+    }
+
+    bool added = false;
+
+    for(uint8_t i = 0; i < 6; i++) {
+        if(fromTask->outputStreams[i] == NULL) {
+            fromTask->outputStreams[i] = outputStream;
+            added = true;
+            break;
+        }
+    }
+
+    if(!added) {
+        free(ringBuffer);
+        free(outputStream);
+        free(inputStream);
+        return false;
+    }
+
+    added = false;
+
+    for(uint8_t i = 0; i < 6; i++) {
+        if(toTask->inputStreams[i] == NULL) {
+            toTask->inputStreams[i] = inputStream;
+            added = true;
+            break;
+        }
+    }
+
+    if(!added) {
+        free(ringBuffer);
+        free(outputStream);
+        free(inputStream);
+        return false;
+    }
+
+    return true;
+}
+
+Task* findTaskById(TaskManager* taskManager, const char* id) {
+    for(uint8_t i = 0; i < taskManager->maxTasks; i++) {
+        Task* task = &taskManager->tasks[i];
+
+        if(task->id == id) {
+            return task;
+        }
+    }
+
+    return NULL;
+}
+
+OutputStream* getOutputStream(const char* streamId) {
+    if(mCurrentTask != NULL) {
+        for(uint8_t i = 0; i < 6; i++) {
+            OutputStream* outputStream = mCurrentTask->outputStreams[i];
+
+            if(outputStreamId(outputStream) == streamId) {
+                return outputStream;
+            }
+        }
+    }
+
+    return NULL;
+}
+
+InputStream* getInputStream(const char* streamId) {
+    if(mCurrentTask != NULL) {
+        for(uint8_t i = 0; i < 6; i++) {
+            InputStream* inputStream = mCurrentTask->inputStreams[i];
+
+            if(inputStreamId(inputStream) == streamId) {
+                return inputStream;
+            }
+        }
+    }
+
+    return NULL;
+}
+
+OutputStream** getOutputStreams() {
+    if(mCurrentTask != NULL) {
+        return mCurrentTask->outputStreams;
+    }
+
+    return NULL;
+}
+
+InputStream** getInputStreams() {
+    if(mCurrentTask != NULL) {
+        return mCurrentTask->inputStreams;
+    }
+
+    return NULL;
+}
+
 void taskManagerRun(TaskManager* taskManager) {
     while(true) {
         Task* task = getRandomActiveTask(taskManager);
@@ -83,7 +210,7 @@ static void taskManagerProcessTask(Task* task, uint32_t millis) {
     if(setjmp(mHaltJmp)) {
         // The folloing task halted if this is running.
         mCurrentTask = NULL;
-        printf("Task \"%s\" was reset because it was taking too long.\n", task->id);
+//        printf("Task \"%s\" was reset because it was taking too long.\n", task->id);
         memset(task->data, 0, task->dataSize);
     } else {
         mTaskTimeCounter = 0;
