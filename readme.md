@@ -69,7 +69,7 @@ bool taskManagerAddStream(TaskManager* taskManager, const char* fromId, const ch
 OutputStream* getOutputStream(const char* streamId);
 InputStream* getInputStream(const char* streamId);
 
-// Get an array (fixed 6 length) containing all the available input or output streams.
+// Get an array (fixed 6 length) containing all the available input or output streams. (Only use from within a task.)
 OutputStream** getOutputStreams();
 InputStream** getInputStreams();
 ```
