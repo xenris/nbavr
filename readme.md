@@ -119,6 +119,7 @@ Running build.sh will compile the library and all the examples.
 
 ## Communicating over serial
 picocom --imap lfcrlf --omap crlf /dev/ttyACM1
+
 Change the serial port to suit your system.
 
 ## Interrupts and hardware used
