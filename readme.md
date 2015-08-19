@@ -9,6 +9,10 @@ A set of libraries for AVR microprocessors which are assured to never block.
 
 Plus a simple and reliable real time OS which provides the ability to run tasks (fake threads) atomically (in terms of both time and memory), and has the ability to reset tasks if they happen to crash/halt.
 
+## Status
+Beta
+The code is stable, but I am in the process of making some fairly big changes and (hopefully) improvements to the api.
+
 ## TaskManager (real time os)
 * The task manager is nonpreemptive, which means all tasks share the same stack and each task step has to return before the next task can start. This has the advantage that less RAM is required, and that every task is atomic relative to each other.
 * The task manager also monitors each task step and will reset a task if it is taking too long, allowing all the other tasks to continue running, while giving the crashed task the chance to recover.
@@ -46,6 +50,46 @@ void taskManagerRun(TaskManager* taskManager);
 typedef bool (*TaskFunction)(void* data, uint32_t millis);
 ```
 
+## Streams
+* Used for communication between tasks
+* Each stream is one way, with an input end and an output end.
+* Because tasks run atomically you can be sure that under normal circumstances a stream will contain a complete message. (Abnormal circumstances include overflowing the stream's buffer, or having the task take too long and being reset before it finishes writing its message.)
+* Streams use a RingBuffer as the backend.
+
+```c
+// For connecting two tasks via a stream.
+// The from and to IDs are the tasks to join.
+// The stream id is used to reference the stream within the task.
+// The buffer size is in bytes.
+bool taskManagerAddStream(TaskManager* taskManager, const char* fromId, const char* toId, const char* streamId, uint8_t bufferSize);
+```
+
+```c
+// Get an output or input stream by name. (Only use from within a task.)
+OutputStream* getOutputStream(const char* streamId);
+InputStream* getInputStream(const char* streamId);
+
+// Get an array (fixed 6 length) containing all the available input or output streams.
+OutputStream** getOutputStreams();
+InputStream** getInputStreams();
+```
+
+```c
+// A selection of functions for using streams
+
+bool outputStreamPush(OutputStream* outputStream, uint8_t n);
+int16_t outputStreamAvailable(OutputStream* outputStream);
+const char* outputStreamId(OutputStream* outputStream);
+bool outputStreamHasOverflowed(OutputStream* outputStream);
+
+bool inputStreamPop(InputStream* inputStream, uint8_t* n);
+bool inputStreamPeek(InputStream* inputStream, uint8_t* n);
+int16_t inputStreamAvailable(InputStream* inputStream);
+bool inputStreamHasData(InputStream* inputStream);
+const char* inputStreamId(InputStream* inputStream);
+bool inputStreamHasOverflowed(InputStream* inputStream);
+```
+
 ## Recommended tools
 * git
 * avr-gcc
@@ -80,7 +124,7 @@ The task manager uses the 16bit timer/counter1 to run .
 * atmega328p
 
 ## Contributors
-(If you add or fix or improve something in this library feel free to put your name here.)
+(If you add, fix, or improve something in this library feel free to add your name here.)
 * Henry Shepperd
 
 ## Warranty
