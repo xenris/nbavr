@@ -117,6 +117,10 @@ Running build.sh will compile the library and all the examples.
 3. Check that Tuprules.tup and build.sh are correct for your setup.
 4. Run build.sh -u to compile and upload to a device.
 
+## Communicating over serial
+picocom --imap lfcrlf --omap crlf /dev/ttyACM1
+Change the serial port to suit your system.
+
 ## Interrupts and hardware used
 The task manager uses the 16bit timer/counter1 to run .
 
