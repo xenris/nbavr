@@ -9,15 +9,8 @@
 #include <stdbool.h>
 #include <string.h>
 #include "stream.h"
+#include "task.h"
 
-typedef enum {
-    PRIORITY_DRIVER = 1,
-    PRIORITY_HIGH = 5,
-    PRIORITY_MEDIUM = 10,
-    PRIORITY_LOW = 20,
-} TaskPriority;
-
-typedef bool (*TaskFunction)(void*, uint32_t);
 typedef struct TaskManager TaskManager;
 
 TaskManager* taskManagerInit(uint8_t maxTasks);
