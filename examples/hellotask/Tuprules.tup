@@ -15,6 +15,7 @@ ifeq ($(LIB_CFLAGS),)
     CFLAGS += -Os
     CFLAGS += -mmcu=$(mmcu)
     CFLAGS += -DF_CPU=$(freq)
+    CFLAGS += -fdiagnostics-color=always
 
     LDFLAGS = -Llib/nbavr/ -lnbavr
 

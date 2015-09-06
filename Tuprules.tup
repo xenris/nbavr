@@ -19,6 +19,7 @@ LIB_CFLAGS += -Os
 LIB_CFLAGS += -mmcu=$(mmcu)
 LIB_CFLAGS += -DF_CPU=$(freq)
 LIB_CFLAGS += -Wl,-gc-sections
+LIB_CFLAGS += -fdiagnostics-color=always
 
 LIB_LDFLAGS = -L$(TUP_CWD) -lnbavr
 
