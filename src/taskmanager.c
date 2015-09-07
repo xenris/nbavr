@@ -30,9 +30,7 @@ static jmp_buf mHaltJmp;
 static uint8_t mTaskTimeCounter;
 
 TaskManager* taskManagerInit(uint8_t maxTasks) {
-    TIMSK1 |= _BV(OCIE1A);
-    OCR1A = 16000;
-    TCCR1B = _BV(CS10) | _BV(WGM12);
+    setupSystemClock();
 
     TaskManager* taskManager = calloc(1, sizeof(TaskManager));
     taskManager->maxTasks = maxTasks;
@@ -277,7 +275,7 @@ static Task* getRandomActiveTask(TaskManager* taskManager) {
 //    return result;
 }
 
-ISR(TIMER1_COMPA_vect) {
+tickInterrupt {
     mMillis++;
     mTaskTimeCounter++;
 

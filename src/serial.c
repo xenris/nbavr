@@ -1,8 +1,5 @@
 #include "serial.h"
 
-// setbaud.h provides UBRRH_VALUE, UBRRL_VALUE, and USE_2X.
-#include <util/setbaud.h>
-
 typedef struct {
     bool initialised;
     OutputStream** outputStreams;
@@ -15,21 +12,7 @@ typedef struct {
 bool serialTask(void* data, uint32_t millis);
 
 const char* serialInit(TaskManager* taskManager) {
-    // Set baud rate as defined by BAUD.
-    UBRR0H = UBRRH_VALUE;
-    UBRR0L = UBRRL_VALUE;
-
-    // Use 2x rate if needed.
-    #if USE_2X
-        UCSR0A |= _BV(U2X0);
-    #else
-        UCSR0A &= (uint8_t)~(_BV(U2X0));
-    #endif
-
-    // 8-bit data packets.
-    UCSR0C = _BV(UCSZ01) | _BV(UCSZ00);
-    // Enable RX, TX.
-    UCSR0B = _BV(RXEN0) | _BV(TXEN0);
+    enableUsart();
 
     const char* serialTaskId = "serialTask";
 
@@ -48,19 +31,19 @@ bool serialTask(void* data, uint32_t millis) {
         serialData->inputStreams = getInputStreams();
     }
 
-    if(UCSR0A & _BV(UDRE0)) {
+    if(usartDataRegisterEmpty()) {
         InputStream* inputStream = serialData->inputStreams[serialData->currentInputStream];
         uint8_t data;
 
         if((inputStream != NULL) && inputStreamPop(inputStream, &data)) {
-            UDR0 = data;
+            usartPush(data);
         } else {
             serialData->currentInputStream = (serialData->currentInputStream + 1) % 6;
         }
     }
 
-    if(UCSR0A & _BV(RXC0)) {
-        const uint8_t data = UDR0;
+    if(usartReceiveComplete()) {
+        const uint8_t data = usartPop();
 
         for(uint8_t i = 0; i < 6; i++) {
             OutputStream* outputStream = serialData->outputStreams[i];

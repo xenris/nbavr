@@ -8,6 +8,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+
+#include "hardware.h"
 #include "stream.h"
 #include "task.h"
 
