@@ -4,16 +4,16 @@
 #define HARDWARE_DEFINED
 
 static inline void setupSystemClock() {
-    // Enable compare match interrupt.
-    TIMSK1 |= _BV(OCIE1A);
-    // Set compare match point.
-    OCR1A = 16000;
-    // Enable clock with no prescaling, and waveform mode 4 (CTC).
-    TCCR1B = _BV(CS10) | _BV(WGM12);
+    // No compare match. Normal waveform.
+    TCCR0A = 0;
+    // Normal waveform. clk/8 prescaler.
+    TCCR0B = _BV(CS01);
+    // Overflow interrupt.
+    TIMSK0 = _BV(TOIE0);
 }
 
-#define tickInterrupt ISR(TIMER1_COMPA_vect)
-#define MS_PER_TICK 1
+#define tickInterrupt ISR(TIMER0_OVF_vect)
+#define US_PER_TICK (256LL * 8LL * 1000000LL) / F_CPU
 
 static inline void enableUsart() {
     // Set baud rate as defined by BAUD.

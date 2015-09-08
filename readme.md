@@ -123,7 +123,7 @@ picocom --imap lfcrlf --omap crlf /dev/ttyACM1
 Change the serial port to suit your system.
 
 ## Interrupts and hardware used
-The task manager uses the 16bit timer/counter1 to run .
+The task manager uses the 8bit timer/counter0 with the overflow interrupt to run.
 
 ## Devices tested
 * atmega328p

@@ -25,6 +25,7 @@ static void taskManagerProcessTask(Task* task, uint32_t millis);
 static Task* getRandomActiveTask(TaskManager* taskManager);
 
 static volatile uint32_t mMillis;
+static volatile uint16_t mMicros;
 static Task* mCurrentTask;
 static jmp_buf mHaltJmp;
 static uint8_t mTaskTimeCounter;
@@ -276,8 +277,13 @@ static Task* getRandomActiveTask(TaskManager* taskManager) {
 }
 
 tickInterrupt {
-    mMillis++;
-    mTaskTimeCounter++;
+    mMicros += US_PER_TICK;
+
+    while(mMicros > 1000) {
+        mMillis++;
+        mTaskTimeCounter++;
+        mMicros -= 1000;
+    }
 
     if((mCurrentTask != NULL) && (mTaskTimeCounter >= MAX_TASK_TIME)) {
         longjmp(mHaltJmp, 1);
