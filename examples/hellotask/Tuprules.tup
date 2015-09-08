@@ -3,7 +3,7 @@
 ifeq ($(LIB_CFLAGS),)
     mmcu = atmega328p
 
-    freq = 16000000
+    freq = 16000000L
 
     CFLAGS = -Ilib/nbavr/
     CFLAGS += -Wall
