@@ -190,6 +190,8 @@ InputStream** getInputStreams() {
 
 void taskManagerRun(TaskManager* taskManager) {
     while(true) {
+        wdt_reset();
+
         Task* task = getRandomActiveTask(taskManager);
 
         if(task != NULL) {

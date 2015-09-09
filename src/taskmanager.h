@@ -12,6 +12,7 @@
 #include "hardware.h"
 #include "stream.h"
 #include "task.h"
+#include "watchdog.h"
 
 typedef struct TaskManager TaskManager;
 

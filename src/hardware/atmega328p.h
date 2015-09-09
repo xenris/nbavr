@@ -37,4 +37,7 @@ static inline void enableUsart() {
 #define usartDataRegisterEmpty() UCSR0A & _BV(UDRE0)
 #define usartReceiveComplete() UCSR0A & _BV(RXC0)
 
+#define watchdogResetFlag() MCUSR & _BV(WDRF)
+#define clearWatchdogResetFlag() MCUSR &= ~_BV(WDRF)
+
 #endif
