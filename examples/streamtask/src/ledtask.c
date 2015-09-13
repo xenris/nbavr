@@ -2,13 +2,11 @@
 
 #define PULSE_LENGTH 50
 
-static void setLED(bool on);
-
 bool ledTask(void* p, uint32_t millis) {
     LEDData* data = p;
 
     if(!data->initialised) {
-        DDRB |= _BV(5);
+        pinDirection(PinB5, Output);
         data->serial = getInputStream("serial");
         data->initialised = true;
     }
@@ -19,15 +17,8 @@ bool ledTask(void* p, uint32_t millis) {
         data->ledPulseTime = millis + PULSE_LENGTH;
     }
 
-    setLED(!(millis > data->ledPulseTime));
+    bool on = !(millis > data->ledPulseTime);
+    pinSet(PinB5, on ? High : Low);
 
     return true;
-}
-
-static void setLED(bool on) {
-    if(on) {
-        PORTB |= _BV(5);
-    } else {
-        PORTB &= (uint8_t)~_BV(5);
-    }
 }
