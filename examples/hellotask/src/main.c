@@ -49,10 +49,10 @@ bool ledTask(void* data, uint32_t millis) {
     LEDData* ledData = data;
 
     if(!ledData->initialised) {
-        DDRB |= _BV(5);
+        pinDirection(PinB5, Output);
         ledData->initialised = true;
     } else if(millis >= ledData->delay) {
-        PORTB ^= _BV(5);
+        pinToggle(PinB5);
         ledData->delay = millis + 1000;
     }
 
