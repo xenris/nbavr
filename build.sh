@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # "build.sh" to build the library and its examples.
-# "build.sh -u hellotask" to also upload the example "hellotask".
+# "build.sh -u hello" to also upload the example "hello".
 
 mcu=m328p
 port=/dev/ttyACM0

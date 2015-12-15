@@ -110,7 +110,7 @@ Running build.sh will compile the library and all the examples.
 ### Method 1
 1. Clone nbavr.
 2. Check that Tuprules.tup and build.sh are correct for your setup.
-3. Run "build.sh -u hellotask" to compile and upload hellotask to a device.
+3. Run "build.sh -u hello" to compile and upload hello to a device.
 
 ### Method 2
 1. Copy one of the examples to somewhere convenient.
