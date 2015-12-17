@@ -1,9 +1,7 @@
-#include "ledtask.h"
-
-#define PULSE_LENGTH 50
+#include "led.h"
 
 static struct {
-    uint32_t ledPulseTime;
+    uint32_t delay;
 } mData;
 
 static void setup(Task* task, uint32_t millis);
@@ -13,19 +11,13 @@ Task ledTask = {&mData, sizeof(mData), setup, NULL, PRIORITY_MEDIUM, NULL, 0, NU
 
 static void setup(Task* task, uint32_t millis) {
     pinDirection(PinB5, Output);
-
+    mData.delay = 0;
     task->function = loop;
 }
 
 static void loop(Task* task, uint32_t millis) {
-    uint8_t c;
-
-    if(streamPop(task->inputStreams[0], &c)) {
-        mData.ledPulseTime = millis + PULSE_LENGTH;
+    if(millis >= mData.delay) {
+        pinToggle(PinB5);
+        mData.delay = millis + 1000;
     }
-
-    bool on = !(millis > mData.ledPulseTime);
-    pinSet(PinB5, on ? High : Low);
-
-    return true;
 }

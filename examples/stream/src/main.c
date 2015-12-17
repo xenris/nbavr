@@ -1,19 +1,33 @@
 #include "main.h"
 
 int main(void) {
-    TaskManager* taskManager = taskManagerInit(10);
+    static Stream task1SerialStream = streamInit(50);
+    static Stream task2Task1Stream = streamInit(10);
+    static Stream serialLedStream = streamInit(10);
 
-    const char* serialTaskId = serialInit(taskManager);
+    static Stream* task1SerialStreamA[] = {&task1SerialStream};
+    static Stream* task2Task1StreamA[] = {&task2Task1Stream};
+    static Stream* serialLedStreamA[] = {&serialLedStream};
 
-    taskManagerAddTask(taskManager, task1, sizeof(Task1Data), "task1", PRIORITY_LOW);
-    taskManagerAddTask(taskManager, task2, sizeof(Task2Data), "task2", PRIORITY_LOW);
-    taskManagerAddTask(taskManager, ledTask, sizeof(LEDData), "ledTask", PRIORITY_LOW);
+    task1.inputStreams = task2Task1StreamA;
+    task1.inputStreamCount = 1;
+    task1.outputStreams = task1SerialStreamA;
+    task1.outputStreamCount = 1;
 
-    taskManagerAddStream(taskManager, "task1", serialTaskId, "serial", 50);
-    taskManagerAddStream(taskManager, "task2", "task1", "stream", 10);
-    taskManagerAddStream(taskManager, serialTaskId, "ledTask", "serial", 10);
+    task2.outputStreams = task2Task1StreamA;
+    task2.outputStreamCount = 1;
 
-    taskManagerRun(taskManager);
+    ledTask.inputStreams = serialLedStreamA;
+    ledTask.inputStreamCount = 1;
+
+    serialTask.inputStreams = task1SerialStreamA;
+    serialTask.inputStreamCount = 1;
+    serialTask.outputStreams = serialLedStreamA;
+    serialTask.outputStreamCount = 1;
+
+    static Task* tasks[] = {&task1, &task2, &ledTask, &serialTask};
+
+    taskManagerRun(tasks, sizeof(tasks) / sizeof(Task*));
 
     return 0;
 }

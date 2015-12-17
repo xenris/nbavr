@@ -1,55 +1,41 @@
 #include "serial.h"
 
-typedef struct {
-    bool initialised;
-    OutputStream** outputStreams;
-    InputStream** inputStreams;
-
+static struct {
     uint8_t currentInputStream;
     uint8_t currentOutputStream;
-} SerialData;
+} mData;
 
-bool serialTask(void* data, uint32_t millis);
+static void setup(Task* task, uint32_t millis);
+static void loop(Task* task, uint32_t millis);
 
-const char* serialInit(TaskManager* taskManager) {
+Task serialTask = {&mData, sizeof(mData), setup, NULL, PRIORITY_DRIVER, NULL, 0, NULL, 0};
+
+static void setup(Task* task, uint32_t millis) {
     enableUsart();
 
-    const char* serialTaskId = "serialTask";
-
-    taskManagerAddTask(taskManager, serialTask, sizeof(SerialData), serialTaskId, PRIORITY_DRIVER);
-
-    return serialTaskId;
+    task->function = loop;
 }
 
-bool serialTask(void* data, uint32_t millis) {
-    SerialData* serialData = data;
-    (void)millis;
-
-    if(!serialData->initialised) {
-        serialData->initialised = true;
-        serialData->outputStreams = getOutputStreams();
-        serialData->inputStreams = getInputStreams();
-    }
-
+static void loop(Task* task, uint32_t millis) {
     if(usartDataRegisterEmpty()) {
-        InputStream* inputStream = serialData->inputStreams[serialData->currentInputStream];
+        Stream* stream = task->inputStreams[mData.currentInputStream];
         uint8_t data;
 
-        if((inputStream != NULL) && inputStreamPop(inputStream, &data)) {
+        if((stream != NULL) && streamPop(stream, &data)) {
             usartPush(data);
         } else {
-            serialData->currentInputStream = (serialData->currentInputStream + 1) % 6;
+            mData.currentInputStream = (mData.currentInputStream + 1) % task->inputStreamCount;
         }
     }
 
     if(usartReceiveComplete()) {
         const uint8_t data = usartPop();
 
-        for(uint8_t i = 0; i < 6; i++) {
-            OutputStream* outputStream = serialData->outputStreams[i];
+        for(uint8_t i = 0; i < task->outputStreamCount; i++) {
+            Stream* stream = task->outputStreams[i];
 
-            if(outputStream != NULL) {
-                outputStreamPush(outputStream, data);
+            if(stream != NULL) {
+                streamPush(stream, data);
             }
         }
     }

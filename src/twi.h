@@ -28,7 +28,8 @@ typedef struct TWIAction {
     struct TWIAction* next;
 } TWIAction;
 
-void twiInit(TaskManager* taskManager, uint16_t kHz);
 bool twiDoAction(TWIAction* action, volatile TWIResult* result);
+
+extern Task twiTask;
 
 #endif

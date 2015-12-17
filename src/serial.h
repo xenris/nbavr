@@ -2,9 +2,8 @@
 #define SERIAL_H
 
 #include "hardware.h"
-#include "ringbuffer.h"
 #include "taskmanager.h"
 
-const char* serialInit(TaskManager* taskManager);
+extern Task serialTask;
 
 #endif

@@ -3,4 +3,7 @@
 
 #include <nbavr.h>
 
+#include "hello.h"
+#include "led.h"
+
 #endif

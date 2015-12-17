@@ -2,7 +2,7 @@
 
 static const char* digits = "0123456789ABCDEF";
 
-bool print(OutputStream* outputStream, const char* format, ...) {
+bool print(Stream* stream, const char* format, ...) {
     va_list arglist;
     va_start(arglist, format);
     bool special = false;
@@ -17,35 +17,35 @@ bool print(OutputStream* outputStream, const char* format, ...) {
             if(special) {
                 switch(c) {
                 case 'i':
-                    success = printint(outputStream, true, va_arg(arglist, int16_t), 10);
+                    success = printint(stream, true, va_arg(arglist, int16_t), 10);
                     break;
                 case 'u':
-                    success = printint(outputStream, false, va_arg(arglist, uint16_t), 10);
+                    success = printint(stream, false, va_arg(arglist, uint16_t), 10);
                     break;
                 case 'x':
-                    success = printint(outputStream, false, va_arg(arglist, uint16_t), 16);
+                    success = printint(stream, false, va_arg(arglist, uint16_t), 16);
                     break;
                 case 'o':
-                    success = printint(outputStream, false, va_arg(arglist, uint16_t), 8);
+                    success = printint(stream, false, va_arg(arglist, uint16_t), 8);
                     break;
                 case 'b':
-                    success = printint(outputStream, false, va_arg(arglist, uint16_t), 2);
+                    success = printint(stream, false, va_arg(arglist, uint16_t), 2);
                     break;
                 case 's':
-                    success = printstr(outputStream, va_arg(arglist, char*));
+                    success = printstr(stream, va_arg(arglist, char*));
                     break;
                 case 'c':
-                    success = printchar(outputStream, va_arg(arglist, int));
+                    success = printchar(stream, va_arg(arglist, int));
                     break;
                 case '%':
-                    success = printchar(outputStream, c);
+                    success = printchar(stream, c);
                     break;
                 default:
-                    success = printchar(outputStream, c);
+                    success = printchar(stream, c);
                     break;
                 }
             } else {
-                success = printchar(outputStream, c);
+                success = printchar(stream, c);
             }
 
             special = false;
@@ -59,9 +59,9 @@ bool print(OutputStream* outputStream, const char* format, ...) {
     return true;
 }
 
-bool printstr(OutputStream* outputStream, const char* str) {
+bool printstr(Stream* stream, const char* str) {
     for(char* p = (char*)str; *p != '\0'; p++) {
-        if(!printchar(outputStream, *p)) {
+        if(!printchar(stream, *p)) {
             return false;
         }
     }
@@ -69,11 +69,11 @@ bool printstr(OutputStream* outputStream, const char* str) {
     return true;
 }
 
-bool printchar(OutputStream* outputStream, char c) {
-    return outputStreamPush(outputStream, c);
+bool printchar(Stream* stream, char c) {
+    return streamPush(stream, c);
 }
 
-bool printint(OutputStream* outputStream, bool sign, uint16_t u, uint8_t base) {
+bool printint(Stream* stream, bool sign, uint16_t u, uint8_t base) {
     int16_t* s = (int16_t*)&u;
     char stack[16];
     int8_t i = 0;
@@ -99,7 +99,7 @@ bool printint(OutputStream* outputStream, bool sign, uint16_t u, uint8_t base) {
     i--;
 
     while(i >= 0) {
-        if(!printchar(outputStream, stack[i])) {
+        if(!printchar(stream, stack[i])) {
             return false;
         }
 

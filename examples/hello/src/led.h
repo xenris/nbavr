@@ -1,5 +1,5 @@
-#ifndef LEDTASK_H
-#define LEDTASK_H
+#ifndef LED_H
+#define LED_H
 
 #include <nbavr.h>
 

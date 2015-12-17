@@ -1,77 +1,76 @@
 #include "stream.h"
 
-typedef struct OutputStream {
-    const char* id;
-    RingBuffer* ringBuffer;
-} OutputStream;
+static uint8_t streamNextIndex(Stream* stream, uint8_t i);
 
-typedef struct InputStream {
-    const char* id;
-    RingBuffer* ringBuffer;
-} InputStream;
+bool streamPush(Stream* stream, uint8_t in) {
+    const uint8_t nextHead = streamNextIndex(stream, stream->head);
 
-OutputStream* outputStreamCreate(const char* id, RingBuffer* ringBuffer) {
-    OutputStream* outputStream = calloc(1, sizeof(OutputStream));
-
-    if(outputStream == NULL) {
-        return NULL;
+    if(nextHead == stream->tail) {
+        stream->overflowed = true;
+        return false;
     }
 
-    outputStream->id = id;
-    outputStream->ringBuffer = ringBuffer;
+    stream->data[stream->head] = in;
+    stream->head = nextHead;
 
-    return outputStream;
+    return true;
 }
 
-bool outputStreamPush(OutputStream* outputStream, uint8_t n) {
-    return ringBufferPush(outputStream->ringBuffer, n);
-}
-
-int16_t outputStreamAvailable(OutputStream* outputStream) {
-    return ringBufferUnused(outputStream->ringBuffer);
-}
-
-const char* outputStreamId(OutputStream* outputStream) {
-    return outputStream->id;
-}
-
-bool outputStreamHasOverflowed(OutputStream* outputStream) {
-    return ringBufferHasOverflowed(outputStream->ringBuffer);
-}
-
-InputStream* inputStreamCreate(const char* id, RingBuffer* ringBuffer) {
-    InputStream* inputStream = calloc(1, sizeof(InputStream));
-
-    if(inputStream == NULL) {
-        return NULL;
+bool streamPop(Stream* stream, uint8_t* out) {
+    if(stream->tail == stream->head) {
+        return false;
     }
 
-    inputStream->id = id;
-    inputStream->ringBuffer = ringBuffer;
+    const uint8_t nextTail = streamNextIndex(stream, stream->tail);
 
-    return inputStream;
+    *out = stream->data[stream->tail];
+    stream->tail = nextTail;
+
+    return true;
 }
 
-bool inputStreamPop(InputStream* inputStream, uint8_t* n) {
-    return ringBufferPop(inputStream->ringBuffer, n);
+bool streamPeek(Stream* stream, uint8_t* out) {
+    if(stream->tail == stream->head) {
+        return false;
+    }
+
+    *out = stream->data[stream->tail];
+
+    return true;
 }
 
-bool inputStreamPeek(InputStream* inputStream, uint8_t* n) {
-    return ringBufferPeek(inputStream->ringBuffer, n);
+int16_t streamAvailable(Stream* stream) {
+    const uint8_t head = stream->head;
+    const uint8_t tail = stream->tail;
+    const uint8_t size = stream->size;
+
+    if(head >= tail) {
+        return head - tail;
+    } else {
+        return (size - tail) + head;
+    }
 }
 
-int16_t inputStreamAvailable(InputStream* inputStream) {
-    return ringBufferUsed(inputStream->ringBuffer);
+int16_t streamFree(Stream* stream) {
+    int16_t diff = stream->tail - stream->head;
+
+    if(diff < 0) {
+        diff += stream->size;
+    }
+
+    return diff;
+
+    const uint8_t head = stream->head;
+    const uint8_t tail = stream->tail;
+    const uint8_t size = stream->size;
+
+    if(head >= tail) {
+        return (size - head) + tail;
+    } else {
+        return tail - head;
+    }
 }
 
-bool inputStreamHasData(InputStream* inputStream) {
-    return !ringBufferEmpty(inputStream->ringBuffer);
-}
-
-const char* inputStreamId(InputStream* inputStream) {
-    return inputStream->id;
-}
-
-bool inputStreamHasOverflowed(InputStream* inputStream) {
-    return ringBufferHasOverflowed(inputStream->ringBuffer);
+static uint8_t streamNextIndex(Stream* stream, uint8_t i) {
+    return (i + 1) % stream->size;
 }

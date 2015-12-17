@@ -1,60 +1,19 @@
 #include "main.h"
 
-typedef struct {
-    bool initialised;
-    uint16_t count;
-    uint32_t delay;
-    OutputStream* outputStream;
-} HelloData;
-
-typedef struct {
-    bool initialised;
-    uint32_t delay;
-} LEDData;
-
-bool helloTask(void* data, uint32_t millis);
-bool ledTask(void* data, uint32_t millis);
-
 int main(void) {
-    TaskManager* taskManager = taskManagerInit(10);
+    static Stream stream = streamInit(20);
 
-    const char* serialTaskId = serialInit(taskManager);
+    static Stream* streamA[] = {&stream};
 
-    taskManagerAddTask(taskManager, helloTask, sizeof(HelloData), "helloTask", PRIORITY_LOW);
-    taskManagerAddTask(taskManager, ledTask, sizeof(LEDData), "ledTask", PRIORITY_LOW);
+    helloTask.outputStreams = streamA;
+    helloTask.outputStreamCount = 1;
 
-    taskManagerAddStream(taskManager, "helloTask", serialTaskId, "helloStream", 25);
+    serialTask.inputStreams = streamA;
+    serialTask.inputStreamCount = 1;
 
-    taskManagerRun(taskManager);
+    static Task* tasks[] = {&helloTask, &ledTask, &serialTask};
+
+    taskManagerRun(tasks, sizeof(tasks) / sizeof(Task*));
 
     return 0;
-}
-
-bool helloTask(void* data, uint32_t millis) {
-    HelloData* helloData = data;
-
-    if(!helloData->initialised) {
-        helloData->initialised = true;
-        helloData->outputStream = getOutputStream("helloStream");
-    } else if(millis >= helloData->delay) {
-        print(helloData->outputStream, "hello! (%i)\n", helloData->count);
-        helloData->delay = millis + 1000;
-        helloData->count++;
-    }
-
-    return true;
-}
-
-bool ledTask(void* data, uint32_t millis) {
-    LEDData* ledData = data;
-
-    if(!ledData->initialised) {
-        pinDirection(PinB5, Output);
-        ledData->initialised = true;
-    } else if(millis >= ledData->delay) {
-        pinToggle(PinB5);
-        ledData->delay = millis + 1000;
-    }
-
-    return true;
 }

@@ -4,22 +4,36 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "ringbuffer.h"
+typedef struct Stream {
+    uint16_t size;
+    uint16_t head;
+    uint16_t tail;
+    bool overflowed;
+    uint8_t data[];
+} Stream;
 
-typedef struct OutputStream OutputStream;
-typedef struct InputStream InputStream;
+// For initialising a stream statically.
+// +1 in size to compensate for one lost byte.
+// One byte is lost in the process of detecting overflow.
+#define streamInit(n) {n + 1, 0, 0, false, {[n]0}}
 
-OutputStream* outputStreamCreate(const char* id, RingBuffer* ringBuffer);
-bool outputStreamPush(OutputStream* outputStream, uint8_t n);
-int16_t outputStreamAvailable(OutputStream* outputStream);
-const char* outputStreamId(OutputStream* outputStream);
-bool outputStreamHasOverflowed(OutputStream* outputStream);
-InputStream* inputStreamCreate(const char* id, RingBuffer* ringBuffer);
-bool inputStreamPop(InputStream* inputStream, uint8_t* n);
-bool inputStreamPeek(InputStream* inputStream, uint8_t* n);
-int16_t inputStreamAvailable(InputStream* inputStream);
-bool inputStreamHasData(InputStream* inputStream);
-const char* inputStreamId(InputStream* inputStream);
-bool inputStreamHasOverflowed(InputStream* inputStream);
+bool streamPush(Stream* stream, uint8_t n);
+bool streamPop(Stream* stream, uint8_t* n);
+bool streamPeek(Stream* stream, uint8_t* n);
+int16_t streamAvailable(Stream* stream);
+int16_t streamFree(Stream* stream);
+
+inline bool streamHasOverflowed(Stream* stream) {
+    return stream->overflowed;
+}
+
+inline bool streamEmpty(Stream* stream) {
+    return (stream->head == stream->tail);
+}
+
+
+inline bool streamHasData(Stream* stream) {
+    return !streamEmpty(stream);
+}
 
 #endif
