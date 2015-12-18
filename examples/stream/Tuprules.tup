@@ -17,12 +17,14 @@ ifeq ($(LIB_CFLAGS),)
     CFLAGS += -DF_CPU=$(freq)
     CFLAGS += -Wl,-gc-sections
     CFLAGS += -fdiagnostics-color=always
+    CFLAGS += -Wno-unused-parameter
 
     LDFLAGS = -Llib/nbavr/ -lnbavr
 
     LIBFILES = lib/nbavr/libnbavr.a
 else
     CFLAGS = $(LIB_CFLAGS)
+    CFLAGS += -Wno-unused-parameter
     LDFLAGS = $(LIB_LDFLAGS)
     LIBFILES = $(LIB_LIBFILE)
 endif
