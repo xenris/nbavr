@@ -6,6 +6,7 @@ bool print(Stream* stream, const char* format, ...) {
     va_list arglist;
     va_start(arglist, format);
     bool special = false;
+    bool result = true;
 
     for(char* p = (char*)format; *p != '\0'; p++) {
         char c = *p;
@@ -52,11 +53,14 @@ bool print(Stream* stream, const char* format, ...) {
         }
 
         if(!success) {
-            return false;
+            result = false;
+            break;
         }
     }
 
-    return true;
+    va_end(arglist);
+
+    return result;
 }
 
 bool printstr(Stream* stream, const char* str) {
