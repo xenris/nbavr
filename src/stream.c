@@ -39,7 +39,7 @@ bool streamPeek(Stream* stream, uint8_t* out) {
     return true;
 }
 
-int16_t streamAvailable(Stream* stream) {
+int16_t streamUsed(Stream* stream) {
     const uint8_t head = stream->head;
     const uint8_t tail = stream->tail;
     const uint8_t size = stream->size;
@@ -51,24 +51,8 @@ int16_t streamAvailable(Stream* stream) {
     }
 }
 
-int16_t streamFree(Stream* stream) {
-    int16_t diff = stream->tail - stream->head;
-
-    if(diff < 0) {
-        diff += stream->size;
-    }
-
-    return diff;
-
-    const uint8_t head = stream->head;
-    const uint8_t tail = stream->tail;
-    const uint8_t size = stream->size;
-
-    if(head >= tail) {
-        return (size - head) + tail;
-    } else {
-        return tail - head;
-    }
+int16_t streamUnused(Stream* stream) {
+    return stream->size - streamUsed(stream) - 1;
 }
 
 static uint8_t streamNextIndex(Stream* stream, uint8_t i) {

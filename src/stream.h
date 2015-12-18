@@ -20,8 +20,8 @@ typedef struct Stream {
 bool streamPush(Stream* stream, uint8_t n);
 bool streamPop(Stream* stream, uint8_t* n);
 bool streamPeek(Stream* stream, uint8_t* n);
-int16_t streamAvailable(Stream* stream);
-int16_t streamFree(Stream* stream);
+int16_t streamUsed(Stream* stream);
+int16_t streamUnused(Stream* stream);
 
 inline bool streamHasOverflowed(Stream* stream) {
     return stream->overflowed;
