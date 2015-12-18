@@ -3,7 +3,7 @@
 
 #define HARDWARE_DEFINED
 
-static inline void setupSystemClock() {
+inline void setupSystemClock() {
     // No compare match. Normal waveform.
     TCCR0A = 0;
     // Normal waveform. clk/8 prescaler.
@@ -15,7 +15,7 @@ static inline void setupSystemClock() {
 #define tickInterrupt ISR(TIMER0_OVF_vect)
 #define US_PER_TICK (256LL * 8LL * 1000000LL) / F_CPU
 
-static inline void enableUsart() {
+inline void enableUsart() {
     // Set baud rate as defined by BAUD.
     UBRR0 = UBRR_VALUE;
 
@@ -82,7 +82,7 @@ typedef enum {
     High,
 } Value;
 
-static inline void pinDirection(Pin pin, Direction direction) {
+inline void pinDirection(Pin pin, Direction direction) {
     volatile uint8_t* ddrn;
     uint8_t p;
 
@@ -104,7 +104,7 @@ static inline void pinDirection(Pin pin, Direction direction) {
     }
 }
 
-static inline Value pinValue(Pin pin) {
+inline Value pinValue(Pin pin) {
     volatile uint8_t* pinn;
     uint8_t p;
 
@@ -122,7 +122,7 @@ static inline Value pinValue(Pin pin) {
     return ((*pinn) & _BV(p)) ? High : Low;
 }
 
-static inline void pinSet(Pin pin, Value value) {
+inline void pinSet(Pin pin, Value value) {
     volatile uint8_t* portn;
     uint8_t p;
 
@@ -146,7 +146,7 @@ static inline void pinSet(Pin pin, Value value) {
 
 // Writing a logic one to PINxn toggles PORTxn.
 // (atmega328p documentation 13.2.2)
-static inline void pinToggle(Pin pin) {
+inline void pinToggle(Pin pin) {
     volatile uint8_t* pinn;
     uint8_t p;
 
@@ -164,7 +164,7 @@ static inline void pinToggle(Pin pin) {
     *pinn |= _BV(p);
 }
 
-static inline void portDirection(Port port, uint8_t directions) {
+inline void portDirection(Port port, uint8_t directions) {
     volatile uint8_t* ddrn;
 
     if(port == PortB) {
@@ -178,7 +178,7 @@ static inline void portDirection(Port port, uint8_t directions) {
     *ddrn = directions;
 }
 
-static inline uint8_t portValue(Port port) {
+inline uint8_t portValue(Port port) {
     volatile uint8_t* pinn;
 
     if(port == PortB) {
@@ -192,7 +192,7 @@ static inline uint8_t portValue(Port port) {
     return *pinn;
 }
 
-static inline void portSet(Port port, uint8_t values) {
+inline void portSet(Port port, uint8_t values) {
     volatile uint8_t* portn;
 
     if(port == PortB) {
@@ -208,7 +208,7 @@ static inline void portSet(Port port, uint8_t values) {
 
 // Writing a logic one to PINxn toggles PORTxn.
 // (atmega328p documentation 13.2.2)
-static inline void portToggle(Port port, uint8_t selection) {
+inline void portToggle(Port port, uint8_t selection) {
     volatile uint8_t* pinn;
 
     if(port == PortB) {
