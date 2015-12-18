@@ -13,20 +13,24 @@ typedef enum {
     PRIORITY_LOW = 20,
 } TaskPriority;
 
+typedef enum {
+    STATE_SETUP = 0,
+    STATE_LOOP,
+    STATE_CRASH,
+} TaskState;
+
 struct Task;
 
 typedef void (*TaskFunction)(struct Task*, uint32_t);
-// TODO Pass in info indicating the cause of the crash. (Halt, memory, etc...)
-// TODO Implement crash handling feature.
-//  Somehow needs to reset the task after the crash function is called.
-typedef void (*CrashFunction)(struct Task*);
 
 typedef struct Task {
-    void* data;
-    uint16_t dataSize;
-    TaskFunction function;
-    CrashFunction crash;
+    void* const data;
+    const uint16_t dataSize;
+    const TaskFunction setup;
+    const TaskFunction loop;
+    const TaskFunction crash;
     TaskPriority priority;
+    TaskState state;
     Stream** inputStreams;
     uint8_t inputStreamCount;
     Stream** outputStreams;

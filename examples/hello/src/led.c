@@ -7,12 +7,16 @@ static struct {
 static void setup(Task* task, uint32_t millis);
 static void loop(Task* task, uint32_t millis);
 
-Task ledTask = {&mData, sizeof(mData), setup, NULL, PRIORITY_MEDIUM, NULL, 0, NULL, 0};
+Task ledTask = {
+    .data = &mData,
+    .dataSize = sizeof(mData),
+    .setup = setup,
+    .loop = loop,
+};
 
 static void setup(Task* task, uint32_t millis) {
     pinDirection(PinB5, Output);
     mData.delay = 0;
-    task->function = loop;
 }
 
 static void loop(Task* task, uint32_t millis) {

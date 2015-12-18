@@ -8,12 +8,15 @@ static struct {
 static void setup(Task* task, uint32_t millis);
 static void loop(Task* task, uint32_t millis);
 
-Task task2 = {&mData, sizeof(mData), setup, NULL, PRIORITY_MEDIUM, NULL, 0, NULL, 0};
+Task task2 = {
+    .data = &mData,
+    .dataSize = sizeof(mData),
+    .setup = setup,
+    .loop = loop,
+};
 
 static void setup(Task* task, uint32_t millis) {
     mData.delay = 4100;
-
-    task->function = loop;
 }
 
 static void loop(Task* task, uint32_t millis) {

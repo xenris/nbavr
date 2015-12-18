@@ -8,12 +8,16 @@ static struct {
 static void setup(Task* task, uint32_t millis);
 static void loop(Task* task, uint32_t millis);
 
-Task serialTask = {&mData, sizeof(mData), setup, NULL, PRIORITY_DRIVER, NULL, 0, NULL, 0};
+Task serialTask = {
+    .data = &mData,
+    .dataSize = sizeof(mData),
+    .setup = setup,
+    .loop = loop,
+    .priority = PRIORITY_DRIVER,
+};
 
 static void setup(Task* task, uint32_t millis) {
     enableUsart();
-
-    task->function = loop;
 }
 
 static void loop(Task* task, uint32_t millis) {

@@ -23,15 +23,19 @@ static void loop(Task* task, uint32_t millis);
 static TWIAction* mNextAction;
 static volatile TWIResult* mNextResult;
 
-Task twiTask = {&mData, sizeof(mData), setup, NULL, PRIORITY_DRIVER, NULL, 0, NULL, 0};
+Task twiTask = {
+    .data = &mData,
+    .dataSize = sizeof(mData),
+    .setup = setup,
+    .loop = loop,
+    .priority = PRIORITY_DRIVER,
+};
 
 static void setup(Task* task, uint32_t millis) {
     const uint32_t scaleFactor = 1;
     TWBR = (uint8_t)((((F_CPU / 1000UL) / TWI_BAUD) - 16UL) / (2UL * scaleFactor));
 
     twiEnable();
-
-    task->function = loop;
 
     mData.ready = true;
 }

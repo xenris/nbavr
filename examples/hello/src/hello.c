@@ -5,14 +5,13 @@ static struct {
     uint32_t delay;
 } mData;
 
-static void setup(Task* task, uint32_t millis);
 static void loop(Task* task, uint32_t millis);
 
-Task helloTask = {&mData, sizeof(mData), setup, NULL, PRIORITY_MEDIUM, NULL, 0, NULL, 0};
-
-static void setup(Task* task, uint32_t millis) {
-    task->function = loop;
-}
+Task helloTask = {
+    .data = &mData,
+    .dataSize = sizeof(mData),
+    .loop = loop,
+};
 
 static void loop(Task* task, uint32_t millis) {
     if(millis >= mData.delay) {

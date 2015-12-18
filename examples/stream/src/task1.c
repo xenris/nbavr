@@ -7,7 +7,11 @@ static struct {
 
 static void loop(Task* task, uint32_t millis);
 
-Task task1 = {&mData, sizeof(mData), loop, NULL, PRIORITY_MEDIUM, NULL, 0, NULL, 0};
+Task task1 = {
+    .data = &mData,
+    .dataSize = sizeof(mData),
+    .loop = loop,
+};
 
 static void loop(Task* task, uint32_t millis) {
     if(millis >= mData.delay) {

@@ -4,6 +4,7 @@
 
 static void taskManagerProcessTask(Task* task, uint32_t millis);
 static Task* getRandomTask(Task** tasks, uint8_t taskCount);
+inline TaskFunction processState(Task* task);
 
 static volatile uint32_t mMillis;
 static volatile uint16_t mMicros;
@@ -32,18 +33,14 @@ void taskManagerRun(Task** tasks, uint8_t taskCount) {
 static void taskManagerProcessTask(Task* task, uint32_t millis) {
     // Save state in case the task halts.
     if(setjmp(mHaltJmp)) {
-        // The folloing task halted if this is running.
-        wdt_reset();
-        mCurrentTask = NULL;
-        if((task->crash != NULL) && !setjmp(mHaltJmp)) {
-            task->crash(task);
-        }
-        memset(task->data, 0, task->dataSize);
+        // If we are here then the task must have halted.
+        task->state = STATE_CRASH;
     } else {
         mTaskTimeCounter = 0;
         mCurrentTask = task;
-        if(task->function != NULL) {
-            task->function(task, millis);
+        TaskFunction f = processState(task);
+        if(f != NULL) {
+            f(task, millis);
         }
         mCurrentTask = NULL;
     }
@@ -53,6 +50,11 @@ static Task* getRandomTask(Task** tasks, uint8_t taskCount) {
     int sum = 0;
     for(uint8_t i = 0; i < taskCount; i++) {
         Task* task = tasks[i];
+
+        // If no priority set then set it to medium.
+        if(task->priority == 0) {
+            task->priority = PRIORITY_MEDIUM;
+        }
 
         sum += (PRIORITY_LOW + 1) - task->priority;
     }
@@ -96,6 +98,21 @@ static Task* getRandomTask(Task** tasks, uint8_t taskCount) {
 //    }
 
 //    return result;
+}
+
+inline TaskFunction processState(Task* task) {
+    if(task->state == STATE_LOOP) {
+        return task->loop;
+    } else if(task->state == STATE_CRASH) {
+        task->state = STATE_SETUP;
+        return task->crash;
+    } else { // STATE_SETUP or any other value.
+        if(task->data != NULL) {
+            memset(task->data, 0, task->dataSize);
+        }
+        task->state = STATE_LOOP;
+        return task->setup;
+    }
 }
 
 tickInterrupt {
