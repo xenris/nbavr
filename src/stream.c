@@ -39,6 +39,51 @@ bool streamPeek(Stream* stream, uint8_t* out) {
     return true;
 }
 
+bool streamPush16(Stream* stream, uint16_t n) {
+    streamPush(stream, (n >> 8));
+    return streamPush(stream, n);
+}
+
+bool streamPop16(Stream* stream, uint16_t* n) {
+    uint8_t* t = (uint8_t*)n;
+    streamPop(stream, t + 1);
+    return streamPop(stream, t);
+}
+
+bool streamPeek16(Stream* stream, uint16_t* n) {
+    if(streamUsed(stream) < 2) {
+        return false;
+    }
+
+    uint8_t* t = (uint8_t*)n;
+    *(t + 1) = stream->data[stream->tail];
+    *t = stream->data[streamNextIndex(stream, stream->tail)];
+
+    return true;
+}
+
+bool streamPushBuffer(Stream* stream, uint16_t count, uint8_t* buffer) {
+    for(uint16_t i = 0; i < count; i++) {
+        if(!streamPush(stream, buffer[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool streamPopBuffer(Stream* stream, uint16_t count, uint8_t* buffer) {
+    for(uint16_t i = 0; i < count; i++) {
+        uint8_t t;
+        if(!streamPop(stream, &t)) {
+            return false;
+        }
+        buffer[i] = t;
+    }
+
+    return true;
+}
+
 int16_t streamUsed(Stream* stream) {
     const uint8_t head = stream->head;
     const uint8_t tail = stream->tail;

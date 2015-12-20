@@ -20,6 +20,11 @@ typedef struct Stream {
 bool streamPush(Stream* stream, uint8_t n);
 bool streamPop(Stream* stream, uint8_t* n);
 bool streamPeek(Stream* stream, uint8_t* n);
+bool streamPush16(Stream* stream, uint16_t n);
+bool streamPop16(Stream* stream, uint16_t* n);
+bool streamPeek16(Stream* stream, uint16_t* n);
+bool streamPushBuffer(Stream* stream, uint16_t count, uint8_t* buffer);
+bool streamPopBuffer(Stream* stream, uint16_t count, uint8_t* buffer);
 int16_t streamUsed(Stream* stream);
 int16_t streamUnused(Stream* stream);
 
