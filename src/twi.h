@@ -14,6 +14,7 @@ typedef enum {
 } TWIDirection;
 
 typedef enum {
+    TWI_NONE,
     TWI_QUEUED,
     TWI_BUSY,
     TWI_SUCCESS,
