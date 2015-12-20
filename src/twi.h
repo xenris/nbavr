@@ -25,11 +25,12 @@ typedef struct TWIAction {
     uint8_t addr;
     uint8_t count;
     uint8_t* data;
-    struct TWIAction* next;
+    TWIResult* result;
+    bool repeatStart;
 } TWIAction;
 
-bool twiDoAction(TWIAction* action, volatile TWIResult* result);
-
 extern Task twiTask;
+
+bool twiDo(Stream* stream, TWIAction* action);
 
 #endif

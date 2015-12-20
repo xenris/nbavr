@@ -10,18 +10,15 @@
 #define twiClearError() TWCR = (_BV(TWINT) | _BV(TWSTO) | _BV(TWEN))
 
 static struct {
-    bool initialised;
     bool ready;
+    bool repeatStartRequested;
     uint8_t dataIndex;
-    TWIAction* action;
-    volatile TWIResult* result;
+    TWIAction action;
+    uint8_t currentInputStream;
 } mData;
 
 static void setup(Task* task, uint32_t millis);
 static void loop(Task* task, uint32_t millis);
-
-static TWIAction* mNextAction;
-static volatile TWIResult* mNextResult;
 
 Task twiTask = {
     .data = &mData,
@@ -38,91 +35,90 @@ static void setup(Task* task, uint32_t millis) {
     twiEnable();
 
     mData.ready = true;
+    mData.repeatStartRequested = false;
+    mData.currentInputStream = 0;
 }
 
 static void loop(Task* task, uint32_t millis) {
-    if(mData.ready && (mNextAction != NULL)) {
-        mData.ready = false;
-        mData.dataIndex = 0;
-        mData.action = mNextAction;
-        mData.result = mNextResult;
-        *mData.result = TWI_BUSY;
+    if(mData.ready || mData.repeatStartRequested) {
+        Stream* stream = task->inputStreams[mData.currentInputStream];
 
-        mNextAction = NULL;
-        mNextResult = NULL;
+        if(streamPopBuffer(stream, sizeof(TWIAction), (uint8_t*)&mData.action)) {
+            mData.ready = false;
+            mData.dataIndex = 0;
+            if(mData.action.result != NULL) {
+                *mData.action.result = TWI_BUSY;
+            }
+            mData.repeatStartRequested = false;
 
-        twiSendStart();
+            twiSendStart();
+        } else {
+            if(!mData.repeatStartRequested) { // Only go to next input if not waiting on repeated start.
+                mData.currentInputStream = (mData.currentInputStream + 1) % task->inputStreamCount;
+            }
+        }
     }
 
     uint8_t twStatus = TW_STATUS;
 
     if(twStatus == TW_NO_INFO) {
-        return true;
-    }
-
-    // XXX What to do here? Presumably this will only happen in slave mode,
-    //  right? So it should be safe to enter the switch with a NULL action...?
-    if(mData.action == NULL) {
-//        printf("DEBUG: action == NULL (file %s, line: %i)\n", __FILE__, __LINE__);
+        return;
     }
 
     switch(twStatus) {
         case TW_START:
         case TW_REP_START:
-            TWDR = (uint8_t)(mData.action->addr << 1) | mData.action->rw;
+            TWDR = (uint8_t)(mData.action.addr << 1) | mData.action.rw;
             twiSendNACK();
             break;
         case TW_MT_SLA_ACK:
         case TW_MT_DATA_ACK:
-            if(mData.dataIndex < mData.action->count) {
-                TWDR = mData.action->data[mData.dataIndex];
+            if(mData.dataIndex < mData.action.count) {
+                TWDR = mData.action.data[mData.dataIndex];
                 mData.dataIndex++;
                 twiSendNACK();
             } else {
-                mData.action = mData.action->next;
-
-                if(mData.action != NULL) {
-                    mData.dataIndex = 0;
+                if(mData.action.repeatStart) {
+                    mData.repeatStartRequested = true;
                     twiSendStart();
                 } else {
-                    *mData.result = TWI_SUCCESS;
+                    *mData.action.result = TWI_SUCCESS;
                     twiSendStop();
                 }
             }
             break;
         case TW_MT_SLA_NACK:
         case TW_MT_DATA_NACK:
-            *mData.result = TWI_FAIL;
+            *mData.action.result = TWI_FAIL;
             twiSendStop();
             break;
         case TW_MT_ARB_LOST: // and TW_MR_ARB_LOST
-            *mData.result = TWI_FAIL;
+            *mData.action.result = TWI_FAIL;
             twiClearInt();
             break;
         case TW_MR_SLA_ACK:
             twiSendACK();
             break;
         case TW_MR_SLA_NACK:
-            *mData.result = TWI_FAIL;
+            *mData.action.result = TWI_FAIL;
             twiSendStop();
             break;
         case TW_MR_DATA_ACK:
-            mData.action->data[mData.dataIndex] = TWDR;
+            mData.action.data[mData.dataIndex] = TWDR;
             mData.dataIndex++;
 
-            if(mData.dataIndex < mData.action->count) {
+            if(mData.dataIndex < mData.action.count) {
                 twiSendACK();
             } else {
                 twiSendNACK();
             }
             break;
         case TW_MR_DATA_NACK:
-            mData.action = mData.action->next;
-
-            if(mData.action != NULL) {
+            if(mData.action.repeatStart) {
+                mData.repeatStartRequested = true;
                 twiSendStart();
             } else {
-                *mData.result = TWI_SUCCESS;
+                *mData.action.result = TWI_SUCCESS;
                 twiSendStop();
             }
             break;
@@ -145,26 +141,22 @@ static void loop(Task* task, uint32_t millis) {
         case TW_NO_INFO:
             break;
         case TW_BUS_ERROR:
-            *mData.result = TWI_FAIL;
+            *mData.action.result = TWI_FAIL;
             twiClearError();
             break;
     }
 
-    mData.ready = (*mData.result != TWI_BUSY);
+    mData.ready = (*mData.action.result != TWI_BUSY);
 
     return true;
 }
 
-bool twiDoAction(TWIAction* action, volatile TWIResult* result) {
-    if(mNextAction != NULL) {
-        *result = TWI_FAIL;
+bool twiDo(Stream* stream, TWIAction* action) {
+    if(streamPushBuffer(stream, sizeof(TWIAction), (uint8_t*)action)) {
+        *action->result = TWI_QUEUED;
+        return true;
+    } else {
+        *action->result = TWI_FAIL;
         return false;
     }
-
-    mNextAction = action;
-    mNextResult = result;
-
-    *result = TWI_QUEUED;
-
-    return true;
 }
