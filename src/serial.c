@@ -43,6 +43,4 @@ static void loop(Task* task, uint32_t millis) {
             }
         }
     }
-
-    return true;
 }

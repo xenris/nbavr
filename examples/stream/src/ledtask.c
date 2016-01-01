@@ -29,6 +29,4 @@ static void loop(Task* task, uint32_t millis) {
 
     bool on = !(millis > mData.ledPulseTime);
     pinSet(PinB5, on ? High : Low);
-
-    return true;
 }

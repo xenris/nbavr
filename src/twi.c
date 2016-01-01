@@ -147,8 +147,6 @@ static void loop(Task* task, uint32_t millis) {
     }
 
     mData.ready = (*mData.action.result != TWI_BUSY);
-
-    return true;
 }
 
 bool twiDo(Stream* stream, TWIAction* action) {
