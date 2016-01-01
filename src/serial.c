@@ -2,7 +2,6 @@
 
 static struct {
     uint8_t currentInputStream;
-    uint8_t currentOutputStream;
 } mData;
 
 static void setup(Task* task, uint32_t millis);
