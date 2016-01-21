@@ -6,6 +6,7 @@ inline TaskFunction processState(Task* task);
 
 static bool mTaskIsActive;
 static jmp_buf mHaltJmp;
+static uint8_t mNextTaskIndex = -1;
 
 void taskManagerRun(Task** tasks, uint8_t taskCount) {
     resetClearStatus();
@@ -52,8 +53,6 @@ static void taskManagerProcessTask(Task* task) {
         // Do nothing.
     }
 }
-
-static uint8_t mNextTaskIndex = -1;
 
 static Task* getNextTask(Task** tasks, uint8_t taskCount) {
     Task* task;
