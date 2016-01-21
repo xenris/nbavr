@@ -3,6 +3,10 @@
 static const char* digits = "0123456789ABCDEF";
 
 bool print(Stream* stream, const char* format, ...) {
+    if(stream == NULL) {
+        return false;
+    }
+
     va_list arglist;
     va_start(arglist, format);
     bool special = false;
@@ -64,6 +68,10 @@ bool print(Stream* stream, const char* format, ...) {
 }
 
 bool printstr(Stream* stream, const char* str) {
+    if(stream == NULL) {
+        return false;
+    }
+
     for(char* p = (char*)str; *p != '\0'; p++) {
         if(!printchar(stream, *p)) {
             return false;
@@ -78,6 +86,10 @@ bool printchar(Stream* stream, char c) {
 }
 
 bool printint(Stream* stream, bool sign, uint16_t u, uint8_t base) {
+    if(stream == NULL) {
+        return false;
+    }
+
     int16_t* s = (int16_t*)&u;
     char stack[16];
     int8_t i = 0;

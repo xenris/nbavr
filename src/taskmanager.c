@@ -10,6 +10,11 @@ static jmp_buf mHaltJmp;
 void taskManagerRun(Task** tasks, uint8_t taskCount) {
     resetClearStatus();
 
+    if((tasks == NULL) || (taskCount == 0)) {
+        watchdogDisable();
+        while(true);
+    }
+
     watchdog(WATCHDOG_16MS, WATCHDOG_INTERRUPT_RESET);
 
     while(true) {
@@ -24,6 +29,10 @@ void taskManagerRun(Task** tasks, uint8_t taskCount) {
 }
 
 static void taskManagerProcessTask(Task* task) {
+    if(task == NULL) {
+        return;
+    }
+
     // Save state in case the task halts.
     uint8_t jmp = setjmp(mHaltJmp);
 

@@ -3,6 +3,10 @@
 static uint8_t streamNextIndex(Stream* stream, uint8_t i);
 
 bool streamPush(Stream* stream, uint8_t in) {
+    if(stream == NULL) {
+        return false;
+    }
+
     const uint8_t nextHead = streamNextIndex(stream, stream->head);
 
     if(nextHead == stream->tail) {
@@ -17,6 +21,14 @@ bool streamPush(Stream* stream, uint8_t in) {
 }
 
 bool streamPop(Stream* stream, uint8_t* out) {
+    if(stream == NULL) {
+        return false;
+    }
+
+    if(out == NULL) {
+        return false;
+    }
+
     if(stream->tail == stream->head) {
         return false;
     }
@@ -30,6 +42,14 @@ bool streamPop(Stream* stream, uint8_t* out) {
 }
 
 bool streamPeek(Stream* stream, uint8_t* out) {
+    if(stream == NULL) {
+        return false;
+    }
+
+    if(out == NULL) {
+        return false;
+    }
+
     if(stream->tail == stream->head) {
         return false;
     }
@@ -40,17 +60,37 @@ bool streamPeek(Stream* stream, uint8_t* out) {
 }
 
 bool streamPush16(Stream* stream, uint16_t n) {
+    if(stream == NULL) {
+        return false;
+    }
+
     streamPush(stream, (n >> 8));
     return streamPush(stream, n);
 }
 
 bool streamPop16(Stream* stream, uint16_t* n) {
+    if(stream == NULL) {
+        return false;
+    }
+
+    if(n == NULL) {
+        return false;
+    }
+
     uint8_t* t = (uint8_t*)n;
     streamPop(stream, t + 1);
     return streamPop(stream, t);
 }
 
 bool streamPeek16(Stream* stream, uint16_t* n) {
+    if(stream == NULL) {
+        return false;
+    }
+
+    if(n == NULL) {
+        return false;
+    }
+
     if(streamUsed(stream) < 2) {
         return false;
     }
@@ -63,6 +103,10 @@ bool streamPeek16(Stream* stream, uint16_t* n) {
 }
 
 bool streamPushBuffer(Stream* stream, uint16_t count, uint8_t* buffer) {
+    if(buffer == NULL) {
+        return false;
+    }
+
     for(uint16_t i = 0; i < count; i++) {
         if(!streamPush(stream, buffer[i])) {
             return false;
@@ -73,6 +117,10 @@ bool streamPushBuffer(Stream* stream, uint16_t count, uint8_t* buffer) {
 }
 
 bool streamPopBuffer(Stream* stream, uint16_t count, uint8_t* buffer) {
+    if(buffer == NULL) {
+        return false;
+    }
+
     for(uint16_t i = 0; i < count; i++) {
         uint8_t t;
         if(!streamPop(stream, &t)) {
@@ -85,6 +133,10 @@ bool streamPopBuffer(Stream* stream, uint16_t count, uint8_t* buffer) {
 }
 
 int16_t streamUsed(Stream* stream) {
+    if(stream == NULL) {
+        return 0;
+    }
+
     const uint8_t head = stream->head;
     const uint8_t tail = stream->tail;
     const uint8_t size = stream->size;
@@ -97,6 +149,10 @@ int16_t streamUsed(Stream* stream) {
 }
 
 int16_t streamUnused(Stream* stream) {
+    if(stream == NULL) {
+        return 0;
+    }
+
     return stream->size - streamUsed(stream) - 1;
 }
 
