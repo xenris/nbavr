@@ -48,10 +48,8 @@ static void taskManagerProcessTask(Task* task) {
         }
 
         mTaskIsActive = false;
-    } else if(jmp == 1) { // Task halted.
+    } else { // Task halted.
         task->state = STATE_CRASH;
-    } else { // Watchdog interrupt, but no task running.
-        // Do nothing.
     }
 }
 
@@ -94,5 +92,7 @@ inline TaskFunction processState(Task* task) {
 }
 
 ISR(WDT_vect) {
-    longjmp(mHaltJmp, mTaskIsActive ? 1 : 2);
+    if(mTaskIsActive) {
+        longjmp(mHaltJmp, 1);
+    }
 }
