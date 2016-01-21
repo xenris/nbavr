@@ -30,6 +30,7 @@ typedef struct Task {
     const TaskFunction loop;
     const TaskFunction crash;
     TaskPriority priority;
+    uint8_t tokens;
     TaskState state;
     Stream** inputStreams;
     uint8_t inputStreamCount;
