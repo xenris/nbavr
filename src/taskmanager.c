@@ -43,6 +43,7 @@ static void taskManagerProcessTask(Task* task) {
         TaskFunction f = processState(task);
 
         if(f != NULL) {
+            watchdogReset();
             f(task);
         }
 
