@@ -5,19 +5,34 @@ Non-blocking AVR.
 Created by Henry Shepperd (hshepperd@gmail.com)
 
 ## Aim
-A set of libraries for AVR microprocessors which are assured to never block.
+A set of libraries written in C for AVR microprocessors which are guaranteed to never block.
 
-Plus a simple and reliable real time OS which provides the ability to run independent tasks atomically (in terms of both time and memory), and has the ability to reset tasks if they happen to crash/halt.
+A simple and reliable real time OS, with the ability to recover tasks if they freeze up.
+
+To be reliable.
+
+To be efficient.
+
+To be an alternative to the Arduino system.
+
+## Features
+* Nonpreemptive multithreading.
+* Prevents system hangs.
+* Easy to use library for AVR hardware.
+* Written in C.
 
 ## Status
 Beta
 
-The code is stable, but I am in the process of making some fairly big changes and (hopefully) improvements to the api.
+The code is stable, but I am still in the process of making some fairly big changes and (hopefully) improvements to the api.
+
+End user documentation is quite limited. This readme and the example projects are all the available documentation.
+
+## Overview
+nbavr is fairly similar to the Arduino system. You have setup and loop functions which provide you with the base program flow, as well as a bunch of libraries to make doing things easier and more reliable. The difference with nbavr is that you can have many tasks running at the same time (sequentially, not parallel) each with their own setup and loop functions. Each task also has a crash function which is called in the event that the task ever freezes up. This allows the task to try to recover before being reset. All other tasks continue running normally.
 
 ## TaskManager (real time os)
-* The task manager is nonpreemptive, which means all tasks share the same stack and each task step has to return before the next task can start. This has the advantage that less RAM is required, and that every task is atomic relative to each other.
-* The task manager also monitors each task and will reset a task if it is taking too long, allowing all the other tasks to continue running, while giving the crashed task the chance to recover.
-* The task manager doesn't manage memory allocated with m/calloc, so if a task calls m/calloc and then crashes a memory leak will occur. On an 8 bit microprocessor it is much more reliable to only use static memory anyway, so don't use m/calloc.
+* The task manager provides nonpreemptive multitasking, which means all tasks share the same stack and each task step has to return before the next task can start. This has the advantage that less RAM is required, and that every task is atomic relative to each other. The disadvantage is that a single task can take up a large chunk of time (up to 16ms) before the task manager will step in and allow another task to run.
 
 ```c
 // Run a group of tasks.
@@ -28,12 +43,16 @@ void taskManagerRun(Task** tasks, uint8_t taskCount)
 
 ```c
 // A group of tasks is declared like this:
-static Task* tasks[] = {&helloTask, &ledTask, &serialTask};
+static Task* tasks[] = {&task1, &task2, &task3};
 ```
 
 ## Tasks
-* If a task takes too long to return it will be reset by the task manager (memory cleared and setup called).
-* millis is the number of milliseconds passed since the task manager was started.
+* Tasks have setup, loop, and crash functions which provide program flow.
+* 1. First setup is called.
+* 2. Then loop is called repeatedly.
+* 3. If setup or loop take too long crash is called before going back to step 1.
+* Each task has a priority. PRIORITY_MEDIUM is the default.
+* Each task has a set of input and output streams for communicating with other tasks.
 
 ```c
 // Task declaration.
@@ -45,7 +64,6 @@ Task task = {
     .loop = ..., // Function called repetedly after setup is called.
     .crash = ..., // Function called when the task manager detects that the task has halted.
     .priority = ..., // PRIORITY_LOW/MEDIUM/HIGH/DRIVER.
-    .state = ..., // Ignore. (Used by the task manager to keep track of task state.)
     .inputStreams = ..., // Array of input streams.
     .inputStreamCount = ..., // Number of input streams.
     .outputStreams = ..., // Array of output streams.
@@ -55,13 +73,19 @@ Task task = {
 
 ```c
 // The function required for .setup, .loop and .crash.
-typedef void (*TaskFunction)(Task* task, uint32_t millis);
+typedef void (*TaskFunction)(Task* task);
 ```
+
+## Task halt handling
+* The task manager monitors each task using the hardware watchdog and will reset a task if it is taking too long, allowing all the other tasks to continue running, while giving the crashed task the chance to recover.
+* In the event that there is an unrecoverable halt (can only happen if someone does something silly like disabling interrupts and then going into an infinite loop) the AVR will be hardware reset and resetWasWatchdog() will return true until the task manager is started or resetClearStatus() is called.
+* Each task gets a maximum of 16ms each iteration before the task manager assumes the task has halted.
+* If a task continuously keeps halting it will consume 16ms each time which will cause the other tasks to slow down.
 
 ## Streams
 * First in first out (fifo) buffer.
 * Used for communication between tasks
-* Because tasks run atomically you can be sure that under normal circumstances a stream will contain a complete message. (Abnormal circumstances include the message being bigger than the stream's buffer, or having the task halt/crash before it finishes writing its message.)
+* Because tasks run atomically to each other you can be sure that under normal circumstances a stream will contain a complete message. (Abnormal circumstances include the message being bigger than the stream's buffer, or having the task halt before it finishes writing its message.)
 
 ```c
 // To create a new stream of 20 bytes.
@@ -117,15 +141,15 @@ Running build.sh will compile the library and all the examples.
 1. Copy one of the examples to somewhere convenient.
 2. Clone nbavr into lib/nbavr/.
 3. Check that Tuprules.tup and build.sh are correct for your setup.
-4. Run build.sh -u to compile and upload to a device.
+4. Run "build.sh -u" to compile and upload to a device.
 
 ## Communicating over serial
 picocom --imap lfcrlf --omap crlf /dev/ttyACM1
 
 Change the serial port to suit your system.
 
-## Interrupts and hardware used
-The task manager uses the 8bit timer/counter0 with the overflow interrupt to run.
+## Interrupts and hardware used by nbavr
+The task manager uses the watchdog timer to monitor tasks.
 
 ## Devices tested
 * atmega328p
