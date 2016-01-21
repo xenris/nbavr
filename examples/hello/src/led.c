@@ -14,6 +14,7 @@ Task ledTask = {
     .dataSize = sizeof(mData),
     .setup = setup,
     .loop = loop,
+    .priority = PRIORITY_LOW,
 };
 
 static void setup(Task* task) {
