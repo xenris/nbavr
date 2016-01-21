@@ -6,8 +6,8 @@ static struct {
     uint32_t ledPulseTime;
 } mData;
 
-static void setup(Task* task, uint32_t millis);
-static void loop(Task* task, uint32_t millis);
+static void setup(Task* task);
+static void loop(Task* task);
 
 Task ledTask = {
     .data = &mData,
@@ -16,11 +16,12 @@ Task ledTask = {
     .loop = loop,
 };
 
-static void setup(Task* task, uint32_t millis) {
+static void setup(Task* task) {
     pinDirection(PinB5, Output);
 }
 
-static void loop(Task* task, uint32_t millis) {
+static void loop(Task* task) {
+    uint32_t millis = clockMillis();
     uint8_t c;
 
     if(streamPop(task->inputStreams[0], &c)) {

@@ -1,48 +1,46 @@
 #include "taskmanager.h"
 
-#define MAX_TASK_TIME 20
-
-static void taskManagerProcessTask(Task* task, uint32_t millis);
+static void taskManagerProcessTask(Task* task);
 static Task* getRandomTask(Task** tasks, uint8_t taskCount);
 inline TaskFunction processState(Task* task);
 
-static volatile uint32_t mMillis;
-static volatile uint16_t mMicros;
-static Task* mCurrentTask;
+static bool mTaskIsActive;
 static jmp_buf mHaltJmp;
-static uint8_t mTaskTimeCounter;
 
 void taskManagerRun(Task** tasks, uint8_t taskCount) {
-    setupSystemClock();
+    resetClearStatus();
+
+    watchdog(WATCHDOG_16MS, WATCHDOG_INTERRUPT_RESET);
 
     while(true) {
-        wdt_reset();
+        watchdogReset();
+        watchdogInterruptEnable(true);
+        sei();
 
         Task* task = getRandomTask(tasks, taskCount);
 
-        uint32_t millis;
-
-        ATOMIC_BLOCK(ATOMIC_FORCEON) {
-            millis = mMillis;
-        }
-
-        taskManagerProcessTask(task, millis);
+        taskManagerProcessTask(task);
     }
 }
 
-static void taskManagerProcessTask(Task* task, uint32_t millis) {
+static void taskManagerProcessTask(Task* task) {
     // Save state in case the task halts.
-    if(setjmp(mHaltJmp)) {
-        // If we are here then the task must have halted.
-        task->state = STATE_CRASH;
-    } else {
-        mTaskTimeCounter = 0;
-        mCurrentTask = task;
+    uint8_t jmp = setjmp(mHaltJmp);
+
+    if(jmp == 0) {
+        mTaskIsActive = true;
+
         TaskFunction f = processState(task);
+
         if(f != NULL) {
-            f(task, millis);
+            f(task);
         }
-        mCurrentTask = NULL;
+
+        mTaskIsActive = false;
+    } else if(jmp == 1) { // Task halted.
+        task->state = STATE_CRASH;
+    } else { // Watchdog interrupt, but no task running.
+        // Do nothing.
     }
 }
 
@@ -115,16 +113,6 @@ inline TaskFunction processState(Task* task) {
     }
 }
 
-tickInterrupt {
-    mMicros += US_PER_TICK;
-
-    while(mMicros > 1000) {
-        mMillis++;
-        mTaskTimeCounter++;
-        mMicros -= 1000;
-    }
-
-    if((mCurrentTask != NULL) && (mTaskTimeCounter >= MAX_TASK_TIME)) {
-        longjmp(mHaltJmp, 1);
-    }
+ISR(WDT_vect) {
+    longjmp(mHaltJmp, mTaskIsActive ? 1 : 2);
 }

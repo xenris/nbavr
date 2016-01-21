@@ -5,7 +5,7 @@ static struct {
     uint16_t count;
 } mData;
 
-static void loop(Task* task, uint32_t millis);
+static void loop(Task* task);
 
 Task task1 = {
     .data = &mData,
@@ -13,7 +13,9 @@ Task task1 = {
     .loop = loop,
 };
 
-static void loop(Task* task, uint32_t millis) {
+static void loop(Task* task) {
+    uint32_t millis = clockMillis();
+
     if(millis >= mData.delay) {
         print(task->outputStreams[0], "Task1 running (%i)\n", mData.count);
         mData.delay = millis + 1000;

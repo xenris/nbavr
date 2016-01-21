@@ -1,6 +1,7 @@
 #ifndef NBAVR_H
 #define NBAVR_H
 
+#include "src/clock.h"
 #include "src/serial.h"
 #include "src/twi.h"
 #include "src/taskmanager.h"

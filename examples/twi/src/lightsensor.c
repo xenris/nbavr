@@ -10,8 +10,8 @@ static struct {
     uint8_t lightSensorValueBuffer[2];
 } mData;
 
-static void setup(Task* task, uint32_t millis);
-static void loop(Task* task, uint32_t millis);
+static void setup(Task* task);
+static void loop(Task* task);
 
 static uint8_t LIGHT_SENSOR_ON_MSG = 0x01;
 static uint8_t LIGHT_SENSOR_CONTIN_H_RES_MSG = 0x10;
@@ -27,7 +27,7 @@ Task lightSensorTask = {
     .loop = loop,
 };
 
-static void setup(Task* task, uint32_t millis) {
+static void setup(Task* task) {
     pinDirection(PinC2, Output);
     pinDirection(PinC3, Output);
     pinSet(PinC2, High);
@@ -45,7 +45,9 @@ static void setup(Task* task, uint32_t millis) {
     twiDo(mData.twiOut, &lightSensorContHiResMode);
 }
 
-static void loop(Task* task, uint32_t millis) {
+static void loop(Task* task) {
+    uint32_t millis = clockMillis();
+
     if(millis >= mData.delay) {
         if(mData.lightSensorReadResult == TWI_SUCCESS) {
             uint16_t t = (mData.lightSensorValueBuffer[0] << 8) | mData.lightSensorValueBuffer[1];

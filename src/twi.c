@@ -17,8 +17,8 @@ static struct {
     uint8_t currentInputStream;
 } mData;
 
-static void setup(Task* task, uint32_t millis);
-static void loop(Task* task, uint32_t millis);
+static void setup(Task* task);
+static void loop(Task* task);
 
 Task twiTask = {
     .data = &mData,
@@ -28,7 +28,7 @@ Task twiTask = {
     .priority = PRIORITY_DRIVER,
 };
 
-static void setup(Task* task, uint32_t millis) {
+static void setup(Task* task) {
     const uint32_t scaleFactor = 1;
     TWBR = (uint8_t)((((F_CPU / 1000UL) / TWI_BAUD) - 16UL) / (2UL * scaleFactor));
 
@@ -39,7 +39,7 @@ static void setup(Task* task, uint32_t millis) {
     mData.currentInputStream = 0;
 }
 
-static void loop(Task* task, uint32_t millis) {
+static void loop(Task* task) {
     if(mData.ready || mData.repeatStartRequested) {
         Stream* stream = task->inputStreams[mData.currentInputStream];
 

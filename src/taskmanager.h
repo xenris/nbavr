@@ -12,7 +12,6 @@
 #include "hardware.h"
 #include "stream.h"
 #include "task.h"
-#include "watchdog.h"
 
 void taskManagerRun(Task** tasks, uint8_t taskCount);
 

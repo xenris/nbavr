@@ -21,7 +21,7 @@ typedef enum {
 
 struct Task;
 
-typedef void (*TaskFunction)(struct Task*, uint32_t);
+typedef void (*TaskFunction)(struct Task*);
 
 typedef struct Task {
     void* const data;
