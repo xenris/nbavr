@@ -155,7 +155,7 @@ The task manager uses the watchdog timer to monitor tasks.
 * atmega328p
 
 ## Contributors
-(If you add, fix, or improve something in this library feel free to add your name here.)
+If you add, fix, or improve something in this library feel free to add your name here.
 * Henry Shepperd
 
 ## Warranty
