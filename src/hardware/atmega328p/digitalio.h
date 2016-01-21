@@ -105,6 +105,10 @@ inline void pinSet(Pin pin, Value value) {
     }
 }
 
+inline void pinPullup(Pin pin, bool b) {
+    pinSet(pin, b ? High : Low);
+}
+
 // Writing a logic one to PINxn toggles PORTxn.
 // (atmega328p documentation 13.2.2)
 inline void pinToggle(Pin pin) {
@@ -165,6 +169,10 @@ inline void portSet(Port port, uint8_t values) {
     }
 
     *portn = values;
+}
+
+inline void portPullup(Port port, uint8_t values) {
+    portSet(port, values);
 }
 
 // Writing a logic one to PINxn toggles PORTxn.
