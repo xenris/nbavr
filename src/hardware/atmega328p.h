@@ -5,6 +5,7 @@
 
 #include <util/atomic.h>
 
+#include "atmega328p/adc.h"
 #include "atmega328p/digitalio.h"
 #include "atmega328p/reset.h"
 #include "atmega328p/timer0.h"
