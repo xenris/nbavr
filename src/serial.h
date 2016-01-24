@@ -2,7 +2,7 @@
 #define SERIAL_H
 
 #include "hardware.h"
-#include "taskmanager.h"
+#include "task.h"
 
 extern Task serialTask;
 
