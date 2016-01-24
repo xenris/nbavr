@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <util/atomic.h>
 
 typedef struct Stream {
     uint16_t size;
@@ -30,16 +31,46 @@ int16_t streamUsed(Stream* stream);
 int16_t streamUnused(Stream* stream);
 
 inline bool streamHasOverflowed(Stream* stream) {
-    return stream->overflowed;
+    if(stream == NULL) {
+        return false;
+    }
+
+    bool result;
+
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        result = stream->overflowed;
+    }
+
+    return result;
 }
 
 inline bool streamEmpty(Stream* stream) {
-    return (stream->head == stream->tail);
+    if(stream == NULL) {
+        return true;
+    }
+
+    bool result;
+
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        result = (stream->head == stream->tail);
+    }
+
+    return result;
 }
 
 
 inline bool streamHasData(Stream* stream) {
-    return !streamEmpty(stream);
+    if(stream == NULL) {
+        return false;
+    }
+
+    bool result;
+
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        result = (stream->head != stream->tail);
+    }
+
+    return result;
 }
 
 #endif

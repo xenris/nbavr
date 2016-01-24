@@ -7,15 +7,17 @@ bool streamPush(Stream* stream, uint8_t in) {
         return false;
     }
 
-    const uint8_t nextHead = streamNextIndex(stream, stream->head);
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        const uint8_t nextHead = streamNextIndex(stream, stream->head);
 
-    if(nextHead == stream->tail) {
-        stream->overflowed = true;
-        return false;
+        if(nextHead == stream->tail) {
+            stream->overflowed = true;
+            return false;
+        }
+
+        stream->data[stream->head] = in;
+        stream->head = nextHead;
     }
-
-    stream->data[stream->head] = in;
-    stream->head = nextHead;
 
     return true;
 }
@@ -29,14 +31,16 @@ bool streamPop(Stream* stream, uint8_t* out) {
         return false;
     }
 
-    if(stream->tail == stream->head) {
-        return false;
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if(stream->tail == stream->head) {
+            return false;
+        }
+
+        const uint8_t nextTail = streamNextIndex(stream, stream->tail);
+
+        *out = stream->data[stream->tail];
+        stream->tail = nextTail;
     }
-
-    const uint8_t nextTail = streamNextIndex(stream, stream->tail);
-
-    *out = stream->data[stream->tail];
-    stream->tail = nextTail;
 
     return true;
 }
@@ -50,11 +54,13 @@ bool streamPeek(Stream* stream, uint8_t* out) {
         return false;
     }
 
-    if(stream->tail == stream->head) {
-        return false;
-    }
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if(stream->tail == stream->head) {
+            return false;
+        }
 
-    *out = stream->data[stream->tail];
+        *out = stream->data[stream->tail];
+    }
 
     return true;
 }
@@ -64,8 +70,16 @@ bool streamPush16(Stream* stream, uint16_t n) {
         return false;
     }
 
-    streamPush(stream, (n >> 8));
-    return streamPush(stream, n);
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if(streamUnused(stream) < 2) {
+            return false;
+        }
+
+        streamPush(stream, (n >> 8));
+        streamPush(stream, n);
+    }
+
+    return true;
 }
 
 bool streamPop16(Stream* stream, uint16_t* n) {
@@ -77,9 +91,17 @@ bool streamPop16(Stream* stream, uint16_t* n) {
         return false;
     }
 
-    uint8_t* t = (uint8_t*)n;
-    streamPop(stream, t + 1);
-    return streamPop(stream, t);
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if(streamUsed(stream) < 2) {
+            return false;
+        }
+
+        uint8_t* t = (uint8_t*)n;
+        streamPop(stream, t + 1);
+        streamPop(stream, t);
+    }
+
+    return true;
 }
 
 bool streamPeek16(Stream* stream, uint16_t* n) {
@@ -91,13 +113,15 @@ bool streamPeek16(Stream* stream, uint16_t* n) {
         return false;
     }
 
-    if(streamUsed(stream) < 2) {
-        return false;
-    }
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if(streamUsed(stream) < 2) {
+            return false;
+        }
 
-    uint8_t* t = (uint8_t*)n;
-    *(t + 1) = stream->data[stream->tail];
-    *t = stream->data[streamNextIndex(stream, stream->tail)];
+        uint8_t* t = (uint8_t*)n;
+        *(t + 1) = stream->data[stream->tail];
+        *t = stream->data[streamNextIndex(stream, stream->tail)];
+    }
 
     return true;
 }
@@ -107,9 +131,11 @@ bool streamPushBuffer(Stream* stream, uint16_t count, uint8_t* buffer) {
         return false;
     }
 
-    for(uint16_t i = 0; i < count; i++) {
-        if(!streamPush(stream, buffer[i])) {
-            return false;
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        for(uint16_t i = 0; i < count; i++) {
+            if(!streamPush(stream, buffer[i])) {
+                return false;
+            }
         }
     }
 
@@ -121,12 +147,14 @@ bool streamPopBuffer(Stream* stream, uint16_t count, uint8_t* buffer) {
         return false;
     }
 
-    for(uint16_t i = 0; i < count; i++) {
-        uint8_t t;
-        if(!streamPop(stream, &t)) {
-            return false;
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        for(uint16_t i = 0; i < count; i++) {
+            uint8_t t;
+            if(!streamPop(stream, &t)) {
+                return false;
+            }
+            buffer[i] = t;
         }
-        buffer[i] = t;
     }
 
     return true;
@@ -137,15 +165,21 @@ int16_t streamUsed(Stream* stream) {
         return 0;
     }
 
-    const uint8_t head = stream->head;
-    const uint8_t tail = stream->tail;
-    const uint8_t size = stream->size;
+    uint16_t result;
 
-    if(head >= tail) {
-        return head - tail;
-    } else {
-        return (size - tail) + head;
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        const uint8_t head = stream->head;
+        const uint8_t tail = stream->tail;
+        const uint8_t size = stream->size;
+
+        if(head >= tail) {
+            result = head - tail;
+        } else {
+            result = (size - tail) + head;
+        }
     }
+
+    return result;
 }
 
 int16_t streamUnused(Stream* stream) {
@@ -153,7 +187,13 @@ int16_t streamUnused(Stream* stream) {
         return 0;
     }
 
-    return stream->size - streamUsed(stream) - 1;
+    uint16_t result;
+
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        result = stream->size - streamUsed(stream) - 1;
+    }
+
+    return result;
 }
 
 static uint8_t streamNextIndex(Stream* stream, uint8_t i) {
