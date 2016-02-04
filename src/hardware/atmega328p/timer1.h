@@ -42,9 +42,9 @@ typedef struct {
     Timer1OutputCompareMode outputCompareB;
     Timer1WaveformGenerationMode waveformGenerationMode;
     Timer1ClockSelect clockSelect;
-    uint8_t timerRegister;
-    uint8_t outputCompareRegisterA;
-    uint8_t outputCompareRegisterB;
+    uint16_t timerRegister;
+    uint16_t outputCompareRegisterA;
+    uint16_t outputCompareRegisterB;
     bool outputCompareMatchAIntEnable;
     bool outputCompareMatchBIntEnable;
     bool overflowIntEnable;
@@ -113,27 +113,27 @@ inline void timer1ClockSelect(Timer1ClockSelect clockSelect) {
     TCCR1B |= clockSelect;
 }
 
-inline void timer1SetTimerRegister(uint8_t v) {
+inline void timer1SetTimerRegister(uint16_t v) {
     TCNT1 = v;
 }
 
-inline uint8_t timer1GetTimerRegister() {
+inline uint16_t timer1GetTimerRegister() {
     return TCNT1;
 }
 
-inline void timer1SetOutputCompareA(uint8_t v) {
+inline void timer1SetOutputCompareA(uint16_t v) {
     OCR1A = v;
 }
 
-inline uint8_t timer1GetOutputCompareA() {
+inline uint16_t timer1GetOutputCompareA() {
     return OCR1A;
 }
 
-inline void timer1SetOutputCompareB(uint8_t v) {
-    OCR1B= v;
+inline void timer1SetOutputCompareB(uint16_t v) {
+    OCR1B = v;
 }
 
-inline uint8_t timer1GetOutputCompareB() {
+inline uint16_t timer1GetOutputCompareB() {
     return OCR1B;
 }
 
