@@ -47,7 +47,7 @@ typedef struct {
     bool use2X;
 } USART0Config;
 
-inline void usart0(USART0Config config) {
+static inline void usart0(USART0Config config) {
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         uint8_t a = 0;
         uint8_t b = 0;
@@ -105,11 +105,11 @@ inline void usart0(USART0Config config) {
     }
 }
 
-inline void usart0Push(uint8_t b) {
+static inline void usart0Push(uint8_t b) {
     UDR0 = b;
 }
 
-inline void usart0Push9(uint16_t b) {
+static inline void usart0Push9(uint16_t b) {
     if(b & 0x0100) {
         UCSR0B |= _BV(TXB80);
     } else {
@@ -119,42 +119,42 @@ inline void usart0Push9(uint16_t b) {
     UDR0 = (uint8_t)b;
 }
 
-inline uint8_t usart0Pop() {
+static inline uint8_t usart0Pop() {
     return UDR0;
 }
 
-inline uint16_t usart0Pop9() {
+static inline uint16_t usart0Pop9() {
     uint8_t h = (UCSR0B >> _BV(RXB80)) & 0x01;
     uint8_t l = UDR0;
 
     return (h << 8) | l;
 }
 
-inline bool usart0ReceiveComplete() {
+static inline bool usart0ReceiveComplete() {
     return UCSR0A & _BV(RXC0);
 }
 
-inline bool usart0TransmitComplete() {
+static inline bool usart0TransmitComplete() {
     return UCSR0A & _BV(TXC0);
 }
 
-inline bool usart0DataRegisterEmpty() {
+static inline bool usart0DataRegisterEmpty() {
     return UCSR0A & _BV(UDRE0);
 }
 
-inline bool usart0FrameError() {
+static inline bool usart0FrameError() {
     return UCSR0A & _BV(FE0);
 }
 
-inline bool usart0DataOverRun() {
+static inline bool usart0DataOverRun() {
     return UCSR0A & _BV(DOR0);
 }
 
-inline bool usart0ParityError() {
+static inline bool usart0ParityError() {
     return UCSR0A & _BV(UPE0);
 }
 
-inline void usart0DoubleTransmissionSpeed(bool b) {
+static inline void usart0DoubleTransmissionSpeed(bool b) {
     if(b) {
         UCSR0A |= _BV(U2X0);
     } else {
@@ -162,7 +162,7 @@ inline void usart0DoubleTransmissionSpeed(bool b) {
     }
 }
 
-inline void usart0MultiprocessorCummunicationMode(bool b) {
+static inline void usart0MultiprocessorCummunicationMode(bool b) {
     if(b) {
         UCSR0A |= _BV(MPCM0);
     } else {
@@ -170,7 +170,7 @@ inline void usart0MultiprocessorCummunicationMode(bool b) {
     }
 }
 
-inline void usart0RXCompleteInterruptEnable(bool b) {
+static inline void usart0RXCompleteInterruptEnable(bool b) {
     if(b) {
         UCSR0B |= _BV(RXCIE0);
     } else {
@@ -178,7 +178,7 @@ inline void usart0RXCompleteInterruptEnable(bool b) {
     }
 }
 
-inline void usart0TXCompleteInterruptEnable(bool b) {
+static inline void usart0TXCompleteInterruptEnable(bool b) {
     if(b) {
         UCSR0B |= _BV(TXCIE0);
     } else {
@@ -186,7 +186,7 @@ inline void usart0TXCompleteInterruptEnable(bool b) {
     }
 }
 
-inline void usart0DataRegisterEmptyInterruptEnable(bool b) {
+static inline void usart0DataRegisterEmptyInterruptEnable(bool b) {
     if(b) {
         UCSR0B |= _BV(UDRIE0);
     } else {
@@ -194,7 +194,7 @@ inline void usart0DataRegisterEmptyInterruptEnable(bool b) {
     }
 }
 
-inline void usart0ReceiverEnable(bool b) {
+static inline void usart0ReceiverEnable(bool b) {
     if(b) {
         UCSR0B |= _BV(RXEN0);
     } else {
@@ -202,7 +202,7 @@ inline void usart0ReceiverEnable(bool b) {
     }
 }
 
-inline void usart0TransmitterEnable(bool b) {
+static inline void usart0TransmitterEnable(bool b) {
     if(b) {
         UCSR0B |= _BV(TXEN0);
     } else {
@@ -210,17 +210,17 @@ inline void usart0TransmitterEnable(bool b) {
     }
 }
 
-inline void usart0ModeSelect(USART0Mode mode) {
+static inline void usart0ModeSelect(USART0Mode mode) {
     UCSR0C &= ~(_BV(UMSEL01) | _BV(UMSEL00));
     UCSR0C |= mode;
 }
 
-inline void usart0ParityMode(USART0ParityMode mode) {
+static inline void usart0ParityMode(USART0ParityMode mode) {
     UCSR0C &= ~(_BV(UPM01) | _BV(UPM00));
     UCSR0C |= mode;
 }
 
-inline void usart0StopBitSelect(USART0StopBit stopBit) {
+static inline void usart0StopBitSelect(USART0StopBit stopBit) {
     if(stopBit == USART0_1_BIT) {
         UCSR0C &= ~_BV(USBS0);
     } else {
@@ -228,7 +228,7 @@ inline void usart0StopBitSelect(USART0StopBit stopBit) {
     }
 }
 
-inline void usart0CharacterSize(USART0CharacterSize size) {
+static inline void usart0CharacterSize(USART0CharacterSize size) {
     if(size == USART0_9_BIT) {
         UCSR0B |= _BV(UCSZ02);
     } else {
@@ -238,7 +238,7 @@ inline void usart0CharacterSize(USART0CharacterSize size) {
     UCSR0C |= (size & USART0_8_BIT) << UCSZ00;;
 }
 
-inline void usart0ClockPolarity(USART0ClockPolarity polarity) {
+static inline void usart0ClockPolarity(USART0ClockPolarity polarity) {
     if(polarity == USART0_TX_RISING_RX_FALLING) {
         UCSR0C &= ~_BV(UCPOL0);
     } else {
@@ -246,7 +246,7 @@ inline void usart0ClockPolarity(USART0ClockPolarity polarity) {
     }
 }
 
-inline void usart0BaudRate(uint16_t baud) {
+static inline void usart0BaudRate(uint16_t baud) {
     UBRR0H = (baud >> 8) & 0x0F;
     UBRR0L = baud;
 }

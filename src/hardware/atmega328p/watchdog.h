@@ -20,11 +20,11 @@ typedef enum {
     WATCHDOG_8S = _BV(WDP3) | _BV(WDP0),
 } WatchdogPrescaler;
 
-inline void watchdogReset() {
+static inline void watchdogReset() {
     __asm__ __volatile__ ("wdr");
 }
 
-inline void watchdog(WatchdogPrescaler prescaler, WatchdogMode mode) {
+static inline void watchdog(WatchdogPrescaler prescaler, WatchdogMode mode) {
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         watchdogReset();
         WDTCSR = _BV(WDCE) | _BV(WDE);
@@ -32,7 +32,7 @@ inline void watchdog(WatchdogPrescaler prescaler, WatchdogMode mode) {
     }
 }
 
-inline void watchdogDisable() {
+static inline void watchdogDisable() {
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         watchdogReset();
         MCUSR &= ~_BV(WDRF);
@@ -41,7 +41,7 @@ inline void watchdogDisable() {
     }
 }
 
-inline void watchdogSystemResetEnable(bool b) {
+static inline void watchdogSystemResetEnable(bool b) {
     if(b) {
         WDTCSR |= _BV(WDE);
     } else {
@@ -49,7 +49,7 @@ inline void watchdogSystemResetEnable(bool b) {
     }
 }
 
-inline void watchdogInterruptEnable(bool b) {
+static inline void watchdogInterruptEnable(bool b) {
     if(b) {
         WDTCSR |= _BV(WDIE);
     } else {

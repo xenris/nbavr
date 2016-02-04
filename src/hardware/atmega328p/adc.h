@@ -56,7 +56,7 @@ typedef struct {
     ADCAutoTrigger autoTrigger;
 } ADCConfig;
 
-inline void adcStart(ADCConfig config) {
+static inline void adcStart(ADCConfig config) {
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         ADCH; // Read to ensure the data register can be updated.
 
@@ -71,14 +71,14 @@ inline void adcStart(ADCConfig config) {
     }
 }
 
-inline void adcDisable() {
+static inline void adcDisable() {
     ADCSRA = 0;
     ADMUX = _BV(ADIF); // Clear interrupt flag.
     ADCSRB &= ~(_BV(ADTS2) | _BV(ADTS1) | _BV(ADTS0));
     DIDR0 = 0;
 }
 
-inline uint16_t adcGetValue() {
+static inline uint16_t adcGetValue() {
     return ADC;
 }
 

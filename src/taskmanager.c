@@ -2,7 +2,7 @@
 
 static void taskManagerProcessTask(Task* task);
 static Task* getNextTask(Task** tasks, uint8_t taskCount);
-inline TaskFunction processState(Task* task);
+static inline TaskFunction processState(Task* task);
 
 static bool mTaskIsActive;
 static jmp_buf mHaltJmp;
@@ -78,7 +78,7 @@ static Task* getNextTask(Task** tasks, uint8_t taskCount) {
     return task;
 }
 
-inline TaskFunction processState(Task* task) {
+static inline TaskFunction processState(Task* task) {
     if(task->state == STATE_LOOP) {
         return task->loop;
     } else if(task->state == STATE_CRASH) {

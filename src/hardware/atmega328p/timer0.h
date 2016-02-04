@@ -41,7 +41,7 @@ typedef struct {
     bool overflowIntEnable;
 } Timer0Config;
 
-inline void timer0(Timer0Config config) {
+static inline void timer0(Timer0Config config) {
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         uint8_t a = 0;
         uint8_t b = 0;
@@ -76,17 +76,17 @@ inline void timer0(Timer0Config config) {
     }
 }
 
-inline void timer0OutputCompareModeA(Timer0OutputCompareMode mode) {
+static inline void timer0OutputCompareModeA(Timer0OutputCompareMode mode) {
     TCCR0A &= ~(_BV(COM0A1) | _BV(COM0A0));
     TCCR0A |= mode << COM0A0;
 }
 
-inline void timer0OutputCompareModeB(Timer0OutputCompareMode mode) {
+static inline void timer0OutputCompareModeB(Timer0OutputCompareMode mode) {
     TCCR0A &= ~(_BV(COM0B1) | _BV(COM0B0));
     TCCR0A |= mode << COM0B0;
 }
 
-inline void timer0WaveformGenerationMode(Timer0WaveformGenerationMode mode) {
+static inline void timer0WaveformGenerationMode(Timer0WaveformGenerationMode mode) {
     if(mode & _BV(WGM02)) {
         TCCR0B |= _BV(WGM02);
     } else {
@@ -97,36 +97,36 @@ inline void timer0WaveformGenerationMode(Timer0WaveformGenerationMode mode) {
     TCCR0A |= (mode & (_BV(WGM01) | _BV(WGM00)));
 }
 
-inline void timer0ClockSelect(Timer0ClockSelect clockSelect) {
+static inline void timer0ClockSelect(Timer0ClockSelect clockSelect) {
     TCCR0B &= ~(_BV(CS02) | _BV(CS01) | _BV(CS00));
     TCCR0B |= clockSelect;
 }
 
-inline void timer0SetTimerRegister(uint8_t v) {
+static inline void timer0SetTimerRegister(uint8_t v) {
     TCNT0 = v;
 }
 
-inline uint8_t timer0GetTimerRegister() {
+static inline uint8_t timer0GetTimerRegister() {
     return TCNT0;
 }
 
-inline void timer0SetOutputCompareA(uint8_t v) {
+static inline void timer0SetOutputCompareA(uint8_t v) {
     OCR0A = v;
 }
 
-inline uint8_t timer0GetOutputCompareA() {
+static inline uint8_t timer0GetOutputCompareA() {
     return OCR0A;
 }
 
-inline void timer0SetOutputCompareB(uint8_t v) {
+static inline void timer0SetOutputCompareB(uint8_t v) {
     OCR0B = v;
 }
 
-inline uint8_t timer0GetOutputCompareB() {
+static inline uint8_t timer0GetOutputCompareB() {
     return OCR0B;
 }
 
-inline void timer0OutputCompareMatchAIntEnable(bool b) {
+static inline void timer0OutputCompareMatchAIntEnable(bool b) {
     if(b) {
         TIMSK0 |= _BV(OCIE0A);
     } else {
@@ -134,7 +134,7 @@ inline void timer0OutputCompareMatchAIntEnable(bool b) {
     }
 }
 
-inline void timer0OutputCompareMatchBIntEnable(bool b) {
+static inline void timer0OutputCompareMatchBIntEnable(bool b) {
     if(b) {
         TIMSK0 |= _BV(OCIE0B);
     } else {
@@ -142,7 +142,7 @@ inline void timer0OutputCompareMatchBIntEnable(bool b) {
     }
 }
 
-inline void timer0OverflowIntEnable(bool b) {
+static inline void timer0OverflowIntEnable(bool b) {
     if(b) {
         TIMSK0 |= _BV(TOIE0);
     } else {
@@ -150,27 +150,27 @@ inline void timer0OverflowIntEnable(bool b) {
     }
 }
 
-inline bool timer0OutputCompareMatchAFlag() {
+static inline bool timer0OutputCompareMatchAFlag() {
     return TIFR0 & _BV(OCF0A);
 }
 
-inline void timer0ClearOutputCompareMatchAFlag() {
+static inline void timer0ClearOutputCompareMatchAFlag() {
     TIFR0 |= _BV(OCF0A);
 }
 
-inline bool timer0OutputCompareMatchBFlag() {
+static inline bool timer0OutputCompareMatchBFlag() {
     return TIFR0 & _BV(OCF0B);
 }
 
-inline void timer0ClearOutputCompareMatchBFlag() {
+static inline void timer0ClearOutputCompareMatchBFlag() {
     TIFR0 |= _BV(OCF0B);
 }
 
-inline bool timer0OverflowFlag() {
+static inline bool timer0OverflowFlag() {
     return TIFR0 & _BV(TOV0);
 }
 
-inline void timer0ClearOverflowFlag() {
+static inline void timer0ClearOverflowFlag() {
     TIFR0 |= _BV(TOV0);
 }
 

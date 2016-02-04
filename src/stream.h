@@ -30,7 +30,7 @@ bool streamPopBuffer(Stream* stream, uint16_t count, uint8_t* buffer);
 int16_t streamUsed(Stream* stream);
 int16_t streamUnused(Stream* stream);
 
-inline bool streamHasOverflowed(Stream* stream) {
+static inline bool streamHasOverflowed(Stream* stream) {
     if(stream == NULL) {
         return false;
     }
@@ -44,7 +44,7 @@ inline bool streamHasOverflowed(Stream* stream) {
     return result;
 }
 
-inline bool streamEmpty(Stream* stream) {
+static inline bool streamEmpty(Stream* stream) {
     if(stream == NULL) {
         return true;
     }
@@ -59,7 +59,7 @@ inline bool streamEmpty(Stream* stream) {
 }
 
 
-inline bool streamHasData(Stream* stream) {
+static inline bool streamHasData(Stream* stream) {
     if(stream == NULL) {
         return false;
     }

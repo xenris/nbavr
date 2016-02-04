@@ -1,27 +1,27 @@
 #ifndef NBAVR_RESET_H
 #define NBAVR_RESET_H
 
-inline bool resetWasWatchdog() {
+static inline bool resetWasWatchdog() {
     return MCUSR & _BV(WDRF);
 }
 
-inline bool resetWasBrownout() {
+static inline bool resetWasBrownout() {
     return MCUSR & _BV(BORF);
 }
 
-inline bool resetWasExternal() {
+static inline bool resetWasExternal() {
     return MCUSR & _BV(EXTRF);
 }
 
-inline bool resetWasPoweron() {
+static inline bool resetWasPoweron() {
     return MCUSR & _BV(PORF);
 }
 
-inline uint8_t resetStatus() {
+static inline uint8_t resetStatus() {
     return MCUSR;
 }
 
-inline void resetClearStatus() {
+static inline void resetClearStatus() {
     MCUSR = 0;
 }
 
