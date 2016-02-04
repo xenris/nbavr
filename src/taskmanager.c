@@ -18,6 +18,8 @@ void taskManagerRun(Task** tasks, uint8_t taskCount) {
 
     watchdog(WATCHDOG_16MS, WATCHDOG_INTERRUPT_RESET);
 
+    timerSetup();
+
     while(true) {
         watchdogReset();
         watchdogInterruptEnable(true);

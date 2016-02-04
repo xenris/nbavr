@@ -10,6 +10,7 @@
 #include <string.h>
 
 #include "hardware.h"
+#include "timer.h"
 #include "stream.h"
 #include "task.h"
 
