@@ -24,4 +24,11 @@ LIB_CFLAGS += -Wno-unused-parameter
 
 LIB_LDFLAGS = -L$(TUP_CWD) -lnbavr
 
+# To fix gdb source path problems
+ifeq ($(CFLAGS),)
+    EX_CFLAGS = -fdebug-prefix-map=src/=../../src/
+else
+    EX_CFLAGS = -fdebug-prefix-map=src/=lib/nbavr/src/
+endif
+
 LIB_LIBFILE = $(TUP_CWD)/libnbavr.a
