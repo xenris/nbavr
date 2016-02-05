@@ -21,14 +21,27 @@ static uint16_t usToTimerTicks(uint16_t n);
 static volatile Interrupt interrupts[TIME_INTERRUPTS];
 static volatile int interruptsHead = 0;
 static volatile int interruptsTail = 0;
+static volatile uint32_t mMillis;
 
 void timerSetup() {
     Timer1Config config = {
         .clockSelect = TIMER1_SOURCE_8,
+        .outputCompareRegisterA = usToTimerTicks(1000),
+        .outputCompareMatchAIntEnable = true,
         // TODO Use output compare A for clock.
     };
 
     timer1(config);
+}
+
+uint32_t getMillis() {
+    uint32_t millis;
+
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        millis = mMillis;
+    }
+
+    return millis;
 }
 
 bool addInterrupt(void (*function)(void), uint16_t us) {
@@ -148,4 +161,12 @@ ISR(TIMER1_COMPB_vect) {
 
         interrupt.function();
     }
+}
+
+ISR(TIMER1_COMPA_vect) {
+    uint16_t newTicks = timer1GetOutputCompareA() + usToTimerTicks(1000);
+
+    timer1SetOutputCompareA(newTicks);
+
+    mMillis++;
 }

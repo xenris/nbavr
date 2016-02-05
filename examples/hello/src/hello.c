@@ -14,7 +14,7 @@ Task helloTask = {
 };
 
 static void loop(Task* task) {
-    uint32_t millis = clockMillis();
+    uint32_t millis = getMillis();
 
     if(millis >= mData.delay) {
         print(&stdout, "hello! (%i)\n", mData.count);

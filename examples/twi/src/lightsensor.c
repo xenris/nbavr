@@ -42,7 +42,7 @@ static void setup(Task* task) {
 }
 
 static void loop(Task* task) {
-    uint32_t millis = clockMillis();
+    uint32_t millis = getMillis();
 
     if(millis >= mData.delay) {
         if(mData.lightSensorReadResult == TWI_SUCCESS) {

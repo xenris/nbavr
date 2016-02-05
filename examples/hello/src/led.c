@@ -23,7 +23,7 @@ static void setup(Task* task) {
 }
 
 static void loop(Task* task) {
-    uint32_t millis = clockMillis();
+    uint32_t millis = getMillis();
 
     if(mData.delay <= millis) {
         pinToggle(ledPin);

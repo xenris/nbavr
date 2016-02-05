@@ -21,7 +21,7 @@ static void setup(Task* task) {
 }
 
 static void loop(Task* task) {
-    uint32_t millis = clockMillis();
+    uint32_t millis = getMillis();
     uint8_t c;
 
     if(streamPop(&stdin, &c)) {

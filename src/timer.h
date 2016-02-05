@@ -5,5 +5,6 @@
 
 void timerSetup();
 bool addInterrupt(void (*function)(void), uint16_t us);
+uint32_t getMillis();
 
 #endif
