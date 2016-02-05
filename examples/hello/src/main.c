@@ -3,7 +3,7 @@
 #define MICROS_PER_TICK ((64 * 256) / (F_CPU / 1000000))
 
 int main(void) {
-    static Task* tasks[] = {&helloTask, &ledTask, &serialTask};
+    static Task* tasks[] = {&helloTask, &ledTask, &serialTask, NULL};
 
     Timer0Config clockConfig = {
         .clockSelect = TIMER0_SOURCE_64,
@@ -14,7 +14,7 @@ int main(void) {
 
     clockInit(MICROS_PER_TICK);
 
-    taskManagerRun(tasks, sizeof(tasks) / sizeof(Task*));
+    taskManagerRun(tasks);
 
     return 0;
 }

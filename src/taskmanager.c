@@ -1,20 +1,15 @@
 #include "taskmanager.h"
 
 static void taskManagerProcessTask(Task* task);
-static Task* getNextTask(Task** tasks, uint8_t taskCount);
+static Task* getNextTask(Task** tasks);
 static inline TaskFunction processState(Task* task);
 
 static bool mTaskIsActive;
 static jmp_buf mHaltJmp;
 static uint8_t mNextTaskIndex = -1;
 
-void taskManagerRun(Task** tasks, uint8_t taskCount) {
+void taskManagerRun(Task** tasks) {
     resetClearStatus();
-
-    if((tasks == NULL) || (taskCount == 0)) {
-        watchdogDisable();
-        while(true);
-    }
 
     watchdog(WATCHDOG_16MS, WATCHDOG_INTERRUPT_RESET);
 
@@ -25,17 +20,13 @@ void taskManagerRun(Task** tasks, uint8_t taskCount) {
         watchdogInterruptEnable(true);
         sei();
 
-        Task* task = getNextTask(tasks, taskCount);
+        Task* task = getNextTask(tasks);
 
         taskManagerProcessTask(task);
     }
 }
 
 static void taskManagerProcessTask(Task* task) {
-    if(task == NULL) {
-        return;
-    }
-
     // Save state in case the task halts.
     uint8_t jmp = setjmp(mHaltJmp);
 
@@ -55,13 +46,18 @@ static void taskManagerProcessTask(Task* task) {
     }
 }
 
-static Task* getNextTask(Task** tasks, uint8_t taskCount) {
+static Task* getNextTask(Task** tasks) {
     Task* task;
 
     while(true) {
-        mNextTaskIndex = (mNextTaskIndex + 1) % taskCount;
+        mNextTaskIndex++;
 
         task = tasks[mNextTaskIndex];
+
+        if(task == NULL) {
+            mNextTaskIndex = -1;
+            continue;
+        }
 
         if(task->priority == 0) {
             task->priority = PRIORITY_MEDIUM;

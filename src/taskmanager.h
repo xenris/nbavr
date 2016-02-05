@@ -14,6 +14,6 @@
 #include "stream.h"
 #include "task.h"
 
-void taskManagerRun(Task** tasks, uint8_t taskCount);
+void taskManagerRun(Task** tasks);
 
 #endif
