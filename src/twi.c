@@ -14,8 +14,9 @@ static struct {
     bool repeatStartRequested;
     uint8_t dataIndex;
     TWIAction action;
-    uint8_t currentInputStream;
 } mData;
+
+Stream twiStream = streamInit(2 * sizeof(TWIAction));
 
 static void setup(Task* task);
 static void loop(Task* task);
@@ -36,14 +37,11 @@ static void setup(Task* task) {
 
     mData.ready = true;
     mData.repeatStartRequested = false;
-    mData.currentInputStream = 0;
 }
 
 static void loop(Task* task) {
     if(mData.ready || mData.repeatStartRequested) {
-        Stream* stream = task->inputStreams[mData.currentInputStream];
-
-        if(streamPopBuffer(stream, sizeof(TWIAction), (uint8_t*)&mData.action)) {
+        if(streamPopBuffer(&twiStream, sizeof(TWIAction), (uint8_t*)&mData.action)) {
             mData.ready = false;
             mData.dataIndex = 0;
             if(mData.action.result != NULL) {
@@ -52,10 +50,6 @@ static void loop(Task* task) {
             mData.repeatStartRequested = false;
 
             twiSendStart();
-        } else {
-            if(!mData.repeatStartRequested) { // Only go to next input if not waiting on repeated start.
-                mData.currentInputStream = (mData.currentInputStream + 1) % task->inputStreamCount;
-            }
         }
     }
 
@@ -149,8 +143,8 @@ static void loop(Task* task) {
     mData.ready = (*mData.action.result != TWI_BUSY);
 }
 
-bool twiDo(Stream* stream, TWIAction* action) {
-    if(streamPushBuffer(stream, sizeof(TWIAction), (uint8_t*)action)) {
+bool twiDo(TWIAction* action) {
+    if(streamPushBuffer(&twiStream, sizeof(TWIAction), (uint8_t*)action)) {
         *action->result = TWI_QUEUED;
         return true;
     } else {

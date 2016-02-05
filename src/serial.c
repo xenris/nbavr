@@ -1,20 +1,16 @@
 #include "serial.h"
 
-static struct {
-    Stream* currentInput;
-    uint8_t nextIndex;
-} mData;
-
 static void setup(Task* task);
 static void loop(Task* task);
 
 Task serialTask = {
-    .data = &mData,
-    .dataSize = sizeof(mData),
     .setup = setup,
     .loop = loop,
     .priority = PRIORITY_LOW,
 };
+
+Stream stdout = streamInit(30);
+Stream stdin = streamInit(10);
 
 static void setup(Task* task) {
     USART0Config config = {
@@ -31,22 +27,19 @@ static void setup(Task* task) {
 }
 
 static void loop(Task* task) {
-    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if(task->inputStreamCount > 0) {
-            if(streamHasData(mData.currentInput)) {
-                usart0DataRegisterEmptyInterruptEnable(true);
-            } else {
-                mData.nextIndex = (mData.nextIndex + 1) % task->inputStreamCount;
-                mData.currentInput = task->inputStreams[mData.nextIndex];
-            }
-        }
+    if(streamHasData(&stdout)) {
+        serialFlush();
     }
+}
+
+void serialFlush() {
+    usart0DataRegisterEmptyInterruptEnable(true);
 }
 
 ISR(USART_UDRE_vect) {
     uint8_t data;
 
-    if(streamPop(mData.currentInput, &data)) {
+    if(streamPop(&stdout, &data)) {
         usart0Push(data);
     } else {
         usart0DataRegisterEmptyInterruptEnable(false);
@@ -54,11 +47,5 @@ ISR(USART_UDRE_vect) {
 }
 
 ISR(USART_RX_vect) {
-    const uint8_t data = usart0Pop();
-
-    for(uint8_t i = 0; i < serialTask.outputStreamCount; i++) {
-        Stream* stream = serialTask.outputStreams[i];
-
-        streamPush(stream, data);
-    }
+    streamPush(&stdin, usart0Pop());
 }

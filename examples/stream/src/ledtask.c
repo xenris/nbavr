@@ -24,7 +24,7 @@ static void loop(Task* task) {
     uint32_t millis = clockMillis();
     uint8_t c;
 
-    if(streamPop(task->inputStreams[0], &c)) {
+    if(streamPop(&stdin, &c)) {
         mData.ledPulseTime = millis + PULSE_LENGTH;
     }
 

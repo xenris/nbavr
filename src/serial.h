@@ -5,5 +5,9 @@
 #include "task.h"
 
 extern Task serialTask;
+extern Stream stdout;
+extern Stream stdin;
+
+void serialFlush();
 
 #endif

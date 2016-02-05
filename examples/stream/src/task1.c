@@ -5,6 +5,8 @@ static struct {
     uint16_t count;
 } mData;
 
+Stream task1Stream = streamInit(5);
+
 static void loop(Task* task);
 
 Task task1 = {
@@ -17,14 +19,14 @@ static void loop(Task* task) {
     uint32_t millis = clockMillis();
 
     if(millis >= mData.delay) {
-        print(task->outputStreams[0], "Task1 running (%i)\n", mData.count);
+        print(&stdout, "Task1 running (%i)\n", mData.count);
         mData.delay = millis + 1000;
         mData.count++;
     }
 
     uint8_t b;
 
-    if(streamPop(task->inputStreams[0], &b)) {
-        print(task->outputStreams[0], "Task1 received byte 0x%x\n", b);
+    if(streamPop(&task1Stream, &b)) {
+        print(&stdout, "Task1 received byte 0x%x\n", b);
     }
 }

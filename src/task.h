@@ -32,10 +32,6 @@ typedef struct Task {
     TaskPriority priority;
     uint8_t tokens;
     TaskState state;
-    Stream** inputStreams;
-    uint8_t inputStreamCount;
-    Stream** outputStreams;
-    uint8_t outputStreamCount;
 } Task;
 
 #endif

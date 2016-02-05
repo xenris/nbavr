@@ -17,7 +17,7 @@ static void loop(Task* task) {
     uint32_t millis = clockMillis();
 
     if(millis >= mData.delay) {
-        print(task->outputStreams[0], "hello! (%i)\n", mData.count);
+        print(&stdout, "hello! (%i)\n", mData.count);
         mData.delay = millis + 1000;
         mData.count++;
     }

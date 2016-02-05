@@ -3,16 +3,6 @@
 #define MICROS_PER_TICK ((64 * 256) / (F_CPU / 1000000))
 
 int main(void) {
-    static Stream stream = streamInit(20);
-
-    static Stream* streamA[] = {&stream};
-
-    helloTask.outputStreams = streamA;
-    helloTask.outputStreamCount = 1;
-
-    serialTask.inputStreams = streamA;
-    serialTask.inputStreamCount = 1;
-
     static Task* tasks[] = {&helloTask, &ledTask, &serialTask};
 
     Timer0Config clockConfig = {

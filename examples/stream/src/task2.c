@@ -1,5 +1,7 @@
 #include "task2.h"
 
+extern Stream task1Stream;
+
 static struct {
     uint32_t delay;
     uint8_t count;
@@ -23,7 +25,7 @@ static void loop(Task* task) {
     uint32_t millis = clockMillis();
 
     if(millis >= mData.delay) {
-        streamPush(task->outputStreams[0], mData.count);
+        streamPush(&task1Stream, mData.count);
         mData.delay = millis + 4100;
         mData.count += 25;
     }

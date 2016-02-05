@@ -32,6 +32,6 @@ typedef struct TWIAction {
 
 extern Task twiTask;
 
-bool twiDo(Stream* stream, TWIAction* action);
+bool twiDo(TWIAction* action);
 
 #endif
