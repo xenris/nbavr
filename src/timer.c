@@ -45,13 +45,13 @@ uint32_t getMillis() {
 }
 
 bool addInterrupt(void (*function)(void), uint16_t us) {
+    volatile uint16_t currentTicks = timer1GetTimerRegister();
+
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if(interruptsTail == dec(interruptsHead)) {
             // interrupt queue is full.
             return false;
         }
-
-        uint16_t currentTicks = timer1GetTimerRegister();
 
         // If clock is higher than 8MHz a uint16_t is able to hold a number greater than the overflow time.
         // Alternatively, I could just limit this function to take an upper bound which works at any frequency.
@@ -133,7 +133,7 @@ static uint16_t usToTimerTicks(uint16_t n) {
 }
 
 ISR(TIMER1_COMPB_vect) {
-    uint16_t now = timer1GetTimerRegister();
+    volatile uint16_t now = timer1GetTimerRegister();
 
     if(interruptsTail == interruptsHead) {
         // This shouldn't happen.
