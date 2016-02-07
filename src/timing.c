@@ -28,7 +28,6 @@ void timingSetup() {
         .clockSelect = TIMER1_SOURCE_8,
         .outputCompareRegisterA = usToTimerTicks(1000),
         .outputCompareMatchAIntEnable = true,
-        // TODO Use output compare A for clock.
     };
 
     timer1(config);
