@@ -13,7 +13,7 @@ void taskManagerRun(Task** tasks) {
 
     watchdog(WATCHDOG_16MS, WATCHDOG_INTERRUPT_RESET);
 
-    timerSetup();
+    timingSetup();
 
     while(true) {
         watchdogReset();

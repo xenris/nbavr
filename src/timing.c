@@ -1,4 +1,4 @@
-#include "timer.h"
+#include "timing.h"
 
 typedef struct {
     void (*function)(void);
@@ -23,7 +23,7 @@ static volatile int interruptsHead = 0;
 static volatile int interruptsTail = 0;
 static volatile uint32_t mMillis;
 
-void timerSetup() {
+void timingSetup() {
     Timer1Config config = {
         .clockSelect = TIMER1_SOURCE_8,
         .outputCompareRegisterA = usToTimerTicks(1000),
