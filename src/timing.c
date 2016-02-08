@@ -5,9 +5,6 @@
 
 #define DIVISOR 64
 #define F_CPU_MHZ (F_CPU / 1000000)
-/*#define RESOLUTION_US (DIVISOR / F_CPU_MHZ) // FIXME This can be a fraction, and rounded to 0.*/
-/*#define MICROSECONDS_PER_TICK RESOLUTION_US*/
-#define TICKS_PER_MICROSECOND (F_CPU_MHZ / DIVISOR) // FIXME This can be a fraction, and rounded to 0.
 #define OVERFLOW_TIME ((65536 / F_CPU_MHZ) * DIVISOR)
 
 static int compareInterruptTimes(uint16_t a, uint16_t b, uint16_t now);
