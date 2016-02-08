@@ -3,7 +3,7 @@
 #define inc(i) (i + 1 < MAX_MICRO_INTERRUPTS ? i + 1 : 0)
 #define dec(i) (i == 0 ? MAX_MICRO_INTERRUPTS - 1 : i - 1)
 
-#define DIVISOR 8 // May use 64 instead.
+#define DIVISOR 64
 #define F_CPU_MHZ (F_CPU / 1000000)
 /*#define RESOLUTION_US (DIVISOR / F_CPU_MHZ) // FIXME This can be a fraction, and rounded to 0.*/
 /*#define MICROSECONDS_PER_TICK RESOLUTION_US*/
@@ -15,7 +15,7 @@ static uint16_t usToTimerTicks(uint16_t n);
 
 void timingSetup() {
     Timer1Config config = {
-        .clockSelect = TIMER1_SOURCE_8,
+        .clockSelect = TIMER1_SOURCE_64,
         .outputCompareRegisterA = usToTimerTicks(1000),
         .outputCompareMatchAIntEnable = true,
     };
@@ -46,26 +46,7 @@ bool addInterrupt(void (*function)(void), uint16_t us) {
             return false;
         }
 
-        // If clock is higher than 8MHz a uint16_t is able to hold a number greater than the overflow time.
-        // Alternatively, I could just limit this function to take an upper bound which works at any frequency.
-        #if(F_CPU > 8000000)
-            if(us >= OVERFLOW_TIME) {
-                us = OVERFLOW_TIME - 1;
-            }
-        #endif
-
         uint16_t requestedTicks = usToTimerTicks(us);
-
-        // If divisor is 1 then min bound requestedTicks to at least 8.
-        // This ensures there is at least 8 clock cycles between interrupts for other things to happen.
-        // XXX On the other hand, if interrupts are been created this quickly then all 8 clock cycles, and more, are
-        //  being used up to process this function. So really this is pointless, unless the min bound is much larger.
-        //  This problem applies to divisors of 8 too.
-        #if(DIVISOR == 1)
-            if(requestedTicks < 8) {
-                requestedTicks = 8;
-            }
-        #endif
 
         uint16_t interruptTime = currentTicks + requestedTicks;
 
