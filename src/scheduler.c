@@ -27,3 +27,11 @@ Task* getNextTask(void) {
 
     return task;
 }
+
+void setPriority(TaskPriority priority) {
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if(kernel.currentTask != NULL) {
+            kernel.currentTask->priority = priority;
+        }
+    }
+}

@@ -4,5 +4,6 @@
 #include "kernel.h"
 
 Task* getNextTask(void);
+void setPriority(TaskPriority priority);
 
 #endif
