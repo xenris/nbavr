@@ -196,6 +196,17 @@ int16_t streamUnused(Stream* stream) {
     return result;
 }
 
+void streamClear(Stream* stream) {
+    if(stream == NULL) {
+        return;
+    }
+
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        stream->head = 0;
+        stream->tail = 0;
+    }
+}
+
 static uint8_t streamNextIndex(Stream* stream, uint8_t i) {
     return (i + 1) % stream->size;
 }

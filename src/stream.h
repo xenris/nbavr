@@ -29,6 +29,7 @@ bool streamPushBuffer(Stream* stream, uint16_t count, uint8_t* buffer);
 bool streamPopBuffer(Stream* stream, uint16_t count, uint8_t* buffer);
 int16_t streamUsed(Stream* stream);
 int16_t streamUnused(Stream* stream);
+void streamClear(Stream* stream);
 
 static inline bool streamHasOverflowed(Stream* stream) {
     if(stream == NULL) {
