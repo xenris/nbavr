@@ -19,9 +19,7 @@ typedef enum {
     STATE_CRASH,
 } TaskState;
 
-struct Task;
-
-typedef void (*TaskFunction)(struct Task*);
+typedef void (*TaskFunction)(void);
 
 typedef struct Task {
     const TaskFunction setup;

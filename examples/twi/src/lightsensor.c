@@ -1,7 +1,7 @@
 #include "lightsensor.h"
 
-static void setup(Task* task);
-static void loop(Task* task);
+static void setup(void);
+static void loop(void);
 
 static TWIResult lightSensorOnResult;
 static TWIResult lightSensorContHResResult;
@@ -20,7 +20,7 @@ Task lightSensorTask = {
     .loop = loop,
 };
 
-static void setup(Task* task) {
+static void setup(void) {
     pinDirection(PinC2, Output);
     pinDirection(PinC3, Output);
     pinSet(PinC2, High);
@@ -34,7 +34,7 @@ static void setup(Task* task) {
     twiDo(&lightSensorContHiResMode);
 }
 
-static void loop(Task* task) {
+static void loop(void) {
     if(lightSensorReadResult == TWI_SUCCESS) {
         uint16_t t = (lightSensorValueBuffer[0] << 8) | lightSensorValueBuffer[1];
         print(&stdout, "%u\n", t);

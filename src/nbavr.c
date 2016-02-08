@@ -36,7 +36,7 @@ static void processTask(Task* task) {
 
         if(f != NULL) {
             watchdogReset();
-            f(task);
+            f();
         }
 
         kernel.currentTask = NULL;

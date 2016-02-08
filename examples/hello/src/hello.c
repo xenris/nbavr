@@ -1,7 +1,7 @@
 #include "hello.h"
 
-static void setup(Task* task);
-static void loop(Task* task);
+static void setup(void);
+static void loop(void);
 
 Task helloTask = {
     .setup = setup,
@@ -10,12 +10,11 @@ Task helloTask = {
 
 static uint16_t count;
 
-
-static void setup(Task* task) {
+static void setup(void) {
     count = 0;
 }
 
-static void loop(Task* task) {
+static void loop(void) {
     print(&stdout, "hello! (%i)\n", count);
     count++;
 

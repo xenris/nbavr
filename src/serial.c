@@ -1,7 +1,7 @@
 #include "serial.h"
 
-static void setup(Task* task);
-static void loop(Task* task);
+static void setup(void);
+static void loop(void);
 
 Task serialTask = {
     .setup = setup,
@@ -12,7 +12,7 @@ Task serialTask = {
 Stream stdout = streamInit(30);
 Stream stdin = streamInit(10);
 
-static void setup(Task* task) {
+static void setup(void) {
     USART0Config config = {
         .receiverEnable = true,
         .transmitterEnable = true,
@@ -26,7 +26,7 @@ static void setup(Task* task) {
     usart0(config);
 }
 
-static void loop(Task* task) {
+static void loop(void) {
     if(streamHasData(&stdout)) {
         serialFlush();
     }

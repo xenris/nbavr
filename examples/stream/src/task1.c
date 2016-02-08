@@ -1,7 +1,7 @@
 #include "task1.h"
 
-static void setup(Task* task);
-static void loop(Task* task);
+static void setup(void);
+static void loop(void);
 
 Task task1 = {
     .setup = setup,
@@ -13,13 +13,13 @@ static uint16_t count;
 
 Stream task1Stream = streamInit(5);
 
-static void setup(Task* task) {
+static void setup(void) {
     delay = 0;
     count = 0;
     streamClear(&task1Stream);
 }
 
-static void loop(Task* task) {
+static void loop(void) {
     uint32_t millis = getMillis();
 
     if(millis >= delay) {

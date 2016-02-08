@@ -9,8 +9,8 @@
 #define twiClearInt() TWCR = (_BV(TWINT) | _BV(TWEN))
 #define twiClearError() TWCR = (_BV(TWINT) | _BV(TWSTO) | _BV(TWEN))
 
-static void setup(Task* task);
-static void loop(Task* task);
+static void setup(void);
+static void loop(void);
 
 static bool ready;
 static bool repeatStartRequested;
@@ -25,7 +25,7 @@ Task twiTask = {
     .priority = PRIORITY_DRIVER,
 };
 
-static void setup(Task* task) {
+static void setup(void) {
     const uint32_t scaleFactor = 1;
     TWBR = (uint8_t)((((F_CPU / 1000UL) / TWI_BAUD) - 16UL) / (2UL * scaleFactor));
 
@@ -36,7 +36,7 @@ static void setup(Task* task) {
     dataIndex = 0;
 }
 
-static void loop(Task* task) {
+static void loop(void) {
     if(ready || repeatStartRequested) {
         if(streamPopBuffer(&twiStream, sizeof(TWIAction), (uint8_t*)&action)) {
             ready = false;
