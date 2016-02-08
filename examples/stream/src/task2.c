@@ -3,7 +3,6 @@
 extern Stream task1Stream;
 
 static struct {
-    uint32_t delay;
     uint8_t count;
 } mData;
 
@@ -18,15 +17,12 @@ Task task2 = {
 };
 
 static void setup(Task* task) {
-    mData.delay = 4100;
+    delayMillis(4100);
 }
 
 static void loop(Task* task) {
-    uint32_t millis = getMillis();
+    streamPush(&task1Stream, mData.count);
+    mData.count += 25;
 
-    if(millis >= mData.delay) {
-        streamPush(&task1Stream, mData.count);
-        mData.delay = millis + 4100;
-        mData.count += 25;
-    }
+    delayMillis(4100);
 }

@@ -32,6 +32,7 @@ typedef struct Task {
     TaskPriority priority;
     uint8_t tokens;
     TaskState state;
+    uint32_t delay;
 } Task;
 
 #endif

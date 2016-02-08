@@ -33,6 +33,10 @@ uint32_t getMillis() {
     return millis;
 }
 
+uint32_t getMicros() {
+    return 0; // TODO
+}
+
 bool addInterrupt(void (*function)(void), uint16_t us) {
     volatile uint16_t currentTicks = timer1GetTimerRegister();
 
@@ -93,6 +97,24 @@ bool addInterrupt(void (*function)(void), uint16_t us) {
     }
 
     return true;
+}
+
+void delayMillis(uint16_t ms) {
+    // Take the currently active task and set its delay time to now + ms
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if(state.currentTask != NULL) {
+            state.currentTask->delay = getMillis() + ms + 1;
+        }
+    }
+}
+
+void delaySeconds(uint16_t s) {
+    // Take the currently active task and set its delay time to now + s
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if(state.currentTask != NULL) {
+            state.currentTask->delay = getMillis() + ((uint32_t)s * 1000);
+        }
+    }
 }
 
 static int compareInterruptTimes(uint16_t a, uint16_t b, uint16_t now) {

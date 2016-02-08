@@ -2,16 +2,10 @@
 
 #define PULSE_LENGTH 50
 
-static struct {
-    uint32_t ledPulseTime;
-} mData;
-
 static void setup(Task* task);
 static void loop(Task* task);
 
 Task ledTask = {
-    .data = &mData,
-    .dataSize = sizeof(mData),
     .setup = setup,
     .loop = loop,
 };
@@ -21,13 +15,13 @@ static void setup(Task* task) {
 }
 
 static void loop(Task* task) {
-    uint32_t millis = getMillis();
+    pinSet(PinB5, Low);
+
     uint8_t c;
 
     if(streamPop(&stdin, &c)) {
-        mData.ledPulseTime = millis + PULSE_LENGTH;
+        streamClear(&stdin);
+        pinSet(PinB5, High);
+        delayMillis(PULSE_LENGTH);
     }
-
-    bool on = !(millis > mData.ledPulseTime);
-    pinSet(PinB5, on ? High : Low);
 }

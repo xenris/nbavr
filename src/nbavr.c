@@ -19,7 +19,9 @@ void nbavr(Task** tasks) {
 
         Task* task = getNextTask();
 
-        processTask(task);
+        if(task->delay <= getMillis()) {
+            processTask(task);
+        }
     }
 }
 

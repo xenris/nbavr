@@ -1,7 +1,6 @@
 #include "lightsensor.h"
 
 static struct {
-    uint32_t delay;
     TWIResult lightSensorOnResult;
     TWIResult lightSensorContHResResult;
     TWIResult lightSensorReadResult;
@@ -31,8 +30,6 @@ static void setup(Task* task) {
     pinSet(PinC2, High);
     pinSet(PinC3, Low);
 
-    mData.delay = 0;
-
     mData.lightSensorOnResult = TWI_NONE;
     mData.lightSensorContHResResult = TWI_NONE;
     mData.lightSensorReadResult = TWI_NONE;
@@ -42,18 +39,14 @@ static void setup(Task* task) {
 }
 
 static void loop(Task* task) {
-    uint32_t millis = getMillis();
-
-    if(millis >= mData.delay) {
-        if(mData.lightSensorReadResult == TWI_SUCCESS) {
-            uint16_t t = (mData.lightSensorValueBuffer[0] << 8) | mData.lightSensorValueBuffer[1];
-            print(&stdout, "%u\n", t);
-        }
-
-        if(mData.lightSensorReadResult != TWI_BUSY) {
-            twiDo(&lightSensorGetReadingAction);
-        }
-
-        mData.delay = millis + 200;
+    if(mData.lightSensorReadResult == TWI_SUCCESS) {
+        uint16_t t = (mData.lightSensorValueBuffer[0] << 8) | mData.lightSensorValueBuffer[1];
+        print(&stdout, "%u\n", t);
     }
+
+    if(mData.lightSensorReadResult != TWI_BUSY) {
+        twiDo(&lightSensorGetReadingAction);
+    }
+
+    delayMillis(200);
 }

@@ -2,7 +2,6 @@
 
 static struct {
     uint16_t count;
-    uint32_t delay;
 } mData;
 
 static void loop(Task* task);
@@ -14,11 +13,8 @@ Task helloTask = {
 };
 
 static void loop(Task* task) {
-    uint32_t millis = getMillis();
+    print(&stdout, "hello! (%i)\n", mData.count);
+    mData.count++;
 
-    if(millis >= mData.delay) {
-        print(&stdout, "hello! (%i)\n", mData.count);
-        mData.delay = millis + 1000;
-        mData.count++;
-    }
+    delayMillis(1000);
 }
