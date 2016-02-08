@@ -2,8 +2,8 @@
 
 void yield(void) {
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if(state.currentTask != NULL) {
-            longjmp(state.haltJmp, 2);
+        if(kernel.currentTask != NULL) {
+            longjmp(kernel.haltJmp, 2);
         }
     }
 }

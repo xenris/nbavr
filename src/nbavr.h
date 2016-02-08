@@ -4,10 +4,10 @@
 #include <string.h>
 
 #include "hardware.h"
+#include "kernel.h"
 #include "print.h"
 #include "scheduler.h"
 #include "serial.h"
-#include "state.h"
 #include "stream.h"
 #include "task.h"
 #include "timing.h"

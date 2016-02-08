@@ -24,7 +24,7 @@ uint32_t getMillis() {
     uint32_t millis;
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        millis = state.millis;
+        millis = kernel.millis;
     }
 
     return millis;
@@ -38,7 +38,7 @@ bool addInterrupt(void (*function)(void), uint16_t us) {
     volatile uint16_t currentTicks = timer1GetTimerRegister();
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if(state.microIntsTail == dec(state.microIntsHead)) {
+        if(kernel.microIntsTail == dec(kernel.microIntsHead)) {
             // interrupt queue is full.
             return false;
         }
@@ -48,27 +48,27 @@ bool addInterrupt(void (*function)(void), uint16_t us) {
         uint16_t interruptTime = currentTicks + requestedTicks;
 
         // Add interrupt to sorted ring buffer.
-        int n = state.microIntsTail;
+        int n = kernel.microIntsTail;
 
         while(true) {
             int p = dec(n);
 
-            if((n == state.microIntsHead)
-            || (compareInterruptTimes(state.microInts[p].tick, interruptTime, currentTicks) <= 0)) {
+            if((n == kernel.microIntsHead)
+            || (compareInterruptTimes(kernel.microInts[p].tick, interruptTime, currentTicks) <= 0)) {
                 break;
             }
 
-            state.microInts[n] = state.microInts[p];
+            kernel.microInts[n] = kernel.microInts[p];
 
             n = p;
         }
 
-        state.microInts[n].function = function;
-        state.microInts[n].tick = interruptTime;
+        kernel.microInts[n].function = function;
+        kernel.microInts[n].tick = interruptTime;
 
-        state.microIntsTail = inc(state.microIntsTail);
+        kernel.microIntsTail = inc(kernel.microIntsTail);
 
-        if(n == state.microIntsHead) {
+        if(n == kernel.microIntsHead) {
             timer1SetOutputCompareB(interruptTime);
             timer1OutputCompareMatchBIntEnable(true);
         }
@@ -80,8 +80,8 @@ bool addInterrupt(void (*function)(void), uint16_t us) {
 void delayMillis(uint16_t ms) {
     // Take the currently active task and set its delay time to now + ms
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if(state.currentTask != NULL) {
-            state.currentTask->delay = getMillis() + ms + 1;
+        if(kernel.currentTask != NULL) {
+            kernel.currentTask->delay = getMillis() + ms + 1;
         }
     }
 }
@@ -89,8 +89,8 @@ void delayMillis(uint16_t ms) {
 void delaySeconds(uint16_t s) {
     // Take the currently active task and set its delay time to now + s
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if(state.currentTask != NULL) {
-            state.currentTask->delay = getMillis() + ((uint32_t)s * 1000);
+        if(kernel.currentTask != NULL) {
+            kernel.currentTask->delay = getMillis() + ((uint32_t)s * 1000);
         }
     }
 }
@@ -124,16 +124,16 @@ static uint16_t usToTimerTicks(uint16_t n) {
 ISR(TIMER1_COMPB_vect) {
     volatile uint16_t now = timer1GetTimerRegister();
 
-    if(state.microIntsTail == state.microIntsHead) {
+    if(kernel.microIntsTail == kernel.microIntsHead) {
         // This shouldn't happen.
         timer1OutputCompareMatchBIntEnable(false);
     } else {
-        MicroInt interrupt = state.microInts[state.microIntsHead];
+        MicroInt interrupt = kernel.microInts[kernel.microIntsHead];
 
-        state.microIntsHead = inc(state.microIntsHead);
+        kernel.microIntsHead = inc(kernel.microIntsHead);
 
-        if(state.microIntsTail != state.microIntsHead) {
-            MicroInt next = state.microInts[state.microIntsHead];
+        if(kernel.microIntsTail != kernel.microIntsHead) {
+            MicroInt next = kernel.microInts[kernel.microIntsHead];
 
             if(next.tick == now) {
 /*                timer1SetOutputCompareMatchBFlag(); // Force interrupt to happen imediately.*/
@@ -157,5 +157,5 @@ ISR(TIMER1_COMPA_vect) {
 
     timer1SetOutputCompareA(newTicks);
 
-    state.millis++;
+    kernel.millis++;
 }

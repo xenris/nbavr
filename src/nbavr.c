@@ -4,7 +4,7 @@ static void processTask(Task* task);
 static TaskFunction processState(Task* task);
 
 void nbavr(Task** tasks) {
-    state.tasks = tasks;
+    kernel.tasks = tasks;
 
     resetClearStatus();
 
@@ -27,10 +27,10 @@ void nbavr(Task** tasks) {
 
 static void processTask(Task* task) {
     // Save state in case the task halts.
-    uint8_t jmp = setjmp(state.haltJmp);
+    uint8_t jmp = setjmp(kernel.haltJmp);
 
     if(jmp == 0) {
-        state.currentTask = task;
+        kernel.currentTask = task;
 
         TaskFunction f = processState(task);
 
@@ -39,11 +39,11 @@ static void processTask(Task* task) {
             f(task);
         }
 
-        state.currentTask = NULL;
+        kernel.currentTask = NULL;
     } else if(jmp == 1) { // Task halted.
         task->state = STATE_CRASH;
     } else { // Task yielded
-        state.currentTask = NULL;
+        kernel.currentTask = NULL;
     }
 }
 

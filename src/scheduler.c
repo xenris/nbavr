@@ -4,12 +4,12 @@ Task* getNextTask(void) {
     Task* task;
 
     while(true) {
-        state.taskIndex++;
+        kernel.taskIndex++;
 
-        task = state.tasks[state.taskIndex];
+        task = kernel.tasks[kernel.taskIndex];
 
         if(task == NULL) {
-            state.taskIndex = -1;
+            kernel.taskIndex = -1;
             continue;
         }
 

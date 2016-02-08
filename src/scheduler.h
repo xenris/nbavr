@@ -1,7 +1,7 @@
 #ifndef NBAVR_SCHEDULER_H
 #define NBAVR_SCHEDULER_H
 
-#include "state.h"
+#include "kernel.h"
 
 Task* getNextTask(void);
 

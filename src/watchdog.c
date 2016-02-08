@@ -1,8 +1,8 @@
 #include "watchdog.h"
 
 ISR(WDT_vect) {
-    if(state.currentTask != NULL) {
+    if(kernel.currentTask != NULL) {
         // TODO Set task state to "crashed" here.
-        longjmp(state.haltJmp, 1);
+        longjmp(kernel.haltJmp, 1);
     }
 }

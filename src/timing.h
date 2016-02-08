@@ -10,7 +10,7 @@
 // Timer/Counter1 is used to provide all time based functions.
 
 #include "hardware.h"
-#include "state.h"
+#include "kernel.h"
 
 void timingSetup();
 bool addInterrupt(void (*function)(void), uint16_t us);

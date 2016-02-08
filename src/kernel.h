@@ -1,5 +1,5 @@
-#ifndef NBAVR_STATE_H
-#define NBAVR_STATE_H
+#ifndef NBAVR_KERNEL_H
+#define NBAVR_KERNEL_H
 
 // This module will provide all the state variables of the kernel in one tidy
 //  struct.
@@ -11,7 +11,7 @@
 #include "task.h"
 #include "microint.h"
 
-typedef struct State {
+typedef struct Kernel {
     Task** tasks; // The list of tasks provided by the user.
     Task* currentTask; // The currently active task, or null if none.
     uint8_t taskIndex; // The index of the next task to be checked by the scheduler.
@@ -21,8 +21,8 @@ typedef struct State {
     volatile int microIntsTail; // Tail of microsecond interrupt queue.
     volatile uint32_t millis; // Milliseconds passed since startup.
     volatile uint32_t seconds; // Seconds passed since startup.
-} State;
+} Kernel;
 
-extern State state;
+extern Kernel kernel;
 
 #endif
