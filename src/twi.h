@@ -1,12 +1,8 @@
 #ifndef TWI_H
 #define TWI_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
+#include <nbavr.h>
 #include <util/twi.h>
-
-#include "taskmanager.h"
 
 typedef enum {
     TWI_READ = TW_READ,

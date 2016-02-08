@@ -8,7 +8,7 @@ ifndef freq
     freq = 16000000L
 endif
 
-LIB_CFLAGS = -I$(TUP_CWD)
+LIB_CFLAGS = -I$(TUP_CWD)/src
 LIB_CFLAGS += -Wall
 LIB_CFLAGS += -Wextra
 LIB_CFLAGS += -Werror

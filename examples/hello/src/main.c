@@ -1,9 +1,9 @@
 #include "main.h"
 
 int main(void) {
-    static Task* tasks[] = {&helloTask, &ledTask, &serialTask, NULL};
+    Task* tasks[] = {&helloTask, &ledTask, &serialTask, NULL};
 
-    taskManagerRun(tasks);
+    nbavr(tasks);
 
     return 0;
 }

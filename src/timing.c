@@ -1,12 +1,7 @@
 #include "timing.h"
 
-typedef struct {
-    void (*function)(void);
-    uint16_t tick;
-} Interrupt;
-
-#define inc(i) (i + 1 < TIME_INTERRUPTS ? i + 1 : 0)
-#define dec(i) (i == 0 ? TIME_INTERRUPTS - 1 : i - 1)
+#define inc(i) (i + 1 < MAX_MICRO_INTERRUPTS ? i + 1 : 0)
+#define dec(i) (i == 0 ? MAX_MICRO_INTERRUPTS - 1 : i - 1)
 
 #define DIVISOR 8 // May use 64 instead.
 #define F_CPU_MHZ (F_CPU / 1000000)
@@ -17,11 +12,6 @@ typedef struct {
 
 static int compareInterruptTimes(uint16_t a, uint16_t b, uint16_t now);
 static uint16_t usToTimerTicks(uint16_t n);
-
-static volatile Interrupt interrupts[TIME_INTERRUPTS];
-static volatile int interruptsHead = 0;
-static volatile int interruptsTail = 0;
-static volatile uint32_t mMillis;
 
 void timingSetup() {
     Timer1Config config = {
@@ -37,7 +27,7 @@ uint32_t getMillis() {
     uint32_t millis;
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        millis = mMillis;
+        millis = state.millis;
     }
 
     return millis;
@@ -47,7 +37,7 @@ bool addInterrupt(void (*function)(void), uint16_t us) {
     volatile uint16_t currentTicks = timer1GetTimerRegister();
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if(interruptsTail == dec(interruptsHead)) {
+        if(state.microIntsTail == dec(state.microIntsHead)) {
             // interrupt queue is full.
             return false;
         }
@@ -76,27 +66,27 @@ bool addInterrupt(void (*function)(void), uint16_t us) {
         uint16_t interruptTime = currentTicks + requestedTicks;
 
         // Add interrupt to sorted ring buffer.
-        int n = interruptsTail;
+        int n = state.microIntsTail;
 
         while(true) {
             int p = dec(n);
 
-            if((n == interruptsHead)
-            || (compareInterruptTimes(interrupts[p].tick, interruptTime, currentTicks) <= 0)) {
+            if((n == state.microIntsHead)
+            || (compareInterruptTimes(state.microInts[p].tick, interruptTime, currentTicks) <= 0)) {
                 break;
             }
 
-            interrupts[n] = interrupts[p];
+            state.microInts[n] = state.microInts[p];
 
             n = p;
         }
 
-        interrupts[n].function = function;
-        interrupts[n].tick = interruptTime;
+        state.microInts[n].function = function;
+        state.microInts[n].tick = interruptTime;
 
-        interruptsTail = inc(interruptsTail);
+        state.microIntsTail = inc(state.microIntsTail);
 
-        if(n == interruptsHead) {
+        if(n == state.microIntsHead) {
             timer1SetOutputCompareB(interruptTime);
             timer1OutputCompareMatchBIntEnable(true);
         }
@@ -134,16 +124,16 @@ static uint16_t usToTimerTicks(uint16_t n) {
 ISR(TIMER1_COMPB_vect) {
     volatile uint16_t now = timer1GetTimerRegister();
 
-    if(interruptsTail == interruptsHead) {
+    if(state.microIntsTail == state.microIntsHead) {
         // This shouldn't happen.
         timer1OutputCompareMatchBIntEnable(false);
     } else {
-        Interrupt interrupt = interrupts[interruptsHead];
+        MicroInt interrupt = state.microInts[state.microIntsHead];
 
-        interruptsHead = inc(interruptsHead);
+        state.microIntsHead = inc(state.microIntsHead);
 
-        if(interruptsTail != interruptsHead) {
-            Interrupt next = interrupts[interruptsHead];
+        if(state.microIntsTail != state.microIntsHead) {
+            MicroInt next = state.microInts[state.microIntsHead];
 
             if(next.tick == now) {
 /*                timer1SetOutputCompareMatchBFlag(); // Force interrupt to happen imediately.*/
@@ -167,5 +157,5 @@ ISR(TIMER1_COMPA_vect) {
 
     timer1SetOutputCompareA(newTicks);
 
-    mMillis++;
+    state.millis++;
 }
