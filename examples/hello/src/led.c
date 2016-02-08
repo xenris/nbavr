@@ -1,9 +1,9 @@
 #include "led.h"
 
-static const Pin ledPin = PinB5;
-
 static void setup(Task* task);
 static void loop(Task* task);
+
+static const Pin ledPin = PinB5;
 
 Task ledTask = {
     .setup = setup,

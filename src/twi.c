@@ -9,21 +9,17 @@
 #define twiClearInt() TWCR = (_BV(TWINT) | _BV(TWEN))
 #define twiClearError() TWCR = (_BV(TWINT) | _BV(TWSTO) | _BV(TWEN))
 
-static struct {
-    bool ready;
-    bool repeatStartRequested;
-    uint8_t dataIndex;
-    TWIAction action;
-} mData;
-
-Stream twiStream = streamInit(2 * sizeof(TWIAction));
-
 static void setup(Task* task);
 static void loop(Task* task);
 
+static bool ready;
+static bool repeatStartRequested;
+static uint8_t dataIndex;
+static TWIAction action;
+
+Stream twiStream = streamInit(2 * sizeof(TWIAction));
+
 Task twiTask = {
-    .data = &mData,
-    .dataSize = sizeof(mData),
     .setup = setup,
     .loop = loop,
     .priority = PRIORITY_DRIVER,
@@ -35,19 +31,20 @@ static void setup(Task* task) {
 
     twiEnable();
 
-    mData.ready = true;
-    mData.repeatStartRequested = false;
+    ready = true;
+    repeatStartRequested = false;
+    dataIndex = 0;
 }
 
 static void loop(Task* task) {
-    if(mData.ready || mData.repeatStartRequested) {
-        if(streamPopBuffer(&twiStream, sizeof(TWIAction), (uint8_t*)&mData.action)) {
-            mData.ready = false;
-            mData.dataIndex = 0;
-            if(mData.action.result != NULL) {
-                *mData.action.result = TWI_BUSY;
+    if(ready || repeatStartRequested) {
+        if(streamPopBuffer(&twiStream, sizeof(TWIAction), (uint8_t*)&action)) {
+            ready = false;
+            dataIndex = 0;
+            if(action.result != NULL) {
+                *action.result = TWI_BUSY;
             }
-            mData.repeatStartRequested = false;
+            repeatStartRequested = false;
 
             twiSendStart();
         }
@@ -62,57 +59,57 @@ static void loop(Task* task) {
     switch(twStatus) {
         case TW_START:
         case TW_REP_START:
-            TWDR = (uint8_t)(mData.action.addr << 1) | mData.action.rw;
+            TWDR = (uint8_t)(action.addr << 1) | action.rw;
             twiSendNACK();
             break;
         case TW_MT_SLA_ACK:
         case TW_MT_DATA_ACK:
-            if(mData.dataIndex < mData.action.count) {
-                TWDR = mData.action.data[mData.dataIndex];
-                mData.dataIndex++;
+            if(dataIndex < action.count) {
+                TWDR = action.data[dataIndex];
+                dataIndex++;
                 twiSendNACK();
             } else {
-                if(mData.action.repeatStart) {
-                    mData.repeatStartRequested = true;
+                if(action.repeatStart) {
+                    repeatStartRequested = true;
                     twiSendStart();
                 } else {
-                    *mData.action.result = TWI_SUCCESS;
+                    *action.result = TWI_SUCCESS;
                     twiSendStop();
                 }
             }
             break;
         case TW_MT_SLA_NACK:
         case TW_MT_DATA_NACK:
-            *mData.action.result = TWI_FAIL;
+            *action.result = TWI_FAIL;
             twiSendStop();
             break;
         case TW_MT_ARB_LOST: // and TW_MR_ARB_LOST
-            *mData.action.result = TWI_FAIL;
+            *action.result = TWI_FAIL;
             twiClearInt();
             break;
         case TW_MR_SLA_ACK:
             twiSendACK();
             break;
         case TW_MR_SLA_NACK:
-            *mData.action.result = TWI_FAIL;
+            *action.result = TWI_FAIL;
             twiSendStop();
             break;
         case TW_MR_DATA_ACK:
-            mData.action.data[mData.dataIndex] = TWDR;
-            mData.dataIndex++;
+            action.data[dataIndex] = TWDR;
+            dataIndex++;
 
-            if(mData.dataIndex < mData.action.count) {
+            if(dataIndex < action.count) {
                 twiSendACK();
             } else {
                 twiSendNACK();
             }
             break;
         case TW_MR_DATA_NACK:
-            if(mData.action.repeatStart) {
-                mData.repeatStartRequested = true;
+            if(action.repeatStart) {
+                repeatStartRequested = true;
                 twiSendStart();
             } else {
-                *mData.action.result = TWI_SUCCESS;
+                *action.result = TWI_SUCCESS;
                 twiSendStop();
             }
             break;
@@ -135,12 +132,12 @@ static void loop(Task* task) {
         case TW_NO_INFO:
             break;
         case TW_BUS_ERROR:
-            *mData.action.result = TWI_FAIL;
+            *action.result = TWI_FAIL;
             twiClearError();
             break;
     }
 
-    mData.ready = (*mData.action.result != TWI_BUSY);
+    ready = (*action.result != TWI_BUSY);
 }
 
 bool twiDo(TWIAction* action) {

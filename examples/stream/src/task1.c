@@ -1,27 +1,31 @@
 #include "task1.h"
 
-static struct {
-    uint32_t delay;
-    uint16_t count;
-} mData;
-
-Stream task1Stream = streamInit(5);
-
+static void setup(Task* task);
 static void loop(Task* task);
 
 Task task1 = {
-    .data = &mData,
-    .dataSize = sizeof(mData),
+    .setup = setup,
     .loop = loop,
 };
+
+static uint32_t delay;
+static uint16_t count;
+
+Stream task1Stream = streamInit(5);
+
+static void setup(Task* task) {
+    delay = 0;
+    count = 0;
+    streamClear(&task1Stream);
+}
 
 static void loop(Task* task) {
     uint32_t millis = getMillis();
 
-    if(millis >= mData.delay) {
-        print(&stdout, "Task1 running (%i)\n", mData.count);
-        mData.delay = millis + 1000;
-        mData.count++;
+    if(millis >= delay) {
+        print(&stdout, "Task1 running (%i)\n", count);
+        delay = millis + 1000;
+        count++;
     }
 
     uint8_t b;

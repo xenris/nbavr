@@ -1,8 +1,6 @@
 #ifndef NBAVR_H
 #define NBAVR_H
 
-#include <string.h>
-
 #include "hardware.h"
 #include "kernel.h"
 #include "print.h"

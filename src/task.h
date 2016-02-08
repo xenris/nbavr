@@ -24,8 +24,6 @@ struct Task;
 typedef void (*TaskFunction)(struct Task*);
 
 typedef struct Task {
-    void* const data;
-    const uint16_t dataSize;
     const TaskFunction setup;
     const TaskFunction loop;
     const TaskFunction crash;

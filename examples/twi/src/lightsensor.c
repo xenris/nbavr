@@ -1,25 +1,21 @@
 #include "lightsensor.h"
 
-static struct {
-    TWIResult lightSensorOnResult;
-    TWIResult lightSensorContHResResult;
-    TWIResult lightSensorReadResult;
-    uint8_t lightSensorValueBuffer[2];
-} mData;
-
 static void setup(Task* task);
 static void loop(Task* task);
+
+static TWIResult lightSensorOnResult;
+static TWIResult lightSensorContHResResult;
+static TWIResult lightSensorReadResult;
+static uint8_t lightSensorValueBuffer[2];
 
 static uint8_t LIGHT_SENSOR_ON_MSG = 0x01;
 static uint8_t LIGHT_SENSOR_CONTIN_H_RES_MSG = 0x10;
 
-static TWIAction lightSensorOnAction = {TWI_WRITE, 0x23, 1, &LIGHT_SENSOR_ON_MSG, &mData.lightSensorOnResult, false};
-static TWIAction lightSensorContHiResMode = {TWI_WRITE, 0x23, 1, &LIGHT_SENSOR_CONTIN_H_RES_MSG, &mData.lightSensorContHResResult, false};
-static TWIAction lightSensorGetReadingAction = {TWI_READ, 0x23, 2, mData.lightSensorValueBuffer, &mData.lightSensorReadResult, false};
+static TWIAction lightSensorOnAction = {TWI_WRITE, 0x23, 1, &LIGHT_SENSOR_ON_MSG, &lightSensorOnResult, false};
+static TWIAction lightSensorContHiResMode = {TWI_WRITE, 0x23, 1, &LIGHT_SENSOR_CONTIN_H_RES_MSG, &lightSensorContHResResult, false};
+static TWIAction lightSensorGetReadingAction = {TWI_READ, 0x23, 2, lightSensorValueBuffer, &lightSensorReadResult, false};
 
 Task lightSensorTask = {
-    .data = &mData,
-    .dataSize = sizeof(mData),
     .setup = setup,
     .loop = loop,
 };
@@ -30,21 +26,21 @@ static void setup(Task* task) {
     pinSet(PinC2, High);
     pinSet(PinC3, Low);
 
-    mData.lightSensorOnResult = TWI_NONE;
-    mData.lightSensorContHResResult = TWI_NONE;
-    mData.lightSensorReadResult = TWI_NONE;
+    lightSensorOnResult = TWI_NONE;
+    lightSensorContHResResult = TWI_NONE;
+    lightSensorReadResult = TWI_NONE;
 
     twiDo(&lightSensorOnAction);
     twiDo(&lightSensorContHiResMode);
 }
 
 static void loop(Task* task) {
-    if(mData.lightSensorReadResult == TWI_SUCCESS) {
-        uint16_t t = (mData.lightSensorValueBuffer[0] << 8) | mData.lightSensorValueBuffer[1];
+    if(lightSensorReadResult == TWI_SUCCESS) {
+        uint16_t t = (lightSensorValueBuffer[0] << 8) | lightSensorValueBuffer[1];
         print(&stdout, "%u\n", t);
     }
 
-    if(mData.lightSensorReadResult != TWI_BUSY) {
+    if(lightSensorReadResult != TWI_BUSY) {
         twiDo(&lightSensorGetReadingAction);
     }
 

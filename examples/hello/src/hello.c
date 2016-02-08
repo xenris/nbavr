@@ -1,20 +1,23 @@
 #include "hello.h"
 
-static struct {
-    uint16_t count;
-} mData;
-
+static void setup(Task* task);
 static void loop(Task* task);
 
 Task helloTask = {
-    .data = &mData,
-    .dataSize = sizeof(mData),
+    .setup = setup,
     .loop = loop,
 };
 
+static uint16_t count;
+
+
+static void setup(Task* task) {
+    count = 0;
+}
+
 static void loop(Task* task) {
-    print(&stdout, "hello! (%i)\n", mData.count);
-    mData.count++;
+    print(&stdout, "hello! (%i)\n", count);
+    count++;
 
     delayMillis(1000);
 }

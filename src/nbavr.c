@@ -48,15 +48,13 @@ static void processTask(Task* task) {
 }
 
 static TaskFunction processState(Task* task) {
-    if(task->state == STATE_LOOP) {
+    switch(task->state) {
+    case STATE_LOOP:
         return task->loop;
-    } else if(task->state == STATE_CRASH) {
+    case STATE_CRASH:
         task->state = STATE_SETUP;
         return task->crash;
-    } else { // STATE_SETUP or any other value.
-        if(task->data != NULL) {
-            memset(task->data, 0, task->dataSize);
-        }
+    default:
         task->state = STATE_LOOP;
         return task->setup;
     }
