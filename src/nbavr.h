@@ -12,6 +12,7 @@
 #include "task.h"
 #include "timing.h"
 #include "twi.h"
+#include "yield.h"
 
 void nbavr(Task** tasks);
 

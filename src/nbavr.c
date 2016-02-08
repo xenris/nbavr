@@ -38,8 +38,10 @@ static void processTask(Task* task) {
         }
 
         state.currentTask = NULL;
-    } else { // Task halted.
+    } else if(jmp == 1) { // Task halted.
         task->state = STATE_CRASH;
+    } else { // Task yielded
+        state.currentTask = NULL;
     }
 }
 
