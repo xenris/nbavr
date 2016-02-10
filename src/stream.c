@@ -7,6 +7,12 @@ bool streamPush(Stream* stream, uint8_t in) {
         return false;
     }
 
+    if(streamEmpty(stream)) {
+        if(stream->callback != NULL) {
+            stream->callback();
+        }
+    }
+
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         const uint8_t nextHead = streamNextIndex(stream, stream->head);
 
@@ -70,6 +76,12 @@ bool streamPush16(Stream* stream, uint16_t n) {
         return false;
     }
 
+    if(streamEmpty(stream)) {
+        if(stream->callback != NULL) {
+            stream->callback();
+        }
+    }
+
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if(streamUnused(stream) < 2) {
             return false;
@@ -129,6 +141,12 @@ bool streamPeek16(Stream* stream, uint16_t* n) {
 bool streamPushBuffer(Stream* stream, uint16_t count, uint8_t* buffer) {
     if(buffer == NULL) {
         return false;
+    }
+
+    if(streamEmpty(stream)) {
+        if(stream->callback != NULL) {
+            stream->callback();
+        }
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
