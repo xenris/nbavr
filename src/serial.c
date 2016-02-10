@@ -2,6 +2,7 @@
 
 static void setup(void);
 static void loop(void);
+static void stdoutCallback();
 
 Task serialTask = {
     .setup = setup,
@@ -9,7 +10,7 @@ Task serialTask = {
     .priority = PRIORITY_LOW,
 };
 
-Stream stdout = streamInit(30);
+Stream stdout = streamInitCallback(30, stdoutCallback);
 Stream stdin = streamInit(10);
 
 static void setup(void) {
@@ -30,6 +31,12 @@ static void loop(void) {
     if(streamHasData(&stdout)) {
         serialFlush();
     }
+
+    serialTask.priority = PRIORITY_LOW;
+}
+
+static void stdoutCallback() {
+    serialTask.priority = PRIORITY_DRIVER;
 }
 
 void serialFlush() {
