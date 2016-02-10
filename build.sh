@@ -36,7 +36,7 @@ fi
 if [ "${1}" == "-d" ]; then
     hash avr-gdb 2>/dev/null || { echo >&2 "avr-gdb is needed for debugging but it's not installed."; exit 1; }
     hash simavr 2>/dev/null || { echo >&2 "simavr is needed for debugging but it's not installed."; exit 1; }
-    hash ddd 2>/dev/null || { echo >&2 "ddd is needed for debugging but it's not installed."; exit 1; }
+    hash kdbg 2>/dev/null || { echo >&2 "kdbg is needed for debugging but it's not installed."; exit 1; }
 
     exampledir="examples/${2}"
 
@@ -44,7 +44,7 @@ if [ "${1}" == "-d" ]; then
         cd $exampledir
 
         simavr -g -v -v -t -m $mmcu -f $freq gen/firmware.elf &
-        ddd --debugger "avr-gdb" --eval-command="file gen/firmware.elf" --eval-command="target remote localhost:1234"
+        kdbg -r localhost:1234 gen/firmware.elf
 
         pkill simavr
     else
