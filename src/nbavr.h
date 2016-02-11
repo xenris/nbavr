@@ -3,6 +3,7 @@
 
 #include "hardware.h"
 #include "kernel.h"
+#include "lcd.h"
 #include "print.h"
 #include "scheduler.h"
 #include "serial.h"

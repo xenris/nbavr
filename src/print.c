@@ -42,6 +42,12 @@ bool print(Stream* stream, const char* format, ...) {
                 case 'c':
                     success = printchar(stream, va_arg(arglist, int));
                     break;
+                case 'v':
+                    success = printvalue(stream, va_arg(arglist, int));
+                    break;
+                case 'n':
+                    // TODO
+                    break;
                 case '%':
                     success = printchar(stream, c);
                     break;
@@ -82,6 +88,10 @@ bool printstr(Stream* stream, const char* str) {
 }
 
 bool printchar(Stream* stream, char c) {
+    return streamPush(stream, c);
+}
+
+bool printvalue(Stream* stream, int c) {
     return streamPush(stream, c);
 }
 
