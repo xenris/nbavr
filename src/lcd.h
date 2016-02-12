@@ -5,11 +5,10 @@
 #include <util/delay.h>
 
 // \r = clear display and return curser to home position.
-// \n = move to start of next line.
+// \n = move to start of next line, wrapping to first line.
 // \v = move curser to the position defined by the next two bytes.
 //  e.g. \v\1\2 = move to start of second line.
-// \f = scoll display forward (shift text left)
-// \b = scoll display backward (shift text right)
+// \a = clear current line and put curser at start.
 
 extern Task lcdTask;
 extern Stream* lcdout;

@@ -4,6 +4,8 @@
 #define CURSER_HOME 0x02
 #define CURSER_START_LINE_ONE 0x80
 #define CURSER_START_LINE_TWO 0xC0
+#define CURSER_LEFT 0x10
+#define CURSER_RIGHT 0x14
 #define ENTRY_MODE_LEFT 0x04
 #define ENTRY_MODE_RIGHT 0x06
 #define ENTRY_MODE_LEFT_SCROLL 0x05
@@ -15,19 +17,47 @@
 #define DISPLAY_ON_CURSER 0x0E
 #define DISPLAY_ON_CURSER_BLINK 0x0F
 #define FUNCTION_FOUR_BITS_TWO_LINES 0x28
+#define SET_DDRAM_ADDRESS 0x80
 
 #define max(a,b) (a > b ? a : b)
 #define min(a,b) (a < b ? a : b)
 #define clip(x,l,h) (max(min(x,h), l))
 
+typedef struct {
+    uint8_t min;
+    uint8_t max;
+} Range;
+
+typedef struct {
+    uint8_t x;
+    uint8_t y;
+} Coord;
+
+// memoryMap[line].min/max
+
+static const Range memoryMap[] = {
+    {0x00, 0x0f},
+    {0x40, 0x4f}};
+
+static const uint8_t lineCount = 2;
+static const uint8_t lineLength = 16;
+
 static void (*state)(void);
+static bool outOfBounds;
 
 static void setup(void);
 static void loop(void);
 static void run(void);
+static void writeCharacter(uint8_t character);
 static void setCurser(uint8_t x, uint8_t y);
+static void setCurserAddress(uint8_t address);
 static void newLine(void);
 static bool busy(void);
+static uint8_t getCurserAddress(void);
+static uint8_t coordToAddress(uint8_t x, uint8_t y);
+static Coord addressToCoord(uint8_t address);
+static void clearCurrentLine(void);
+static void stepBack(void);
 static void sendByte(bool rs, uint8_t data);
 static void sendNibble(bool rs, uint8_t data);
 static uint8_t getByte(bool rs);
@@ -59,19 +89,20 @@ static void setup(void) {
     pinSet(LCD_PIN_E, Low);
 
     state = init0;
+    outOfBounds = false;
 
     delayMillis(50);
 }
 
 static void loop(void) {
-    state();
-}
-
-static void run(void) {
     if(busy()) {
         return;
     }
 
+    state();
+}
+
+static void run(void) {
     uint8_t byte;
     uint8_t x;
     uint8_t y;
@@ -80,23 +111,26 @@ static void run(void) {
         switch(byte) {
         case '\r':
             sendByte(false, CLEAR_DISPLAY);
+            outOfBounds = false;
             break;
         case '\n':
             newLine();
+            outOfBounds = false;
             break;
         case '\v':
             if(streamPop(lcdout, &x) && streamPop(lcdout, &y)) {
                 setCurser(x - 1, y - 1);
+                outOfBounds = false;
             }
             break;
-        case '\f':
-            sendByte(false, SCROLL_LEFT);
-            break;
-        case '\b':
-            sendByte(false, SCROLL_RIGHT);
+        case '\a':
+            state = clearCurrentLine;
+            outOfBounds = false;
             break;
         default:
-            sendByte(true, byte);
+            if(!outOfBounds) {
+                writeCharacter(byte);
+            }
         }
 
         lcdTask.priority = PRIORITY_HIGH;
@@ -105,21 +139,93 @@ static void run(void) {
     }
 }
 
+static void writeCharacter(uint8_t character) {
+    uint8_t address = getCurserAddress();
+    Coord coord = addressToCoord(address);
+
+    if(coord.x == lineLength - 1) {
+        outOfBounds = true;
+        state = stepBack;
+    }
+
+    sendByte(true, character);
+}
+
 static void setCurser(uint8_t x, uint8_t y) {
-    y = clip(y, 0, 1);
-    x = clip(x, 0, 16);
-    sendByte(false, 0x80 + x + (y * 0x40));
+    setCurserAddress(coordToAddress(x, y));
+}
+
+static void setCurserAddress(uint8_t address) {
+    sendByte(false, SET_DDRAM_ADDRESS | address);
 }
 
 static void newLine(void) {
-    // TODO Make this work on displays with more than two lines.
-    sendByte(false, CURSER_START_LINE_TWO);
+    uint8_t address = getCurserAddress();
+    Coord coord = addressToCoord(address);
+
+    uint8_t y = (coord.y + 1) % lineCount;
+
+    setCurserAddress(memoryMap[y].min);
 }
 
 static bool busy(void) {
     uint8_t data = getByte(false);
 
     return data & _BV(7);
+}
+
+static uint8_t getCurserAddress(void) {
+    uint8_t data = getByte(false);
+
+    return data & ~_BV(7);
+}
+
+static uint8_t coordToAddress(uint8_t x, uint8_t y) {
+    y = clip(y, 0, lineCount - 1);
+    x = clip(x, 0, lineLength - 1);
+
+    return memoryMap[y].min + x;
+}
+
+static Coord addressToCoord(uint8_t address) {
+    Coord coord = {0, 0};
+
+    for(uint8_t i = 0; i < lineCount; i++) {
+        if((address >= memoryMap[i].min) && (address <= memoryMap[i].max)) {
+            coord.x = (address - memoryMap[i].min);
+            coord.y = i;
+            break;
+        }
+    }
+
+    return coord;
+}
+
+static void clearCurrentLine(void) {
+    static uint8_t count = 255;
+    static uint8_t address;
+
+    print(&stdout, "a\n");
+
+    if(count == 255) {
+        address = getCurserAddress();
+        Coord coord = addressToCoord(address);
+        address = memoryMap[coord.y].min;
+        setCurserAddress(address);
+    } else if(count < lineLength) {
+        sendByte(true, ' ');
+    } else {
+        state = run;
+        count = 255;
+        setCurserAddress(address);
+    }
+
+    count++;
+}
+
+static void stepBack(void) {
+    sendByte(false, CURSER_LEFT);
+    state = run;
 }
 
 static void sendByte(bool rs, uint8_t data) {
@@ -153,6 +259,7 @@ static void sendNibble(bool rs, uint8_t data) {
     pinSet(LCD_PIN_E, Low);
 }
 
+// XXX May need to wait 43us when reading data.
 static uint8_t getByte(bool rs) {
     uint8_t data = 0;
 
