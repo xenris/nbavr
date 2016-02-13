@@ -21,6 +21,7 @@ LIB_CFLAGS += -DF_CPU=$(freq)
 LIB_CFLAGS += -Wl,-gc-sections
 LIB_CFLAGS += -fdiagnostics-color=always
 LIB_CFLAGS += -Wno-unused-parameter
+LIB_CFLAGS += -Wno-unused-function
 
 LIB_LDFLAGS = -L$(TUP_CWD) -lnbavr
 
