@@ -34,7 +34,7 @@ uint32_t getMicros() {
     return 0; // TODO
 }
 
-bool addInterrupt(void (*function)(void), uint16_t us) {
+bool addInterrupt(void (*function)(uint16_t), uint16_t code, uint16_t us) {
     volatile uint16_t currentTicks = timer1GetTimerRegister();
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
@@ -64,6 +64,7 @@ bool addInterrupt(void (*function)(void), uint16_t us) {
         }
 
         kernel.microInts[n].function = function;
+        kernel.microInts[n].code = code;
         kernel.microInts[n].tick = interruptTime;
 
         kernel.microIntsTail = inc(kernel.microIntsTail);
@@ -148,7 +149,7 @@ ISR(TIMER1_COMPB_vect) {
             timer1OutputCompareMatchBIntEnable(false);
         }
 
-        interrupt.function();
+        interrupt.function(interrupt.code);
     }
 }
 

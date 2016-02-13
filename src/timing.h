@@ -13,7 +13,7 @@
 #include "kernel.h"
 
 void timingSetup();
-bool addInterrupt(void (*function)(void), uint16_t us);
+bool addInterrupt(void (*function)(uint16_t), uint16_t code, uint16_t us);
 uint32_t getMillis();
 uint32_t getMicros();
 void delayMillis(uint16_t ms);
