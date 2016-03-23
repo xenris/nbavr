@@ -14,4 +14,6 @@
 #define LCD_PIN_RS PinD4
 #define LCD_PIN_E PinB1
 
+#define MAX_SERVOS 6
+
 #endif

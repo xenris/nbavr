@@ -5,6 +5,7 @@
 #include "kernel.h"
 #include "lcd.h"
 #include "print.h"
+#include "servo.h"
 #include "scheduler.h"
 #include "serial.h"
 #include "stream.h"
