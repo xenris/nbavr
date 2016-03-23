@@ -13,6 +13,7 @@
 #include "timing.h"
 #include "twi.h"
 #include "yield.h"
+#include "hardware/uno.h"
 
 void nbavr(Task** tasks);
 
