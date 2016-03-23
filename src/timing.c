@@ -34,45 +34,41 @@ uint32_t getMicros() {
     return 0; // TODO
 }
 
-bool addInterrupt(void (*function)(uint16_t), uint16_t code, uint16_t us) {
-    volatile uint16_t currentTicks = timer1GetTimerRegister();
-
+bool addInterrupt(void (*function)(int), int code, uint16_t us) {
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if(kernel.microIntsTail == dec(kernel.microIntsHead)) {
-            // interrupt queue is full.
+        volatile uint16_t currentTicks = timer1GetTimerRegister();
+
+        if(kernel.microIntsTail >= MAX_MICRO_INTERRUPTS) {
+            // interrupt stack is full.
             return false;
         }
 
         uint16_t requestedTicks = usToTimerTicks(us);
 
-        uint16_t interruptTime = currentTicks + requestedTicks;
-
-        // Add interrupt to sorted ring buffer.
-        int n = kernel.microIntsTail;
-
-        while(true) {
-            int p = dec(n);
-
-            if((n == kernel.microIntsHead)
-            || (compareInterruptTimes(kernel.microInts[p].tick, interruptTime, currentTicks) <= 0)) {
-                break;
-            }
-
-            kernel.microInts[n] = kernel.microInts[p];
-
-            n = p;
+        if(requestedTicks < 2) { // TODO Check that an interrupt in only 2 ticks won't be missed.
+            requestedTicks = 2;
         }
 
-        kernel.microInts[n].function = function;
-        kernel.microInts[n].code = code;
-        kernel.microInts[n].tick = interruptTime;
+        uint16_t interruptTime = currentTicks + requestedTicks;
 
-        kernel.microIntsTail = inc(kernel.microIntsTail);
+        uint8_t index;
 
-        if(n == kernel.microIntsHead) {
+        for(index = kernel.microIntsTail; index > 0; index--) {
+            if(compareInterruptTimes(kernel.microInts[index - 1].tick, interruptTime, currentTicks) < 0) {
+                kernel.microInts[index] = kernel.microInts[index - 1];
+            } else {
+                break;
+            }
+        }
+
+        kernel.microInts[index] = (MicroInt){function, code, interruptTime};
+
+        if(index == kernel.microIntsTail) {
             timer1SetOutputCompareB(interruptTime);
             timer1OutputCompareMatchBIntEnable(true);
         }
+
+        kernel.microIntsTail++;
     }
 
     return true;
@@ -123,33 +119,23 @@ static uint16_t usToTimerTicks(uint16_t n) {
 }
 
 ISR(TIMER1_COMPB_vect) {
-    volatile uint16_t now = timer1GetTimerRegister();
-
-    if(kernel.microIntsTail == kernel.microIntsHead) {
-        // This shouldn't happen.
-        timer1OutputCompareMatchBIntEnable(false);
-    } else {
-        MicroInt interrupt = kernel.microInts[kernel.microIntsHead];
-
-        kernel.microIntsHead = inc(kernel.microIntsHead);
-
-        if(kernel.microIntsTail != kernel.microIntsHead) {
-            MicroInt next = kernel.microInts[kernel.microIntsHead];
-
-            if(next.tick == now) {
-/*                timer1SetOutputCompareMatchBFlag(); // Force interrupt to happen imediately.*/
-                // TODO How to handle this? Can't set flag manually, and interrupt will be missed
-                //  if tick == now.
-                //  Could handle it immediately in this interrupt...?
-                timer1SetOutputCompareB(next.tick); // XXX This probably won't work...
-            } else {
-                timer1SetOutputCompareB(next.tick);
-            }
-        } else {
+    while(true) {
+        if(kernel.microIntsTail == 0) {
             timer1OutputCompareMatchBIntEnable(false);
+            break;
         }
 
-        interrupt.function(interrupt.code);
+        MicroInt interrupt = kernel.microInts[kernel.microIntsTail - 1];
+
+        uint16_t now = timer1GetTimerRegister();
+
+        if((int16_t)now >= (int16_t)interrupt.tick) {
+            interrupt.function(interrupt.code);
+            kernel.microIntsTail--;
+        } else {
+            timer1SetOutputCompareB(interrupt.tick);
+            break;
+        }
     }
 }
 

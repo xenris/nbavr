@@ -17,7 +17,6 @@ typedef struct Kernel {
     uint8_t taskIndex; // The index of the next task to be checked by the scheduler.
     jmp_buf haltJmp; // For escaping a task if it halts.
     volatile MicroInt microInts[MAX_MICRO_INTERRUPTS]; // Queue of microsecond interrupts.
-    volatile int microIntsHead; // Head of microsecond interrupt queue.
     volatile int microIntsTail; // Tail of microsecond interrupt queue.
     volatile uint32_t millis; // Milliseconds passed since startup.
     volatile uint32_t seconds; // Seconds passed since startup.
