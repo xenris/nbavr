@@ -129,7 +129,9 @@ ISR(TIMER1_COMPB_vect) {
 
         uint16_t now = timer1GetTimerRegister();
 
-        if((int16_t)now >= (int16_t)interrupt.tick) {
+        uint16_t diff = interrupt.tick - now;
+
+        if((int16_t)diff <= 1) {
             interrupt.function(interrupt.code);
             kernel.microIntsTail--;
         } else {
