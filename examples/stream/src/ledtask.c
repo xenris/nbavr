@@ -19,8 +19,8 @@ static void loop(void) {
 
     uint8_t c;
 
-    if(streamPop(&stdin, &c)) {
-        streamClear(&stdin);
+    if(streamPop(stdin, &c)) {
+        streamClear(stdin);
         pinSet(PinB5, High);
         delayMillis(PULSE_LENGTH);
     }

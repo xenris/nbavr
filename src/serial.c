@@ -10,8 +10,11 @@ Task serialTask = {
     .priority = PRIORITY_LOW,
 };
 
-Stream stdout = streamInitCallback(30, stdoutCallback);
-Stream stdin = streamInit(10);
+static Stream serialOut = streamInitCallback(30, stdoutCallback);
+static Stream serialIn = streamInit(10);
+
+Stream* stdout = &serialOut;
+Stream* stdin = &serialIn;
 
 static void setup(void) {
     USART0Config config = {
@@ -28,7 +31,7 @@ static void setup(void) {
 }
 
 static void loop(void) {
-    if(streamHasData(&stdout)) {
+    if(streamHasData(stdout)) {
         serialFlush();
     }
 
@@ -46,7 +49,7 @@ void serialFlush() {
 ISR(USART_UDRE_vect) {
     uint8_t data;
 
-    if(streamPop(&stdout, &data)) {
+    if(streamPop(stdout, &data)) {
         usart0Push(data);
     } else {
         usart0DataRegisterEmptyInterruptEnable(false);
@@ -54,5 +57,5 @@ ISR(USART_UDRE_vect) {
 }
 
 ISR(USART_RX_vect) {
-    streamPush(&stdin, usart0Pop());
+    streamPush(stdin, usart0Pop());
 }

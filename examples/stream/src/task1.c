@@ -23,7 +23,7 @@ static void loop(void) {
     uint32_t millis = getMillis();
 
     if(millis >= delay) {
-        print(&stdout, "Task1 running (%i)\n", count);
+        print(stdout, "Task1 running (%i)\n", count);
         delay = millis + 1000;
         count++;
     }
@@ -31,6 +31,6 @@ static void loop(void) {
     uint8_t b;
 
     if(streamPop(&task1Stream, &b)) {
-        print(&stdout, "Task1 received byte 0x%x\n", b);
+        print(stdout, "Task1 received byte 0x%x\n", b);
     }
 }

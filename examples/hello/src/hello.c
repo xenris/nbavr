@@ -15,7 +15,7 @@ static void setup(void) {
 }
 
 static void loop(void) {
-    print(&stdout, "hello! (%i)\n", count);
+    print(stdout, "hello! (%i)\n", count);
     count++;
 
     delayMillis(1000);
