@@ -205,8 +205,6 @@ static void clearCurrentLine(void) {
     static uint8_t count = 255;
     static uint8_t address;
 
-    print(stdout, "a\n");
-
     if(count == 255) {
         address = getCurserAddress();
         Coord coord = addressToCoord(address);
