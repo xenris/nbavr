@@ -4,29 +4,30 @@ Non-blocking AVR.
 
 Created by Henry Shepperd (hshepperd@gmail.com)
 
+An alternative to the Arduino system.
+
 ## Aim
-A set of libraries written in C for AVR microprocessors which are guaranteed to never block.
-
-A simple and reliable real time OS, with the ability to recover tasks if they freeze up.
-
-To be reliable.
-
-To be efficient.
-
-To be an alternative to the Arduino system.
+* To be reliable.
+* To be efficient.
+* To be simple.
+* To work with most 8-bit AVR microprocessors.
 
 ## Features
-* Nonpreemptive multithreading.
-* Prevents system hangs.
-* Easy to use library for AVR hardware.
 * Written in C.
+* Real time operating system.
+* Non-preemptive miltitasking.
+* Prevents system lockups.
+* All functions are non-block.
 
 ## Status
 Beta
 
-The code is stable, but I am still in the process of making some fairly big changes and (hopefully) improvements to the api.
+The code is stable and most of the API is set, but some things may change, and more things will be added.
 
-End user documentation is quite limited. This readme and the example projects are all the available documentation.
+## Documentation
+Documentation is limited, but there should be enough to get started.
+
+See this readme, [reference](reference.md), and the [examples](examples/).
 
 ## Overview
 nbavr is fairly similar to the Arduino system. You have setup and loop functions which provide you with the base program flow, as well as a bunch of libraries to make doing things easier and more reliable. The difference with nbavr is that you can have many tasks running at the same time each with their own setup and loop functions. Each task also has a crash function which is called in the event that the task ever locks up. After crash is called the task's setup will be called before resuming the loop. All other tasks continue running normally.
@@ -34,40 +35,12 @@ nbavr is fairly similar to the Arduino system. You have setup and loop functions
 ## TaskManager (real time os)
 * The task manager provides nonpreemptive multitasking, which means all tasks share the same stack and each task step has to return before the next task can start. This has the advantage that less RAM is required, and that every task is atomic relative to each other. The disadvantage is that a single task can take up a large chunk of time (up to 16ms) before the task manager will stop and reset it to allow the other tasks to run.
 
-```c
-// Run a group of tasks.
-// This function never returns.
-// No more tasks can be started after this is called.
-void taskManagerRun(Task** tasks, uint8_t taskCount)
-```
-
-```c
-// A group of tasks is declared like this:
-static Task* tasks[] = {&task1, &task2, &task3};
-```
-
 ## Tasks
 * Tasks have setup, loop, and crash functions which provide program flow.
 * 1. First setup is called.
 * 2. Then loop is called repeatedly.
 * 3. If setup or loop take too long crash is called before going back to step 1.
 * Each task has a priority. PRIORITY_MEDIUM is the default.
-
-```c
-// Task declaration.
-// All elements are optional.
-Task task = {
-    .setup = ..., // Function called once at task start and after crash.
-    .loop = ..., // Function called repetedly after setup is called.
-    .crash = ..., // Function called when the task manager detects that the task has halted.
-    .priority = ..., // PRIORITY_LOW/MEDIUM/HIGH/DRIVER.
-};
-```
-
-```c
-// The function required for .setup, .loop and .crash.
-typedef void (*TaskFunction)(void);
-```
 
 ## Task halt handling
 * The task manager monitors each task using the hardware watchdog and will reset a task if it is taking too long, allowing all the other tasks to continue running, while giving the crashed task the chance to recover.
@@ -79,23 +52,6 @@ typedef void (*TaskFunction)(void);
 * First in first out (fifo) byte buffer.
 * Can be used for communication between tasks.
 * Because tasks run atomically to each other you can be sure that under normal circumstances a stream will contain a complete message. (Abnormal circumstances include the message being bigger than the stream's buffer, or having the task halt/crash before it finishes writing its message.)
-
-```c
-// To create a new stream of 20 bytes.
-static Stream stream = streamInit(20);
-```
-
-```c
-// A selection of functions for working with streams.
-bool streamPush(Stream* stream, uint8_t n);
-bool streamPop(Stream* stream, uint8_t* n);
-bool streamPeek(Stream* stream, uint8_t* n);
-int16_t streamUsed(Stream* stream);
-int16_t streamUnused(Stream* stream);
-bool streamHasOverflowed(Stream* stream);
-bool streamEmpty(Stream* stream);
-bool streamHasData(Stream* stream);
-```
 
 ## Recommended tools
 * git
