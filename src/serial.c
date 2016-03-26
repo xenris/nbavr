@@ -49,7 +49,7 @@ void serialFlush() {
 ISR(USART_UDRE_vect) {
     uint8_t data;
 
-    if(streamPop(stdout, &data)) {
+    if(streamPop_(stdout, &data)) {
         usart0Push(data);
     } else {
         usart0DataRegisterEmptyInterruptEnable(false);
@@ -57,5 +57,5 @@ ISR(USART_UDRE_vect) {
 }
 
 ISR(USART_RX_vect) {
-    streamPush(stdin, usart0Pop());
+    streamPush_(stdin, usart0Pop());
 }
