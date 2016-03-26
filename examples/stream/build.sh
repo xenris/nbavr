@@ -2,6 +2,7 @@
 
 mmcu=atmega328p
 freq=16000000
+programmer=stk500v2 #use "arduino" to upload to an Arduino device.
 
 set -e
 
@@ -14,7 +15,7 @@ tup
 avr-size gen/firmware.elf -C --mcu=atmega328p
 
 if [ "${1}" = "-u" ]; then
-    avrdude -p m328p -P /dev/ttyACM0 -c stk500v2 -e -U flash:w:gen/firmware.hex
+    avrdude -p m328p -P /dev/ttyACM0 -c $programmer -e -U flash:w:gen/firmware.hex
 fi
 
 if [ "${1}" == "-d" ]; then

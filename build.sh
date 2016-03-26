@@ -7,7 +7,7 @@ mcu=m328p
 mmcu=atmega328p
 freq=16000000
 port=/dev/ttyACM0
-programmer=stk500v2
+programmer=stk500v2 #use "arduino" to upload to an Arduino device.
 
 set -e
 
