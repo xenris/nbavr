@@ -17,7 +17,7 @@ An alternative to the Arduino system.
 * Real time operating system.
 * Non-preemptive miltitasking.
 * Prevents system lockups.
-* All functions are non-block.
+* All functions are non-blocking.
 
 ## Status
 Beta
