@@ -98,6 +98,11 @@ bool streamHasOverflowed(Stream* stream);
 
 bool streamEmpty(Stream* stream);
 bool streamHasData(Stream* stream);
+
+// There are also non-atomic variants available for speed critical code (e.g. inside interrupts).
+// Just append _ to the end of the stream function name.
+bool streamPush_(Stream* stream, uint8_t n);
+// etc...
 ```
 
 ### Example

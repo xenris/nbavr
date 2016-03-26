@@ -52,6 +52,7 @@ nbavr is fairly similar to the Arduino system. You have setup and loop functions
 * First in first out (fifo) byte buffer.
 * Can be used for communication between tasks.
 * Because tasks run atomically to each other you can be sure that under normal circumstances a stream will contain a complete message. (Abnormal circumstances include the message being bigger than the stream's buffer, or having the task halt/crash before it finishes writing its message.)
+* All the stream manipulation functions are atomic, meaning no interrupt can be called while a stream is being used. This means you can use streams to send data in and out of interrupt code without any chance of the stream being corrupted. (There are also non-atomic variants available.)
 
 ## Recommended tools
 * git
