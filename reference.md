@@ -333,15 +333,15 @@ typedef enum {
 ```c
 // Configure the ADC to do a single conversion on pin ADC1/PC1, using AVcc pin as reference, with a prescaler of 64.
 ADCConfig config = {
-    reference = ADC_REFERENCE_AVCC,
-    channel = ADC_1,
-    prescaler = ADC_PRESCALER_64,
-}
+    .reference = ADC_REFERENCE_AVCC,
+    .channel = ADC_1,
+    .prescaler = ADC_PRESCALER_64,
+};
 
 // Start the convertion
 adcStart(config);
 
-static volatile value;
+static volatile uint16_t value;
 
 // This interrupt will be called when the convertion is complete.
 ISR(ADC_vect) {
@@ -443,10 +443,10 @@ typedef enum {
 ```c
 // Setup timer/counter0 to call an interrupt every 1024 * 256 clock cycles.
 
-Timer0Config config {
+Timer0Config config = {
     .clockSelect = TIMER0_SOURCE_1024,
     .overflowIntEnable = true,
-}
+};
 
 timer0(config);
 
@@ -460,11 +460,11 @@ ISR(TIMER0_OVF_vect) {
 
 pinDirection(PinB3, Output);
 
-Timer2Config config {
+Timer2Config config = {
     .clockSelect = TIMER2_SOURCE_8,
     .waveformGenerationMode = TIMER2_FAST_PWM,
     .outputCompareA = TIMER2_OUTPUT_COMPARE_SET_ON_COMPARE,
-}
+};
 
 timer2(config);
 
