@@ -1,10 +1,11 @@
 # Tuprules
 
-ifeq ($(LIB_CFLAGS),)
-    mmcu = atmega328p
-
-    freq = 16000000L
-
+# If compiling as a library example use the flags provided by the library.
+ifneq ($(LIB_CFLAGS),)
+    CFLAGS = $(LIB_CFLAGS)
+    LDFLAGS = $(LIB_LDFLAGS)
+    LIBFILES = $(LIB_LIBFILE)
+else
     CFLAGS = -Ilib/nbavr/src/
     CFLAGS += -Wall
     CFLAGS += -Wextra
@@ -13,18 +14,14 @@ ifeq ($(LIB_CFLAGS),)
     CFLAGS += -g
     CFLAGS += -std=c99
     CFLAGS += -Os
-    CFLAGS += -mmcu=$(mmcu)
-    CFLAGS += -DF_CPU=$(freq)
+    CFLAGS += -mmcu=@(MMCU)
+    CFLAGS += -DF_CPU=@(FREQ)
     CFLAGS += -Wl,-gc-sections
     CFLAGS += -fdiagnostics-color=always
     CFLAGS += -Wno-unused-parameter
 
-    LDFLAGS = -Llib/nbavr/ -lnbavr
+    LDFLAGS = -Llib/nbavr/
+    LDFLAGS += -lnbavr
 
     LIBFILES = lib/nbavr/libnbavr.a
-else
-    CFLAGS = $(LIB_CFLAGS)
-    CFLAGS += -Wno-unused-parameter
-    LDFLAGS = $(LIB_LDFLAGS)
-    LIBFILES = $(LIB_LIBFILE)
 endif
