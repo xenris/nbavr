@@ -65,26 +65,24 @@ nbavr is fairly similar to the Arduino system. You have setup and loop functions
 * a terminal
 * picocom
 
-## Building
-Running build.sh will compile the library and all the examples.
+## Building the library
+Change build.config to suit your environment, then run build.sh.
 
 ## Running the examples
+1. Change build.config and tup.config to suit your environment.
+1. Run "build.sh -u hello" to compile and upload hello to a device.
 
-### Method 1
-1. Clone nbavr.
-2. Check that Tuprules.tup and build.sh are correct for your setup.
-3. Run "build.sh -u hello" to compile and upload hello to a device.
-
-### Method 2
+## Creating a new project
 1. Copy one of the examples to somewhere convenient.
-2. Clone nbavr into lib/nbavr/.
-3. Check that Tuprules.tup and build.sh are correct for your setup.
-4. Run "build.sh -u" to compile and upload to a device.
+1. Delete the gen/ and tmp/ directories if they exist.
+1. Clone nbavr into lib/nbavr.
+1. Change build.config and tup.config to suit your environment.
+1. Run "build.sh -u" to compile and upload to a device.
 
 ## Communicating over serial
-picocom --imap lfcrlf --omap crlf /dev/ttyACM1
+picocom --imap lfcrlf --omap crlf /dev/ttyACM0
 
-Change the serial port to suit your system.
+Change the serial port to suit your environment.
 
 ## Interrupts and hardware used by nbavr
 The watchdog timer is used to monitor tasks, resetting them if they halt.
