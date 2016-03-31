@@ -15,7 +15,7 @@ An alternative to the Arduino system.
 ## Features
 * Written in C.
 * Real time operating system.
-* Non-preemptive miltitasking.
+* Non-preemptive multitasking.
 * Prevents system lockups.
 * All functions are non-blocking.
 
