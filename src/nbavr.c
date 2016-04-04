@@ -6,15 +6,13 @@ static TaskFunction processState(Task* task);
 void nbavr(Task** tasks) {
     kernel.tasks = tasks;
 
-    resetClearStatus();
-
-    watchdog(WATCHDOG_16MS, WATCHDOG_INTERRUPT_RESET);
+    wdt_enable(WDTO_15MS);
 
     timingSetup();
 
     while(true) {
-        watchdogReset();
-        watchdogInterruptEnable(true);
+        wdt_reset();
+
         sei();
 
         Task* task = getNextTask();
@@ -35,7 +33,7 @@ static void processTask(Task* task) {
         TaskFunction f = processState(task);
 
         if(f != NULL) {
-            watchdogReset();
+            wdt_reset();
             f();
         }
 

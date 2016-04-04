@@ -2,6 +2,8 @@
 #define LIGHTSENSOR_H
 
 #include <nbavr.h>
+#include <tasks/serial.h>
+#include <tasks/twi.h>
 
 // Sample program to test TWI.
 // Reads values from the BH1750 light sensor chip and prints them to serial out.

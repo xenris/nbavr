@@ -3,6 +3,8 @@
 static void setup(void);
 static void loop(void);
 static void stdoutCallback();
+static void dataRegEmptyCallback(void);
+static void rxCompleteCallback(void);
 
 Task serialTask = {
     .setup = setup,
@@ -17,14 +19,15 @@ Stream* stdout = &serialOut;
 Stream* stdin = &serialIn;
 
 static void setup(void) {
-    USART0Config config = {
+    Usart0Config config = {
         .receiverEnable = true,
         .transmitterEnable = true,
-        .characterSize = USART0_8_BIT,
+        .characterSize = Usart0CharacterSize8,
         .baud = UBRR_VALUE,
         .use2X = USE_2X,
-        .dataRegisterEmptyIntEnable = true,
+        .dataRegisterEmptyCallback = dataRegEmptyCallback,
         .rxCompleteIntEnable = true,
+        .rxCompleteCallback = rxCompleteCallback,
     };
 
     usart0(config);
@@ -46,7 +49,7 @@ void serialFlush() {
     usart0DataRegisterEmptyInterruptEnable(true);
 }
 
-ISR(USART_UDRE_vect) {
+static void dataRegEmptyCallback(void) {
     uint8_t data;
 
     if(streamPop_(stdout, &data)) {
@@ -56,6 +59,6 @@ ISR(USART_UDRE_vect) {
     }
 }
 
-ISR(USART_RX_vect) {
+static void rxCompleteCallback(void) {
     streamPush_(stdin, usart0Pop());
 }

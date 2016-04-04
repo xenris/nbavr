@@ -1,6 +1,7 @@
 # Tuprules
 
-LIB_CFLAGS = -I$(TUP_CWD)/src
+LIB_CFLAGS = -I$(TUP_CWD)/
+LIB_CFLAGS += -I$(TUP_CWD)/src/
 LIB_CFLAGS += -Wall
 LIB_CFLAGS += -Wextra
 LIB_CFLAGS += -Werror
@@ -14,6 +15,8 @@ LIB_CFLAGS += -Wl,-gc-sections
 LIB_CFLAGS += -fdiagnostics-color=always
 LIB_CFLAGS += -Wno-unused-parameter
 LIB_CFLAGS += -Wno-unused-function
+LIB_CFLAGS += -Wno-attributes
+LIB_CFLAGS += -flto
 
 LIB_LDFLAGS = -L$(TUP_CWD)
 LIB_LDFLAGS += -lnbavr

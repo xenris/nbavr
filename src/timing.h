@@ -9,8 +9,10 @@
 // - A system for delaying a task loop for between 1 and 65535 milliseconds.
 // Timer/Counter1 is used to provide all time based functions.
 
+#include <stddef.h>
 #include "hardware.h"
 #include "kernel.h"
+#include "microint.h"
 
 void timingSetup();
 bool addInterrupt(void (*function)(int), int code, uint16_t us);

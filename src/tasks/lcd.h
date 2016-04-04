@@ -2,6 +2,7 @@
 #define NBAVR_LCD_H
 
 #include <nbavr.h>
+// FIXME Shouldn't really be using these blocking calls...?
 #include <util/delay.h>
 
 // \r = clear display and return curser to home position.

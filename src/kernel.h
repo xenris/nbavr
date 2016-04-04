@@ -1,13 +1,10 @@
 #ifndef NBAVR_KERNEL_H
 #define NBAVR_KERNEL_H
 
-// This module will provide all the state variables of the kernel in one tidy
-//  struct.
+// This module will provide all the state variables of the kernel in one tidy struct.
 
+#include <config.h>
 #include <setjmp.h>
-
-#include "../config.h"
-
 #include "task.h"
 #include "microint.h"
 

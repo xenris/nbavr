@@ -6,7 +6,8 @@ ifneq ($(LIB_CFLAGS),)
     LDFLAGS = $(LIB_LDFLAGS)
     LIBFILES = $(LIB_LIBFILE)
 else
-    CFLAGS = -Ilib/nbavr/src/
+    CFLAGS = -I$(TUP_CWD)/lib/nbavr/src/
+    CFLAGS += -I$(TUP_CWD)/
     CFLAGS += -Wall
     CFLAGS += -Wextra
     CFLAGS += -Werror
@@ -19,6 +20,9 @@ else
     CFLAGS += -Wl,-gc-sections
     CFLAGS += -fdiagnostics-color=always
     CFLAGS += -Wno-unused-parameter
+    CFLAGS += -Wno-unused-function
+    CFLAGS += -Wno-attributes
+    CFLAGS += -flto
 
     LDFLAGS = -Llib/nbavr/
     LDFLAGS += -lnbavr

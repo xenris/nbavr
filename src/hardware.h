@@ -1,17 +1,17 @@
-#ifndef HARDWARE_H
-#define HARDWARE_H
+#ifndef NBAVR_HARDWARE_H
+#define NBAVR_HARDWARE_H
 
-#include "../config.h"
-#include <avr/io.h>
-#include <stdbool.h>
-#include <util/setbaud.h>
-
-#if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328__)
-    #include "hardware/atmega328p.h"
-#endif
-
-#ifndef HARDWARE_DEFINED
-    #error Hardware specific code has not been defined for this AVR
-#endif
+#include "hardware/adc.h"
+#include "hardware/digitalio.h"
+#include "hardware/int0.h"
+#include "hardware/int1.h"
+#include "hardware/pcint0.h"
+#include "hardware/pcint1.h"
+#include "hardware/pcint2.h"
+#include "hardware/timer0.h"
+#include "hardware/timer1.h"
+#include "hardware/timer2.h"
+#include "hardware/usart0.h"
+#include "hardware/watchdog.h"
 
 #endif

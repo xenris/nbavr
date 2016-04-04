@@ -9,12 +9,16 @@
 
 static int compareInterruptTimes(uint16_t a, uint16_t b, uint16_t now);
 static uint16_t usToTimerTicks(uint16_t n);
+static void outputBIntCallback();
+static void outputAIntCallback();
 
 void timingSetup() {
     Timer1Config config = {
-        .clockSelect = TIMER1_SOURCE_64,
-        .outputCompareRegisterA = usToTimerTicks(1000),
-        .outputCompareMatchAIntEnable = true,
+        .clock = Timer1Clock64,
+        .outputARegister = usToTimerTicks(1000),
+        .outputAIntEnable = true,
+        .outputBIntCallback = outputBIntCallback,
+        .outputAIntCallback = outputAIntCallback,
     };
 
     timer1(config);
@@ -118,7 +122,7 @@ static uint16_t usToTimerTicks(uint16_t n) {
     // return (uint16_t)(((uint32_t)n * F_CPU_MHZ + (DIVISOR / 2)) / DIVISOR);
 }
 
-ISR(TIMER1_COMPB_vect) {
+static void outputBIntCallback() {
     while(true) {
         if(kernel.microIntsTail == 0) {
             timer1OutputCompareMatchBIntEnable(false);
@@ -141,7 +145,7 @@ ISR(TIMER1_COMPB_vect) {
     }
 }
 
-ISR(TIMER1_COMPA_vect) {
+static void outputAIntCallback() {
     uint16_t newTicks = timer1GetOutputCompareA() + usToTimerTicks(1000);
 
     timer1SetOutputCompareA(newTicks);

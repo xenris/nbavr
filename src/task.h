@@ -4,8 +4,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "stream.h"
-
 typedef enum {
     PRIORITY_DRIVER = 1,
     PRIORITY_HIGH = 5,
