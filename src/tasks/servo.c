@@ -18,7 +18,7 @@ static const int16_t servoUpdateDelay = 20;
 
 Task servoTask = {
     .loop = loop,
-    .priority = PRIORITY_LOW,
+    .priority = TaskPriorityLow,
 };
 
 static void loop(void) {

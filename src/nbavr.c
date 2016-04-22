@@ -39,7 +39,7 @@ static void processTask(Task* task) {
 
         kernel.currentTask = NULL;
     } else if(jmp == 1) { // Task halted.
-        task->state = STATE_CRASH;
+        task->state = TaskStateCrash;
     } else { // Task yielded
         kernel.currentTask = NULL;
     }
@@ -47,13 +47,13 @@ static void processTask(Task* task) {
 
 static TaskFunction processState(Task* task) {
     switch(task->state) {
-    case STATE_LOOP:
+    case TaskStateLoop:
         return task->loop;
-    case STATE_CRASH:
-        task->state = STATE_SETUP;
+    case TaskStateCrash:
+        task->state = TaskStateSetup;
         return task->crash;
     default:
-        task->state = STATE_LOOP;
+        task->state = TaskStateLoop;
         return task->setup;
     }
 }

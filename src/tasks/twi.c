@@ -22,7 +22,7 @@ Stream twiStream = streamInit(2 * sizeof(TWIAction));
 Task twiTask = {
     .setup = setup,
     .loop = loop,
-    .priority = PRIORITY_DRIVER,
+    .priority = TaskPriorityDriver,
 };
 
 static void setup(void) {

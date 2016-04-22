@@ -73,7 +73,7 @@ static void init7(void);
 Task lcdTask = {
     .setup = setup,
     .loop = loop,
-    .priority = PRIORITY_MEDIUM,
+    .priority = TaskPriorityMedium,
 };
 
 static Stream _lcdout = streamInit(LCD_STREAM_SIZE);
@@ -133,9 +133,9 @@ static void run(void) {
             }
         }
 
-        lcdTask.priority = PRIORITY_HIGH;
+        lcdTask.priority = TaskPriorityHigh;
     } else {
-        lcdTask.priority = PRIORITY_LOW;
+        lcdTask.priority = TaskPriorityLow;
     }
 }
 

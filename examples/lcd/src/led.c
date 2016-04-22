@@ -8,7 +8,7 @@ static const Pin ledPin = PinB5;
 Task ledTask = {
     .setup = setup,
     .loop = loop,
-    .priority = PRIORITY_LOW,
+    .priority = TaskPriorityLow,
 };
 
 static void setup(void) {

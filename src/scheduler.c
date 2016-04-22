@@ -14,7 +14,7 @@ Task* getNextTask(void) {
         }
 
         if(task->priority == 0) {
-            task->priority = PRIORITY_MEDIUM;
+            task->priority = TaskPriorityMedium;
         }
 
         if(task->tokens >= task->priority) {
