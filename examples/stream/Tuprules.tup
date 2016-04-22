@@ -23,6 +23,7 @@ else
     CFLAGS += -Wno-unused-function
     CFLAGS += -Wno-attributes
     CFLAGS += -flto
+    CFLAGS += -ffreestanding
 
     LDFLAGS = -Llib/nbavr/
     LDFLAGS += -lnbavr

@@ -17,6 +17,7 @@ LIB_CFLAGS += -Wno-unused-parameter
 LIB_CFLAGS += -Wno-unused-function
 LIB_CFLAGS += -Wno-attributes
 LIB_CFLAGS += -flto
+LIB_CFLAGS += -ffreestanding
 
 LIB_LDFLAGS = -L$(TUP_CWD)
 LIB_LDFLAGS += -lnbavr
