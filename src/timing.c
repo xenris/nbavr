@@ -151,4 +151,10 @@ static void outputAIntCallback() {
     timer1SetOutputCompareA(newTicks);
 
     kernel.millis++;
+
+    if(kernel.currentTask != NULL) {
+        if(kernel.millis > kernel.haltTimeout) {
+            longjmp(kernel.haltJmp, 1);
+        }
+    }
 }

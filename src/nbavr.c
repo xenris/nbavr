@@ -28,16 +28,15 @@ static void processTask(Task* task) {
     uint8_t jmp = setjmp(kernel.haltJmp);
 
     if(jmp == 0) {
-        kernel.currentTask = task;
-
         TaskFunction f = processState(task);
 
         if(f != NULL) {
             wdt_reset();
+            kernel.haltTimeout = getMillis() + TASK_TIMEOUT;
+            kernel.currentTask = task;
             f();
+            kernel.currentTask = NULL;
         }
-
-        kernel.currentTask = NULL;
     } else if(jmp == 1) { // Task halted.
         task->state = TaskStateCrash;
     } else { // Task yielded

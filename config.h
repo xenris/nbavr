@@ -1,6 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#define TASK_TIMEOUT 6
+
 #define BAUD 9600
 #define TWI_BAUD 400
 #define MAX_MICRO_INTERRUPTS 10

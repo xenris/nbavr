@@ -12,6 +12,7 @@ typedef struct Kernel {
     Task** tasks; // The list of tasks provided by the user.
     Task* currentTask; // The currently active task, or null if none.
     uint8_t taskIndex; // The index of the next task to be checked by the scheduler.
+    uint32_t haltTimeout; // Time when the task will be reset if it doesn't return.
     jmp_buf haltJmp; // For escaping a task if it halts.
     volatile MicroInt microInts[MAX_MICRO_INTERRUPTS]; // Queue of microsecond interrupts.
     volatile int microIntsTail; // Tail of microsecond interrupt queue.
