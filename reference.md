@@ -2,6 +2,8 @@
 
 This reference is a work in progress, but should contain enough to get started, along with the examples.
 
+(This reference isn't automatically generated, so it will most likely be perpetually slightly out of date.)
+
 ## Task Manager
 
 ```c
@@ -25,10 +27,9 @@ nbavr(tasks)
 // Task declaration.
 // All elements are optional.
 Task task = {
-    .setup = ..., // Function called once at task start and after crash.
+    .setup = ..., // Function called once at task start (and again if the task halts).
     .loop = ..., // Function called repetedly after setup is called.
     .crash = ..., // Function called when the task manager detects that the task has halted.
-    .priority = ..., // PRIORITY_LOW/MEDIUM/HIGH/DRIVER.
 };
 
 // The type of the .setup, .loop, and .crash functions.
@@ -49,7 +50,6 @@ Task task = {
     .setup = setup,
     .loop = loop,
     .crash = crash,
-    .priority = PRIORITY_LOW,
 };
 
 static void setup(void) {
