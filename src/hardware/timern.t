@@ -24,11 +24,15 @@ void timerN()(TimerN(Config) config) {
         uint8_t* clockBit2Reg = (uint8_t*)&TIMER_N(_CLOCK_BIT_2_REG);
         uint8_t* timerCounterReg = (uint8_t*)&TIMER_N(_TIMER_COUNTER_REG);
         #if TIMER_N(_OUTPUT_A)
+        uint8_t* outputAModeBit0Reg = (uint8_t*)&TIMER_N(_OUTPUT_A_MODE_BIT_0_REG);
+        uint8_t* outputAModeBit1Reg = (uint8_t*)&TIMER_N(_OUTPUT_A_MODE_BIT_1_REG);
         uint8_t* outputAReg = (uint8_t*)&TIMER_N(_OUTPUT_A_REG);
         uint8_t* outputAIntEnableReg = (uint8_t*)&TIMER_N(_OUTPUT_A_INT_ENABLE_REG);
         uint8_t* outputAIntFlagReg = (uint8_t*)&TIMER_N(_OUTPUT_A_INT_FLAG_REG);
         #endif
         #if TIMER_N(_OUTPUT_B)
+        uint8_t* outputBModeBit0Reg = (uint8_t*)&TIMER_N(_OUTPUT_B_MODE_BIT_0_REG);
+        uint8_t* outputBModeBit1Reg = (uint8_t*)&TIMER_N(_OUTPUT_B_MODE_BIT_1_REG);
         uint8_t* outputBReg = (uint8_t*)&TIMER_N(_OUTPUT_B_REG);
         uint8_t* outputBIntEnableReg = (uint8_t*)&TIMER_N(_OUTPUT_B_INT_ENABLE_REG);
         uint8_t* outputBIntFlagReg = (uint8_t*)&TIMER_N(_OUTPUT_B_INT_FLAG_REG);
@@ -50,10 +54,14 @@ void timerN()(TimerN(Config) config) {
         uint8_t clockBit1 = TIMER_N(_CLOCK_BIT_1);
         uint8_t clockBit2 = TIMER_N(_CLOCK_BIT_2);
         #if TIMER_N(_OUTPUT_A)
+        uint8_t outputAModeBit0 = TIMER_N(_OUTPUT_A_MODE_BIT_0);
+        uint8_t outputAModeBit1 = TIMER_N(_OUTPUT_A_MODE_BIT_1);
         uint8_t outputAIntEnableBit = TIMER_N(_OUTPUT_A_INT_ENABLE_BIT);
         uint8_t outputAIntFlagBit = TIMER_N(_OUTPUT_A_INT_FLAG_BIT);
         #endif
         #if TIMER_N(_OUTPUT_B)
+        uint8_t outputBModeBit0 = TIMER_N(_OUTPUT_B_MODE_BIT_0);
+        uint8_t outputBModeBit1 = TIMER_N(_OUTPUT_B_MODE_BIT_1);
         uint8_t outputBIntEnableBit = TIMER_N(_OUTPUT_B_INT_ENABLE_BIT);
         uint8_t outputBIntFlagBit = TIMER_N(_OUTPUT_B_INT_FLAG_BIT);
         #endif
@@ -82,6 +90,8 @@ void timerN()(TimerN(Config) config) {
 
         // Setup output compares.
         #if TIMER_N(_OUTPUT_A)
+        setBit(outputAModeBit0Reg, outputAModeBit0, config.outputAMode & 0x01);
+        setBit(outputAModeBit1Reg, outputAModeBit1, config.outputAMode & 0x02);
         setBit(outputAIntEnableReg, outputAIntEnableBit, config.outputAIntEnable);
         setBit(outputAIntFlagReg, outputAIntFlagBit, true);
         *outputAReg = config.outputARegister;
@@ -89,6 +99,8 @@ void timerN()(TimerN(Config) config) {
         #endif
 
         #if TIMER_N(_OUTPUT_B)
+        setBit(outputBModeBit0Reg, outputBModeBit0, config.outputBMode & 0x01);
+        setBit(outputBModeBit1Reg, outputBModeBit1, config.outputBMode & 0x02);
         setBit(outputBIntEnableReg, outputBIntEnableBit, config.outputBIntEnable);
         setBit(outputBIntFlagReg, outputBIntFlagBit, true);
         *outputBReg = config.outputBRegister;

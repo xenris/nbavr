@@ -16,6 +16,14 @@
 #define CHIP_ADC_START_REG                                      ADCSRA
 #define CHIP_ADC_START_BIT                                      ADSC
 
+#define CHIP_ADC_REFERENCE_BIT_0_REG                            ADMUX
+#define CHIP_ADC_REFERENCE_BIT_1_REG                            ADMUX
+#define CHIP_ADC_REFERENCE_BIT_0                                REFS0
+#define CHIP_ADC_REFERENCE_BIT_1                                REFS1
+#define CHIP_ADC_REFERENCE_AREF_ID                              0
+#define CHIP_ADC_REFERENCE_AVCC_ID                              1
+#define CHIP_ADC_REFERENCE_INTERNAL_ID                          3
+
 #define CHIP_ADC_CHANNEL_BIT_0_REG                              ADMUX
 #define CHIP_ADC_CHANNEL_BIT_1_REG                              ADMUX
 #define CHIP_ADC_CHANNEL_BIT_2_REG                              ADMUX
@@ -184,6 +192,10 @@
 #define CHIP_TIMER_1_TIMER_COUNTER_REG                          TCNT1
 
 #define CHIP_TIMER_1_OUTPUT_A                                   TRUE
+#define CHIP_TIMER_1_OUTPUT_A_MODE_BIT_0_REG                    TCCR1A
+#define CHIP_TIMER_1_OUTPUT_A_MODE_BIT_1_REG                    TCCR1A
+#define CHIP_TIMER_1_OUTPUT_A_MODE_BIT_0                        COM1A0
+#define CHIP_TIMER_1_OUTPUT_A_MODE_BIT_1                        COM1A1
 #define CHIP_TIMER_1_OUTPUT_A_REG                               OCR1A
 #define CHIP_TIMER_1_OUTPUT_A_INT_ENABLE_REG                    TIMSK
 #define CHIP_TIMER_1_OUTPUT_A_INT_ENABLE_BIT                    OCIE1A
@@ -192,6 +204,10 @@
 #define CHIP_TIMER_1_OUTPUT_A_INT_VECTOR                        TIMER1_COMPA_vect
 
 #define CHIP_TIMER_1_OUTPUT_B                                   TRUE
+#define CHIP_TIMER_1_OUTPUT_B_MODE_BIT_0_REG                    TCCR1A
+#define CHIP_TIMER_1_OUTPUT_B_MODE_BIT_1_REG                    TCCR1A
+#define CHIP_TIMER_1_OUTPUT_B_MODE_BIT_0                        COM1B0
+#define CHIP_TIMER_1_OUTPUT_B_MODE_BIT_1                        COM1B1
 #define CHIP_TIMER_1_OUTPUT_B_REG                               OCR1B
 #define CHIP_TIMER_1_OUTPUT_B_INT_ENABLE_REG                    TIMSK
 #define CHIP_TIMER_1_OUTPUT_B_INT_ENABLE_BIT                    OCIE1B
@@ -249,6 +265,10 @@
 #define CHIP_TIMER_2_TIMER_COUNTER_REG                          TCNT2
 
 #define CHIP_TIMER_2_OUTPUT_A                                   TRUE
+#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_0_REG                    TCCR2A
+#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_1_REG                    TCCR2A
+#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_0                        COM2A0
+#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_1                        COM2A1
 #define CHIP_TIMER_2_OUTPUT_A_REG                               OCR2
 #define CHIP_TIMER_2_OUTPUT_A_INT_ENABLE_REG                    TIMSK
 #define CHIP_TIMER_2_OUTPUT_A_INT_ENABLE_BIT                    OCIE2

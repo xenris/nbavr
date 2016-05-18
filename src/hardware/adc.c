@@ -10,6 +10,9 @@ void adcStart(ADCConfig config) {
         uint8_t* enableReg = (uint8_t*)&CHIP_ADC_ENABLE_REG;
         uint8_t* startReg = (uint8_t*)&CHIP_ADC_START_REG;
         uint8_t* intFlagReg = (uint8_t*)&CHIP_ADC_INT_FLAG_REG;
+        uint8_t* intEnableReg = (uint8_t*)&CHIP_ADC_INT_ENABLE_REG;
+        uint8_t* referenceBit0Reg = (uint8_t*)&CHIP_ADC_REFERENCE_BIT_0_REG;
+        uint8_t* referenceBit1Reg = (uint8_t*)&CHIP_ADC_REFERENCE_BIT_1_REG;
         #ifdef CHIP_ADC_TRIGGER
         uint8_t* autoEnableReg = (uint8_t*)&CHIP_ADC_TRIGGER_ENABLE_REG;
         uint8_t* triggerBit0Reg = (uint8_t*)&CHIP_ADC_TRIGGER_BIT_0_REG;
@@ -32,7 +35,9 @@ void adcStart(ADCConfig config) {
         uint8_t enableBit = CHIP_ADC_ENABLE_BIT;
         uint8_t startBit = CHIP_ADC_START_BIT;
         uint8_t intFlagBit = CHIP_ADC_INT_FLAG_BIT;
-
+        uint8_t intEnableBit = CHIP_ADC_INT_ENABLE_BIT;
+        uint8_t referenceBit0 = CHIP_ADC_REFERENCE_BIT_0;
+        uint8_t referenceBit1 = CHIP_ADC_REFERENCE_BIT_1;
         #ifdef CHIP_ADC_TRIGGER
         uint8_t autoEnableBit = CHIP_ADC_TRIGGER_ENABLE_BIT;
         uint8_t triggerBit0 = CHIP_ADC_TRIGGER_BIT_0;
@@ -79,12 +84,19 @@ void adcStart(ADCConfig config) {
         setBit(channelBit2Reg, channelBit2, config.channel & 0x04);
         setBit(channelBit3Reg, channelBit3, config.channel & 0x08);
 
+        // Set reference.
+        setBit(referenceBit0Reg, referenceBit0, config.reference & 0x01);
+        setBit(referenceBit1Reg, referenceBit1, config.reference & 0x02);
+
         // Set prescaler
         #ifdef CHIP_ADC_PRESCALER
         setBit(prescalerBit0Reg, prescalerBit0, config.prescaler & 0x01);
         setBit(prescalerBit1Reg, prescalerBit1, config.prescaler & 0x02);
         setBit(prescalerBit2Reg, prescalerBit2, config.prescaler & 0x04);
         #endif
+
+        // Enable interrupt.
+        setBit(intEnableReg, intEnableBit, true);
 
         // Register callback.
         mADCCallback = config.callback;
