@@ -2,7 +2,7 @@
 
 This reference is a work in progress, but should contain enough to get started, along with the examples.
 
-(This reference isn't automatically generated, so it will most likely be perpetually slightly out of date.)
+(This reference isn't automatically generated (yet), so it will most likely be perpetually slightly out of date.)
 
 ## Task Manager
 
@@ -266,18 +266,19 @@ portSet(PortB, 0x0F);
 // Starts the ADC using the configuration provided.
 void adcStart(ADCConfig config);
 
-// Disables the ADC.
-void adcDisable();
+// Stops the ADC.
+void adcStop();
 
-// Gets the most recently acquired analog to digital conversion
-uint16_t adcGetValue();
+// The callback function to get the value from the ADC.
+typedef void (*ADCCallback)(uint16_t value);
 
 typedef struct {
     ADCReference reference;
     ADCChannel channel;
     ADCPrescaler prescaler;
-    ADCAdjust adjust;
-    ADCAutoTrigger autoTrigger;
+    bool leftAdjust;
+    ADCTrigger trigger;
+    ADCCallback callback;
 } ADCConfig;
 
 typedef enum {
@@ -287,17 +288,17 @@ typedef enum {
 } ADCReference;
 
 typedef enum {
-    ADC_0,
-    ADC_1,
-    ADC_2,
-    ADC_3,
-    ADC_4,
-    ADC_5,
-    ADC_6,
-    ADC_7,
-    ADC_8,
-    ADC_VBG,
-    ADC_GND,
+    ADC_CHANNEL_0,
+    ADC_CHANNEL_1,
+    ADC_CHANNEL_2,
+    ADC_CHANNEL_3,
+    ADC_CHANNEL_4,
+    ADC_CHANNEL_5,
+    ADC_CHANNEL_6,
+    ADC_CHANNEL_7,
+    ADC_CHANNEL_8,
+    ADC_CHANNEL_VBG,
+    ADC_CHANNEL_GND,
 } ADCChannel;
 
 typedef enum {
@@ -311,21 +312,16 @@ typedef enum {
 } ADCPrescaler;
 
 typedef enum {
-    ADC_RIGHT_ADJUST,
-    ADC_LEFT_ADJUST,
-} ADCAdjust;
-
-typedef enum {
-    ADC_SINGLE_CONVERSION,
-    ADC_FREE_RUNNING,
-    ADC_ANALOG_COMPARATOR,
-    ADC_EXTERNAL_INT_0,
-    ADC_TIMER0_COMPARE_MATCH_A,
-    ADC_TIMER0_OVERFLOW,
-    ADC_TIMER1_COMPARE_MATCH_B,
-    ADC_TIMER1_OVERFLOW,
-    ADC_TIMER1_CAPTURE_EVENT,
-} ADCAutoTrigger;
+    ADC_TRIGGER_SINGLE_CONVERSION,
+    ADC_TRIGGER_FREE_RUNNING,
+    ADC_TRIGGER_ANALOG_COMPARATOR,
+    ADC_TRIGGER_EXTERNAL_INT_0,
+    ADC_TRIGGER_TIMER0_COMPARE_MATCH_A,
+    ADC_TRIGGER_TIMER0_OVERFLOW,
+    ADC_TRIGGER_TIMER1_COMPARE_MATCH_B,
+    ADC_TRIGGER_TIMER1_OVERFLOW,
+    ADC_TRIGGER_TIMER1_CAPTURE_EVENT,
+} ADCTrigger;
 ```
 
 ### Example
@@ -334,18 +330,20 @@ typedef enum {
 // Configure the ADC to do a single conversion on pin ADC1/PC1, using AVcc pin as reference, with a prescaler of 64.
 ADCConfig config = {
     .reference = ADC_REFERENCE_AVCC,
-    .channel = ADC_1,
+    .channel = ADC_CHANNEL_1,
     .prescaler = ADC_PRESCALER_64,
+    .trigger = ADC_TRIGGER_SINGLE_CONVERSION,
+    .callback = adcCallback,
 };
 
 // Start the convertion
 adcStart(config);
 
-static volatile uint16_t value;
-
-// This interrupt will be called when the convertion is complete.
-ISR(ADC_vect) {
-    value = adcGetValue();
+// This callback will be called when the convertion is complete.
+void adcCallback(uint16_t value) {
+    // Use or save this value here.
+    // e.g. Push this value to a stream:
+    streamPush16_(&valueStream, value);
 }
 ```
 
@@ -359,6 +357,9 @@ static Task* tasks[] = {&task1, &task2, &task3, &servoTask, NULL};
 ```c
 // Servos can be added to any IO pin.
 int8_t servoAdd(Pin pin);
+
+// Servos can be removed, reducing their power consumption.
+void servoRemove(int8_t servo);
 
 // The position of the servo is defined by a signed 8 bit integer, which gives the range -128 to 127, end to end.
 void servoSet(int8_t servo, int8_t position);
@@ -385,72 +386,92 @@ Timer/Counter1 is used by nbavr and shouldn't be changed. (To use timer/counter2
 // Start a timer/counter with the provided configuration.
 void timer0(Timer0Config config);
 
+// Set the current value of the timer/counter.
+void timer0SetTimerRegister(uint8_t v);
 // Get the current value of the timer/counter.
-uint8_t timer0GetTimerRegister();
+uint8_t timer0GetTimerRegister(void);
 
-// Set the output compare registers.
+// Controlling the timer's output compares.
 void timer0SetOutputCompareA(uint8_t v);
-void timer0SetOutputCompareB(uint8_t v);
-
-// Enable various interrupts.
-void timer0OverflowIntEnable(bool b);
+uint8_t timer0GetOutputCompareA(void);
 void timer0OutputCompareMatchAIntEnable(bool b);
-void timer0OutputCompareMatchBIntEnable(bool b)
+bool timer0OutputCompareMatchAFlag();
+void timer0ClearOutputCompareMatchAFlag();
+
+void timer0SetOutputCompareB(uint8_t v);
+uint8_t timer0GetOutputCompareB(void);
+void timer0OutputCompareMatchBIntEnable(bool b);
+bool timer0OutputCompareMatchBFlag();
+void timer0ClearOutputCompareMatchBFlag();
+
+// Controlling the timer's overflow interrupt.
+void timer0OverflowIntEnable(bool b);
+bool timer0OverflowFlag();
+void timer0ClearOverflowFlag();
+
+// The timer callback function.
+typedef void (*TimerCallback)(void);
 
 typedef struct {
-    Timer0OutputCompareMode outputCompareA;
-    Timer0OutputCompareMode outputCompareB;
-    Timer0WaveformGenerationMode waveformGenerationMode;
-    Timer0ClockSelect clockSelect;
+    Timer0Waveform waveform;
+    Timer0Clock clock;
     uint8_t timerRegister;
-    uint8_t outputCompareRegisterA;
-    uint8_t outputCompareRegisterB;
-    bool outputCompareMatchAIntEnable;
-    bool outputCompareMatchBIntEnable;
+    uint8_t outputARegister;
+    bool outputAIntEnable;
+    Timer0OutputMode outputAMode;
+    TimerCallback outputAIntCallback;
+    uint8_t outputBRegister;
+    bool outputBIntEnable;
+    Timer0OutputMode outputBMode;
+    TimerCallback outputBIntCallback;
     bool overflowIntEnable;
+    TimerCallback overflowIntCallback;
 } Timer0Config;
 
 typedef enum {
-    TIMER0_OUTPUT_COMPARE_DISCONNECTED = 0,
-    TIMER0_OUTPUT_COMPARE_TOGGLE = 1,
-    TIMER0_OUTPUT_COMPARE_CLEAR_ON_COMPARE = 2,
-    TIMER0_OUTPUT_COMPARE_SET_ON_COMPARE = 3,
-} Timer0OutputCompareMode;
+    Timer0OutputModeDisconnected,
+    Timer0OutputModeToggle,
+    Timer0OutputModeClear,
+    Timer0OutputModeSet,
+} Timer0OutputMode;
 
 typedef enum {
-    TIMER0_NORMAL = 0,
-    TIMER0_PWM_PHASE_CORRECT = _BV(WGM00),
-    TIMER0_CLEAR_TIMER_ON_COMPARE = _BV(WGM01),
-    TIMER0_FAST_PWM = _BV(WGM01) | _BV(WGM00),
-    TIMER0_PWM_PHASE_CORRECT_OCRA = _BV(WGM02) | _BV(WGM00),
-    TIMER0_FAST_PWM_OCRA = _BV(WGM02) | _BV(WGM01) | _BV(WGM00),
-} Timer0WaveformGenerationMode;
+    Timer0WaveformNormal,
+    Timer0WaveformPWM,
+    Timer0WaveformCTCOCRA,
+    Timer0WaveformFastPWM,
+    Timer0WaveformPWMOCRA,
+    Timer0WaveformFastPWMOCRA,
+} Timer0Waveform;
 
 typedef enum {
-    TIMER0_SOURCE_NONE = 0,
-    TIMER0_SOURCE_1 = 1,
-    TIMER0_SOURCE_8 = 2,
-    TIMER0_SOURCE_64 = 3,
-    TIMER0_SOURCE_256 = 4,
-    TIMER0_SOURCE_1024 = 5,
-    TIMER0_SOURCE_EXTERNAL_FALLING = 6,
-    TIMER0_SOURCE_EXTERNAL_RISING = 7,
-} Timer0ClockSelect;
+    Timer0ClockNone,
+    Timer0Clock1,
+    Timer0Clock8,
+    Timer0Clock32,
+    Timer0Clock64,
+    Timer0Clock128,
+    Timer0Clock256,
+    Timer0Clock1024,
+    Timer0ClockExtFalling,
+    Timer0ClockExtRising,
+} Timer0Clock;
 ```
 
 ### Example
 
 ```c
-// Setup timer/counter0 to call an interrupt every 1024 * 256 clock cycles.
+// Setup timer/counter0 to call overflowCallback every 1024 * 256 clock cycles.
 
 Timer0Config config = {
-    .clockSelect = TIMER0_SOURCE_1024,
+    .clock = Timer0Clock1024,
     .overflowIntEnable = true,
+    .overflowIntCallback = overflowCallback,
 };
 
 timer0(config);
 
-ISR(TIMER0_OVF_vect) {
+void overflowCallback(void) {
     // ...
 }
 
@@ -461,9 +482,9 @@ ISR(TIMER0_OVF_vect) {
 pinDirection(PinB3, Output);
 
 Timer2Config config = {
-    .clockSelect = TIMER2_SOURCE_8,
-    .waveformGenerationMode = TIMER2_FAST_PWM,
-    .outputCompareA = TIMER2_OUTPUT_COMPARE_SET_ON_COMPARE,
+    .clock = Timer2Clock8,
+    .waveform = Timer2WaveformFastPWM,
+    .outputAMode = Timer2OutputModeSet,
 };
 
 timer2(config);
@@ -597,37 +618,43 @@ twiDo(&action);
 
 ```c
 // Enable external interrupt triggered by the defined event.
-void int0(IntEvent event);
-void int1(IntEvent event);
+void int0(IntTrigger trigger, IntCallback callback);
+void int1(IntTrigger trigger, IntCallback callback);
+
+// Int callback function.
+typedef void (*IntCallback)(void);
 
 // Enable pin change external interrupts on the defined pins.
-void pcint0(uint8_t active); // Pins PCINT0 to PCINT7
-void pcint1(uint8_t active); // Pins PCINT8 to PCINT14 (No PCINT15)
-void pcint2(uint8_t active); // Pins PCINT16 to PCINT23
+void pcint0(uint8_t active, PCIntCallback callback); // Pins PCINT0 to PCINT7
+void pcint1(uint8_t active, PCIntCallback callback); // Pins PCINT8 to PCINT14 (No PCINT15)
+void pcint2(uint8_t active, PCIntCallback callback); // Pins PCINT16 to PCINT23
+
+// PCInt callback function.
+typedef void (*PCIntCallback)(void);
 
 typedef enum {
-    IntLow = 0,
-    IntChange = 1,
-    IntFalling = 2,
-    IntRising = 3,
-    IntDisable = 4,
-} IntEvent;
+    IntTriggerLow,
+    IntTriggerChange,
+    IntTriggerFalling,
+    IntTriggerRising,
+    IntDisable,
+} IntTrigger;
 ```
 
 ### Example
 
 ```c
 // Enable an external interrupt, triggered when pin INT0/PD2 goes low.
-int0(IntFalling);
+int0(IntTriggerFalling, intCallback);
 
 // Enable a pin change external interrupt, triggered when either pin PCINT8/PC0 or PCINT9/PC1 changes.
-pcint1(0x03);
+pcint1(0x03, pcintCallback);
 
-ISR(INT0_vect) {
+void intCallback(void) {
     //...
 }
 
-ISR(PCINT1_vect) {
+void pcintCallback(void) {
     //...
 }
 ```
