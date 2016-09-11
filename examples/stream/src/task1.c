@@ -11,12 +11,13 @@ Task task1 = {
 static uint32_t delay;
 static uint16_t count;
 
-Stream task1Stream = streamInit(5);
+static Stream _task1Stream = streamInit(5);
+Stream* task1Stream = &_task1Stream;
 
 static void setup(void) {
     delay = 0;
     count = 0;
-    streamClear(&task1Stream);
+    streamClear(task1Stream);
 }
 
 static void loop(void) {
@@ -30,7 +31,7 @@ static void loop(void) {
 
     uint8_t b;
 
-    if(streamPop(&task1Stream, &b)) {
+    if(streamPop(task1Stream, &b)) {
         print(stdout, "Task1 received byte 0x%x\n", b);
     }
 }

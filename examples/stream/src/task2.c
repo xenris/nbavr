@@ -1,6 +1,6 @@
 #include "task2.h"
 
-extern Stream task1Stream;
+extern Stream* task1Stream;
 
 static void setup(void);
 static void loop(void);
@@ -18,7 +18,7 @@ static void setup(void) {
 }
 
 static void loop(void) {
-    streamPush(&task1Stream, count);
+    streamPush(task1Stream, count);
     count += 25;
 
     delayMillis(4100);
