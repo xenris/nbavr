@@ -17,7 +17,7 @@ static bool repeatStartRequested;
 static uint8_t dataIndex;
 static TWIAction action;
 
-Stream twiStream = streamInit(2 * sizeof(TWIAction));
+static Stream twiStream = streamInit(2 * sizeof(TWIAction));
 
 Task twiTask = {
     .setup = setup,
