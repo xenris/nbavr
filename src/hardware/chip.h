@@ -13,6 +13,10 @@
     #include "chips/atmega8.h"
 #endif
 
+/*#if defined(__AVR_XXX__)*/
+/*    #include "chips/xxx.h"*/
+/*#endif*/
+
 #ifndef NBAVR_CHIP_DEFINED
     #error The hardware has not been defined for this chip
 #endif
