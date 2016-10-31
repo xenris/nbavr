@@ -4,29 +4,27 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-typedef enum {
-    TaskPriorityDriver = 1,
-    TaskPriorityHigh = 5,
-    TaskPriorityMedium = 10,
-    TaskPriorityLow = 20,
-} TaskPriority;
-
-typedef enum {
-    TaskStateSetup = 0,
+typedef enum __attribute__((packed)) {
+    TaskStateSetup,
     TaskStateLoop,
     TaskStateCrash,
 } TaskState;
 
+typedef enum __attribute__((packed)) {
+    SleepStateAwake,
+    SleepStateDelay,
+    SleepStateSleep,
+} SleepState;
+
 typedef void (*TaskFunction)(void);
 
-typedef struct Task {
+typedef struct __attribute__((packed)) {
     const TaskFunction setup;
     const TaskFunction loop;
     const TaskFunction crash;
-    TaskPriority priority;
-    uint8_t tokens;
     TaskState state;
-    uint32_t delay;
+    SleepState sleepState;
+    uint32_t wakeTick;
 } Task;
 
 #endif

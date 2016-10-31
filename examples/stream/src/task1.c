@@ -8,24 +8,24 @@ Task task1 = {
     .loop = loop,
 };
 
-static uint32_t delay;
+static uint32_t mDelay;
 static uint16_t count;
 
 static Stream _task1Stream = streamInit(5);
 Stream* task1Stream = &_task1Stream;
 
 static void setup(void) {
-    delay = 0;
+    mDelay = 0;
     count = 0;
     streamClear(task1Stream);
 }
 
 static void loop(void) {
-    uint32_t millis = getMillis();
+    uint32_t ticks = getTicks();
 
-    if(millis >= delay) {
+    if(ticks >= mDelay) {
         print(stdout, "Task1 running (%i)\n", count);
-        delay = millis + 1000;
+        mDelay = ticks + MS_TO_TICKS(1000);
         count++;
     }
 

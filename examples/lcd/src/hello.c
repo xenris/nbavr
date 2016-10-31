@@ -17,7 +17,7 @@ static void setup(void) {
 }
 
 static void loop(void) {
-    uint16_t seconds = getMillis() / 1000;
+    uint16_t seconds = TICKS_TO_MS(getTicks()) / 1000;
 
     print(lcdout, "\r%s (%u)\n%s", msg1, seconds, msg2 + scroll);
 
@@ -27,5 +27,5 @@ static void loop(void) {
         scroll = 0;
     }
 
-    delayMillis(500);
+    delay(&helloTask, MS_TO_TICKS(500));
 }

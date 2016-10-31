@@ -1,26 +1,35 @@
 #ifndef NBAVR_TIMING_H
 #define NBAVR_TIMING_H
 
-// The timing module provides:
-// - Two counters: milliseconds and microseconds.
-// - A time based interrupt system where a function can be reqested to be run
-//  once at a specific time between ~10 and 65535 microseconds with an accuracy
-//  of 4us at 16MHz
-// - A system for delaying a task loop for between 1 and 65535 milliseconds.
-// - A task timeout which calls kernel.haltjmp when a task takes longer than
-//  TASK_TIMEOUT milliseconds.
-// Timer/Counter1 is used to provide all time based functions.
+// Every clock cycle is 1 / freq seconds. (62.5ns at 16MHz)
+// Every 64 clock cycles is a tick. (4us at 16MHz)
+// Every 2^16 ticks is a tock. (262.144ms at 16MHz)
+// Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
 
+#include <config.h>
 #include <stddef.h>
 #include "hardware.h"
-#include "kernel.h"
-#include "microint.h"
 
-void timingSetup();
-bool addInterrupt(void (*function)(int), int code, uint16_t us);
-uint32_t getMillis();
-uint32_t getMicros();
-void delayMillis(uint16_t ms);
-void delaySeconds(uint16_t s);
+#define DIVISOR 64UL
+#define F_CPU_MHZ (F_CPU / 1000000UL)
+#define OVERFLOW_TIME ((65536UL / F_CPU_MHZ) * DIVISOR)
+
+#define US_TO_TICKS(us) (((us) + (DIVISOR / F_CPU_MHZ / 2)) / (DIVISOR / F_CPU_MHZ))
+#define MS_TO_TICKS(ms) (US_TO_TICKS((ms) * 1000UL))
+
+#define TICKS_TO_US(ts) ((ts) * (DIVISOR / F_CPU_MHZ))
+#define TICKS_TO_MS(ts) (TICKS_TO_US(ts) / 1000UL)
+
+#define TICKS_TO_TOCKS(t) (((t) + 32768UL) / 65536UL)
+#define TOCKS_TO_TICKS(t) ((t) * 65536UL)
+
+void setupTicks();
+uint16_t getTicks16(void) __attribute__((always_inline));
+uint32_t getTicks(void) __attribute__((always_inline));
+uint32_t getTicks_(void);
+uint16_t getTocks(void);
+bool addInterrupt(void (*callback)(int16_t), int16_t code, uint16_t ticks);
+void enableHaltInterrupt(uint16_t tick);
+void disableHaltInterrupt(void);
 
 #endif

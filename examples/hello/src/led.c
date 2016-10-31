@@ -8,7 +8,6 @@ static const Pin ledPin = PinB5;
 Task ledTask = {
     .setup = setup,
     .loop = loop,
-    .priority = TaskPriorityLow,
 };
 
 static void setup(void) {
@@ -17,5 +16,5 @@ static void setup(void) {
 
 static void loop(void) {
     pinToggle(ledPin);
-    delayMillis(1000);
+    delay(&ledTask, MS_TO_TICKS(500));
 }

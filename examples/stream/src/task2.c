@@ -14,12 +14,12 @@ static uint8_t count;
 
 static void setup(void) {
     count = 0;
-    delayMillis(4100);
+    delay(&task2, MS_TO_TICKS(4100));
 }
 
 static void loop(void) {
     streamPush(task1Stream, count);
     count += 25;
 
-    delayMillis(4100);
+    delay(&task2, MS_TO_TICKS(4100));
 }

@@ -73,7 +73,6 @@ static void init7(void);
 Task lcdTask = {
     .setup = setup,
     .loop = loop,
-    .priority = TaskPriorityMedium,
 };
 
 static Stream _lcdout = streamInit(LCD_STREAM_SIZE);
@@ -91,7 +90,7 @@ static void setup(void) {
     state = init0;
     outOfBounds = false;
 
-    delayMillis(50);
+    delay(&lcdTask, MS_TO_TICKS(50));
 }
 
 static void loop(void) {
@@ -132,10 +131,8 @@ static void run(void) {
                 writeCharacter(byte);
             }
         }
-
-        lcdTask.priority = TaskPriorityHigh;
     } else {
-        lcdTask.priority = TaskPriorityLow;
+        delay(&lcdTask, MS_TO_TICKS(20));
     }
 }
 
@@ -304,50 +301,50 @@ static void init0(void) {
     // Reset 1
     sendNibble(false, 0x3);
     state = init1;
-    delayMillis(5);
+    delay(&lcdTask, MS_TO_TICKS(5));
 }
 
 static void init1(void) {
     // Reset 2
     sendNibble(false, 0x3);
     state = init2;
-    delayMillis(1);
+    delay(&lcdTask, MS_TO_TICKS(1));
 }
 
 static void init2(void) {
     // Reset 3
     sendNibble(false, 0x3);
     state = init3;
-    delayMillis(1);
+    delay(&lcdTask, MS_TO_TICKS(1));
 }
 
 static void init3(void) {
     // initial 4 bit mode
     sendNibble(false, 0x2);
     state = init4;
-    delayMillis(1);
+    delay(&lcdTask, MS_TO_TICKS(1));
 }
 
 static void init4(void) {
     sendByte(false, FUNCTION_FOUR_BITS_TWO_LINES);
     state = init5;
-    delayMillis(1);
+    delay(&lcdTask, MS_TO_TICKS(1));
 }
 
 static void init5(void) {
     sendByte(false, DISPLAY_ON);
     state = init6;
-    delayMillis(1);
+    delay(&lcdTask, MS_TO_TICKS(1));
 }
 
 static void init6(void) {
     sendByte(false, CLEAR_DISPLAY);
     state = init7;
-    delayMillis(4);
+    delay(&lcdTask, MS_TO_TICKS(4));
 }
 
 static void init7(void) {
     sendByte(false, ENTRY_MODE_RIGHT);
     state = run;
-    delayMillis(1);
+    delay(&lcdTask, MS_TO_TICKS(1));
 }

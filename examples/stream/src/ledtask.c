@@ -1,6 +1,6 @@
 #include "ledtask.h"
 
-#define PULSE_LENGTH 50
+#define PULSE_LENGTH MS_TO_TICKS(50)
 
 static void setup(void);
 static void loop(void);
@@ -22,6 +22,6 @@ static void loop(void) {
     if(streamPop(stdin, &c)) {
         streamClear(stdin);
         pinSet(PinB5, High);
-        delayMillis(PULSE_LENGTH);
+        delay(&ledTask, PULSE_LENGTH);
     }
 }

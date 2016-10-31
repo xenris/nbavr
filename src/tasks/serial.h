@@ -3,8 +3,6 @@
 
 #include <nbavr.h>
 #include <util/setbaud.h>
-/*#include "hardware.h"*/
-/*#include "task.h"*/
 
 extern Task serialTask;
 extern Stream* stdout;

@@ -12,13 +12,12 @@ static void end(int code);
 static bool servoEnable[MAX_SERVOS];
 static Pin servoPins[MAX_SERVOS];
 static int8_t servoPositions[MAX_SERVOS];
-static const int16_t servoMinTime = 600;
-static const int16_t servoMaxTime = 2400;
-static const int16_t servoUpdateDelay = 20;
+static const int16_t servoMinTime = US_TO_TICKS(600);
+static const int16_t servoMaxTime = US_TO_TICKS(2400);
+static const int16_t servoUpdateDelay = MS_TO_TICKS(20);
 
 Task servoTask = {
     .loop = loop,
-    .priority = TaskPriorityLow,
 };
 
 static void loop(void) {
@@ -37,12 +36,12 @@ static void loop(void) {
         int16_t range = servoMaxTime - servoMinTime;
         int16_t adjust = position * (range / 256);
 
-        int16_t us = middle + adjust;
+        int16_t ticks = middle + adjust;
 
-        addInterrupt(end, pin, us);
+        addInterrupt(end, pin, ticks);
     }
 
-    delayMillis(servoUpdateDelay);
+    delay(&servoTask, servoUpdateDelay);
 }
 
 static void end(int code) {

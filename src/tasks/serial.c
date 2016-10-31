@@ -9,7 +9,6 @@ static void rxCompleteCallback(void);
 Task serialTask = {
     .setup = setup,
     .loop = loop,
-    .priority = TaskPriorityLow,
 };
 
 static Stream serialOut = streamInitCallback(30, stdoutCallback);
@@ -38,11 +37,11 @@ static void loop(void) {
         serialFlush();
     }
 
-    serialTask.priority = TaskPriorityLow;
+    sleep(&serialTask);
 }
 
 static void stdoutCallback() {
-    serialTask.priority = TaskPriorityDriver;
+    wake(&serialTask);
 }
 
 void serialFlush() {

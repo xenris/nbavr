@@ -1,160 +1,261 @@
 #include "timing.h"
 
-#define inc(i) (i + 1 < MAX_MICRO_INTERRUPTS ? i + 1 : 0)
-#define dec(i) (i == 0 ? MAX_MICRO_INTERRUPTS - 1 : i - 1)
+// NOTE This library works with some assumptions, such as the cpu mhz being
+//  a power of 2 up to 64
 
-#define DIVISOR 64
-#define F_CPU_MHZ (F_CPU / 1000000)
-#define OVERFLOW_TIME ((65536 / F_CPU_MHZ) * DIVISOR)
+// To prevent interrupts being missed.
+// (0, 2^16 - buffer) is in the future.
+// [2^16 - buffer, 0] is past and now.
+#define INTERRUPT_TICK_BUFFER 200
+#define MIN_INTERRUPT_TICK 2
 
-static int compareInterruptTimes(uint16_t a, uint16_t b, uint16_t now);
-static uint16_t usToTimerTicks(uint16_t n);
-static void outputBIntCallback();
-static void outputAIntCallback();
+typedef struct {
+    // The callback to use.
+    void (*callback)(int16_t);
+    // Code to pass into the callback.
+    int16_t code;
+    // The tick at which to perform the callback.
+    uint16_t tick;
+} Interrupt;
 
-void timingSetup() {
+typedef struct {
+    uint8_t size;
+    Interrupt interrupts[MAX_TICK_INTERRUPTS];
+} Queue;
+
+static void tickCallback();
+static void tockCallback();
+static void push(Queue* queue, uint16_t base, Interrupt interrupt) __attribute__((always_inline));
+static void pop(Queue* queue) __attribute__((always_inline));
+static Interrupt peek(Queue* queue) __attribute__((always_inline));
+static bool compare(uint16_t a, uint16_t b, uint16_t c) __attribute__((always_inline));
+
+// Tock counter. (Tick overflows, 2^16 ticks.)
+static uint16_t mTocks;
+// Queue of pending tick interrupts.
+static Queue mInterrupts;
+
+// Start the tick counter.
+void setupTicks(void (*halt)(void)) {
     Timer1Config config = {
         .clock = Timer1Clock64,
-        .outputARegister = usToTimerTicks(1000),
-        .outputAIntEnable = true,
-        .outputBIntCallback = outputBIntCallback,
-        .outputAIntCallback = outputAIntCallback,
+        .outputAIntCallback = tickCallback,
+        .outputBIntCallback = halt,
+        .overflowIntEnable = true,
+        .overflowIntCallback = tockCallback,
     };
 
     timer1(config);
 }
 
-uint32_t getMillis() {
-    uint32_t millis;
+// Get the 16 bit hardware counter.
+uint16_t getTicks16(void) {
+    return timer1GetTimerRegister();
+}
 
-    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        millis = kernel.millis;
+// Get the 32 bit combined hardware and overflow counter.
+uint32_t getTicks(void) {
+    atomic {
+        return getTicks_();
     }
 
-    return millis;
+    return 0;
 }
 
-uint32_t getMicros() {
-    return 0; // TODO
+// Non-atomic version
+uint32_t getTicks_(void) {
+    // Get the value of the counter.
+    uint16_t low = getTicks16();
+    // Get the value of the overflow counter.
+    uint16_t high = mTocks;
+
+    // Check if the counter has overflowed since atomic started.
+    if(timer1OverflowFlag()) {
+        // If it has then there is a possibility that the numbers are not synchronised.
+        // Get the new counter value, and increment "high".
+        low = getTicks16();
+        high++;
+    }
+
+    return ((uint32_t)high << 16) | low;
 }
 
-bool addInterrupt(void (*function)(int), int code, uint16_t us) {
-    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        volatile uint16_t currentTicks = timer1GetTimerRegister();
+uint16_t getTocks(void) {
+    atomic {
+        return mTocks;
+    }
 
-        if(kernel.microIntsTail >= MAX_MICRO_INTERRUPTS) {
-            // interrupt stack is full.
+    return 0;
+}
+
+// Add a tick precision interrupt.
+bool addInterrupt(void (*callback)(int16_t), int16_t code, uint16_t delay) {
+    atomic {
+        uint16_t now = getTicks16();
+
+        if(mInterrupts.size >= MAX_TICK_INTERRUPTS) {
+            // Interrupt queue is full.
             return false;
         }
 
-        uint16_t requestedTicks = usToTimerTicks(us);
-
-        if(requestedTicks < 2) { // TODO Check that an interrupt in only 2 ticks won't be missed.
-            requestedTicks = 2;
+        if(callback == NULL) {
+            return false;
         }
 
-        uint16_t interruptTime = currentTicks + requestedTicks;
-
-        uint8_t index;
-
-        for(index = kernel.microIntsTail; index > 0; index--) {
-            if(compareInterruptTimes(kernel.microInts[index - 1].tick, interruptTime, currentTicks) < 0) {
-                kernel.microInts[index] = kernel.microInts[index - 1];
-            } else {
-                break;
-            }
+        // Enforce a minimum delay to prevent missed interrupts.
+        if(delay < MIN_INTERRUPT_TICK) {
+            delay = MIN_INTERRUPT_TICK;
         }
 
-        kernel.microInts[index] = (MicroInt){function, code, interruptTime};
+        // Ensure the delay isn't in the faked negative range.
+        uint16_t limit = 0U - INTERRUPT_TICK_BUFFER - 1U;
 
-        if(index == kernel.microIntsTail) {
-            timer1SetOutputCompareB(interruptTime);
-            timer1OutputCompareMatchBIntEnable(true);
+        if(delay > limit) {
+            delay = limit;
         }
 
-        kernel.microIntsTail++;
+        uint16_t interruptTick = now + delay;
+
+        // Add the interrupt to the queue
+        Interrupt interrupt = {callback, code, interruptTick};
+        push(&mInterrupts, now - INTERRUPT_TICK_BUFFER, interrupt);
+
+        // Set the timer to the first interrupt.
+        timer1SetOutputCompareA(peek(&mInterrupts).tick);
+
+        // If the queue was previously empty, clear the flag and enable interrupt.
+        if(mInterrupts.size == 1) {
+            timer1ClearOutputCompareAMatchFlag();
+            timer1OutputCompareAMatchIntEnable(true);
+        }
     }
 
     return true;
 }
 
-void delayMillis(uint16_t ms) {
-    // Take the currently active task and set its delay time to now + ms
-    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if(kernel.currentTask != NULL) {
-            kernel.currentTask->delay = getMillis() + ms + 1;
-        }
+void enableHaltInterrupt(uint16_t tick) {
+    atomic {
+        timer1SetOutputCompareB(tick);
+        timer1OutputCompareBMatchIntEnable(true);
+        timer1ClearOutputCompareBMatchFlag();
     }
 }
 
-void delaySeconds(uint16_t s) {
-    // Take the currently active task and set its delay time to now + s
-    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if(kernel.currentTask != NULL) {
-            kernel.currentTask->delay = getMillis() + ((uint32_t)s * 1000);
-        }
+void disableHaltInterrupt(void) {
+    atomic {
+        timer1OutputCompareBMatchIntEnable(false);
+        timer1ClearOutputCompareBMatchFlag();
     }
 }
 
-static int compareInterruptTimes(uint16_t a, uint16_t b, uint16_t now) {
-    if(a > now) {
-        if(b > now) {
-            return a - b;
-        } else {
-            return -1;
-        }
-    } else {
-        if(b > now) {
-            return 1;
-        } else {
-            return a - b;
-        }
-    }
-}
-
-static uint16_t usToTimerTicks(uint16_t n) {
-    // Rounded up. Prefered because n = 1 will never output 0.
-    // With integer overflow handling, via 32 bit integers.
-    // Would be better if 32bit ints were not needed. TODO
-    return (uint16_t)(((uint32_t)n * F_CPU_MHZ + (DIVISOR - 1)) / DIVISOR);
-
-    // Mathematically correct rounding version.
-    // return (uint16_t)(((uint32_t)n * F_CPU_MHZ + (DIVISOR / 2)) / DIVISOR);
-}
-
-static void outputBIntCallback() {
+// Called when a tick interrupt occurs.
+static void tickCallback() {
     while(true) {
-        if(kernel.microIntsTail == 0) {
-            timer1OutputCompareMatchBIntEnable(false);
+        Interrupt interrupt = peek(&mInterrupts);
+
+        interrupt.callback(interrupt.code);
+
+        pop(&mInterrupts);
+
+        if(mInterrupts.size == 0) {
+            timer1OutputCompareAMatchIntEnable(false);
             break;
         }
 
-        MicroInt interrupt = kernel.microInts[kernel.microIntsTail - 1];
+        uint16_t next = peek(&mInterrupts).tick;
 
-        uint16_t now = timer1GetTimerRegister();
+        timer1ClearOutputCompareAMatchFlag();
+        timer1SetOutputCompareA(next);
 
-        uint16_t diff = interrupt.tick - now;
-
-        if((int16_t)diff <= 1) {
-            interrupt.function(interrupt.code);
-            kernel.microIntsTail--;
-        } else {
-            timer1SetOutputCompareB(interrupt.tick);
+        if(compare(interrupt.tick, getTicks16(), next)) {
             break;
         }
     }
 }
 
-static void outputAIntCallback() {
-    uint16_t newTicks = timer1GetOutputCompareA() + usToTimerTicks(1000);
+// System clock.
+// Keeps track of tocks (tick overflows).
+static void tockCallback() {
+    mTocks++;
+}
 
-    timer1SetOutputCompareA(newTicks);
+// Push an interrupt to the queue.
+// Check queue size before calling.
+static void push(Queue* queue, uint16_t base, Interrupt interrupt) {
+    Interrupt* interrupts = queue->interrupts;
 
-    kernel.millis++;
+    interrupts[queue->size] = interrupt;
 
-    if(kernel.currentTask != NULL) {
-        if(kernel.millis > kernel.haltTimeout) {
-            longjmp(kernel.haltJmp, 1);
+    uint8_t n = queue->size;
+
+    queue->size++;
+
+    while(n > 0) {
+        uint8_t p = n / 2;
+
+        if(compare(base, interrupts[n].tick, interrupts[p].tick)) {
+            Interrupt t = interrupts[p];
+            interrupts[p] = interrupts[n];
+            interrupts[n] = t;
+        } else {
+            break;
         }
+
+        n = p;
+    }
+}
+
+// Pop an interrupt from the queue.
+// Check queue size before calling.
+static void pop(Queue* queue) {
+    Interrupt* interrupts = queue->interrupts;
+
+    queue->size--;
+
+    // Priority to compare to when ordering.
+    uint16_t base = interrupts[0].tick;
+
+    interrupts[0] = interrupts[queue->size];
+
+    uint8_t p = 0;
+    uint8_t s = queue->size / 2;
+
+    while(p < s) {
+        uint8_t l = p * 2 + 1;
+        uint8_t r = p * 2 + 2;
+        uint8_t c = r;
+
+        // If there is only one child, or left is sooner.
+        if((c >= queue->size) || (compare(base, interrupts[l].tick, interrupts[r].tick))) {
+            c = l;
+        }
+
+        // If child is sooner, swap with parent.
+        if(compare(base, interrupts[c].tick, interrupts[p].tick)) {
+            Interrupt t = interrupts[p];
+            interrupts[p] = interrupts[c];
+            interrupts[c] = t;
+        } else {
+            break;
+        }
+
+        p = c;
+    }
+}
+
+// Look at the top interrupt in the queue.
+// Will return rubbish if the queue is empty.
+static Interrupt peek(Queue* queue) {
+    return queue->interrupts[0];
+}
+
+// Indicates which of b or c is closer to a.
+// true if b is sooner.
+// otherwise false.
+static bool compare(uint16_t a, uint16_t b, uint16_t c) {
+    if((a > b) == (b > c)) {
+        return a < c;
+    } else {
+        return a > c;
     }
 }

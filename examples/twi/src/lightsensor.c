@@ -44,5 +44,5 @@ static void loop(void) {
         twiDo(&lightSensorGetReadingAction);
     }
 
-    delayMillis(200);
+    delay(&lightSensorTask, MS_TO_TICKS(200));
 }

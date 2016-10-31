@@ -1,11 +1,11 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define TASK_TIMEOUT 6
+#define TASK_TIMEOUT MS_TO_TICKS(6)
 
 #define BAUD 9600
 #define TWI_BAUD 400
-#define MAX_MICRO_INTERRUPTS 10
+#define MAX_TICK_INTERRUPTS 10
 
 #define LCD_STREAM_SIZE 30
 #define LCD_PIN_D4 PinC4

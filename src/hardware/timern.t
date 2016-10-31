@@ -131,7 +131,7 @@ TIMER_N(_TYPE) timerN(GetOutputCompareA)(void) {
     return TIMER_N(_OUTPUT_A_REG);
 }
 
-void timerN(OutputCompareMatchAIntEnable)(bool b) {
+void timerN(OutputCompareAMatchIntEnable)(bool b) {
     if(b) {
         TIMER_N(_OUTPUT_A_INT_ENABLE_REG) |= _BV(TIMER_N(_OUTPUT_A_INT_ENABLE_BIT));
     } else {
@@ -157,7 +157,7 @@ TIMER_N(_TYPE) timerN(GetOutputCompareB)(void) {
     return TIMER_N(_OUTPUT_B_REG);
 }
 
-void timerN(OutputCompareMatchBIntEnable)(bool b) {
+void timerN(OutputCompareBMatchIntEnable)(bool b) {
     if(b) {
         TIMER_N(_OUTPUT_B_INT_ENABLE_REG) |= _BV(TIMER_N(_OUTPUT_B_INT_ENABLE_BIT));
     } else {

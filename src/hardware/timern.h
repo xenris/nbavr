@@ -84,17 +84,17 @@ TIMER_N(_TYPE) timerN(GetTimerRegister)() __attribute__((always_inline));
 #if TIMER_N(_OUTPUT_A)
 void timerN(SetOutputCompareA)(TIMER_N(_TYPE) v) __attribute__((always_inline));
 TIMER_N(_TYPE) timerN(GetOutputCompareA)() __attribute__((always_inline));
-void timerN(OutputCompareMatchAIntEnable)(bool b) __attribute__((always_inline));
-bool timerN(OutputCompareMatchAFlag)() __attribute__((always_inline));
-void timerN(ClearOutputCompareMatchAFlag)() __attribute__((always_inline));
+void timerN(OutputCompareAMatchIntEnable)(bool b) __attribute__((always_inline));
+bool timerN(OutputCompareAMatchFlag)() __attribute__((always_inline));
+void timerN(ClearOutputCompareAMatchFlag)() __attribute__((always_inline));
 #endif
 
 #if TIMER_N(_OUTPUT_B)
 void timerN(SetOutputCompareB)(TIMER_N(_TYPE) v) __attribute__((always_inline));
 TIMER_N(_TYPE) timerN(GetOutputCompareB)() __attribute__((always_inline));
-void timerN(OutputCompareMatchBIntEnable)(bool b) __attribute__((always_inline));
-bool timerN(OutputCompareMatchBFlag)() __attribute__((always_inline));
-void timerN(ClearOutputCompareMatchBFlag)() __attribute__((always_inline));
+void timerN(OutputCompareBMatchIntEnable)(bool b) __attribute__((always_inline));
+bool timerN(OutputCompareBMatchFlag)() __attribute__((always_inline));
+void timerN(ClearOutputCompareBMatchFlag)() __attribute__((always_inline));
 #endif
 
 void timerN(OverflowIntEnable)(bool b) __attribute__((always_inline));
