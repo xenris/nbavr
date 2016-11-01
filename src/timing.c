@@ -150,26 +150,25 @@ void disableHaltInterrupt(void) {
 
 // Called when a tick interrupt occurs.
 static void tickCallback() {
-    while(true) {
-        Interrupt interrupt = peek(&mInterrupts);
+    loop: ;
 
-        interrupt.callback(interrupt.code);
+    Interrupt interrupt = peek(&mInterrupts);
 
-        pop(&mInterrupts);
+    interrupt.callback(interrupt.code);
 
-        if(mInterrupts.size == 0) {
-            timer1OutputCompareAMatchIntEnable(false);
-            break;
-        }
+    pop(&mInterrupts);
 
+    if(mInterrupts.size > 0) {
         uint16_t next = peek(&mInterrupts).tick;
 
         timer1ClearOutputCompareAMatchFlag();
         timer1SetOutputCompareA(next);
 
-        if(compare(interrupt.tick, getTicks16(), next)) {
-            break;
+        if(!compare(interrupt.tick, getTicks16() + 1, next)) {
+            goto loop;
         }
+    } else {
+        timer1OutputCompareAMatchIntEnable(false);
     }
 }
 
@@ -253,7 +252,7 @@ static Interrupt peek(Queue* queue) {
 // true if b is sooner.
 // otherwise false.
 static bool compare(uint16_t a, uint16_t b, uint16_t c) {
-    if((a > b) == (b > c)) {
+    if((a > b) == (b >= c)) {
         return a < c;
     } else {
         return a > c;
