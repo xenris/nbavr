@@ -19,7 +19,12 @@ static void setup(void) {
 static void loop(void) {
     uint16_t seconds = TICKS_TO_MS(getTicks()) / 1000;
 
-    print(lcdout, "\r%s (%u)\n%s", msg1, seconds, msg2 + scroll);
+    printchar(lcdout, '\r');
+    printstr(lcdout, msg1);
+    printstr(lcdout, " (");
+    printi16(lcdout, seconds, PrintUDec);
+    printstr(lcdout, ")\n");
+    printstr(lcdout, msg2 + scroll);
 
     scroll++;
 

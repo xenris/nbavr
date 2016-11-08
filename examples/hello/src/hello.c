@@ -15,7 +15,10 @@ static void setup(void) {
 }
 
 static void loop(void) {
-    print(stdout, "hello! (%u)\n", count);
+    printstr(stdout, "hello! (");
+    printi16(stdout, count, PrintSDec);
+    printstr(stdout, ")\n");
+
     count++;
 
     delay(&helloTask, MS_TO_TICKS(1000));
