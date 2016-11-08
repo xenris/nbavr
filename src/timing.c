@@ -20,6 +20,8 @@ typedef struct {
 
 typedef struct {
     uint8_t size;
+    uint8_t head;
+    uint8_t tail;
     Interrupt interrupts[MAX_TICK_INTERRUPTS];
 } Queue;
 
@@ -91,43 +93,50 @@ uint16_t getTocks(void) {
 // Add a tick precision interrupt.
 bool addInterrupt(void (*callback)(int16_t), int16_t code, uint16_t delay) {
     atomic {
-        uint16_t now = getTicks16();
+        return addInterrupt_(callback, code, delay);
+    }
 
-        if(mInterrupts.size >= MAX_TICK_INTERRUPTS) {
-            // Interrupt queue is full.
-            return false;
-        }
+    return false;
+}
 
-        if(callback == NULL) {
-            return false;
-        }
+// Non-atomic version.
+bool addInterrupt_(void (*callback)(int16_t), int16_t code, uint16_t delay) {
+    uint16_t now = getTicks16();
 
-        // Enforce a minimum delay to prevent missed interrupts.
-        if(delay < MIN_INTERRUPT_TICK) {
-            delay = MIN_INTERRUPT_TICK;
-        }
+    if(callback == NULL) {
+        return false;
+    }
 
-        // Ensure the delay isn't in the faked negative range.
-        uint16_t limit = 0U - INTERRUPT_TICK_BUFFER - 1U;
+    // Check if queue is full.
+    if(mInterrupts.size >= MAX_TICK_INTERRUPTS) {
+        return false;
+    }
 
-        if(delay > limit) {
-            delay = limit;
-        }
+    // Enforce a minimum delay to prevent missed interrupts.
+    if(delay < MIN_INTERRUPT_TICK) {
+        delay = MIN_INTERRUPT_TICK;
+    }
 
-        uint16_t interruptTick = now + delay;
+    // Ensure the delay isn't in the faked negative range.
+    uint16_t limit = 0U - INTERRUPT_TICK_BUFFER - 1U;
 
-        // Add the interrupt to the queue
-        Interrupt interrupt = {callback, code, interruptTick};
-        push(&mInterrupts, now - INTERRUPT_TICK_BUFFER, interrupt);
+    if(delay > limit) {
+        delay = limit;
+    }
 
-        // Set the timer to the first interrupt.
-        timer1SetOutputCompareA(peek(&mInterrupts).tick);
+    uint16_t interruptTick = now + delay;
 
-        // If the queue was previously empty, clear the flag and enable interrupt.
-        if(mInterrupts.size == 1) {
-            timer1ClearOutputCompareAMatchFlag();
-            timer1OutputCompareAMatchIntEnable(true);
-        }
+    // Add the interrupt to the queue
+    Interrupt interrupt = {callback, code, interruptTick};
+    push(&mInterrupts, now - INTERRUPT_TICK_BUFFER, interrupt);
+
+    // Set the timer to the first interrupt.
+    timer1SetOutputCompareA(peek(&mInterrupts).tick);
+
+    // If the queue was previously empty, clear the flag and enable interrupt.
+    if(mInterrupts.size == 1) {
+        timer1ClearOutputCompareAMatchFlag();
+        timer1OutputCompareAMatchIntEnable(true);
     }
 
     return true;
@@ -183,69 +192,54 @@ static void tockCallback() {
 static void push(Queue* queue, uint16_t base, Interrupt interrupt) {
     Interrupt* interrupts = queue->interrupts;
 
-    interrupts[queue->size] = interrupt;
+    interrupts[queue->tail] = interrupt;
 
-    uint8_t n = queue->size;
+    uint8_t t = queue->tail;
+    uint8_t h = queue->head;
 
     queue->size++;
+    queue->tail++;
 
-    while(n > 0) {
-        uint8_t p = n / 2;
+    if(queue->tail >= MAX_TICK_INTERRUPTS) {
+        queue->tail = 0;
+    }
 
-        if(compare(base, interrupts[n].tick, interrupts[p].tick)) {
-            Interrupt t = interrupts[p];
-            interrupts[p] = interrupts[n];
-            interrupts[n] = t;
+    while(t != h) {
+        uint8_t p;
+
+        if(t == 0) {
+            p = MAX_TICK_INTERRUPTS - 1;
+        } else {
+            p = t - 1;
+        }
+
+        if(compare(base, interrupts[t].tick, interrupts[p].tick)) {
+            Interrupt temp = interrupts[p];
+            interrupts[p] = interrupts[t];
+            interrupts[t] = temp;
         } else {
             break;
         }
 
-        n = p;
+        t = p;
     }
 }
 
 // Pop an interrupt from the queue.
 // Check queue size before calling.
 static void pop(Queue* queue) {
-    Interrupt* interrupts = queue->interrupts;
-
     queue->size--;
+    queue->head++;
 
-    // Priority to compare to when ordering.
-    uint16_t base = interrupts[0].tick;
-
-    interrupts[0] = interrupts[queue->size];
-
-    uint8_t p = 0;
-    uint8_t s = queue->size / 2;
-
-    while(p < s) {
-        uint8_t l = p * 2 + 1;
-        uint8_t r = p * 2 + 2;
-        uint8_t c = r;
-
-        // If there is only one child, or left is sooner.
-        if((c >= queue->size) || (compare(base, interrupts[l].tick, interrupts[r].tick))) {
-            c = l;
-        }
-
-        // If child is sooner, swap with parent.
-        if(compare(base, interrupts[c].tick, interrupts[p].tick)) {
-            Interrupt t = interrupts[p];
-            interrupts[p] = interrupts[c];
-            interrupts[c] = t;
-        } else {
-            break;
-        }
-
-        p = c;
+    if(queue->head >= MAX_TICK_INTERRUPTS) {
+        queue->head = 0;
     }
 }
 
 // Look at the top interrupt in the queue.
 // Will return rubbish if the queue is empty.
 static Interrupt peek(Queue* queue) {
-    return queue->interrupts[0];
+    return queue->interrupts[queue->head];
 }
 
 // Indicates which of b or c is closer to a.

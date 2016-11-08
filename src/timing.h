@@ -29,6 +29,7 @@ uint32_t getTicks(void) __attribute__((always_inline));
 uint32_t getTicks_(void);
 uint16_t getTocks(void);
 bool addInterrupt(void (*callback)(int16_t), int16_t code, uint16_t ticks);
+bool addInterrupt_(void (*callback)(int16_t), int16_t code, uint16_t ticks);
 void enableHaltInterrupt(uint16_t tick);
 void disableHaltInterrupt(void);
 
