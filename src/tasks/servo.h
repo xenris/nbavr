@@ -3,11 +3,17 @@
 
 #include <nbavr.h>
 
+typedef struct {
+    int8_t id;
+} Servo;
+
 extern Task servoTask;
 
-int8_t servoAdd(Pin pin);
-void servoRemove(int8_t servo);
-void servoSet(int8_t servo, int8_t position);
-int8_t servoGet(int8_t servo);
+Servo servoAdd(Pin pin);
+void servoRemove(Servo servo);
+void servoSet(Servo servo, int8_t position);
+int8_t servoGet(Servo servo);
+void servoSetSpeed(Servo servo, uint8_t speed);
+uint8_t servoGetSpeed(Servo servo);
 
 #endif

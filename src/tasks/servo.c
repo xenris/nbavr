@@ -1,91 +1,168 @@
 #include "servo.h"
 
-static void loop(void);
-static void end(int code);
-
 // Servo module has no setup because the list of servos may be initialised
 //  before this setup is called, and the servos need to be remembered even if
 //  this module is reset.
 
 // Servos have a range of -128 to 127.
+// Servo speed is a number between 0 and 255, slowest to fastest. Speed is the
+//  maximum step size done each cycle.
 
-static bool servoEnable[MAX_SERVOS];
-static Pin servoPins[MAX_SERVOS];
-static int8_t servoPositions[MAX_SERVOS];
-static const int16_t servoMinTime = US_TO_TICKS(600);
-static const int16_t servoMaxTime = US_TO_TICKS(2400);
-static const int16_t servoUpdateDelay = MS_TO_TICKS(20);
+#define SERVO_MIN_TIME US_TO_TICKS(600)
+#define SERVO_MAX_TIME US_TO_TICKS(2400)
+#define SERVO_UPDATE_DELAY MS_TO_TICKS(20)
+
+#define abs(n) ((n) < 0 ? -(n) : (n))
+
+typedef struct {
+    bool enabled;
+    Pin pin;
+    // Where it is currently set to.
+    int8_t position;
+    // Where it is aiming for.
+    int8_t goal;
+    uint8_t speed;
+} ServoData;
+
+static struct {
+    ServoData servos[MAX_SERVOS];
+    uint8_t index;
+    uint16_t start;
+} state;
+
+static void loop(void);
+static void updatePosition(ServoData* servoData);
+static void pulseServo(ServoData* servoData);
+static void end(int16_t code);
 
 Task servoTask = {
     .loop = loop,
 };
 
 static void loop(void) {
-    for(int8_t i = 0; i < MAX_SERVOS; i++) {
-        if(!servoEnable[i]) {
-            continue;
-        }
-
-        Pin pin = servoPins[i];
-
-        pinSet(pin, High);
-
-        int16_t position = servoPositions[i];
-
-        int16_t middle = (servoMaxTime + servoMinTime) / 2;
-        int16_t range = servoMaxTime - servoMinTime;
-        int16_t adjust = position * (range / 256);
-
-        int16_t ticks = middle + adjust;
-
-        addInterrupt(end, pin, ticks);
+    if(state.index == 0) {
+        state.start = getTicks16();
     }
 
-    delay(&servoTask, servoUpdateDelay);
+    if(state.index < MAX_SERVOS) {
+        ServoData* servoData = &state.servos[state.index];
+
+        if(servoData->enabled) {
+            updatePosition(servoData);
+            pulseServo(servoData);
+
+            sleep(&servoTask);
+        }
+
+        state.index += 1;
+    } else {
+        state.index = 0;
+
+        uint16_t diff = getTicks16() - state.start;
+
+        if(diff < SERVO_UPDATE_DELAY) {
+            delay(&servoTask, SERVO_UPDATE_DELAY - diff);
+        }
+    }
 }
 
-static void end(int code) {
+static void updatePosition(ServoData* servoData) {
+    if(servoData->position != servoData->goal) {
+        int16_t step = servoData->speed;
+        int16_t diff = servoData->position - servoData->goal;
+        diff = abs(diff);
+
+        if(diff < step) {
+            servoData->position = servoData->goal;
+        } else {
+            if(servoData->goal < servoData->position) {
+                step = -step;
+            }
+
+            servoData->position += step;
+        }
+
+    }
+}
+
+static void pulseServo(ServoData* servoData) {
+    int16_t middle = (SERVO_MAX_TIME + SERVO_MIN_TIME) / 2;
+    int16_t range = SERVO_MAX_TIME - SERVO_MIN_TIME;
+    int16_t adjust = servoData->position * (range / 256);
+
+    int16_t ticks = middle + adjust;
+
+    atomic {
+        if(addInterrupt_(end, servoData->pin, ticks)) {
+            pinSet(servoData->pin, High);
+        }
+    }
+}
+
+static void end(int16_t code) {
     pinSet(code, Low);
+    wake(&servoTask);
 }
 
-int8_t servoAdd(Pin pin) {
-    int8_t servo = 0;
+Servo servoAdd(Pin pin) {
+    Servo servo = {0};
 
-    while(servoEnable[servo]) {
-        servo++;
+    while(state.servos[servo.id].enabled) {
+        servo.id++;
 
-        if(servo >= MAX_SERVOS) {
-            return -1;
+        if(servo.id >= MAX_SERVOS) {
+            return (Servo){-1};
         }
     }
 
-    servoEnable[servo] = true;
+    ServoData* servoData = &state.servos[servo.id];
+
+    servoData->enabled = true;
 
     pinDirection(pin, Output);
     pinSet(pin, Low);
 
-    servoPins[servo] = pin;
-    servoPositions[servo] = 0;
+    servoData->pin = pin;
+    servoData->goal = 0;
+    servoData->position = 0;
+    servoData->speed = 255;
 
     return servo;
 }
 
-void servoRemove(int8_t servo) {
-    if((servo >= 0) && (servo < MAX_SERVOS)) {
-        servoEnable[servo] = false;
-        pinSet(servoPins[servo], Low);
+void servoRemove(Servo servo) {
+    if((servo.id >= 0) && (servo.id < MAX_SERVOS)) {
+        ServoData* servoData = &state.servos[servo.id];
+
+        servoData->enabled = false;
+        pinSet(servoData->pin, Low);
     }
 }
 
-void servoSet(int8_t servo, int8_t position) {
-    if((servo >= 0) && (servo < MAX_SERVOS)) {
-        servoPositions[servo] = position;
+void servoSet(Servo servo, int8_t goal) {
+    if((servo.id >= 0) && (servo.id < MAX_SERVOS)) {
+        state.servos[servo.id].goal = goal;
     }
 }
 
-int8_t servoGet(int8_t servo) {
-    if((servo >= 0) && (servo < MAX_SERVOS)) {
-        return servoPositions[servo];
+int8_t servoGet(Servo servo) {
+    if((servo.id >= 0) && (servo.id < MAX_SERVOS)) {
+        return state.servos[servo.id].goal;
+    }
+
+    return 0;
+}
+
+void servoSetSpeed(Servo servo, uint8_t speed) {
+    if((servo.id >= 0) && (servo.id < MAX_SERVOS)) {
+
+        state.servos[servo.id].speed = speed;
+    }
+}
+
+uint8_t servoGetSpeed(Servo servo) {
+    if((servo.id >= 0) && (servo.id < MAX_SERVOS)) {
+        return state.servos[servo.id].speed;
     }
 
     return 0;
