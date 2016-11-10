@@ -3,9 +3,10 @@
 include_rules
 
 # Compile source to object code.
-: foreach src/*.c |> avr-gcc $(LIB_CFLAGS) -c -o %o %f |> tmp/%B.o
-: foreach src/hardware/*.c |> avr-gcc $(LIB_CFLAGS) -c -o %o %f |> tmp/%B.o
-: foreach src/tasks/*.c |> avr-gcc $(LIB_CFLAGS) -c -o %o %f |> tmp/%B.o
+: foreach src/*.c src/hardware/*.c src/tasks/*.c |> $(CC) $(CFLAGS) -c -o %o %f |> tmp/%B.o
 
 # Archive object code into a library.
-: tmp/*.o |> avr-ar rcs %o %f |> libnbavr.a
+: tmp/*.o |> $(AR) rcs %o %f |> libnbavr.a
+
+# Generate gitignore file.
+.gitignore

@@ -1,25 +1,34 @@
 # Tuprules
 
-LIB_CFLAGS = -I$(TUP_CWD)/
-LIB_CFLAGS += -I$(TUP_CWD)/src/
-LIB_CFLAGS += -Wall
-LIB_CFLAGS += -Wextra
-LIB_CFLAGS += -Werror
-LIB_CFLAGS += -ffunction-sections
-LIB_CFLAGS += -g
-LIB_CFLAGS += -std=c99
-LIB_CFLAGS += -Os
-LIB_CFLAGS += -mmcu=@(MMCU)
-LIB_CFLAGS += -DF_CPU=@(FREQ)
-LIB_CFLAGS += -Wl,-gc-sections
-LIB_CFLAGS += -fdiagnostics-color=always
-LIB_CFLAGS += -Wno-unused-parameter
-LIB_CFLAGS += -Wno-unused-function
-LIB_CFLAGS += -Wno-attributes
-LIB_CFLAGS += -flto
-LIB_CFLAGS += -ffreestanding
+NBAVR_TOP = $(TUP_CWD)
 
-LIB_LDFLAGS = -L$(TUP_CWD)
-LIB_LDFLAGS += -lnbavr
+CC = avr-gcc
+AR = avr-ar
+OBJDUMP = avr-objdump
 
-LIB_LIBFILE = $(TUP_CWD)/libnbavr.a
+ifeq ($(MMCU),)
+    MMCU = atmega328p
+endif
+
+ifeq ($(FREQ),)
+    FREQ = 16000000UL
+endif
+
+CFLAGS = -I$(TUP_CWD)/
+CFLAGS += -I$(TUP_CWD)/src/
+CFLAGS += -Wall
+CFLAGS += -Wextra
+CFLAGS += -Werror
+CFLAGS += -ffunction-sections
+CFLAGS += -g
+CFLAGS += -std=c99
+CFLAGS += -Os
+CFLAGS += -mmcu=$(MMCU)
+CFLAGS += -DF_CPU=$(FREQ)
+CFLAGS += -Wl,-gc-sections
+CFLAGS += -fdiagnostics-color=always
+CFLAGS += -Wno-unused-parameter
+CFLAGS += -Wno-unused-function
+CFLAGS += -Wno-attributes
+CFLAGS += -flto
+CFLAGS += -ffreestanding
