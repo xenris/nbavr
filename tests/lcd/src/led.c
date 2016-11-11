@@ -3,7 +3,7 @@
 static void setup(void);
 static void loop(void);
 
-static const Pin ledPin = PinB5;
+#define ledPin PinB5
 
 Task ledTask = {
     .setup = setup,

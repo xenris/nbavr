@@ -4,16 +4,15 @@
 #define DDRN_REGISTER_OFFSET 1
 #define PORTN_REGISTER_OFFSET 2
 
-uint8_t* portToPINN(Port port) __attribute__((always_inline));
-uint8_t* portToDDRN(Port port) __attribute__((always_inline));
-uint8_t* portToPORTN(Port port) __attribute__((always_inline));
-uint8_t* pinToPINN(Pin pin) __attribute__((always_inline));
-uint8_t* pinToDDRN(Pin pin) __attribute__((always_inline));
-uint8_t* pinToPORTN(Pin pin) __attribute__((always_inline));
+#define PIN_REG(p) (volatile uint8_t*)((uint8_t)p.value + PINN_REGISTER_OFFSET)
+#define DDR_REG(p) (volatile uint8_t*)((uint8_t)p.value + DDRN_REGISTER_OFFSET)
+#define PORT_REG(p) (volatile uint8_t*)((uint8_t)p.value + PORTN_REGISTER_OFFSET)
+
+#define PIN_ID(p) (p.value >> 8)
 
 void pinDirection(Pin pin, Direction direction) {
-    volatile uint8_t* ddrn = pinToDDRN(pin);
-    uint8_t p = pin;
+    volatile uint8_t* ddrn = DDR_REG(pin);
+    uint8_t p = PIN_ID(pin);
 
     if(direction == Output) {
         *ddrn |= _BV(p);
@@ -23,15 +22,15 @@ void pinDirection(Pin pin, Direction direction) {
 }
 
 Value pinValue(Pin pin) {
-    volatile uint8_t* pinn = pinToPINN(pin);
-    uint8_t p = pin;
+    volatile uint8_t* pinn = PIN_REG(pin);
+    uint8_t p = PIN_ID(pin);
 
     return ((*pinn) & _BV(p)) ? High : Low;
 }
 
 void pinSet(Pin pin, Value value) {
-    volatile uint8_t* portn = pinToPORTN(pin);
-    uint8_t p = pin;
+    volatile uint8_t* portn = PORT_REG(pin);
+    uint8_t p = PIN_ID(pin);
 
     if(value == High) {
         *portn |= _BV(p);
@@ -46,26 +45,26 @@ void pinPullup(Pin pin, bool b) {
 
 // Writing a logic one to PINxn toggles PORTxn.
 void pinToggle(Pin pin) {
-    volatile uint8_t* pinn = pinToPINN(pin);
-    uint8_t p = pin;
+    volatile uint8_t* pinn = PIN_REG(pin);
+    uint8_t p = PIN_ID(pin);
 
     *pinn |= _BV(p);
 }
 
 void portDirection(Port port, uint8_t directions) {
-    volatile uint8_t* ddrn = portToDDRN(port);
+    volatile uint8_t* ddrn = DDR_REG(port);
 
     *ddrn = directions;
 }
 
 uint8_t portValue(Port port) {
-    volatile uint8_t* pinn = portToPINN(port);
+    volatile uint8_t* pinn = PIN_REG(port);
 
     return *pinn;
 }
 
 void portSet(Port port, uint8_t values) {
-    volatile uint8_t* portn = portToPORTN(port);
+    volatile uint8_t* portn = PORT_REG(port);
 
     *portn = values;
 }
@@ -76,31 +75,7 @@ void portPullup(Port port, uint8_t values) {
 
 // Writing a logic one to PINxn toggles PORTxn.
 void portToggle(Port port, uint8_t selection) {
-    volatile uint8_t* pinn = portToPINN(port);
+    volatile uint8_t* pinn = PIN_REG(port);
 
     *pinn = selection;
-}
-
-uint8_t* portToPINN(Port port) {
-    return (uint8_t*)port + PINN_REGISTER_OFFSET;
-}
-
-uint8_t* portToDDRN(Port port) {
-    return (uint8_t*)port + DDRN_REGISTER_OFFSET;
-}
-
-uint8_t* portToPORTN(Port port) {
-    return (uint8_t*)port + PORTN_REGISTER_OFFSET;
-}
-
-uint8_t* pinToPINN(Pin pin) {
-    return (uint8_t*)(pin >> 8) + PINN_REGISTER_OFFSET;
-}
-
-uint8_t* pinToDDRN(Pin pin) {
-    return (uint8_t*)(pin >> 8) + DDRN_REGISTER_OFFSET;
-}
-
-uint8_t* pinToPORTN(Pin pin) {
-    return (uint8_t*)(pin >> 8) + PORTN_REGISTER_OFFSET;
 }

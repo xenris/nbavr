@@ -93,14 +93,14 @@ static void pulseServo(ServoData* servoData) {
     int16_t ticks = middle + adjust;
 
     atomic {
-        if(addInterrupt_(end, servoData->pin, ticks)) {
+        if(addInterrupt_(end, servoData->pin.value, ticks)) {
             pinSet(servoData->pin, High);
         }
     }
 }
 
 static void end(int16_t code) {
-    pinSet(code, Low);
+    pinSet((Pin){code}, Low);
     wake(&servoTask);
 }
 

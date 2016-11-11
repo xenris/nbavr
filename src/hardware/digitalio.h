@@ -5,126 +5,131 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-typedef enum {
-    #ifdef PINA
-        PortA = (uint16_t)&PINA,
-    #endif
-    #ifdef PINB
-        PortB = (uint16_t)&PINB,
-    #endif
-    #ifdef PINC
-        PortC = (uint16_t)&PINC,
-    #endif
-    #ifdef PIND
-        PortD = (uint16_t)&PIND,
-    #endif
+typedef struct __attribute__((packed)) {
+    uint8_t value;
 } Port;
 
-typedef enum {
-    #ifdef PINA0
-        PinA0 = (PortA << 8) | PINA0,
-    #endif
-    #ifdef PINA1
-        PinA1 = (PortA << 8) | PINA1,
-    #endif
-    #ifdef PINA2
-        PinA2 = (PortA << 8) | PINA2,
-    #endif
-    #ifdef PINA3
-        PinA3 = (PortA << 8) | PINA3,
-    #endif
-    #ifdef PINA4
-        PinA4 = (PortA << 8) | PINA4,
-    #endif
-    #ifdef PINA5
-        PinA5 = (PortA << 8) | PINA5,
-    #endif
-    #ifdef PINA6
-        PinA6 = (PortA << 8) | PINA6,
-    #endif
-    #ifdef PINA7
-        PinA7 = (PortA << 8) | PINA7,
-    #endif
-    #ifdef PINB0
-        PinB0 = (PortB << 8) | PINB0,
-    #endif
-    #ifdef PINB1
-        PinB1 = (PortB << 8) | PINB1,
-    #endif
-    #ifdef PINB2
-        PinB2 = (PortB << 8) | PINB2,
-    #endif
-    #ifdef PINB3
-        PinB3 = (PortB << 8) | PINB3,
-    #endif
-    #ifdef PINB4
-        PinB4 = (PortB << 8) | PINB4,
-    #endif
-    #ifdef PINB5
-        PinB5 = (PortB << 8) | PINB5,
-    #endif
-    #ifdef PINB6
-        PinB6 = (PortB << 8) | PINB6,
-    #endif
-    #ifdef PINB7
-        PinB7 = (PortB << 8) | PINB7,
-    #endif
-    #ifdef PINC0
-        PinC0 = (PortC << 8) | PINC0,
-    #endif
-    #ifdef PINC1
-        PinC1 = (PortC << 8) | PINC1,
-    #endif
-    #ifdef PINC2
-        PinC2 = (PortC << 8) | PINC2,
-    #endif
-    #ifdef PINC3
-        PinC3 = (PortC << 8) | PINC3,
-    #endif
-    #ifdef PINC4
-        PinC4 = (PortC << 8) | PINC4,
-    #endif
-    #ifdef PINC5
-        PinC5 = (PortC << 8) | PINC5,
-    #endif
-    #ifdef PINC6
-        PinC6 = (PortC << 8) | PINC6,
-    #endif
-    #ifdef PINC7
-        PinC7 = (PortC << 8) | PINC7,
-    #endif
-    #ifdef PIND0
-        PinD0 = (PortD << 8) | PIND0,
-    #endif
-    #ifdef PIND1
-        PinD1 = (PortD << 8) | PIND1,
-    #endif
-    #ifdef PIND2
-        PinD2 = (PortD << 8) | PIND2,
-    #endif
-    #ifdef PIND3
-        PinD3 = (PortD << 8) | PIND3,
-    #endif
-    #ifdef PIND4
-        PinD4 = (PortD << 8) | PIND4,
-    #endif
-    #ifdef PIND5
-        PinD5 = (PortD << 8) | PIND5,
-    #endif
-    #ifdef PIND6
-        PinD6 = (PortD << 8) | PIND6,
-    #endif
-    #ifdef PIND7
-        PinD7 = (PortD << 8) | PIND7,
-    #endif
+typedef struct __attribute__((packed)) {
+    // High byte for pin, Low byte for port.
+    uint16_t value;
 } Pin;
 
-typedef enum {
+#ifdef PINA
+    #define PortA ((Port){(uint16_t)&PINA})
+#endif
+#ifdef PINB
+    #define PortB ((Port){(uint16_t)&PINB})
+#endif
+#ifdef PINC
+    #define PortC ((Port){(uint16_t)&PINC})
+#endif
+#ifdef PIND
+    #define PortD ((Port){(uint16_t)&PIND})
+#endif
+
+#ifdef PINA0
+    #define PinA0 ((Pin){PINA0 << 8 | (uint8_t)(uint16_t)&PINA})
+#endif
+#ifdef PINA1
+    #define PinA1 ((Pin){PINA1 << 8 | (uint8_t)(uint16_t)&PINA})
+#endif
+#ifdef PINA2
+    #define PinA2 ((Pin){PINA2 << 8 | (uint8_t)(uint16_t)&PINA})
+#endif
+#ifdef PINA3
+    #define PinA3 ((Pin){PINA3 << 8 | (uint8_t)(uint16_t)&PINA})
+#endif
+#ifdef PINA4
+    #define PinA4 ((Pin){PINA4 << 8 | (uint8_t)(uint16_t)&PINA})
+#endif
+#ifdef PINA5
+    #define PinA5 ((Pin){PINA5 << 8 | (uint8_t)(uint16_t)&PINA})
+#endif
+#ifdef PINA6
+    #define PinA6 ((Pin){PINA6 << 8 | (uint8_t)(uint16_t)&PINA})
+#endif
+#ifdef PINA7
+    #define PinA7 ((Pin){PINA7 << 8 | (uint8_t)(uint16_t)&PINA})
+#endif
+#ifdef PINB0
+    #define PinB0 ((Pin){PINB0 << 8 | (uint8_t)(uint16_t)&PINB})
+#endif
+#ifdef PINB1
+    #define PinB1 ((Pin){PINB1 << 8 | (uint8_t)(uint16_t)&PINB})
+#endif
+#ifdef PINB2
+    #define PinB2 ((Pin){PINB2 << 8 | (uint8_t)(uint16_t)&PINB})
+#endif
+#ifdef PINB3
+    #define PinB3 ((Pin){PINB3 << 8 | (uint8_t)(uint16_t)&PINB})
+#endif
+#ifdef PINB4
+    #define PinB4 ((Pin){PINB4 << 8 | (uint8_t)(uint16_t)&PINB})
+#endif
+#ifdef PINB5
+    #define PinB5 ((Pin){PINB5 << 8 | (uint8_t)(uint16_t)&PINB})
+#endif
+#ifdef PINB6
+    #define PinB6 ((Pin){PINB6 << 8 | (uint8_t)(uint16_t)&PINB})
+#endif
+#ifdef PINB7
+    #define PinB7 ((Pin){PINB7 << 8 | (uint8_t)(uint16_t)&PINB})
+#endif
+#ifdef PINC0
+    #define PinC0 ((Pin){PINC0 << 8 | (uint8_t)(uint16_t)&PINC})
+#endif
+#ifdef PINC1
+    #define PinC1 ((Pin){PINC1 << 8 | (uint8_t)(uint16_t)&PINC})
+#endif
+#ifdef PINC2
+    #define PinC2 ((Pin){PINC2 << 8 | (uint8_t)(uint16_t)&PINC})
+#endif
+#ifdef PINC3
+    #define PinC3 ((Pin){PINC3 << 8 | (uint8_t)(uint16_t)&PINC})
+#endif
+#ifdef PINC4
+    #define PinC4 ((Pin){PINC4 << 8 | (uint8_t)(uint16_t)&PINC})
+#endif
+#ifdef PINC5
+    #define PinC5 ((Pin){PINC5 << 8 | (uint8_t)(uint16_t)&PINC})
+#endif
+#ifdef PINC6
+    #define PinC6 ((Pin){PINC6 << 8 | (uint8_t)(uint16_t)&PINC})
+#endif
+#ifdef PINC7
+    #define PinC7 ((Pin){PINC7 << 8 | (uint8_t)(uint16_t)&PINC})
+#endif
+#ifdef PIND0
+    #define PinD0 ((Pin){PIND0 << 8 | (uint8_t)(uint16_t)&PIND})
+#endif
+#ifdef PIND1
+    #define PinD1 ((Pin){PIND1 << 8 | (uint8_t)(uint16_t)&PIND})
+#endif
+#ifdef PIND2
+    #define PinD2 ((Pin){PIND2 << 8 | (uint8_t)(uint16_t)&PIND})
+#endif
+#ifdef PIND3
+    #define PinD3 ((Pin){PIND3 << 8 | (uint8_t)(uint16_t)&PIND})
+#endif
+#ifdef PIND4
+    #define PinD4 ((Pin){PIND4 << 8 | (uint8_t)(uint16_t)&PIND})
+#endif
+#ifdef PIND5
+    #define PinD5 ((Pin){PIND5 << 8 | (uint8_t)(uint16_t)&PIND})
+#endif
+#ifdef PIND6
+    #define PinD6 ((Pin){PIND6 << 8 | (uint8_t)(uint16_t)&PIND})
+#endif
+#ifdef PIND7
+    #define PinD7 ((Pin){PIND7 << 8 | (uint8_t)(uint16_t)&PIND})
+#endif
+
+typedef enum __attribute__((packed)) {
     Input,
     Output,
 } Direction;
 
-typedef enum {
+typedef enum __attribute__((packed)) {
     Low,
     High,
 } Value;
