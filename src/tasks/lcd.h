@@ -11,7 +11,20 @@
 //  e.g. \v\1\2 = move to start of second line.
 // \a = clear current line and put curser at start.
 
-extern Task lcdTask;
+#define LCD_STREAM_SIZE 30
+
+typedef struct {
+    Pin d4;
+    Pin d5;
+    Pin d6;
+    Pin d7;
+    Pin rw;
+    Pin rs;
+    Pin e;
+} LCDConfig;
+
 extern Stream* lcdout;
+
+Task* lcdTask(LCDConfig config);
 
 #endif

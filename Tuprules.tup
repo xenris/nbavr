@@ -14,8 +14,7 @@ ifeq ($(FREQ),)
     FREQ = 16000000UL
 endif
 
-CFLAGS = -I$(TUP_CWD)/
-CFLAGS += -I$(TUP_CWD)/src/
+CFLAGS = -I$(TUP_CWD)/src/
 CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Werror

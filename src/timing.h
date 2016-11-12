@@ -6,9 +6,10 @@
 // Every 2^16 ticks is a tock. (262.144ms at 16MHz)
 // Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
 
-#include <config.h>
 #include <stddef.h>
 #include "hardware.h"
+
+#define MAX_TICK_INTERRUPTS 10
 
 #define DIVISOR 64UL
 #define F_CPU_MHZ (F_CPU / 1000000UL)

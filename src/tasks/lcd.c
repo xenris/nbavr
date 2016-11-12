@@ -70,7 +70,7 @@ static void init5(void);
 static void init6(void);
 static void init7(void);
 
-Task lcdTask = {
+static Task task = {
     .setup = setup,
     .loop = loop,
 };
@@ -79,18 +79,26 @@ static Stream _lcdout = streamInit(LCD_STREAM_SIZE);
 
 Stream* lcdout = &_lcdout;
 
+static LCDConfig lcdConfig;
+
+Task* lcdTask(LCDConfig config) {
+    lcdConfig = config;
+
+    return &task;
+}
+
 static void setup(void) {
-    pinDirection(LCD_PIN_RW, Output);
-    pinDirection(LCD_PIN_RS, Output);
-    pinDirection(LCD_PIN_E, Output);
-    pinSet(LCD_PIN_RW, Low);
-    pinSet(LCD_PIN_RS, Low);
-    pinSet(LCD_PIN_E, Low);
+    pinDirection(lcdConfig.rw, Output);
+    pinDirection(lcdConfig.rs, Output);
+    pinDirection(lcdConfig.e, Output);
+    pinSet(lcdConfig.rw, Low);
+    pinSet(lcdConfig.rs, Low);
+    pinSet(lcdConfig.e, Low);
 
     state = init0;
     outOfBounds = false;
 
-    delay(&lcdTask, MS_TO_TICKS(50));
+    delay(&task, MS_TO_TICKS(50));
 }
 
 static void loop(void) {
@@ -132,7 +140,7 @@ static void run(void) {
             }
         }
     } else {
-        delay(&lcdTask, MS_TO_TICKS(20));
+        delay(&task, MS_TO_TICKS(20));
     }
 }
 
@@ -236,63 +244,63 @@ static void sendNibble(bool rs, uint8_t data) {
     Value d6 = (data & _BV(2)) ? High : Low;
     Value d7 = (data & _BV(3)) ? High : Low;
 
-    pinDirection(LCD_PIN_D4, Output);
-    pinDirection(LCD_PIN_D5, Output);
-    pinDirection(LCD_PIN_D6, Output);
-    pinDirection(LCD_PIN_D7, Output);
+    pinDirection(lcdConfig.d4, Output);
+    pinDirection(lcdConfig.d5, Output);
+    pinDirection(lcdConfig.d6, Output);
+    pinDirection(lcdConfig.d7, Output);
 
-    pinSet(LCD_PIN_D4, d4);
-    pinSet(LCD_PIN_D5, d5);
-    pinSet(LCD_PIN_D6, d6);
-    pinSet(LCD_PIN_D7, d7);
-    pinSet(LCD_PIN_RW, Low);
-    pinSet(LCD_PIN_RS, rs ? High : Low);
+    pinSet(lcdConfig.d4, d4);
+    pinSet(lcdConfig.d5, d5);
+    pinSet(lcdConfig.d6, d6);
+    pinSet(lcdConfig.d7, d7);
+    pinSet(lcdConfig.rw, Low);
+    pinSet(lcdConfig.rs, rs ? High : Low);
 
     _delay_us(1);
-    pinSet(LCD_PIN_E, High);
+    pinSet(lcdConfig.e, High);
     _delay_us(1);
-    pinSet(LCD_PIN_E, Low);
+    pinSet(lcdConfig.e, Low);
 }
 
 // XXX May need to wait 43us when reading data.
 static uint8_t getByte(bool rs) {
     uint8_t data = 0;
 
-    pinDirection(LCD_PIN_D4, Input);
-    pinDirection(LCD_PIN_D5, Input);
-    pinDirection(LCD_PIN_D6, Input);
-    pinDirection(LCD_PIN_D7, Input);
+    pinDirection(lcdConfig.d4, Input);
+    pinDirection(lcdConfig.d5, Input);
+    pinDirection(lcdConfig.d6, Input);
+    pinDirection(lcdConfig.d7, Input);
 
-    pinSet(LCD_PIN_D4, Low);
-    pinSet(LCD_PIN_D5, Low);
-    pinSet(LCD_PIN_D6, Low);
-    pinSet(LCD_PIN_D7, Low);
-    pinSet(LCD_PIN_RW, High);
-    pinSet(LCD_PIN_RS, rs ? High : Low);
-
-    _delay_us(1);
-
-    pinSet(LCD_PIN_E, High);
-    _delay_us(1);
-
-    data |= (pinValue(LCD_PIN_D7) == High) ? (1 << 7) : 0;
-    data |= (pinValue(LCD_PIN_D6) == High) ? (1 << 6) : 0;
-    data |= (pinValue(LCD_PIN_D5) == High) ? (1 << 5) : 0;
-    data |= (pinValue(LCD_PIN_D4) == High) ? (1 << 4) : 0;
-
-    pinSet(LCD_PIN_E, Low);
+    pinSet(lcdConfig.d4, Low);
+    pinSet(lcdConfig.d5, Low);
+    pinSet(lcdConfig.d6, Low);
+    pinSet(lcdConfig.d7, Low);
+    pinSet(lcdConfig.rw, High);
+    pinSet(lcdConfig.rs, rs ? High : Low);
 
     _delay_us(1);
 
-    pinSet(LCD_PIN_E, High);
+    pinSet(lcdConfig.e, High);
     _delay_us(1);
 
-    data |= (pinValue(LCD_PIN_D7) == High) ? (1 << 3) : 0;
-    data |= (pinValue(LCD_PIN_D6) == High) ? (1 << 2) : 0;
-    data |= (pinValue(LCD_PIN_D5) == High) ? (1 << 1) : 0;
-    data |= (pinValue(LCD_PIN_D4) == High) ? (1 << 0) : 0;
+    data |= (pinValue(lcdConfig.d7) == High) ? (1 << 7) : 0;
+    data |= (pinValue(lcdConfig.d6) == High) ? (1 << 6) : 0;
+    data |= (pinValue(lcdConfig.d5) == High) ? (1 << 5) : 0;
+    data |= (pinValue(lcdConfig.d4) == High) ? (1 << 4) : 0;
 
-    pinSet(LCD_PIN_E, Low);
+    pinSet(lcdConfig.e, Low);
+
+    _delay_us(1);
+
+    pinSet(lcdConfig.e, High);
+    _delay_us(1);
+
+    data |= (pinValue(lcdConfig.d7) == High) ? (1 << 3) : 0;
+    data |= (pinValue(lcdConfig.d6) == High) ? (1 << 2) : 0;
+    data |= (pinValue(lcdConfig.d5) == High) ? (1 << 1) : 0;
+    data |= (pinValue(lcdConfig.d4) == High) ? (1 << 0) : 0;
+
+    pinSet(lcdConfig.e, Low);
 
     return data;
 }
@@ -301,50 +309,50 @@ static void init0(void) {
     // Reset 1
     sendNibble(false, 0x3);
     state = init1;
-    delay(&lcdTask, MS_TO_TICKS(5));
+    delay(&task, MS_TO_TICKS(5));
 }
 
 static void init1(void) {
     // Reset 2
     sendNibble(false, 0x3);
     state = init2;
-    delay(&lcdTask, MS_TO_TICKS(1));
+    delay(&task, MS_TO_TICKS(1));
 }
 
 static void init2(void) {
     // Reset 3
     sendNibble(false, 0x3);
     state = init3;
-    delay(&lcdTask, MS_TO_TICKS(1));
+    delay(&task, MS_TO_TICKS(1));
 }
 
 static void init3(void) {
     // initial 4 bit mode
     sendNibble(false, 0x2);
     state = init4;
-    delay(&lcdTask, MS_TO_TICKS(1));
+    delay(&task, MS_TO_TICKS(1));
 }
 
 static void init4(void) {
     sendByte(false, FUNCTION_FOUR_BITS_TWO_LINES);
     state = init5;
-    delay(&lcdTask, MS_TO_TICKS(1));
+    delay(&task, MS_TO_TICKS(1));
 }
 
 static void init5(void) {
     sendByte(false, DISPLAY_ON);
     state = init6;
-    delay(&lcdTask, MS_TO_TICKS(1));
+    delay(&task, MS_TO_TICKS(1));
 }
 
 static void init6(void) {
     sendByte(false, CLEAR_DISPLAY);
     state = init7;
-    delay(&lcdTask, MS_TO_TICKS(4));
+    delay(&task, MS_TO_TICKS(4));
 }
 
 static void init7(void) {
     sendByte(false, ENTRY_MODE_RIGHT);
     state = run;
-    delay(&lcdTask, MS_TO_TICKS(1));
+    delay(&task, MS_TO_TICKS(1));
 }

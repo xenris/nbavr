@@ -3,6 +3,8 @@
 
 #include <nbavr.h>
 
+#define MAX_SERVOS 6
+
 typedef struct {
     int8_t id;
 } Servo;

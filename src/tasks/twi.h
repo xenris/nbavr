@@ -4,6 +4,8 @@
 #include <nbavr.h>
 #include <util/twi.h>
 
+#define TWI_BAUD 400
+
 typedef enum {
     TWI_READ = TW_READ,
     TWI_WRITE = TW_WRITE,

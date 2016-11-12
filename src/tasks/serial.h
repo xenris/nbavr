@@ -1,6 +1,8 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
+#define BAUD 9600
+
 #include <nbavr.h>
 #include <util/setbaud.h>
 
