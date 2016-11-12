@@ -265,10 +265,10 @@
 #define CHIP_TIMER_2_TIMER_COUNTER_REG                          TCNT2
 
 #define CHIP_TIMER_2_OUTPUT_A                                   TRUE
-#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_0_REG                    TCCR2A
-#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_1_REG                    TCCR2A
-#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_0                        COM2A0
-#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_1                        COM2A1
+#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_0_REG                    TCCR2
+#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_1_REG                    TCCR2
+#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_0                        COM20
+#define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_1                        COM21
 #define CHIP_TIMER_2_OUTPUT_A_REG                               OCR2
 #define CHIP_TIMER_2_OUTPUT_A_INT_ENABLE_REG                    TIMSK
 #define CHIP_TIMER_2_OUTPUT_A_INT_ENABLE_BIT                    OCIE2
