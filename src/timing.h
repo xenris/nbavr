@@ -24,7 +24,7 @@
 #define TICKS_TO_TOCKS(t) (((t) + 32768UL) / 65536UL)
 #define TOCKS_TO_TICKS(t) ((t) * 65536UL)
 
-void setupTicks();
+void setupTicks(void (*halt)(void));
 uint16_t getTicks16(void) __attribute__((always_inline));
 uint32_t getTicks(void) __attribute__((always_inline));
 uint32_t getTicks_(void);
