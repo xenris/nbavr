@@ -37,8 +37,7 @@ static void setup(void) {
 static void loop(void) {
     if(lightSensorReadResult == TWI_SUCCESS) {
         uint16_t t = (lightSensorValueBuffer[0] << 8) | lightSensorValueBuffer[1];
-        printi16(stdout, t, PrintUDec);
-        printchar(stdout, '\n');
+        print(stdout, t, (char)'\n');
     }
 
     if(lightSensorReadResult != TWI_BUSY) {

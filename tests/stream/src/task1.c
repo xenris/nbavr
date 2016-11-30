@@ -24,9 +24,7 @@ static void loop(void) {
     uint32_t ticks = getTicks();
 
     if(ticks >= mDelay) {
-        printstr(stdout, "Task1 running (");
-        printi16(stdout, count, PrintUDec);
-        printstr(stdout, ")\n");
+        print(stdout, "Task1 running (", count, ")\n");
         mDelay = ticks + MS_TO_TICKS(1000);
         count++;
     }
@@ -34,8 +32,8 @@ static void loop(void) {
     uint8_t b;
 
     if(streamPop(task1Stream, &b)) {
-        printstr(stdout, "Task1 received byte 0x");
-        printi16(stdout, b, PrintUHex);
-        printchar(stdout, '\n');
+        print(stdout, "Task1 received byte 0x");
+        printint(stdout, b, PrintUHex);
+        print(stdout, (char)'\n');
     }
 }

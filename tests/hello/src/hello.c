@@ -15,9 +15,7 @@ static void setup(void) {
 }
 
 static void loop(void) {
-    printstr(stdout, "hello! (");
-    printi16(stdout, count, PrintSDec);
-    printstr(stdout, ")\n");
+    print(stdout, "hello! (", count, ")\n");
 
     count++;
 
