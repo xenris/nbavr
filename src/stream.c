@@ -7,7 +7,7 @@ bool streamPush_(Stream* stream, uint8_t in) {
         return false;
     }
 
-    if(streamEmpty(stream)) {
+    if(streamEmpty_(stream)) {
         if(stream->callback != NULL) {
             stream->callback();
         }
@@ -70,18 +70,18 @@ bool streamPush16_(Stream* stream, uint16_t n) {
         return false;
     }
 
-    if(streamEmpty(stream)) {
+    if(streamEmpty_(stream)) {
         if(stream->callback != NULL) {
             stream->callback();
         }
     }
 
-    if(streamUnused(stream) < 2) {
+    if(streamUnused_(stream) < 2) {
         return false;
     }
 
-    streamPush(stream, (n >> 8));
-    streamPush(stream, n);
+    streamPush_(stream, (n >> 8));
+    streamPush_(stream, n);
 
     return true;
 }
@@ -95,13 +95,13 @@ bool streamPop16_(Stream* stream, uint16_t* n) {
         return false;
     }
 
-    if(streamUsed(stream) < 2) {
+    if(streamUsed_(stream) < 2) {
         return false;
     }
 
     uint8_t* t = (uint8_t*)n;
-    streamPop(stream, t + 1);
-    streamPop(stream, t);
+    streamPop_(stream, t + 1);
+    streamPop_(stream, t);
 
     return true;
 }
@@ -115,7 +115,7 @@ bool streamPeek16_(Stream* stream, uint16_t* n) {
         return false;
     }
 
-    if(streamUsed(stream) < 2) {
+    if(streamUsed_(stream) < 2) {
         return false;
     }
 
@@ -131,14 +131,14 @@ bool streamPushBuffer_(Stream* stream, uint16_t count, uint8_t* buffer) {
         return false;
     }
 
-    if(streamEmpty(stream)) {
+    if(streamEmpty_(stream)) {
         if(stream->callback != NULL) {
             stream->callback();
         }
     }
 
     for(uint16_t i = 0; i < count; i++) {
-        if(!streamPush(stream, buffer[i])) {
+        if(!streamPush_(stream, buffer[i])) {
             return false;
         }
     }
@@ -153,7 +153,7 @@ bool streamPopBuffer_(Stream* stream, uint16_t count, uint8_t* buffer) {
 
     for(uint16_t i = 0; i < count; i++) {
         uint8_t t;
-        if(!streamPop(stream, &t)) {
+        if(!streamPop_(stream, &t)) {
             return false;
         }
         buffer[i] = t;
@@ -183,7 +183,7 @@ int16_t streamUnused_(Stream* stream) {
         return 0;
     }
 
-    return stream->size - streamUsed(stream) - 1;
+    return stream->size - streamUsed_(stream) - 1;
 }
 
 void streamClear_(Stream* stream) {
