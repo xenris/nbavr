@@ -2,11 +2,8 @@
 
 include_rules
 
-# Compile source to object code.
-: foreach src/*.c src/hardware/*.c src/tasks/*.c |> $(CC) $(CFLAGS) -c -o %o %f |> tmp/%B.o
-
-# Archive object code into a library.
-: tmp/*.o |> $(AR) rcs %o %f |> libnbavr.a
+# Generate a header file containing the preprocessor output.
+: src/nbavr.cpp |> avr-cpp -x c++ $(CFLAGS) %f %o |> header.hpp
 
 # Generate gitignore file.
 .gitignore

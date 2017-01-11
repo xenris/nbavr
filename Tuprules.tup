@@ -1,17 +1,18 @@
 # Tuprules
 
+include build.config
+
 NBAVR_TOP = $(TUP_CWD)
 
-CC = avr-gcc
-AR = avr-ar
+CC = avr-g++
 OBJDUMP = avr-objdump
 
 ifeq ($(MMCU),)
-    MMCU = atmega328p
+    MMCU = $(mcu)
 endif
 
 ifeq ($(FREQ),)
-    FREQ = 16000000UL
+    FREQ = $(freq)
 endif
 
 CFLAGS = -I$(TUP_CWD)/src/
@@ -20,7 +21,7 @@ CFLAGS += -Wextra
 CFLAGS += -Werror
 CFLAGS += -ffunction-sections
 CFLAGS += -g
-CFLAGS += -std=c11
+CFLAGS += -std=c++14
 CFLAGS += -Os
 CFLAGS += -mmcu=$(MMCU)
 CFLAGS += -DF_CPU=$(FREQ)
@@ -28,7 +29,8 @@ CFLAGS += -Wl,-gc-sections
 CFLAGS += -fdiagnostics-color=always
 CFLAGS += -Wno-unused-parameter
 CFLAGS += -Wno-unused-function
-CFLAGS += -Wno-attributes
-CFLAGS += -Wno-pointer-to-int-cast
+CFLAGS += -Wno-unused-variable
 CFLAGS += -flto
 CFLAGS += -ffreestanding
+CFLAGS += -fno-exceptions
+CFLAGS += -fmax-errors=3
