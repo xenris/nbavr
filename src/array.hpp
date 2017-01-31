@@ -7,7 +7,8 @@ class Array {
     const uint8_t _size;
 
 public:
-    Array(T* datap, uint8_t size) : _datap(datap), _size(size) {
+    template<uint8_t S>
+    Array(T(&a)[S]) : _datap(a), _size(S) {
     }
 
     constexpr force_inline uint8_t size() const {
@@ -45,9 +46,23 @@ template <class T, uint8_t S>
 class ArrayBuffer : public Array<T> {
     T _data[S];
 
-    public:
+public:
+    ArrayBuffer() : Array<T>(_data) {
+    }
 
-    ArrayBuffer() : Array<T>(_data, S) {
+    ArrayBuffer(T t) : Array<T>(_data) {
+        for(uint8_t i = 0; i < S; i++) {
+            _data[i] = t;
+        }
+    }
+
+    template<uint8_t N>
+    ArrayBuffer(const T(&list)[N]) : Array<T>(_data) {
+        static_assert(N == S, "Number of initialiser elements does not match ArrayBuffer size");
+
+        for(uint8_t i = 0; i < S; i++) {
+            _data[i] = list[i];
+        }
     }
 };
 
