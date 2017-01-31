@@ -14,7 +14,7 @@ class Serial : public Task {
 
     public:
 
-    Serial(U usart, Stream<char>& stdout, Stream<char>& stdin)
+    Serial(U& usart, Stream<char>& stdout, Stream<char>& stdin)
     : usart(usart), stdout(stdout), stdin(stdin) {
         stdout.setCallback(streamCallback, this);
 
