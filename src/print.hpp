@@ -96,4 +96,10 @@ inline Stream<char>& operator<<(Stream<char>& stream, bool n) {
     return stream;
 }
 
+template <class T>
+inline Stream<char>& operator<<(Stream<char>& stream, T* p) {
+    printint(stream, (uint16_t)p, PrintFormat::UHex);
+    return stream;
+}
+
 #endif
