@@ -15,7 +15,7 @@ void main() {
     Hello hello(clock, stdout);
     Flash flash(clock, ledPin);
 
-    Task* tasks[] = {&serial, &hello, &flash, nullptr};
+    Task* tasks[] = {&serial, &hello, &flash};
 
     nbavr(clock, tasks);
 }

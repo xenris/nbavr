@@ -17,7 +17,7 @@ void main() {
     Task1 task1(clock, stream, stdout);
     Task2 task2(clock, stream);
 
-    Task* tasks[] = {&task1, &task2, &flash, &serial, nullptr};
+    Task* tasks[] = {&task1, &task2, &flash, &serial};
 
     nbavr(clock, tasks);
 }

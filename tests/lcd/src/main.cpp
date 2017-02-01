@@ -20,7 +20,7 @@ void main() {
     Hello hello(clock, lcdout);
     Flash flash(clock, ledPin);
 
-    Task* tasks[] = {&hello, &flash, &lcd, nullptr};
+    Task* tasks[] = {&hello, &flash, &lcd};
 
     nbavr(clock, tasks);
 }

@@ -15,7 +15,7 @@ void main() {
     Serial<Usart0> serial(usart0, stdout, stdin);
     LightSensor lightSensor(clock, stdout, twiout);
 
-    Task* tasks[] = {&lightSensor, &twi, &serial, nullptr};
+    Task* tasks[] = {&lightSensor, &twi, &serial};
 
     nbavr(clock, tasks);
 }

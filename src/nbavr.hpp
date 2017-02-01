@@ -30,7 +30,8 @@ inline void resumeFromHalt() {
     longjmp(_longJmp, LONG_JUMP_HALT);
 }
 
-inline void nbavr(Clock& clock, Task** tasks) {
+template <uint8_t S>
+inline void nbavr(Clock& clock, Task* (&tasks)[S]) {
     // Disable interrupts.
     cli();
 
@@ -40,27 +41,27 @@ inline void nbavr(Clock& clock, Task** tasks) {
     // If a task halts or yields, the cpu will jump back here.
     int jmp = setjmp(_longJmp);
 
-    // Pointer to current task.
+    // Index of current task.
     // Static to prevent being reinitialised when a task yields or halts.
-    static Task** task = tasks;
+    static uint8_t taskI = 0;
 
     // If a task halted or yielded go to the next task.
     if(jmp) {
-        task++;
+        taskI++;
     }
 
     while(true) {
-        while(*task != nullptr) {
+        while(taskI < S) {
             _wdt_reset();
 
             sei();
 
-            (*task)->step(clock);
+            tasks[taskI]->step(clock);
 
-            task++;
+            taskI++;
         }
 
-        task = tasks;
+        taskI = 0;
         // TODO Sleep the cpu if all tasks are asleep.
     }
 }
