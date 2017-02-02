@@ -1,7 +1,7 @@
 class PcInt {
-    volatile uint8_t& _enableRegister;
-    volatile uint8_t& _maskRegister;
-    volatile uint8_t& _flagRegister;
+    volatile uint8_t* const _enableRegister;
+    volatile uint8_t* const _maskRegister;
+    volatile uint8_t* const _flagRegister;
     const uint8_t _enableBit;
     const uint8_t _flagBit;
     void (*&_interruptP)(void*);
@@ -9,9 +9,9 @@ class PcInt {
 
 public:
     PcInt(
-        volatile uint8_t& enableRegister,
-        volatile uint8_t& maskRegister,
-        volatile uint8_t& flagRegister,
+        volatile uint8_t* const enableRegister,
+        volatile uint8_t* const maskRegister,
+        volatile uint8_t* const flagRegister,
         const uint8_t enableBit,
         const uint8_t flagBit,
         void (*&interruptP)(void*),
@@ -38,7 +38,7 @@ public:
         _interruptDataP = data;
 
         // Configure trigger.
-        _maskRegister = mask;
+        *_maskRegister = mask;
 
         // Enable interrupt.
         setBit_(_enableRegister, _enableBit, true);
@@ -57,7 +57,7 @@ public:
         _interruptP = nullptr;
         _interruptDataP = nullptr;
 
-        _maskRegister = 0;
+        *_maskRegister = 0;
 
         setBit_(_enableRegister, _enableBit, false);
 

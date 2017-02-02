@@ -2,44 +2,44 @@
 #define NBAVR_PORT_HPP
 
 class Port {
-    volatile uint8_t& _output;
-    volatile uint8_t& _direction;
-    volatile uint8_t& _input;
+    volatile uint8_t* const _output;
+    volatile uint8_t* const _direction;
+    volatile uint8_t* const _input;
 
 public:
-    Port(volatile uint8_t& output, volatile uint8_t& direction, volatile uint8_t& input)
+    Port(volatile uint8_t* const output, volatile uint8_t* const direction, volatile uint8_t* const input)
         : _output(output), _direction(direction), _input(input) {
     }
 
     force_inline uint8_t direction(uint8_t d) const {
-        _direction = d;
+        *_direction = d;
         return d;
     }
 
     force_inline uint8_t direction() const {
-        return _direction;
+        return *_direction;
     }
 
     force_inline uint8_t pullup(uint8_t p) const {
-        _output = p;
+        *_output = p;
         return p;
     }
 
     force_inline uint8_t pullup() const {
-        return _output;
+        return *_output;
     }
 
     force_inline uint8_t value(uint8_t v) const {
-        _output = v;
+        *_output = v;
         return v;
     }
 
     force_inline uint8_t value() const {
-        return _input;
+        return *_input;
     }
 
     force_inline uint8_t toggle(uint8_t bits) const {
-        _input = bits;
+        *_input = bits;
         return bits;
     }
 

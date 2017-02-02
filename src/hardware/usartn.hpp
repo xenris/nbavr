@@ -62,7 +62,7 @@ struct UsartN() {
         bool use2X = false;
     };
 
-    force_inline void apply(Config config) {
+    force_inline void apply(Config config) const {
         atomic {
             setBit_(USART_N(_DOUBLE_SPEED_REG), USART_N(_DOUBLE_SPEED_BIT), config.use2X);
 
@@ -100,8 +100,8 @@ struct UsartN() {
             _MemoryBarrier();
             #endif
 
-            USART_N(_BAUD_RATE_REG_HIGH) = config.baud >> 8;
-            USART_N(_BAUD_RATE_REG_LOW) = config.baud;
+            *USART_N(_BAUD_RATE_REG_HIGH) = config.baud >> 8;
+            *USART_N(_BAUD_RATE_REG_LOW) = config.baud;
 
             _usartN(RxCompleteInterrupt) = config.rxCompleteInterrupt;
             _usartN(RxCompleteInterruptData) = config.rxCompleteInterruptData;
@@ -114,27 +114,27 @@ struct UsartN() {
         }
     }
 
-    force_inline void push(uint8_t b) {
-        USART_N(_DATA_REG) = b;
+    force_inline void push(uint8_t b) const {
+        *USART_N(_DATA_REG) = b;
     }
 
-    force_inline void push9(uint16_t b) {
+    force_inline void push9(uint16_t b) const {
         if(b & 0x0100) {
-            USART_N(_TX_DATA_BIT_8_REG) |= _BV(USART_N(_TX_DATA_BIT_8_BIT));
+            *USART_N(_TX_DATA_BIT_8_REG) |= _BV(USART_N(_TX_DATA_BIT_8_BIT));
         } else {
-            USART_N(_TX_DATA_BIT_8_REG) &= ~_BV(USART_N(_TX_DATA_BIT_8_BIT));
+            *USART_N(_TX_DATA_BIT_8_REG) &= ~_BV(USART_N(_TX_DATA_BIT_8_BIT));
         }
 
-        USART_N(_DATA_REG) = b;
+        *USART_N(_DATA_REG) = b;
     }
 
-    force_inline uint8_t pop() {
-        return USART_N(_DATA_REG);
+    force_inline uint8_t pop() const {
+        return *USART_N(_DATA_REG);
     }
 
-    force_inline uint16_t pop9() {
-        uint8_t bit8 = USART_N(_RX_DATA_BIT_8_REG) & _BV(USART_N(_RX_DATA_BIT_8_BIT));
-        uint8_t result = USART_N(_DATA_REG);
+    force_inline uint16_t pop9() const {
+        uint8_t bit8 = *USART_N(_RX_DATA_BIT_8_REG) & _BV(USART_N(_RX_DATA_BIT_8_BIT));
+        uint8_t result = *USART_N(_DATA_REG);
 
         if(bit8) {
             result |= 0x0100;
@@ -143,67 +143,67 @@ struct UsartN() {
         return result;
     }
 
-    force_inline bool frameError() {
-        bool result = USART_N(_FRAME_ERROR_REG) & _BV(USART_N(_FRAME_ERROR_BIT));
+    force_inline bool frameError() const {
+        bool result = *USART_N(_FRAME_ERROR_REG) & _BV(USART_N(_FRAME_ERROR_BIT));
 
-        USART_N(_FRAME_ERROR_REG) &= ~_BV(USART_N(_FRAME_ERROR_BIT));
-
-        return result;
-    }
-
-    force_inline bool dataOverRun() {
-        bool result = USART_N(_DATA_OVERRUN_REG) & _BV(USART_N(_DATA_OVERRUN_BIT));
-
-        USART_N(_DATA_OVERRUN_REG) &= ~_BV(USART_N(_DATA_OVERRUN_BIT));
+        *USART_N(_FRAME_ERROR_REG) &= ~_BV(USART_N(_FRAME_ERROR_BIT));
 
         return result;
     }
 
-    force_inline bool parityError() {
-        bool result = USART_N(_PARITY_ERROR_REG) & _BV(USART_N(_PARITY_ERROR_BIT));
+    force_inline bool dataOverRun() const {
+        bool result = *USART_N(_DATA_OVERRUN_REG) & _BV(USART_N(_DATA_OVERRUN_BIT));
 
-        USART_N(_PARITY_ERROR_REG) &= ~_BV(USART_N(_PARITY_ERROR_BIT));
+        *USART_N(_DATA_OVERRUN_REG) &= ~_BV(USART_N(_DATA_OVERRUN_BIT));
 
         return result;
     }
 
-    force_inline void rxCompleteInterruptEnable(bool b) {
+    force_inline bool parityError() const {
+        bool result = *USART_N(_PARITY_ERROR_REG) & _BV(USART_N(_PARITY_ERROR_BIT));
+
+        *USART_N(_PARITY_ERROR_REG) &= ~_BV(USART_N(_PARITY_ERROR_BIT));
+
+        return result;
+    }
+
+    force_inline void rxCompleteInterruptEnable(bool b) const {
         if(b) {
-            USART_N(_RX_COMPLETE_INT_ENABLE_REG) |= _BV(USART_N(_RX_COMPLETE_INT_ENABLE_BIT));
+            *USART_N(_RX_COMPLETE_INT_ENABLE_REG) |= _BV(USART_N(_RX_COMPLETE_INT_ENABLE_BIT));
         } else {
-            USART_N(_RX_COMPLETE_INT_ENABLE_REG) &= ~_BV(USART_N(_RX_COMPLETE_INT_ENABLE_BIT));
+            *USART_N(_RX_COMPLETE_INT_ENABLE_REG) &= ~_BV(USART_N(_RX_COMPLETE_INT_ENABLE_BIT));
         }
     }
 
-    force_inline void txCompleteInterruptEnable(bool b) {
+    force_inline void txCompleteInterruptEnable(bool b) const {
         if(b) {
-            USART_N(_TX_COMPLETE_INT_ENABLE_REG) |= _BV(USART_N(_TX_COMPLETE_INT_ENABLE_BIT));
+            *USART_N(_TX_COMPLETE_INT_ENABLE_REG) |= _BV(USART_N(_TX_COMPLETE_INT_ENABLE_BIT));
         } else {
-            USART_N(_TX_COMPLETE_INT_ENABLE_REG) &= ~_BV(USART_N(_TX_COMPLETE_INT_ENABLE_BIT));
+            *USART_N(_TX_COMPLETE_INT_ENABLE_REG) &= ~_BV(USART_N(_TX_COMPLETE_INT_ENABLE_BIT));
         }
     }
 
-    force_inline void dataRegisterEmptyInterruptEnable(bool b) {
+    force_inline void dataRegisterEmptyInterruptEnable(bool b) const {
         if(b) {
-            USART_N(_DATA_REG_EMPTY_INT_ENABLE_REG) |= _BV(USART_N(_DATA_REG_EMPTY_INT_ENABLE_BIT));
+            *USART_N(_DATA_REG_EMPTY_INT_ENABLE_REG) |= _BV(USART_N(_DATA_REG_EMPTY_INT_ENABLE_BIT));
         } else {
-            USART_N(_DATA_REG_EMPTY_INT_ENABLE_REG) &= ~_BV(USART_N(_DATA_REG_EMPTY_INT_ENABLE_BIT));
+            *USART_N(_DATA_REG_EMPTY_INT_ENABLE_REG) &= ~_BV(USART_N(_DATA_REG_EMPTY_INT_ENABLE_BIT));
         }
     }
 
-    force_inline void receiverEnable(bool b) {
+    force_inline void receiverEnable(bool b) const {
         if(b) {
-            USART_N(_RX_ENABLE_REG) |= _BV(USART_N(_RX_ENABLE_BIT));
+            *USART_N(_RX_ENABLE_REG) |= _BV(USART_N(_RX_ENABLE_BIT));
         } else {
-            USART_N(_RX_ENABLE_REG) &= ~_BV(USART_N(_RX_ENABLE_BIT));
+            *USART_N(_RX_ENABLE_REG) &= ~_BV(USART_N(_RX_ENABLE_BIT));
         }
     }
 
-    force_inline void transmitterEnable(bool b) {
+    force_inline void transmitterEnable(bool b) const {
         if(b) {
-            USART_N(_TX_ENABLE_REG) |= _BV(USART_N(_TX_ENABLE_BIT));
+            *USART_N(_TX_ENABLE_REG) |= _BV(USART_N(_TX_ENABLE_BIT));
         } else {
-            USART_N(_TX_ENABLE_REG) &= ~_BV(USART_N(_TX_ENABLE_BIT));
+            *USART_N(_TX_ENABLE_REG) &= ~_BV(USART_N(_TX_ENABLE_BIT));
         }
     }
 };

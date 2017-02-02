@@ -28,21 +28,21 @@ void sei() {
 
 force_inline
 uint8_t __cli() {
-    uint8_t s = CHIP_STATUS_REG;
+    uint8_t s = *CHIP_STATUS_REG;
     cli();
     return s;
 }
 
 force_inline
 uint8_t __sei() {
-    uint8_t s = CHIP_STATUS_REG;
+    uint8_t s = *CHIP_STATUS_REG;
     sei();
     return s;
 }
 
 force_inline
 void __ssreg(const uint8_t *s) {
-    CHIP_STATUS_REG = *s;
+    *CHIP_STATUS_REG = *s;
 }
 
 #define atomic for(uint8_t __sreg __attribute__((cleanup(__ssreg))) = __cli(), __once = 1; __once; __once = 0)
@@ -90,31 +90,12 @@ auto end(T* t) -> decltype(t->end()) {
     return t->end();
 }
 
-// TODO Move to hardware section.
-/// Set or clear a volatile register bit.
-force_inline void setBit(volatile uint8_t& reg, uint8_t bit, uint8_t value) {
-    if(value) {
-        reg |= _BV(bit);
-    } else {
-        reg &= ~_BV(bit);
-    }
-}
-
 /// Set or clear a volatile register bit.
 force_inline void setBit(volatile uint8_t* reg, uint8_t bit, uint8_t value) {
     if(value) {
         *reg |= _BV(bit);
     } else {
         *reg &= ~_BV(bit);
-    }
-}
-
-/// Lazily set or clear a volatile register bit, for better compiler optimisation.
-force_inline void setBit_(volatile uint8_t& reg, uint8_t bit, bool value) {
-    if(value) {
-        (uint8_t&)reg |= _BV(bit);
-    } else {
-        (uint8_t&)reg &= ~_BV(bit);
     }
 }
 

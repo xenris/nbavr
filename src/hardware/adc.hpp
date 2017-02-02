@@ -173,7 +173,7 @@ struct ADC {
     }
 
     force_inline uint16_t value() {
-        return CHIP_ADC_DATA_REG;
+        return *CHIP_ADC_DATA_REG;
     }
 };
 

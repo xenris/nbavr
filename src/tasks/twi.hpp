@@ -33,7 +33,7 @@
 #define TW_BUS_ERROR		0x00
 #define TW_STATUS_MASK		(_BV(TWS7)|_BV(TWS6)|_BV(TWS5)|_BV(TWS4)|\
 				_BV(TWS3))
-#define TW_STATUS		(TWSR & TW_STATUS_MASK)
+#define TW_STATUS		(*TWSR & TW_STATUS_MASK)
 #define TW_READ		1
 #define TW_WRITE	0
 
@@ -68,14 +68,14 @@
 #define TWDR REG8(0xBB)
 
 #define TWI_BAUD 400
-#define twiEnable() TWCR = _BV(TWEN)
-#define twiDisable() TWCR = 0
-#define twiSendStart() TWCR = (_BV(TWINT) | _BV(TWSTA) | _BV(TWEN))
-#define twiSendACK() TWCR = (_BV(TWINT) | _BV(TWEN) | _BV(TWEA))
-#define twiSendNACK() TWCR = (_BV(TWINT) | _BV(TWEN))
-#define twiSendStop() TWCR = (_BV(TWINT) | _BV(TWSTO) | _BV(TWEN))
-#define twiClearInt() TWCR = (_BV(TWINT) | _BV(TWEN))
-#define twiClearError() TWCR = (_BV(TWINT) | _BV(TWSTO) | _BV(TWEN))
+#define twiEnable() *TWCR = _BV(TWEN)
+#define twiDisable() *TWCR = 0
+#define twiSendStart() *TWCR = (_BV(TWINT) | _BV(TWSTA) | _BV(TWEN))
+#define twiSendACK() *TWCR = (_BV(TWINT) | _BV(TWEN) | _BV(TWEA))
+#define twiSendNACK() *TWCR = (_BV(TWINT) | _BV(TWEN))
+#define twiSendStop() *TWCR = (_BV(TWINT) | _BV(TWSTO) | _BV(TWEN))
+#define twiClearInt() *TWCR = (_BV(TWINT) | _BV(TWEN))
+#define twiClearError() *TWCR = (_BV(TWINT) | _BV(TWSTO) | _BV(TWEN))
 
 class TWI : public Task {
     public:
@@ -120,7 +120,7 @@ class TWI : public Task {
 
         TWI(Stream<Action>& twiout) : twiout(twiout) {
             const uint32_t scaleFactor = 1;
-            TWBR = (uint8_t)((((F_CPU / 1000UL) / TWI_BAUD) - 16UL) / (2UL * scaleFactor));
+            *TWBR = (uint8_t)((((F_CPU / 1000UL) / TWI_BAUD) - 16UL) / (2UL * scaleFactor));
 
             twiEnable();
 
@@ -154,13 +154,13 @@ class TWI : public Task {
             switch(twStatus) {
                 case TW_START:
                 case TW_REP_START:
-                    TWDR = (uint8_t)(action.addr << 1) | (uint8_t)action.rw;
+                    *TWDR = (uint8_t)(action.addr << 1) | (uint8_t)action.rw;
                     twiSendNACK();
                     break;
                 case TW_MT_SLA_ACK:
                 case TW_MT_DATA_ACK:
                     if(dataIndex < action.count) {
-                        TWDR = action.data[dataIndex];
+                        *TWDR = action.data[dataIndex];
                         dataIndex++;
                         twiSendNACK();
                     } else {
@@ -190,7 +190,7 @@ class TWI : public Task {
                     twiSendStop();
                     break;
                 case TW_MR_DATA_ACK:
-                    action.data[dataIndex] = TWDR;
+                    action.data[dataIndex] = *TWDR;
                     dataIndex++;
 
                     if(dataIndex < action.count) {

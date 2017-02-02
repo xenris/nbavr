@@ -1,8 +1,8 @@
 class ExInt {
-    volatile uint8_t& _enableRegister;
-    volatile uint8_t& _triggerBit0Register;
-    volatile uint8_t& _triggerBit1Register;
-    volatile uint8_t& _flagRegister;
+    volatile uint8_t* const _enableRegister;
+    volatile uint8_t* const _triggerBit0Register;
+    volatile uint8_t* const _triggerBit1Register;
+    volatile uint8_t* const _flagRegister;
     const uint8_t _enableBit;
     const uint8_t _triggerBit0Bit;
     const uint8_t _triggerBit1Bit;
@@ -19,10 +19,10 @@ public:
     };
 
     ExInt(
-        volatile uint8_t& enableRegister,
-        volatile uint8_t& triggerBit0Register,
-        volatile uint8_t& triggerBit1Register,
-        volatile uint8_t& flagRegister,
+        volatile uint8_t* const enableRegister,
+        volatile uint8_t* const triggerBit0Register,
+        volatile uint8_t* const triggerBit1Register,
+        volatile uint8_t* const flagRegister,
         const uint8_t enableBit,
         const uint8_t triggerBit0Bit,
         const uint8_t triggerBit1Bit,

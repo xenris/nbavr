@@ -2,13 +2,12 @@
 #define NBAVR_PIN_HPP
 
 class Pin {
-    volatile uint8_t& _output;
-    volatile uint8_t& _direction;
-    volatile uint8_t& _input;
+    volatile uint8_t* const _output;
+    volatile uint8_t* const _direction;
+    volatile uint8_t* const _input;
     const uint8_t bit;
 
-    public:
-
+public:
     enum class Direction : int8_t {
         Input,
         InputPullup,
@@ -20,23 +19,23 @@ class Pin {
         High,
     };
 
-    Pin(volatile uint8_t& output, volatile uint8_t& direction, volatile uint8_t& input, uint8_t bit)
+    Pin(volatile uint8_t* output, volatile uint8_t* direction, volatile uint8_t* input, uint8_t bit)
         : _output(output), _direction(direction), _input(input), bit(bit) {
     }
 
     force_inline Direction direction(Direction d) const {
         switch(d) {
             case Direction::Input:
-                _direction &= ~bv(bit);
-                _output &= ~bv(bit);
+                *_direction &= ~bv(bit);
+                *_output &= ~bv(bit);
                 break;
             case Direction::InputPullup:
-                _direction &= ~bv(bit);
-                _output |= bv(bit);
+                *_direction &= ~bv(bit);
+                *_output |= bv(bit);
                 break;
             case Direction::Output:
-                _direction |= bv(bit);
-                _output &= ~bv(bit);
+                *_direction |= bv(bit);
+                *_output &= ~bv(bit);
                 break;
         }
 
@@ -44,9 +43,9 @@ class Pin {
     }
 
     force_inline Direction direction() const {
-        if(_direction & bv(bit)) {
+        if(*_direction & bv(bit)) {
             return Direction::Output;
-        } else if(_output & bv(bit)) {
+        } else if(*_output & bv(bit)) {
             return Direction::InputPullup;
         } else {
             return Direction::Input;
@@ -55,27 +54,27 @@ class Pin {
 
     force_inline Value value(Value v) const {
         if(v == Value::High) {
-            _output |= bv(bit);
+            *_output |= bv(bit);
         } else {
-            _output &= ~bv(bit);
+            *_output &= ~bv(bit);
         }
 
         return v;
     }
 
     force_inline Value value() const {
-        return (_input & bv(bit)) ? Value::High : Value::Low;
+        return (*_input & bv(bit)) ? Value::High : Value::Low;
     }
 
     force_inline void toggle() const {
-        _input |= bv(bit);
+        *_input |= bv(bit);
     }
 
-    force_inline Value operator=(Value v) {
+    force_inline Value operator=(Value v) const {
         return value(v);
     }
 
-    force_inline Direction operator=(Direction d) {
+    force_inline Direction operator=(Direction d) const {
         return direction(d);
     }
 
@@ -93,10 +92,10 @@ class Pin {
         Pin##PORT##PIN() \
             : Pin(CHIP_PORT_##PORT##_OUTPUT_REG, CHIP_PORT_##PORT##_DIRECTION_REG, CHIP_PORT_##PORT##_INPUT_REG, PIN) { \
         } \
-        force_inline Value operator=(Value v) { \
+        force_inline Value operator=(Value v) const { \
             return Pin::operator=(v); \
         } \
-        force_inline Direction operator=(Direction v) { \
+        force_inline Direction operator=(Direction v) const { \
             return Pin::operator=(v); \
         } \
     };

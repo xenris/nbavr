@@ -90,7 +90,7 @@ struct TimerCounterN {
             clockSelect(config.clockSelect);
 
             // Load timer register.
-            TIMERCOUNTER_N(_COUNTER_REG) = config.timerRegister;
+            *TIMERCOUNTER_N(_COUNTER_REG) = config.timerRegister;
 
             // Setup output compares.
             #if TIMERCOUNTER_N(_OUTPUTCOMPARE_A)
@@ -98,7 +98,7 @@ struct TimerCounterN {
             setBit_(TIMERCOUNTER_N(_OUTPUTCOMPARE_A_MODE_BIT_1_REG), TIMERCOUNTER_N(_OUTPUTCOMPARE_A_MODE_BIT_1_BIT), (uint8_t)config.outputAMode & 0x02);
             setBit_(TIMERCOUNTER_N(_OUTPUTCOMPARE_A_INT_ENABLE_REG), TIMERCOUNTER_N(_OUTPUTCOMPARE_A_INT_ENABLE_BIT), config.outputAIntEnable);
             setBit_(TIMERCOUNTER_N(_OUTPUTCOMPARE_A_INT_FLAG_REG), TIMERCOUNTER_N(_OUTPUTCOMPARE_A_INT_FLAG_BIT), true);
-            TIMERCOUNTER_N(_OUTPUTCOMPARE_A_REG) = config.outputARegister;
+            *TIMERCOUNTER_N(_OUTPUTCOMPARE_A_REG) = config.outputARegister;
             _timerCounterN(OutputCompareAInterrupt) = config.outputCompareAInterrupt;
             _timerCounterN(OutputCompareAInterruptData) = config.outputCompareAInterruptData;
             #endif
@@ -108,7 +108,7 @@ struct TimerCounterN {
             setBit_(TIMERCOUNTER_N(_OUTPUTCOMPARE_B_MODE_BIT_1_REG), TIMERCOUNTER_N(_OUTPUTCOMPARE_B_MODE_BIT_1_BIT), (uint8_t)config.outputBMode & 0x02);
             setBit_(TIMERCOUNTER_N(_OUTPUTCOMPARE_B_INT_ENABLE_REG), TIMERCOUNTER_N(_OUTPUTCOMPARE_B_INT_ENABLE_BIT), config.outputBIntEnable);
             setBit_(TIMERCOUNTER_N(_OUTPUTCOMPARE_B_INT_FLAG_REG), TIMERCOUNTER_N(_OUTPUTCOMPARE_B_INT_FLAG_BIT), true);
-            TIMERCOUNTER_N(_OUTPUTCOMPARE_B_REG) = config.outputBRegister;
+            *TIMERCOUNTER_N(_OUTPUTCOMPARE_B_REG) = config.outputBRegister;
             _timerCounterN(OutputCompareBInterrupt) = config.outputCompareBInterrupt;
             _timerCounterN(OutputCompareBInterruptData) = config.outputCompareBInterruptData;
             #endif
@@ -118,7 +118,7 @@ struct TimerCounterN {
             setBit_(TIMERCOUNTER_N(_OUTPUTCOMPARE_C_MODE_BIT_1_REG), TIMERCOUNTER_N(_OUTPUTCOMPARE_C_MODE_BIT_1_BIT), (uint8_t)config.outputCMode & 0x02);
             setBit_(TIMERCOUNTER_N(_OUTPUTCOMPARE_C_INT_ENABLE_REG), TIMERCOUNTER_N(_OUTPUTCOMPARE_C_INT_ENABLE_BIT), config.outputCIntEnable);
             setBit_(TIMERCOUNTER_N(_OUTPUTCOMPARE_C_INT_FLAG_REG), TIMERCOUNTER_N(_OUTPUTCOMPARE_C_INT_FLAG_BIT), true);
-            TIMERCOUNTER_N(_OUTPUTCOMPARE_C_REG) = config.outputCRegister;
+            *TIMERCOUNTER_N(_OUTPUTCOMPARE_C_REG) = config.outputCRegister;
             _timerCounterN(OutputCompareCInterrupt) = config.outputCompareCInterrupt;
             _timerCounterN(OutputCompareCInterruptData) = config.outputCompareCInterruptData;
             #endif
@@ -155,11 +155,11 @@ struct TimerCounterN {
     }
 
     force_inline void timerRegister(TIMERCOUNTER_N(_TYPE) value) const {
-        TIMERCOUNTER_N(_COUNTER_REG) = value;
+        *TIMERCOUNTER_N(_COUNTER_REG) = value;
     }
 
     force_inline TIMERCOUNTER_N(_TYPE) timerRegister() const {
-        return TIMERCOUNTER_N(_COUNTER_REG);
+        return *TIMERCOUNTER_N(_COUNTER_REG);
     }
 
     #if TIMERCOUNTER_N(_OUTPUTCOMPARE_A)
@@ -182,18 +182,18 @@ struct TimerCounterN {
 
     force_inline void overflowIntEnable(bool b) const {
         if(b) {
-            TIMERCOUNTER_N(_OVERFLOW_INT_ENABLE_REG) |= bv(TIMERCOUNTER_N(_OVERFLOW_INT_ENABLE_BIT));
+            *TIMERCOUNTER_N(_OVERFLOW_INT_ENABLE_REG) |= bv(TIMERCOUNTER_N(_OVERFLOW_INT_ENABLE_BIT));
         } else {
-            TIMERCOUNTER_N(_OVERFLOW_INT_ENABLE_REG) &= ~bv(TIMERCOUNTER_N(_OVERFLOW_INT_ENABLE_BIT));
+            *TIMERCOUNTER_N(_OVERFLOW_INT_ENABLE_REG) &= ~bv(TIMERCOUNTER_N(_OVERFLOW_INT_ENABLE_BIT));
         }
     }
 
     force_inline bool overflowIntFlag() const {
-        return TIMERCOUNTER_N(_OVERFLOW_INT_FLAG_REG) & bv(TIMERCOUNTER_N(_OVERFLOW_INT_FLAG_BIT));
+        return *TIMERCOUNTER_N(_OVERFLOW_INT_FLAG_REG) & bv(TIMERCOUNTER_N(_OVERFLOW_INT_FLAG_BIT));
     }
 
     force_inline void overflowIntFlagClear() const {
-        TIMERCOUNTER_N(_OVERFLOW_INT_FLAG_REG) |= bv(TIMERCOUNTER_N(_OVERFLOW_INT_FLAG_BIT));
+        *TIMERCOUNTER_N(_OVERFLOW_INT_FLAG_REG) |= bv(TIMERCOUNTER_N(_OVERFLOW_INT_FLAG_BIT));
     }
 
     static constexpr int size() {
