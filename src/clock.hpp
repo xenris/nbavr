@@ -161,7 +161,7 @@ public:
 
         // If the queue was previously empty, clear the flag and enable interrupt.
         if(_interrupts.size == 1) {
-            _timer.outputCompareAIntFlag();
+            _timer.outputCompareAIntFlagClear();
             _timer.outputCompareAIntEnable(true);
         }
 
@@ -255,9 +255,8 @@ private:
         }
     }
 
-    // XXX FIXME Wrong interrrupt is being called. A and B appear to be swapped.
     // Called when a tick interrupt occurs.
-    static void timerCounterOutputCompareB(void* data) {
+    static void timerCounterOutputCompareA(void* data) {
         ClockT* self = (ClockT*)data;
 
         loop: ;
@@ -282,12 +281,17 @@ private:
         }
     }
 
-    static void timerCounterOutputCompareA(void* data) {
+    static void timerCounterOutputCompareB(void* data) {
         // TODO disable output compare interrupt.
         ClockT* self = (ClockT*)data;
 
-        if(self->_haltCallback != nullptr) {
-            self->_haltCallback(self->_haltCallbackData);
+        void (*haltCallback)(void*) = self->_haltCallback;
+        void* haltCallbackData = self->_haltCallbackData;
+
+        self->disableHaltInterrupt();
+
+        if(haltCallback != nullptr) {
+            haltCallback(haltCallbackData);
         }
     }
 
