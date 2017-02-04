@@ -105,7 +105,7 @@ public:
             high++;
         }
 
-        return ((uint32_t)high << 16) | low;
+        return (uint32_t(high) << 16) | low;
     }
 
     force_inline uint16_t getTocks() const override {
@@ -257,7 +257,7 @@ private:
 
     // Called when a tick interrupt occurs.
     static void timerCounterOutputCompareA(void* data) {
-        ClockT* self = (ClockT*)data;
+        ClockT* self = reinterpret_cast<ClockT*>(data);
 
         loop: ;
 
@@ -283,7 +283,7 @@ private:
 
     static void timerCounterOutputCompareB(void* data) {
         // TODO disable output compare interrupt.
-        ClockT* self = (ClockT*)data;
+        ClockT* self = reinterpret_cast<ClockT*>(data);
 
         void (*haltCallback)(void*) = self->_haltCallback;
         void* haltCallbackData = self->_haltCallbackData;
@@ -296,7 +296,7 @@ private:
     }
 
     static void timerCounterOverflow(void* data) {
-        ClockT* self = (ClockT*)data;
+        ClockT* self = reinterpret_cast<ClockT*>(data);
 
         self->_tocks++;
     }

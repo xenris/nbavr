@@ -166,17 +166,17 @@ struct UsartN {
             setBit_(RX_ENABLE_REG, RX_ENABLE_BIT, config.receiverEnable);
             setBit_(TX_ENABLE_REG, TX_ENABLE_BIT, config.transmitterEnable);
 
-            setBit_(CHARACTER_SIZE_BIT_0_REG, CHARACTER_SIZE_BIT_0_BIT, (uint8_t)config.characterSize & 0x01);
-            setBit_(CHARACTER_SIZE_BIT_1_REG, CHARACTER_SIZE_BIT_1_BIT, (uint8_t)config.characterSize & 0x02);
-            setBit_(CHARACTER_SIZE_BIT_2_REG, CHARACTER_SIZE_BIT_2_BIT, (uint8_t)config.characterSize & 0x04);
+            setBit_(CHARACTER_SIZE_BIT_0_REG, CHARACTER_SIZE_BIT_0_BIT, uint8_t(config.characterSize) & 0x01);
+            setBit_(CHARACTER_SIZE_BIT_1_REG, CHARACTER_SIZE_BIT_1_BIT, uint8_t(config.characterSize) & 0x02);
+            setBit_(CHARACTER_SIZE_BIT_2_REG, CHARACTER_SIZE_BIT_2_BIT, uint8_t(config.characterSize) & 0x04);
 
-            setBit_(MODE_BIT_0_REG, MODE_BIT_0_BIT, (uint8_t)config.mode & 0x01);
+            setBit_(MODE_BIT_0_REG, MODE_BIT_0_BIT, uint8_t(config.mode) & 0x01);
             #if MODE_BIT_COUNT > 1
-            setBit_(MODE_BIT_1_REG, MODE_BIT_1_BIT, (uint8_t)config.mode & 0x02);
+            setBit_(MODE_BIT_1_REG, MODE_BIT_1_BIT, uint8_t(config.mode) & 0x02);
             #endif
 
-            setBit_(PARITY_BIT_0_REG, PARITY_BIT_0_BIT, (uint8_t)config.parity & 0x01);
-            setBit_(PARITY_BIT_1_REG, PARITY_BIT_1_BIT, (uint8_t)config.parity & 0x02);
+            setBit_(PARITY_BIT_0_REG, PARITY_BIT_0_BIT, uint8_t(config.parity) & 0x01);
+            setBit_(PARITY_BIT_1_REG, PARITY_BIT_1_BIT, uint8_t(config.parity) & 0x02);
 
             setBit_(STOP_BITS_REG, STOP_BITS_BIT, config.stopBits == StopBits::Bits2);
 

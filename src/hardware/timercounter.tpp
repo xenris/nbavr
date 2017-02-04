@@ -201,8 +201,8 @@ struct TimerCounterN {
 
             // Setup output compares.
             #define MAKE_OUTPUTCOMPARE(X) \
-                setBit_(OUTPUTCOMPARE_##X##_MODE_BIT_0_REG, OUTPUTCOMPARE_##X##_MODE_BIT_0_BIT, (uint8_t)config.output##X##Mode & 0x01); \
-                setBit_(OUTPUTCOMPARE_##X##_MODE_BIT_1_REG, OUTPUTCOMPARE_##X##_MODE_BIT_1_BIT, (uint8_t)config.output##X##Mode & 0x02); \
+                setBit_(OUTPUTCOMPARE_##X##_MODE_BIT_0_REG, OUTPUTCOMPARE_##X##_MODE_BIT_0_BIT, uint8_t(config.output##X##Mode) & 0x01); \
+                setBit_(OUTPUTCOMPARE_##X##_MODE_BIT_1_REG, OUTPUTCOMPARE_##X##_MODE_BIT_1_BIT, uint8_t(config.output##X##Mode) & 0x02); \
                 setBit_(OUTPUTCOMPARE_##X##_INT_ENABLE_REG, OUTPUTCOMPARE_##X##_INT_ENABLE_BIT, config.output##X##IntEnable); \
                 setBit_(OUTPUTCOMPARE_##X##_INT_FLAG_REG, OUTPUTCOMPARE_##X##_INT_FLAG_BIT, true); \
                 *OUTPUTCOMPARE_##X##_REG = config.output##X##Register; \
@@ -230,24 +230,24 @@ struct TimerCounterN {
     #if WAVEFORM
     static force_inline void waveform(Waveform waveform) {
         #if WAVEFORM_BIT_COUNT > 0
-        setBit_(WAVEFORM_BIT_0_REG, WAVEFORM_BIT_0_BIT, (uint8_t)waveform & 0x01);
+        setBit_(WAVEFORM_BIT_0_REG, WAVEFORM_BIT_0_BIT, uint8_t(waveform) & 0x01);
         #endif
         #if WAVEFORM_BIT_COUNT > 1
-        setBit_(WAVEFORM_BIT_1_REG, WAVEFORM_BIT_1_BIT, (uint8_t)waveform & 0x02);
+        setBit_(WAVEFORM_BIT_1_REG, WAVEFORM_BIT_1_BIT, uint8_t(waveform) & 0x02);
         #endif
         #if WAVEFORM_BIT_COUNT > 2
-        setBit_(WAVEFORM_BIT_2_REG, WAVEFORM_BIT_2_BIT, (uint8_t)waveform & 0x04);
+        setBit_(WAVEFORM_BIT_2_REG, WAVEFORM_BIT_2_BIT, uint8_t(waveform) & 0x04);
         #endif
         #if WAVEFORM_BIT_COUNT > 3
-        setBit_(WAVEFORM_BIT_3_REG, WAVEFORM_BIT_3_BIT, (uint8_t)waveform & 0x08);
+        setBit_(WAVEFORM_BIT_3_REG, WAVEFORM_BIT_3_BIT, uint8_t(waveform) & 0x08);
         #endif
     }
     #endif
 
     static force_inline void clockSelect(ClockSelect clockSelect) {
-        setBit_(CLOCK_BIT_0_REG, CLOCK_BIT_0_BIT, (uint8_t)clockSelect & 0x01);
-        setBit_(CLOCK_BIT_1_REG, CLOCK_BIT_1_BIT, (uint8_t)clockSelect & 0x02);
-        setBit_(CLOCK_BIT_2_REG, CLOCK_BIT_2_BIT, (uint8_t)clockSelect & 0x04);
+        setBit_(CLOCK_BIT_0_REG, CLOCK_BIT_0_BIT, uint8_t(clockSelect) & 0x01);
+        setBit_(CLOCK_BIT_1_REG, CLOCK_BIT_1_BIT, uint8_t(clockSelect) & 0x02);
+        setBit_(CLOCK_BIT_2_REG, CLOCK_BIT_2_BIT, uint8_t(clockSelect) & 0x04);
     }
 
     static force_inline void timerRegister(TYPE value) {

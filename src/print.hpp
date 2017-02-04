@@ -16,12 +16,12 @@ enum class PrintFormat : uint8_t {
 
 constexpr char endl = '\n';
 
-inline bool printchar(Stream<char>& stream, char c) {
+inline bool printchar(Stream<char>& stream, const char c) {
     return stream.push(c);
 }
 
 inline bool printstr(Stream<char>& stream, const char* str) {
-    for(char* p = (char*)str; *p != '\0'; p++) {
+    for(const char* p = str; *p != '\0'; p++) {
         if(!stream.push(*p)) {
             return false;
         }
@@ -98,7 +98,7 @@ inline Stream<char>& operator<<(Stream<char>& stream, bool n) {
 
 template <class T>
 inline Stream<char>& operator<<(Stream<char>& stream, T* p) {
-    printint(stream, (uint16_t)p, PrintFormat::UHex);
+    printint(stream, uint16_t(p), PrintFormat::UHex);
     return stream;
 }
 

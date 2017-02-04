@@ -23,7 +23,7 @@ class Stream {
     Stream(const Stream&) = delete;
     Stream& operator=(const Stream&) = delete;
 
-    force_inline bool push(T& in) {
+    force_inline bool push(const T& in) {
         atomic {
             return push_(in);
         }
@@ -47,7 +47,7 @@ class Stream {
         return false;
     }
 
-    force_inline bool push(T* buffer, uint8_t count) {
+    force_inline bool push(const T* buffer, uint8_t count) {
         atomic {
             return push_(buffer, count);
         }
@@ -95,7 +95,7 @@ class Stream {
         return false;
     }
 
-    bool push_(T& in) {
+    bool push_(const T& in) {
         if(full || locked || (size == 0)) {
             return false;
         }
@@ -149,7 +149,7 @@ class Stream {
         return true;
     }
 
-    bool push_(T* buffer, uint8_t count) {
+    bool push_(const T* buffer, uint8_t count) {
         if((count > unused_()) || locked || (size == 0) || (buffer == nullptr)) {
             return false;
         }

@@ -4,11 +4,11 @@
 inline bool printint(Stream<char>& stream, TU n, PrintFormat format = PrintFormat::SDec) {
     constexpr const char* digits = "0123456789ABCDEF";
 
-    TS* s = (TS*)&n;
+    TS* s = reinterpret_cast<TS*>(&n);
     char stack[INT_SIZE + 1];
     int8_t i = 0;
-    bool negative = ((uint8_t)format & 0x10) && (*s < 0);
-    int8_t base = (uint8_t)format & 0x0F;
+    bool negative = (uint8_t(format) & 0x10) && (*s < 0);
+    int8_t base = uint8_t(format) & 0x0F;
 
     if(negative) {
         *s *= -1;
@@ -58,7 +58,7 @@ inline bool printint(Stream<char>& stream, TU n, PrintFormat format = PrintForma
 }
 
 inline bool printint(Stream<char>& stream, TS n, PrintFormat format) {
-    return printint(stream, (TU)n, format);
+    return printint(stream, TU(n), format);
 }
 
 #undef TS

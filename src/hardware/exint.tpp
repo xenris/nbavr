@@ -38,8 +38,8 @@ struct ExIntN {
         INTERRUPT_DATA = data;
 
         // Configure trigger.
-        setBit_(TRIGGER_BIT_0_REG, TRIGGER_BIT_0_BIT, (uint8_t)trigger & 0x01);
-        setBit_(TRIGGER_BIT_1_REG, TRIGGER_BIT_1_BIT, (uint8_t)trigger & 0x02);
+        setBit_(TRIGGER_BIT_0_REG, TRIGGER_BIT_0_BIT, uint8_t(trigger) & 0x01);
+        setBit_(TRIGGER_BIT_1_REG, TRIGGER_BIT_1_BIT, uint8_t(trigger) & 0x02);
 
         // Enable interrupt.
         setBit_(ENABLE_REG, ENABLE_BIT, true);

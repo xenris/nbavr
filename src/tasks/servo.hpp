@@ -144,7 +144,7 @@ private:
     }
 
     static void end(void* data) {
-        ServoManager* self = (ServoManager*)data;
+        ServoManager* self = reinterpret_cast<ServoManager*>(data);
 
         self->_activeServo->pulseEnd();
 

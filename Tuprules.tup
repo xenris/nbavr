@@ -34,3 +34,4 @@ CFLAGS += -flto
 CFLAGS += -ffreestanding
 CFLAGS += -fno-exceptions
 CFLAGS += -fmax-errors=3
+CFLAGS += -Wold-style-cast

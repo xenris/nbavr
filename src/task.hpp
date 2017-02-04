@@ -25,7 +25,7 @@ public:
     void step(Clock& clock) {
         if(state == State::Delay) {
             // Check if it is time for this task to wake up.
-            if((int32_t)(clock.getTicks() - wakeTick) >= 0) {
+            if(int32_t(clock.getTicks() - wakeTick) >= 0) {
                 state = State::Awake;
             }
         }
@@ -73,7 +73,7 @@ protected:
 
 private:
     static void crashCallback(void* data) {
-        Task* self = (Task*)data;
+        Task* self = reinterpret_cast<Task*>(data);
 
         self->state = State::Crash;
         self->crashCount++;

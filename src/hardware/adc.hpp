@@ -127,29 +127,29 @@ struct ADC {
 
             // Set auto trigger value.
             #ifdef CHIP_ADC_TRIGGER
-            setBit_(CHIP_ADC_TRIGGER_BIT_0_REG, CHIP_ADC_TRIGGER_BIT_0_BIT, (uint8_t)config.trigger & 0x01);
-            setBit_(CHIP_ADC_TRIGGER_BIT_1_REG, CHIP_ADC_TRIGGER_BIT_1_BIT, (uint8_t)config.trigger & 0x02);
-            setBit_(CHIP_ADC_TRIGGER_BIT_2_REG, CHIP_ADC_TRIGGER_BIT_2_BIT, (uint8_t)config.trigger & 0x04);
+            setBit_(CHIP_ADC_TRIGGER_BIT_0_REG, CHIP_ADC_TRIGGER_BIT_0_BIT, uint8_t(config.trigger) & 0x01);
+            setBit_(CHIP_ADC_TRIGGER_BIT_1_REG, CHIP_ADC_TRIGGER_BIT_1_BIT, uint8_t(config.trigger) & 0x02);
+            setBit_(CHIP_ADC_TRIGGER_BIT_2_REG, CHIP_ADC_TRIGGER_BIT_2_BIT, uint8_t(config.trigger) & 0x04);
             #endif
 
             // Set left adjust.
             setBit_(CHIP_ADC_LEFT_ADJUST_REG, CHIP_ADC_LEFT_ADJUST_BIT, config.leftAdjust);
 
             // Set input channel.
-            setBit_(CHIP_ADC_CHANNEL_BIT_0_REG, CHIP_ADC_CHANNEL_BIT_0_BIT, (uint8_t)config.channel & 0x01);
-            setBit_(CHIP_ADC_CHANNEL_BIT_1_REG, CHIP_ADC_CHANNEL_BIT_1_BIT, (uint8_t)config.channel & 0x02);
-            setBit_(CHIP_ADC_CHANNEL_BIT_2_REG, CHIP_ADC_CHANNEL_BIT_2_BIT, (uint8_t)config.channel & 0x04);
-            setBit_(CHIP_ADC_CHANNEL_BIT_3_REG, CHIP_ADC_CHANNEL_BIT_3_BIT, (uint8_t)config.channel & 0x08);
+            setBit_(CHIP_ADC_CHANNEL_BIT_0_REG, CHIP_ADC_CHANNEL_BIT_0_BIT, uint8_t(config.channel) & 0x01);
+            setBit_(CHIP_ADC_CHANNEL_BIT_1_REG, CHIP_ADC_CHANNEL_BIT_1_BIT, uint8_t(config.channel) & 0x02);
+            setBit_(CHIP_ADC_CHANNEL_BIT_2_REG, CHIP_ADC_CHANNEL_BIT_2_BIT, uint8_t(config.channel) & 0x04);
+            setBit_(CHIP_ADC_CHANNEL_BIT_3_REG, CHIP_ADC_CHANNEL_BIT_3_BIT, uint8_t(config.channel) & 0x08);
 
             // Set reference.
-            setBit_(CHIP_ADC_REFERENCE_BIT_0_REG, CHIP_ADC_REFERENCE_BIT_0_BIT, (uint8_t)config.reference & 0x01);
-            setBit_(CHIP_ADC_REFERENCE_BIT_1_REG, CHIP_ADC_REFERENCE_BIT_1_BIT, (uint8_t)config.reference & 0x02);
+            setBit_(CHIP_ADC_REFERENCE_BIT_0_REG, CHIP_ADC_REFERENCE_BIT_0_BIT, uint8_t(config.reference) & 0x01);
+            setBit_(CHIP_ADC_REFERENCE_BIT_1_REG, CHIP_ADC_REFERENCE_BIT_1_BIT, uint8_t(config.reference) & 0x02);
 
             // Set prescaler
             #ifdef CHIP_ADC_PRESCALER
-            setBit_(CHIP_ADC_PRESCALER_BIT_0_REG, CHIP_ADC_PRESCALER_BIT_0_BIT, (uint8_t)config.prescaler & 0x01);
-            setBit_(CHIP_ADC_PRESCALER_BIT_1_REG, CHIP_ADC_PRESCALER_BIT_1_BIT, (uint8_t)config.prescaler & 0x02);
-            setBit_(CHIP_ADC_PRESCALER_BIT_2_REG, CHIP_ADC_PRESCALER_BIT_2_BIT, (uint8_t)config.prescaler & 0x04);
+            setBit_(CHIP_ADC_PRESCALER_BIT_0_REG, CHIP_ADC_PRESCALER_BIT_0_BIT, uint8_t(config.prescaler) & 0x01);
+            setBit_(CHIP_ADC_PRESCALER_BIT_1_REG, CHIP_ADC_PRESCALER_BIT_1_BIT, uint8_t(config.prescaler) & 0x02);
+            setBit_(CHIP_ADC_PRESCALER_BIT_2_REG, CHIP_ADC_PRESCALER_BIT_2_BIT, uint8_t(config.prescaler) & 0x04);
             #endif
 
             // Enable interrupt.

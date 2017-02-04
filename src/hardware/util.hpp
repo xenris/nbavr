@@ -114,10 +114,12 @@ force_inline void setBit(volatile uint8_t* reg, uint8_t bit, uint8_t value) {
 
 /// Lazily set or clear a volatile register bit, for better compiler optimisation.
 force_inline void setBit_(volatile uint8_t* reg, uint8_t bit, bool value) {
+    uint8_t* reg_ = const_cast<uint8_t*>(reg);
+
     if(value) {
-        *(uint8_t*)reg |= _BV(bit);
+        *reg_ |= _BV(bit);
     } else {
-        *(uint8_t*)reg &= ~_BV(bit);
+        *reg_ &= ~_BV(bit);
     }
 }
 

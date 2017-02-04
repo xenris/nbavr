@@ -167,8 +167,8 @@ private:
     }
 
     uint8_t coordToAddress(uint8_t x, uint8_t y) {
-        y = clip(y, (uint8_t)0, (uint8_t)(lineCount - 1));
-        x = clip(x, (uint8_t)0, (uint8_t)(lineLength - 1));
+        y = clip(y, uint8_t(0), uint8_t(lineCount - 1));
+        x = clip(x, uint8_t(0), uint8_t(lineLength - 1));
 
         return memoryMap[y].min + x;
     }

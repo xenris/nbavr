@@ -1,9 +1,9 @@
 #ifndef NBAVR_CHIP_HPP
 #define NBAVR_CHIP_HPP
 
-#define REG8(addr) (volatile uint8_t*)(addr)
-#define REG16(addr) (volatile uint16_t*)(addr)
-#define REG32(addr) (volatile uint32_t*)(addr)
+#define REG8(addr) reinterpret_cast<volatile uint8_t*>(addr)
+#define REG16(addr) reinterpret_cast<volatile uint16_t*>(addr)
+#define REG32(addr) reinterpret_cast<volatile uint32_t*>(addr)
 
 #define VECT(n) __vector_ ## n
 

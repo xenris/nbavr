@@ -41,13 +41,13 @@ private:
     }
 
     static void usartRxComplete(void* data) {
-        Serial* self = (Serial*)data;
+        Serial* self = reinterpret_cast<Serial*>(data);
 
         self->stdin << Usart::pop();
     }
 
     static void usartDataRegisterEmpty(void* data) {
-        Serial* self = (Serial*)data;
+        Serial* self = reinterpret_cast<Serial*>(data);
 
         char d;
 
@@ -59,7 +59,7 @@ private:
     }
 
     static void streamCallback(void* data) {
-        Serial* self = (Serial*)data;
+        Serial* self = reinterpret_cast<Serial*>(data);
 
         self->wake();
     }

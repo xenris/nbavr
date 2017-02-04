@@ -120,7 +120,7 @@ class TWI : public Task {
 
         TWI(Stream<Action>& twiout) : twiout(twiout) {
             const uint32_t scaleFactor = 1;
-            *TWBR = (uint8_t)((((F_CPU / 1000UL) / TWI_BAUD) - 16UL) / (2UL * scaleFactor));
+            *TWBR = uint8_t((((F_CPU / 1000UL) / TWI_BAUD) - 16UL) / (2UL * scaleFactor));
 
             twiEnable();
 
@@ -154,7 +154,7 @@ class TWI : public Task {
             switch(twStatus) {
                 case TW_START:
                 case TW_REP_START:
-                    *TWDR = (uint8_t)(action.addr << 1) | (uint8_t)action.rw;
+                    *TWDR = uint8_t(action.addr << 1) | uint8_t(action.rw);
                     twiSendNACK();
                     break;
                 case TW_MT_SLA_ACK:
