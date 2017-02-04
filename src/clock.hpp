@@ -129,7 +129,7 @@ public:
     bool addInterrupt_(void (*callback)(void*), void* data, uint16_t delay) override {
         uint16_t now = getTicks16();
 
-        if(callback == NULL) {
+        if(callback == nullptr) {
             return false;
         }
 

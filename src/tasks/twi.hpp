@@ -136,7 +136,7 @@ class TWI : public Task {
                 if(twiout.pop(&action)) {
                     ready = false;
                     dataIndex = 0;
-                    if(action.result != NULL) {
+                    if(action.result != nullptr) {
                         *action.result = Result::Busy;
                     }
                     repeatStartRequested = false;
