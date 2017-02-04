@@ -11,8 +11,6 @@
 #define SERVO_MAX_TIME US_TO_TICKS(2400)
 #define SERVO_UPDATE_DELAY MS_TO_TICKS(20)
 
-#define abs(n) ((n) < 0 ? -(n) : (n))
-
 struct Servo {
     virtual void enabled(bool enabled) = 0;
     virtual bool enabled() = 0;
@@ -103,9 +101,9 @@ class ServoManager : public Task {
     Clock& _clock;
     Servo** _servos;
     const uint8_t _servoCount;
-    int8_t index;
-    uint16_t start;
-    Servo* _activeServo;
+    int8_t index = 0;
+    uint16_t start = 0;
+    Servo* _activeServo = nullptr;
 
 public:
     template <uint8_t S>

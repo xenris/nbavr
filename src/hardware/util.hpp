@@ -78,6 +78,12 @@ T clip(T x, T l, T h) {
 }
 
 template<class T>
+force_inline
+T abs(T a) {
+    return a >= 0 ? a : -a;
+}
+
+template<class T>
 auto begin(T& t) -> decltype(t.begin()) {
     return t.begin();
 }
