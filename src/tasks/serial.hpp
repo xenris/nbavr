@@ -6,19 +6,18 @@
 #include <nbavr.hpp>
 #include <util/setbaud.h>
 
-template <class U>
+template <class Usart>
 class Serial : public Task {
-    U& usart;
     Stream<char>& stdout;
     Stream<char>& stdin;
 
-    public:
+public:
+    Serial(Stream<char>& stdout, Stream<char>& stdin) : stdout(stdout), stdin(stdin) {
+        static_assert(Usart::getHardwareType() == HardwareType::Usart, "Serial requires a Usart");
 
-    Serial(U& usart, Stream<char>& stdout, Stream<char>& stdin)
-    : usart(usart), stdout(stdout), stdin(stdin) {
         stdout.setCallback(streamCallback, this);
 
-        typename U::Config config;
+        typename Usart::Config config;
         config.receiverEnable = true,
         config.transmitterEnable = true,
         config.baud = UBRR_VALUE,
@@ -29,25 +28,22 @@ class Serial : public Task {
         config.dataRegisterEmptyInterrupt = usartDataRegisterEmpty;
         config.dataRegisterEmptyInterruptData = this;
 
-        usart.apply(config);
+        Usart::apply(config);
     }
 
-    protected:
-
+private:
     void loop() override {
         if(!stdout.empty()) {
-            usart.dataRegisterEmptyInterruptEnable(true);
+            Usart::dataRegisterEmptyInterruptEnable(true);
         }
 
         sleep();
     }
 
-    private:
-
     static void usartRxComplete(void* data) {
         Serial* self = (Serial*)data;
 
-        self->stdin << self->usart.pop();
+        self->stdin << Usart::pop();
     }
 
     static void usartDataRegisterEmpty(void* data) {
@@ -56,9 +52,9 @@ class Serial : public Task {
         char d;
 
         if(self->stdout.pop_(&d)) {
-            self->usart.push(d);
+            Usart::push(d);
         } else {
-            self->usart.dataRegisterEmptyInterruptEnable(false);
+            Usart::dataRegisterEmptyInterruptEnable(false);
         }
     }
 

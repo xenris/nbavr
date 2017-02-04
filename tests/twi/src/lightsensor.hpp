@@ -28,17 +28,13 @@ class LightSensor : public Task {
     Stream<char>& stdout;
     Stream<TWI::Action>& twiout;
 
-    public:
-
+public:
     LightSensor(Clock& clock, Stream<char>& stdout, Stream<TWI::Action>& twiout)
     : clock(clock), stdout(stdout), twiout(twiout) {
-        PinC2 pinC2;
-        PinC3 pinC3;
-
-        pinC2.direction(Pin::Direction::Output);
-        pinC3.direction(Pin::Direction::Output);
-        pinC2.value(Pin::Value::High);
-        pinC3.value(Pin::Value::Low);
+        PinC2::direction(PinC2::Direction::Output);
+        PinC3::direction(PinC3::Direction::Output);
+        PinC2::value(PinC2::Value::High);
+        PinC3::value(PinC3::Value::Low);
 
         lightSensorOnResult = TWI::Result::None;
         lightSensorContHResResult = TWI::Result::None;
@@ -48,8 +44,7 @@ class LightSensor : public Task {
         twiout << lightSensorContHiResMode;
     }
 
-    protected:
-
+private:
     void loop() override {
         if(lightSensorReadResult == TWI::Result::Success) {
             uint16_t t = (lightSensorValueBuffer[0] << 8) | lightSensorValueBuffer[1];

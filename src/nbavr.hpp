@@ -36,7 +36,7 @@ inline void nbavr(Clock& clock, Task* (&tasks)[S]) {
     cli();
 
     // Enable watchdog timer with the shortest timeout.
-    _wdt_enable();
+    WDT::enable();
 
     // If a task halts or yields, the cpu will jump back here.
     int jmp = setjmp(_longJmp);
@@ -52,7 +52,7 @@ inline void nbavr(Clock& clock, Task* (&tasks)[S]) {
 
     while(true) {
         while(taskI < S) {
-            _wdt_reset();
+            WDT::reset();
 
             sei();
 

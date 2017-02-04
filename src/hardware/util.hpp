@@ -1,8 +1,15 @@
 #ifndef NBAVR_UTIL_HPP
 #define NBAVR_UTIL_HPP
 
-#define CONCAT_(A,B,C) A ## B ## C
-#define CONCAT(A,B,C) CONCAT_(A,B,C)
+#define CONCAT(...) GET_CONCAT(__VA_ARGS__, CONCAT5, CONCAT4, CONCAT3, CONCAT2, CONCAT1)(__VA_ARGS__)
+
+#define CONCAT1(A) A
+#define CONCAT2(A, B) A ## B
+#define CONCAT3(A, B, C) A ## B ## C
+#define CONCAT4(A, B, C, D) A ## B ## C ## D
+#define CONCAT5(A, B, C, D, E) A ## B ## C ## D ## E
+
+#define GET_CONCAT(_1, _2, _3, _4, _5, NAME,...) NAME
 
 #define bv(n) (1 << (n))
 #define _BV(n) bv(n)

@@ -4,6 +4,5 @@
 #include <nbavr.hpp>
 
 #include "hello.hpp"
-#include "flash.hpp"
 
 #endif

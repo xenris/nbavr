@@ -33,9 +33,8 @@
 #define FUNCTION_FOUR_BITS_TWO_LINES 0x28
 #define SET_DDRAM_ADDRESS 0x80
 
+template <class D4, class D5, class D6, class D7, class RW, class RS, class E>
 class LCD : public Task {
-    private:
-
     struct Range {
         uint8_t min;
         uint8_t max;
@@ -58,33 +57,31 @@ class LCD : public Task {
     StateFunction state;
     bool outOfBounds = false;
     Stream<char>& lcdout;
-    Pin& _d4;
-    Pin& _d5;
-    Pin& _d6;
-    Pin& _d7;
-    Pin& _rw;
-    Pin& _rs;
-    Pin& _e;
 
-    public:
+public:
+    LCD(Clock& clock, Stream<char>& lcdout) : clock(clock), lcdout(lcdout) {
+        static_assert(D4::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
+        static_assert(D5::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
+        static_assert(D6::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
+        static_assert(D7::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
+        static_assert(RW::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
+        static_assert(RS::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
+        static_assert(E::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
 
-    LCD(Clock& clock, Stream<char>& lcdout, Pin& d4, Pin& d5, Pin& d6, Pin& d7, Pin& rw, Pin& rs, Pin& e)
-    : clock(clock), lcdout(lcdout), _d4(d4), _d5(d5), _d6(d6), _d7(d7), _rw(rw), _rs(rs), _e(e) {
-        _rw = Pin::Direction::Output;
-        _rs = Pin::Direction::Output;
-        _e = Pin::Direction::Output;
+        RW::direction(RW::Direction::Output);
+        RS::direction(RS::Direction::Output);
+        E::direction(E::Direction::Output);
 
-        _rw = Pin::Value::Low;
-        _rs = Pin::Value::Low;
-        _e = Pin::Value::Low;
+        RW::value(RW::Value::Low);
+        RS::value(RS::Value::Low);
+        E::value(E::Value::Low);
 
         state = &LCD::init0;
 
         delay(clock, MS_TO_TICKS(50));
     }
 
-    protected:
-
+private:
     void loop() override {
         if(busy()) {
             return;
@@ -93,249 +90,248 @@ class LCD : public Task {
         (this->*state)();
     }
 
-    private:
-        void run(void) {
-            char byte;
-            char x;
-            char y;
+    void run(void) {
+        char byte = 0;
+        char x = 0;
+        char y = 0;
 
-            if(lcdout.pop(&byte)) {
-                switch(byte) {
-                case '\r':
-                    sendByte(false, CLEAR_DISPLAY);
+        if(lcdout.pop(&byte)) {
+            switch(byte) {
+            case '\r':
+                sendByte(false, CLEAR_DISPLAY);
+                outOfBounds = false;
+                break;
+            case '\n':
+                newLine();
+                outOfBounds = false;
+                break;
+            case '\v':
+                if(lcdout.pop(&x) && lcdout.pop(&y)) {
+                    setCurser(x - 1, y - 1);
                     outOfBounds = false;
-                    break;
-                case '\n':
-                    newLine();
-                    outOfBounds = false;
-                    break;
-                case '\v':
-                    if(lcdout.pop(&x) && lcdout.pop(&y)) {
-                        setCurser(x - 1, y - 1);
-                        outOfBounds = false;
-                    }
-                    break;
-                case '\a':
-                    state = &LCD::clearCurrentLine;
-                    outOfBounds = false;
-                    break;
-                default:
-                    if(!outOfBounds) {
-                        writeCharacter(byte);
-                    }
                 }
-            } else {
-                delay(clock, MS_TO_TICKS(20));
-            }
-        }
-
-        void writeCharacter(uint8_t character) {
-            uint8_t address = getCurserAddress();
-            Coord coord = addressToCoord(address);
-
-            if(coord.x == lineLength - 1) {
-                outOfBounds = true;
-                state = &LCD::stepBack;
-            }
-
-            sendByte(true, character);
-        }
-
-        void setCurser(uint8_t x, uint8_t y) {
-            setCurserAddress(coordToAddress(x, y));
-        }
-
-        void setCurserAddress(uint8_t address) {
-            sendByte(false, SET_DDRAM_ADDRESS | address);
-        }
-
-        void newLine(void) {
-            uint8_t address = getCurserAddress();
-            Coord coord = addressToCoord(address);
-
-            uint8_t y = (coord.y + 1) % lineCount;
-
-            setCurserAddress(memoryMap[y].min);
-        }
-
-        bool busy(void) {
-            uint8_t data = getByte(false);
-
-            return data & _BV(7);
-        }
-
-        uint8_t getCurserAddress(void) {
-            uint8_t data = getByte(false);
-
-            return data & ~_BV(7);
-        }
-
-        uint8_t coordToAddress(uint8_t x, uint8_t y) {
-            y = clip(y, (uint8_t)0, (uint8_t)(lineCount - 1));
-            x = clip(x, (uint8_t)0, (uint8_t)(lineLength - 1));
-
-            return memoryMap[y].min + x;
-        }
-
-        Coord addressToCoord(uint8_t address) {
-            Coord coord = {0, 0};
-
-            for(uint8_t i = 0; i < lineCount; i++) {
-                if((address >= memoryMap[i].min) && (address <= memoryMap[i].max)) {
-                    coord.x = (address - memoryMap[i].min);
-                    coord.y = i;
-                    break;
+                break;
+            case '\a':
+                state = &LCD::clearCurrentLine;
+                outOfBounds = false;
+                break;
+            default:
+                if(!outOfBounds) {
+                    writeCharacter(byte);
                 }
             }
+        } else {
+            delay(clock, MS_TO_TICKS(20));
+        }
+    }
 
-            return coord;
+    void writeCharacter(uint8_t character) {
+        uint8_t address = getCurserAddress();
+        Coord coord = addressToCoord(address);
+
+        if(coord.x == lineLength - 1) {
+            outOfBounds = true;
+            state = &LCD::stepBack;
         }
 
-        void clearCurrentLine(void) {
-            uint8_t count = 255;
-            uint8_t address = 0;
+        sendByte(true, character);
+    }
 
-            if(count == 255) {
-                address = getCurserAddress();
-                Coord coord = addressToCoord(address);
-                address = memoryMap[coord.y].min;
-                setCurserAddress(address);
-            } else if(count < lineLength) {
-                sendByte(true, ' ');
-            } else {
-                state = &LCD::run;
-                count = 255;
-                setCurserAddress(address);
+    void setCurser(uint8_t x, uint8_t y) {
+        setCurserAddress(coordToAddress(x, y));
+    }
+
+    void setCurserAddress(uint8_t address) {
+        sendByte(false, SET_DDRAM_ADDRESS | address);
+    }
+
+    void newLine(void) {
+        uint8_t address = getCurserAddress();
+        Coord coord = addressToCoord(address);
+
+        uint8_t y = (coord.y + 1) % lineCount;
+
+        setCurserAddress(memoryMap[y].min);
+    }
+
+    bool busy(void) {
+        uint8_t data = getByte(false);
+
+        return data & _BV(7);
+    }
+
+    uint8_t getCurserAddress(void) {
+        uint8_t data = getByte(false);
+
+        return data & ~_BV(7);
+    }
+
+    uint8_t coordToAddress(uint8_t x, uint8_t y) {
+        y = clip(y, (uint8_t)0, (uint8_t)(lineCount - 1));
+        x = clip(x, (uint8_t)0, (uint8_t)(lineLength - 1));
+
+        return memoryMap[y].min + x;
+    }
+
+    Coord addressToCoord(uint8_t address) {
+        Coord coord = {0, 0};
+
+        for(uint8_t i = 0; i < lineCount; i++) {
+            if((address >= memoryMap[i].min) && (address <= memoryMap[i].max)) {
+                coord.x = (address - memoryMap[i].min);
+                coord.y = i;
+                break;
             }
-
-            count++;
         }
 
-        void stepBack(void) {
-            sendByte(false, CURSER_LEFT);
+        return coord;
+    }
+
+    void clearCurrentLine(void) {
+        uint8_t count = 255;
+        uint8_t address = 0;
+
+        if(count == 255) {
+            address = getCurserAddress();
+            Coord coord = addressToCoord(address);
+            address = memoryMap[coord.y].min;
+            setCurserAddress(address);
+        } else if(count < lineLength) {
+            sendByte(true, ' ');
+        } else {
             state = &LCD::run;
+            count = 255;
+            setCurserAddress(address);
         }
 
-        void sendByte(bool rs, uint8_t data) {
-            uint8_t high = data >> 4;
-            uint8_t low = data;
-            sendNibble(rs, high);
-            sendNibble(rs, low);
-        }
+        count++;
+    }
 
-        void sendNibble(bool rs, uint8_t data) {
-            _d4 = Pin::Direction::Output;
-            _d5 = Pin::Direction::Output;
-            _d6 = Pin::Direction::Output;
-            _d7 = Pin::Direction::Output;
+    void stepBack(void) {
+        sendByte(false, CURSER_LEFT);
+        state = &LCD::run;
+    }
 
-            _d4 = (data & _BV(0)) ? Pin::Value::High : Pin::Value::Low;
-            _d5 = (data & _BV(1)) ? Pin::Value::High : Pin::Value::Low;
-            _d6 = (data & _BV(2)) ? Pin::Value::High : Pin::Value::Low;
-            _d7 = (data & _BV(3)) ? Pin::Value::High : Pin::Value::Low;
-            _rw = Pin::Value::Low;
-            _rs = rs ? Pin::Value::High : Pin::Value::Low;
+    void sendByte(bool rs, uint8_t data) {
+        uint8_t high = data >> 4;
+        uint8_t low = data;
+        sendNibble(rs, high);
+        sendNibble(rs, low);
+    }
 
-            _delay_us(1);
-            _e = Pin::Value::High;
-            _delay_us(1);
-            _e = Pin::Value::Low;
-        }
+    void sendNibble(bool rs, uint8_t data) {
+        D4::direction(D4::Direction::Output);
+        D5::direction(D5::Direction::Output);
+        D6::direction(D6::Direction::Output);
+        D7::direction(D7::Direction::Output);
 
-        // XXX May need to wait 43us when reading data.
-        uint8_t getByte(bool rs) {
-            uint8_t data = 0;
+        D4::value((data & _BV(0)) ? D4::Value::High : D4::Value::Low);
+        D5::value((data & _BV(1)) ? D5::Value::High : D5::Value::Low);
+        D6::value((data & _BV(2)) ? D6::Value::High : D6::Value::Low);
+        D7::value((data & _BV(3)) ? D7::Value::High : D7::Value::Low);
+        RW::value(RW::Value::Low);
+        RS::value(rs ? RS::Value::High : RS::Value::Low);
 
-            _d4 = Pin::Direction::Input;
-            _d5 = Pin::Direction::Input;
-            _d6 = Pin::Direction::Input;
-            _d7 = Pin::Direction::Input;
+        _delay_us(1);
+        E::value(E::Value::High);
+        _delay_us(1);
+        E::value(E::Value::Low);
+    }
 
-            _d4 = Pin::Value::Low;
-            _d5 = Pin::Value::Low;
-            _d6 = Pin::Value::Low;
-            _d7 = Pin::Value::Low;
-            _rw = Pin::Value::High;
-            _rs = rs ? Pin::Value::High : Pin::Value::Low;
+    // XXX May need to wait 43us when reading data.
+    uint8_t getByte(bool rs) {
+        uint8_t data = 0;
 
-            _delay_us(1);
+        D4::direction(D4::Direction::Input);
+        D5::direction(D5::Direction::Input);
+        D6::direction(D6::Direction::Input);
+        D7::direction(D7::Direction::Input);
 
-            _e = Pin::Value::High;
-            _delay_us(1);
+        D4::value(D4::Value::Low);
+        D5::value(D5::Value::Low);
+        D6::value(D6::Value::Low);
+        D7::value(D7::Value::Low);
+        RW::value(RW::Value::High);
+        RS::value(rs ? RS::Value::High : RS::Value::Low);
 
-            data |= (_d7 == Pin::Value::High) ? (1 << 7) : 0;
-            data |= (_d6 == Pin::Value::High) ? (1 << 6) : 0;
-            data |= (_d5 == Pin::Value::High) ? (1 << 5) : 0;
-            data |= (_d4 == Pin::Value::High) ? (1 << 4) : 0;
+        _delay_us(1);
 
-            _e = Pin::Value::Low;
+        E::value(E::Value::High);
+        _delay_us(1);
 
-            _delay_us(1);
+        data |= (D7::value() == D7::Value::High) ? (1 << 7) : 0;
+        data |= (D6::value() == D6::Value::High) ? (1 << 6) : 0;
+        data |= (D5::value() == D5::Value::High) ? (1 << 5) : 0;
+        data |= (D4::value() == D4::Value::High) ? (1 << 4) : 0;
 
-            _e = Pin::Value::High;
-            _delay_us(1);
+        E::value(E::Value::Low);
 
-            data |= (_d7 == Pin::Value::High) ? (1 << 3) : 0;
-            data |= (_d6 == Pin::Value::High) ? (1 << 2) : 0;
-            data |= (_d5 == Pin::Value::High) ? (1 << 1) : 0;
-            data |= (_d4 == Pin::Value::High) ? (1 << 0) : 0;
+        _delay_us(1);
 
-            _e = Pin::Value::Low;
+        E::value(E::Value::High);
+        _delay_us(1);
 
-            return data;
-        }
+        data |= (D7::value() == D7::Value::High) ? (1 << 3) : 0;
+        data |= (D6::value() == D6::Value::High) ? (1 << 2) : 0;
+        data |= (D5::value() == D5::Value::High) ? (1 << 1) : 0;
+        data |= (D4::value() == D4::Value::High) ? (1 << 0) : 0;
 
-        void init0(void) {
-            // Reset 1
-            sendNibble(false, 0x3);
-            state = &LCD::init1;
-            delay(clock, MS_TO_TICKS(5));
-        }
+        E::value(E::Value::Low);
 
-        void init1(void) {
-            // Reset 2
-            sendNibble(false, 0x3);
-            state = &LCD::init2;
-            delay(clock, MS_TO_TICKS(1));
-        }
+        return data;
+    }
 
-        void init2(void) {
-            // Reset 3
-            sendNibble(false, 0x3);
-            state = &LCD::init3;
-            delay(clock, MS_TO_TICKS(1));
-        }
+    void init0(void) {
+        // Reset 1
+        sendNibble(false, 0x3);
+        state = &LCD::init1;
+        delay(clock, MS_TO_TICKS(5));
+    }
 
-        void init3(void) {
-            // initial 4 bit mode
-            sendNibble(false, 0x2);
-            state = &LCD::init4;
-            delay(clock, MS_TO_TICKS(1));
-        }
+    void init1(void) {
+        // Reset 2
+        sendNibble(false, 0x3);
+        state = &LCD::init2;
+        delay(clock, MS_TO_TICKS(1));
+    }
 
-        void init4(void) {
-            sendByte(false, FUNCTION_FOUR_BITS_TWO_LINES);
-            state = &LCD::init5;
-            delay(clock, MS_TO_TICKS(1));
-        }
+    void init2(void) {
+        // Reset 3
+        sendNibble(false, 0x3);
+        state = &LCD::init3;
+        delay(clock, MS_TO_TICKS(1));
+    }
 
-        void init5(void) {
-            sendByte(false, DISPLAY_ON);
-            state = &LCD::init6;
-            delay(clock, MS_TO_TICKS(1));
-        }
+    void init3(void) {
+        // initial 4 bit mode
+        sendNibble(false, 0x2);
+        state = &LCD::init4;
+        delay(clock, MS_TO_TICKS(1));
+    }
 
-        void init6(void) {
-            sendByte(false, CLEAR_DISPLAY);
-            state = &LCD::init7;
-            delay(clock, MS_TO_TICKS(4));
-        }
+    void init4(void) {
+        sendByte(false, FUNCTION_FOUR_BITS_TWO_LINES);
+        state = &LCD::init5;
+        delay(clock, MS_TO_TICKS(1));
+    }
 
-        void init7(void) {
-            sendByte(false, ENTRY_MODE_RIGHT);
-            state = &LCD::run;
-            delay(clock, MS_TO_TICKS(1));
-        }
+    void init5(void) {
+        sendByte(false, DISPLAY_ON);
+        state = &LCD::init6;
+        delay(clock, MS_TO_TICKS(1));
+    }
+
+    void init6(void) {
+        sendByte(false, CLEAR_DISPLAY);
+        state = &LCD::init7;
+        delay(clock, MS_TO_TICKS(4));
+    }
+
+    void init7(void) {
+        sendByte(false, ENTRY_MODE_RIGHT);
+        state = &LCD::run;
+        delay(clock, MS_TO_TICKS(1));
+    }
 };
 
 #endif

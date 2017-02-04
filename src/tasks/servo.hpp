@@ -1,10 +1,6 @@
 #ifndef NBAVR_SERVO_HPP
 #define NBAVR_SERVO_HPP
 
-// Servo module has no setup because the list of servos may be initialised
-//  before this setup is called, and the servos need to be remembered even if
-//  this module is reset.
-
 // Servos have a range of -128 to 127.
 // Servo speed is a number between 0 and 255, slowest to fastest. Speed is the
 //  maximum step size done each cycle.
@@ -17,119 +13,123 @@
 
 #define abs(n) ((n) < 0 ? -(n) : (n))
 
-/// For controlling servo hardware.
-class Servo {
-    private:
-        Clock& clock;
-        Pin& _pin;
-        bool _enabled = true;
-        int8_t _positionCurrent = 0;
-        int8_t _positionGoal = 0;
-        uint8_t _speed = 255;
+struct Servo {
+    virtual void enabled(bool enabled) = 0;
+    virtual bool enabled() = 0;
+    virtual void position(int8_t position) = 0;
+    virtual int8_t position() = 0;
+    virtual void speed(uint8_t speed) = 0;
+    virtual uint8_t speed() = 0;
+    virtual uint16_t update() = 0;
+    virtual void pulseStart() = 0;
+    virtual void pulseEnd() = 0;
+};
 
-    public:
-        Servo(Clock& clock, Pin pin) : clock(clock), _pin(pin) {
-        }
+template <class Pin>
+class ServoT : public Servo {
+    bool _enabled = true;
+    int8_t _positionCurrent = 0;
+    int8_t _positionGoal = 0;
+    uint8_t _speed = 255;
 
-//        void pin(Pin pin) { _pin = pin; }
-//        Pin pin() { return _pin; }
-        void enabled(bool enabled) { _enabled = enabled; }
-        bool enabled() { return _enabled; }
-        void position(int8_t position) { _positionGoal = position; }
-        int8_t position() { return _positionGoal; }
-        void speed(uint8_t speed) { _speed = speed; }
-        uint8_t speed() { return _speed; }
-        /// TODO Set pin high and create an interrupt to set pin low.
-        void update() {
-            if(_positionCurrent != _positionGoal) {
-                int16_t step = _speed;
-                int16_t diff = _positionCurrent - _positionGoal;
-                diff = abs(diff);
+public:
+    ServoT() {
+        static_assert(Pin::getHardwareType() == HardwareType::Pin, "ServoT requires a Pin");
 
-                if(diff < step) {
-                    _positionCurrent = _positionGoal;
-                } else {
-                    if(_positionGoal < _positionCurrent) {
-                        step = -step;
-                    }
+        Pin::direction(Pin::Direction::Output);
+        Pin::value(Pin::Value::Low);
+    }
 
-                    _positionCurrent += step;
+    void enabled(bool enabled) override {
+        _enabled = enabled;
+    }
+
+    bool enabled() override {
+        return _enabled;
+    }
+
+    void position(int8_t position) override {
+        _positionGoal = position;
+    }
+
+    int8_t position() override {
+        return _positionGoal;
+    }
+
+    void speed(uint8_t speed) override {
+        _speed = speed;
+    }
+
+    uint8_t speed() override {
+        return _speed;
+    }
+
+    uint16_t update() override {
+        if(_positionCurrent != _positionGoal) {
+            int16_t step = _speed;
+            int16_t diff = _positionCurrent - _positionGoal;
+            diff = abs(diff);
+
+            if(diff < step) {
+                _positionCurrent = _positionGoal;
+            } else {
+                if(_positionGoal < _positionCurrent) {
+                    step = -step;
                 }
+
+                _positionCurrent += step;
             }
         }
 
-        bool pulse() {
-            int16_t middle = (SERVO_MAX_TIME + SERVO_MIN_TIME) / 2;
-            int16_t range = SERVO_MAX_TIME - SERVO_MIN_TIME;
-            int16_t adjust = _positionCurrent * (range / 256);
+        uint16_t middle = (SERVO_MAX_TIME + SERVO_MIN_TIME) / 2;
+        uint16_t range = SERVO_MAX_TIME - SERVO_MIN_TIME;
+        uint16_t adjust = _positionCurrent * (range / 256);
 
-            int16_t ticks = middle + adjust;
+        uint16_t ticks = middle + adjust;
 
-            atomic {
-                if(clock.addInterrupt_(end, &_pin, ticks)) {
-                    _pin.value(Pin::Value::High);
-                    return true;
-                }
-            }
+        return ticks;
+    }
 
-            return false;
-        }
+    void pulseStart() override {
+        Pin::value(Pin::Value::High);
+    }
 
-        // FIXME How do I reference the wake function of ServoTask.
-        static void end(void* data) {
-            Pin* pin = (Pin*)data;
-
-            pin->value(Pin::Value::Low);
-
-//            wake();
-        }
+    void pulseEnd() override {
+        Pin::value(Pin::Value::Low);
+    }
 };
 
-// Interface for fetching servos.
-class Servos {
-    public:
-        // XXX Or maybe get, getNext, next, fetch?
-        virtual Servo* create(Pin pin) = 0;
-};
-
-template <int8_t S>
-class ServoManager : public Task, public Servos {
-    Clock& clock;
-    Servo servos[S];
+class ServoManager : public Task {
+    Clock& _clock;
+    Servo** _servos;
+    const uint8_t _servoCount;
     int8_t index;
     uint16_t start;
+    Servo* _activeServo;
 
-    public:
-
-    // TODO Pass in the servo objects to manage as an array.
-    ServoManager(Clock& clock) : clock(clock){
+public:
+    template <uint8_t S>
+    ServoManager(Clock& clock, Servo* (&servos)[S]) : _clock(clock), _servos(servos), _servoCount(S) {
     }
 
-    Servo* create(Pin pin) override {
-        for(uint8_t i = 0; i < S; i++) {
-            if(!servos[i].enabled()) {
-                return &servos[i];
-            }
-        }
-
-        return &servos[S - 1];
-    }
-
-    protected:
-
+private:
     void loop() override {
         if(index == 0) {
-            start = clock.getTicks16();
+            start = _clock.getTicks16();
         }
 
-        if(index < S) {
-            Servo& servo = servos[index];
+        if(index < _servoCount) {
+            _activeServo = _servos[index];
 
-            if(servo.enabled()) {
-                servo.update();
+            if(_activeServo->enabled()) {
+                uint16_t pulseLength = _activeServo->update();
 
-                if(servo.pulse()) {
-                    sleep();
+                atomic {
+                    if(_clock.addInterrupt_(end, this, pulseLength)) {
+                        // _activeServo->pin() = Pin::Value::High;
+                        _activeServo->pulseStart();
+                        sleep();
+                    }
                 }
             }
 
@@ -137,12 +137,20 @@ class ServoManager : public Task, public Servos {
         } else {
             index = 0;
 
-            uint16_t diff = clock.getTicks16() - start;
+            uint16_t diff = _clock.getTicks16() - start;
 
             if(diff < SERVO_UPDATE_DELAY) {
-                delay(clock, SERVO_UPDATE_DELAY - diff);
+                delay(_clock, SERVO_UPDATE_DELAY - diff);
             }
         }
+    }
+
+    static void end(void* data) {
+        ServoManager* self = (ServoManager*)data;
+
+        self->_activeServo->pulseEnd();
+
+        self->wake();
     }
 };
 

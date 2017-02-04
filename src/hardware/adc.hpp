@@ -4,6 +4,12 @@
 #ifdef CHIP_ADC
 
 struct ADC {
+    ADC() = delete;
+
+    static constexpr HardwareType getHardwareType() {
+        return HardwareType::ADC;
+    }
+
     enum class Reference : uint8_t {
         AREF = CHIP_ADC_REFERENCE_AREF_ID,
         AVCC = CHIP_ADC_REFERENCE_AVCC_ID,

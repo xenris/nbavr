@@ -3,28 +3,26 @@
 
 #include <nbavr.hpp>
 
+template <class ledPin>
 class Flash : public Task {
     Clock& clock;
     Stream<char>& stdin;
-    Pin& ledPin;
     static const uint32_t pulseLength = MS_TO_TICKS(50);
 
-    public:
-
-    Flash(Clock& clock, Stream<char>& stdin, Pin& ledPin) : clock(clock), stdin(stdin), ledPin(ledPin) {
-        ledPin.direction(Pin::Direction::Output);
+public:
+    Flash(Clock& clock, Stream<char>& stdin) : clock(clock), stdin(stdin) {
+        ledPin::direction(ledPin::Direction::Output);
     }
 
-    protected:
-
+private:
     void loop() override {
-        ledPin.value(Pin::Value::Low);
+        ledPin::value(ledPin::Value::Low);
 
         char c;
 
         if(stdin.pop(&c)) {
             stdin.clear();
-            ledPin.value(Pin::Value::High);
+            ledPin::value(ledPin::Value::High);
             delay(clock, pulseLength);
         }
     }

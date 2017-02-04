@@ -3,16 +3,17 @@
 #include <nbavr.cpp>
 
 void main() {
-    TimerCounter1 timerCounter1;
-    Usart0 usart0;
-    ClockT<TimerCounter1> clock(timerCounter1);
+    typedef TimerCounter1 clockTimer;
+    typedef Usart0 serialUsart;
+
+    ClockT<clockTimer> clock;
 
     StreamBuffer<char, 30> stdout;
     StreamBuffer<char, 0> stdin;
     StreamBuffer<TWI::Action, 2> twiout;
 
     TWI twi(twiout);
-    Serial<Usart0> serial(usart0, stdout, stdin);
+    Serial<serialUsart> serial(stdout, stdin);
     LightSensor lightSensor(clock, stdout, twiout);
 
     Task* tasks[] = {&lightSensor, &twi, &serial};

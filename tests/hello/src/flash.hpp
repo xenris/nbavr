@@ -3,18 +3,19 @@
 
 #include <nbavr.hpp>
 
+template <class ledPin>
 class Flash : public Task {
     Clock& clock;
-    Pin& ledPin;
 
 public:
-    Flash(Clock& clock, Pin& ledPin) : clock(clock), ledPin(ledPin) {
-        ledPin = Pin::Direction::Output;
+    Flash(Clock& clock) : clock(clock) {
+        ledPin::direction(ledPin::Direction::Output);
     }
 
 private:
     void loop() override {
-        ledPin.toggle();
+
+        ledPin::toggle();
         delay(clock, MS_TO_TICKS(500));
     }
 };

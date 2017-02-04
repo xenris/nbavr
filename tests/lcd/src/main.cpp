@@ -3,24 +3,23 @@
 #include <nbavr.cpp>
 
 void main() {
-    TimerCounter1 timerCounter1;
-    PinB5 ledPin;
-    PinC4 pinD4;
-    PinC5 pinD5;
-    PinD6 pinD6;
-    PinD7 pinD7;
-    PinD5 pinRW;
-    PinD4 pinRS;
-    PinB1 pinE;
-    ClockT<TimerCounter1> clock(timerCounter1);
+    typedef TimerCounter1 clockTimer;
+    typedef PinC4 lcdD4;
+    typedef PinC5 lcdD5;
+    typedef PinD6 lcdD6;
+    typedef PinD7 lcdD7;
+    typedef PinD5 lcdRW;
+    typedef PinD4 lcdRS;
+    typedef PinB1 lcdE;
+
+    ClockT<clockTimer> clock;
 
     StreamBuffer<char, 30> lcdout;
 
-    LCD lcd(clock, lcdout, pinD4, pinD5, pinD6, pinD7, pinRW, pinRS, pinE);
+    LCD<lcdD4, lcdD5, lcdD6, lcdD7, lcdRW, lcdRS, lcdE> lcd(clock, lcdout);
     Hello hello(clock, lcdout);
-    Flash flash(clock, ledPin);
 
-    Task* tasks[] = {&hello, &flash, &lcd};
+    Task* tasks[] = {&hello, &lcd};
 
     nbavr(clock, tasks);
 }

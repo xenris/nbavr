@@ -35,7 +35,7 @@ struct Clock {
     virtual void disableHaltInterrupt() = 0;
 };
 
-template<class T>
+template<class Timer>
 class ClockT : public Clock {
     struct Interrupt {
         // The callback to use.
@@ -53,18 +53,18 @@ class ClockT : public Clock {
         Interrupt interrupts[MAX_TICK_INTERRUPTS];
     };
 
-    T& _timer;
     uint16_t _tocks = 0;
     Queue _interrupts;
     void (*_haltCallback)(void*) = nullptr;
     void* _haltCallbackData = nullptr;
 
 public:
-    ClockT(T timer) : _timer(timer) {
-        static_assert(T::size() == 2, "ClockT requires a 16 bit timer.");
+    ClockT() {
+        static_assert(Timer::getHardwareType() == HardwareType::TimerCounter, "ClockT requires a TimerCounter");
+        static_assert(Timer::size() == 2, "ClockT requires a 16 bit TimerCounter");
 
-        typename T::Config config;
-        config.clockSelect = T::ClockSelect::Div64;
+        typename Timer::Config config;
+        config.clockSelect = Timer::ClockSelect::Div64;
         config.overflowIntEnable = true;
         config.outputCompareAInterrupt = timerCounterOutputCompareA;
         config.outputCompareAInterruptData = this;
@@ -73,12 +73,12 @@ public:
         config.overflowInterrupt = timerCounterOverflow;
         config.overflowInterruptData = this;
 
-        _timer.apply(config);
+        Timer::apply(config);
     }
 
     // Get the 16 bit hardware counter.
     force_inline uint16_t getTicks16() const override {
-        return _timer.timerRegister();
+        return Timer::timerRegister();
     }
 
     // Get the 32 bit combined hardware and overflow counter.
@@ -98,7 +98,7 @@ public:
         uint16_t high = _tocks;
 
         // Check if the counter has overflowed since atomic started.
-        if(_timer.overflowIntFlag()) {
+        if(Timer::overflowIntFlag()) {
             // If it has then there is a possibility that the numbers are not synchronised.
             // Get the new counter value, and increment "high".
             low = getTicks16();
@@ -157,12 +157,12 @@ public:
         push(&_interrupts, now - INTERRUPT_TICK_BUFFER, interrupt);
 
         // Set the timer to the first interrupt.
-        _timer.outputCompareASet(peek(&_interrupts).tick);
+        Timer::outputCompareARegister(peek(&_interrupts).tick);
 
         // If the queue was previously empty, clear the flag and enable interrupt.
         if(_interrupts.size == 1) {
-            _timer.outputCompareAIntFlagClear();
-            _timer.outputCompareAIntEnable(true);
+            Timer::outputCompareAIntFlagClear();
+            Timer::outputCompareAIntEnable(true);
         }
 
         return true;
@@ -171,9 +171,9 @@ public:
     force_inline void enableHaltInterrupt(uint16_t timeout, void (*callback)(void*), void* data) override {
         atomic {
             uint16_t tick = getTicks16() + timeout;
-            _timer.outputCompareBSet(tick);
-            _timer.outputCompareBIntEnable(true);
-            _timer.outputCompareBIntFlagClear();
+            Timer::outputCompareBRegister(tick);
+            Timer::outputCompareBIntEnable(true);
+            Timer::outputCompareBIntFlagClear();
             _haltCallback = callback;
             _haltCallbackData = data;
         }
@@ -181,8 +181,8 @@ public:
 
     force_inline void disableHaltInterrupt() override {
         atomic {
-            _timer.outputCompareBIntEnable(false);
-            _timer.outputCompareBIntFlagClear();
+            Timer::outputCompareBIntEnable(false);
+            Timer::outputCompareBIntFlagClear();
             _haltCallback = nullptr;
             _haltCallbackData = nullptr;
         }
@@ -270,14 +270,14 @@ private:
         if(self->_interrupts.size > 0) {
             uint16_t next = peek(&self->_interrupts).tick;
 
-            self->_timer.outputCompareAIntFlagClear();
-            self->_timer.outputCompareASet(next);
+            Timer::outputCompareAIntFlagClear();
+            Timer::outputCompareARegister(next);
 
             if(!compare(interrupt.tick, self->getTicks16() + 1, next)) {
                 goto loop;
             }
         } else {
-            self->_timer.outputCompareAIntEnable(false);
+            Timer::outputCompareAIntEnable(false);
         }
     }
 

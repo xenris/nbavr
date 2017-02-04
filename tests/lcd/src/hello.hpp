@@ -11,13 +11,11 @@ class Hello : public Task {
     uint8_t scroll = 0;
     Stream<char>& lcdout;
 
-    public:
-
+public:
     Hello(Clock& clock, Stream<char>& lcdout) : clock(clock), lcdout(lcdout) {
     }
 
-    protected:
-
+private:
     void loop() override {
         uint16_t seconds = TICKS_TO_MS(clock.getTicks()) / 1000;
 

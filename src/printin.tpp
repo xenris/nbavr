@@ -1,6 +1,3 @@
-#define CONCAT_(A,B,C) A ## B ## C
-#define CONCAT(A,B,C) CONCAT_(A,B,C)
-
 #define TS CONCAT(int, INT_SIZE, _t)
 #define TU CONCAT(uint, INT_SIZE, _t)
 

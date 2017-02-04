@@ -3,17 +3,18 @@
 #include <nbavr.cpp>
 
 void main() {
-    PinB5 ledPin;
-    TimerCounter1 timerCounter1;
-    Usart0 usart0;
-    ClockT<TimerCounter1> clock(timerCounter1);
+    typedef PinB5 ledPin;
+    typedef TimerCounter1 clockTimer;
+    typedef Usart0 serialUsart;
+
+    ClockT<clockTimer> clock;
 
     StreamBuffer<char, 40> stdout;
     StreamBuffer<char, 0> stdin;
 
-    Serial<Usart0> serial(usart0, stdout, stdin);
+    Serial<serialUsart> serial(stdout, stdin);
     Hello hello(clock, stdout);
-    Flash flash(clock, ledPin);
+    Flash<ledPin> flash(clock);
 
     Task* tasks[] = {&serial, &hello, &flash};
 

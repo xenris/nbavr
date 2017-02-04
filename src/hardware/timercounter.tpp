@@ -1,0 +1,411 @@
+#define TimerCounterN CONCAT(TimerCounter,ID)
+
+#define TYPE CONCAT(CHIP_TIMERCOUNTER_, ID, _TYPE)
+
+#define COUNTER_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _COUNTER_REG)
+
+#define WAVEFORM CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM)
+#define WAVEFORM_NORMAL_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_NORMAL_ID)
+#define WAVEFORM_PWM_PHASE_CORRECT_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_PWM_PHASE_CORRECT_ID)
+#define WAVEFORM_CTC_OCRA_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_CTC_OCRA_ID)
+#define WAVEFORM_FAST_PWM_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_FAST_PWM_ID)
+#define WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID)
+#define WAVEFORM_FAST_PWM_OCRA_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_FAST_PWM_OCRA_ID)
+
+#define WAVEFORM_BIT_COUNT CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_COUNT)
+
+//TODO Check this. simavr says it is out of ram range.
+#define WAVEFORM_BIT_0_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_0_REG)
+#define WAVEFORM_BIT_1_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_1_REG)
+#define WAVEFORM_BIT_2_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_2_REG)
+#define WAVEFORM_BIT_3_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_2_REG)
+
+#define WAVEFORM_BIT_0_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_0_BIT)
+#define WAVEFORM_BIT_1_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_1_BIT)
+#define WAVEFORM_BIT_2_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_2_BIT)
+#define WAVEFORM_BIT_3_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_2_BIT)
+
+#define CLOCK_NONE_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_NONE_ID)
+#define CLOCK_1_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_1_ID)
+#define CLOCK_8_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_8_ID)
+#define CLOCK_32_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_32_ID)
+#define CLOCK_64_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_64_ID)
+#define CLOCK_128_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_128_ID)
+#define CLOCK_256_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_256_ID)
+#define CLOCK_1024_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_1024_ID)
+#define CLOCK_EXT_FALLING_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_EXT_FALLING_ID)
+#define CLOCK_EXT_RISING_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_EXT_RISING_ID)
+
+#define CLOCK_BIT_0_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_BIT_0_REG)
+#define CLOCK_BIT_1_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_BIT_1_REG)
+#define CLOCK_BIT_2_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_BIT_2_REG)
+
+#define CLOCK_BIT_0_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_BIT_0_BIT)
+#define CLOCK_BIT_1_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_BIT_1_BIT)
+#define CLOCK_BIT_2_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _CLOCK_BIT_2_BIT)
+
+#define OUTPUTCOMPARE_A CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_A)
+#define OUTPUTCOMPARE_B CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_B)
+#define OUTPUTCOMPARE_C CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_C)
+
+#define OUTPUTCOMPARE_A_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_A_REG)
+#define OUTPUTCOMPARE_B_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_B_REG)
+#define OUTPUTCOMPARE_C_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_C_REG)
+
+#define OUTPUTCOMPARE_MODE CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_MODE)
+#define OUTPUTCOMPARE_MODE_DISCONNECTED_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_MODE_DISCONNECTED_ID)
+#define OUTPUTCOMPARE_MODE_TOGGLE_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_MODE_TOGGLE_ID)
+#define OUTPUTCOMPARE_MODE_CLEAR_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_MODE_CLEAR_ID)
+#define OUTPUTCOMPARE_MODE_SET_ID CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_MODE_SET_ID)
+
+#define OUTPUTCOMPARE_A_MODE_BIT_0_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_A_MODE_BIT_0_REG)
+#define OUTPUTCOMPARE_A_MODE_BIT_1_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_A_MODE_BIT_1_REG)
+#define OUTPUTCOMPARE_B_MODE_BIT_0_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_B_MODE_BIT_0_REG)
+#define OUTPUTCOMPARE_B_MODE_BIT_1_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_B_MODE_BIT_1_REG)
+#define OUTPUTCOMPARE_C_MODE_BIT_0_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_C_MODE_BIT_0_REG)
+#define OUTPUTCOMPARE_C_MODE_BIT_1_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_C_MODE_BIT_1_REG)
+
+#define OUTPUTCOMPARE_A_MODE_BIT_0_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_A_MODE_BIT_0_BIT)
+#define OUTPUTCOMPARE_A_MODE_BIT_1_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_A_MODE_BIT_1_BIT)
+#define OUTPUTCOMPARE_B_MODE_BIT_0_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_B_MODE_BIT_0_BIT)
+#define OUTPUTCOMPARE_B_MODE_BIT_1_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_B_MODE_BIT_1_BIT)
+#define OUTPUTCOMPARE_C_MODE_BIT_0_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_C_MODE_BIT_0_BIT)
+#define OUTPUTCOMPARE_C_MODE_BIT_1_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_C_MODE_BIT_1_BIT)
+
+#define OUTPUTCOMPARE_A_INT_ENABLE_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_A_INT_ENABLE_REG)
+#define OUTPUTCOMPARE_B_INT_ENABLE_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_B_INT_ENABLE_REG)
+#define OUTPUTCOMPARE_C_INT_ENABLE_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_C_INT_ENABLE_REG)
+
+#define OUTPUTCOMPARE_A_INT_ENABLE_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_A_INT_ENABLE_BIT)
+#define OUTPUTCOMPARE_B_INT_ENABLE_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_B_INT_ENABLE_BIT)
+#define OUTPUTCOMPARE_C_INT_ENABLE_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_C_INT_ENABLE_BIT)
+
+#define OUTPUTCOMPARE_A_INT_FLAG_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_A_INT_FLAG_REG)
+#define OUTPUTCOMPARE_B_INT_FLAG_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_B_INT_FLAG_REG)
+#define OUTPUTCOMPARE_C_INT_FLAG_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_C_INT_FLAG_REG)
+
+#define OUTPUTCOMPARE_A_INT_FLAG_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_A_INT_FLAG_BIT)
+#define OUTPUTCOMPARE_B_INT_FLAG_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_B_INT_FLAG_BIT)
+#define OUTPUTCOMPARE_C_INT_FLAG_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OUTPUTCOMPARE_C_INT_FLAG_BIT)
+
+#define OVERFLOW_INT_ENABLE_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OVERFLOW_INT_ENABLE_REG)
+#define OVERFLOW_INT_ENABLE_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OVERFLOW_INT_ENABLE_BIT)
+
+#define OVERFLOW_INT_FLAG_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _OVERFLOW_INT_FLAG_REG)
+#define OVERFLOW_INT_FLAG_BIT CONCAT(CHIP_TIMERCOUNTER_, ID, _OVERFLOW_INT_FLAG_BIT)
+
+#define OUTPUTCOMPARE_A_INTERRUPT CONCAT(_timerCounter, ID, OutputCompareAInterrupt)
+#define OUTPUTCOMPARE_A_INTERRUPT_DATA CONCAT(_timerCounter, ID, OutputCompareAInterruptData)
+#define OUTPUTCOMPARE_B_INTERRUPT CONCAT(_timerCounter, ID, OutputCompareBInterrupt)
+#define OUTPUTCOMPARE_B_INTERRUPT_DATA CONCAT(_timerCounter, ID, OutputCompareBInterruptData)
+#define OUTPUTCOMPARE_C_INTERRUPT CONCAT(_timerCounter, ID, OutputCompareCInterrupt)
+#define OUTPUTCOMPARE_C_INTERRUPT_DATA CONCAT(_timerCounter, ID, OutputCompareCInterruptData)
+#define OVERFLOW_INTERRUPT CONCAT(_timerCounter, ID, OverflowInterrupt)
+#define OVERFLOW_INTERRUPT_DATA CONCAT(_timerCounter, ID, OverflowInterruptData)
+
+struct TimerCounterN {
+    TimerCounterN() = delete;
+
+    static constexpr HardwareType getHardwareType() {
+        return HardwareType::TimerCounter;
+    }
+
+    static constexpr int size() {
+        return sizeof(TYPE);
+    }
+
+    #if WAVEFORM
+    enum class Waveform : uint8_t {
+        Normal = WAVEFORM_NORMAL_ID,
+        PWM = WAVEFORM_PWM_PHASE_CORRECT_ID,
+        CTCOCRA = WAVEFORM_CTC_OCRA_ID,
+        FastPWM = WAVEFORM_FAST_PWM_ID,
+        #if WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID
+        PWMOCRA = WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID,
+        #endif
+        #if WAVEFORM_FAST_PWM_OCRA_ID
+        FastPWMOCRA = WAVEFORM_FAST_PWM_OCRA_ID,
+        #endif
+    };
+    #endif
+
+    enum class ClockSelect : uint8_t {
+        None = CLOCK_NONE_ID,
+        Div1 = CLOCK_1_ID,
+        Div8 = CLOCK_8_ID,
+        #if CLOCK_32_ID
+        Div32 = CLOCK_32_ID,
+        #endif
+        Div64 = CLOCK_64_ID,
+        #if CLOCK_128_ID
+        Div128 = CLOCK_128_ID,
+        #endif
+        Div256 = CLOCK_256_ID,
+        Div1024 = CLOCK_1024_ID,
+        #if CLOCK_EXT_FALLING_ID
+        ExtFalling = CLOCK_EXT_FALLING_ID,
+        #endif
+        #if CLOCK_EXT_RISING_ID
+        ExtRising = CLOCK_EXT_RISING_ID,
+        #endif
+    };
+
+    #if OUTPUTCOMPARE_MODE
+    enum class OutputMode : uint8_t {
+        Disconnected = OUTPUTCOMPARE_MODE_DISCONNECTED_ID,
+        Toggle = OUTPUTCOMPARE_MODE_TOGGLE_ID,
+        Clear = OUTPUTCOMPARE_MODE_CLEAR_ID,
+        Set = OUTPUTCOMPARE_MODE_SET_ID,
+    };
+    #endif
+
+    struct Config {
+        #if WAVEFORM
+        Waveform waveform = Waveform::Normal;
+        #endif
+        ClockSelect clockSelect = ClockSelect::None;
+        TYPE timerRegister = 0;
+
+        #define MAKE_OUTPUTCOMPARE(X) \
+            TYPE output##X##Register = 0; \
+            bool output##X##IntEnable = false; \
+            OutputMode output##X##Mode = OutputMode::Disconnected; \
+            void (*outputCompare##X##Interrupt)(void*) = nullptr; \
+            void* outputCompare##X##InterruptData = nullptr;
+        #if OUTPUTCOMPARE_A
+            MAKE_OUTPUTCOMPARE(A)
+        #endif
+        #if OUTPUTCOMPARE_B
+            MAKE_OUTPUTCOMPARE(B)
+        #endif
+        #if OUTPUTCOMPARE_C
+            MAKE_OUTPUTCOMPARE(C)
+        #endif
+        #undef MAKE_OUTPUTCOMPARE
+
+        bool overflowIntEnable = false;
+        void (*overflowInterrupt)(void*) = nullptr;
+        void* overflowInterruptData = nullptr;
+    };
+
+    static force_inline void apply(Config config) {
+        atomic {
+            #if WAVEFORM
+            waveform(config.waveform);
+            #endif
+
+            clockSelect(config.clockSelect);
+
+            // Load timer register.
+            *COUNTER_REG = config.timerRegister;
+
+            // Setup output compares.
+            #define MAKE_OUTPUTCOMPARE(X) \
+                setBit_(OUTPUTCOMPARE_##X##_MODE_BIT_0_REG, OUTPUTCOMPARE_##X##_MODE_BIT_0_BIT, (uint8_t)config.output##X##Mode & 0x01); \
+                setBit_(OUTPUTCOMPARE_##X##_MODE_BIT_1_REG, OUTPUTCOMPARE_##X##_MODE_BIT_1_BIT, (uint8_t)config.output##X##Mode & 0x02); \
+                setBit_(OUTPUTCOMPARE_##X##_INT_ENABLE_REG, OUTPUTCOMPARE_##X##_INT_ENABLE_BIT, config.output##X##IntEnable); \
+                setBit_(OUTPUTCOMPARE_##X##_INT_FLAG_REG, OUTPUTCOMPARE_##X##_INT_FLAG_BIT, true); \
+                *OUTPUTCOMPARE_##X##_REG = config.output##X##Register; \
+                OUTPUTCOMPARE_##X##_INTERRUPT = config.outputCompare##X##Interrupt; \
+                OUTPUTCOMPARE_##X##_INTERRUPT_DATA = config.outputCompare##X##InterruptData;
+            #if OUTPUTCOMPARE_A
+                MAKE_OUTPUTCOMPARE(A)
+            #endif
+            #if OUTPUTCOMPARE_B
+                MAKE_OUTPUTCOMPARE(B)
+            #endif
+            #if OUTPUTCOMPARE_C
+                MAKE_OUTPUTCOMPARE(C)
+            #endif
+            #undef MAKE_OUTPUTCOMPARE
+
+            // Setup overflow int.
+            setBit_(OVERFLOW_INT_ENABLE_REG, OVERFLOW_INT_ENABLE_BIT, config.overflowIntEnable);
+            setBit_(OVERFLOW_INT_FLAG_REG, OVERFLOW_INT_FLAG_BIT, true);
+            OVERFLOW_INTERRUPT = config.overflowInterrupt;
+            OVERFLOW_INTERRUPT_DATA = config.overflowInterruptData;
+        }
+    }
+
+    #if WAVEFORM
+    static force_inline void waveform(Waveform waveform) {
+        #if WAVEFORM_BIT_COUNT > 0
+        setBit_(WAVEFORM_BIT_0_REG, WAVEFORM_BIT_0_BIT, (uint8_t)waveform & 0x01);
+        #endif
+        #if WAVEFORM_BIT_COUNT > 1
+        setBit_(WAVEFORM_BIT_1_REG, WAVEFORM_BIT_1_BIT, (uint8_t)waveform & 0x02);
+        #endif
+        #if WAVEFORM_BIT_COUNT > 2
+        setBit_(WAVEFORM_BIT_2_REG, WAVEFORM_BIT_2_BIT, (uint8_t)waveform & 0x04);
+        #endif
+        #if WAVEFORM_BIT_COUNT > 3
+        setBit_(WAVEFORM_BIT_3_REG, WAVEFORM_BIT_3_BIT, (uint8_t)waveform & 0x08);
+        #endif
+    }
+    #endif
+
+    static force_inline void clockSelect(ClockSelect clockSelect) {
+        setBit_(CLOCK_BIT_0_REG, CLOCK_BIT_0_BIT, (uint8_t)clockSelect & 0x01);
+        setBit_(CLOCK_BIT_1_REG, CLOCK_BIT_1_BIT, (uint8_t)clockSelect & 0x02);
+        setBit_(CLOCK_BIT_2_REG, CLOCK_BIT_2_BIT, (uint8_t)clockSelect & 0x04);
+    }
+
+    static force_inline void timerRegister(TYPE value) {
+        *COUNTER_REG = value;
+    }
+
+    static force_inline TYPE timerRegister() {
+        return *COUNTER_REG;
+    }
+
+    #define MAKE_OUTPUTCOMPARE(X) \
+        static force_inline void outputCompare##X##Register(TYPE v) { \
+            *OUTPUTCOMPARE_##X##_REG = v; \
+        } \
+        static force_inline TYPE outputCompare##X##Register() { \
+            return *OUTPUTCOMPARE_##X##_REG; \
+        } \
+        static force_inline void outputCompare##X##IntEnable(bool b) { \
+            if(b) { \
+                *OUTPUTCOMPARE_##X##_INT_ENABLE_REG |= bv(OUTPUTCOMPARE_##X##_INT_ENABLE_BIT); \
+            } else { \
+                *OUTPUTCOMPARE_##X##_INT_ENABLE_REG &= ~bv(OUTPUTCOMPARE_##X##_INT_ENABLE_BIT); \
+            } \
+        } \
+        static force_inline bool outputCompare##X##IntFlag() { \
+            return *OUTPUTCOMPARE_##X##_INT_FLAG_REG & bv(OUTPUTCOMPARE_##X##_INT_FLAG_BIT); \
+        } \
+        static force_inline void outputCompare##X##IntFlagClear() { \
+            *OUTPUTCOMPARE_##X##_INT_FLAG_REG |= bv(OUTPUTCOMPARE_##X##_INT_FLAG_BIT); \
+        }
+    #if OUTPUTCOMPARE_A
+        MAKE_OUTPUTCOMPARE(A)
+    #endif
+    #if OUTPUTCOMPARE_B
+        MAKE_OUTPUTCOMPARE(B)
+    #endif
+    #if OUTPUTCOMPARE_C
+        MAKE_OUTPUTCOMPARE(C)
+    #endif
+    #undef MAKE_OUTPUTCOMPARE
+
+    static force_inline void overflowIntEnable(bool b) {
+        if(b) {
+            *OVERFLOW_INT_ENABLE_REG |= bv(OVERFLOW_INT_ENABLE_BIT);
+        } else {
+            *OVERFLOW_INT_ENABLE_REG &= ~bv(OVERFLOW_INT_ENABLE_BIT);
+        }
+    }
+
+    static force_inline bool overflowIntFlag() {
+        return *OVERFLOW_INT_FLAG_REG & bv(OVERFLOW_INT_FLAG_BIT);
+    }
+
+    static force_inline void overflowIntFlagClear() {
+        *OVERFLOW_INT_FLAG_REG |= bv(OVERFLOW_INT_FLAG_BIT);
+    }
+};
+
+#undef TimerCounterN
+
+#undef TYPE
+
+#undef COUNTER_REG
+
+#undef WAVEFORM
+#undef WAVEFORM_NORMAL_ID
+#undef WAVEFORM_PWM_PHASE_CORRECT_ID
+#undef WAVEFORM_CTC_OCRA_ID
+#undef WAVEFORM_FAST_PWM_ID
+#undef WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID
+#undef WAVEFORM_FAST_PWM_OCRA_ID
+
+#undef WAVEFORM_BIT_COUNT
+
+#undef WAVEFORM_BIT_0_REG
+#undef WAVEFORM_BIT_1_REG
+#undef WAVEFORM_BIT_2_REG
+#undef WAVEFORM_BIT_3_REG
+
+#undef WAVEFORM_BIT_0_BIT
+#undef WAVEFORM_BIT_1_BIT
+#undef WAVEFORM_BIT_2_BIT
+#undef WAVEFORM_BIT_3_BIT
+
+#undef CLOCK_NONE_ID
+#undef CLOCK_1_ID
+#undef CLOCK_8_ID
+#undef CLOCK_32_ID
+#undef CLOCK_64_ID
+#undef CLOCK_128_ID
+#undef CLOCK_256_ID
+#undef CLOCK_1024_ID
+#undef CLOCK_EXT_FALLING_ID
+#undef CLOCK_EXT_RISING_ID
+
+#undef CLOCK_BIT_0_REG
+#undef CLOCK_BIT_1_REG
+#undef CLOCK_BIT_2_REG
+
+#undef CLOCK_BIT_0_BIT
+#undef CLOCK_BIT_1_BIT
+#undef CLOCK_BIT_2_BIT
+
+#undef OUTPUTCOMPARE_A
+#undef OUTPUTCOMPARE_B
+#undef OUTPUTCOMPARE_C
+
+#undef OUTPUTCOMPARE_A_REG
+#undef OUTPUTCOMPARE_B_REG
+#undef OUTPUTCOMPARE_C_REG
+
+#undef OUTPUTCOMPARE_MODE
+#undef OUTPUTCOMPARE_MODE_DISCONNECTED_ID
+#undef OUTPUTCOMPARE_MODE_TOGGLE_ID
+#undef OUTPUTCOMPARE_MODE_CLEAR_ID
+#undef OUTPUTCOMPARE_MODE_SET_ID
+
+#undef OUTPUTCOMPARE_A_MODE_BIT_0_REG
+#undef OUTPUTCOMPARE_A_MODE_BIT_1_REG
+#undef OUTPUTCOMPARE_B_MODE_BIT_0_REG
+#undef OUTPUTCOMPARE_B_MODE_BIT_1_REG
+#undef OUTPUTCOMPARE_C_MODE_BIT_0_REG
+#undef OUTPUTCOMPARE_C_MODE_BIT_1_REG
+
+#undef OUTPUTCOMPARE_A_MODE_BIT_0_BIT
+#undef OUTPUTCOMPARE_A_MODE_BIT_1_BIT
+#undef OUTPUTCOMPARE_B_MODE_BIT_0_BIT
+#undef OUTPUTCOMPARE_B_MODE_BIT_1_BIT
+#undef OUTPUTCOMPARE_C_MODE_BIT_0_BIT
+#undef OUTPUTCOMPARE_C_MODE_BIT_1_BIT
+
+#undef OUTPUTCOMPARE_A_INT_ENABLE_REG
+#undef OUTPUTCOMPARE_B_INT_ENABLE_REG
+#undef OUTPUTCOMPARE_C_INT_ENABLE_REG
+
+#undef OUTPUTCOMPARE_A_INT_ENABLE_BIT
+#undef OUTPUTCOMPARE_B_INT_ENABLE_BIT
+#undef OUTPUTCOMPARE_C_INT_ENABLE_BIT
+
+#undef OUTPUTCOMPARE_A_INT_FLAG_REG
+#undef OUTPUTCOMPARE_B_INT_FLAG_REG
+#undef OUTPUTCOMPARE_C_INT_FLAG_REG
+
+#undef OUTPUTCOMPARE_A_INT_FLAG_BIT
+#undef OUTPUTCOMPARE_B_INT_FLAG_BIT
+#undef OUTPUTCOMPARE_C_INT_FLAG_BIT
+
+#undef OVERFLOW_INT_ENABLE_REG
+#undef OVERFLOW_INT_ENABLE_BIT
+
+#undef OVERFLOW_INT_FLAG_REG
+#undef OVERFLOW_INT_FLAG_BIT
+
+#undef OUTPUTCOMPARE_A_INTERRUPT
+#undef OUTPUTCOMPARE_A_INTERRUPT_DATA
+#undef OUTPUTCOMPARE_B_INTERRUPT
+#undef OUTPUTCOMPARE_B_INTERRUPT_DATA
+#undef OUTPUTCOMPARE_C_INTERRUPT
+#undef OUTPUTCOMPARE_C_INTERRUPT_DATA
+#undef OVERFLOW_INTERRUPT
+#undef OVERFLOW_INTERRUPT_DATA
