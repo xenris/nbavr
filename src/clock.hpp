@@ -39,17 +39,17 @@ template<class Timer>
 class ClockT : public Clock {
     struct Interrupt {
         // The callback to use.
-        void (*callback)(void*);
+        void (*callback)(void*) = nullptr;
         // Data to pass into the callback.
-        void* data;
+        void* data = nullptr;
         // The tick at which to perform the callback.
-        uint16_t tick;
+        uint16_t tick = 0;
     };
 
     struct Queue {
-        uint8_t size;
-        uint8_t head;
-        uint8_t tail;
+        uint8_t size = 0;
+        uint8_t head = 0;
+        uint8_t tail = 0;
         Interrupt interrupts[MAX_TICK_INTERRUPTS];
     };
 
