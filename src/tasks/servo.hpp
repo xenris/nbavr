@@ -11,58 +11,42 @@
 #define SERVO_MAX_TIME US_TO_TICKS(2400)
 #define SERVO_UPDATE_DELAY MS_TO_TICKS(20)
 
-struct Servo {
-    virtual void enabled(bool enabled) = 0;
-    virtual bool enabled() = 0;
-    virtual void position(int8_t position) = 0;
-    virtual int8_t position() = 0;
-    virtual void speed(uint8_t speed) = 0;
-    virtual uint8_t speed() = 0;
-    virtual uint16_t update() = 0;
-    virtual void pulseStart() = 0;
-    virtual void pulseEnd() = 0;
-};
-
-template <class Pin>
-class ServoT : public Servo {
+class Servo {
     bool _enabled = true;
     int8_t _positionCurrent = 0;
     int8_t _positionGoal = 0;
     uint8_t _speed = 255;
 
+protected:
+    Servo() { };
+
 public:
-    ServoT() {
-        static_assert(Pin::getHardwareType() == HardwareType::Pin, "ServoT requires a Pin");
 
-        Pin::direction(Pin::Direction::Output);
-        Pin::value(Pin::Value::Low);
-    }
-
-    void enabled(bool enabled) override {
+    void enabled(bool enabled) {
         _enabled = enabled;
     }
 
-    bool enabled() override {
+    bool enabled() const {
         return _enabled;
     }
 
-    void position(int8_t position) override {
+    void position(int8_t position) {
         _positionGoal = position;
     }
 
-    int8_t position() override {
+    int8_t position() const {
         return _positionGoal;
     }
 
-    void speed(uint8_t speed) override {
+    void speed(uint8_t speed) {
         _speed = speed;
     }
 
-    uint8_t speed() override {
+    uint8_t speed() const {
         return _speed;
     }
 
-    uint16_t update() override {
+    uint16_t update() {
         if(_positionCurrent != _positionGoal) {
             int16_t step = _speed;
             int16_t diff = _positionCurrent - _positionGoal;
@@ -88,11 +72,24 @@ public:
         return ticks;
     }
 
-    void pulseStart() override {
+    virtual void pulseStart() const = 0;
+    virtual void pulseEnd() const = 0;
+};
+
+template <class Pin>
+struct ServoT : Servo {
+    ServoT() {
+        static_assert(Pin::getHardwareType() == HardwareType::Pin, "ServoT requires a Pin");
+
+        Pin::direction(Pin::Direction::Output);
+        Pin::value(Pin::Value::Low);
+    }
+
+    void pulseStart() const override {
         Pin::value(Pin::Value::High);
     }
 
-    void pulseEnd() override {
+    void pulseEnd() const override {
         Pin::value(Pin::Value::Low);
     }
 };
