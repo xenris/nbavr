@@ -12,7 +12,7 @@
 #define SERVO_UPDATE_DELAY MS_TO_TICKS(20)
 
 class Servo {
-    bool _enabled = true;
+    bool _awake = false;
     int8_t _positionCurrent = 0;
     int8_t _positionGoal = 0;
     uint8_t _speed = 255;
@@ -21,25 +21,26 @@ protected:
     Servo() { };
 
 public:
-
-    void enabled(bool enabled) {
-        _enabled = enabled;
+    void sleep() {
+        _awake = false;
     }
 
-    bool enabled() const {
-        return _enabled;
+    void wake() {
+        _awake = true;
     }
 
-    void position(int8_t position) {
+    bool awake() const {
+        return _awake;
+    }
+
+    void set(int8_t position, uint8_t speed = 255) {
         _positionGoal = position;
+        _speed = speed;
+        _awake = true;
     }
 
     int8_t position() const {
-        return _positionGoal;
-    }
-
-    void speed(uint8_t speed) {
-        _speed = speed;
+        return _positionCurrent;
     }
 
     uint8_t speed() const {
@@ -116,7 +117,7 @@ private:
         if(index < _servoCount) {
             _activeServo = _servos[index];
 
-            if(_activeServo->enabled()) {
+            if(_activeServo->awake()) {
                 uint16_t pulseLength = _activeServo->update();
 
                 atomic {
