@@ -6,6 +6,7 @@
 #include <stdint.h>
 
 #include "hardware.hpp"
+#include "atomic.hpp"
 #include "stream.hpp"
 #include "array.hpp"
 #include "clock.hpp"
