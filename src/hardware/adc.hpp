@@ -107,7 +107,7 @@ struct ADC {
         void* adcCompleteInterruptData = nullptr;
     };
 
-    force_inline void start(Config config) {
+    static force_inline void start(Config config) {
         atomic {
             // TODO Disable ADC power reduction. (Needed?)
 
@@ -168,7 +168,7 @@ struct ADC {
         }
     }
 
-    force_inline void stop() {
+    static force_inline void stop() {
         atomic {
             // Disable ADC
             setBit_(CHIP_ADC_ENABLE_REG, CHIP_ADC_ENABLE_BIT, false);
@@ -178,7 +178,7 @@ struct ADC {
         }
     }
 
-    force_inline uint16_t value() {
+    static force_inline uint16_t value() {
         return *CHIP_ADC_DATA_REG;
     }
 };
