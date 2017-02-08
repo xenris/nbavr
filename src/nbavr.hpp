@@ -5,6 +5,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "util/type_info.hpp"
+
 #include "hardware.hpp"
 #include "atomic.hpp"
 #include "stream.hpp"
