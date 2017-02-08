@@ -9,6 +9,7 @@
 
 #include "hardware.hpp"
 #include "atomic.hpp"
+#include "rational.hpp"
 #include "stream.hpp"
 #include "array.hpp"
 #include "clock.hpp"
