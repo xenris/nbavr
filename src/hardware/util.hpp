@@ -60,26 +60,22 @@ void __ssreg(const uint8_t *s) {
     void vector(void)
 
 template<class T>
-force_inline
-T max(T a, T b) {
+constexpr force_inline T max(T a, T b) {
     return a > b ? a : b;
 }
 
 template<class T>
-force_inline
-T min(T a, T b) {
+constexpr force_inline T min(T a, T b) {
     return a < b ? a : b;
 }
 
 template<class T>
-force_inline
-T clip(T x, T l, T h) {
+constexpr force_inline T clip(T x, T l, T h) {
     return max(min(x, h), l);
 }
 
 template<class T>
-force_inline
-T abs(T a) {
+constexpr force_inline T abs(T a) {
     return a >= 0 ? a : -a;
 }
 
