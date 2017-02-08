@@ -4,14 +4,10 @@
 // High nibble indicates whether it is signed.
 // Low nibble indicates the base.
 enum class PrintFormat : uint8_t {
-    UBin = 0x00,
-    UOct = 0x01,
-    UDec = 0x02,
-    UHex = 0x04,
-    SBin = 0x10,
-    SOct = 0x11,
-    SDec = 0x12,
-    SHex = 0x14,
+    Bin = 0x00,
+    Oct = 0x01,
+    Dec = 0x02,
+    Hex = 0x04,
 };
 
 constexpr char endl = '\n';
@@ -30,21 +26,62 @@ inline bool printstr(Stream<char>& stream, const char* str) {
     return true;
 }
 
-#define INT_SIZE 8
-#include "printin.tpp"
-#undef INT_SIZE
+template <class T>
+inline bool printint(Stream<char>& stream, T n, PrintFormat format = PrintFormat::Dec) {
+    char stack[type_info<T>::num_digits + 1];
+    int8_t i = 0;
+    bool negative = n < 0;
+    int8_t base = uint8_t(format) & 0x0F;
 
-#define INT_SIZE 16
-#include "printin.tpp"
-#undef INT_SIZE
+    if(n == 0) {
+        stack[i++] = '0';
+    }
 
-#define INT_SIZE 32
-#include "printin.tpp"
-#undef INT_SIZE
+    while(n != 0) {
+        int8_t d;
 
-#define INT_SIZE 64
-#include "printin.tpp"
-#undef INT_SIZE
+        switch(base) {
+            case 0x00:
+                d = n % 2;
+                n /= 2;
+                break;
+            case 0x01:
+                d = n % 8;
+                n /= 8;
+                break;
+            case 0x02:
+                d = n % 10;
+                n /= 10;
+                break;
+            default:
+                d = n % 16;
+                n /= 16;
+                break;
+        }
+
+        d = abs(d);
+
+        if(d < 10) {
+            stack[i++] = '0' + d;
+        } else {
+            stack[i++] = 'A' + d - 10;
+        }
+    }
+
+    if(negative) {
+        stack[i++] = '-';
+    }
+
+    i--;
+
+    for(; i >= 0; i--) {
+        if(!stream.push(stack[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 inline Stream<char>& operator<<(Stream<char>& stream, const char* str) {
     printstr(stream, str);
@@ -52,42 +89,42 @@ inline Stream<char>& operator<<(Stream<char>& stream, const char* str) {
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, int8_t n) {
-    printint(stream, n, PrintFormat::SDec);
+    printint(stream, n, PrintFormat::Dec);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, int16_t n) {
-    printint(stream, n, PrintFormat::SDec);
+    printint(stream, n, PrintFormat::Dec);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, int32_t n) {
-    printint(stream, n, PrintFormat::SDec);
+    printint(stream, n, PrintFormat::Dec);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, int64_t n) {
-    printint(stream, n, PrintFormat::SDec);
+    printint(stream, n, PrintFormat::Dec);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, uint8_t n) {
-    printint(stream, n, PrintFormat::UDec);
+    printint(stream, n, PrintFormat::Dec);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, uint16_t n) {
-    printint(stream, n, PrintFormat::UDec);
+    printint(stream, n, PrintFormat::Dec);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, uint32_t n) {
-    printint(stream, n, PrintFormat::UDec);
+    printint(stream, n, PrintFormat::Dec);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, uint64_t n) {
-    printint(stream, n, PrintFormat::UDec);
+    printint(stream, n, PrintFormat::Dec);
     return stream;
 }
 
@@ -98,7 +135,7 @@ inline Stream<char>& operator<<(Stream<char>& stream, bool n) {
 
 template <class T>
 inline Stream<char>& operator<<(Stream<char>& stream, T* p) {
-    printint(stream, uint16_t(p), PrintFormat::UHex);
+    printint(stream, uint16_t(p), PrintFormat::Hex);
     return stream;
 }
 

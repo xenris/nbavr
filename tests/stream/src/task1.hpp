@@ -28,7 +28,7 @@ class Task1 : public Task {
 
         if(stream.pop(&b)) {
             stdout << "Task1 received byte 0x";
-            printint(stdout, b, PrintFormat::UHex);
+            printint(stdout, b, PrintFormat::Hex);
             stdout << endl;
         }
     }
