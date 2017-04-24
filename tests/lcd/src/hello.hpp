@@ -3,18 +3,16 @@
 
 #include <nbavr.hpp>
 
-class Hello : public Task {
+struct Hello : Task {
     static constexpr const char* msg1 = "Hello!";
     static constexpr const char* msg2 = "                Welcome to nbavr";
 
     uint8_t scroll = 0;
     Stream<char>& lcdout;
 
-public:
     Hello(Stream<char>& lcdout) : lcdout(lcdout) {
     }
 
-private:
     void loop(Clock& clock) override {
         uint16_t seconds = TICKS_TO_MS(clock.getTicks()) / 1000;
 

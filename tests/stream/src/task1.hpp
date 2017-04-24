@@ -3,13 +3,11 @@
 
 #include <nbavr.hpp>
 
-class Task1 : public Task {
+struct Task1 : Task {
     uint32_t mDelay = 0;
     uint16_t count = 0;
     Stream<uint8_t>& stream;
     Stream<char>& stdout;
-
-    public:
 
     Task1(Stream<uint8_t>& stream, Stream<char>& stdout) : stream(stream), stdout(stdout) {
     }

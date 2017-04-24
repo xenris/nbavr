@@ -4,15 +4,13 @@
 #include <nbavr.hpp>
 
 template <class ledPin>
-class Flash : public Task {
+struct Flash : Task {
     bool intOccurred = false;
 
-public:
     Flash() {
         ledPin::direction(ledPin::Direction::Output);
     }
 
-private:
     void loop(Clock& clock) override {
         if(intOccurred) {
             intOccurred = false;

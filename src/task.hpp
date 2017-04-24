@@ -1,8 +1,7 @@
 #ifndef NBAVR_TASK_HPP
 #define NBAVR_TASK_HPP
 
-class Task {
-public:
+struct Task {
     enum class State : int8_t {
         Awake,
         Delay,

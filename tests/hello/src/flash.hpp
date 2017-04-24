@@ -4,15 +4,12 @@
 #include <nbavr.hpp>
 
 template <class ledPin>
-class Flash : public Task {
-public:
+struct Flash : Task {
     Flash() {
         ledPin::direction(ledPin::Direction::Output);
     }
 
-private:
     void loop(Clock& clock) override {
-
         ledPin::toggle();
         delay(clock, MS_TO_TICKS(500));
     }

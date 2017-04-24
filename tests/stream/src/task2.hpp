@@ -3,17 +3,13 @@
 
 #include <nbavr.hpp>
 
-class Task2 : public Task {
+struct Task2 : Task {
     bool firstRun = true;
     uint8_t count = 0;
     Stream<uint8_t>& stream;
 
-    public:
-
     Task2(Stream<uint8_t>& stream) : stream(stream) {
     }
-
-    protected:
 
     void loop(Clock& clock) override {
         if(firstRun) {
