@@ -12,7 +12,6 @@
 //  VCC = PinC2
 
 class LightSensor : public Task {
-    Clock& clock;
     TWI::Result lightSensorOnResult;
     TWI::Result lightSensorContHResResult;
     TWI::Result lightSensorReadResult;
@@ -29,8 +28,8 @@ class LightSensor : public Task {
     Stream<TWI::Action>& twiout;
 
 public:
-    LightSensor(Clock& clock, Stream<char>& stdout, Stream<TWI::Action>& twiout)
-    : clock(clock), stdout(stdout), twiout(twiout) {
+    LightSensor(Stream<char>& stdout, Stream<TWI::Action>& twiout)
+    : stdout(stdout), twiout(twiout) {
         PinC2::direction(PinC2::Direction::Output);
         PinC3::direction(PinC3::Direction::Output);
         PinC2::value(PinC2::Value::High);
@@ -45,7 +44,7 @@ public:
     }
 
 private:
-    void loop() override {
+    void loop(Clock& clock) override {
         if(lightSensorReadResult == TWI::Result::Success) {
             uint16_t t = (lightSensorValueBuffer[0] << 8) | lightSensorValueBuffer[1];
             stdout << t << endl;

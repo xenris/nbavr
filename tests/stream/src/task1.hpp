@@ -4,7 +4,6 @@
 #include <nbavr.hpp>
 
 class Task1 : public Task {
-    Clock& clock;
     uint32_t mDelay = 0;
     uint16_t count = 0;
     Stream<uint8_t>& stream;
@@ -12,10 +11,10 @@ class Task1 : public Task {
 
     public:
 
-    Task1(Clock& clock, Stream<uint8_t>& stream, Stream<char>& stdout) : clock(clock), stream(stream), stdout(stdout) {
+    Task1(Stream<uint8_t>& stream, Stream<char>& stdout) : stream(stream), stdout(stdout) {
     }
 
-    void loop() override {
+    void loop(Clock& clock) override {
         uint32_t ticks = clock.getTicks();
 
         if(ticks >= mDelay) {

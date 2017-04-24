@@ -131,7 +131,7 @@ class TWI : public Task {
 
     protected:
 
-        void loop() override {
+        void loop(Clock& clock) override {
             if(ready || repeatStartRequested) {
                 if(twiout.pop(&action)) {
                     ready = false;

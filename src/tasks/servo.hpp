@@ -96,7 +96,6 @@ struct ServoT : Servo {
 };
 
 class ServoManager : public Task {
-    Clock& _clock;
     Servo** _servos;
     const uint8_t _servoCount;
     int8_t index = 0;
@@ -105,13 +104,13 @@ class ServoManager : public Task {
 
 public:
     template <uint8_t S>
-    ServoManager(Clock& clock, Servo* (&servos)[S]) : _clock(clock), _servos(servos), _servoCount(S) {
+    ServoManager(Servo* (&servos)[S]) : _servos(servos), _servoCount(S) {
     }
 
 private:
-    void loop() override {
+    void loop(Clock& clock) override {
         if(index == 0) {
-            start = _clock.getTicks16();
+            start = clock.getTicks16();
         }
 
         if(index < _servoCount) {
@@ -121,7 +120,7 @@ private:
                 uint16_t pulseLength = _activeServo->update();
 
                 atomic {
-                    if(_clock.addInterrupt_(end, this, pulseLength)) {
+                    if(clock.addInterrupt_(end, this, pulseLength)) {
                         // _activeServo->pin() = Pin::Value::High;
                         _activeServo->pulseStart();
                         sleep();
@@ -133,10 +132,10 @@ private:
         } else {
             index = 0;
 
-            uint16_t diff = _clock.getTicks16() - start;
+            uint16_t diff = clock.getTicks16() - start;
 
             if(diff < SERVO_UPDATE_DELAY) {
-                delay(_clock, SERVO_UPDATE_DELAY - diff);
+                delay(clock, SERVO_UPDATE_DELAY - diff);
             }
         }
     }

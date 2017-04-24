@@ -51,15 +51,15 @@ class LCD : public Task {
     static constexpr uint8_t lineCount = 2;
     static constexpr uint8_t lineLength = 16;
 
-    typedef void (LCD::*StateFunction)();
+    typedef void (LCD::*StateFunction)(Clock& clock);
 
-    Clock& clock;
+    bool firstRun = true;
     StateFunction state;
     bool outOfBounds = false;
     Stream<char>& lcdout;
 
 public:
-    LCD(Clock& clock, Stream<char>& lcdout) : clock(clock), lcdout(lcdout) {
+    LCD(Stream<char>& lcdout) : lcdout(lcdout) {
         static_assert(D4::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
         static_assert(D5::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
         static_assert(D6::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
@@ -77,20 +77,24 @@ public:
         E::value(E::Value::Low);
 
         state = &LCD::init0;
-
-        delay(clock, MS_TO_TICKS(50));
     }
 
 private:
-    void loop() override {
-        if(busy()) {
-            return;
-        }
+    void loop(Clock& clock) override {
+        if(firstRun) {
+            firstRun = false;
 
-        (this->*state)();
+            delay(clock, MS_TO_TICKS(50));
+        } else {
+            if(busy()) {
+                return;
+            }
+
+            (this->*state)(clock);
+        }
     }
 
-    void run(void) {
+    void run(Clock& clock) {
         char byte = 0;
         char x = 0;
         char y = 0;
@@ -187,7 +191,7 @@ private:
         return coord;
     }
 
-    void clearCurrentLine(void) {
+    void clearCurrentLine(Clock& clock) {
         uint8_t count = 255;
         uint8_t address = 0;
 
@@ -207,7 +211,7 @@ private:
         count++;
     }
 
-    void stepBack(void) {
+    void stepBack(Clock& clock) {
         sendByte(false, CURSER_LEFT);
         state = &LCD::run;
     }
@@ -281,53 +285,53 @@ private:
         return data;
     }
 
-    void init0(void) {
+    void init0(Clock& clock) {
         // Reset 1
         sendNibble(false, 0x3);
         state = &LCD::init1;
         delay(clock, MS_TO_TICKS(5));
     }
 
-    void init1(void) {
+    void init1(Clock& clock) {
         // Reset 2
         sendNibble(false, 0x3);
         state = &LCD::init2;
         delay(clock, MS_TO_TICKS(1));
     }
 
-    void init2(void) {
+    void init2(Clock& clock) {
         // Reset 3
         sendNibble(false, 0x3);
         state = &LCD::init3;
         delay(clock, MS_TO_TICKS(1));
     }
 
-    void init3(void) {
+    void init3(Clock& clock) {
         // initial 4 bit mode
         sendNibble(false, 0x2);
         state = &LCD::init4;
         delay(clock, MS_TO_TICKS(1));
     }
 
-    void init4(void) {
+    void init4(Clock& clock) {
         sendByte(false, FUNCTION_FOUR_BITS_TWO_LINES);
         state = &LCD::init5;
         delay(clock, MS_TO_TICKS(1));
     }
 
-    void init5(void) {
+    void init5(Clock& clock) {
         sendByte(false, DISPLAY_ON);
         state = &LCD::init6;
         delay(clock, MS_TO_TICKS(1));
     }
 
-    void init6(void) {
+    void init6(Clock& clock) {
         sendByte(false, CLEAR_DISPLAY);
         state = &LCD::init7;
         delay(clock, MS_TO_TICKS(4));
     }
 
-    void init7(void) {
+    void init7(Clock& clock) {
         sendByte(false, ENTRY_MODE_RIGHT);
         state = &LCD::run;
         delay(clock, MS_TO_TICKS(1));

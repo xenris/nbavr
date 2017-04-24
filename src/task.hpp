@@ -34,7 +34,7 @@ public:
 
         switch(state) {
         case State::Awake:
-            loop();
+            loop(clock);
             crashCount = 0;
             break;
         case State::Crash:
@@ -68,7 +68,7 @@ public:
     }
 
 protected:
-    virtual void loop() {};
+    virtual void loop(Clock& clock) {};
     virtual void crash() {};
 
 private:

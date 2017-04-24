@@ -5,17 +5,16 @@
 
 template <class ledPin>
 class Flash : public Task {
-    Clock& clock;
     Stream<char>& stdin;
     static const uint32_t pulseLength = MS_TO_TICKS(50);
 
 public:
-    Flash(Clock& clock, Stream<char>& stdin) : clock(clock), stdin(stdin) {
+    Flash(Stream<char>& stdin) : stdin(stdin) {
         ledPin::direction(ledPin::Direction::Output);
     }
 
 private:
-    void loop() override {
+    void loop(Clock& clock) override {
         ledPin::value(ledPin::Value::Low);
 
         char c;

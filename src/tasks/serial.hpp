@@ -32,7 +32,7 @@ public:
     }
 
 private:
-    void loop() override {
+    void loop(Clock& clock) override {
         if(!stdout.empty()) {
             Usart::dataRegisterEmptyInterruptEnable(true);
         }

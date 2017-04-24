@@ -36,10 +36,12 @@ inline void resumeFromHalt() {
     longjmp(_longJmp, LONG_JUMP_HALT);
 }
 
-template <uint8_t S>
-inline void nbavr(Clock& clock, Task* (&tasks)[S]) {
+template <class timer, uint8_t S>
+inline void nbavr(Task* (&tasks)[S]) {
     // Disable interrupts.
     cli();
+
+    ClockT<timer> clock;
 
     // Enable watchdog timer with the shortest timeout.
     WDT::enable();
