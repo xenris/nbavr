@@ -24,13 +24,8 @@
 #include "tasks/twi.hpp"
 
 #define LONG_JUMP_HALT 1
-#define LONG_JUMP_YIELD 2
 
 extern jmp_buf _longJmp;
-
-inline void resumeFromYield() {
-    longjmp(_longJmp, LONG_JUMP_YIELD);
-}
 
 inline void resumeFromHalt() {
     longjmp(_longJmp, LONG_JUMP_HALT);
@@ -46,14 +41,14 @@ inline void nbavr(Task* (&tasks)[S]) {
     // Enable watchdog timer with the shortest timeout.
     WDT::enable();
 
-    // If a task halts or yields, the cpu will jump back here.
+    // If a task halts, the cpu will jump back here.
     int jmp = setjmp(_longJmp);
 
     // Index of current task.
-    // Static to prevent being reinitialised when a task yields or halts.
+    // Static to prevent being reinitialised when a task halts.
     static uint8_t taskI = 0;
 
-    // If a task halted or yielded go to the next task.
+    // If a task halted go to the next task.
     if(jmp) {
         taskI++;
     }

@@ -1,7 +1,6 @@
 #ifndef NBAVR_TASK_HPP
 #define NBAVR_TASK_HPP
 
-extern inline void resumeFromYield();
 extern inline void resumeFromHalt();
 
 #define TASK_TIMEOUT MS_TO_TICKS(6)
