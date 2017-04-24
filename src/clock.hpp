@@ -31,8 +31,6 @@ struct Clock {
     virtual uint16_t getTocks() const = 0;
     virtual bool addInterrupt(void (*callback)(void*), void* data, uint16_t delay) = 0;
     virtual bool addInterrupt_(void (*callback)(void*), void* data, uint16_t delay) = 0;
-    virtual void enableHaltInterrupt(uint16_t timeout, void (*callback)(void*), void* data) = 0;
-    virtual void disableHaltInterrupt() = 0;
 };
 
 template<class Timer>
@@ -68,8 +66,6 @@ public:
         config.overflowIntEnable = true;
         config.outputCompareAInterrupt = timerCounterOutputCompareA;
         config.outputCompareAInterruptData = this;
-        config.outputCompareBInterrupt = timerCounterOutputCompareB;
-        config.outputCompareBInterruptData = this;
         config.overflowInterrupt = timerCounterOverflow;
         config.overflowInterruptData = this;
 
@@ -168,26 +164,6 @@ public:
         return true;
     }
 
-    force_inline void enableHaltInterrupt(uint16_t timeout, void (*callback)(void*), void* data) override {
-        atomic {
-            uint16_t tick = getTicks16() + timeout;
-            Timer::outputCompareBRegister(tick);
-            Timer::outputCompareBIntEnable(true);
-            Timer::outputCompareBIntFlagClear();
-            _haltCallback = callback;
-            _haltCallbackData = data;
-        }
-    }
-
-    force_inline void disableHaltInterrupt() override {
-        atomic {
-            Timer::outputCompareBIntEnable(false);
-            Timer::outputCompareBIntFlagClear();
-            _haltCallback = nullptr;
-            _haltCallbackData = nullptr;
-        }
-    }
-
 private:
     // Push an interrupt to the queue.
     // Check queue size before calling.
@@ -278,20 +254,6 @@ private:
             }
         } else {
             Timer::outputCompareAIntEnable(false);
-        }
-    }
-
-    static void timerCounterOutputCompareB(void* data) {
-        // TODO disable output compare interrupt.
-        ClockT* self = reinterpret_cast<ClockT*>(data);
-
-        void (*haltCallback)(void*) = self->_haltCallback;
-        void* haltCallbackData = self->_haltCallbackData;
-
-        self->disableHaltInterrupt();
-
-        if(haltCallback != nullptr) {
-            haltCallback(haltCallbackData);
         }
     }
 

@@ -1,7 +1,6 @@
 #ifndef NBAVR_HPP
 #define NBAVR_HPP
 
-#include <setjmp.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -23,51 +22,88 @@
 #include "tasks/servo.hpp"
 #include "tasks/twi.hpp"
 
-#define LONG_JUMP_HALT 1
+#define TASK_TIMEOUT MS_TO_TICKS(6)
 
-extern jmp_buf _longJmp;
+template <class TimerCounter>
+class NBAVR {
+    Task** tasks;
+    const uint8_t numTasks;
+    uint8_t taskI = 0;
+    ClockT<TimerCounter> clock;
 
-inline void resumeFromHalt() {
-    longjmp(_longJmp, LONG_JUMP_HALT);
-}
+public:
 
-template <class timer, uint8_t S>
-inline void nbavr(Task* (&tasks)[S]) {
-    // Disable interrupts.
-    cli();
+    template <uint8_t S>
+    NBAVR(Task* (&tasks)[S]) : tasks(tasks), numTasks(S) {
+        TimerCounter::outputCompareBInterrupt(haltCallback, this);
 
-    ClockT<timer> clock;
+        WDT::enable();
 
-    // Enable watchdog timer with the shortest timeout.
-    WDT::enable();
-
-    // If a task halts, the cpu will jump back here.
-    int jmp = setjmp(_longJmp);
-
-    // Index of current task.
-    // Static to prevent being reinitialised when a task halts.
-    static uint8_t taskI = 0;
-
-    // If a task halted go to the next task.
-    if(jmp) {
-        taskI++;
+        while(true) {
+            stepAll();
+        }
     }
 
-    while(true) {
-        while(taskI < S) {
-            WDT::reset();
+private:
 
-            sei();
-
-            tasks[taskI]->step(clock);
-
-            taskI++;
+    // Run each task once.
+    void stepAll() {
+        for(uint8_t i = 0; i < numTasks; i++) {
+            stepOne();
         }
 
-        taskI = 0;
         // TODO Sleep the cpu if all tasks are asleep.
     }
-}
+
+    // Run the next task.
+    void stepOne() {
+        Task& task = *tasks[taskI];
+
+        WDT::reset();
+
+        cli();
+
+        if(task.state == Task::State::Delay) {
+            // Check if it is time for this task to wake up.
+            if(int32_t(clock.getTicks_() - task.wakeTick) >= 0) {
+                task.state = Task::State::Awake;
+            }
+        }
+
+        // Setup halt callback.
+        TimerCounter::outputCompareBRegister(clock.getTicks16() + TASK_TIMEOUT);
+        TimerCounter::outputCompareBIntFlagClear();
+        TimerCounter::outputCompareBIntEnable(true);
+
+        sei();
+
+        if(task.state == Task::State::Awake) {
+            task.loop(clock);
+        }
+
+        // Disable halt callback.
+        TimerCounter::outputCompareBIntEnable(true);
+
+        taskI = (taskI + 1) % numTasks;
+    }
+
+    // Run each task once, excluding the crashed one.
+    void handleHalt() {
+        Task& task = *tasks[taskI];
+
+        task.state = Task::State::Halt;
+
+        stepAll();
+
+        task.state = Task::State::Awake;
+    }
+
+    static void haltCallback(void* data) {
+        NBAVR* self = static_cast<NBAVR*>(data);
+
+        self->handleHalt();
+    }
+};
 
 __extension__ typedef int __guard __attribute__((mode (__DI__)));
 

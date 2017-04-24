@@ -16,5 +16,5 @@ void main() {
 
     Task* tasks[] = {&lightSensor, &twi, &serial};
 
-    nbavr<systemTimer>(tasks);
+    NBAVR<systemTimer> nbavr(tasks);
 }

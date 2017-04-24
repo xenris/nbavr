@@ -20,8 +20,6 @@
 //twi
 //spm mem
 
-jmp_buf _longJmp;
-
 #define MAKE_INTERRUPT_HANDLER_0(name,NAME) \
     void (*_##name##Interrupt)(void*); \
     void* _##name##InterruptData; \

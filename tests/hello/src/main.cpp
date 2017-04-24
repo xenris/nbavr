@@ -16,5 +16,5 @@ void main() {
 
     Task* tasks[] = {&serial, &hello, &flash};
 
-    nbavr<systemTimer>(tasks);
+    NBAVR<systemTimer> nbavr(tasks);
 }

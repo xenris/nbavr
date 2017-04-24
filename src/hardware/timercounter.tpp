@@ -265,6 +265,10 @@ struct TimerCounterN {
         static force_inline TYPE outputCompare##X##Register() { \
             return *OUTPUTCOMPARE_##X##_REG; \
         } \
+        static force_inline void outputCompare##X##Interrupt(void (*func)(void*), void* data) { \
+            OUTPUTCOMPARE_##X##_INTERRUPT = func; \
+            OUTPUTCOMPARE_##X##_INTERRUPT_DATA = data; \
+        } \
         static force_inline void outputCompare##X##IntEnable(bool b) { \
             if(b) { \
                 *OUTPUTCOMPARE_##X##_INT_ENABLE_REG |= bv(OUTPUTCOMPARE_##X##_INT_ENABLE_BIT); \
@@ -278,6 +282,7 @@ struct TimerCounterN {
         static force_inline void outputCompare##X##IntFlagClear() { \
             *OUTPUTCOMPARE_##X##_INT_FLAG_REG |= bv(OUTPUTCOMPARE_##X##_INT_FLAG_BIT); \
         }
+
     #if OUTPUTCOMPARE_A
         MAKE_OUTPUTCOMPARE(A)
     #endif
@@ -287,6 +292,7 @@ struct TimerCounterN {
     #if OUTPUTCOMPARE_C
         MAKE_OUTPUTCOMPARE(C)
     #endif
+
     #undef MAKE_OUTPUTCOMPARE
 
     static force_inline void overflowIntEnable(bool b) {

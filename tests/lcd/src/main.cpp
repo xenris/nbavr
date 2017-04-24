@@ -19,5 +19,5 @@ void main() {
 
     Task* tasks[] = {&hello, &lcd};
 
-    nbavr<systemTimer>(tasks);
+    NBAVR<systemTimer> nbavr(tasks);
 }
