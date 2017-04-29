@@ -1,3 +1,6 @@
+#ifndef NBAVR_INTERRUPTS_HPP
+#define NBAVR_INTERRUPTS_HPP
+
 #define MAKE_INTERRUPT_HANDLER_0_HEADER(name,NAME) \
     extern void (*_##name##Interrupt)(void*); \
     extern void* _##name##InterruptData;
@@ -188,3 +191,5 @@
 //TODO analog comp
 //TODO twi
 //TODO spm mem
+
+#endif
