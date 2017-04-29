@@ -1,9 +1,4 @@
 # Tupfile
 
-include_rules
-
-# Generate a header file containing the preprocessor output.
-: src/nbavr.cpp |> avr-cpp -x c++ $(CFLAGS) %f %o |> header.hpp
-
 # Generate gitignore file.
 .gitignore
