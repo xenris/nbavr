@@ -31,8 +31,8 @@
 #define TW_SR_STOP		0xA0
 #define TW_NO_INFO		0xF8
 #define TW_BUS_ERROR		0x00
-#define TW_STATUS_MASK		(_BV(TWS7)|_BV(TWS6)|_BV(TWS5)|_BV(TWS4)|\
-				_BV(TWS3))
+#define TW_STATUS_MASK		(bv(TWS7)|bv(TWS6)|bv(TWS5)|bv(TWS4)|\
+				bv(TWS3))
 #define TW_STATUS		(*TWSR & TW_STATUS_MASK)
 #define TW_READ		1
 #define TW_WRITE	0
@@ -68,14 +68,14 @@
 #define TWDR REG8(0xBB)
 
 #define TWI_BAUD 400
-#define twiEnable() *TWCR = _BV(TWEN)
+#define twiEnable() *TWCR = bv(TWEN)
 #define twiDisable() *TWCR = 0
-#define twiSendStart() *TWCR = (_BV(TWINT) | _BV(TWSTA) | _BV(TWEN))
-#define twiSendACK() *TWCR = (_BV(TWINT) | _BV(TWEN) | _BV(TWEA))
-#define twiSendNACK() *TWCR = (_BV(TWINT) | _BV(TWEN))
-#define twiSendStop() *TWCR = (_BV(TWINT) | _BV(TWSTO) | _BV(TWEN))
-#define twiClearInt() *TWCR = (_BV(TWINT) | _BV(TWEN))
-#define twiClearError() *TWCR = (_BV(TWINT) | _BV(TWSTO) | _BV(TWEN))
+#define twiSendStart() *TWCR = (bv(TWINT) | bv(TWSTA) | bv(TWEN))
+#define twiSendACK() *TWCR = (bv(TWINT) | bv(TWEN) | bv(TWEA))
+#define twiSendNACK() *TWCR = (bv(TWINT) | bv(TWEN))
+#define twiSendStop() *TWCR = (bv(TWINT) | bv(TWSTO) | bv(TWEN))
+#define twiClearInt() *TWCR = (bv(TWINT) | bv(TWEN))
+#define twiClearError() *TWCR = (bv(TWINT) | bv(TWSTO) | bv(TWEN))
 
 class TWI : public Task {
     public:

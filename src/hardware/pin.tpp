@@ -13,7 +13,6 @@ struct PinXN {
 
     enum class Direction : int8_t {
         Input,
-        InputPullup,
         Output,
     };
 
@@ -23,45 +22,35 @@ struct PinXN {
     };
 
     static force_inline void direction(Direction d) {
-        switch(d) {
-            case Direction::Input:
-                *DIRECTION_REG &= ~bv(BIT);
-                *OUTPUT_REG &= ~bv(BIT);
-                break;
-            case Direction::InputPullup:
-                *DIRECTION_REG &= ~bv(BIT);
-                *OUTPUT_REG |= bv(BIT);
-                break;
-            case Direction::Output:
-                *DIRECTION_REG |= bv(BIT);
-                break;
-        }
+        setBit_(DIRECTION_REG, BIT, d == Direction::Output);
     }
 
     static force_inline Direction direction() {
-        if(*DIRECTION_REG & bv(BIT)) {
-            return Direction::Output;
-        } else if(*OUTPUT_REG & bv(BIT)) {
-            return Direction::InputPullup;
-        } else {
-            return Direction::Input;
-        }
+        return (*DIRECTION_REG & bv(BIT)) ? Direction::Output : Direction::Input;
     }
 
-    static force_inline void value(Value v) {
-        if(v == Value::High) {
-            *OUTPUT_REG |= bv(BIT);
-        } else {
-            *OUTPUT_REG &= ~bv(BIT);
-        }
+    static force_inline void pullup(bool p) {
+        output(p ? Value::High : Value::Low);
     }
 
-    static force_inline Value value() {
+    static force_inline bool pullup() {
+        return output();
+    }
+
+    static force_inline void output(Value v) {
+        setBit_(OUTPUT_REG, BIT, v == Value::High);
+    }
+
+    static force_inline bool output() {
+        return *OUTPUT_REG & bv(BIT);
+    }
+
+    static force_inline Value input() {
         return (*INPUT_REG & bv(BIT)) ? Value::High : Value::Low;
     }
 
     static force_inline void toggle() {
-        *INPUT_REG |= bv(BIT);
+        setBit_(INPUT_REG, BIT, true);
     }
 };
 

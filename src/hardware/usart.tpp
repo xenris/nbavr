@@ -126,83 +126,105 @@ struct UsartN {
         Size9 = CHARACTER_SIZE_9_ID,
     };
 
-    enum class ClockPolarity : uint8_t {
+    enum class Polarity : uint8_t {
         TxRisingRxFalling = CLOCK_POLARITY_TX_RISING_RX_FALLING_ID,
         TxFallingRxRising = CLOCK_POLARITY_TX_FALLING_RX_RISING_ID,
     };
 
-    struct Config {
-        bool receiverEnable = false;
-        bool transmitterEnable = false;
-        bool multiprocessorCummunicationMode = false;
-        bool rxCompleteIntEnable = false;
-        bool txCompleteIntEnable = false;
-        bool dataRegisterEmptyIntEnable = false;
-        void (*rxCompleteInterrupt)(void*) = nullptr;
-        void* rxCompleteInterruptData = nullptr;
-        void (*txCompleteInterrupt)(void*) = nullptr;
-        void* txCompleteInterruptData = nullptr;
-        void (*dataRegisterEmptyInterrupt)(void*) = nullptr;
-        void* dataRegisterEmptyInterruptData = nullptr;
-        Mode mode = Mode::Asynchronous;
-        Parity parity = Parity::Disabled;
-        StopBits stopBits = StopBits::Bits1;
-        CharacterSize characterSize = CharacterSize::Size8;
-        ClockPolarity clockPolarity = ClockPolarity::TxRisingRxFalling;
-        uint16_t baud = 0;
-        bool use2X = false;
-    };
+    static force_inline void mode(Mode m) {
+        #if USART_REG_SELECT
+        setBit_(USART_REG_SELECT_REG, USART_REG_SELECT_BIT, true);
+        #endif
 
-    static force_inline void apply(Config config) {
-        atomic {
-            setBit_(DOUBLE_SPEED_REG, DOUBLE_SPEED_BIT, config.use2X);
+        setBit_(MODE_BIT_0_REG, MODE_BIT_0_BIT, uint8_t(m) & 0x01);
+        #if MODE_BIT_COUNT > 1
+        setBit_(MODE_BIT_1_REG, MODE_BIT_1_BIT, uint8_t(m) & 0x02);
+        #endif
+    }
 
-            setBit_(MULTI_PROCESSOR_COMMUNICATION_REG, MULTI_PROCESSOR_COMMUNICATION_BIT, config.multiprocessorCummunicationMode);
+    static force_inline void parity(Parity p) {
+        #if USART_REG_SELECT
+        setBit_(USART_REG_SELECT_REG, USART_REG_SELECT_BIT, true);
+        #endif
 
-            setBit_(RX_COMPLETE_INT_ENABLE_REG, RX_COMPLETE_INT_ENABLE_BIT, config.rxCompleteIntEnable);
-            setBit_(TX_COMPLETE_INT_ENABLE_REG, TX_COMPLETE_INT_ENABLE_BIT, config.txCompleteIntEnable);
-            setBit_(DATA_REG_EMPTY_INT_ENABLE_REG, DATA_REG_EMPTY_INT_ENABLE_BIT, config.dataRegisterEmptyIntEnable);
+        setBit_(PARITY_BIT_0_REG, PARITY_BIT_0_BIT, uint8_t(p) & 0x01);
+        setBit_(PARITY_BIT_1_REG, PARITY_BIT_1_BIT, uint8_t(p) & 0x02);
+    }
 
-            setBit_(RX_ENABLE_REG, RX_ENABLE_BIT, config.receiverEnable);
-            setBit_(TX_ENABLE_REG, TX_ENABLE_BIT, config.transmitterEnable);
+    static force_inline void stopBits(StopBits b) {
+        #if USART_REG_SELECT
+        setBit_(USART_REG_SELECT_REG, USART_REG_SELECT_BIT, true);
+        #endif
 
-            setBit_(CHARACTER_SIZE_BIT_0_REG, CHARACTER_SIZE_BIT_0_BIT, uint8_t(config.characterSize) & 0x01);
-            setBit_(CHARACTER_SIZE_BIT_1_REG, CHARACTER_SIZE_BIT_1_BIT, uint8_t(config.characterSize) & 0x02);
-            setBit_(CHARACTER_SIZE_BIT_2_REG, CHARACTER_SIZE_BIT_2_BIT, uint8_t(config.characterSize) & 0x04);
+        setBit_(STOP_BITS_REG, STOP_BITS_BIT, b == StopBits::Bits2);
+    }
 
-            setBit_(MODE_BIT_0_REG, MODE_BIT_0_BIT, uint8_t(config.mode) & 0x01);
-            #if MODE_BIT_COUNT > 1
-            setBit_(MODE_BIT_1_REG, MODE_BIT_1_BIT, uint8_t(config.mode) & 0x02);
-            #endif
+    static force_inline void characterSize(CharacterSize s) {
+        #if USART_REG_SELECT
+        setBit_(USART_REG_SELECT_REG, USART_REG_SELECT_BIT, true);
+        #endif
 
-            setBit_(PARITY_BIT_0_REG, PARITY_BIT_0_BIT, uint8_t(config.parity) & 0x01);
-            setBit_(PARITY_BIT_1_REG, PARITY_BIT_1_BIT, uint8_t(config.parity) & 0x02);
+        setBit_(CHARACTER_SIZE_BIT_0_REG, CHARACTER_SIZE_BIT_0_BIT, uint8_t(s) & 0x01);
+        setBit_(CHARACTER_SIZE_BIT_1_REG, CHARACTER_SIZE_BIT_1_BIT, uint8_t(s) & 0x02);
+        setBit_(CHARACTER_SIZE_BIT_2_REG, CHARACTER_SIZE_BIT_2_BIT, uint8_t(s) & 0x04);
+    }
 
-            setBit_(STOP_BITS_REG, STOP_BITS_BIT, config.stopBits == StopBits::Bits2);
+    static force_inline void polarity(Polarity p) {
+        #if USART_REG_SELECT
+        setBit_(USART_REG_SELECT_REG, USART_REG_SELECT_BIT, true);
+        #endif
 
-            setBit_(CLOCK_POLARITY_REG, CLOCK_POLARITY_BIT, config.clockPolarity == ClockPolarity::TxFallingRxRising);
+        setBit_(CLOCK_POLARITY_REG, CLOCK_POLARITY_BIT, p == Polarity::TxFallingRxRising);
+    }
 
-            setBit_(FRAME_ERROR_REG, FRAME_ERROR_BIT, false);
-            setBit_(DATA_OVERRUN_REG, DATA_OVERRUN_BIT, false);
-            setBit_(PARITY_ERROR_REG, PARITY_ERROR_BIT, false);
+    static force_inline void baud(uint16_t b) {
+        b &= 0x0fff;
 
-            #if USART_REG_SELECT
-            setBit_(USART_REG_SELECT_REG, USART_REG_SELECT_BIT, true);
-            _MemoryBarrier();
-            #endif
+        *BAUD_RATE_REG_HIGH = b >> 8;
+        *BAUD_RATE_REG_LOW = b;
+    }
 
-            *BAUD_RATE_REG_HIGH = config.baud >> 8;
-            *BAUD_RATE_REG_LOW = config.baud;
+    static force_inline void use2X(bool u) {
+        setBit_(DOUBLE_SPEED_REG, DOUBLE_SPEED_BIT, u);
+    }
 
-            RX_COMPLETE_INTERRUPT = config.rxCompleteInterrupt;
-            RX_COMPLETE_INTERRUPT_DATA = config.rxCompleteInterruptData;
+    static force_inline void receiverEnable(bool e) {
+        setBit_(RX_ENABLE_REG, RX_ENABLE_BIT, e);
+    }
 
-            TX_COMPLETE_INTERRUPT = config.txCompleteInterrupt;
-            TX_COMPLETE_INTERRUPT_DATA = config.txCompleteInterruptData;
+    static force_inline void transmitterEnable(bool e) {
+        setBit_(TX_ENABLE_REG, TX_ENABLE_BIT, e);
+    }
 
-            DATA_REGISTER_EMPTY_INTERRUPT = config.dataRegisterEmptyInterrupt;
-            DATA_REGISTER_EMPTY_INTERRUPT_DATA = config.dataRegisterEmptyInterruptData;
-        }
+    static force_inline void multiprocessorCummunicationMode(bool e) {
+        setBit_(MULTI_PROCESSOR_COMMUNICATION_REG, MULTI_PROCESSOR_COMMUNICATION_BIT, e);
+    }
+
+    static force_inline void rxCompleteIntEnable(bool e) {
+        setBit_(RX_COMPLETE_INT_ENABLE_REG, RX_COMPLETE_INT_ENABLE_BIT, e);
+    }
+
+    static force_inline void txCompleteIntEnable(bool e) {
+        setBit_(TX_COMPLETE_INT_ENABLE_REG, TX_COMPLETE_INT_ENABLE_BIT, e);
+    }
+
+    static force_inline void dataRegisterEmptyIntEnable(bool e) {
+        setBit_(DATA_REG_EMPTY_INT_ENABLE_REG, DATA_REG_EMPTY_INT_ENABLE_BIT, e);
+    }
+
+    static force_inline void rxCompleteCallback(void (*func)(void*), void* data) {
+        RX_COMPLETE_INTERRUPT = func;
+        RX_COMPLETE_INTERRUPT_DATA = data;
+    }
+
+    static force_inline void txCompleteCallback(void (*func)(void*), void* data) {
+        TX_COMPLETE_INTERRUPT = func;
+        TX_COMPLETE_INTERRUPT_DATA = data;
+    }
+
+    static force_inline void dataRegisterEmptyCallback(void (*func)(void*), void* data) {
+        DATA_REGISTER_EMPTY_INTERRUPT = func;
+        DATA_REGISTER_EMPTY_INTERRUPT_DATA = data;
     }
 
     static force_inline void push(uint8_t b) {
@@ -210,11 +232,7 @@ struct UsartN {
     }
 
     static force_inline void push9(uint16_t b) {
-        if(b & 0x0100) {
-            *TX_DATA_BIT_8_REG |= _BV(TX_DATA_BIT_8_BIT);
-        } else {
-            *TX_DATA_BIT_8_REG &= ~_BV(TX_DATA_BIT_8_BIT);
-        }
+        setBit_(TX_DATA_BIT_8_REG, TX_DATA_BIT_8_BIT, b & 0x0100);
 
         *DATA_REG = b;
     }
@@ -224,10 +242,9 @@ struct UsartN {
     }
 
     static force_inline uint16_t pop9() {
-        uint8_t bit8 = *RX_DATA_BIT_8_REG & _BV(RX_DATA_BIT_8_BIT);
-        uint8_t result = *DATA_REG;
+        uint16_t result = *DATA_REG;
 
-        if(bit8) {
+        if(*RX_DATA_BIT_8_REG & bv(RX_DATA_BIT_8_BIT)) {
             result |= 0x0100;
         }
 
@@ -235,67 +252,27 @@ struct UsartN {
     }
 
     static force_inline bool frameError() {
-        bool result = *FRAME_ERROR_REG & _BV(FRAME_ERROR_BIT);
+        return *FRAME_ERROR_REG & bv(FRAME_ERROR_BIT);
+    }
 
-        *FRAME_ERROR_REG &= ~_BV(FRAME_ERROR_BIT);
-
-        return result;
+    static force_inline void frameErrorClear() {
+        setBit_(FRAME_ERROR_REG, FRAME_ERROR_BIT, false);
     }
 
     static force_inline bool dataOverRun() {
-        bool result = *DATA_OVERRUN_REG & _BV(DATA_OVERRUN_BIT);
+        return *DATA_OVERRUN_REG & bv(DATA_OVERRUN_BIT);
+    }
 
-        *DATA_OVERRUN_REG &= ~_BV(DATA_OVERRUN_BIT);
-
-        return result;
+    static force_inline void dataOverRunClear() {
+        setBit_(DATA_OVERRUN_REG, DATA_OVERRUN_BIT, false);
     }
 
     static force_inline bool parityError() {
-        bool result = *PARITY_ERROR_REG & _BV(PARITY_ERROR_BIT);
-
-        *PARITY_ERROR_REG &= ~_BV(PARITY_ERROR_BIT);
-
-        return result;
+        return *PARITY_ERROR_REG & bv(PARITY_ERROR_BIT);
     }
 
-    static force_inline void rxCompleteInterruptEnable(bool b) {
-        if(b) {
-            *RX_COMPLETE_INT_ENABLE_REG |= _BV(RX_COMPLETE_INT_ENABLE_BIT);
-        } else {
-            *RX_COMPLETE_INT_ENABLE_REG &= ~_BV(RX_COMPLETE_INT_ENABLE_BIT);
-        }
-    }
-
-    static force_inline void txCompleteInterruptEnable(bool b) {
-        if(b) {
-            *TX_COMPLETE_INT_ENABLE_REG |= _BV(TX_COMPLETE_INT_ENABLE_BIT);
-        } else {
-            *TX_COMPLETE_INT_ENABLE_REG &= ~_BV(TX_COMPLETE_INT_ENABLE_BIT);
-        }
-    }
-
-    static force_inline void dataRegisterEmptyInterruptEnable(bool b) {
-        if(b) {
-            *DATA_REG_EMPTY_INT_ENABLE_REG |= _BV(DATA_REG_EMPTY_INT_ENABLE_BIT);
-        } else {
-            *DATA_REG_EMPTY_INT_ENABLE_REG &= ~_BV(DATA_REG_EMPTY_INT_ENABLE_BIT);
-        }
-    }
-
-    static force_inline void receiverEnable(bool b) {
-        if(b) {
-            *RX_ENABLE_REG |= _BV(RX_ENABLE_BIT);
-        } else {
-            *RX_ENABLE_REG &= ~_BV(RX_ENABLE_BIT);
-        }
-    }
-
-    static force_inline void transmitterEnable(bool b) {
-        if(b) {
-            *TX_ENABLE_REG |= _BV(TX_ENABLE_BIT);
-        } else {
-            *TX_ENABLE_REG &= ~_BV(TX_ENABLE_BIT);
-        }
+    static force_inline void parityErrorClear() {
+        setBit_(PARITY_ERROR_REG, PARITY_ERROR_BIT, false);
     }
 };
 

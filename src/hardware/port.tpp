@@ -20,18 +20,22 @@ struct PortX {
     }
 
     static force_inline void pullup(uint8_t p) {
-        *OUTPUT_REG = p;
+        output(p);
     }
 
     static force_inline uint8_t pullup() {
-        return *OUTPUT_REG;
+        return output();
     }
 
-    static force_inline void value(uint8_t v) {
+    static force_inline void output(uint8_t v) {
         *OUTPUT_REG = v;
     }
 
-    static force_inline uint8_t value() {
+    static force_inline uint8_t output() {
+        return *OUTPUT_REG;
+    }
+
+    static force_inline uint8_t input() {
         return *INPUT_REG;
     }
 

@@ -14,7 +14,6 @@
 
 #define WAVEFORM_BIT_COUNT CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_COUNT)
 
-//TODO Check this. simavr says it is out of ram range.
 #define WAVEFORM_BIT_0_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_0_REG)
 #define WAVEFORM_BIT_1_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_1_REG)
 #define WAVEFORM_BIT_2_REG CONCAT(CHIP_TIMERCOUNTER_, ID, _WAVEFORM_BIT_2_REG)
@@ -104,32 +103,15 @@
 #define OVERFLOW_INTERRUPT_DATA CONCAT(_timerCounter, ID, OverflowInterruptData)
 
 struct TimerCounterN {
+    typedef TYPE type;
+
     TimerCounterN() = delete;
 
     static constexpr HardwareType getHardwareType() {
         return HardwareType::TimerCounter;
     }
 
-    static constexpr int size() {
-        return sizeof(TYPE);
-    }
-
-    #if WAVEFORM
-    enum class Waveform : uint8_t {
-        Normal = WAVEFORM_NORMAL_ID,
-        PWM = WAVEFORM_PWM_PHASE_CORRECT_ID,
-        CTCOCRA = WAVEFORM_CTC_OCRA_ID,
-        FastPWM = WAVEFORM_FAST_PWM_ID,
-        #if WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID
-        PWMOCRA = WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID,
-        #endif
-        #if WAVEFORM_FAST_PWM_OCRA_ID
-        FastPWMOCRA = WAVEFORM_FAST_PWM_OCRA_ID,
-        #endif
-    };
-    #endif
-
-    enum class ClockSelect : uint8_t {
+    enum class Clock : uint8_t {
         None = CLOCK_NONE_ID,
         Div1 = CLOCK_1_ID,
         Div8 = CLOCK_8_ID,
@@ -150,6 +132,23 @@ struct TimerCounterN {
         #endif
     };
 
+    // TODO Make it such that there is always a waveform enumeration with at least "Normal"
+    //  so that waveform(Waveform::Normal) compiles on all chips.
+    #if WAVEFORM
+    enum class Waveform : uint8_t {
+        Normal = WAVEFORM_NORMAL_ID,
+        PWM = WAVEFORM_PWM_PHASE_CORRECT_ID,
+        CTCOCRA = WAVEFORM_CTC_OCRA_ID,
+        FastPWM = WAVEFORM_FAST_PWM_ID,
+        #if WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID
+        PWMOCRA = WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID,
+        #endif
+        #if WAVEFORM_FAST_PWM_OCRA_ID
+        FastPWMOCRA = WAVEFORM_FAST_PWM_OCRA_ID,
+        #endif
+    };
+    #endif
+
     #if OUTPUTCOMPARE_MODE
     enum class OutputMode : uint8_t {
         Disconnected = OUTPUTCOMPARE_MODE_DISCONNECTED_ID,
@@ -159,72 +158,18 @@ struct TimerCounterN {
     };
     #endif
 
-    struct Config {
-        #if WAVEFORM
-        Waveform waveform = Waveform::Normal;
-        #endif
-        ClockSelect clockSelect = ClockSelect::None;
-        TYPE timerRegister = 0;
+    static force_inline void counter(TYPE value) {
+        *COUNTER_REG = value;
+    }
 
-        #define MAKE_OUTPUTCOMPARE(X) \
-            TYPE output##X##Register = 0; \
-            bool output##X##IntEnable = false; \
-            OutputMode output##X##Mode = OutputMode::Disconnected; \
-            void (*outputCompare##X##Interrupt)(void*) = nullptr; \
-            void* outputCompare##X##InterruptData = nullptr;
-        #if OUTPUTCOMPARE_A
-            MAKE_OUTPUTCOMPARE(A)
-        #endif
-        #if OUTPUTCOMPARE_B
-            MAKE_OUTPUTCOMPARE(B)
-        #endif
-        #if OUTPUTCOMPARE_C
-            MAKE_OUTPUTCOMPARE(C)
-        #endif
-        #undef MAKE_OUTPUTCOMPARE
+    static force_inline TYPE counter() {
+        return *COUNTER_REG;
+    }
 
-        bool overflowIntEnable = false;
-        void (*overflowInterrupt)(void*) = nullptr;
-        void* overflowInterruptData = nullptr;
-    };
-
-    static force_inline void apply(Config config) {
-        atomic {
-            #if WAVEFORM
-            waveform(config.waveform);
-            #endif
-
-            clockSelect(config.clockSelect);
-
-            // Load timer register.
-            *COUNTER_REG = config.timerRegister;
-
-            // Setup output compares.
-            #define MAKE_OUTPUTCOMPARE(X) \
-                setBit_(OUTPUTCOMPARE_##X##_MODE_BIT_0_REG, OUTPUTCOMPARE_##X##_MODE_BIT_0_BIT, uint8_t(config.output##X##Mode) & 0x01); \
-                setBit_(OUTPUTCOMPARE_##X##_MODE_BIT_1_REG, OUTPUTCOMPARE_##X##_MODE_BIT_1_BIT, uint8_t(config.output##X##Mode) & 0x02); \
-                setBit_(OUTPUTCOMPARE_##X##_INT_ENABLE_REG, OUTPUTCOMPARE_##X##_INT_ENABLE_BIT, config.output##X##IntEnable); \
-                setBit_(OUTPUTCOMPARE_##X##_INT_FLAG_REG, OUTPUTCOMPARE_##X##_INT_FLAG_BIT, true); \
-                *OUTPUTCOMPARE_##X##_REG = config.output##X##Register; \
-                OUTPUTCOMPARE_##X##_INTERRUPT = config.outputCompare##X##Interrupt; \
-                OUTPUTCOMPARE_##X##_INTERRUPT_DATA = config.outputCompare##X##InterruptData;
-            #if OUTPUTCOMPARE_A
-                MAKE_OUTPUTCOMPARE(A)
-            #endif
-            #if OUTPUTCOMPARE_B
-                MAKE_OUTPUTCOMPARE(B)
-            #endif
-            #if OUTPUTCOMPARE_C
-                MAKE_OUTPUTCOMPARE(C)
-            #endif
-            #undef MAKE_OUTPUTCOMPARE
-
-            // Setup overflow int.
-            setBit_(OVERFLOW_INT_ENABLE_REG, OVERFLOW_INT_ENABLE_BIT, config.overflowIntEnable);
-            setBit_(OVERFLOW_INT_FLAG_REG, OVERFLOW_INT_FLAG_BIT, true);
-            OVERFLOW_INTERRUPT = config.overflowInterrupt;
-            OVERFLOW_INTERRUPT_DATA = config.overflowInterruptData;
-        }
+    static force_inline void clock(Clock clock) {
+        setBit_(CLOCK_BIT_0_REG, CLOCK_BIT_0_BIT, uint8_t(clock) & 0x01);
+        setBit_(CLOCK_BIT_1_REG, CLOCK_BIT_1_BIT, uint8_t(clock) & 0x02);
+        setBit_(CLOCK_BIT_2_REG, CLOCK_BIT_2_BIT, uint8_t(clock) & 0x04);
     }
 
     #if WAVEFORM
@@ -244,56 +189,10 @@ struct TimerCounterN {
     }
     #endif
 
-    static force_inline void clockSelect(ClockSelect clockSelect) {
-        setBit_(CLOCK_BIT_0_REG, CLOCK_BIT_0_BIT, uint8_t(clockSelect) & 0x01);
-        setBit_(CLOCK_BIT_1_REG, CLOCK_BIT_1_BIT, uint8_t(clockSelect) & 0x02);
-        setBit_(CLOCK_BIT_2_REG, CLOCK_BIT_2_BIT, uint8_t(clockSelect) & 0x04);
+    static force_inline void overflowCallback(void (*func)(void*), void* data) {
+        OVERFLOW_INTERRUPT = func;
+        OVERFLOW_INTERRUPT_DATA = data;
     }
-
-    static force_inline void timerRegister(TYPE value) {
-        *COUNTER_REG = value;
-    }
-
-    static force_inline TYPE timerRegister() {
-        return *COUNTER_REG;
-    }
-
-    #define MAKE_OUTPUTCOMPARE(X) \
-        static force_inline void outputCompare##X##Register(TYPE v) { \
-            *OUTPUTCOMPARE_##X##_REG = v; \
-        } \
-        static force_inline TYPE outputCompare##X##Register() { \
-            return *OUTPUTCOMPARE_##X##_REG; \
-        } \
-        static force_inline void outputCompare##X##Interrupt(void (*func)(void*), void* data) { \
-            OUTPUTCOMPARE_##X##_INTERRUPT = func; \
-            OUTPUTCOMPARE_##X##_INTERRUPT_DATA = data; \
-        } \
-        static force_inline void outputCompare##X##IntEnable(bool b) { \
-            if(b) { \
-                *OUTPUTCOMPARE_##X##_INT_ENABLE_REG |= bv(OUTPUTCOMPARE_##X##_INT_ENABLE_BIT); \
-            } else { \
-                *OUTPUTCOMPARE_##X##_INT_ENABLE_REG &= ~bv(OUTPUTCOMPARE_##X##_INT_ENABLE_BIT); \
-            } \
-        } \
-        static force_inline bool outputCompare##X##IntFlag() { \
-            return *OUTPUTCOMPARE_##X##_INT_FLAG_REG & bv(OUTPUTCOMPARE_##X##_INT_FLAG_BIT); \
-        } \
-        static force_inline void outputCompare##X##IntFlagClear() { \
-            *OUTPUTCOMPARE_##X##_INT_FLAG_REG |= bv(OUTPUTCOMPARE_##X##_INT_FLAG_BIT); \
-        }
-
-    #if OUTPUTCOMPARE_A
-        MAKE_OUTPUTCOMPARE(A)
-    #endif
-    #if OUTPUTCOMPARE_B
-        MAKE_OUTPUTCOMPARE(B)
-    #endif
-    #if OUTPUTCOMPARE_C
-        MAKE_OUTPUTCOMPARE(C)
-    #endif
-
-    #undef MAKE_OUTPUTCOMPARE
 
     static force_inline void overflowIntEnable(bool b) {
         if(b) {
@@ -310,6 +209,47 @@ struct TimerCounterN {
     static force_inline void overflowIntFlagClear() {
         *OVERFLOW_INT_FLAG_REG |= bv(OVERFLOW_INT_FLAG_BIT);
     }
+
+    #define MAKE_OUTPUTCOMPARE(X) \
+        static force_inline void output##X(TYPE v) { \
+            *OUTPUTCOMPARE_##X##_REG = v; \
+        } \
+        static force_inline TYPE output##X() { \
+            return *OUTPUTCOMPARE_##X##_REG; \
+        } \
+        static force_inline void output##X##Mode(OutputMode m) { \
+            setBit_(OUTPUTCOMPARE_##X##_MODE_BIT_0_REG, OUTPUTCOMPARE_##X##_MODE_BIT_0_BIT, uint8_t(m) & 0x01); \
+            setBit_(OUTPUTCOMPARE_##X##_MODE_BIT_1_REG, OUTPUTCOMPARE_##X##_MODE_BIT_1_BIT, uint8_t(m) & 0x02); \
+        } \
+        static force_inline void output##X##Callback(void (*func)(void*), void* data) { \
+            OUTPUTCOMPARE_##X##_INTERRUPT = func; \
+            OUTPUTCOMPARE_##X##_INTERRUPT_DATA = data; \
+        } \
+        static force_inline void output##X##IntEnable(bool b) { \
+            if(b) { \
+                *OUTPUTCOMPARE_##X##_INT_ENABLE_REG |= bv(OUTPUTCOMPARE_##X##_INT_ENABLE_BIT); \
+            } else { \
+                *OUTPUTCOMPARE_##X##_INT_ENABLE_REG &= ~bv(OUTPUTCOMPARE_##X##_INT_ENABLE_BIT); \
+            } \
+        } \
+        static force_inline bool output##X##IntFlag() { \
+            return *OUTPUTCOMPARE_##X##_INT_FLAG_REG & bv(OUTPUTCOMPARE_##X##_INT_FLAG_BIT); \
+        } \
+        static force_inline void output##X##IntFlagClear() { \
+            *OUTPUTCOMPARE_##X##_INT_FLAG_REG |= bv(OUTPUTCOMPARE_##X##_INT_FLAG_BIT); \
+        }
+
+    #if OUTPUTCOMPARE_A
+        MAKE_OUTPUTCOMPARE(A)
+    #endif
+    #if OUTPUTCOMPARE_B
+        MAKE_OUTPUTCOMPARE(B)
+    #endif
+    #if OUTPUTCOMPARE_C
+        MAKE_OUTPUTCOMPARE(C)
+    #endif
+
+    #undef MAKE_OUTPUTCOMPARE
 };
 
 #undef TimerCounterN

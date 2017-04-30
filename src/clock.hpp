@@ -59,22 +59,19 @@ class ClockT : public Clock {
 public:
     ClockT() {
         static_assert(Timer::getHardwareType() == HardwareType::TimerCounter, "ClockT requires a TimerCounter");
-        static_assert(Timer::size() == 2, "ClockT requires a 16 bit TimerCounter");
+        static_assert(sizeof(typename Timer::type) == 2, "ClockT requires a 16 bit TimerCounter");
 
-        typename Timer::Config config;
-        config.clockSelect = Timer::ClockSelect::Div64;
-        config.overflowIntEnable = true;
-        config.outputCompareAInterrupt = timerCounterOutputCompareA;
-        config.outputCompareAInterruptData = this;
-        config.overflowInterrupt = timerCounterOverflow;
-        config.overflowInterruptData = this;
-
-        Timer::apply(config);
+        atomic {
+            Timer::outputACallback(timerCounterOutputCompareA, this);
+            Timer::overflowCallback(timerCounterOverflow, this);
+            Timer::overflowIntEnable(true);
+            Timer::clock(Timer::Clock::Div64);
+        }
     }
 
     // Get the 16 bit hardware counter.
     force_inline uint16_t getTicks16() const override {
-        return Timer::timerRegister();
+        return Timer::counter();
     }
 
     // Get the 32 bit combined hardware and overflow counter.
@@ -153,12 +150,14 @@ public:
         push(&_interrupts, now - INTERRUPT_TICK_BUFFER, interrupt);
 
         // Set the timer to the first interrupt.
-        Timer::outputCompareARegister(peek(&_interrupts).tick);
+        block Timer::outputA(peek(&_interrupts).tick);
 
         // If the queue was previously empty, clear the flag and enable interrupt.
         if(_interrupts.size == 1) {
-            Timer::outputCompareAIntFlagClear();
-            Timer::outputCompareAIntEnable(true);
+            atomic {
+                Timer::outputAIntFlagClear();
+                Timer::outputAIntEnable(true);
+            }
         }
 
         return true;
@@ -246,14 +245,14 @@ private:
         if(self->_interrupts.size > 0) {
             uint16_t next = peek(&self->_interrupts).tick;
 
-            Timer::outputCompareAIntFlagClear();
-            Timer::outputCompareARegister(next);
+            block Timer::outputA(next);
+            block Timer::outputAIntFlagClear();
 
             if(!compare(interrupt.tick, self->getTicks16() + 1, next)) {
                 goto loop;
             }
         } else {
-            Timer::outputCompareAIntEnable(false);
+            block Timer::outputAIntEnable(false);
         }
     }
 

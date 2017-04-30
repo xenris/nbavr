@@ -17,7 +17,7 @@ struct Flash : Task {
 
             delay(clock, MS_TO_TICKS(500));
         } else {
-            ledPin::value(ledPin::Value::High);
+            ledPin::output(ledPin::Value::High);
 
             clock.addInterrupt(interrupt, this, MS_TO_TICKS(50));
 
@@ -28,7 +28,7 @@ struct Flash : Task {
     static void interrupt(void* data) {
         Flash* self = reinterpret_cast<Flash*>(data);
 
-        ledPin::value(ledPin::Value::Low);
+        ledPin::output(ledPin::Value::Low);
 
         self->intOccurred = true;
         self->wake();

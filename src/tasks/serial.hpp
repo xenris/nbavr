@@ -17,24 +17,21 @@ public:
 
         stdout.setCallback(streamCallback, this);
 
-        typename Usart::Config config;
-        config.receiverEnable = true,
-        config.transmitterEnable = true,
-        config.baud = UBRR_VALUE,
-        config.use2X = USE_2X,
-        config.rxCompleteIntEnable = true,
-        config.rxCompleteInterrupt = usartRxComplete;
-        config.rxCompleteInterruptData = this;
-        config.dataRegisterEmptyInterrupt = usartDataRegisterEmpty;
-        config.dataRegisterEmptyInterruptData = this;
-
-        Usart::apply(config);
+        atomic {
+            Usart::receiverEnable(true);
+            Usart::transmitterEnable(true);
+            Usart::baud(UBRR_VALUE);
+            Usart::use2X(USE_2X);
+            Usart::rxCompleteIntEnable(true);
+            Usart::rxCompleteCallback(usartRxComplete, this);
+            Usart::dataRegisterEmptyCallback(usartDataRegisterEmpty, this);
+        }
     }
 
 private:
     void loop(Clock& clock) override {
         if(!stdout.empty()) {
-            Usart::dataRegisterEmptyInterruptEnable(true);
+            Usart::dataRegisterEmptyIntEnable(true);
         }
 
         sleep();
@@ -54,7 +51,7 @@ private:
         if(self->stdout.pop_(&d)) {
             Usart::push(d);
         } else {
-            Usart::dataRegisterEmptyInterruptEnable(false);
+            Usart::dataRegisterEmptyIntEnable(false);
         }
     }
 

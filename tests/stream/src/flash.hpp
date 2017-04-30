@@ -13,13 +13,13 @@ struct Flash : Task {
     }
 
     void loop(Clock& clock) override {
-        ledPin::value(ledPin::Value::Low);
+        ledPin::output(ledPin::Value::Low);
 
         char c;
 
         if(stdin.pop(&c)) {
             stdin.clear();
-            ledPin::value(ledPin::Value::High);
+            ledPin::output(ledPin::Value::High);
             delay(clock, pulseLength);
         }
     }

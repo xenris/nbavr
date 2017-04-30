@@ -24,20 +24,20 @@
 
 #define TASK_TIMEOUT MS_TO_TICKS(6)
 
-template <class TimerCounter>
+template <class Timer>
 class NBAVR {
     Task** tasks;
     const uint8_t numTasks;
     uint8_t taskI = 0;
-    ClockT<TimerCounter> clock;
+    ClockT<Timer> clock;
 
 public:
 
     template <uint8_t S>
     NBAVR(Task* (&tasks)[S]) : tasks(tasks), numTasks(S) {
-        TimerCounter::outputCompareBInterrupt(haltCallback, this);
+        block Timer::outputBCallback(haltCallback, this);
 
-        WDT::enable();
+        block WDT::enable();
 
         while(true) {
             stepAll();
@@ -71,9 +71,11 @@ private:
         }
 
         // Setup halt callback.
-        TimerCounter::outputCompareBRegister(clock.getTicks16() + TASK_TIMEOUT);
-        TimerCounter::outputCompareBIntFlagClear();
-        TimerCounter::outputCompareBIntEnable(true);
+        atomic {
+            Timer::outputB(clock.getTicks16() + TASK_TIMEOUT);
+            Timer::outputBIntFlagClear();
+            Timer::outputBIntEnable(true);
+        }
 
         sei();
 
@@ -82,7 +84,7 @@ private:
         }
 
         // Disable halt callback.
-        TimerCounter::outputCompareBIntEnable(true);
+        block Timer::outputBIntEnable(true);
 
         taskI = (taskI + 1) % numTasks;
     }

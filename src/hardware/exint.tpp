@@ -32,32 +32,26 @@ struct ExIntN {
         Rising = TRIGGER_RISING_ID,
     };
 
-    static force_inline void enable(Trigger trigger, void (*interrupt)(void*), void* data) {
-        // Register interrupt function.
-        INTERRUPT = interrupt;
-        INTERRUPT_DATA = data;
-
-        // Configure trigger.
-        setBit_(TRIGGER_BIT_0_REG, TRIGGER_BIT_0_BIT, uint8_t(trigger) & 0x01);
-        setBit_(TRIGGER_BIT_1_REG, TRIGGER_BIT_1_BIT, uint8_t(trigger) & 0x02);
-
-        // Enable interrupt.
-        setBit_(ENABLE_REG, ENABLE_BIT, true);
-
-        // Clear interrupt flag.
-        setBit_(FLAG_REG, FLAG_BIT, true);
+    static force_inline void enable(bool e) {
+        setBit_(ENABLE_REG, ENABLE_BIT, e);
     }
 
-    static force_inline void disable() {
-        // Unregister interrupt function.
-        INTERRUPT = nullptr;
-        INTERRUPT_DATA = nullptr;
+    static force_inline void trigger(Trigger trigger) {
+        setBit_(TRIGGER_BIT_0_REG, TRIGGER_BIT_0_BIT, uint8_t(trigger) & 0x01);
+        setBit_(TRIGGER_BIT_1_REG, TRIGGER_BIT_1_BIT, uint8_t(trigger) & 0x02);
+    }
 
-        // Disable interrupt.
-        setBit(ENABLE_REG, ENABLE_BIT, false);
+    static force_inline void callback(void (*func)(void*), void* data) {
+        INTERRUPT = func;
+        INTERRUPT_DATA = data;
+    }
 
-        // Clear interrupt flag.
-        setBit(FLAG_REG, FLAG_BIT, true);
+    static force_inline bool intFlag() {
+        return *FLAG_REG & bv(FLAG_BIT);
+    }
+
+    static force_inline void intFlagClear() {
+        setBit_(FLAG_REG, FLAG_BIT, true);
     }
 };
 

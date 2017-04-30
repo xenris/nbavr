@@ -95,91 +95,76 @@ struct ADC {
         SingleConversion,
     };
 
-    struct Config {
-        Reference reference = Reference::AVCC;
-        Channel channel = Channel::ADC0;
-        #ifdef CHIP_ADC_PRESCALER
-            Prescaler prescaler = Prescaler::Div128;
-        #endif
-        bool leftAdjust = false;
-        Trigger trigger = Trigger::SingleConversion;
-        void (*adcCompleteInterrupt)(void*) = nullptr;
-        void* adcCompleteInterruptData = nullptr;
-    };
-
-    static force_inline void start(Config config) {
-        atomic {
-            // TODO Disable ADC power reduction. (Needed?)
-
-            // Enable ADC.
-            setBit_(CHIP_ADC_ENABLE_REG, CHIP_ADC_ENABLE_BIT, true);
-
-            // Clear interrupt flag.
-            setBit_(CHIP_ADC_INT_FLAG_REG, CHIP_ADC_INT_FLAG_BIT, true);
-
-            #if CHIP_ADC_TRIGGER
-            // Enable auto trigger.
-            setBit_(CHIP_ADC_TRIGGER_ENABLE_REG, CHIP_ADC_TRIGGER_ENABLE_BIT, config.trigger != Trigger::SingleConversion);
-            #else
-            // Enable free running.
-            setBit_(CHIP_ADC_FREE_RUNNING_ENABLE_REG, CHIP_ADC_FREE_RUNNING_ENABLE_BIT, config.trigger != Trigger::SingleConversion);
-            #endif
-
-            // Set auto trigger value.
-            #ifdef CHIP_ADC_TRIGGER
-            setBit_(CHIP_ADC_TRIGGER_BIT_0_REG, CHIP_ADC_TRIGGER_BIT_0_BIT, uint8_t(config.trigger) & 0x01);
-            setBit_(CHIP_ADC_TRIGGER_BIT_1_REG, CHIP_ADC_TRIGGER_BIT_1_BIT, uint8_t(config.trigger) & 0x02);
-            setBit_(CHIP_ADC_TRIGGER_BIT_2_REG, CHIP_ADC_TRIGGER_BIT_2_BIT, uint8_t(config.trigger) & 0x04);
-            #endif
-
-            // Set left adjust.
-            setBit_(CHIP_ADC_LEFT_ADJUST_REG, CHIP_ADC_LEFT_ADJUST_BIT, config.leftAdjust);
-
-            // Set input channel.
-            setBit_(CHIP_ADC_CHANNEL_BIT_0_REG, CHIP_ADC_CHANNEL_BIT_0_BIT, uint8_t(config.channel) & 0x01);
-            setBit_(CHIP_ADC_CHANNEL_BIT_1_REG, CHIP_ADC_CHANNEL_BIT_1_BIT, uint8_t(config.channel) & 0x02);
-            setBit_(CHIP_ADC_CHANNEL_BIT_2_REG, CHIP_ADC_CHANNEL_BIT_2_BIT, uint8_t(config.channel) & 0x04);
-            setBit_(CHIP_ADC_CHANNEL_BIT_3_REG, CHIP_ADC_CHANNEL_BIT_3_BIT, uint8_t(config.channel) & 0x08);
-
-            // Set reference.
-            setBit_(CHIP_ADC_REFERENCE_BIT_0_REG, CHIP_ADC_REFERENCE_BIT_0_BIT, uint8_t(config.reference) & 0x01);
-            setBit_(CHIP_ADC_REFERENCE_BIT_1_REG, CHIP_ADC_REFERENCE_BIT_1_BIT, uint8_t(config.reference) & 0x02);
-
-            // Set prescaler
-            #ifdef CHIP_ADC_PRESCALER
-            setBit_(CHIP_ADC_PRESCALER_BIT_0_REG, CHIP_ADC_PRESCALER_BIT_0_BIT, uint8_t(config.prescaler) & 0x01);
-            setBit_(CHIP_ADC_PRESCALER_BIT_1_REG, CHIP_ADC_PRESCALER_BIT_1_BIT, uint8_t(config.prescaler) & 0x02);
-            setBit_(CHIP_ADC_PRESCALER_BIT_2_REG, CHIP_ADC_PRESCALER_BIT_2_BIT, uint8_t(config.prescaler) & 0x04);
-            #endif
-
-            // Enable interrupt.
-            setBit_(CHIP_ADC_INT_ENABLE_REG, CHIP_ADC_INT_ENABLE_BIT, true);
-
-            // Register callback.
-            _adcInterrupt = config.adcCompleteInterrupt;
-            _adcInterruptData = config.adcCompleteInterruptData;
-            // callback = config.callback;
-
-            // Start ADC.
-            if((config.trigger == Trigger::SingleConversion)
-            || (config.trigger == Trigger::FreeRunning)) {
-                setBit_(CHIP_ADC_START_REG, CHIP_ADC_START_BIT, true);
-            }
-        }
+    static force_inline void enable(bool e) {
+        setBit_(CHIP_ADC_ENABLE_REG, CHIP_ADC_ENABLE_BIT, e);
     }
 
-    static force_inline void stop() {
-        atomic {
-            // Disable ADC
-            setBit_(CHIP_ADC_ENABLE_REG, CHIP_ADC_ENABLE_BIT, false);
-
-            // Clear interrupt flag
-            setBit_(CHIP_ADC_INT_FLAG_REG, CHIP_ADC_INT_FLAG_BIT, true);
-        }
+    static force_inline void start() {
+        setBit_(CHIP_ADC_START_REG, CHIP_ADC_START_BIT, true);
     }
 
     static force_inline uint16_t value() {
         return *CHIP_ADC_DATA_REG;
+    }
+
+    static force_inline void reference(Reference ref) {
+        setBit_(CHIP_ADC_REFERENCE_BIT_0_REG, CHIP_ADC_REFERENCE_BIT_0_BIT, uint8_t(ref) & 0x01);
+        setBit_(CHIP_ADC_REFERENCE_BIT_1_REG, CHIP_ADC_REFERENCE_BIT_1_BIT, uint8_t(ref) & 0x02);
+    }
+
+    static force_inline void channel(Channel ch) {
+        setBit_(CHIP_ADC_CHANNEL_BIT_0_REG, CHIP_ADC_CHANNEL_BIT_0_BIT, uint8_t(ch) & 0x01);
+        setBit_(CHIP_ADC_CHANNEL_BIT_1_REG, CHIP_ADC_CHANNEL_BIT_1_BIT, uint8_t(ch) & 0x02);
+        setBit_(CHIP_ADC_CHANNEL_BIT_2_REG, CHIP_ADC_CHANNEL_BIT_2_BIT, uint8_t(ch) & 0x04);
+        setBit_(CHIP_ADC_CHANNEL_BIT_3_REG, CHIP_ADC_CHANNEL_BIT_3_BIT, uint8_t(ch) & 0x08);
+    }
+
+    #ifdef CHIP_ADC_PRESCALER
+    static force_inline void prescaler(Prescaler pre) {
+        setBit_(CHIP_ADC_PRESCALER_BIT_0_REG, CHIP_ADC_PRESCALER_BIT_0_BIT, uint8_t(pre) & 0x01);
+        setBit_(CHIP_ADC_PRESCALER_BIT_1_REG, CHIP_ADC_PRESCALER_BIT_1_BIT, uint8_t(pre) & 0x02);
+        setBit_(CHIP_ADC_PRESCALER_BIT_2_REG, CHIP_ADC_PRESCALER_BIT_2_BIT, uint8_t(pre) & 0x04);
+    }
+    #endif
+
+    static force_inline void leftAdjust(bool l) {
+        setBit_(CHIP_ADC_LEFT_ADJUST_REG, CHIP_ADC_LEFT_ADJUST_BIT, l);
+    }
+
+    static force_inline void trigger(Trigger trig) {
+        if(trig == Trigger::SingleConversion) {
+            #ifdef CHIP_ADC_TRIGGER
+            setBit_(CHIP_ADC_TRIGGER_ENABLE_REG, CHIP_ADC_TRIGGER_ENABLE_BIT, false);
+            #else
+            setBit_(CHIP_ADC_FREE_RUNNING_ENABLE_REG, CHIP_ADC_FREE_RUNNING_ENABLE_BIT, false);
+            #endif
+        } else {
+            #ifdef CHIP_ADC_TRIGGER
+            setBit_(CHIP_ADC_TRIGGER_BIT_0_REG, CHIP_ADC_TRIGGER_BIT_0_BIT, uint8_t(trig) & 0x01);
+            setBit_(CHIP_ADC_TRIGGER_BIT_1_REG, CHIP_ADC_TRIGGER_BIT_1_BIT, uint8_t(trig) & 0x02);
+            setBit_(CHIP_ADC_TRIGGER_BIT_2_REG, CHIP_ADC_TRIGGER_BIT_2_BIT, uint8_t(trig) & 0x04);
+            setBit_(CHIP_ADC_TRIGGER_ENABLE_REG, CHIP_ADC_TRIGGER_ENABLE_BIT, true);
+            #else
+            setBit_(CHIP_ADC_FREE_RUNNING_ENABLE_REG, CHIP_ADC_FREE_RUNNING_ENABLE_BIT, true);
+            #endif
+        }
+    }
+
+    static force_inline void callback(void (*func)(void*), void* data) {
+        _adcInterrupt = func;
+        _adcInterruptData = data;
+    }
+
+    static force_inline void intEnable(bool e) {
+        setBit_(CHIP_ADC_INT_ENABLE_REG, CHIP_ADC_INT_ENABLE_BIT, e);
+    }
+
+    static force_inline bool intFlag() {
+        return *CHIP_ADC_INT_FLAG_REG & bv(CHIP_ADC_INT_FLAG_BIT);
+    }
+
+    static force_inline void intFlagClear() {
+        setBit_(CHIP_ADC_INT_FLAG_REG, CHIP_ADC_INT_FLAG_BIT, true);
     }
 };
 

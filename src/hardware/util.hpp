@@ -12,7 +12,6 @@
 #define GET_CONCAT(_1, _2, _3, _4, _5, NAME,...) NAME
 
 #define bv(n) (1 << (n))
-#define _BV(n) bv(n)
 
 #define force_inline inline __attribute__((always_inline))
 
@@ -21,7 +20,9 @@ void nop() {
     __asm__ __volatile__ ("nop");
 }
 
-#define _MemoryBarrier() __asm__ __volatile__("":::"memory")
+force_inline void _MemoryBarrier(const uint8_t *s = nullptr) {
+    __asm__ __volatile__("":::"memory");
+}
 
 force_inline
 void cli() {
@@ -54,6 +55,7 @@ void __ssreg(const uint8_t *s) {
 
 #define atomic for(uint8_t __sreg __attribute__((cleanup(__ssreg))) = __cli(), __once = 1; __once; __once = 0)
 #define nonatomic for(uint8_t __sreg __attribute__((cleanup(__ssreg))) = __sei(), __once = 1; __once; __once = 0)
+#define block for(uint8_t __once __attribute__((cleanup(_MemoryBarrier))) = 1; __once; __once = 0)
 
 #define ISR(vector, ...) \
     extern "C" void vector(void) __attribute__((signal,used,externally_visible)) __VA_ARGS__; \
@@ -100,11 +102,11 @@ auto end(T* t) -> decltype(t->end()) {
 }
 
 /// Set or clear a volatile register bit.
-force_inline void setBit(volatile uint8_t* reg, uint8_t bit, uint8_t value) {
+force_inline void setBit(volatile uint8_t* reg, uint8_t bit, bool value) {
     if(value) {
-        *reg |= _BV(bit);
+        *reg |= bv(bit);
     } else {
-        *reg &= ~_BV(bit);
+        *reg &= ~bv(bit);
     }
 }
 
@@ -113,9 +115,9 @@ force_inline void setBit_(volatile uint8_t* reg, uint8_t bit, bool value) {
     uint8_t* reg_ = const_cast<uint8_t*>(reg);
 
     if(value) {
-        *reg_ |= _BV(bit);
+        *reg_ |= bv(bit);
     } else {
-        *reg_ &= ~_BV(bit);
+        *reg_ &= ~bv(bit);
     }
 }
 

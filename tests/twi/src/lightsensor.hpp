@@ -31,8 +31,8 @@ struct LightSensor : Task {
     : stdout(stdout), twiout(twiout) {
         PinC2::direction(PinC2::Direction::Output);
         PinC3::direction(PinC3::Direction::Output);
-        PinC2::value(PinC2::Value::High);
-        PinC3::value(PinC3::Value::Low);
+        PinC2::output(PinC2::Value::High);
+        PinC3::output(PinC3::Value::Low);
 
         lightSensorOnResult = TWI::Result::None;
         lightSensorContHResResult = TWI::Result::None;

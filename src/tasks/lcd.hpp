@@ -72,9 +72,9 @@ public:
         RS::direction(RS::Direction::Output);
         E::direction(E::Direction::Output);
 
-        RW::value(RW::Value::Low);
-        RS::value(RS::Value::Low);
-        E::value(E::Value::Low);
+        RW::output(RW::Value::Low);
+        RS::output(RS::Value::Low);
+        E::output(E::Value::Low);
 
         state = &LCD::init0;
     }
@@ -161,13 +161,13 @@ private:
     bool busy(void) {
         uint8_t data = getByte(false);
 
-        return data & _BV(7);
+        return data & bv(7);
     }
 
     uint8_t getCurserAddress(void) {
         uint8_t data = getByte(false);
 
-        return data & ~_BV(7);
+        return data & ~bv(7);
     }
 
     uint8_t coordToAddress(uint8_t x, uint8_t y) {
@@ -229,17 +229,17 @@ private:
         D6::direction(D6::Direction::Output);
         D7::direction(D7::Direction::Output);
 
-        D4::value((data & _BV(0)) ? D4::Value::High : D4::Value::Low);
-        D5::value((data & _BV(1)) ? D5::Value::High : D5::Value::Low);
-        D6::value((data & _BV(2)) ? D6::Value::High : D6::Value::Low);
-        D7::value((data & _BV(3)) ? D7::Value::High : D7::Value::Low);
-        RW::value(RW::Value::Low);
-        RS::value(rs ? RS::Value::High : RS::Value::Low);
+        D4::output((data & bv(0)) ? D4::Value::High : D4::Value::Low);
+        D5::output((data & bv(1)) ? D5::Value::High : D5::Value::Low);
+        D6::output((data & bv(2)) ? D6::Value::High : D6::Value::Low);
+        D7::output((data & bv(3)) ? D7::Value::High : D7::Value::Low);
+        RW::output(RW::Value::Low);
+        RS::output(rs ? RS::Value::High : RS::Value::Low);
 
         _delay_us(1);
-        E::value(E::Value::High);
+        E::output(E::Value::High);
         _delay_us(1);
-        E::value(E::Value::Low);
+        E::output(E::Value::Low);
     }
 
     // XXX May need to wait 43us when reading data.
@@ -251,36 +251,36 @@ private:
         D6::direction(D6::Direction::Input);
         D7::direction(D7::Direction::Input);
 
-        D4::value(D4::Value::Low);
-        D5::value(D5::Value::Low);
-        D6::value(D6::Value::Low);
-        D7::value(D7::Value::Low);
-        RW::value(RW::Value::High);
-        RS::value(rs ? RS::Value::High : RS::Value::Low);
+        D4::output(D4::Value::Low);
+        D5::output(D5::Value::Low);
+        D6::output(D6::Value::Low);
+        D7::output(D7::Value::Low);
+        RW::output(RW::Value::High);
+        RS::output(rs ? RS::Value::High : RS::Value::Low);
 
         _delay_us(1);
 
-        E::value(E::Value::High);
+        E::output(E::Value::High);
         _delay_us(1);
 
-        data |= (D7::value() == D7::Value::High) ? (1 << 7) : 0;
-        data |= (D6::value() == D6::Value::High) ? (1 << 6) : 0;
-        data |= (D5::value() == D5::Value::High) ? (1 << 5) : 0;
-        data |= (D4::value() == D4::Value::High) ? (1 << 4) : 0;
+        data |= (D7::input() == D7::Value::High) ? (1 << 7) : 0;
+        data |= (D6::input() == D6::Value::High) ? (1 << 6) : 0;
+        data |= (D5::input() == D5::Value::High) ? (1 << 5) : 0;
+        data |= (D4::input() == D4::Value::High) ? (1 << 4) : 0;
 
-        E::value(E::Value::Low);
+        E::output(E::Value::Low);
 
         _delay_us(1);
 
-        E::value(E::Value::High);
+        E::output(E::Value::High);
         _delay_us(1);
 
-        data |= (D7::value() == D7::Value::High) ? (1 << 3) : 0;
-        data |= (D6::value() == D6::Value::High) ? (1 << 2) : 0;
-        data |= (D5::value() == D5::Value::High) ? (1 << 1) : 0;
-        data |= (D4::value() == D4::Value::High) ? (1 << 0) : 0;
+        data |= (D7::input() == D7::Value::High) ? (1 << 3) : 0;
+        data |= (D6::input() == D6::Value::High) ? (1 << 2) : 0;
+        data |= (D5::input() == D5::Value::High) ? (1 << 1) : 0;
+        data |= (D4::input() == D4::Value::High) ? (1 << 0) : 0;
 
-        E::value(E::Value::Low);
+        E::output(E::Value::Low);
 
         return data;
     }
