@@ -5,17 +5,17 @@
 
 #define NBAVR_CHIP_DEFINED
 
-////////////////////////////////////////////////////////////////////
+//------------------------------------------------
 // Status Register
 
 #define CHIP_STATUS_REG                                                 REG8(0x5F)
 
-////////////////////////////////////////////////////////////////////
+//------------------------------------------------
 // Reset Status Register
 
 #define CHIP_RESET_STATUS_REG                                           REG8(0x54)
 
-////////////////////////////////////////////////////////////////////
+//------------------------------------------------
 // Watchdog Timer
 
 #define CHIP_WATCHDOG_TIMER_CONTROL_REG                                 REG8(0x60)
@@ -28,23 +28,32 @@
 #define CHIP_WATCHDOG_TIMER_INT_ENABLE_BIT                              6
 #define CHIP_WATCHDOG_TIMER_INT_FLAG_BIT                                7
 
-////////////////////////////////////////////////////////////////////
+//------------------------------------------------
 // IO Ports
 
+// Including non-existant ports.
+#define CHIP_PORT_COUNT                                                 4
+
+#define CHIP_PORT_B                                                     TRUE
 #define CHIP_PORT_B_OUTPUT_REG                                          REG8(0x25)
 #define CHIP_PORT_B_DIRECTION_REG                                       REG8(0x24)
 #define CHIP_PORT_B_INPUT_REG                                           REG8(0x23)
 
+#define CHIP_PORT_C                                                     TRUE
 #define CHIP_PORT_C_OUTPUT_REG                                          REG8(0x28)
 #define CHIP_PORT_C_DIRECTION_REG                                       REG8(0x27)
 #define CHIP_PORT_C_INPUT_REG                                           REG8(0x26)
 
+#define CHIP_PORT_D                                                     TRUE
 #define CHIP_PORT_D_OUTPUT_REG                                          REG8(0x2B)
 #define CHIP_PORT_D_DIRECTION_REG                                       REG8(0x2A)
 #define CHIP_PORT_D_INPUT_REG                                           REG8(0x29)
 
-////////////////////////////////////////////////////////////////////
+//------------------------------------------------
 // IO Pins
+
+// Maximum number of pins per port.
+#define CHIP_PIN_COUNT                                                  8
 
 #define CHIP_PIN_B0                                                     TRUE
 #define CHIP_PIN_B1                                                     TRUE
@@ -72,7 +81,7 @@
 #define CHIP_PIN_D6                                                     TRUE
 #define CHIP_PIN_D7                                                     TRUE
 
-////////////////////////////////////////////////////////////////////
+//------------------------------------------------
 // ADC
 
 #define CHIP_ADC                                                        TRUE
@@ -155,13 +164,10 @@
 #define CHIP_ADC_PRESCALER_64_ID                                        6
 #define CHIP_ADC_PRESCALER_128_ID                                       7
 
-////////////////////////////////////////////////////////////////////
+//------------------------------------------------
 // External Interrupts
 
-#define CHIP_EXINT_N_TRIGGER_LOW_ID                                       0
-#define CHIP_EXINT_N_TRIGGER_CHANGE_ID                                    1
-#define CHIP_EXINT_N_TRIGGER_FALLING_ID                                   2
-#define CHIP_EXINT_N_TRIGGER_RISING_ID                                    3
+#define CHIP_EXINT_COUNT                                                2
 
 #define CHIP_EXINT_0                                                      TRUE
 #define CHIP_EXINT_0_ENABLE_REG                                           REG8(0x3D)
@@ -173,6 +179,10 @@
 #define CHIP_EXINT_0_TRIGGER_BIT_0_BIT                                    0
 #define CHIP_EXINT_0_TRIGGER_BIT_1_BIT                                    1
 #define CHIP_EXINT_0_INT_VECTOR                                           VECT(1)
+#define CHIP_EXINT_0_TRIGGER_LOW_ID                                       0
+#define CHIP_EXINT_0_TRIGGER_CHANGE_ID                                    1
+#define CHIP_EXINT_0_TRIGGER_FALLING_ID                                   2
+#define CHIP_EXINT_0_TRIGGER_RISING_ID                                    3
 
 #define CHIP_EXINT_1                                                      TRUE
 #define CHIP_EXINT_1_ENABLE_REG                                           REG8(0x3D)
@@ -184,9 +194,15 @@
 #define CHIP_EXINT_1_TRIGGER_BIT_0_BIT                                    2
 #define CHIP_EXINT_1_TRIGGER_BIT_1_BIT                                    3
 #define CHIP_EXINT_1_INT_VECTOR                                           VECT(2)
+#define CHIP_EXINT_1_TRIGGER_LOW_ID                                       0
+#define CHIP_EXINT_1_TRIGGER_CHANGE_ID                                    1
+#define CHIP_EXINT_1_TRIGGER_FALLING_ID                                   2
+#define CHIP_EXINT_1_TRIGGER_RISING_ID                                    3
 
-////////////////////////////////////////////////////////////////////
+//------------------------------------------------
 // Pin Change Interrupts
+
+#define CHIP_PCINT_COUNT                                                2
 
 #define CHIP_PCINT_0                                                    TRUE
 #define CHIP_PCINT_0_ENABLE_REG                                         REG8(0x68)
@@ -212,7 +228,12 @@
 #define CHIP_PCINT_2_MASK_REG                                           REG8(0x6D)
 #define CHIP_PCINT_2_INT_VECTOR                                         VECT(5)
 
-////////////////////////////////////////////////////////////////////
+//------------------------------------------------
+// Timer Counters
+
+#define CHIP_TIMERCOUNTER_COUNT                                         3
+
+//------------------------------------------------
 // Timer Counter 0
 
 #define CHIP_TIMERCOUNTER_0                                             TRUE
@@ -287,8 +308,8 @@
 #define CHIP_TIMERCOUNTER_0_OVERFLOW_INT_FLAG_BIT                       0
 #define CHIP_TIMERCOUNTER_0_OVERFLOW_INT_VECTOR                         VECT(16)
 
-////////////////////////////////////////////////////////////////////
-// TimerCounter1
+//------------------------------------------------
+// Timer Counter 1
 
 #define CHIP_TIMERCOUNTER_1                                             TRUE
 
@@ -373,8 +394,8 @@
 #define CHIP_TIMERCOUNTER_1_OVERFLOW_INT_FLAG_BIT                       0
 #define CHIP_TIMERCOUNTER_1_OVERFLOW_INT_VECTOR                         VECT(13)
 
-////////////////////////////////////////////////////////////////////
-// Timer2
+//------------------------------------------------
+// Timer Counter 2
 
 #define CHIP_TIMERCOUNTER_2                                             TRUE
 
@@ -450,8 +471,10 @@
 
 // TODO Add input capture definitions.
 
-////////////////////////////////////////////////////////////////////
+//------------------------------------------------
 // USART0
+
+#define CHIP_USART_COUNT                                                1
 
 #define CHIP_USART_0                                                    TRUE
 
@@ -530,8 +553,8 @@
 #define CHIP_USART_0_CLOCK_POLARITY_REG                                 REG8(0xC2)
 #define CHIP_USART_0_CLOCK_POLARITY_BIT                                 0
 
-#define CHIP_USART_0_RX_COMPLETE_INT_VECTOR                             VECT(18)
-#define CHIP_USART_0_DATA_REG_EMPTY_INT_VECTOR                          VECT(19)
-#define CHIP_USART_0_TX_COMPLETE_INT_VECTOR                             VECT(20)
+#define CHIP_USART_0_RX_INT_VECTOR                                      VECT(18)
+#define CHIP_USART_0_DE_INT_VECTOR                                      VECT(19)
+#define CHIP_USART_0_TX_INT_VECTOR                                      VECT(20)
 
 #endif

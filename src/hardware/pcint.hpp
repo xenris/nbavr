@@ -1,104 +1,90 @@
+/// # Pin Change Interrupts
+
+/// All functions are static.
+
 #ifndef NBAVR_PCINT_HPP
-#define NBAVR_PCINT_HPP
 
-// class PcInt {
-//     volatile uint8_t* const _enableRegister;
-//     volatile uint8_t* const _maskRegister;
-//     volatile uint8_t* const _flagRegister;
-//     const uint8_t _enableBit;
-//     const uint8_t _flagBit;
-//     void (*&_interruptP)(void*);
-//     void*& _interruptDataP;
-//
-// public:
-//     PcInt(
-//         volatile uint8_t* const enableRegister,
-//         volatile uint8_t* const maskRegister,
-//         volatile uint8_t* const flagRegister,
-//         const uint8_t enableBit,
-//         const uint8_t flagBit,
-//         void (*&interruptP)(void*),
-//         void*& interruptDataP)
-//     :
-//     _enableRegister(enableRegister),
-//     _maskRegister(maskRegister),
-//     _flagRegister(flagRegister),
-//     _enableBit(enableBit),
-//     _flagBit(flagBit),
-//     _interruptP(interruptP),
-//     _interruptDataP(interruptDataP) {
-//     }
-//
-//     force_inline void enable(uint8_t mask, void (*interrupt)(void*), void* data) {
-//         atomic {
-//             enable_(mask, interrupt, data);
-//         }
-//     }
-//
-//     force_inline void enable_(uint8_t mask, void (*interrupt)(void*), void* data) {
-//         // Register callback.
-//         _interruptP = interrupt;
-//         _interruptDataP = data;
-//
-//         // Configure trigger.
-//         *_maskRegister = mask;
-//
-//         // Enable interrupt.
-//         setBit_(_enableRegister, _enableBit, true);
-//
-//         // Clear interrupt flag.
-//         setBit_(_flagRegister, _flagBit, true);
-//     }
-//
-//     force_inline void disable() {
-//         atomic {
-//             disable_();
-//         }
-//     }
-//
-//     force_inline void disable_() {
-//         _interruptP = nullptr;
-//         _interruptDataP = nullptr;
-//
-//         *_maskRegister = 0;
-//
-//         setBit_(_enableRegister, _enableBit, false);
-//
-//         setBit_(_flagRegister, _flagBit, true);
-//     }
-// };
-//
-// #define MAKE_PCINT_CLASS(ID)
-//     struct PcInt##ID : PcInt {
-//         PcInt##ID()
-//             : PcInt(
-//                 CHIP_PCINT_##ID##_ENABLE_REG,
-//                 CHIP_PCINT_##ID##_MASK_REG,
-//                 CHIP_PCINT_##ID##_FLAG_REG,
-//                 CHIP_PCINT_##ID##_ENABLE_BIT,
-//                 CHIP_PCINT_##ID##_FLAG_BIT,
-//                 _pcInt##ID##Interrupt,
-//                 _pcInt##ID##InterruptData
-//                 ) {
-//         }
-//     };
-
-#ifdef CHIP_PCINT_0
-    #define ID 0
-    #include "pcint.tpp"
-    #undef ID
+#ifndef N
+    // PcInt id.
+    #define N 0
 #endif
 
-#ifdef CHIP_PCINT_1
-    #define ID 1
-    #include "pcint.tpp"
-    #undef ID
-#endif
+#if N < CHIP_PCINT_COUNT
+    // If this hardware exists.
+    #if CONCAT(CHIP_PCINT_, N)
 
-#ifdef CHIP_PCINT_2
-    #define ID 2
-    #include "pcint.tpp"
-    #undef ID
-#endif
+//--------------------------------------------------------
+
+#define PcIntN CONCAT(PcInt, N)
+#define C(X) CONCAT(CHIP_PCINT_, N, _, X)
+#define _C(X) UNDERLINE(PCINT, N, X)
+
+MAKE_CALLBACK_HEADER(PCINT, N);
+
+/// #### macro INCLUDE_PCINT_CALLBACK(N)
+/// Include this to use PcInt callbacks.
+#define INCLUDE_PCINT_CALLBACK(N) MAKE_CALLBACK(PCINT, N)
+
+/// ## Class PCIntN
+struct PcIntN {
+    PcIntN() = delete;
+
+    /// #### constexpr HardwareType getHardwareType()
+    /// Get the type of hardware that this class represents.
+    static constexpr HardwareType getHardwareType() {
+        return HardwareType::PcInt;
+    }
+
+    /// #### void enable(bool)
+    /// Enable/disable this interrupt.
+    static force_inline void enable(bool e) {
+        setBit_(C(ENABLE_REG), C(ENABLE_BIT), e);
+    }
+
+    /// #### void mask(uint8_t)
+    /// Set which pins trigger this interrupt.
+    static force_inline void mask(uint8_t m) {
+        *C(MASK_REG) = m;
+    }
+
+    /// #### void callback(void (\*)(void\*), void\*)
+    /// Set the callback and data for this interrupt.
+    static force_inline void callback(void (*func)(void*), void* data) {
+        _C(Callback) = func;
+        _C(CallbackData) = data;
+    }
+
+    /// #### bool intFlag()
+    /// Returns true if the interrupt flag is set.
+    static force_inline bool intFlag() {
+        return *C(FLAG_REG) & bv(C(FLAG_BIT));
+    }
+
+    /// #### void intFlagClear()
+    /// Clear the interrupt flag.
+    static force_inline void intFlagClear() {
+        setBit_(C(FLAG_REG), C(FLAG_BIT), true);
+    }
+};
+
+#undef PcIntN
+#undef C
+#undef _C
+
+//--------------------------------------------------------
+
+    #endif // CONCAT(CHIP_PCINT_, N)
+
+    #include "incn.hpp"
+
+    #include "pcint.hpp"
+
+#else // N < CHIP_PCINT_COUNT
+
+    #undef N
+
+    #define NBAVR_PCINT_HPP
+
+#endif // N < CHIP_PCINT_COUNT
 
 #endif

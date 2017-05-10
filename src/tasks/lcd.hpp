@@ -3,10 +3,10 @@
 
 #include <nbavr.hpp>
 // FIXME Shouldn't really be using these blocking calls...?
-//#include <util/delay.h>
+#include <util/delay.h>
 
-#define _delay_us(n)
-#define _delay_ms(n)
+// #define _delay_us(n)
+// #define _delay_ms(n)
 
 // \r = clear display and return curser to home position.
 // \n = move to start of next line, wrapping to first line.

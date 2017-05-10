@@ -14,7 +14,7 @@ enum class HardwareType : uint8_t {
 
 #include "hardware/chip.hpp"
 #include "hardware/util.hpp"
-#include "hardware/interrupts.hpp"
+#include "hardware/callbacks.hpp"
 
 #include "hardware/adc.hpp"
 #include "hardware/exint.hpp"
