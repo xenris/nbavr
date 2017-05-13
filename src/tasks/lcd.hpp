@@ -68,13 +68,13 @@ public:
         static_assert(RS::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
         static_assert(E::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
 
-        RW::direction(RW::Direction::Output);
-        RS::direction(RS::Direction::Output);
-        E::direction(E::Direction::Output);
+        RW::direction(Direction::Output);
+        RS::direction(Direction::Output);
+        E::direction(Direction::Output);
 
-        RW::output(RW::Value::Low);
-        RS::output(RS::Value::Low);
-        E::output(E::Value::Low);
+        RW::output(Value::Low);
+        RS::output(Value::Low);
+        E::output(Value::Low);
 
         state = &LCD::init0;
     }
@@ -224,63 +224,63 @@ private:
     }
 
     void sendNibble(bool rs, uint8_t data) {
-        D4::direction(D4::Direction::Output);
-        D5::direction(D5::Direction::Output);
-        D6::direction(D6::Direction::Output);
-        D7::direction(D7::Direction::Output);
+        D4::direction(Direction::Output);
+        D5::direction(Direction::Output);
+        D6::direction(Direction::Output);
+        D7::direction(Direction::Output);
 
-        D4::output((data & bv(0)) ? D4::Value::High : D4::Value::Low);
-        D5::output((data & bv(1)) ? D5::Value::High : D5::Value::Low);
-        D6::output((data & bv(2)) ? D6::Value::High : D6::Value::Low);
-        D7::output((data & bv(3)) ? D7::Value::High : D7::Value::Low);
-        RW::output(RW::Value::Low);
-        RS::output(rs ? RS::Value::High : RS::Value::Low);
+        D4::output((data & bv(0)) ? Value::High : Value::Low);
+        D5::output((data & bv(1)) ? Value::High : Value::Low);
+        D6::output((data & bv(2)) ? Value::High : Value::Low);
+        D7::output((data & bv(3)) ? Value::High : Value::Low);
+        RW::output(Value::Low);
+        RS::output(rs ? Value::High : Value::Low);
 
         _delay_us(1);
-        E::output(E::Value::High);
+        E::output(Value::High);
         _delay_us(1);
-        E::output(E::Value::Low);
+        E::output(Value::Low);
     }
 
     // XXX May need to wait 43us when reading data.
     uint8_t getByte(bool rs) {
         uint8_t data = 0;
 
-        D4::direction(D4::Direction::Input);
-        D5::direction(D5::Direction::Input);
-        D6::direction(D6::Direction::Input);
-        D7::direction(D7::Direction::Input);
+        D4::direction(Direction::Input);
+        D5::direction(Direction::Input);
+        D6::direction(Direction::Input);
+        D7::direction(Direction::Input);
 
-        D4::output(D4::Value::Low);
-        D5::output(D5::Value::Low);
-        D6::output(D6::Value::Low);
-        D7::output(D7::Value::Low);
-        RW::output(RW::Value::High);
-        RS::output(rs ? RS::Value::High : RS::Value::Low);
-
-        _delay_us(1);
-
-        E::output(E::Value::High);
-        _delay_us(1);
-
-        data |= (D7::input() == D7::Value::High) ? (1 << 7) : 0;
-        data |= (D6::input() == D6::Value::High) ? (1 << 6) : 0;
-        data |= (D5::input() == D5::Value::High) ? (1 << 5) : 0;
-        data |= (D4::input() == D4::Value::High) ? (1 << 4) : 0;
-
-        E::output(E::Value::Low);
+        D4::output(Value::Low);
+        D5::output(Value::Low);
+        D6::output(Value::Low);
+        D7::output(Value::Low);
+        RW::output(Value::High);
+        RS::output(rs ? Value::High : Value::Low);
 
         _delay_us(1);
 
-        E::output(E::Value::High);
+        E::output(Value::High);
         _delay_us(1);
 
-        data |= (D7::input() == D7::Value::High) ? (1 << 3) : 0;
-        data |= (D6::input() == D6::Value::High) ? (1 << 2) : 0;
-        data |= (D5::input() == D5::Value::High) ? (1 << 1) : 0;
-        data |= (D4::input() == D4::Value::High) ? (1 << 0) : 0;
+        data |= (D7::input() == Value::High) ? (1 << 7) : 0;
+        data |= (D6::input() == Value::High) ? (1 << 6) : 0;
+        data |= (D5::input() == Value::High) ? (1 << 5) : 0;
+        data |= (D4::input() == Value::High) ? (1 << 4) : 0;
 
-        E::output(E::Value::Low);
+        E::output(Value::Low);
+
+        _delay_us(1);
+
+        E::output(Value::High);
+        _delay_us(1);
+
+        data |= (D7::input() == Value::High) ? (1 << 3) : 0;
+        data |= (D6::input() == Value::High) ? (1 << 2) : 0;
+        data |= (D5::input() == Value::High) ? (1 << 1) : 0;
+        data |= (D4::input() == Value::High) ? (1 << 0) : 0;
+
+        E::output(Value::Low);
 
         return data;
     }

@@ -8,7 +8,7 @@ struct Flash : Task {
     bool intOccurred = false;
 
     Flash() {
-        ledPin::direction(ledPin::Direction::Output);
+        ledPin::direction(Direction::Output);
     }
 
     void loop(Clock& clock) override {
@@ -17,7 +17,7 @@ struct Flash : Task {
 
             delay(clock, MS_TO_TICKS(500));
         } else {
-            ledPin::output(ledPin::Value::High);
+            ledPin::output(Value::High);
 
             clock.addInterrupt(interrupt, this, MS_TO_TICKS(50));
 
@@ -28,7 +28,7 @@ struct Flash : Task {
     static void interrupt(void* data) {
         Flash* self = reinterpret_cast<Flash*>(data);
 
-        ledPin::output(ledPin::Value::Low);
+        ledPin::output(Value::Low);
 
         self->intOccurred = true;
         self->wake();

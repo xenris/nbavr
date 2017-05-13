@@ -29,10 +29,10 @@ struct LightSensor : Task {
 
     LightSensor(Stream<char>& stdout, Stream<TWI::Action>& twiout)
     : stdout(stdout), twiout(twiout) {
-        PinC2::direction(PinC2::Direction::Output);
-        PinC3::direction(PinC3::Direction::Output);
-        PinC2::output(PinC2::Value::High);
-        PinC3::output(PinC3::Value::Low);
+        PinC2::direction(Direction::Output);
+        PinC3::direction(Direction::Output);
+        PinC2::output(Value::High);
+        PinC3::output(Value::Low);
 
         lightSensorOnResult = TWI::Result::None;
         lightSensorContHResResult = TWI::Result::None;

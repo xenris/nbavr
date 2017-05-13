@@ -6,7 +6,7 @@
 template <class ledPin>
 struct Flash : Task {
     Flash() {
-        ledPin::direction(ledPin::Direction::Output);
+        ledPin::direction(Direction::Output);
     }
 
     void loop(Clock& clock) override {

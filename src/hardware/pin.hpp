@@ -7,8 +7,8 @@
 /// ## Example
 
 /// ```c++
-/// PinB5::direction(PinB5::Direction::Output);
-/// PinB5::output(PinB5::Value::High);
+/// PinB5::direction(Direction::Output);
+/// PinB5::output(Value::High);
 /// ```
 
 #ifndef NBAVR_PIN_HPP
@@ -23,28 +23,33 @@
 
 //--------------------------------------------------------
 
+#ifndef NBAVR_PIN_ENUMS
+#define NBAVR_PIN_ENUMS
+
+/// #### enum Direction
+/// * Input
+/// * Output
+enum class Direction : int8_t {
+    Input,
+    Output,
+};
+
+/// #### enum Value
+/// * Low
+/// * High
+enum class Value : int8_t {
+    Low,
+    High,
+};
+
+#endif
+
 #define PinXN CONCAT(Pin, PORT, BIT)
 #define C(X) CONCAT(CHIP_PORT_, PORT, _, X)
 
 /// ## Class PinXN
 struct PinXN {
     PinXN() = delete;
-
-    /// #### enum Direction
-    /// * Input
-    /// * Output
-    enum class Direction : int8_t {
-        Input,
-        Output,
-    };
-
-    /// #### enum Value
-    /// * Low
-    /// * High
-    enum class Value : int8_t {
-        Low,
-        High,
-    };
 
     /// #### constexpr [HardwareType](../hardware.hpp.md) getHardwareType()
     /// Get the type of hardware that this class represents.

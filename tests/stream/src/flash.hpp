@@ -9,17 +9,17 @@ struct Flash : Task {
     static const uint32_t pulseLength = MS_TO_TICKS(50);
 
     Flash(Stream<char>& stdin) : stdin(stdin) {
-        ledPin::direction(ledPin::Direction::Output);
+        ledPin::direction(Direction::Output);
     }
 
     void loop(Clock& clock) override {
-        ledPin::output(ledPin::Value::Low);
+        ledPin::output(Value::Low);
 
         char c;
 
         if(stdin.pop(&c)) {
             stdin.clear();
-            ledPin::output(ledPin::Value::High);
+            ledPin::output(Value::High);
             delay(clock, pulseLength);
         }
     }

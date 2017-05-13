@@ -5,7 +5,7 @@ INCLUDE_DEFAULT_CALLBACK;
 void main() {
     typedef PinB5 ledPin;
 
-    ledPin::direction(ledPin::Direction::Output);
+    ledPin::direction(Direction::Output);
 
     while(true) {
         block ledPin::toggle();

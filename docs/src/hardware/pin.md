@@ -4,16 +4,16 @@ N is the pin id (1, 2, etc).<br>
 All functions are static.
 ## Example
 ```c++
-PinB5::direction(PinB5::Direction::Output);
-PinB5::output(PinB5::Value::High);
+PinB5::direction(Direction::Output);
+PinB5::output(Value::High);
 ```
-## Class PinXN
 #### enum Direction
 * Input
 * Output
 #### enum Value
 * Low
 * High
+## Class PinXN
 #### constexpr [HardwareType](../hardware.hpp.md) getHardwareType()
 Get the type of hardware that this class represents.
 #### void direction(Direction)
