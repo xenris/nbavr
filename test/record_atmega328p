@@ -1,0 +1,19 @@
+r Adc::value() fcb1ef0ee26bd5c8c926bc83afe0a23d959a89f7
+w Adc::enable(false) 7a:ff:7f:
+w Adc::enable(true) 7a:00:80:
+w Adc::reference(Adc::Reference::AREF) 7c:ff:3f:
+w Adc::reference(Adc::Reference::AVCC) 7c:00:40:7c:ff:7f:
+w Adc::reference(Adc::Reference::Internal) 7c:00:c0:
+w Adc::start() 7a:00:40:
+w Adc::value()
+w Adc::channel(Adc::Channel::ADC0) 7c:ff:f0:
+w Adc::channel(Adc::Channel::ADC1) 7c:00:01:7c:ff:f1:
+w Adc::channel(Adc::Channel::ADC2) 7c:00:02:7c:ff:f2:
+w Adc::channel(Adc::Channel::ADC3) 7c:00:03:7c:ff:f3:
+w Adc::channel(Adc::Channel::ADC4) 7c:00:04:7c:ff:f4:
+w Adc::channel(Adc::Channel::ADC5) 7c:00:05:7c:ff:f5:
+w Adc::channel(Adc::Channel::ADC6) 7c:00:06:7c:ff:f6:
+w Adc::channel(Adc::Channel::ADC7) 7c:00:07:7c:ff:f7:
+w Adc::channel(Adc::Channel::ADC8) 7c:00:08:7c:ff:f8:
+w Adc::channel(Adc::Channel::GND) 7c:00:0f:
+w Adc::channel(Adc::Channel::VBG) 7c:00:0e:7c:ff:fe:

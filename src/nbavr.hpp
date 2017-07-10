@@ -13,142 +13,287 @@
 #include "half.hpp"
 #include "stream.hpp"
 #include "array.hpp"
-#include "clock.hpp"
+#include "taskmanager.hpp"
 #include "print.hpp"
-#include "task.hpp"
 
 #include "tasks/lcd.hpp"
 #include "tasks/serial.hpp"
 #include "tasks/servo.hpp"
 #include "tasks/twi.hpp"
 
-/// # Task Manager
+// Every clock cycle is 1 / freq seconds. (62.5ns at 16MHz)
+// Every 64 clock cycles is a tick. (4us at 16MHz)
+// Every 2^16 ticks is a tock. (262.144ms at 16MHz)
+// Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
 
-/// ## Example
+#define MAX_TICK_INTERRUPTS 10
+#define DIVISOR 64UL
+#define INTERRUPT_TICK_BUFFER 200
+#define MIN_INTERRUPT_TICK 2
 
-/// ```c++
-/// typedef TimerCounter1 systemTimer;
-/// typedef PinB5 ledPin;
-///
-/// Flash<ledPin> flash;
-///
-/// Task* tasks[] = {&flash};
-///
-/// NBAVR<systemTimer> nbavr(tasks);
-/// ```
+template<class TimerCounter, uint32_t CpuFreq>
+class Nbavr {
+    struct Interrupt {
+        // The callback to use.
+        void (*callback)(void*) = nullptr;
+        // Data to pass into the callback.
+        void* data = nullptr;
+        // The tick at which to perform the callback.
+        uint16_t tick = 0;
+    };
 
-/// ## Class NBAVR\<TimerCounterN\>
+    struct Queue {
+        uint8_t size = 0;
+        uint8_t head = 0;
+        uint8_t tail = 0;
+        Interrupt interrupts[MAX_TICK_INTERRUPTS];
+    };
 
-/// #### NBAVR(Task\*[])
-/// Run an array of tasks.<br>
-/// Requires a 16bit timer/counter.<br>
-/// This constructor does not return.
+    uint16_t _tocks = 0;
+    Queue _interrupts;
+    void (*_haltCallback)(void*) = nullptr;
+    void* _haltCallbackData = nullptr;
 
-
-#define TASK_TIMEOUT MS_TO_TICKS(6)
-
-template <class Timer>
-class NBAVR {
-    Task** tasks;
-    const uint8_t numTasks;
-    uint8_t taskI = 0;
-    ClockT<Timer> clock;
+    Nbavr() {}
+    Nbavr(Nbavr const&);
+    void operator=(Nbavr const&);
 
 public:
+    typedef TimerCounter timer;
+    const uint32_t freq = CpuFreq;
 
-    template <uint8_t S>
-    NBAVR(Task* (&tasks)[S]) : tasks(tasks), numTasks(S) {
-        block Timer::outputBCallback(haltCallback, this);
+    static force_inline void init() {
+        static_assert(TimerCounter::getHardwareType() == HardwareType::TimerCounter, "Nbavr requires a TimerCounter");
+        static_assert(sizeof(typename TimerCounter::type) == 2, "Nbavr requires a 16 bit TimerCounter");
 
-        block WDT::enable();
+        getInstance();
 
-        while(true) {
-            stepAll();
+        atomic {
+            TimerCounter::outputACallback(timerCounterOutputCompareA, nullptr);
+            TimerCounter::overflowCallback(timerCounterOverflow, nullptr);
+            TimerCounter::overflowIntEnable(true);
+            TimerCounter::clock(TimerCounter::Clock::Div64);
         }
     }
 
-private:
-
-    // Run each task once.
-    void stepAll() {
-        for(uint8_t i = 0; i < numTasks; i++) {
-            stepOne();
-        }
-
-        // TODO Sleep the cpu if all tasks are asleep.
+    static force_inline Nbavr& getInstance() {
+        static Nbavr nbavr;
+        return nbavr;
     }
 
-    // Run the next task.
-    void stepOne() {
-        Task& task = *tasks[taskI];
+    static constexpr uint32_t millisToTicks(uint32_t ms) {
+        // const uint32_t CpuFreqMhz = CpuFreq / 1000000;
 
-        WDT::reset();
+        // return ((ms * 1000) + (DIVISOR / CpuFreqMhz / 2)) / (DIVISOR / CpuFreqMhz);
+        // return ((ms * 1000) + (DIVISOR / CpuFreqMhz / 2)) / (DIVISOR / CpuFreqMhz);
 
-        cli();
+        // const uint32_t seconds = ms / 1000;
 
-        if(task.state == Task::State::Delay) {
-            // Check if it is time for this task to wake up.
-            if(int32_t(clock.getTicks_() - task.wakeTick) >= 0) {
-                task.state = Task::State::Awake;
+        // constexpr uint32_t ticksPerSecond = CpuFreq / DIVISOR;
+        // constexpr uint32_t ticksPerMs = ticksPerSecond / 1000;
+        // constexpr uint32_t ticksPerMsRem = ticksPerSecond % 1000;
+
+        // return ms * ticksPerMs + ms * ticksPerMsRem / 1000;
+
+        return (float(ms) * (CpuFreq / 1000) / DIVISOR) + 0.5;
+    }
+
+    static constexpr uint32_t ticksToMillis(uint32_t ticks) {
+        // const uint32_t CpuFreqMhz = CpuFreq / 1000000;
+
+        // return (ticks * (DIVISOR / CpuFreqMhz)) / 1000;
+
+        // return DIVISOR * ticks / (CpuFreq / 1000);
+
+        return (float(ticks) * 1000 * DIVISOR / CpuFreq) + 0.5;
+    }
+
+    // Get the 16 bit hardware counter.
+    static force_inline uint16_t getTicks16() {
+        return TimerCounter::counter();
+    }
+
+    // Get the 32 bit combined hardware and overflow counter.
+    static uint32_t getTicks() {
+        uint32_t ticks;
+
+        atomic {
+            // Get the value of the counter.
+            uint16_t low = getTicks16();
+            // Get the value of the overflow counter.
+            uint16_t high = getInstance()._tocks;
+
+            // Check if the counter has overflowed since atomic started.
+            if(TimerCounter::overflowIntFlag()) {
+                // If it has then there is a possibility that the numbers are not synchronised.
+                // Get the new counter value, and increment "high".
+                low = getTicks16();
+                high++;
+            }
+
+            ticks = (uint32_t(high) << 16) | low;
+        }
+
+        return ticks;
+    }
+
+    static force_inline uint16_t getTocks() {
+        uint16_t tocks;
+
+        atomic {
+            tocks = getInstance()._tocks;
+        }
+
+        return tocks;
+    }
+
+    // Add a tick precision interrupt.
+    static bool addInterrupt(void (*callback)(void*), void* data, uint16_t delay) {
+        atomic {
+            Nbavr& self = getInstance();
+
+            uint16_t now = getTicks16();
+
+            if(callback == nullptr) {
+                return false;
+            }
+
+            // Check if queue is full.
+            if(self._interrupts.size >= MAX_TICK_INTERRUPTS) {
+                return false;
+            }
+
+            // Enforce a minimum delay to prevent missed interrupts.
+            if(delay < MIN_INTERRUPT_TICK) {
+                delay = MIN_INTERRUPT_TICK;
+            }
+
+            // Ensure the delay isn't in the faked negative range.
+            uint16_t limit = 0U - INTERRUPT_TICK_BUFFER - 1U;
+
+            if(delay > limit) {
+                delay = limit;
+            }
+
+            uint16_t interruptTick = now + delay;
+
+            // Add the interrupt to the queue
+            Interrupt interrupt = {callback, data, interruptTick};
+            push(&self._interrupts, now - INTERRUPT_TICK_BUFFER, interrupt);
+
+            // Set the timer to the first interrupt.
+            block TimerCounter::outputA(peek(&self._interrupts).tick);
+
+            // If the queue was previously empty, clear the flag and enable interrupt.
+            if(self._interrupts.size == 1) {
+                atomic {
+                    TimerCounter::outputAIntFlagClear();
+                    TimerCounter::outputAIntEnable(true);
+                }
             }
         }
 
-        // Setup halt callback.
-        atomic {
-            Timer::outputB(clock.getTicks16() + TASK_TIMEOUT);
-            Timer::outputBIntFlagClear();
-            Timer::outputBIntEnable(true);
-        }
-
-        sei();
-
-        if(task.state == Task::State::Awake) {
-            task.loop(clock);
-        }
-
-        // Disable halt callback.
-        block Timer::outputBIntEnable(true);
-
-        taskI = (taskI + 1) % numTasks;
+        return true;
     }
 
-    // Run each task once, excluding the crashed one.
-    void handleHalt() {
-        Task& task = *tasks[taskI];
+private:
+    // Push an interrupt to the queue.
+    // Check queue size before calling.
+    static void push(Queue* queue, uint16_t base, Interrupt interrupt) {
+        Interrupt* interrupts = queue->interrupts;
 
-        task.state = Task::State::Halt;
+        interrupts[queue->tail] = interrupt;
 
-        stepAll();
+        uint8_t t = queue->tail;
+        uint8_t h = queue->head;
 
-        task.state = Task::State::Awake;
+        queue->size++;
+        queue->tail++;
+
+        if(queue->tail >= MAX_TICK_INTERRUPTS) {
+            queue->tail = 0;
+        }
+
+        while(t != h) {
+            uint8_t p;
+
+            if(t == 0) {
+                p = MAX_TICK_INTERRUPTS - 1;
+            } else {
+                p = t - 1;
+            }
+
+            if(compare(base, interrupts[t].tick, interrupts[p].tick)) {
+                Interrupt temp = interrupts[p];
+                interrupts[p] = interrupts[t];
+                interrupts[t] = temp;
+            } else {
+                break;
+            }
+
+            t = p;
+        }
     }
 
-    static void haltCallback(void* data) {
-        NBAVR* self = static_cast<NBAVR*>(data);
+    // Pop an interrupt from the queue.
+    // Check queue size before calling.
+    force_inline static void pop(Queue* queue) {
+        queue->size--;
+        queue->head++;
 
-        self->handleHalt();
+        if(queue->head >= MAX_TICK_INTERRUPTS) {
+            queue->head = 0;
+        }
+    }
+
+    // Look at the top interrupt in the queue.
+    // Will return rubbish if the queue is empty.
+    force_inline static Interrupt peek(Queue* queue) {
+        return queue->interrupts[queue->head];
+    }
+
+    // Indicates which of b or c is closer to a.
+    // true if b is sooner.
+    // otherwise false.
+    force_inline static bool compare(uint16_t a, uint16_t b, uint16_t c) {
+        if((a > b) == (b >= c)) {
+            return a < c;
+        } else {
+            return a > c;
+        }
+    }
+
+    // Called when a tick interrupt occurs.
+    static void timerCounterOutputCompareA(void* data) {
+        Nbavr& self = getInstance();
+
+        loop: ;
+
+        Interrupt interrupt = peek(&self._interrupts);
+
+        interrupt.callback(interrupt.data);
+
+        pop(&self._interrupts);
+
+        if(self._interrupts.size > 0) {
+            uint16_t next = peek(&self._interrupts).tick;
+
+            block TimerCounter::outputA(next);
+            block TimerCounter::outputAIntFlagClear();
+
+            if(!compare(interrupt.tick, self.getTicks16() + 1, next)) {
+                goto loop;
+            }
+        } else {
+            block TimerCounter::outputAIntEnable(false);
+        }
+    }
+
+    static void timerCounterOverflow(void* data) {
+        Nbavr& self = getInstance();
+
+        self._tocks++;
     }
 };
-
-__extension__ typedef int __guard __attribute__((mode (__DI__)));
-
-extern "C" force_inline int __cxa_guard_acquire(__guard *) __attribute__((used));
-extern "C" force_inline void __cxa_guard_release (__guard *) __attribute__((used));
-extern "C" force_inline void __cxa_guard_abort (__guard *) __attribute__((used));
-extern "C" force_inline void __cxa_pure_virtual(void) __attribute__((used));
-
-int __cxa_guard_acquire(__guard *g) {
-    return !*reinterpret_cast<char*>(g);
-}
-
-void __cxa_guard_release(__guard *g) {
-    *reinterpret_cast<char*>(g) = 1;
-}
-
-void __cxa_pure_virtual(void) {
-}
-
-void __cxa_guard_abort (__guard *) {
-}
 
 #endif

@@ -67,23 +67,31 @@
 #define force_inline inline __attribute__((always_inline))
 
 force_inline void nop() {
+    #ifndef TEST
     __asm__ __volatile__ ("nop");
+    #endif
 }
 
 force_inline void _MemoryBarrier(const uint8_t *s = nullptr) {
+    #ifndef TEST
     __asm__ __volatile__("":::"memory");
+    #endif
 }
 
 /// #### void cli()
 /// Clear the global interrupt flag.
 force_inline void cli() {
+    #ifndef TEST
     __asm__ __volatile__ ("cli" ::: "memory");
+    #endif
 }
 
 /// #### void sei()
 /// Set the global interrupt flag.
 force_inline void sei() {
+    #ifndef TEST
     __asm__ __volatile__ ("sei" ::: "memory");
+    #endif
 }
 
 force_inline uint8_t __cli() {

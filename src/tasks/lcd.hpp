@@ -2,11 +2,13 @@
 #define NBAVR_LCD_HPP
 
 #include <nbavr.hpp>
+#ifndef TEST
 // FIXME Shouldn't really be using these blocking calls...?
 #include <util/delay.h>
-
-// #define _delay_us(n)
-// #define _delay_ms(n)
+#else
+#define _delay_us(n)
+#define _delay_ms(n)
+#endif
 
 // \r = clear display and return curser to home position.
 // \n = move to start of next line, wrapping to first line.
@@ -33,7 +35,7 @@
 #define FUNCTION_FOUR_BITS_TWO_LINES 0x28
 #define SET_DDRAM_ADDRESS 0x80
 
-template <class D4, class D5, class D6, class D7, class RW, class RS, class E>
+template <class Nbavr, class D4, class D5, class D6, class D7, class RW, class RS, class E>
 class LCD : public Task {
     struct Range {
         uint8_t min;
@@ -51,7 +53,7 @@ class LCD : public Task {
     static constexpr uint8_t lineCount = 2;
     static constexpr uint8_t lineLength = 16;
 
-    typedef void (LCD::*StateFunction)(Clock& clock);
+    typedef void (LCD::*StateFunction)();
 
     bool firstRun = true;
     StateFunction state;
@@ -80,21 +82,21 @@ public:
     }
 
 private:
-    void loop(Clock& clock) override {
+    void loop() override {
         if(firstRun) {
             firstRun = false;
 
-            delay(clock, MS_TO_TICKS(50));
+            sleep(Nbavr::getTicks() + Nbavr::millisToTicks(50));
         } else {
             if(busy()) {
                 return;
             }
 
-            (this->*state)(clock);
+            (this->*state)();
         }
     }
 
-    void run(Clock& clock) {
+    void run() {
         char byte = 0;
         char x = 0;
         char y = 0;
@@ -125,7 +127,7 @@ private:
                 }
             }
         } else {
-            delay(clock, MS_TO_TICKS(20));
+            sleep(Nbavr::getTicks() + Nbavr::millisToTicks(20));
         }
     }
 
@@ -191,7 +193,7 @@ private:
         return coord;
     }
 
-    void clearCurrentLine(Clock& clock) {
+    void clearCurrentLine() {
         uint8_t count = 255;
         uint8_t address = 0;
 
@@ -211,7 +213,7 @@ private:
         count++;
     }
 
-    void stepBack(Clock& clock) {
+    void stepBack() {
         sendByte(false, CURSER_LEFT);
         state = &LCD::run;
     }
@@ -285,56 +287,56 @@ private:
         return data;
     }
 
-    void init0(Clock& clock) {
+    void init0() {
         // Reset 1
         sendNibble(false, 0x3);
         state = &LCD::init1;
-        delay(clock, MS_TO_TICKS(5));
+        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(5));
     }
 
-    void init1(Clock& clock) {
+    void init1() {
         // Reset 2
         sendNibble(false, 0x3);
         state = &LCD::init2;
-        delay(clock, MS_TO_TICKS(1));
+        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
     }
 
-    void init2(Clock& clock) {
+    void init2() {
         // Reset 3
         sendNibble(false, 0x3);
         state = &LCD::init3;
-        delay(clock, MS_TO_TICKS(1));
+        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
     }
 
-    void init3(Clock& clock) {
+    void init3() {
         // initial 4 bit mode
         sendNibble(false, 0x2);
         state = &LCD::init4;
-        delay(clock, MS_TO_TICKS(1));
+        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
     }
 
-    void init4(Clock& clock) {
+    void init4() {
         sendByte(false, FUNCTION_FOUR_BITS_TWO_LINES);
         state = &LCD::init5;
-        delay(clock, MS_TO_TICKS(1));
+        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
     }
 
-    void init5(Clock& clock) {
+    void init5() {
         sendByte(false, DISPLAY_ON);
         state = &LCD::init6;
-        delay(clock, MS_TO_TICKS(1));
+        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
     }
 
-    void init6(Clock& clock) {
+    void init6() {
         sendByte(false, CLEAR_DISPLAY);
         state = &LCD::init7;
-        delay(clock, MS_TO_TICKS(4));
+        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(4));
     }
 
-    void init7(Clock& clock) {
+    void init7() {
         sendByte(false, ENTRY_MODE_RIGHT);
         state = &LCD::run;
-        delay(clock, MS_TO_TICKS(1));
+        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
     }
 };
 

@@ -6,6 +6,11 @@
 #define NBAVR_CHIP_DEFINED
 
 //------------------------------------------------
+// Ram Size
+
+#define CHIP_RAM_SIZE                                                   1024
+
+//------------------------------------------------
 // Status Register
 
 #define CHIP_STATUS_REG                                                 REG8(0x5F)

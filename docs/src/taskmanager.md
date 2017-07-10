@@ -3,15 +3,16 @@
 ```c++
 typedef TimerCounter1 systemTimer;
 typedef PinB5 ledPin;
+typedef Nbavr<systemTimer, 16000000> Nbavr;
 
-Flash<ledPin> flash;
+Flash<Nbavr, ledPin> flash;
 
 Task* tasks[] = {&flash};
 
-NBAVR<systemTimer> nbavr(tasks);
+TaskManager<Nbavr> tm(tasks);
 ```
-## Class NBAVR\<TimerCounterN\>
-#### NBAVR(Task\*[])
+## Class TaskManager\<Nbavr\>
+#### TaskManager(Task\*[])
 Run an array of tasks.<br>
 Requires a 16bit timer/counter.<br>
 This constructor does not return.

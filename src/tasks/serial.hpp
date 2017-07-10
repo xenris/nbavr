@@ -4,7 +4,13 @@
 #define BAUD 9600
 
 #include <nbavr.hpp>
+
+#ifndef TEST
 #include <util/setbaud.h>
+#else
+#define UBRR_VALUE 1
+#define USE_2X 1
+#endif
 
 template <class Usart>
 class Serial : public Task {
@@ -29,7 +35,7 @@ public:
     }
 
 private:
-    void loop(Clock& clock) override {
+    void loop() override {
         if(!stdout.empty()) {
             Usart::dataRegisterEmptyIntEnable(true);
         }

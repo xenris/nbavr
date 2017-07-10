@@ -2,8 +2,12 @@
 #define NBAVR_WATCHDOG_HPP
 
 // TODO Add enum class to indicate what sort of reset occured.
+// TODO Some things have been excluded from testing. Need to work out how to
+//  include them.
 
+#ifndef TEST
 uint8_t _resetStatus __attribute__((section(".noinit")));
+#endif
 
 struct WDT {
     WDT() = delete;
@@ -13,7 +17,9 @@ struct WDT {
     }
 
     static force_inline void reset() {
+        #ifndef TEST
         __asm__ __volatile__ ("wdr");
+        #endif
     }
 
     static force_inline void enable() {
@@ -31,6 +37,7 @@ struct WDT {
     }
 };
 
+#ifndef TEST
 void _getResetStatus() __attribute__((used, naked, section(".init3")));
 void _getResetStatus() {
    _resetStatus = *CHIP_RESET_STATUS_REG;
@@ -38,5 +45,6 @@ void _getResetStatus() {
 
    WDT::disable();
 }
+#endif
 
 #endif

@@ -77,6 +77,7 @@
 #define twiClearInt() *TWCR = (bv(TWINT) | bv(TWEN))
 #define twiClearError() *TWCR = (bv(TWINT) | bv(TWSTO) | bv(TWEN))
 
+template <class Nbavr>
 class TWI : public Task {
     public:
         enum class Mode : uint8_t {
@@ -120,7 +121,7 @@ class TWI : public Task {
 
         TWI(Stream<Action>& twiout) : twiout(twiout) {
             const uint32_t scaleFactor = 1;
-            *TWBR = uint8_t((((F_CPU / 1000UL) / TWI_BAUD) - 16UL) / (2UL * scaleFactor));
+            *TWBR = uint8_t((((Nbavr::freq / 1000UL) / TWI_BAUD) - 16UL) / (2UL * scaleFactor));
 
             twiEnable();
 
@@ -131,7 +132,7 @@ class TWI : public Task {
 
     protected:
 
-        void loop(Clock& clock) override {
+        void loop() override {
             if(ready || repeatStartRequested) {
                 if(twiout.pop(&action)) {
                     ready = false;

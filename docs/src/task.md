@@ -1,7 +1,7 @@
 # Tasks
 ## Example
 ```c++
-template <class ledPin>
+template <class Nbavr, class ledPin>
 struct Flash : Task {
     Flash() {
         ledPin::direction(ledPin::Direction::Output);
@@ -10,15 +10,15 @@ struct Flash : Task {
     void loop(Clock& clock) override {
         ledPin::toggle();
 
-        delay(clock, MS_TO_TICKS(500));
+        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(500));
     }
 };
 ```
 ## Class Task
-#### void **delay**(Clock&, uint32_t)
-Delay this task for some number of ticks.
+#### void **sleep**(uint32_t time)
+Put this task to sleep until time.
 #### void **sleep**()
-Put this task to sleep.
+Put this task to sleep until woken with wake().
 #### void **wake**()
 Wake this task from sleep or delay.
 #### virtual void **loop**()

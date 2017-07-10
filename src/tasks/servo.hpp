@@ -7,10 +7,11 @@
 
 #include <nbavr.hpp>
 
-#define SERVO_MIN_TIME US_TO_TICKS(600)
-#define SERVO_MAX_TIME US_TO_TICKS(2400)
-#define SERVO_UPDATE_DELAY MS_TO_TICKS(20)
+#define SERVO_MIN_TIME Nbavr::microsToTick(600)
+#define SERVO_MAX_TIME Nbavr::microsToTick(2400)
+#define SERVO_UPDATE_DELAY Nbavr::millisToTick(20)
 
+template <class Nbavr>
 class Servo {
     bool _awake = false;
     int8_t _positionCurrent = 0;
@@ -77,8 +78,8 @@ public:
     virtual void pulseEnd() const = 0;
 };
 
-template <class Pin>
-struct ServoT : Servo {
+template <class Nbavr, class Pin>
+struct ServoT : Servo<Nbavr> {
     ServoT() {
         static_assert(Pin::getHardwareType() == HardwareType::Pin, "ServoT requires a Pin");
 
@@ -95,22 +96,23 @@ struct ServoT : Servo {
     }
 };
 
+template <class Nbavr>
 class ServoManager : public Task {
-    Servo** _servos;
+    Servo<Nbavr>** _servos;
     const uint8_t _servoCount;
     int8_t index = 0;
     uint16_t start = 0;
-    Servo* _activeServo = nullptr;
+    Servo<Nbavr>* _activeServo = nullptr;
 
 public:
     template <uint8_t S>
-    ServoManager(Servo* (&servos)[S]) : _servos(servos), _servoCount(S) {
+    ServoManager(Servo<Nbavr>* (&servos)[S]) : _servos(servos), _servoCount(S) {
     }
 
 private:
-    void loop(Clock& clock) override {
+    void loop() override {
         if(index == 0) {
-            start = clock.getTicks16();
+            start = Nbavr::getTicks16();
         }
 
         if(index < _servoCount) {
@@ -120,7 +122,7 @@ private:
                 uint16_t pulseLength = _activeServo->update();
 
                 atomic {
-                    if(clock.addInterrupt_(end, this, pulseLength)) {
+                    if(Nbavr::addInterrupt(end, this, pulseLength)) {
                         // _activeServo->pin() = Pin::Value::High;
                         _activeServo->pulseStart();
                         sleep();
@@ -132,10 +134,10 @@ private:
         } else {
             index = 0;
 
-            uint16_t diff = clock.getTicks16() - start;
+            uint16_t diff = Nbavr::getTicks16() - start;
 
             if(diff < SERVO_UPDATE_DELAY) {
-                delay(clock, SERVO_UPDATE_DELAY - diff);
+                sleep(Nbavr::getTicks() + (SERVO_UPDATE_DELAY - diff));
             }
         }
     }
