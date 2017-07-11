@@ -1,6 +1,6 @@
 #define __AVR_ATmega8__
 
-#define CHIP "atmega8"
+#define RECORD_ID "atmega8"
 
 #include "test.hpp"
 

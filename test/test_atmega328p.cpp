@@ -1,6 +1,6 @@
 #define __AVR_ATmega328P__
 
-#define CHIP "atmega328p"
+#define RECORD_ID "atmega328p"
 
 #include "test.hpp"
 

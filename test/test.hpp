@@ -3,8 +3,8 @@
 #include <fstream>
 #include <nbavr.hpp>
 
-#ifndef CHIP
-    #error CHIP not defined
+#ifndef RECORD_ID
+    #error RECORD_ID not defined
 #endif
 
 // TODO Ensure correct program flow. (Tasks take turns. Halted tasks don't
@@ -38,7 +38,7 @@ struct MyEnvironment : public ::testing::Environment {
         record = new std::map<std::string, std::string>();
         missing = new std::map<std::string, std::string>();
 
-        std::string recordPath = "record_" + std::string(CHIP);
+        std::string recordPath = "record_" + std::string(RECORD_ID);
 
         std::fstream recordFile(recordPath, std::fstream::out | std::fstream::in | std::fstream::app);
 
