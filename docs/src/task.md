@@ -15,8 +15,8 @@ struct Flash : Task {
 };
 ```
 ## Class Task
-#### void **sleep**(uint32_t time)
-Put this task to sleep until time.
+#### void **sleep**(uint32_t tick)
+Put this task to sleep until tick.
 #### void **sleep**()
 Put this task to sleep until woken with wake().
 #### void **wake**()

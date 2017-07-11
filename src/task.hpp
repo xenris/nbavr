@@ -32,10 +32,10 @@ struct Task {
     State state = State::Awake;
     uint32_t wakeTick = 0;
 
-    /// #### void **sleep**(uint32_t time)
-    /// Put this task to sleep until time.
-    void sleep(uint32_t time) {
-        wakeTick = time;
+    /// #### void **sleep**(uint32_t tick)
+    /// Put this task to sleep until tick.
+    void sleep(uint32_t tick) {
+        wakeTick = tick;
         state = State::Delay;
     }
 
