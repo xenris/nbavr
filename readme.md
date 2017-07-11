@@ -25,7 +25,7 @@ A c++ library for 8-bit Atmel microprocessors.
 
 Beta
 
-The code is stable but some things may change and more things will be added.
+The code is mostly stable, some things may not work, things will change, and more things will be added.
 
 ## Using this library
 

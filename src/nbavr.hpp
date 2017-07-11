@@ -1,3 +1,19 @@
+/// # Nbavr
+///
+/// ## Example
+
+/// ```c++
+/// const uint32_t CpuFreq = 16000000;
+///
+/// typedef TimerCounter1 systemTimer;
+///
+/// typedef Nbavr<systemTimer, CpuFreq> Nbavr;
+///
+/// uint32_t ticks = Nbavr::getTicks();
+///
+/// uint32_t millis = Nbavr::ticksToMillis(tick);
+/// ```
+
 #ifndef NBAVR_HPP
 #define NBAVR_HPP
 
@@ -21,16 +37,17 @@
 #include "tasks/servo.hpp"
 #include "tasks/twi.hpp"
 
-// Every clock cycle is 1 / freq seconds. (62.5ns at 16MHz)
-// Every 64 clock cycles is a tick. (4us at 16MHz)
-// Every 2^16 ticks is a tock. (262.144ms at 16MHz)
-// Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
+/// Every clock cycle is 1 / freq seconds. (62.5ns at 16MHz)<br>
+/// Every 64 clock cycles is a tick. (4us at 16MHz)<br>
+/// Every 2^16 ticks is a tock. (262.144ms at 16MHz)<br>
+/// Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
 
 #define MAX_TICK_INTERRUPTS 10
 #define DIVISOR 64UL
 #define INTERRUPT_TICK_BUFFER 200
 #define MIN_INTERRUPT_TICK 2
 
+/// ## class Nbavr<class TimerCounter, uint32_t CpuFreq>
 template<class TimerCounter, uint32_t CpuFreq>
 class Nbavr {
     struct Interrupt {
@@ -62,6 +79,8 @@ public:
     typedef TimerCounter timer;
     const uint32_t freq = CpuFreq;
 
+    /// #### static void init()
+    /// Initialises the Nbavr singleton and the clock.
     static force_inline void init() {
         static_assert(TimerCounter::getHardwareType() == HardwareType::TimerCounter, "Nbavr requires a TimerCounter");
         static_assert(sizeof(typename TimerCounter::type) == 2, "Nbavr requires a 16 bit TimerCounter");
@@ -81,6 +100,8 @@ public:
         return nbavr;
     }
 
+    /// #### static constexpr uint32_t millisToTicks(uint32_t ms)
+    /// Converts milliseconds to ticks.
     static constexpr uint32_t millisToTicks(uint32_t ms) {
         // const uint32_t CpuFreqMhz = CpuFreq / 1000000;
 
@@ -98,6 +119,8 @@ public:
         return (float(ms) * (CpuFreq / 1000) / DIVISOR) + 0.5;
     }
 
+    /// #### static constexpr uint32_t ticksToMillis(uint32_t ms)
+    /// Converts ticks to milliseconds.
     static constexpr uint32_t ticksToMillis(uint32_t ticks) {
         // const uint32_t CpuFreqMhz = CpuFreq / 1000000;
 
@@ -108,12 +131,17 @@ public:
         return (float(ticks) * 1000 * DIVISOR / CpuFreq) + 0.5;
     }
 
-    // Get the 16 bit hardware counter.
+    /// #### static uint16_t getTicks16()
+    /// Gets the current value of the 16 bit tick counter.<br>
+    /// Wraps every 2^16 ticks. (262.144ms at 16MHz)
     static force_inline uint16_t getTicks16() {
+        // FIXME This should probably have a "block".
         return TimerCounter::counter();
     }
 
-    // Get the 32 bit combined hardware and overflow counter.
+    /// #### static uint32_t getTicks()
+    /// Gets the current value of the 32 bit tick counter.<br>
+    /// Wraps every 2^32 ticks. (4.77 hours at 16Mhz)
     static uint32_t getTicks() {
         uint32_t ticks;
 
@@ -137,6 +165,9 @@ public:
         return ticks;
     }
 
+    /// #### static uint16_t getTocks()
+    /// Gets the current value of the 16 bit tock counter.<br>
+    /// Wraps every 2^16 tocks. (4.77 hours at 16Mhz)
     static force_inline uint16_t getTocks() {
         uint16_t tocks;
 
@@ -147,7 +178,9 @@ public:
         return tocks;
     }
 
-    // Add a tick precision interrupt.
+    /// #### static bool addInterrupt(void (*callback)(void*), void* data, uint16_t delay)
+    /// Add a tick precision interrupt.<br>
+    /// Returns true if successful.
     static bool addInterrupt(void (*callback)(void*), void* data, uint16_t delay) {
         atomic {
             Nbavr& self = getInstance();

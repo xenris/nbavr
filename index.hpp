@@ -2,8 +2,9 @@
 
 /// ## Index
 
+/// * [Nbavr](src/nbavr.md)
 /// * [Tasks](src/task.md)
-/// * [TaskManager](src/nbavr.md)
+/// * [TaskManager](src/taskmanager.md)
 /// * Hardware
 ///     * [Analog to Digital](src/hardware/adc.md)
 ///     * [External Interrupts](src/hardware/exint.md)
@@ -13,7 +14,7 @@
 ///     * [Timer/Counters](src/hardware/timercounter.md)
 ///     * [USARTs](src/hardware/usart.md)
 ///     * [Utils](src/hardware/util.md)
-/// * [Examples](../tests)
+/// * [Example](https://github.com/xenris/nbavr-project-template)
 
 /// ## Editing documentation
 
