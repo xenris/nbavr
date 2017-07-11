@@ -84,7 +84,7 @@ struct MyEnvironment : public ::testing::Environment {
 
 // Macros for testing function side effects and memory access.
 
-#define TEST_MEM_WRITE(FUNC) \
+#define TEST_RAM_WRITE(FUNC) \
     { \
         std::stringstream ss; \
         for(int _c = 0x00; ; _c = 0xff) { \
@@ -114,7 +114,7 @@ struct MyEnvironment : public ::testing::Environment {
         } \
     }
 
-#define TEST_MEM_READ(FUNC) \
+#define TEST_RAM_READ(FUNC) \
     { \
         unsigned long _seed = 59329876; \
         std::stringstream ss; \
