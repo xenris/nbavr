@@ -46,7 +46,7 @@ struct Task {
     }
 
     /// #### void **wake**()
-    /// Wake this task from sleep or delay.
+    /// Wake this task from sleep.
     void wake() {
         if(state != State::Halt) {
             state = State::Awake;

@@ -20,6 +20,6 @@ Put this task to sleep until tick.
 #### void **sleep**()
 Put this task to sleep until woken with wake().
 #### void **wake**()
-Wake this task from sleep or delay.
+Wake this task from sleep.
 #### virtual void **loop**()
 The main loop of the task. Override this and fill with your own code.
