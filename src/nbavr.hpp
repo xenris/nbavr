@@ -5,13 +5,21 @@
 /// ```c++
 /// const uint32_t CpuFreq = 16000000;
 ///
+/// typedef PinB5 ledPin;
 /// typedef TimerCounter1 systemTimer;
 ///
 /// typedef Nbavr<systemTimer, CpuFreq> Nbavr;
 ///
-/// uint32_t ticks = Nbavr::getTicks();
+/// Flash<Nbavr, ledPin> flash;
 ///
-/// uint32_t millis = Nbavr::ticksToMillis(tick);
+/// Task* tasks[] = {&flash};
+///
+/// Nbavr::run(tasks);
+///
+///
+/// // Within Flash::loop()
+/// uint32_t ticks = Nbavr::getTicks();
+/// uint32_t millis = Nbavr::ticksToMillis(ticks);
 /// ```
 
 #ifndef NBAVR_HPP
@@ -79,13 +87,18 @@ public:
     typedef TimerCounter timer;
     const uint32_t freq = CpuFreq;
 
-    /// #### static void init()
-    /// Initialises the Nbavr singleton and the clock.
-    static force_inline void init() {
+    static force_inline Nbavr& getInstance() {
+        static Nbavr nbavr;
+        return nbavr;
+    }
+
+    /// #### static void run(Task\*[])
+    /// Run an array of tasks.<br>
+    /// This function does not return.
+    template <uint8_t S>
+    static force_inline void run(Task* (&tasks)[S]) {
         static_assert(TimerCounter::getHardwareType() == HardwareType::TimerCounter, "Nbavr requires a TimerCounter");
         static_assert(sizeof(typename TimerCounter::type) == 2, "Nbavr requires a 16 bit TimerCounter");
-
-        getInstance();
 
         atomic {
             TimerCounter::outputACallback(timerCounterOutputCompareA, nullptr);
@@ -93,11 +106,8 @@ public:
             TimerCounter::overflowIntEnable(true);
             TimerCounter::clock(TimerCounter::Clock::Div64);
         }
-    }
 
-    static force_inline Nbavr& getInstance() {
-        static Nbavr nbavr;
-        return nbavr;
+        TaskManager<Nbavr<TimerCounter, CpuFreq>> tm(tasks);
     }
 
     /// #### static constexpr uint32_t millisToTicks(uint32_t ms)
@@ -328,5 +338,26 @@ private:
         self._tocks++;
     }
 };
+
+__extension__ typedef int __guard __attribute__((mode (__DI__)));
+
+extern "C" force_inline int __cxa_guard_acquire(__guard *) __attribute__((used));
+extern "C" force_inline void __cxa_guard_release (__guard *) __attribute__((used));
+extern "C" force_inline void __cxa_guard_abort (__guard *) __attribute__((used));
+extern "C" force_inline void __cxa_pure_virtual(void) __attribute__((used));
+
+int __cxa_guard_acquire(__guard *g) {
+    return !*reinterpret_cast<char*>(g);
+}
+
+void __cxa_guard_release(__guard *g) {
+    *reinterpret_cast<char*>(g) = 1;
+}
+
+void __cxa_pure_virtual(void) {
+}
+
+void __cxa_guard_abort (__guard *) {
+}
 
 #endif

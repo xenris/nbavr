@@ -7,7 +7,7 @@ N is the timer/counter id (1, 2, etc).<br>
 X is the output compare id (A, B, etc).<br>
 T is the type of the timer's counter, either uint8_t or uint16_t.<br>
 All functions are static.
-#### macro INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(N)
+#### macro INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(N, X)
 Include this to use TimerCounter output compare callbacks.
 #### macro INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(N)
 Include this to use TimerCounter overflow callbacks.
