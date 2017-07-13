@@ -5,6 +5,7 @@
 
 // Milliseconds until a task is considered to have halted.
 #define TASK_TIMEOUT_MS 6
+#define TASK_TIMEOUT_HALTED_MS 1
 
 /// # Task Manager
 
@@ -48,7 +49,6 @@ public:
         }
     }
 
-
 private:
 
     // Run each task once.
@@ -66,28 +66,32 @@ private:
 
         WDT::reset();
 
-        cli();
+        sei();
 
         if(task.state == Task::State::Delay) {
             // Check if it is time for this task to wake up.
-            if(int32_t(Nbavr::getTicks() - task.wakeTick) >= 0) {
+            uint32_t wakeTick;
+
+            atomic {
+                wakeTick = task.wakeTick;
+            }
+
+            if(int32_t(Nbavr::getTicks() - wakeTick) >= 0) {
                 task.state = Task::State::Awake;
             }
         }
 
-        // Setup halt callback.
-        block Nbavr::timer::outputB(Nbavr::getTicks16() + Nbavr::millisToTicks(TASK_TIMEOUT_MS));
-        block Nbavr::timer::outputBIntFlagClear();
-        block Nbavr::timer::outputBIntEnable(true);
-
-        sei();
-
         if(task.state == Task::State::Awake) {
-            task.loop();
-        }
+            // Setup halt callback.
+            block Nbavr::timer::outputB(Nbavr::getTicks16() + Nbavr::millisToTicks(TASK_TIMEOUT_MS));
+            block Nbavr::timer::outputBIntFlagClear();
+            block Nbavr::timer::outputBIntEnable(true);
 
-        // Disable halt callback.
-        block Nbavr::timer::outputBIntEnable(false);
+            task.loop();
+
+            // Disable halt callback.
+            block Nbavr::timer::outputBIntEnable(false);
+        }
 
         taskI = (taskI + 1) % numTasks;
     }
@@ -101,6 +105,11 @@ private:
         stepAll();
 
         task.state = Task::State::Awake;
+
+        // Setup halt callback.
+        block Nbavr::timer::outputB(Nbavr::getTicks16() + Nbavr::millisToTicks(TASK_TIMEOUT_HALTED_MS));
+        block Nbavr::timer::outputBIntFlagClear();
+        block Nbavr::timer::outputBIntEnable(true);
     }
 
     static void haltCallback(void* data) {
