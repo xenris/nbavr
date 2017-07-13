@@ -207,7 +207,7 @@
 //------------------------------------------------
 // Pin Change Interrupts
 
-#define CHIP_PCINT_COUNT                                                2
+#define CHIP_PCINT_COUNT                                                3
 
 #define CHIP_PCINT_0                                                    TRUE
 #define CHIP_PCINT_0_ENABLE_REG                                         REG8(0x68)
@@ -272,8 +272,8 @@
 #define CHIP_TIMERCOUNTER_0_CLOCK_64_ID                                 3
 #define CHIP_TIMERCOUNTER_0_CLOCK_256_ID                                4
 #define CHIP_TIMERCOUNTER_0_CLOCK_1024_ID                               5
-#define CHIP_TIMERCOUNTER_0_CLOCK_FALLING_ID                            6
-#define CHIP_TIMERCOUNTER_0_CLOCK_RISING_ID                             7
+#define CHIP_TIMERCOUNTER_0_CLOCK_EXT_FALLING_ID                        6
+#define CHIP_TIMERCOUNTER_0_CLOCK_EXT_RISING_ID                         7
 #define CHIP_TIMERCOUNTER_0_CLOCK_BIT_0_REG                             REG8(0x45)
 #define CHIP_TIMERCOUNTER_0_CLOCK_BIT_1_REG                             REG8(0x45)
 #define CHIP_TIMERCOUNTER_0_CLOCK_BIT_2_REG                             REG8(0x45)
@@ -358,8 +358,8 @@
 #define CHIP_TIMERCOUNTER_1_CLOCK_64_ID                                 3
 #define CHIP_TIMERCOUNTER_1_CLOCK_256_ID                                4
 #define CHIP_TIMERCOUNTER_1_CLOCK_1024_ID                               5
-#define CHIP_TIMERCOUNTER_1_CLOCK_FALLING_ID                            6
-#define CHIP_TIMERCOUNTER_1_CLOCK_RISING_ID                             7
+#define CHIP_TIMERCOUNTER_1_CLOCK_EXT_FALLING_ID                        6
+#define CHIP_TIMERCOUNTER_1_CLOCK_EXT_RISING_ID                         7
 #define CHIP_TIMERCOUNTER_1_CLOCK_BIT_0_REG                             REG8(0x81)
 #define CHIP_TIMERCOUNTER_1_CLOCK_BIT_1_REG                             REG8(0x81)
 #define CHIP_TIMERCOUNTER_1_CLOCK_BIT_2_REG                             REG8(0x81)

@@ -65,7 +65,11 @@ struct MyEnvironment : public ::testing::Environment {
             key += ' ';
             key += function;
 
-            record->insert(std::pair<std::string, std::string>(key, value));
+            if(record->find(key) == record->end()) {
+                record->insert(std::pair<std::string, std::string>(key, value));
+            } else {
+                ADD_FAILURE() << "Duplicate record: " << key;
+            }
         }
 
         recordFile.close();
@@ -114,7 +118,8 @@ struct MyEnvironment : public ::testing::Environment {
         } \
     }
 
-#define TEST_RAM_READ(FUNC) \
+#define TEST_RAM_READ_WRITE(FUNC) \
+    TEST_RAM_WRITE(FUNC) \
     { \
         unsigned long _seed = 59329876; \
         std::stringstream ss; \
