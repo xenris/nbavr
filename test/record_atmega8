@@ -29,11 +29,11 @@ r PortD::pullup() 91975de3292ff57bc1c7
 r TimerCounter0::counter() bef6eea61d554d57db5
 r TimerCounter0::overflowIntFlag() 1100110010
 r TimerCounter1::counter() f7618c76208bb59f49b4
-r TimerCounter1::outputA() d62d4319b061df38ae0
-r TimerCounter1::outputB() 89a684227f9d7a187593
+r TimerCounter1::OutputCompareA::value() d62d4319b061df38ae0
+r TimerCounter1::OutputCompareB::value() 89a684227f9d7a187593
 r TimerCounter1::overflowIntFlag() 1111110000
 r TimerCounter2::counter() 56734fec496643df3c59
-r TimerCounter2::outputA() 5afb5b7c5cfd5d7e5eff
+r TimerCounter2::OutputCompareA::value() 5afb5b7c5cfd5d7e5eff
 r TimerCounter2::overflowIntFlag() 0000101011
 r Usart0::dataOverRun() 0010110100
 r Usart0::frameError() 1110001100
@@ -195,18 +195,18 @@ w TimerCounter1::counter()
 w TimerCounter1::counter(0x0000) 4c:ff:00:
 w TimerCounter1::counter(0x3c3c) 4c:00:3c:4c:ff:3c:
 w TimerCounter1::counter(0xffff) 4c:00:ff:
-w TimerCounter1::outputA()
-w TimerCounter1::outputA(0x3c3c) 4a:00:3c:4a:ff:3c:
-w TimerCounter1::outputAMode(TimerCounter1::OutputMode::Clear) 4f:00:80:4f:ff:bf:
-w TimerCounter1::outputAMode(TimerCounter1::OutputMode::Disconnected) 4f:ff:3f:
-w TimerCounter1::outputAMode(TimerCounter1::OutputMode::Set) 4f:00:c0:
-w TimerCounter1::outputAMode(TimerCounter1::OutputMode::Toggle) 4f:00:40:4f:ff:7f:
-w TimerCounter1::outputB()
-w TimerCounter1::outputB(0x3c3c) 48:00:3c:48:ff:3c:
-w TimerCounter1::outputBMode(TimerCounter1::OutputMode::Clear) 4f:00:20:4f:ff:ef:
-w TimerCounter1::outputBMode(TimerCounter1::OutputMode::Disconnected) 4f:ff:cf:
-w TimerCounter1::outputBMode(TimerCounter1::OutputMode::Set) 4f:00:30:
-w TimerCounter1::outputBMode(TimerCounter1::OutputMode::Toggle) 4f:00:10:4f:ff:df:
+w TimerCounter1::OutputCompareA::value()
+w TimerCounter1::OutputCompareA::value(0x3c3c) 4a:00:3c:4a:ff:3c:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Clear) 4f:00:80:4f:ff:bf:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Disconnected) 4f:ff:3f:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Set) 4f:00:c0:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Toggle) 4f:00:40:4f:ff:7f:
+w TimerCounter1::OutputCompareB::value()
+w TimerCounter1::OutputCompareB::value(0x3c3c) 48:00:3c:48:ff:3c:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Clear) 4f:00:20:4f:ff:ef:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Disconnected) 4f:ff:cf:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Set) 4f:00:30:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Toggle) 4f:00:10:4f:ff:df:
 w TimerCounter1::overflowCallback(func,&data)
 w TimerCounter1::overflowIntEnable(false) 59:ff:fb:
 w TimerCounter1::overflowIntEnable(true) 59:00:04:
@@ -230,12 +230,12 @@ w TimerCounter2::counter()
 w TimerCounter2::counter(0x00) 44:ff:00:
 w TimerCounter2::counter(0x3c) 44:00:3c:44:ff:3c:
 w TimerCounter2::counter(0xff) 44:00:ff:
-w TimerCounter2::outputA()
-w TimerCounter2::outputA(0x3c) 43:00:3c:43:ff:3c:
-w TimerCounter2::outputAMode(TimerCounter2::OutputMode::Clear) 45:00:20:45:ff:ef:
-w TimerCounter2::outputAMode(TimerCounter2::OutputMode::Disconnected) 45:ff:cf:
-w TimerCounter2::outputAMode(TimerCounter2::OutputMode::Set) 45:00:30:
-w TimerCounter2::outputAMode(TimerCounter2::OutputMode::Toggle) 45:00:10:45:ff:df:
+w TimerCounter2::OutputCompareA::value()
+w TimerCounter2::OutputCompareA::value(0x3c) 43:00:3c:43:ff:3c:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Clear) 45:00:20:45:ff:ef:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Disconnected) 45:ff:cf:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Set) 45:00:30:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Toggle) 45:00:10:45:ff:df:
 w TimerCounter2::overflowCallback(func,&data)
 w TimerCounter2::overflowIntEnable(false) 59:ff:bf:
 w TimerCounter2::overflowIntEnable(true) 59:00:40:

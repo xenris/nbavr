@@ -6,6 +6,11 @@
 #define NBAVR_CHIP_DEFINED
 
 //------------------------------------------------
+// Ram Size
+
+#define CHIP_RAM_SIZE                                                   X
+
+//------------------------------------------------
 // Status Register
 
 #define CHIP_STATUS_REG                                                 REG8(0xXX)
@@ -136,23 +141,27 @@
 //------------------------------------------------
 // External Interrupts
 
-#define CHIP_EXINT_X                                                      TRUE
-#define CHIP_EXINT_X_ENABLE_REG                                           REG8(0xXX)
-#define CHIP_EXINT_X_ENABLE_BIT                                           X
-#define CHIP_EXINT_X_FLAG_REG                                             REG8(0xXX)
-#define CHIP_EXINT_X_FLAG_BIT                                             X
-#define CHIP_EXINT_X_TRIGGER_BIT_0_REG                                    REG8(0xXX)
-#define CHIP_EXINT_X_TRIGGER_BIT_1_REG                                    REG8(0xXX)
-#define CHIP_EXINT_X_TRIGGER_BIT_0_BIT                                    X
-#define CHIP_EXINT_X_TRIGGER_BIT_1_BIT                                    X
-#define CHIP_EXINT_X_VECTOR                                               VECT(X)
-#define CHIP_EXINT_X_TRIGGER_LOW_ID                                       0
-#define CHIP_EXINT_X_TRIGGER_CHANGE_ID                                    1
-#define CHIP_EXINT_X_TRIGGER_FALLING_ID                                   2
-#define CHIP_EXINT_X_TRIGGER_RISING_ID                                    3
+#define CHIP_EXINT_COUNT                                                X
+
+#define CHIP_EXINT_X                                                    TRUE
+#define CHIP_EXINT_X_ENABLE_REG                                         REG8(0xXX)
+#define CHIP_EXINT_X_ENABLE_BIT                                         X
+#define CHIP_EXINT_X_FLAG_REG                                           REG8(0xXX)
+#define CHIP_EXINT_X_FLAG_BIT                                           X
+#define CHIP_EXINT_X_TRIGGER_BIT_0_REG                                  REG8(0xXX)
+#define CHIP_EXINT_X_TRIGGER_BIT_1_REG                                  REG8(0xXX)
+#define CHIP_EXINT_X_TRIGGER_BIT_0_BIT                                  X
+#define CHIP_EXINT_X_TRIGGER_BIT_1_BIT                                  X
+#define CHIP_EXINT_X_VECTOR                                             VECT(X)
+#define CHIP_EXINT_X_TRIGGER_LOW_ID                                     0
+#define CHIP_EXINT_X_TRIGGER_CHANGE_ID                                  1
+#define CHIP_EXINT_X_TRIGGER_FALLING_ID                                 2
+#define CHIP_EXINT_X_TRIGGER_RISING_ID                                  3
 
 //------------------------------------------------
 // Pin Change Interrupts
+
+#define CHIP_PCINT_COUNT                                                X
 
 #define CHIP_PCINT_X                                                    TRUE
 #define CHIP_PCINT_X_ENABLE_REG                                         REG8(0xXX)
@@ -214,8 +223,8 @@
 #define CHIP_TIMERCOUNTER_X_CLOCK_128_ID                                X
 #define CHIP_TIMERCOUNTER_X_CLOCK_256_ID                                X
 #define CHIP_TIMERCOUNTER_X_CLOCK_1024_ID                               X
-#define CHIP_TIMERCOUNTER_X_CLOCK_FALLING_ID                            X
-#define CHIP_TIMERCOUNTER_X_CLOCK_RISING_ID                             X
+#define CHIP_TIMERCOUNTER_X_CLOCK_EXT_FALLING_ID                        X
+#define CHIP_TIMERCOUNTER_X_CLOCK_EXT_RISING_ID                         X
 #define CHIP_TIMERCOUNTER_X_CLOCK_BIT_0_REG                             REG8(0xXX)
 #define CHIP_TIMERCOUNTER_X_CLOCK_BIT_1_REG                             REG8(0xXX)
 #define CHIP_TIMERCOUNTER_X_CLOCK_BIT_2_REG                             REG8(0xXX)

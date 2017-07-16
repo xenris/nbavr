@@ -414,33 +414,33 @@ TEST(TimerCounter2, overflowIntFlagClear) {
 }
 
 TEST(TimerCounter1, outputX) {
-    TEST_RAM_WRITE(TimerCounter1::outputA(0x3c3c));
-    TEST_RAM_READ_WRITE(TimerCounter1::outputA());
-    TEST_RAM_WRITE(TimerCounter1::outputB(0x3c3c));
-    TEST_RAM_READ_WRITE(TimerCounter1::outputB());
+    TEST_RAM_WRITE(TimerCounter1::OutputCompareA::value(0x3c3c));
+    TEST_RAM_READ_WRITE(TimerCounter1::OutputCompareA::value());
+    TEST_RAM_WRITE(TimerCounter1::OutputCompareB::value(0x3c3c));
+    TEST_RAM_READ_WRITE(TimerCounter1::OutputCompareB::value());
 }
 
 TEST(TimerCounter2, outputX) {
-    TEST_RAM_WRITE(TimerCounter2::outputA(0x3c));
-    TEST_RAM_READ_WRITE(TimerCounter2::outputA());
+    TEST_RAM_WRITE(TimerCounter2::OutputCompareA::value(0x3c));
+    TEST_RAM_READ_WRITE(TimerCounter2::OutputCompareA::value());
 }
 
 TEST(TimerCounter1, outputXMode) {
-    TEST_RAM_WRITE(TimerCounter1::outputAMode(TimerCounter1::OutputMode::Disconnected));
-    TEST_RAM_WRITE(TimerCounter1::outputAMode(TimerCounter1::OutputMode::Toggle));
-    TEST_RAM_WRITE(TimerCounter1::outputAMode(TimerCounter1::OutputMode::Clear));
-    TEST_RAM_WRITE(TimerCounter1::outputAMode(TimerCounter1::OutputMode::Set));
-    TEST_RAM_WRITE(TimerCounter1::outputBMode(TimerCounter1::OutputMode::Disconnected));
-    TEST_RAM_WRITE(TimerCounter1::outputBMode(TimerCounter1::OutputMode::Toggle));
-    TEST_RAM_WRITE(TimerCounter1::outputBMode(TimerCounter1::OutputMode::Clear));
-    TEST_RAM_WRITE(TimerCounter1::outputBMode(TimerCounter1::OutputMode::Set));
+    TEST_RAM_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Disconnected));
+    TEST_RAM_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Toggle));
+    TEST_RAM_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Clear));
+    TEST_RAM_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Set));
+    TEST_RAM_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Disconnected));
+    TEST_RAM_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Toggle));
+    TEST_RAM_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Clear));
+    TEST_RAM_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Set));
 }
 
 TEST(TimerCounter2, outputXMode) {
-    TEST_RAM_WRITE(TimerCounter2::outputAMode(TimerCounter2::OutputMode::Disconnected));
-    TEST_RAM_WRITE(TimerCounter2::outputAMode(TimerCounter2::OutputMode::Toggle));
-    TEST_RAM_WRITE(TimerCounter2::outputAMode(TimerCounter2::OutputMode::Clear));
-    TEST_RAM_WRITE(TimerCounter2::outputAMode(TimerCounter2::OutputMode::Set));
+    TEST_RAM_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Disconnected));
+    TEST_RAM_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Toggle));
+    TEST_RAM_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Clear));
+    TEST_RAM_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Set));
 }
 
 //------------------------------------------------

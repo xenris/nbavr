@@ -1,0 +1,173 @@
+r Adc::intFlag() 0010101111
+r Adc::value() f5d795b82448a38913797219c26a16a311b507b
+r ExInt0::intFlag() 0111001001
+r PcInt0::intFlag() 0111001001
+r PinB0::direction() 0011100011
+r PinB1::pullup() 0101101010
+r PinB2::output() 1001110011
+r PinB3::input() 0101011010
+r PortB::direction() 8c60a3577be128669bd
+r PortB::input() 63eaa289a0e85f6dee5
+r PortB::output() 4c8b7917666412707f3d
+r PortB::pullup() 4c8b7917666412707f3d
+r TimerCounter0::OutputCompareA::intFlag() 0100000010
+r TimerCounter0::OutputCompareA::value() de459de41b435a615840
+r TimerCounter0::OutputCompareB::intFlag() 0110101001
+r TimerCounter0::OutputCompareB::value() b8141fdb47632eaad6b2
+r TimerCounter0::counter() dfb0b1e142d39485a6f7
+r TimerCounter0::overflowIntFlag() 1100100100
+r TimerCounter1::OutputCompareA::intFlag() 0101010000
+r TimerCounter1::OutputCompareA::value() 66f4b29fbda88351321
+r TimerCounter1::OutputCompareB::intFlag() 1100100010
+r TimerCounter1::OutputCompareB::value() 91dc97c25d68e3ce29f4
+r TimerCounter1::OutputCompareC::value() f07efd6bc9175584a2b0
+r TimerCounter1::counter() 504dba97e4a1cd6a77f4
+r TimerCounter1::overflowIntFlag() 1100011100
+w Adc::callback(func,data)
+w Adc::channel(Adc::Channel::ADC0) 07:ff:f0:
+w Adc::channel(Adc::Channel::ADC1) 07:00:01:07:ff:f1:
+w Adc::channel(Adc::Channel::ADC2) 07:00:02:07:ff:f2:
+w Adc::channel(Adc::Channel::ADC3) 07:00:03:07:ff:f3:
+w Adc::channel(Adc::Channel::GND) 07:00:0d:07:ff:fd:
+w Adc::channel(Adc::Channel::VBG) 07:00:0c:07:ff:fc:
+w Adc::enable(false) 06:ff:7f:
+w Adc::enable(true) 06:00:80:
+w Adc::intEnable(false) 06:ff:f7:
+w Adc::intEnable(true) 06:00:08:
+w Adc::intFlag()
+w Adc::intFlagClear() 06:00:10:
+w Adc::leftAdjust(false) 07:ff:df:
+w Adc::leftAdjust(true) 07:00:20:
+w Adc::prescaler(Adc::Prescaler::Div128) 06:00:07:
+w Adc::prescaler(Adc::Prescaler::Div16) 06:00:04:06:ff:fc:
+w Adc::prescaler(Adc::Prescaler::Div2) 06:ff:f8:
+w Adc::prescaler(Adc::Prescaler::Div32) 06:00:05:06:ff:fd:
+w Adc::prescaler(Adc::Prescaler::Div4) 06:00:02:06:ff:fa:
+w Adc::prescaler(Adc::Prescaler::Div64) 06:00:06:06:ff:fe:
+w Adc::prescaler(Adc::Prescaler::Div8) 06:00:03:06:ff:fb:
+w Adc::reference(Adc::Reference::AREF) 07:00:40:07:ff:7f:
+w Adc::reference(Adc::Reference::AVCC) 07:ff:3f:
+w Adc::reference(Adc::Reference::Internal) 07:00:80:07:ff:bf:
+w Adc::start() 06:00:40:
+w Adc::trigger(Adc::Trigger::AnalogComparator) 03:00:01:06:00:20:03:ff:f9:
+w Adc::trigger(Adc::Trigger::ExternalInt0) 03:00:02:06:00:20:03:ff:fa:
+w Adc::trigger(Adc::Trigger::FreeRunning) 06:00:20:03:ff:f8:
+w Adc::trigger(Adc::Trigger::SingleConversion) 06:ff:df:
+w Adc::trigger(Adc::Trigger::Timer0CompareMatchA) 03:00:03:06:00:20:03:ff:fb:
+w Adc::trigger(Adc::Trigger::Timer0Overflow) 03:00:04:06:00:20:03:ff:fc:
+w Adc::value()
+w ExInt0::callback(func,data)
+w ExInt0::enable(false) 3b:ff:bf:
+w ExInt0::enable(true) 3b:00:40:
+w ExInt0::intFlag()
+w ExInt0::intFlagClear() 3a:00:40:
+w ExInt0::trigger(ExInt0::Trigger::Change) 35:00:01:35:ff:fd:
+w ExInt0::trigger(ExInt0::Trigger::Falling) 35:00:02:35:ff:fe:
+w ExInt0::trigger(ExInt0::Trigger::Low) 35:ff:fc:
+w ExInt0::trigger(ExInt0::Trigger::Rising) 35:00:03:
+w PcInt0::callback(func,data)
+w PcInt0::enable(false) 3b:ff:df:
+w PcInt0::enable(true) 3b:00:20:
+w PcInt0::intFlag()
+w PcInt0::intFlagClear() 3a:00:40:
+w PcInt0::mask(0x64) 15:00:64:15:ff:64:
+w PinB0::direction()
+w PinB0::direction(Direction::Input) 17:ff:fe:
+w PinB0::direction(Direction::Output) 17:00:01:
+w PinB1::pullup()
+w PinB1::pullup(false) 18:ff:fd:
+w PinB1::pullup(true) 18:00:02:
+w PinB2::output()
+w PinB3::input()
+w PinB4::toggle() 16:00:10:
+w PortB::direction()
+w PortB::direction(0x3c) 17:00:3c:17:ff:3c:
+w PortB::input()
+w PortB::output()
+w PortB::output(0x27) 18:00:27:18:ff:27:
+w PortB::pullup()
+w PortB::pullup(0x12) 18:00:12:18:ff:12:
+w PortB::toggle(0x26) 16:00:26:16:ff:26:
+w TimerCounter0::OutputCompareA::callback(func,data)
+w TimerCounter0::OutputCompareA::intEnable(false) 39:ff:fb:
+w TimerCounter0::OutputCompareA::intEnable(true) 39:00:04:
+w TimerCounter0::OutputCompareA::intFlag()
+w TimerCounter0::OutputCompareA::intFlagClear() 38:00:10:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Clear) 2a:00:80:2a:ff:bf:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Disconnected) 2a:ff:3f:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Set) 2a:00:c0:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Toggle) 2a:00:40:2a:ff:7f:
+w TimerCounter0::OutputCompareA::value()
+w TimerCounter0::OutputCompareA::value(0xc8) 29:00:c8:29:ff:c8:
+w TimerCounter0::OutputCompareB::callback(func,data)
+w TimerCounter0::OutputCompareB::intEnable(false) 39:ff:f7:
+w TimerCounter0::OutputCompareB::intEnable(true) 39:00:08:
+w TimerCounter0::OutputCompareB::intFlag()
+w TimerCounter0::OutputCompareB::intFlagClear() 38:00:08:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Clear) 2a:00:20:2a:ff:ef:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Disconnected) 2a:ff:cf:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Set) 2a:00:30:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Toggle) 2a:00:10:2a:ff:df:
+w TimerCounter0::OutputCompareB::value()
+w TimerCounter0::OutputCompareB::value(0x7a) 28:00:7a:28:ff:7a:
+w TimerCounter0::clock(TimerCounter0::Clock::Div1) 33:00:01:33:ff:f9:
+w TimerCounter0::clock(TimerCounter0::Clock::Div1024) 33:00:05:33:ff:fd:
+w TimerCounter0::clock(TimerCounter0::Clock::Div256) 33:00:04:33:ff:fc:
+w TimerCounter0::clock(TimerCounter0::Clock::Div64) 33:00:03:33:ff:fb:
+w TimerCounter0::clock(TimerCounter0::Clock::Div8) 33:00:02:33:ff:fa:
+w TimerCounter0::clock(TimerCounter0::Clock::ExtFalling) 33:00:06:33:ff:fe:
+w TimerCounter0::clock(TimerCounter0::Clock::ExtRising) 33:00:07:
+w TimerCounter0::clock(TimerCounter0::Clock::None) 33:ff:f8:
+w TimerCounter0::counter()
+w TimerCounter0::counter(0xc4) 32:00:c4:32:ff:c4:
+w TimerCounter0::overflowCallback(func,data)
+w TimerCounter0::overflowIntEnable(false) 39:ff:fd:
+w TimerCounter0::overflowIntEnable(true) 39:00:02:
+w TimerCounter0::overflowIntFlag()
+w TimerCounter0::overflowIntFlagClear() 38:00:02:
+w TimerCounter0::waveform(TimerCounter0::Waveform::CTCOCRA) 2a:00:02:2a:ff:fe:33:ff:f7:
+w TimerCounter0::waveform(TimerCounter0::Waveform::FastPWM) 2a:00:03:33:ff:f7:
+w TimerCounter0::waveform(TimerCounter0::Waveform::FastPWMOCRA) 2a:00:03:33:00:08:
+w TimerCounter0::waveform(TimerCounter0::Waveform::Normal) 2a:ff:fc:33:ff:f7:
+w TimerCounter0::waveform(TimerCounter0::Waveform::PWM) 2a:00:01:2a:ff:fd:33:ff:f7:
+w TimerCounter0::waveform(TimerCounter0::Waveform::PWMOCRA) 2a:00:01:33:00:08:2a:ff:fd:
+w TimerCounter1::OutputCompareA::callback(func,data)
+w TimerCounter1::OutputCompareA::intEnable(false) 39:ff:bf:
+w TimerCounter1::OutputCompareA::intEnable(true) 39:00:40:
+w TimerCounter1::OutputCompareA::intFlag()
+w TimerCounter1::OutputCompareA::intFlagClear() 38:00:40:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Clear) 30:00:20:30:ff:ef:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Disconnected) 30:ff:cf:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Set) 30:00:30:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Toggle) 30:00:10:30:ff:df:
+w TimerCounter1::OutputCompareA::value()
+w TimerCounter1::OutputCompareA::value(0xd9) 2e:00:d9:2e:ff:d9:
+w TimerCounter1::OutputCompareB::callback(func,data)
+w TimerCounter1::OutputCompareB::intEnable(false) 39:ff:df:
+w TimerCounter1::OutputCompareB::intEnable(true) 39:00:20:
+w TimerCounter1::OutputCompareB::intFlag()
+w TimerCounter1::OutputCompareB::intFlagClear() 38:00:20:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Clear) 2c:00:20:2c:ff:ef:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Disconnected) 2c:ff:cf:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Set) 2c:00:30:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Toggle) 2c:00:10:2c:ff:df:
+w TimerCounter1::OutputCompareB::value()
+w TimerCounter1::OutputCompareB::value(0x8d) 2b:00:8d:2b:ff:8d:
+w TimerCounter1::OutputCompareC::value()
+w TimerCounter1::OutputCompareC::value(0x15) 2d:00:15:2d:ff:15:
+w TimerCounter1::clock(TimerCounter1::Clock::Div1) 30:00:01:30:ff:f9:
+w TimerCounter1::clock(TimerCounter1::Clock::Div1024) 30:00:03:30:ff:fb:
+w TimerCounter1::clock(TimerCounter1::Clock::Div256) 30:00:01:30:ff:f9:
+w TimerCounter1::clock(TimerCounter1::Clock::Div64) 30:00:07:
+w TimerCounter1::clock(TimerCounter1::Clock::Div8) 30:00:04:30:ff:fc:
+w TimerCounter1::clock(TimerCounter1::Clock::None) 30:ff:f8:
+w TimerCounter1::counter()
+w TimerCounter1::counter(0x8a) 2f:00:8a:2f:ff:8a:
+w TimerCounter1::overflowCallback(func,data)
+w TimerCounter1::overflowIntEnable(false) 39:ff:fb:
+w TimerCounter1::overflowIntEnable(true) 39:00:04:
+w TimerCounter1::overflowIntFlag()
+w TimerCounter1::overflowIntFlagClear() 38:00:04:
+w TimerCounter1::waveform(TimerCounter1::Waveform::CTCOCRA) 30:00:80:30:ff:bf:
+w TimerCounter1::waveform(TimerCounter1::Waveform::FastPWMOCRA) 30:00:40:30:ff:7f:
+w TimerCounter1::waveform(TimerCounter1::Waveform::Normal) 30:ff:3f:

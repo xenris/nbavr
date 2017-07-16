@@ -30,22 +30,22 @@ r PortD::input() de1b5896d3104d8bc85
 r PortD::output() 915d29f5c18d5925f1bd
 r PortD::pullup() 915d29f5c18d5925f1bd
 r TimerCounter0::counter() e8b8875726f5c5946333
-r TimerCounter0::outputA() d2ea21b334c647d95ae
-r TimerCounter0::outputAIntFlag() 1111000000
-r TimerCounter0::outputB() 89847f7a75706b67625d
-r TimerCounter0::outputBIntFlag() 1111111111
+r TimerCounter0::OutputCompareA::value() d2ea21b334c647d95ae
+r TimerCounter0::OutputCompareA::intFlag() 1111000000
+r TimerCounter0::OutputCompareB::value() 89847f7a75706b67625d
+r TimerCounter0::OutputCompareB::intFlag() 1111111111
 r TimerCounter0::overflowIntFlag() 0000111000
 r TimerCounter1::counter() 466f54c1621270647db58b079959a7aab4fcc24d
-r TimerCounter1::outputA() afe8e0bb118e42617335a508d6db7ae38816a54
-r TimerCounter1::outputAIntFlag() 1011011011
-r TimerCounter1::outputB() fb88db8dbb929b977b9b5ba03ba51baafbafdbb4
-r TimerCounter1::outputBIntFlag() 0111000111
+r TimerCounter1::OutputCompareA::value() afe8e0bb118e42617335a508d6db7ae38816a54
+r TimerCounter1::OutputCompareA::intFlag() 1011011011
+r TimerCounter1::OutputCompareB::value() fb88db8dbb929b977b9b5ba03ba51baafbafdbb4
+r TimerCounter1::OutputCompareB::intFlag() 0111000111
 r TimerCounter1::overflowIntFlag() 1001101101
 r TimerCounter2::counter() 26ba4ee276a9d31c559
-r TimerCounter2::outputA() d4975a1de0a36629ecae
-r TimerCounter2::outputAIntFlag() 0010100101
-r TimerCounter2::outputB() e377a9e31c559ec8013
-r TimerCounter2::outputBIntFlag() 1001101100
+r TimerCounter2::OutputCompareA::value() d4975a1de0a36629ecae
+r TimerCounter2::OutputCompareA::intFlag() 0010100101
+r TimerCounter2::OutputCompareB::value() e377a9e31c559ec8013
+r TimerCounter2::OutputCompareB::intFlag() 1001101100
 r TimerCounter2::overflowIntFlag() 1001110011
 r Usart0::dataOverRun() 1111111111
 r Usart0::frameError() 1111111111
@@ -190,28 +190,28 @@ w TimerCounter0::clock(TimerCounter0::Clock::ExtRising) 45:00:07:
 w TimerCounter0::clock(TimerCounter0::Clock::None) 45:ff:f8:
 w TimerCounter0::counter()
 w TimerCounter0::counter(0xc4) 46:00:c4:46:ff:c4:
-w TimerCounter0::outputA()
-w TimerCounter0::outputA(0xc8) 47:00:c8:47:ff:c8:
-w TimerCounter0::outputACallback(func,data)
-w TimerCounter0::outputAIntEnable(false) 6e:ff:fd:
-w TimerCounter0::outputAIntEnable(true) 6e:00:02:
-w TimerCounter0::outputAIntFlag()
-w TimerCounter0::outputAIntFlagClear() 35:00:02:
-w TimerCounter0::outputAMode(TimerCounter0::OutputMode::Clear) 44:00:80:44:ff:bf:
-w TimerCounter0::outputAMode(TimerCounter0::OutputMode::Disconnected) 44:ff:3f:
-w TimerCounter0::outputAMode(TimerCounter0::OutputMode::Set) 44:00:c0:
-w TimerCounter0::outputAMode(TimerCounter0::OutputMode::Toggle) 44:00:40:44:ff:7f:
-w TimerCounter0::outputB()
-w TimerCounter0::outputB(0x7a) 48:00:7a:48:ff:7a:
-w TimerCounter0::outputBCallback(func,data)
-w TimerCounter0::outputBIntEnable(false) 6e:ff:fb:
-w TimerCounter0::outputBIntEnable(true) 6e:00:04:
-w TimerCounter0::outputBIntFlag()
-w TimerCounter0::outputBIntFlagClear() 35:00:04:
-w TimerCounter0::outputBMode(TimerCounter0::OutputMode::Clear) 44:00:20:44:ff:ef:
-w TimerCounter0::outputBMode(TimerCounter0::OutputMode::Disconnected) 44:ff:cf:
-w TimerCounter0::outputBMode(TimerCounter0::OutputMode::Set) 44:00:30:
-w TimerCounter0::outputBMode(TimerCounter0::OutputMode::Toggle) 44:00:10:44:ff:df:
+w TimerCounter0::OutputCompareA::value()
+w TimerCounter0::OutputCompareA::value(0xc8) 47:00:c8:47:ff:c8:
+w TimerCounter0::OutputCompareA::callback(func,data)
+w TimerCounter0::OutputCompareA::intEnable(false) 6e:ff:fd:
+w TimerCounter0::OutputCompareA::intEnable(true) 6e:00:02:
+w TimerCounter0::OutputCompareA::intFlag()
+w TimerCounter0::OutputCompareA::intFlagClear() 35:00:02:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Clear) 44:00:80:44:ff:bf:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Disconnected) 44:ff:3f:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Set) 44:00:c0:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Toggle) 44:00:40:44:ff:7f:
+w TimerCounter0::OutputCompareB::value()
+w TimerCounter0::OutputCompareB::value(0x7a) 48:00:7a:48:ff:7a:
+w TimerCounter0::OutputCompareB::callback(func,data)
+w TimerCounter0::OutputCompareB::intEnable(false) 6e:ff:fb:
+w TimerCounter0::OutputCompareB::intEnable(true) 6e:00:04:
+w TimerCounter0::OutputCompareB::intFlag()
+w TimerCounter0::OutputCompareB::intFlagClear() 35:00:04:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Clear) 44:00:20:44:ff:ef:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Disconnected) 44:ff:cf:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Set) 44:00:30:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Toggle) 44:00:10:44:ff:df:
 w TimerCounter0::overflowCallback(func,data)
 w TimerCounter0::overflowIntEnable(false) 6e:ff:fe:
 w TimerCounter0::overflowIntEnable(true) 6e:00:01:
@@ -233,28 +233,28 @@ w TimerCounter1::clock(TimerCounter1::Clock::ExtRising) 81:00:07:
 w TimerCounter1::clock(TimerCounter1::Clock::None) 81:ff:f8:
 w TimerCounter1::counter()
 w TimerCounter1::counter(0x7c8a) 84:00:8a:85:00:7c:84:ff:8a:85:ff:7c:
-w TimerCounter1::outputA()
-w TimerCounter1::outputA(0xe8d9) 88:00:d9:89:00:e8:88:ff:d9:89:ff:e8:
-w TimerCounter1::outputACallback(func,data)
-w TimerCounter1::outputAIntEnable(false) 6f:ff:fd:
-w TimerCounter1::outputAIntEnable(true) 6f:00:02:
-w TimerCounter1::outputAIntFlag()
-w TimerCounter1::outputAIntFlagClear() 36:00:02:
-w TimerCounter1::outputAMode(TimerCounter1::OutputMode::Clear) 80:00:80:80:ff:bf:
-w TimerCounter1::outputAMode(TimerCounter1::OutputMode::Disconnected) 80:ff:3f:
-w TimerCounter1::outputAMode(TimerCounter1::OutputMode::Set) 80:00:c0:
-w TimerCounter1::outputAMode(TimerCounter1::OutputMode::Toggle) 80:00:40:80:ff:7f:
-w TimerCounter1::outputB()
-w TimerCounter1::outputB(0x7a8d) 8a:00:8d:8b:00:7a:8a:ff:8d:8b:ff:7a:
-w TimerCounter1::outputBCallback(func,data)
-w TimerCounter1::outputBIntEnable(false) 6f:ff:fb:
-w TimerCounter1::outputBIntEnable(true) 6f:00:04:
-w TimerCounter1::outputBIntFlag()
-w TimerCounter1::outputBIntFlagClear() 36:00:04:
-w TimerCounter1::outputBMode(TimerCounter1::OutputMode::Clear) 80:00:20:80:ff:ef:
-w TimerCounter1::outputBMode(TimerCounter1::OutputMode::Disconnected) 80:ff:cf:
-w TimerCounter1::outputBMode(TimerCounter1::OutputMode::Set) 80:00:30:
-w TimerCounter1::outputBMode(TimerCounter1::OutputMode::Toggle) 80:00:10:80:ff:df:
+w TimerCounter1::OutputCompareA::value()
+w TimerCounter1::OutputCompareA::value(0xe8d9) 88:00:d9:89:00:e8:88:ff:d9:89:ff:e8:
+w TimerCounter1::OutputCompareA::callback(func,data)
+w TimerCounter1::OutputCompareA::intEnable(false) 6f:ff:fd:
+w TimerCounter1::OutputCompareA::intEnable(true) 6f:00:02:
+w TimerCounter1::OutputCompareA::intFlag()
+w TimerCounter1::OutputCompareA::intFlagClear() 36:00:02:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Clear) 80:00:80:80:ff:bf:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Disconnected) 80:ff:3f:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Set) 80:00:c0:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Toggle) 80:00:40:80:ff:7f:
+w TimerCounter1::OutputCompareB::value()
+w TimerCounter1::OutputCompareB::value(0x7a8d) 8a:00:8d:8b:00:7a:8a:ff:8d:8b:ff:7a:
+w TimerCounter1::OutputCompareB::callback(func,data)
+w TimerCounter1::OutputCompareB::intEnable(false) 6f:ff:fb:
+w TimerCounter1::OutputCompareB::intEnable(true) 6f:00:04:
+w TimerCounter1::OutputCompareB::intFlag()
+w TimerCounter1::OutputCompareB::intFlagClear() 36:00:04:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Clear) 80:00:20:80:ff:ef:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Disconnected) 80:ff:cf:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Set) 80:00:30:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Toggle) 80:00:10:80:ff:df:
 w TimerCounter1::overflowCallback(func,data)
 w TimerCounter1::overflowIntEnable(false) 6f:ff:fe:
 w TimerCounter1::overflowIntEnable(true) 6f:00:01:
@@ -276,28 +276,28 @@ w TimerCounter2::clock(TimerCounter2::Clock::Div8) b1:00:02:b1:ff:fa:
 w TimerCounter2::clock(TimerCounter2::Clock::None) b1:ff:f8:
 w TimerCounter2::counter()
 w TimerCounter2::counter(0x23) b2:00:23:b2:ff:23:
-w TimerCounter2::outputA()
-w TimerCounter2::outputA(0xed) b3:00:ed:b3:ff:ed:
-w TimerCounter2::outputACallback(func,data)
-w TimerCounter2::outputAIntEnable(false) 70:ff:fd:
-w TimerCounter2::outputAIntEnable(true) 70:00:02:
-w TimerCounter2::outputAIntFlag()
-w TimerCounter2::outputAIntFlagClear() 37:00:02:
-w TimerCounter2::outputAMode(TimerCounter2::OutputMode::Clear) b0:00:80:b0:ff:bf:
-w TimerCounter2::outputAMode(TimerCounter2::OutputMode::Disconnected) b0:ff:3f:
-w TimerCounter2::outputAMode(TimerCounter2::OutputMode::Set) b0:00:c0:
-w TimerCounter2::outputAMode(TimerCounter2::OutputMode::Toggle) b0:00:40:b0:ff:7f:
-w TimerCounter2::outputB()
-w TimerCounter2::outputB(0xd8) b4:00:d8:b4:ff:d8:
-w TimerCounter2::outputBCallback(func,data)
-w TimerCounter2::outputBIntEnable(false) 70:ff:fb:
-w TimerCounter2::outputBIntEnable(true) 70:00:04:
-w TimerCounter2::outputBIntFlag()
-w TimerCounter2::outputBIntFlagClear() 37:00:04:
-w TimerCounter2::outputBMode(TimerCounter2::OutputMode::Clear) b0:00:20:b0:ff:ef:
-w TimerCounter2::outputBMode(TimerCounter2::OutputMode::Disconnected) b0:ff:cf:
-w TimerCounter2::outputBMode(TimerCounter2::OutputMode::Set) b0:00:30:
-w TimerCounter2::outputBMode(TimerCounter2::OutputMode::Toggle) b0:00:10:b0:ff:df:
+w TimerCounter2::OutputCompareA::value()
+w TimerCounter2::OutputCompareA::value(0xed) b3:00:ed:b3:ff:ed:
+w TimerCounter2::OutputCompareA::callback(func,data)
+w TimerCounter2::OutputCompareA::intEnable(false) 70:ff:fd:
+w TimerCounter2::OutputCompareA::intEnable(true) 70:00:02:
+w TimerCounter2::OutputCompareA::intFlag()
+w TimerCounter2::OutputCompareA::intFlagClear() 37:00:02:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Clear) b0:00:80:b0:ff:bf:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Disconnected) b0:ff:3f:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Set) b0:00:c0:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Toggle) b0:00:40:b0:ff:7f:
+w TimerCounter2::OutputCompareB::value()
+w TimerCounter2::OutputCompareB::value(0xd8) b4:00:d8:b4:ff:d8:
+w TimerCounter2::OutputCompareB::callback(func,data)
+w TimerCounter2::OutputCompareB::intEnable(false) 70:ff:fb:
+w TimerCounter2::OutputCompareB::intEnable(true) 70:00:04:
+w TimerCounter2::OutputCompareB::intFlag()
+w TimerCounter2::OutputCompareB::intFlagClear() 37:00:04:
+w TimerCounter2::OutputCompareB::mode(TimerCounter2::OutputMode::Clear) b0:00:20:b0:ff:ef:
+w TimerCounter2::OutputCompareB::mode(TimerCounter2::OutputMode::Disconnected) b0:ff:cf:
+w TimerCounter2::OutputCompareB::mode(TimerCounter2::OutputMode::Set) b0:00:30:
+w TimerCounter2::OutputCompareB::mode(TimerCounter2::OutputMode::Toggle) b0:00:10:b0:ff:df:
 w TimerCounter2::overflowCallback(func,data)
 w TimerCounter2::overflowIntEnable(false) 70:ff:fe:
 w TimerCounter2::overflowIntEnable(true) 70:00:01:

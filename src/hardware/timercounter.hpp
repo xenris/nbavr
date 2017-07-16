@@ -6,9 +6,7 @@
 /// ```
 
 /// N is the timer/counter id (1, 2, etc).<br>
-/// X is the output compare id (A, B, etc).<br>
 /// T is the type of the timer's counter, either uint8_t or uint16_t.<br>
-/// All functions are static.
 
 #ifndef NBAVR_TIMERCOUNTER_HPP
 
@@ -57,6 +55,7 @@ struct TimerCounterN {
 
     TimerCounterN() = delete;
 
+    ///
     /// #### enum Clock
     /// * None (No clock)
     /// * Div1 (cpu frequency / 1)
@@ -92,6 +91,7 @@ struct TimerCounterN {
     // TODO Make it such that there is always a waveform enumeration with at least "Normal"
     //  so that waveform(Waveform::Normal) compiles on all chips.
 
+    ///
     /// #### enum Waveform
     /// * Normal
     /// * PWM
@@ -102,9 +102,13 @@ struct TimerCounterN {
     #if C(WAVEFORM)
     enum class Waveform : uint8_t {
         Normal = C(WAVEFORM_NORMAL_ID),
+        #if C(WAVEFORM_PWM_PHASE_CORRECT_ID)
         PWM = C(WAVEFORM_PWM_PHASE_CORRECT_ID),
+        #endif
         CTCOCRA = C(WAVEFORM_CTC_OCRA_ID),
+        #if C(WAVEFORM_FAST_PWM_ID)
         FastPWM = C(WAVEFORM_FAST_PWM_ID),
+        #endif
         #if C(WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID)
         PWMOCRA = C(WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID),
         #endif
@@ -114,6 +118,7 @@ struct TimerCounterN {
     };
     #endif
 
+    ///
     /// #### enum OutputMode
     /// * Disconnected
     /// * Toggle
@@ -128,25 +133,29 @@ struct TimerCounterN {
     };
     #endif
 
-    /// #### constexpr HardwareType getHardwareType()
+    ///
+    /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
         return HardwareType::TimerCounter;
     }
 
-    /// #### void counter(T)
+    ///
+    /// #### static void counter(T)
     /// Set the counter value.
     static force_inline void counter(C(TYPE) value) {
         *C(COUNTER_REG) = value;
     }
 
-    /// #### T counter()
+    ///
+    /// #### static T counter()
     /// Get the counter value.
     static force_inline C(TYPE) counter() {
         return *C(COUNTER_REG);
     }
 
-    /// #### void clock(Clock)
+    ///
+    /// #### static void clock(Clock)
     /// Set the clock source.
     static force_inline void clock(Clock clock) {
         setBit_(C(CLOCK_BIT_0_REG), C(CLOCK_BIT_0_BIT), uint8_t(clock) & 0x01);
@@ -154,7 +163,8 @@ struct TimerCounterN {
         setBit_(C(CLOCK_BIT_2_REG), C(CLOCK_BIT_2_BIT), uint8_t(clock) & 0x04);
     }
 
-    /// #### void waveform(Waveform)
+    ///
+    /// #### static void waveform(Waveform)
     /// Set the counting method.
     #if C(WAVEFORM)
     static force_inline void waveform(Waveform waveform) {
@@ -173,14 +183,16 @@ struct TimerCounterN {
     }
     #endif
 
-    /// #### void overflowCallback(void (\*)(void\*), void\*)
+    ///
+    /// #### static void overflowCallback(void (\*)(void\*), void\*)
     /// Set the callback and data for the counter overflow interrupt.
     static force_inline void overflowCallback(void (*func)(void*), void* data) {
         _C(OVERFLOW_Callback) = func;
         _C(OVERFLOW_CallbackData) = data;
     }
 
-    /// #### void overflowIntEnable(bool)
+    ///
+    /// #### static void overflowIntEnable(bool)
     /// Enable/disable the counter overflow interrupt.
     static force_inline void overflowIntEnable(bool b) {
         if(b) {
@@ -190,71 +202,40 @@ struct TimerCounterN {
         }
     }
 
-    /// #### bool overflowIntFlag()
+    ///
+    /// #### static bool overflowIntFlag()
     /// Returns true if the counter overflow flag is set.
     static force_inline bool overflowIntFlag() {
         return *C(OVERFLOW_INT_FLAG_REG) & bv(C(OVERFLOW_INT_FLAG_BIT));
     }
 
-    /// #### void overflowIntFlagClear()
+    ///
+    /// #### static void overflowIntFlagClear()
     /// Clear the counter overflow interrupt flag.
     static force_inline void overflowIntFlagClear() {
         *C(OVERFLOW_INT_FLAG_REG) |= bv(C(OVERFLOW_INT_FLAG_BIT));
     }
 
-    /// #### void outputX(T)
-    /// Set the compare register of output compare X.
-    /// #### T outputX()
-    /// Get the compare register of output compare X.
-    /// #### void outputXMode(OutputMode)
-    /// Set the mode of output compare X.
-    /// #### void outputXCallback(void (\*)(void\*), void\*)
-    /// Set the callback and data for output compare X interrupt.
-    /// #### void outputXIntEnable(bool)
-    /// Enable/disable the output compare X interrupt.
-    /// #### bool outputXIntFlag()
-    /// Returns true if the output compare X interrupt flag is set.
-    /// #### void outputXIntFlagClear()
-    /// Clear the output compare X interrupt flag.
-    #define MAKE_OUTPUTCOMPARE(X) \
-        static force_inline void output##X(C(TYPE) v) { \
-            *C(OUTPUTCOMPARE_##X##_REG) = v; \
-        } \
-        static force_inline C(TYPE) output##X() { \
-            return *C(OUTPUTCOMPARE_##X##_REG); \
-        } \
-        static force_inline void output##X##Mode(OutputMode m) { \
-            setBit_(C(OUTPUTCOMPARE_##X##_MODE_BIT_0_REG), C(OUTPUTCOMPARE_##X##_MODE_BIT_0_BIT), uint8_t(m) & 0x01); \
-            setBit_(C(OUTPUTCOMPARE_##X##_MODE_BIT_1_REG), C(OUTPUTCOMPARE_##X##_MODE_BIT_1_BIT), uint8_t(m) & 0x02); \
-        } \
-        static force_inline void output##X##Callback(void (*func)(void*), void* data) { \
-            _C(OUTPUTCOMPARE_##X##_Callback) = func; \
-            _C(OUTPUTCOMPARE_##X##_CallbackData) = data; \
-        } \
-        static force_inline void output##X##IntEnable(bool b) { \
-            if(b) { \
-                *C(OUTPUTCOMPARE_##X##_INT_ENABLE_REG) |= bv(C(OUTPUTCOMPARE_##X##_INT_ENABLE_BIT)); \
-            } else { \
-                *C(OUTPUTCOMPARE_##X##_INT_ENABLE_REG) &= ~bv(C(OUTPUTCOMPARE_##X##_INT_ENABLE_BIT)); \
-            } \
-        } \
-        static force_inline bool output##X##IntFlag() { \
-            return *C(OUTPUTCOMPARE_##X##_INT_FLAG_REG) & bv(C(OUTPUTCOMPARE_##X##_INT_FLAG_BIT)); \
-        } \
-        static force_inline void output##X##IntFlagClear() { \
-            *C(OUTPUTCOMPARE_##X##_INT_FLAG_REG) |= bv(C(OUTPUTCOMPARE_##X##_INT_FLAG_BIT)); \
-        }
+    ///
+    /// ## class OutputCompareX
+    /// See [OutputCompareX](outputcompare.md)
 
     #if C(OUTPUTCOMPARE_A)
-        MAKE_OUTPUTCOMPARE(A)
+        #define ID A
+        #include "outputcompare.hpp"
+        #undef ID
     #endif
 
     #if C(OUTPUTCOMPARE_B)
-        MAKE_OUTPUTCOMPARE(B)
+        #define ID B
+        #include "outputcompare.hpp"
+        #undef ID
     #endif
 
     #if C(OUTPUTCOMPARE_C)
-        MAKE_OUTPUTCOMPARE(C)
+        #define ID C
+        #include "outputcompare.hpp"
+        #undef ID
     #endif
 
     #undef MAKE_OUTPUTCOMPARE

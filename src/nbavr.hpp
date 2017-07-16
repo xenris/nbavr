@@ -101,7 +101,7 @@ public:
         static_assert(sizeof(typename TimerCounter::type) == 2, "Nbavr requires a 16 bit TimerCounter");
 
         atomic {
-            TimerCounter::outputACallback(timerCounterOutputCompareA, nullptr);
+            TimerCounter::OutputCompareA::callback(timerCounterOutputCompareA, nullptr);
             TimerCounter::overflowCallback(timerCounterOverflow, nullptr);
             TimerCounter::overflowIntEnable(true);
             TimerCounter::clock(TimerCounter::Clock::Div64);
@@ -321,14 +321,14 @@ private:
         if(self._interrupts.size > 0) {
             uint16_t next = peek(&self._interrupts).tick;
 
-            block TimerCounter::outputA(next);
-            block TimerCounter::outputAIntFlagClear();
+            block TimerCounter::OutputCompareA::value(next);
+            block TimerCounter::OutputCompareA::intFlagClear();
 
             if(!compare(interrupt.tick, self.getTicks16() + 1, next)) {
                 goto loop;
             }
         } else {
-            block TimerCounter::outputAIntEnable(false);
+            block TimerCounter::OutputCompareA::intEnable(false);
         }
     }
 

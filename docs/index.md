@@ -1,5 +1,7 @@
 # nbavr Documentation
+
 ## Index
+
 * [Nbavr](src/nbavr.md)
 * [Tasks](src/task.md)
 * [TaskManager](src/taskmanager.md)
@@ -13,7 +15,10 @@
     * [USARTs](src/hardware/usart.md)
     * [Utils](src/hardware/util.md)
 * [Example](https://github.com/xenris/nbavr-project-template)
+* [Adding Chips/Tests](src/hardware/chip.md)
+
 ## Editing documentation
+
 All documents in the docs/ directory are generated with the gendocs.sh
 script. To modify documents find their equivalent .hpp file and modify
 that.

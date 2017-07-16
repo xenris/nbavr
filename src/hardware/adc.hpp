@@ -150,9 +150,15 @@ struct Adc {
             ExternalInt0 = CHIP_ADC_TRIGGER_EXTERNAL_INT_0_ID,
             Timer0CompareMatchA = CHIP_ADC_TRIGGER_TIMER0_COMPARE_MATCH_A_ID,
             Timer0Overflow = CHIP_ADC_TRIGGER_TIMER0_OVERFLOW_ID,
+            #if CHIP_ADC_TRIGGER_TIMER1_COMPARE_MATCH_B_ID
             Timer1CompareMatchB = CHIP_ADC_TRIGGER_TIMER1_COMPARE_MATCH_B_ID,
+            #endif
+            #if CHIP_ADC_TRIGGER_TIMER1_OVERFLOW_ID
             Timer1Overflow = CHIP_ADC_TRIGGER_TIMER1_OVERFLOW_ID,
+            #endif
+            #if CHIP_ADC_TRIGGER_TIMER1_CAPTURE_EVENT_ID
             Timer1CaptureEvent = CHIP_ADC_TRIGGER_TIMER1_CAPTURE_EVENT_ID,
+            #endif
         #else
             FreeRunning,
         #endif
