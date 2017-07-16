@@ -14,7 +14,7 @@
         } \
     }
 
-#define INCLUDE_DEFAULT_CALLBACK ISR(VECT(default)) {}
+#define INCLUDE_DEFAULT_CALLBACK() ISR(VECT(default)) {}
 
 // TODO WDT
 // TODO spi,stc
