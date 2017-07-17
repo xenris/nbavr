@@ -21,7 +21,7 @@ public:
     Serial(Stream<char>& stdout, Stream<char>& stdin) : stdout(stdout), stdin(stdin) {
         static_assert(Usart::getHardwareType() == HardwareType::Usart, "Serial requires a Usart");
 
-        stdout.setCallback(streamCallback, this);
+        stdout.setFlush(streamCallback, this);
 
         atomic {
             Usart::receiverEnable(true);

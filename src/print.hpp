@@ -1,8 +1,6 @@
 #ifndef NBAVR_PRINT_HPP
 #define NBAVR_PRINT_HPP
 
-// High nibble indicates whether it is signed.
-// Low nibble indicates the base.
 enum class PrintFormat : uint8_t {
     Bin = 0x00,
     Oct = 0x01,
@@ -13,12 +11,18 @@ enum class PrintFormat : uint8_t {
 constexpr char endl = '\n';
 
 inline bool printchar(Stream<char>& stream, const char c) {
-    return stream.push(c);
+    bool result = stream.push(c);
+
+    if(c == '\n') {
+        stream.flush();
+    }
+
+    return result;
 }
 
 inline bool printstr(Stream<char>& stream, const char* str) {
     for(const char* p = str; *p != '\0'; p++) {
-        if(!stream.push(*p)) {
+        if(!printchar(stream, *p)) {
             return false;
         }
     }
@@ -81,6 +85,11 @@ inline bool printint(Stream<char>& stream, T n, PrintFormat format = PrintFormat
     }
 
     return true;
+}
+
+inline Stream<char>& operator<<(Stream<char>& stream, const char c) {
+    printchar(stream, c);
+    return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, const char* str) {

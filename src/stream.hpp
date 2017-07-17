@@ -5,17 +5,16 @@ template <class T>
 class Stream {
     T* const bufferp;
     const uint8_t size;
-    void (*callback)(void*) = nullptr;
-    void* callbackData = nullptr;
+    void (*flushFunc)(void*) = nullptr;
+    void* flushData = nullptr;
     uint8_t head = 0;
     uint8_t tail = 0;
     bool full = false;
-    bool locked = false;
 
     protected:
 
-    Stream(T* bufferp, uint8_t size, void (*callback)(void*), void* data)
-    : bufferp(bufferp), size(size), callback(callback), callbackData(data) {
+    Stream(T* bufferp, uint8_t size, void (*flushFunc)(void*), void* flushData)
+    : bufferp(bufferp), size(size), flushFunc(flushFunc), flushData(flushData) {
     }
 
     public:
@@ -96,14 +95,8 @@ class Stream {
     }
 
     bool push_(const T& in) {
-        if(full || locked || (size == 0)) {
+        if(full || (size == 0)) {
             return false;
-        }
-
-        if(empty_() && (callback != nullptr)) {
-            locked = true;
-            callback(callbackData);
-            locked = false;
         }
 
         bufferp[head] = in;
@@ -122,7 +115,7 @@ class Stream {
     }
 
     bool pop_(T* out) {
-        if(empty_() || locked || (out == nullptr)) {
+        if(empty_() || (out == nullptr)) {
             return false;
         }
 
@@ -150,14 +143,8 @@ class Stream {
     }
 
     bool push_(const T* buffer, uint8_t count) {
-        if((count > unused_()) || locked || (size == 0) || (buffer == nullptr)) {
+        if((count > unused_()) || (size == 0) || (buffer == nullptr)) {
             return false;
-        }
-
-        if(empty_() && (callback != nullptr)) {
-            locked = true;
-            callback(callbackData);
-            locked = false;
         }
 
         for(uint8_t i = 0; i < count; i++) {
@@ -178,7 +165,7 @@ class Stream {
     }
 
     bool pop_(T* buffer, uint8_t count) {
-        if((count > used_()) || locked || (size == 0) || (buffer == nullptr)) {
+        if((count > used_()) || (size == 0) || (buffer == nullptr)) {
             return false;
         }
 
@@ -226,10 +213,6 @@ class Stream {
     }
 
     force_inline bool clear_() {
-        if(locked) {
-            return false;
-        }
-
         head = 0;
         tail = 0;
         full = false;
@@ -237,14 +220,15 @@ class Stream {
         return true;
     }
 
-    force_inline void setCallback(void (*callback)(void*), void* data) {
-        this->callback = callback;
-        this->callbackData = data;
+    force_inline void setFlush(void (*flushFunc)(void*), void* flushData) {
+        this->flushFunc = flushFunc;
+        this->flushData = flushData;
     }
 
-    force_inline Stream<T>& operator<<(T in) {
-        push(in);
-        return *this;
+    force_inline void flush() {
+        if(flushFunc != nullptr) {
+            flushFunc(flushData);
+        }
     }
 };
 
@@ -256,8 +240,8 @@ class StreamBuffer : public Stream<T> {
 
     public:
 
-    StreamBuffer(void (*callback)(void*) = nullptr, void* data = nullptr)
-    : Stream<T>(buffer, S, callback, data) {
+    StreamBuffer(void (*flushFunc)(void*) = nullptr, void* flushData = nullptr)
+    : Stream<T>(buffer, S, flushFunc, flushData) {
     }
 };
 
