@@ -12,8 +12,8 @@
 #define USE_2X 1
 #endif
 
-template <class Usart>
-class Serial : public Task {
+template <class Nbavr, class Usart>
+class Serial : public Task<Nbavr> {
     Stream<char>& stdout;
     Stream<char>& stdin;
 
@@ -40,7 +40,7 @@ private:
             Usart::dataRegisterEmptyIntEnable(true);
         }
 
-        sleep();
+        this->sleep();
     }
 
     static void usartRxComplete(void* data) {

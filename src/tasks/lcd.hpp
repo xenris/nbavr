@@ -36,7 +36,7 @@
 #define SET_DDRAM_ADDRESS 0x80
 
 template <class Nbavr, class D4, class D5, class D6, class D7, class RW, class RS, class E>
-class LCD : public Task {
+class LCD : public Task<Nbavr> {
     struct Range {
         uint8_t min;
         uint8_t max;
@@ -86,7 +86,7 @@ private:
         if(firstRun) {
             firstRun = false;
 
-            sleep(Nbavr::getTicks() + Nbavr::millisToTicks(50));
+            this->sleep(Nbavr::millisToTicks(50));
         } else {
             if(busy()) {
                 return;
@@ -127,7 +127,7 @@ private:
                 }
             }
         } else {
-            sleep(Nbavr::getTicks() + Nbavr::millisToTicks(20));
+            this->sleep(Nbavr::millisToTicks(20));
         }
     }
 
@@ -291,52 +291,52 @@ private:
         // Reset 1
         sendNibble(false, 0x3);
         state = &LCD::init1;
-        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(5));
+        this->sleep(Nbavr::millisToTicks(5));
     }
 
     void init1() {
         // Reset 2
         sendNibble(false, 0x3);
         state = &LCD::init2;
-        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
+        this->sleep(Nbavr::millisToTicks(1));
     }
 
     void init2() {
         // Reset 3
         sendNibble(false, 0x3);
         state = &LCD::init3;
-        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
+        this->sleep(Nbavr::millisToTicks(1));
     }
 
     void init3() {
         // initial 4 bit mode
         sendNibble(false, 0x2);
         state = &LCD::init4;
-        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
+        this->sleep(Nbavr::millisToTicks(1));
     }
 
     void init4() {
         sendByte(false, FUNCTION_FOUR_BITS_TWO_LINES);
         state = &LCD::init5;
-        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
+        this->sleep(Nbavr::millisToTicks(1));
     }
 
     void init5() {
         sendByte(false, DISPLAY_ON);
         state = &LCD::init6;
-        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
+        this->sleep(Nbavr::millisToTicks(1));
     }
 
     void init6() {
         sendByte(false, CLEAR_DISPLAY);
         state = &LCD::init7;
-        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(4));
+        this->sleep(Nbavr::millisToTicks(4));
     }
 
     void init7() {
         sendByte(false, ENTRY_MODE_RIGHT);
         state = &LCD::run;
-        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(1));
+        this->sleep(Nbavr::millisToTicks(1));
     }
 };
 

@@ -7,7 +7,7 @@
 
 /// ```c++
 /// template <class Nbavr, class ledPin>
-/// struct Flash : Task {
+/// struct Flash : Task<Nbavr> {
 ///     Flash() {
 ///         ledPin::direction(ledPin::Direction::Output);
 ///     }
@@ -15,12 +15,13 @@
 ///     void loop(Clock& clock) override {
 ///         ledPin::toggle();
 ///
-///         sleep(Nbavr::getTicks() + Nbavr::millisToTicks(500));
+///         this->sleep(Nbavr::millisToTicks(500));
 ///     }
 /// };
 /// ```
 
-/// ## Class Task
+/// ## Class Task<class Nbavr>
+template <class Nbavr>
 struct Task {
     enum class State : int8_t {
         Awake,
@@ -32,10 +33,10 @@ struct Task {
     State state = State::Awake;
     uint32_t wakeTick = 0;
 
-    /// #### void **sleep**(uint32_t tick)
-    /// Put this task to sleep until tick.
-    void sleep(uint32_t tick) {
-        wakeTick = tick;
+    /// #### void **sleep**(uint32_t ticks)
+    /// Put this task to sleep until the given number of ticks have passed.
+    void sleep(uint32_t ticks) {
+        wakeTick = Nbavr::getTicks() + ticks;
         state = State::Delay;
     }
 

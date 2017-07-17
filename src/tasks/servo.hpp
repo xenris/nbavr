@@ -97,7 +97,7 @@ struct ServoT : Servo<Nbavr> {
 };
 
 template <class Nbavr>
-class ServoManager : public Task {
+class ServoManager : public Task<Nbavr> {
     Servo<Nbavr>** _servos;
     const uint8_t _servoCount;
     int8_t index = 0;
@@ -125,7 +125,7 @@ private:
                     if(Nbavr::addInterrupt(end, this, pulseLength)) {
                         // _activeServo->pin() = Pin::Value::High;
                         _activeServo->pulseStart();
-                        sleep();
+                        this->sleep();
                     }
                 }
             }
@@ -137,7 +137,7 @@ private:
             uint16_t diff = Nbavr::getTicks16() - start;
 
             if(diff < SERVO_UPDATE_DELAY) {
-                sleep(Nbavr::getTicks() + (SERVO_UPDATE_DELAY - diff));
+                this->sleep(SERVO_UPDATE_DELAY - diff);
             }
         }
     }

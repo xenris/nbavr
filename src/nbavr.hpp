@@ -96,7 +96,7 @@ public:
     /// Run an array of tasks.<br>
     /// This function does not return.
     template <uint8_t S>
-    static force_inline void run(Task* (&tasks)[S]) {
+    static force_inline void run(Task<Nbavr>* (&tasks)[S]) {
         static_assert(TimerCounter::getHardwareType() == HardwareType::TimerCounter, "Nbavr requires a TimerCounter");
         static_assert(sizeof(typename TimerCounter::type) == 2, "Nbavr requires a 16 bit TimerCounter");
 

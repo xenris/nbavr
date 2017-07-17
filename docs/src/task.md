@@ -2,7 +2,7 @@
 ## Example
 ```c++
 template <class Nbavr, class ledPin>
-struct Flash : Task {
+struct Flash : Task<Nbavr> {
     Flash() {
         ledPin::direction(ledPin::Direction::Output);
     }
@@ -10,13 +10,13 @@ struct Flash : Task {
     void loop(Clock& clock) override {
         ledPin::toggle();
 
-        sleep(Nbavr::getTicks() + Nbavr::millisToTicks(500));
+        this->sleep(Nbavr::millisToTicks(500));
     }
 };
 ```
-## Class Task
-#### void **sleep**(uint32_t tick)
-Put this task to sleep until tick.
+## Class Task<class Nbavr>
+#### void **sleep**(uint32_t ticks)
+Put this task to sleep until the given number of ticks have passed.
 #### void **sleep**()
 Put this task to sleep until woken with wake().
 #### void **wake**()

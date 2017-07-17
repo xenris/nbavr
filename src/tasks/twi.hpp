@@ -78,7 +78,7 @@
 #define twiClearError() *TWCR = (bv(TWINT) | bv(TWSTO) | bv(TWEN))
 
 template <class Nbavr>
-class TWI : public Task {
+class TWI : public Task<Nbavr> {
     public:
         enum class Mode : uint8_t {
             Read = TW_READ,

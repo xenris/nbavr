@@ -9,14 +9,16 @@
 
 template <class Nbavr>
 class TaskManager {
-    Task** tasks;
+    typedef Task<Nbavr> TaskT;
+
+    TaskT** tasks;
     const uint8_t numTasks;
     uint8_t taskI = 0;
 
 public:
 
     template <uint8_t S>
-    TaskManager(Task* (&tasks)[S]) : tasks(tasks), numTasks(S) {
+    TaskManager(TaskT* (&tasks)[S]) : tasks(tasks), numTasks(S) {
         block Nbavr::timer::OutputCompareB::callback(haltCallback, this);
 
         block WDT::enable();
@@ -39,13 +41,13 @@ private:
 
     // Run the next task.
     void stepOne() {
-        Task& task = *tasks[taskI];
+        TaskT& task = *tasks[taskI];
 
         WDT::reset();
 
         sei();
 
-        if(task.state == Task::State::Delay) {
+        if(task.state == TaskT::State::Delay) {
             // Check if it is time for this task to wake up.
             uint32_t wakeTick;
 
@@ -54,11 +56,11 @@ private:
             }
 
             if(int32_t(Nbavr::getTicks() - wakeTick) >= 0) {
-                task.state = Task::State::Awake;
+                task.state = TaskT::State::Awake;
             }
         }
 
-        if(task.state == Task::State::Awake) {
+        if(task.state == TaskT::State::Awake) {
             // Setup halt callback.
             block Nbavr::timer::OutputCompareB::value(Nbavr::getTicks16() + Nbavr::millisToTicks(TASK_TIMEOUT_MS));
             block Nbavr::timer::OutputCompareB::intFlagClear();
@@ -75,13 +77,13 @@ private:
 
     // Run each task once, excluding the crashed one.
     void handleHalt() {
-        Task& task = *tasks[taskI];
+        TaskT& task = *tasks[taskI];
 
-        task.state = Task::State::Halt;
+        task.state = TaskT::State::Halt;
 
         stepAll();
 
-        task.state = Task::State::Awake;
+        task.state = TaskT::State::Awake;
 
         // Setup halt callback.
         block Nbavr::timer::OutputCompareB::value(Nbavr::getTicks16() + Nbavr::millisToTicks(TASK_TIMEOUT_HALTED_MS));
