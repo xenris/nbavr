@@ -85,7 +85,7 @@ class Nbavr {
 
 public:
     typedef TimerCounter timer;
-    const uint32_t freq = CpuFreq;
+    static const uint32_t freq = CpuFreq;
 
     static force_inline Nbavr& getInstance() {
         static Nbavr nbavr;
