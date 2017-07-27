@@ -35,7 +35,7 @@ private:
     static void usartRxComplete(void* data) {
         Stream<char>* stdin = reinterpret_cast<Stream<char>*>(data);
 
-        *stdin << Usart::pop();
+        stdin->push(Usart::pop());
     }
 
     static void usartDataRegisterEmpty(void* data) {
