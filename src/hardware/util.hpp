@@ -72,10 +72,12 @@ force_inline void nop() {
     #endif
 }
 
-force_inline void _MemoryBarrier(const uint8_t *s = nullptr) {
+force_inline uint8_t _MemoryBarrier(const uint8_t *s = nullptr) {
     #ifndef TEST
     __asm__ __volatile__("":::"memory");
     #endif
+
+    return 1;
 }
 
 /// #### void cli()
@@ -121,7 +123,7 @@ force_inline void __ssreg(const uint8_t *s) {
 /// #### macro block
 /// Make sure an expression or block of expressions is compiled in the order it is written in.
 /// i.e. Prevents the compiler from doing memory accesses optimisations that reorder code.
-#define block for(uint8_t __once __attribute__((cleanup(_MemoryBarrier))) = 1; __once; __once = 0)
+#define block for(uint8_t __once __attribute__((cleanup(_MemoryBarrier))) = _MemoryBarrier(); __once; __once = 0)
 
 #ifndef TEST
 #define ISR(vector, ...) \
