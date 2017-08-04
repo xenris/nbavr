@@ -28,9 +28,17 @@
 #ifndef NBAVR_CHIP_HPP
 #define NBAVR_CHIP_HPP
 
-#define REG8(addr) reinterpret_cast<volatile uint8_t*>(fake_ram + addr)
-#define REG16(addr) reinterpret_cast<volatile uint16_t*>(fake_ram + addr)
-#define REG32(addr) reinterpret_cast<volatile uint32_t*>(fake_ram + addr)
+#define CHIP_REGISTER_SIZE 0x200
+
+#ifdef TEST
+    uint8_t __test_fake_register[CHIP_REGISTER_SIZE];
+#else
+    #define __test_fake_register 0
+#endif
+
+#define REG8(addr) reinterpret_cast<volatile uint8_t*>(__test_fake_register + addr)
+#define REG16(addr) reinterpret_cast<volatile uint16_t*>(__test_fake_register + addr)
+#define REG32(addr) reinterpret_cast<volatile uint32_t*>(__test_fake_register + addr)
 
 #define VECT(n) __vector_ ## n
 
@@ -55,12 +63,6 @@
 //#if defined(__AVR_XXX__)
 //    #include "chips/xxx.hpp"
 //#endif
-
-#ifdef TEST
-    uint8_t fake_ram[CHIP_RAM_SIZE];
-#else
-    #define fake_ram 0
-#endif
 
 #ifndef NBAVR_CHIP_DEFINED
     #error The hardware has not been defined for this chip

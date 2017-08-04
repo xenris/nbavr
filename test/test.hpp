@@ -88,17 +88,17 @@ struct MyEnvironment : public ::testing::Environment {
 
 // Macros for testing function side effects and memory access.
 
-#define TEST_RAM_WRITE(FUNC) \
+#define TEST_REG_WRITE(FUNC) \
     { \
         std::stringstream ss; \
         for(int _c = 0x00; ; _c = 0xff) { \
-            memset(fake_ram, _c, CHIP_RAM_SIZE); \
+            memset(__test_fake_register, _c, CHIP_REGISTER_SIZE); \
             FUNC; \
-            for(int _i = 0; _i < CHIP_RAM_SIZE; _i++) { \
-                if(fake_ram[_i] != _c) { \
+            for(int _i = 0; _i < CHIP_REGISTER_SIZE; _i++) { \
+                if(__test_fake_register[_i] != _c) { \
                     ss << std::setfill('0') << std::setw(2) << std::hex << _i << ":"; \
                     ss << std::setfill('0') << std::setw(2) << _c << ":"; \
-                    ss << std::setfill('0') << std::setw(2) << (int)fake_ram[_i] << ":"; \
+                    ss << std::setfill('0') << std::setw(2) << (int)__test_fake_register[_i] << ":"; \
                 } \
             } \
             if(_c == 0xff) break; \
@@ -118,14 +118,14 @@ struct MyEnvironment : public ::testing::Environment {
         } \
     }
 
-#define TEST_RAM_READ_WRITE(FUNC) \
-    TEST_RAM_WRITE(FUNC) \
+#define TEST_REG_READ_WRITE(FUNC) \
+    TEST_REG_WRITE(FUNC) \
     { \
         unsigned long _seed = 59329876; \
         std::stringstream ss; \
         for(int _i = 0; _i < 10; _i++) { \
-            for(int _r = 0; _r < CHIP_RAM_SIZE; _r++) { \
-                fake_ram[_r] = (_seed / 65536) % 32768; \
+            for(int _r = 0; _r < CHIP_REGISTER_SIZE; _r++) { \
+                __test_fake_register[_r] = (_seed / 65536) % 32768; \
                 _seed = _seed * 1103515245 + 12345; \
             } \
             auto _t = FUNC; \
