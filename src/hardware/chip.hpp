@@ -60,6 +60,10 @@
     #include "chips/attiny85.hpp"
 #endif
 
+#if defined(__AVR_ATmega2560__)
+    #include "chips/atmega2560.hpp"
+#endif
+
 //#if defined(__AVR_XXX__)
 //    #include "chips/xxx.hpp"
 //#endif
