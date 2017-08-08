@@ -32,9 +32,6 @@
 
 #include "hardware.hpp"
 #include "atomic.hpp"
-#include "rational.hpp"
-#include "fixed.hpp"
-#include "half.hpp"
 #include "stream.hpp"
 #include "array.hpp"
 #include "taskmanager.hpp"
