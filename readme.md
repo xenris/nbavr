@@ -37,17 +37,6 @@ See [nbavr-project-template](https://github.com/xenris/nbavr-project-template).
 
 Documentation is limited, but there should be enough to get started.
 
-## Recommended tools
-
-* avr-gcc
-* avr-binutils
-* avr-libc
-* avrdude
-* git
-* tup
-* bash
-* a terminal
-
 ## Devices included
 
 * atmega328p
