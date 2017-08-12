@@ -47,7 +47,6 @@ Documentation is limited, but there should be enough to get started.
 * tup
 * bash
 * a terminal
-* picocom
 
 ## Devices included
 
