@@ -7,7 +7,7 @@ struct Flash : Task<Nbavr> {
         ledPin::direction(ledPin::Direction::Output);
     }
 
-    void loop(Clock& clock) override {
+    void loop() override {
         ledPin::toggle();
 
         this->sleep(Nbavr::millisToTicks(500));
