@@ -95,13 +95,13 @@ struct UsartN {
         TxFallingRxRising = C(CLOCK_POLARITY_TX_FALLING_RX_RISING_ID),
     };
 
-    /// #### constexpr HardwareType getHardwareType()
+    /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
         return HardwareType::Usart;
     }
 
-    /// #### void mode(Mode)
+    /// #### static void mode(Mode)
     /// Set USART mode.
     static force_inline void mode(Mode m) {
         #if C(USART_REG_SELECT)
@@ -114,7 +114,7 @@ struct UsartN {
         #endif
     }
 
-    /// #### void parity(Parity)
+    /// #### static void parity(Parity)
     /// Set USART parity.
     static force_inline void parity(Parity p) {
         #if C(USART_REG_SELECT)
@@ -125,7 +125,7 @@ struct UsartN {
         setBit_(C(PARITY_BIT_1_REG), C(PARITY_BIT_1_BIT), uint8_t(p) & 0x02);
     }
 
-    /// #### void stopBits(StopBits)
+    /// #### static void stopBits(StopBits)
     /// Set number of stop bits.
     static force_inline void stopBits(StopBits b) {
         #if C(USART_REG_SELECT)
@@ -135,7 +135,7 @@ struct UsartN {
         setBit_(C(STOP_BITS_REG), C(STOP_BITS_BIT), b == StopBits::Bits2);
     }
 
-    /// #### void characterSize(CharacterSize)
+    /// #### static void characterSize(CharacterSize)
     /// Set USART character size.
     static force_inline void characterSize(CharacterSize s) {
         #if C(USART_REG_SELECT)
@@ -147,7 +147,7 @@ struct UsartN {
         setBit_(C(CHARACTER_SIZE_BIT_2_REG), C(CHARACTER_SIZE_BIT_2_BIT), uint8_t(s) & 0x04);
     }
 
-    /// #### void polarity(Polarity)
+    /// #### static void polarity(Polarity)
     /// Set USART clock polarity.
     static force_inline void polarity(Polarity p) {
         #if C(USART_REG_SELECT)
@@ -157,7 +157,7 @@ struct UsartN {
         setBit_(C(CLOCK_POLARITY_REG), C(CLOCK_POLARITY_BIT), p == Polarity::TxFallingRxRising);
     }
 
-    /// #### void baud(uint16_t)
+    /// #### static void baud(uint16_t)
     /// Set USART baud rate.
     static force_inline void baud(uint16_t b) {
         b &= 0x0fff;
@@ -166,76 +166,76 @@ struct UsartN {
         *C(BAUD_RATE_REG_LOW) = b;
     }
 
-    /// #### void use2X(bool)
+    /// #### static void use2X(bool)
     /// Enable/disable baud rate 2x speed.
     static force_inline void use2X(bool u) {
         setBit_(C(DOUBLE_SPEED_REG), C(DOUBLE_SPEED_BIT), u);
     }
 
-    /// #### void receiverEnable(bool)
+    /// #### static void receiverEnable(bool)
     /// Enable/disable receiver.
     static force_inline void receiverEnable(bool e) {
         setBit_(C(RX_ENABLE_REG), C(RX_ENABLE_BIT), e);
     }
 
-    /// #### void transmitterEnable(bool)
+    /// #### static void transmitterEnable(bool)
     /// Enable/disable transmitter.
     static force_inline void transmitterEnable(bool e) {
         setBit_(C(TX_ENABLE_REG), C(TX_ENABLE_BIT), e);
     }
 
-    /// #### void multiprocessorCummunicationMode(bool)
+    /// #### static void multiprocessorCummunicationMode(bool)
     /// Enable/disable multiprocessor cummunication mode.
     static force_inline void multiprocessorCummunicationMode(bool e) {
         setBit_(C(MULTI_PROCESSOR_COMMUNICATION_REG), C(MULTI_PROCESSOR_COMMUNICATION_BIT), e);
     }
 
-    /// #### void rxCompleteIntEnable(bool)
+    /// #### static void rxCompleteIntEnable(bool)
     /// Enable/disable receive complete interrupt.
     static force_inline void rxCompleteIntEnable(bool e) {
         setBit_(C(RX_COMPLETE_INT_ENABLE_REG), C(RX_COMPLETE_INT_ENABLE_BIT), e);
     }
 
-    /// #### void txCompleteIntEnable(bool)
+    /// #### static void txCompleteIntEnable(bool)
     /// Enable/disable transmit complete interrupt.
     static force_inline void txCompleteIntEnable(bool e) {
         setBit_(C(TX_COMPLETE_INT_ENABLE_REG), C(TX_COMPLETE_INT_ENABLE_BIT), e);
     }
 
-    /// #### void dataRegisterEmptyIntEnable(bool)
+    /// #### static void dataRegisterEmptyIntEnable(bool)
     /// Enable/disable data register empty interrupt.
     static force_inline void dataRegisterEmptyIntEnable(bool e) {
         setBit_(C(DATA_REG_EMPTY_INT_ENABLE_REG), C(DATA_REG_EMPTY_INT_ENABLE_BIT), e);
     }
 
-    /// #### void rxCompleteCallback(void (\*)(void\*), void\*)
+    /// #### static void rxCompleteCallback(void (\*)(void\*), void\*)
     /// Set callback for receive complete interrupt.
     static force_inline void rxCompleteCallback(void (*func)(void*), void* data) {
         _C(RX_Callback) = func;
         _C(RX_CallbackData) = data;
     }
 
-    /// #### void txCompleteCallback(void (\*)(void\*), void\*)
+    /// #### static void txCompleteCallback(void (\*)(void\*), void\*)
     /// Set callback for transmit complete interrupt.
     static force_inline void txCompleteCallback(void (*func)(void*), void* data) {
         _C(TX_Callback) = func;
         _C(TX_CallbackData) = data;
     }
 
-    /// #### void dataRegisterEmptyCallback(void (\*)(void\*), void\*)
+    /// #### static void dataRegisterEmptyCallback(void (\*)(void\*), void\*)
     /// Set callback for data register empty interrupt.
     static force_inline void dataRegisterEmptyCallback(void (*func)(void*), void* data) {
         _C(DE_Callback) = func;
         _C(DE_CallbackData) = data;
     }
 
-    /// #### void push(uint8_t)
+    /// #### static void push(uint8_t)
     /// Send a byte.
     static force_inline void push(uint8_t b) {
         *C(DATA_REG) = b;
     }
 
-    /// #### void push9(uint16_t)
+    /// #### static void push9(uint16_t)
     /// Send a 9 bit byte.
     static force_inline void push9(uint16_t b) {
         setBit_(C(TX_DATA_BIT_8_REG), C(TX_DATA_BIT_8_BIT), b & 0x0100);
@@ -243,13 +243,13 @@ struct UsartN {
         *C(DATA_REG) = b;
     }
 
-    /// #### uint8_t pop()
+    /// #### static uint8_t pop()
     /// Get the last received byte.
     static force_inline uint8_t pop() {
         return *C(DATA_REG);
     }
 
-    /// #### uint16_t pop9()
+    /// #### static uint16_t pop9()
     /// Get the last received 9 bit byte.
     static force_inline uint16_t pop9() {
         uint16_t result = *C(DATA_REG);
@@ -261,37 +261,37 @@ struct UsartN {
         return result;
     }
 
-    /// #### bool frameError()
+    /// #### static bool frameError()
     /// Returns true if there was a frame error.
     static force_inline bool frameError() {
         return *C(FRAME_ERROR_REG) & bv(C(FRAME_ERROR_BIT));
     }
 
-    /// #### void frameErrorClear()
+    /// #### static void frameErrorClear()
     /// Clear the frame error flag.
     static force_inline void frameErrorClear() {
         setBit_(C(FRAME_ERROR_REG), C(FRAME_ERROR_BIT), false);
     }
 
-    /// #### bool dataOverRun()
+    /// #### static bool dataOverRun()
     /// Returns true if there was a data over run.
     static force_inline bool dataOverRun() {
         return *C(DATA_OVERRUN_REG) & bv(C(DATA_OVERRUN_BIT));
     }
 
-    /// #### void dataOverRunClear()
+    /// #### static void dataOverRunClear()
     /// Clear the data over run flag.
     static force_inline void dataOverRunClear() {
         setBit_(C(DATA_OVERRUN_REG), C(DATA_OVERRUN_BIT), false);
     }
 
-    /// #### bool parityError()
+    /// #### static bool parityError()
     /// Returns true if there was a parity error.
     static force_inline bool parityError() {
         return *C(PARITY_ERROR_REG) & bv(C(PARITY_ERROR_BIT));
     }
 
-    /// #### void parityErrorClear()
+    /// #### static void parityErrorClear()
     /// Clear the parity error flag.
     static force_inline void parityErrorClear() {
         setBit_(C(PARITY_ERROR_REG), C(PARITY_ERROR_BIT), false);

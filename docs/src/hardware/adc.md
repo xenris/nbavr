@@ -61,29 +61,29 @@ Include this to use Adc callbacks.
 * Timer1Overflow
 * Timer1CaptureEvent
 * FreeRunning
-#### constexpr HardwareType getHardwareType()
+#### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.
-#### void enable(bool)
+#### static void enable(bool)
 Enable/disable the analog to digital converter.
-#### void start()
+#### static void start()
 Start a convertion if set to single conversion or free running modes.
-#### uint16_t value()
+#### static uint16_t value()
 Get the the most recent conversion.
-#### void reference(Reference)
+#### static void reference(Reference)
 Set the reference voltage source.
-#### void channel(Channel)
+#### static void channel(Channel)
 Set the input channel.
-#### void prescaler(Prescaler)
+#### static void prescaler(Prescaler)
 Set the clock prescaler.
-#### void leftAdjust(bool)
+#### static void leftAdjust(bool)
 Enable/disable left adjustment of 10 bit data in 16 bit register.
-#### void trigger(Trigger)
+#### static void trigger(Trigger)
 Set the conversion trigger source.
-#### void callback(void (\*)(void\*), void\*)
+#### static void callback(void (\*)(void\*), void\*)
 Set the callback and data for when a conversion is complete.
-#### void intEnable(bool)
+#### static void intEnable(bool)
 Enable/diable the ADC interrupt.
-#### bool intFlag()
+#### static bool intFlag()
 Returns true if the interrupt flag is set.
-#### void intFlagClear()
+#### static void intFlagClear()
 Clear the interrupt flag.

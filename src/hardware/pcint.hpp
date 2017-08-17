@@ -29,38 +29,38 @@ MAKE_CALLBACK_HEADER(PCINT, N);
 struct PcIntN {
     PcIntN() = delete;
 
-    /// #### constexpr HardwareType getHardwareType()
+    /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
         return HardwareType::PcInt;
     }
 
-    /// #### void enable(bool)
+    /// #### static void enable(bool)
     /// Enable/disable this interrupt.
     static force_inline void enable(bool e) {
         setBit_(C(ENABLE_REG), C(ENABLE_BIT), e);
     }
 
-    /// #### void mask(uint8_t)
+    /// #### static void mask(uint8_t)
     /// Set which pins trigger this interrupt.
     static force_inline void mask(uint8_t m) {
         *C(MASK_REG) = m;
     }
 
-    /// #### void callback(void (\*)(void\*), void\*)
+    /// #### static void callback(void (\*)(void\*), void\*)
     /// Set the callback and data for this interrupt.
     static force_inline void callback(void (*func)(void*), void* data) {
         _C(Callback) = func;
         _C(CallbackData) = data;
     }
 
-    /// #### bool intFlag()
+    /// #### static bool intFlag()
     /// Returns true if the interrupt flag is set.
     static force_inline bool intFlag() {
         return *C(FLAG_REG) & bv(C(FLAG_BIT));
     }
 
-    /// #### void intFlagClear()
+    /// #### static void intFlagClear()
     /// Clear the interrupt flag.
     static force_inline void intFlagClear() {
         setBit_(C(FLAG_REG), C(FLAG_BIT), true);

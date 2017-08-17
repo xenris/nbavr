@@ -14,22 +14,22 @@ PinB5::output(Value::High);
 * Low
 * High
 ## Class PinXN
-#### constexpr [HardwareType](../hardware.hpp.md) getHardwareType()
+#### static constexpr [HardwareType](../hardware.hpp.md) getHardwareType()
 Get the type of hardware that this class represents.
-#### void direction(Direction)
+#### static void direction(Direction)
 Set the direction. (Input/Output)
-#### Direction direction()
+#### static Direction direction()
 Get the direction. (Input/Output)
 paragraph
-#### void pullup(bool)
+#### static void pullup(bool)
 Enable/disable the pullup resistor.
-#### bool pullup()
+#### static bool pullup()
 Returns true if the pullup resistor is enabled.
-#### void output(Value)
+#### static void output(Value)
 Set the output state. (High/Low)
-#### Value output()
+#### static Value output()
 Get the output state. (High/Low)
-#### Value input()
+#### static Value input()
 Get the input state. (High/Low)
-#### void toggle()
+#### static void toggle()
 Toggle the output state. (High/Low)

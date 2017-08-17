@@ -166,38 +166,38 @@ struct Adc {
         SingleConversion,
     };
 
-    /// #### constexpr HardwareType getHardwareType()
+    /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
         return HardwareType::ADC;
     }
 
-    /// #### void enable(bool)
+    /// #### static void enable(bool)
     /// Enable/disable the analog to digital converter.
     static force_inline void enable(bool e) {
         setBit_(CHIP_ADC_ENABLE_REG, CHIP_ADC_ENABLE_BIT, e);
     }
 
-    /// #### void start()
+    /// #### static void start()
     /// Start a convertion if set to single conversion or free running modes.
     static force_inline void start() {
         setBit_(CHIP_ADC_START_REG, CHIP_ADC_START_BIT, true);
     }
 
-    /// #### uint16_t value()
+    /// #### static uint16_t value()
     /// Get the the most recent conversion.
     static force_inline uint16_t value() {
         return *CHIP_ADC_DATA_REG;
     }
 
-    /// #### void reference(Reference)
+    /// #### static void reference(Reference)
     /// Set the reference voltage source.
     static force_inline void reference(Reference ref) {
         setBit_(CHIP_ADC_REFERENCE_BIT_0_REG, CHIP_ADC_REFERENCE_BIT_0_BIT, uint8_t(ref) & 0x01);
         setBit_(CHIP_ADC_REFERENCE_BIT_1_REG, CHIP_ADC_REFERENCE_BIT_1_BIT, uint8_t(ref) & 0x02);
     }
 
-    /// #### void channel(Channel)
+    /// #### static void channel(Channel)
     /// Set the input channel.
     static force_inline void channel(Channel ch) {
         setBit_(CHIP_ADC_CHANNEL_BIT_0_REG, CHIP_ADC_CHANNEL_BIT_0_BIT, uint8_t(ch) & 0x01);
@@ -206,7 +206,7 @@ struct Adc {
         setBit_(CHIP_ADC_CHANNEL_BIT_3_REG, CHIP_ADC_CHANNEL_BIT_3_BIT, uint8_t(ch) & 0x08);
     }
 
-    /// #### void prescaler(Prescaler)
+    /// #### static void prescaler(Prescaler)
     /// Set the clock prescaler.
     #ifdef CHIP_ADC_PRESCALER
     static force_inline void prescaler(Prescaler pre) {
@@ -216,13 +216,13 @@ struct Adc {
     }
     #endif
 
-    /// #### void leftAdjust(bool)
+    /// #### static void leftAdjust(bool)
     /// Enable/disable left adjustment of 10 bit data in 16 bit register.
     static force_inline void leftAdjust(bool l) {
         setBit_(CHIP_ADC_LEFT_ADJUST_REG, CHIP_ADC_LEFT_ADJUST_BIT, l);
     }
 
-    /// #### void trigger(Trigger)
+    /// #### static void trigger(Trigger)
     /// Set the conversion trigger source.
     static force_inline void trigger(Trigger trig) {
         if(trig == Trigger::SingleConversion) {
@@ -243,26 +243,26 @@ struct Adc {
         }
     }
 
-    /// #### void callback(void (\*)(void\*), void\*)
+    /// #### static void callback(void (\*)(void\*), void\*)
     /// Set the callback and data for when a conversion is complete.
     static force_inline void callback(void (*func)(void*), void* data) {
         _ADC_Callback_ = func;
         _ADC_CallbackData_ = data;
     }
 
-    /// #### void intEnable(bool)
+    /// #### static void intEnable(bool)
     /// Enable/diable the ADC interrupt.
     static force_inline void intEnable(bool e) {
         setBit_(CHIP_ADC_INT_ENABLE_REG, CHIP_ADC_INT_ENABLE_BIT, e);
     }
 
-    /// #### bool intFlag()
+    /// #### static bool intFlag()
     /// Returns true if the interrupt flag is set.
     static force_inline bool intFlag() {
         return *CHIP_ADC_INT_FLAG_REG & bv(CHIP_ADC_INT_FLAG_BIT);
     }
 
-    /// #### void intFlagClear()
+    /// #### static void intFlagClear()
     /// Clear the interrupt flag.
     static force_inline void intFlagClear() {
         setBit_(CHIP_ADC_INT_FLAG_REG, CHIP_ADC_INT_FLAG_BIT, true);

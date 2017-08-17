@@ -42,39 +42,39 @@ struct ExIntN {
         Rising = C(TRIGGER_RISING_ID),
     };
 
-    /// #### constexpr HardwareType getHardwareType()
+    /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
         return HardwareType::ExInt;
     }
 
-    /// #### void enable(bool)
+    /// #### static void enable(bool)
     /// Enable/disable this interrupt.
     static force_inline void enable(bool e) {
         setBit_(C(ENABLE_REG), C(ENABLE_BIT), e);
     }
 
-    /// #### void trigger(Trigger)
+    /// #### static void trigger(Trigger)
     /// Set the trigger action.
     static force_inline void trigger(Trigger trigger) {
         setBit_(C(TRIGGER_BIT_0_REG), C(TRIGGER_BIT_0_BIT), uint8_t(trigger) & 0x01);
         setBit_(C(TRIGGER_BIT_1_REG), C(TRIGGER_BIT_1_BIT), uint8_t(trigger) & 0x02);
     }
 
-    /// #### void callback(void (\*)(void\*), void\*)
+    /// #### static void callback(void (\*)(void\*), void\*)
     /// Set the callback and data for this interrupt.
     static force_inline void callback(void (*func)(void*), void* data) {
         _C(Callback) = func;
         _C(CallbackData) = data;
     }
 
-    /// #### bool intFlag()
+    /// #### static bool intFlag()
     /// Returns true if the interrupt flag is set.
     static force_inline bool intFlag() {
         return *C(FLAG_REG) & bv(C(FLAG_BIT));
     }
 
-    /// #### void intFlagClear()
+    /// #### static void intFlagClear()
     /// Clear the interrupt flag.
     static force_inline void intFlagClear() {
         setBit_(C(FLAG_REG), C(FLAG_BIT), true);
