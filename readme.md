@@ -33,9 +33,7 @@ See [nbavr-project-template](https://github.com/xenris/nbavr-project-template).
 
 ## Documentation
 
-[Documentation](docs/index.md)
-
-Documentation is limited, but there should be enough to get started.
+[Documentation](docs/index.md) is limited, but there should be enough to get started.
 
 ## Devices included
 
