@@ -1,5 +1,4 @@
 # Pin Change Interrupts
-All functions are static.
 #### macro INCLUDE_PCINT_CALLBACK(N)
 Include this to use PcInt callbacks.
 ## Class PCIntN

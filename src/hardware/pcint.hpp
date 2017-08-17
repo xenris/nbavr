@@ -1,7 +1,5 @@
 /// # Pin Change Interrupts
 
-/// All functions are static.
-
 #ifndef NBAVR_PCINT_HPP
 
 #ifndef N

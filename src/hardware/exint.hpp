@@ -1,7 +1,6 @@
 /// # External Interrupts
 
-/// N is the external interrupt id (1, 2, etc).<br>
-/// All functions are static.
+/// N is the external interrupt id (1, 2, etc).
 
 #ifndef NBAVR_EXINT_HPP
 

@@ -1,7 +1,6 @@
 # Digital IO Pins
 X is the port id (A, B, etc).<br>
-N is the pin id (1, 2, etc).<br>
-All functions are static.
+N is the pin id (1, 2, etc).
 ## Example
 ```c++
 PinB5::direction(Direction::Output);

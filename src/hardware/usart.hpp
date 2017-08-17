@@ -1,7 +1,6 @@
 /// # USARTs
 
-/// N is the usart id (1, 2, etc).<br>
-/// All functions are static.
+/// N is the usart id (1, 2, etc).
 
 /// ## Example
 

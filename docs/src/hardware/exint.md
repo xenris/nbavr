@@ -1,6 +1,5 @@
 # External Interrupts
-N is the external interrupt id (1, 2, etc).<br>
-All functions are static.
+N is the external interrupt id (1, 2, etc).
 #### macro INCLUDE_EXINT_CALLBACK(N)
 Include this to use ExInt callbacks.
 ## class ExIntN
