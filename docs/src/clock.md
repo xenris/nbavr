@@ -1,4 +1,4 @@
-# Nbavr
+# Clock
 
 ## Example
 ```c++
@@ -7,27 +7,28 @@ const uint32_t CpuFreq = 16000000;
 typedef PinB5 ledPin;
 typedef TimerCounter1 systemTimer;
 
-typedef Nbavr<systemTimer, CpuFreq> Nbavr;
+typedef Clock<systemTimer, CpuFreq> Clock;
 
-Flash<Nbavr, ledPin> flash;
+Clock::init();
+
+Flash<Clock, ledPin> flash;
 
 Task* tasks[] = {&flash};
 
-Nbavr::run(tasks);
+TaskManager tm(tasks);
 
 
 // Within Flash::loop()
-uint32_t ticks = Nbavr::getTicks();
-uint32_t millis = Nbavr::ticksToMillis(ticks);
+uint32_t ticks = Clock::getTicks();
+uint32_t millis = Clock::ticksToMillis(ticks);
 ```
-Every clock cycle is 1 / freq seconds. (62.5ns at 16MHz)<br>
+Every cpu clock cycle is 1 / freq seconds. (62.5ns at 16MHz)<br>
 Every 64 clock cycles is a tick. (4us at 16MHz)<br>
 Every 2^16 ticks is a tock. (262.144ms at 16MHz)<br>
 Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
-## class Nbavr<class TimerCounter, uint32_t CpuFreq>
-#### static void run(Task\*[])
-Run an array of tasks.<br>
-This function does not return.
+## class Clock<class TimerCounter, uint32_t CpuFreq>
+#### static void init()
+Initialise and start the clock.
 #### static constexpr uint32_t millisToTicks(uint32_t ms)
 Converts milliseconds to ticks.
 #### static constexpr uint32_t ticksToMillis(uint32_t ms)

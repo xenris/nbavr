@@ -2,7 +2,6 @@
 
 ## Index
 
-* [Nbavr](src/nbavr.md)
 * [Tasks](src/task.md)
 * [TaskManager](src/taskmanager.md)
 * Hardware

@@ -6,8 +6,8 @@
 /// ## Example
 
 /// ```c++
-/// template <class Nbavr, class ledPin>
-/// struct Flash : Task<Nbavr> {
+/// template <class Clock, class ledPin>
+/// struct Flash : Task<Clock> {
 ///     Flash() {
 ///         ledPin::direction(ledPin::Direction::Output);
 ///     }
@@ -15,13 +15,13 @@
 ///     void loop() override {
 ///         ledPin::toggle();
 ///
-///         this->sleep(Nbavr::millisToTicks(500));
+///         this->sleep(Clock::millisToTicks(500));
 ///     }
 /// };
 /// ```
 
-/// ## Class Task<class Nbavr>
-template <class Nbavr>
+/// ## Class Task<class Clock>
+template <class Clock>
 struct Task {
     enum class State : int8_t {
         Awake,
@@ -36,7 +36,7 @@ struct Task {
     /// #### void **sleep**(uint32_t ticks)
     /// Put this task to sleep until the given number of ticks have passed.
     void sleep(uint32_t ticks) {
-        wakeTick = Nbavr::getTicks() + ticks;
+        wakeTick = Clock::getTicks() + ticks;
         state = State::Delay;
     }
 

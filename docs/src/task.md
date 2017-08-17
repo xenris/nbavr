@@ -1,8 +1,8 @@
 # Tasks
 ## Example
 ```c++
-template <class Nbavr, class ledPin>
-struct Flash : Task<Nbavr> {
+template <class Clock, class ledPin>
+struct Flash : Task<Clock> {
     Flash() {
         ledPin::direction(ledPin::Direction::Output);
     }
@@ -10,11 +10,11 @@ struct Flash : Task<Nbavr> {
     void loop() override {
         ledPin::toggle();
 
-        this->sleep(Nbavr::millisToTicks(500));
+        this->sleep(Clock::millisToTicks(500));
     }
 };
 ```
-## Class Task<class Nbavr>
+## Class Task<class Clock>
 #### void **sleep**(uint32_t ticks)
 Put this task to sleep until the given number of ticks have passed.
 #### void **sleep**()

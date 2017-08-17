@@ -1,3 +1,24 @@
+/// # TaskManager
+///
+/// ## Example
+
+/// ```c++
+/// const uint32_t CpuFreq = 16000000;
+///
+/// typedef PinB5 ledPin;
+/// typedef TimerCounter1 systemTimer;
+///
+/// typedef Clock<systemTimer, CpuFreq> Clock;
+///
+/// Clock::init();
+///
+/// Flash<Clock, ledPin> flash;
+///
+/// Task* tasks[] = {&flash};
+///
+/// TaskManager tm(tasks);
+/// ```
+
 #ifndef NBAVR_TASKMANAGER_HPP
 #define NBAVR_TASKMANAGER_HPP
 
@@ -7,9 +28,10 @@
 #define TASK_TIMEOUT_MS 6
 #define TASK_TIMEOUT_HALTED_MS 1
 
-template <class Nbavr>
+/// ## class TaskManager<class Clock>
+template <class Clock>
 class TaskManager {
-    typedef Task<Nbavr> TaskT;
+    typedef Task<Clock> TaskT;
 
     TaskT** tasks;
     const uint8_t numTasks;
@@ -17,9 +39,11 @@ class TaskManager {
 
 public:
 
+    /// #### TaskManager(TaskT* (&tasks)[])
+    /// Runs the given array of tasks. Does not return.
     template <uint8_t S>
     TaskManager(TaskT* (&tasks)[S]) : tasks(tasks), numTasks(S) {
-        block Nbavr::timer::OutputCompareB::callback(haltCallback, this);
+        block Clock::timer::OutputCompareB::callback(haltCallback, this);
 
         block WDT::enable();
 
@@ -55,21 +79,21 @@ private:
                 wakeTick = task.wakeTick;
             }
 
-            if(int32_t(Nbavr::getTicks() - wakeTick) >= 0) {
+            if(int32_t(Clock::getTicks() - wakeTick) >= 0) {
                 task.state = TaskT::State::Awake;
             }
         }
 
         if(task.state == TaskT::State::Awake) {
             // Setup halt callback.
-            block Nbavr::timer::OutputCompareB::value(Nbavr::getTicks16() + Nbavr::millisToTicks(TASK_TIMEOUT_MS));
-            block Nbavr::timer::OutputCompareB::intFlagClear();
-            block Nbavr::timer::OutputCompareB::intEnable(true);
+            block Clock::timer::OutputCompareB::value(Clock::getTicks16() + Clock::millisToTicks(TASK_TIMEOUT_MS));
+            block Clock::timer::OutputCompareB::intFlagClear();
+            block Clock::timer::OutputCompareB::intEnable(true);
 
             task.loop();
 
             // Disable halt callback.
-            block Nbavr::timer::OutputCompareB::intEnable(false);
+            block Clock::timer::OutputCompareB::intEnable(false);
         }
 
         taskI = (taskI + 1) % numTasks;
@@ -86,9 +110,9 @@ private:
         task.state = TaskT::State::Awake;
 
         // Setup halt callback.
-        block Nbavr::timer::OutputCompareB::value(Nbavr::getTicks16() + Nbavr::millisToTicks(TASK_TIMEOUT_HALTED_MS));
-        block Nbavr::timer::OutputCompareB::intFlagClear();
-        block Nbavr::timer::OutputCompareB::intEnable(true);
+        block Clock::timer::OutputCompareB::value(Clock::getTicks16() + Clock::millisToTicks(TASK_TIMEOUT_HALTED_MS));
+        block Clock::timer::OutputCompareB::intFlagClear();
+        block Clock::timer::OutputCompareB::intEnable(true);
     }
 
     static void haltCallback(void* data) {
