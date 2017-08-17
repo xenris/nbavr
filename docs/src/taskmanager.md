@@ -15,8 +15,8 @@ Flash<Clock, ledPin> flash;
 
 Task* tasks[] = {&flash};
 
-TaskManager tm(tasks);
+TaskManager<Clock> tm(tasks);
 ```
-## class TaskManager<class Clock>
+## class TaskManager\<class Clock\>
 #### TaskManager(TaskT* (&tasks)[])
 Runs the given array of tasks. Does not return.

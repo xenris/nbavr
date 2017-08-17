@@ -16,7 +16,7 @@
 ///
 /// Task* tasks[] = {&flash};
 ///
-/// TaskManager tm(tasks);
+/// TaskManager<Clock> tm(tasks);
 /// ```
 
 #ifndef NBAVR_TASKMANAGER_HPP
@@ -28,7 +28,7 @@
 #define TASK_TIMEOUT_MS 6
 #define TASK_TIMEOUT_HALTED_MS 1
 
-/// ## class TaskManager<class Clock>
+/// ## class TaskManager\<class Clock\>
 template <class Clock>
 class TaskManager {
     typedef Task<Clock> TaskT;

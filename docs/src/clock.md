@@ -26,7 +26,7 @@ Every cpu clock cycle is 1 / freq seconds. (62.5ns at 16MHz)<br>
 Every 64 clock cycles is a tick. (4us at 16MHz)<br>
 Every 2^16 ticks is a tock. (262.144ms at 16MHz)<br>
 Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
-## class Clock<class TimerCounter, uint32_t CpuFreq>
+## class Clock\<class TimerCounter, uint32_t CpuFreq\>
 #### static void init()
 Initialise and start the clock.
 #### static constexpr uint32_t millisToTicks(uint32_t ms)

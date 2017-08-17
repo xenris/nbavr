@@ -37,7 +37,7 @@
 #define INTERRUPT_TICK_BUFFER 200
 #define MIN_INTERRUPT_TICK 2
 
-/// ## class Clock<class TimerCounter, uint32_t CpuFreq>
+/// ## class Clock\<class TimerCounter, uint32_t CpuFreq\>
 template<class TimerCounter, uint32_t CpuFreq>
 class Clock {
     static_assert(TimerCounter::getHardwareType() == HardwareType::TimerCounter, "Clock requires a TimerCounter");
