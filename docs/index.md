@@ -13,7 +13,9 @@
     * [Timer/Counters](src/hardware/timercounter.md)
     * [USARTs](src/hardware/usart.md)
     * [Utils](src/hardware/util.md)
-* [Example](https://github.com/xenris/nbavr-project-template)
+* Examples
+    * [nbavr-project-template](https://github.com/xenris/nbavr-project-template)
+    * [8x8 LED Matrix Display](https://github.com/xenris/led-matrix-display)
 * [Adding Chips/Tests](src/hardware/chip.md)
 
 ## Editing documentation
