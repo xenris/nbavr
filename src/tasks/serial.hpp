@@ -5,45 +5,45 @@
 
 template <class Usart>
 struct Serial {
-    static inline void init(uint32_t CpuFreq, uint32_t baud, Stream<char>* stdout, Stream<char>* stdin = nullptr) {
+    static inline void init(uint32_t CpuFreq, uint32_t baud, Stream<char>* cout, Stream<char>* cin = nullptr) {
         static_assert(Usart::getHardwareType() == HardwareType::Usart, "Serial requires a Usart");
 
-        if(stdout == nullptr) {
+        if(cout == nullptr) {
             return;
         }
 
         const uint16_t ubrr = CpuFreq / (16 * float(baud)) - 1 + 0.5;
 
-        stdout->setFlush(flushCallback, nullptr);
+        cout->setFlush(flushCallback, nullptr);
 
         atomic {
             Usart::transmitterEnable(true);
             Usart::baud(ubrr);
             Usart::use2X(false);
 
-            if(stdin != nullptr) {
+            if(cin != nullptr) {
                 Usart::receiverEnable(true);
                 Usart::rxCompleteIntEnable(true);
-                Usart::rxCompleteCallback(usartRxComplete, stdin);
+                Usart::rxCompleteCallback(usartRxComplete, cin);
             }
 
-            Usart::dataRegisterEmptyCallback(usartDataRegisterEmpty, stdout);
+            Usart::dataRegisterEmptyCallback(usartDataRegisterEmpty, cout);
         }
     }
 
 private:
     static void usartRxComplete(void* data) {
-        Stream<char>* stdin = reinterpret_cast<Stream<char>*>(data);
+        Stream<char>* cin = reinterpret_cast<Stream<char>*>(data);
 
-        stdin->push(Usart::pop());
+        cin->push(Usart::pop());
     }
 
     static void usartDataRegisterEmpty(void* data) {
-        Stream<char>* stdout = reinterpret_cast<Stream<char>*>(data);
+        Stream<char>* cout = reinterpret_cast<Stream<char>*>(data);
 
         char d;
 
-        if(stdout->pop_(&d)) {
+        if(cout->pop_(&d)) {
             Usart::push(d);
         } else {
             Usart::dataRegisterEmptyIntEnable(false);
