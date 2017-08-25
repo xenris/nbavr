@@ -40,10 +40,6 @@ See [nbavr-project-template](https://github.com/xenris/nbavr-project-template).
 * atmega328p
 * atmega8
 
-## Warranty
-
-No.
-
 ## License
 
-You may use any of this code however you like, except for evil.
+MIT. See [license](license).
