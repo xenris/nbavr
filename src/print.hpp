@@ -1,12 +1,7 @@
 #ifndef NBAVR_PRINT_HPP
 #define NBAVR_PRINT_HPP
 
-enum class PrintFormat : uint8_t {
-    Bin = 0x00,
-    Oct = 0x01,
-    Dec = 0x02,
-    Hex = 0x04,
-};
+#include <stdlib.h>
 
 constexpr char endl = '\n';
 
@@ -30,61 +25,142 @@ inline bool printstr(Stream<char>& stream, const char* str) {
     return true;
 }
 
+// Converts integer T to reverse ascii string.
 template <class T>
-inline bool printint(Stream<char>& stream, T n, PrintFormat format = PrintFormat::Dec) {
-    char stack[type_info<T>::num_digits + 1];
+inline int8_t _itoa(char* buffer, T n, int8_t base) {
     int8_t i = 0;
-    bool negative = n < 0;
-    int8_t base = uint8_t(format) & 0x0F;
 
     if(n == 0) {
-        stack[i++] = '0';
-    }
+        buffer[i++] = '0';
+    } else {
+        const bool negative = n < 0;
 
-    while(n != 0) {
-        int8_t d;
+        base = clip(base, int8_t(2), int8_t(36));
+        n = abs(n);
 
-        switch(base) {
-            case 0x00:
-                d = n % 2;
-                n /= 2;
-                break;
-            case 0x01:
-                d = n % 8;
-                n /= 8;
-                break;
-            case 0x02:
-                d = n % 10;
-                n /= 10;
-                break;
-            default:
-                d = n % 16;
-                n /= 16;
-                break;
+        while(n != 0) {
+            int8_t d = n % base;
+
+            n /= base;
+
+            if(d < 10) {
+                buffer[i++] = '0' + d;
+            } else {
+                buffer[i++] = 'a' + (d - 10);
+            }
         }
 
-        d = abs(d);
-
-        if(d < 10) {
-            stack[i++] = '0' + d;
-        } else {
-            stack[i++] = 'A' + d - 10;
+        if(negative) {
+            buffer[i++] = '-';
         }
     }
 
-    if(negative) {
-        stack[i++] = '-';
-    }
+    buffer[i] = '\0';
 
-    i--;
+    return i;
+}
 
-    for(; i >= 0; i--) {
-        if(!stream.push(stack[i])) {
-            return false;
-        }
-    }
+// Converts integer T to ascii string.
+template <class T>
+inline int8_t itoa(char* buffer, T n, int8_t base) {
+    const int8_t l = _itoa(buffer, n, base);
 
-    return true;
+    reverse(buffer, l);
+
+    return l;
+}
+
+// TODO Make efficient float to ascii function with output like:
+// 1.0, 1.0004, 1000.002, 10000.01, 100000.0, 1.0e6, 0.001, -1.0e-50
+// i.e. If more than ~13 characters, use scientific notation.
+// int8_t ftoa(char* buffer, float n) {
+//     union {
+//         float f;
+//         int i;
+//     } u;
+//
+//     u.f = n;
+//
+//     int8_t k = 0;
+//
+//     if(u.i & bv(31)) {
+//         buffer[k++] = '-';
+//         n = -n;
+//     }
+//
+//     if(n == 0) {
+//         buffer[k++] = '0';
+//         buffer[k++] = '.';
+//         buffer[k++] = '0';
+//     } else {
+//         float e = floor(log10(n));
+//         float s = pow(10, -e) * n;
+//
+//         float i;
+//         float f;
+//
+//         f = round(modff(s, &i) * 1e6);
+//
+//         buffer[k++] = '0' + int8_t(i);
+//
+//         buffer[k++] = '.';
+//
+//         char bf[6];
+//
+//         // itoa(&buffer[k], int32_t(f), 10);
+//         int8_t l = _itoa(bf, int32_t(f), 10);
+//
+//         // for(int8_t j = l; j < 6; j++) {
+//         //     buffer[k++] = '0';
+//         // }
+//
+//         for(int8_t j = 0; j < l; j++) {
+//             char c = bf[(l - 1) - j];
+//             if(c != '0') {
+//                 buffer[k++] = c; // XXX XXX XXX
+//             }
+//         }
+//
+//         // k += 6;
+//         //
+//         // for(int8_t j = 0; j < 5; j++) {
+//         //     char c = buffer[k - 1];
+//         //     if(('1' <= c) && (c <= '9')) {
+//         //         break;
+//         //     } else {
+//         //         k--;
+//         //     }
+//         // }
+//
+//         if(int16_t(e) != 0) {
+//             buffer[k++] = 'e';
+//             k += itoa(&buffer[k], int16_t(e), 10);
+//         }
+//     }
+//
+//     buffer[k] = '\0';
+//
+//     return k;
+// }
+
+template <class T>
+inline bool printint(Stream<char>& stream, T n, int8_t base) {
+    char buffer[type_info<T>::num_digits + 1 + 1];
+
+    itoa(buffer, n, base);
+
+    return printstr(stream, buffer);
+}
+
+inline bool printfloat(Stream<char>& stream, float n) {
+    char buffer[14];
+
+    #ifndef TEST
+    dtostre(n, buffer, 6, 0);
+    #endif
+
+
+    return printstr(stream, buffer);
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, const char c) {
@@ -98,42 +174,42 @@ inline Stream<char>& operator<<(Stream<char>& stream, const char* str) {
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, int8_t n) {
-    printint(stream, n, PrintFormat::Dec);
+    printint(stream, n, 10);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, int16_t n) {
-    printint(stream, n, PrintFormat::Dec);
+    printint(stream, n, 10);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, int32_t n) {
-    printint(stream, n, PrintFormat::Dec);
+    printint(stream, n, 10);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, int64_t n) {
-    printint(stream, n, PrintFormat::Dec);
+    printint(stream, n, 10);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, uint8_t n) {
-    printint(stream, n, PrintFormat::Dec);
+    printint(stream, n, 10);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, uint16_t n) {
-    printint(stream, n, PrintFormat::Dec);
+    printint(stream, n, 10);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, uint32_t n) {
-    printint(stream, n, PrintFormat::Dec);
+    printint(stream, n, 10);
     return stream;
 }
 
 inline Stream<char>& operator<<(Stream<char>& stream, uint64_t n) {
-    printint(stream, n, PrintFormat::Dec);
+    printint(stream, n, 10);
     return stream;
 }
 
@@ -144,7 +220,17 @@ inline Stream<char>& operator<<(Stream<char>& stream, bool n) {
 
 template <class T>
 inline Stream<char>& operator<<(Stream<char>& stream, T* p) {
-    printint(stream, uint16_t(p), PrintFormat::Hex);
+    printint(stream, uint16_t(p), 16);
+    return stream;
+}
+
+inline Stream<char>& operator<<(Stream<char>& stream, float n) {
+    printfloat(stream, n);
+    return stream;
+}
+
+inline Stream<char>& operator<<(Stream<char>& stream, double n) {
+    printfloat(stream, float(n));
     return stream;
 }
 
