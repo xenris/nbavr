@@ -60,11 +60,14 @@
 #define TO_LETTER_24 Y
 #define TO_LETTER_25 Z
 
-#define bv(n) (1 << (n))
-
 /// #### macro force_inline
 /// Force a function to always be inlined. Use like "inline".
 #define force_inline inline __attribute__((always_inline))
+
+template <typename T>
+force_inline T bv(T n) {
+    return T(1) << n;
+}
 
 force_inline void nop() {
     #ifndef TEST
