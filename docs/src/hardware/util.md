@@ -23,6 +23,8 @@ Get the smaller of the two values.
 Clip x between l and h.
 #### T abs(T)
 Get the absolute (positive) value.
+#### T* reverse(T* array, size_t length)
+Reverse an array.
 #### void setBit(volatile uint8_t* register, uint8_t bit, bool)
 Set or clear a bit in a volatile register immediately.
 #### void setBit_(volatile uint8_t* register, uint8_t bit, bool)
