@@ -6,7 +6,7 @@ Created by Henry Shepperd (hshepperd@gmail.com)
 
 ## About
 
-A c++ library for 8-bit Atmel microprocessors.
+A C++ library and real time operating system for 8-bit AVR microcontrollers (such as those found on Arduinos).
 
 ## Aims
 
