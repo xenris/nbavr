@@ -161,6 +161,20 @@ constexpr force_inline T abs(T a) {
     return a >= 0 ? a : -a;
 }
 
+/// #### T* reverse(T* array, size_t length)
+/// Reverse an array.
+template <typename T>
+force_inline T* reverse(T* array, size_t length) {
+    for(size_t i = 0; i < (length + 1) / 2; i++) {
+        const size_t j = (length - 1) - i;
+        const T temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    return array;
+}
+
 template<class T>
 auto begin(T& t) -> decltype(t.begin()) {
     return t.begin();
