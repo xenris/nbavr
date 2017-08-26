@@ -251,7 +251,7 @@ struct Adc {
     }
 
     /// #### static void intEnable(bool)
-    /// Enable/diable the ADC interrupt.
+    /// Enable/disable the ADC interrupt.
     static force_inline void intEnable(bool e) {
         setBit_(CHIP_ADC_INT_ENABLE_REG, CHIP_ADC_INT_ENABLE_BIT, e);
     }

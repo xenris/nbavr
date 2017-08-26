@@ -82,7 +82,7 @@ Set the conversion trigger source.
 #### static void callback(void (\*)(void\*), void\*)
 Set the callback and data for when a conversion is complete.
 #### static void intEnable(bool)
-Enable/diable the ADC interrupt.
+Enable/disable the ADC interrupt.
 #### static bool intFlag()
 Returns true if the interrupt flag is set.
 #### static void intFlagClear()
