@@ -30,6 +30,38 @@ public:
         return t;
     }
 
+    force_inline Atomic<T>& operator+=(T t) {
+        atomic {
+            _t += t;
+        }
+
+        return *this;
+    }
+
+    force_inline Atomic<T>& operator-=(T t) {
+        atomic {
+            _t -= t;
+        }
+
+        return *this;
+    }
+
+    force_inline Atomic<T>& operator*=(T t) {
+        atomic {
+            _t *= t;
+        }
+
+        return *this;
+    }
+
+    force_inline Atomic<T>& operator/=(T t) {
+        atomic {
+            _t /= t;
+        }
+
+        return *this;
+    }
+
     force_inline T& direct() {
         return _t;
     }
