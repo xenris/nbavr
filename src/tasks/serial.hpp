@@ -35,7 +35,13 @@ private:
     static void usartRxComplete(void* data) {
         Stream<char>* cin = reinterpret_cast<Stream<char>*>(data);
 
-        cin->push(Usart::pop());
+        char c = Usart::pop();
+
+        cin->push(c);
+
+        if(c == '\n') {
+            cin->flush();
+        }
     }
 
     static void usartDataRegisterEmpty(void* data) {
