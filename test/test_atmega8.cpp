@@ -9,6 +9,8 @@ typedef void (*ft)(void*);
 static ft func = (ft)0x3c3c;
 static void* data = (void*)0x3c3c;
 
+INCLUDE_ADC_CALLBACK();
+
 TEST(Adc, getHardwareType) {
     ASSERT_EQ(Adc::getHardwareType(), HardwareType::ADC);
 }
@@ -64,8 +66,6 @@ TEST(Adc, trigger) {
     TEST_REG_WRITE(Adc::trigger(Adc::Trigger::SingleConversion));
     TEST_REG_WRITE(Adc::trigger(Adc::Trigger::FreeRunning));
 }
-
-INCLUDE_ADC_CALLBACK;
 
 TEST(Adc, callback) {
     TEST_REG_WRITE(Adc::callback(func,&data));

@@ -32,9 +32,9 @@
 
 MAKE_CALLBACK_HEADER(ADC);
 
-/// #### macro INCLUDE_ADC_CALLBACK(N)
+/// #### macro INCLUDE_ADC_CALLBACK()
 /// Include this to use Adc callbacks.
-#define INCLUDE_ADC_CALLBACK MAKE_CALLBACK(ADC)
+#define INCLUDE_ADC_CALLBACK() MAKE_CALLBACK(ADC)
 
 /// ## class Adc
 struct Adc {

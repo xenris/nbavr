@@ -23,7 +23,7 @@ if(Adc::intFlag()) {
     // Conversion not done yet.
 }
 ```
-#### macro INCLUDE_ADC_CALLBACK(N)
+#### macro INCLUDE_ADC_CALLBACK()
 Include this to use Adc callbacks.
 ## class Adc
 #### enum Reference

@@ -12,7 +12,7 @@ static void* data = (void*)0x5678;
 //------------------------------------------------
 // Analog to Digital
 
-INCLUDE_ADC_CALLBACK;
+INCLUDE_ADC_CALLBACK();
 
 TEST(Adc, getHardwareType) {
     ASSERT_EQ(Adc::getHardwareType(), HardwareType::ADC);
