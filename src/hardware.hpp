@@ -8,6 +8,7 @@ enum class HardwareType : uint8_t {
     Pin,
     Port,
     TimerCounter,
+    Twi,
     Usart,
     WDT
 };
@@ -22,6 +23,7 @@ enum class HardwareType : uint8_t {
 #include "hardware/pin.hpp"
 #include "hardware/port.hpp"
 #include "hardware/timercounter.hpp"
+#include "hardware/twi.hpp"
 #include "hardware/usart.hpp"
 #include "hardware/watchdog.hpp"
 

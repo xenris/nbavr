@@ -11,6 +11,7 @@
 ///     * [Digital IO Pins](src/hardware/pin.md)
 ///     * [Digital IO Ports](src/hardware/port.md)
 ///     * [Timer/Counters](src/hardware/timercounter.md)
+///     * [Twi](src/hardware/twi.md)
 ///     * [USARTs](src/hardware/usart.md)
 ///     * [Utils](src/hardware/util.md)
 /// * Examples

@@ -562,4 +562,52 @@
 #define CHIP_USART_0_DE_INT_VECTOR                                      VECT(19)
 #define CHIP_USART_0_TX_INT_VECTOR                                      VECT(20)
 
+//------------------------------------------------
+// Two Wire Serial Interface
+
+#define CHIP_TWI                                                        TRUE
+
+#define CHIP_TWI_PRESCALER_1_ID                                         0
+#define CHIP_TWI_PRESCALER_4_ID                                         1
+#define CHIP_TWI_PRESCALER_16_ID                                        2
+#define CHIP_TWI_PRESCALER_64_ID                                        3
+
+#define CHIP_TWI_PRESCALER_BIT_0_REG                                    REG8(0xB9)
+#define CHIP_TWI_PRESCALER_BIT_0_BIT                                    0
+#define CHIP_TWI_PRESCALER_BIT_1_REG                                    REG8(0xB9)
+#define CHIP_TWI_PRESCALER_BIT_1_BIT                                    1
+
+#define CHIP_TWI_DATA_REG                                               REG8(0xBB)
+
+#define CHIP_TWI_STATUS_REG                                             REG8(0xB9)
+
+#define CHIP_TWI_BIT_RATE_REG                                           REG8(0xB8)
+
+#define CHIP_TWI_ENABLE_REG                                             REG8(0xBC)
+#define CHIP_TWI_ENABLE_BIT                                             2
+
+#define CHIP_TWI_INT_FLAG_REG                                           REG8(0xBC)
+#define CHIP_TWI_INT_FLAG_BIT                                           7
+
+#define CHIP_TWI_INT_ENABLE_REG                                         REG8(0xBC)
+#define CHIP_TWI_INT_ENABLE_BIT                                         0
+
+#define CHIP_TWI_ENABLE_ACK_REG                                         REG8(0xBC)
+#define CHIP_TWI_ENABLE_ACK_BIT                                         6
+
+#define CHIP_TWI_START_CONDITION_REG                                    REG8(0xBC)
+#define CHIP_TWI_START_CONDITION_BIT                                    5
+
+#define CHIP_TWI_STOP_CONDITION_REG                                     REG8(0xBC)
+#define CHIP_TWI_STOP_CONDITION_BIT                                     4
+
+#define CHIP_TWI_WRITE_COLLISION_FLAG_REG                               REG8(0xBC)
+#define CHIP_TWI_WRITE_COLLISION_FLAG_BIT                               3
+
+#define CHIP_TWI_GEN_CALL_REC_ENABLE_REG                                REG8(0xBA)
+#define CHIP_TWI_GEN_CALL_REC_ENABLE_BIT                                0
+
+#define CHIP_TWI_SLAVE_ADDRESS_REG                                      REG8(0xBA)
+#define CHIP_TWI_SLAVE_ADDRESS_MASK_REG                                 REG8(0xBD)
+
 #endif
