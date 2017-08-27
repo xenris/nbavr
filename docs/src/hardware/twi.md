@@ -80,6 +80,9 @@ Clear the write collision flag.
 #### static void intEnable(bool e)
 Enable/disable the Twi interrupt.
 
+#### static void callback(void (\*)(void\*), void\*)
+Set the callback and data for Twi interrupts.
+
 #### static Status status()
 Get the Twi status.
 

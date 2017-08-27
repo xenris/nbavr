@@ -182,6 +182,14 @@ struct Twi {
     }
 
     ///
+    /// #### static void callback(void (\*)(void\*), void\*)
+    /// Set the callback and data for Twi interrupts.
+    static force_inline void callback(void (*func)(void*), void* data) {
+        _TWI_Callback_ = func;
+        _TWI_CallbackData_ = data;
+    }
+
+    ///
     /// #### static Status status()
     /// Get the Twi status.
     static force_inline Status status() {
