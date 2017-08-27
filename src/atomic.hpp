@@ -21,13 +21,13 @@ public:
     }
 
     force_inline operator T() const {
-        T t;
+        T r;
 
         atomic {
-            t = _t;
+            r = _t;
         }
 
-        return t;
+        return r;
     }
 
     force_inline T getSet(T t) {
@@ -82,13 +82,14 @@ public:
     }
 
     force_inline Atomic<T> operator++(int) {
-        T t = *this;
+        T r;
 
         atomic {
-            ++*this;
+            r = _t;
+            _t++;
         }
 
-        return t;
+        return r;
     }
 
     force_inline Atomic<T>& operator--() {
@@ -100,13 +101,14 @@ public:
     }
 
     force_inline Atomic<T> operator--(int) {
-        T t = *this;
+        T r;
 
         atomic {
-            --*this;
+            r = _t;
+            _t--;
         }
 
-        return t;
+        return r;
     }
 
     force_inline T& direct() {
