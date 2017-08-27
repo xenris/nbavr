@@ -30,6 +30,17 @@ public:
         return t;
     }
 
+    force_inline T getSet(T t) {
+        T r;
+
+        atomic {
+            r = _t;
+            _t = t;
+        }
+
+        return r;
+    }
+
     force_inline Atomic<T>& operator+=(T t) {
         atomic {
             _t += t;
@@ -60,6 +71,42 @@ public:
         }
 
         return *this;
+    }
+
+    force_inline Atomic<T>& operator++() {
+        atomic {
+            _t++;
+        }
+
+        return *this;
+    }
+
+    force_inline Atomic<T> operator++(int) {
+        T t = *this;
+
+        atomic {
+            ++*this;
+        }
+
+        return t;
+    }
+
+    force_inline Atomic<T>& operator--() {
+        atomic {
+            _t--;
+        }
+
+        return *this;
+    }
+
+    force_inline Atomic<T> operator--(int) {
+        T t = *this;
+
+        atomic {
+            --*this;
+        }
+
+        return t;
     }
 
     force_inline T& direct() {
