@@ -5,19 +5,21 @@
 
 constexpr char endl = '\n';
 
-inline bool printchar(Stream<char>& stream, const char c) {
-    bool result = stream.push(c);
+template<int S>
+inline bool printchar(Queue<char, S>& queue, const char c) {
+    bool result = queue.push(c);
 
     if(c == '\n') {
-        stream.flush();
+        queue.notify();
     }
 
     return result;
 }
 
-inline bool printstr(Stream<char>& stream, const char* str) {
+template<int S>
+inline bool printstr(Queue<char, S>& queue, const char* str) {
     for(const char* p = str; *p != '\0'; p++) {
-        if(!printchar(stream, *p)) {
+        if(!printchar(queue, *p)) {
             return false;
         }
     }
@@ -143,16 +145,17 @@ inline int8_t itoa(char* buffer, T n, int8_t base) {
 //     return k;
 // }
 
-template <class T>
-inline bool printint(Stream<char>& stream, T n, int8_t base) {
+template <int S, class T>
+inline bool printint(Queue<char, S>& queue, T n, int8_t base) {
     char buffer[type_info<T>::num_digits + 1 + 1];
 
     itoa(buffer, n, base);
 
-    return printstr(stream, buffer);
+    return printstr(queue, buffer);
 }
 
-inline bool printfloat(Stream<char>& stream, float n) {
+template<int S>
+inline bool printfloat(Queue<char, S>& queue, float n) {
     char buffer[14];
 
     #ifndef TEST
@@ -160,78 +163,91 @@ inline bool printfloat(Stream<char>& stream, float n) {
     #endif
 
 
-    return printstr(stream, buffer);
+    return printstr(queue, buffer);
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, const char c) {
-    printchar(stream, c);
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, const char c) {
+    printchar(queue, c);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, const char* str) {
-    printstr(stream, str);
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, const char* str) {
+    printstr(queue, str);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, int8_t n) {
-    printint(stream, n, 10);
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, int8_t n) {
+    printint(queue, n, 10);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, int16_t n) {
-    printint(stream, n, 10);
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, int16_t n) {
+    printint(queue, n, 10);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, int32_t n) {
-    printint(stream, n, 10);
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, int32_t n) {
+    printint(queue, n, 10);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, int64_t n) {
-    printint(stream, n, 10);
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, int64_t n) {
+    printint(queue, n, 10);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, uint8_t n) {
-    printint(stream, n, 10);
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, uint8_t n) {
+    printint(queue, n, 10);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, uint16_t n) {
-    printint(stream, n, 10);
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, uint16_t n) {
+    printint(queue, n, 10);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, uint32_t n) {
-    printint(stream, n, 10);
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, uint32_t n) {
+    printint(queue, n, 10);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, uint64_t n) {
-    printint(stream, n, 10);
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, uint64_t n) {
+    printint(queue, n, 10);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, bool n) {
-    printstr(stream, n ? "true" : "false");
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, bool n) {
+    printstr(queue, n ? "true" : "false");
+    return queue;
 }
 
-template <class T>
-inline Stream<char>& operator<<(Stream<char>& stream, T* p) {
-    printint(stream, uint16_t(p), 16);
-    return stream;
+template <int S, class T>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, T* p) {
+    printint(queue, uint16_t(p), 16);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, float n) {
-    printfloat(stream, n);
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, float n) {
+    printfloat(queue, n);
+    return queue;
 }
 
-inline Stream<char>& operator<<(Stream<char>& stream, double n) {
-    printfloat(stream, float(n));
-    return stream;
+template<int S>
+inline Queue<char, S>& operator<<(Queue<char, S>& queue, double n) {
+    printfloat(queue, float(n));
+    return queue;
 }
 
 #endif

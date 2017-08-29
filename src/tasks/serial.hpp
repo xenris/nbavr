@@ -3,60 +3,60 @@
 
 #include <nbavr.hpp>
 
-template <class Usart>
+template <class Usart, class cout_t, class cin_t = Queue<char, 0>>
 struct Serial {
-    static inline void init(uint32_t CpuFreq, uint32_t baud, Stream<char>* cout, Stream<char>* cin = nullptr) {
+    static inline void init(uint32_t CpuFreq, uint32_t baud, cout_t* out, cin_t* in = nullptr) {
         static_assert(Usart::getHardwareType() == HardwareType::Usart, "Serial requires a Usart");
 
-        if(cout == nullptr) {
+        if(out == nullptr) {
             return;
         }
 
         const uint16_t ubrr = CpuFreq / (16 * float(baud)) - 1 + 0.5;
 
-        cout->setFlush(flushCallback, nullptr);
+        out->setNotify(outNotify, nullptr);
 
         atomic {
             Usart::transmitterEnable(true);
             Usart::baud(ubrr);
             Usart::use2X(false);
 
-            if(cin != nullptr) {
+            if(in != nullptr) {
                 Usart::receiverEnable(true);
                 Usart::rxCompleteIntEnable(true);
-                Usart::rxCompleteCallback(usartRxComplete, cin);
+                Usart::rxCompleteCallback(usartRxComplete, in);
             }
 
-            Usart::dataRegisterEmptyCallback(usartDataRegisterEmpty, cout);
+            Usart::dataRegisterEmptyCallback(usartDataRegisterEmpty, out);
         }
     }
 
 private:
     static void usartRxComplete(void* data) {
-        Stream<char>* cin = reinterpret_cast<Stream<char>*>(data);
+        cin_t* in = reinterpret_cast<cin_t*>(data);
 
         char c = Usart::pop();
 
-        cin->push(c);
+        in->push_(c);
 
         if(c == '\n') {
-            cin->flush();
+            in->notify();
         }
     }
 
     static void usartDataRegisterEmpty(void* data) {
-        Stream<char>* cout = reinterpret_cast<Stream<char>*>(data);
+        cout_t* out = reinterpret_cast<cout_t*>(data);
 
         char d;
 
-        if(cout->pop_(&d)) {
+        if(out->pop_(&d)) {
             Usart::push(d);
         } else {
             Usart::dataRegisterEmptyIntEnable(false);
         }
     }
 
-    static void flushCallback(void* data) {
+    static void outNotify(void* data) {
         Usart::dataRegisterEmptyIntEnable(true);
     }
 };

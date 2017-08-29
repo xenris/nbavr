@@ -8,7 +8,6 @@
 
 #include "hardware.hpp"
 #include "atomic.hpp"
-#include "stream.hpp"
 #include "array.hpp"
 #include "queue.hpp"
 #include "priorityqueue.hpp"

@@ -35,7 +35,7 @@
 #define FUNCTION_FOUR_BITS_TWO_LINES 0x28
 #define SET_DDRAM_ADDRESS 0x80
 
-template <class Clock, class D4, class D5, class D6, class D7, class RW, class RS, class E>
+template <class Clock, class lcdout_t, class D4, class D5, class D6, class D7, class RW, class RS, class E>
 class LCD : public Task<Clock> {
     struct Range {
         uint8_t min;
@@ -58,10 +58,10 @@ class LCD : public Task<Clock> {
     bool firstRun = true;
     StateFunction state;
     bool outOfBounds = false;
-    Stream<char>& lcdout;
+    lcdout_t& lcdout;
 
 public:
-    LCD(Stream<char>& lcdout) : lcdout(lcdout) {
+    LCD(lcdout_t& lcdout) : lcdout(lcdout) {
         static_assert(D4::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
         static_assert(D5::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
         static_assert(D6::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
