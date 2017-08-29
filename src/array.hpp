@@ -1,68 +1,43 @@
 #ifndef NBAVR_ARRAY_HPP
 #define NBAVR_ARRAY_HPP
 
-template <class T>
-class Array {
-    T* const _datap;
-    const uint8_t _size;
+template <typename T, int S>
+struct Array {
+    using size_t = typename conditional<S <= 127, int8_t, int16_t>::type;
+    using type = T;
+
+private:
+
+    T _array[S];
 
 public:
-    template<uint8_t S>
-    Array(T(&a)[S]) : _datap(a), _size(S) {
-    }
 
-    constexpr force_inline uint8_t size() const {
-        return _size;
-    }
-
-    force_inline T& operator[](int16_t i) {
-        if(i >= _size) {
-            i = _size - 1;
-        } else if(i < 0) {
-            i = max(i + _size, 0);
+    T& operator[](size_t i) {
+        if(i < 0) {
+            i = 0;
+        } else if(i >= S) {
+            i = S - 1;
         }
 
-        return _datap[i];
+        return _array[i];
     }
 
-    force_inline T& operator[](uint8_t i) {
-        if(i >= _size) {
-            i = _size - 1;
-        }
-
-        return _datap[i];
-    }
-
-    force_inline T* begin() const {
-        return _datap;
-    }
-
-    force_inline T* end() const {
-        return &_datap[_size];
-    }
-};
-
-template <class T, uint8_t S>
-class ArrayBuffer : public Array<T> {
-    T _data[S];
-
-public:
-    ArrayBuffer() : Array<T>(_data) {
-    }
-
-    ArrayBuffer(T t) : Array<T>(_data) {
-        for(uint8_t i = 0; i < S; i++) {
-            _data[i] = t;
+    void fill(T t) {
+        for(T& n : this) {
+            n = t;
         }
     }
 
-    template<uint8_t N>
-    ArrayBuffer(const T(&list)[N]) : Array<T>(_data) {
-        static_assert(N == S, "Number of initialiser elements does not match ArrayBuffer size");
+    size_t size() {
+        return S;
+    }
 
-        for(uint8_t i = 0; i < S; i++) {
-            _data[i] = list[i];
-        }
+    T* begin() {
+        return &_array[0];
+    }
+
+    T* end() {
+        return &_array[S];
     }
 };
 

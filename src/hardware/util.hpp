@@ -178,6 +178,15 @@ force_inline T* reverse(T* array, size_t length) {
     return array;
 }
 
+/// #### void swap(T& a, T& b)
+/// Swap two variables.
+template <typename T>
+force_inline void swap(T& a, T& b) {
+    T t = a;
+    a = b;
+    b = t;
+}
+
 template<class T>
 auto begin(T& t) -> decltype(t.begin()) {
     return t.begin();
@@ -220,5 +229,19 @@ force_inline void setBit_(volatile uint8_t* reg, uint8_t bit, bool value) {
         *reg_ &= ~bv(bit);
     }
 }
+
+template <typename T>
+struct lesser {
+    constexpr bool operator()(const T &a, const T &b) const {
+        return a < b;
+    }
+};
+
+template <typename T>
+struct greater {
+    constexpr bool operator()(const T &a, const T &b) const {
+        return a > b;
+    }
+};
 
 #endif

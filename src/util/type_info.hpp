@@ -149,4 +149,30 @@ struct type_info<double> {
     constexpr static bool is_integer = false;
 };
 
+template<bool B, class T, class F>
+struct conditional {
+    typedef T type;
+};
+
+template<class T, class F>
+struct conditional<false, T, F> {
+    typedef F type;
+};
+
+struct false_type {
+    constexpr static bool value = false;
+};
+
+struct true_type {
+    constexpr static bool value = true;
+};
+
+template<class T, class U>
+struct is_same : false_type {
+};
+
+template<class T>
+struct is_same<T, T> : true_type {
+};
+
 #endif
