@@ -159,20 +159,17 @@ struct conditional<false, T, F> {
     typedef F type;
 };
 
-struct false_type {
-    constexpr static bool value = false;
-};
-
-struct true_type {
-    constexpr static bool value = true;
+template<class T, T v>
+struct integral_constant {
+    static constexpr T value = v;
 };
 
 template<class T, class U>
-struct is_same : false_type {
+struct is_same : integral_constant<bool, false> {
 };
 
 template<class T>
-struct is_same<T, T> : true_type {
+struct is_same<T, T> : integral_constant<bool, true> {
 };
 
 #endif
