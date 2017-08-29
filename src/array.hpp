@@ -13,11 +13,7 @@ private:
 public:
 
     T& operator[](size_t i) {
-        if(i < 0) {
-            i = 0;
-        } else if(i >= S) {
-            i = S - 1;
-        }
+        i = clip(i, 0, S - 1);
 
         return _array[i];
     }
