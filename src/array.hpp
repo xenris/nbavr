@@ -13,7 +13,7 @@ private:
 public:
 
     T& operator[](size_t i) {
-        i = clip(i, 0, S - 1);
+        i = clip(i, size_t(0), size_t(S - 1));
 
         return _array[i];
     }
