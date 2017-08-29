@@ -29,7 +29,7 @@ public:
     }
 
     bool push_(T t) {
-        if(_full) {
+        if(full_()) {
             return false;
         }
 
@@ -55,7 +55,7 @@ public:
     }
 
     bool pop_(T* t) {
-        if(empty()) {
+        if(empty_()) {
             return false;
         }
 
@@ -79,7 +79,7 @@ public:
     }
 
     bool peek_(T* t) {
-        if(empty()) {
+        if(empty_()) {
             return false;
         }
 
@@ -110,7 +110,7 @@ public:
     }
 
     size_t size_() {
-        if(_full) {
+        if(full_()) {
             return S;
         }
 
@@ -156,15 +156,15 @@ public:
     }
 
     bool empty_() {
-        return (_head == _tail) && !_full;
+        return (_head == _tail) && !full_();
     }
 
     bool full() {
-        return _full;
+        return full_();
     }
 
     bool full_() {
-        return _full;
+        return _full || (S == 0);
     }
 
     void setNotify(notify_t f, void* d) {
