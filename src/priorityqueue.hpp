@@ -15,8 +15,18 @@ private:
 
 public:
 
-    bool push(const T& t) {
-        if(full()) {
+    bool push(T t) {
+        bool b;
+
+        atomic {
+            b = push_(t);
+        }
+
+        return b;
+    }
+
+    bool push_(const T& t) {
+        if(full_()) {
             return false;
         }
 
@@ -43,7 +53,17 @@ public:
     }
 
     bool pop(T* t) {
-        if(empty()) {
+        bool b;
+
+        atomic {
+            b = pop_(t);
+        }
+
+        return b;
+    }
+
+    bool pop_(T* t) {
+        if(empty_()) {
             return false;
         }
 
@@ -75,7 +95,17 @@ public:
     }
 
     bool peek(T* t) {
-        if(empty()) {
+        bool b;
+
+        atomic {
+            b = peek_(t);
+        }
+
+        return b;
+    }
+
+    bool peek_(T* t) {
+        if(empty_()) {
             return false;
         }
 
@@ -85,14 +115,40 @@ public:
     }
 
     void clear() {
+        atomic {
+            clear_();
+        }
+    }
+
+    void clear_() {
         _head = 1;
     }
 
     size_t size() {
+        size_t s;
+
+        atomic {
+            s = size_();
+        }
+
+        return s;
+    }
+
+    size_t size_() {
         return (_head - 1);
     }
 
     size_t free() {
+        size_t s;
+
+        atomic {
+            s = free_();
+        }
+
+        return s;
+    }
+
+    size_t free_() {
         return S - (_head - 1);
     }
 
@@ -100,11 +156,35 @@ public:
         return S;
     }
 
+    size_t capacity_() {
+        return S;
+    }
+
     bool empty() {
+        bool e;
+
+        atomic {
+            e = empty_();
+        }
+
+        return e;
+    }
+
+    bool empty_() {
         return (_head - 1) == 0;
     }
 
     bool full() {
+        bool f;
+
+        atomic {
+            f = full_();
+        }
+
+        return f;
+    }
+
+    bool full_() {
         return (_head - 1) == S;
     }
 };
