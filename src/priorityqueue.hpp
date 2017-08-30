@@ -52,7 +52,7 @@ public:
         return true;
     }
 
-    bool pop(T* t) {
+    bool pop(T* t = nullptr) {
         bool b;
 
         atomic {
@@ -62,12 +62,14 @@ public:
         return b;
     }
 
-    bool pop_(T* t) {
+    bool pop_(T* t = nullptr) {
         if(empty_()) {
             return false;
         }
 
-        *t = _array[1];
+        if(t != nullptr) {
+            *t = _array[1];
+        }
 
         _head--;
 
