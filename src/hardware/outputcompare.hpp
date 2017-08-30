@@ -58,6 +58,10 @@ struct OutputCompareX {
             *CC(INT_ENABLE_REG) &= ~bv(CC(INT_ENABLE_BIT));
         }
     }
+
+    static force_inline bool intEnabled() {
+        return *CC(INT_ENABLE_REG) & bv(CC(INT_ENABLE_BIT));
+    }
     #endif
 
     ///
