@@ -36,6 +36,32 @@ TEST(Clock, ticksToMillis) {
     EXPECT_EQ((Clock<TimerCounter1, 20000000>::ticksToMillis(312500)), 1000);
 }
 
+TEST(Clock, delayedCall) {
+    typedef Clock<TimerCounter1, 16000000> Clock;
+
+    Clock::delayedCall(nullptr, nullptr, Clock::millisToTicks(3000));
+
+    DelayedCall a(nullptr, nullptr, 1000);
+    DelayedCall b(nullptr, nullptr, 1500);
+    DelayedCall c(nullptr, nullptr, 1001);
+    DelayedCall d(nullptr, nullptr, 999);
+    DelayedCall e(nullptr, nullptr, 1000);
+    DelayedCall f(nullptr, nullptr, 4294967296 / 2 - 1);
+    DelayedCall g(nullptr, nullptr, 4294967296 / 2 - 2);
+
+    EXPECT_TRUE(a < b);
+    EXPECT_TRUE(a < c);
+    EXPECT_TRUE(d < a);
+    EXPECT_TRUE(a < c);
+    EXPECT_TRUE(a < f);
+    EXPECT_TRUE(g < f);
+    EXPECT_FALSE(b < a);
+    EXPECT_FALSE(c < a);
+    EXPECT_FALSE(a < e);
+    EXPECT_FALSE(e < a);
+    EXPECT_FALSE(f < a);
+}
+
 TEST(Util, reverse) {
     char str[8];
 
@@ -87,6 +113,15 @@ TEST(Print, itoa) {
 
     itoa(str, int32_t(36), 37);
     EXPECT_STREQ(str, "10");
+
+    itoa(str, int32_t(65535), 10);
+    EXPECT_STREQ(str, "65535");
+
+    itoa(str, uint32_t(65535), 10);
+    EXPECT_STREQ(str, "65535");
+
+    itoa(str, int32_t(32768), 10);
+    EXPECT_STREQ(str, "32768");
 }
 
 TEST(Container, Queue) {
@@ -275,6 +310,12 @@ TEST(Container, PriorityQueue) {
     EXPECT_TRUE(pq.empty());
     EXPECT_FALSE(pq.full());
     EXPECT_EQ(pq.size(), 0);
+
+    pq.push(4);
+
+    EXPECT_FALSE(pq.empty());
+    EXPECT_FALSE(pq.full());
+    EXPECT_EQ(pq.size(), 1);
 }
 
 template <typename Clock, typename cout_t, typename cin_t>
