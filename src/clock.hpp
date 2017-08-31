@@ -187,7 +187,7 @@ public:
 
                 // TODO Need to come up with a more reliable system. Something
                 //  that guarantees the interrupt won't be missed.
-                if(delta <= 10) {
+                if(delta <= 2) {
                     handleDelayedCallback();
                     // XXX What happens if another call is due to happen right now?
                 } else if(delta < 65536) {
@@ -224,7 +224,7 @@ private:
                 // FIXME This could cancel potential calls.
                 TimerCounter::OutputCompareA::intFlagClear();
 
-                if(delta <= 10) {
+                if(delta <= 2) {
                     goto loop;
                 } else if(delta < 65536) {
                     TimerCounter::OutputCompareA::value(dc.tick);
@@ -256,7 +256,7 @@ private:
             // FIXME This could cancel potential calls.
             TimerCounter::OutputCompareA::intFlagClear();
 
-            if(delta <= 10) {
+            if(delta <= 2) {
                 handleDelayedCallback();
             } else if(delta < 65536) {
                 TimerCounter::OutputCompareA::value(dc.tick);
