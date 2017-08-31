@@ -1,6 +1,8 @@
 #ifndef NBAVR_CALLBACKS_HPP
 #define NBAVR_CALLBACKS_HPP
 
+using callback_t = void (*)(void*);
+
 #define MAKE_CALLBACK_HEADER(...) \
     extern void (*UNDERLINE(__VA_ARGS__, Callback))(void*); \
     extern void* UNDERLINE(__VA_ARGS__, CallbackData);
