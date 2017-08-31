@@ -246,21 +246,23 @@ private:
 
         self._tocks++;
 
-        if(!TimerCounter::OutputCompareA::intEnabled() && !calls.empty()) {
+        if(!TimerCounter::OutputCompareA::intEnabled()) {
             DelayedCall dc;
 
-            calls.peek_(&dc);
+            if(calls.peek_(&dc)) {
+                int32_t delta = dc.tick - getTicks();
 
-            int32_t delta = dc.tick - getTicks();
+                // FIXME This could cancel potential calls.
+                TimerCounter::OutputCompareA::intFlagClear();
 
-            // FIXME This could cancel potential calls.
-            TimerCounter::OutputCompareA::intFlagClear();
-
-            if(delta <= 2) {
-                handleDelayedCall();
-            } else if(delta < 65536) {
-                TimerCounter::OutputCompareA::value(dc.tick);
-                TimerCounter::OutputCompareA::intEnable(true);
+                if(delta <= 2) {
+                    handleDelayedCall();
+                } else if(delta < 65536) {
+                    TimerCounter::OutputCompareA::value(dc.tick);
+                    TimerCounter::OutputCompareA::intEnable(true);
+                }
+            } else {
+                TimerCounter::OutputCompareA::intEnable(false);
             }
         }
     }
