@@ -137,11 +137,11 @@ public:
         return S - size_();
     }
 
-    size_t capacity() {
+    static constexpr size_t capacity() {
         return S;
     }
 
-    size_t capacity_() {
+    static constexpr size_t capacity_() {
         return S;
     }
 
