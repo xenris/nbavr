@@ -98,10 +98,16 @@ public:
         return ((float(us) / 1000) * (CpuFreq / 1000) / Divisor) + 0.5;
     }
 
-    /// #### static constexpr uint32_t ticksToMillis(uint32_t ms)
+    /// #### static constexpr uint32_t ticksToMillis(uint32_t ticks)
     /// Convert ticks to milliseconds.
     static constexpr uint32_t ticksToMillis(uint32_t ticks) {
         return (float(ticks) * 1000 * Divisor / CpuFreq) + 0.5;
+    }
+
+    /// #### static constexpr uint32_t ticksToMicros(uint32_t ticks)
+    /// Convert ticks to microseconds.
+    static constexpr uint32_t ticksToMicros(uint32_t ticks) {
+        return (float(ticks) * 1000 * Divisor / (CpuFreq / 1000)) + 0.5;
     }
 
     /// #### static uint16_t getTicks16()
