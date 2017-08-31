@@ -32,37 +32,33 @@
 /// Every 2^16 ticks is a tock. (262.144ms at 16MHz)<br>
 /// Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
 
-#define MAX_TICK_INTERRUPTS 10
-#define DIVISOR 64UL
-#define INTERRUPT_TICK_BUFFER 200
-#define MIN_INTERRUPT_TICK 2
+struct DelayedCall {
+    callback_t callback;
+    void* data;
+    uint32_t tick;
 
-/// ## class Clock\<class TimerCounter, uint32_t CpuFreq\>
-template<class TimerCounter, uint32_t CpuFreq>
+    DelayedCall() {
+    }
+
+    DelayedCall(callback_t callback, void* data, uint32_t tick)
+    : callback(callback), data(data), tick(tick) {
+    }
+
+    bool operator<(const DelayedCall& other) const {
+        return int32_t(other.tick - tick) > 0;
+    }
+};
+
+/// ## class Clock\<class TimerCounter, uint32_t CpuFreq, int MaxCalls = 8\>
+template<class TimerCounter, uint32_t CpuFreq, int MaxCalls = 8>
 class Clock {
     static_assert(TimerCounter::getHardwareType() == HardwareType::TimerCounter, "Clock requires a TimerCounter");
     static_assert(sizeof(typename TimerCounter::type) == 2, "Clock requires a 16 bit TimerCounter");
 
-    struct Interrupt {
-        // The callback to use.
-        void (*callback)(void*) = nullptr;
-        // Data to pass into the callback.
-        void* data = nullptr;
-        // The tick at which to perform the callback.
-        uint16_t tick = 0;
-    };
-
-    struct Queue {
-        uint8_t size = 0;
-        uint8_t head = 0;
-        uint8_t tail = 0;
-        Interrupt interrupts[MAX_TICK_INTERRUPTS];
-    };
+    static constexpr int32_t Divisor = 64;
 
     uint16_t _tocks = 0;
-    Queue _interrupts;
-    void (*_haltCallback)(void*) = nullptr;
-    void* _haltCallbackData = nullptr;
+    PriorityQueue<DelayedCall, MaxCalls> _calls;
 
     Clock() {}
     Clock(Clock const&);
@@ -78,46 +74,34 @@ public:
         return clock;
     }
 
+    // TODO Consider putting this in the constructor.
     /// #### static void init()
     /// Initialise and start the clock.
     static force_inline void init() {
         atomic {
-            TimerCounter::OutputCompareA::callback(timerCounterOutputCompareA, nullptr);
-            TimerCounter::overflowCallback(timerCounterOverflow, nullptr);
+            TimerCounter::OutputCompareA::callback(handleDelayedCallback, nullptr);
+            TimerCounter::overflowCallback(handleTimerOverflow, nullptr);
             TimerCounter::overflowIntEnable(true);
             TimerCounter::clock(TimerCounter::Clock::Div64);
         }
     }
 
     /// #### static constexpr uint32_t millisToTicks(uint32_t ms)
-    /// Converts milliseconds to ticks.
+    /// Convert milliseconds to ticks.
     static constexpr uint32_t millisToTicks(uint32_t ms) {
-        // const uint32_t CpuFreqMhz = CpuFreq / 1000000;
+        return (float(ms) * (CpuFreq / 1000) / Divisor) + 0.5;
+    }
 
-        // return ((ms * 1000) + (DIVISOR / CpuFreqMhz / 2)) / (DIVISOR / CpuFreqMhz);
-        // return ((ms * 1000) + (DIVISOR / CpuFreqMhz / 2)) / (DIVISOR / CpuFreqMhz);
-
-        // const uint32_t seconds = ms / 1000;
-
-        // constexpr uint32_t ticksPerSecond = CpuFreq / DIVISOR;
-        // constexpr uint32_t ticksPerMs = ticksPerSecond / 1000;
-        // constexpr uint32_t ticksPerMsRem = ticksPerSecond % 1000;
-
-        // return ms * ticksPerMs + ms * ticksPerMsRem / 1000;
-
-        return (float(ms) * (CpuFreq / 1000) / DIVISOR) + 0.5;
+    /// #### static constexpr uint32_t microsToTicks(uint32_t us)
+    /// Convert microseconds to ticks.
+    static constexpr uint32_t microsToTicks(uint32_t us) {
+        return ((float(us) / 1000) * (CpuFreq / 1000) / Divisor) + 0.5;
     }
 
     /// #### static constexpr uint32_t ticksToMillis(uint32_t ms)
-    /// Converts ticks to milliseconds.
+    /// Convert ticks to milliseconds.
     static constexpr uint32_t ticksToMillis(uint32_t ticks) {
-        // const uint32_t CpuFreqMhz = CpuFreq / 1000000;
-
-        // return (ticks * (DIVISOR / CpuFreqMhz)) / 1000;
-
-        // return DIVISOR * ticks / (CpuFreq / 1000);
-
-        return (float(ticks) * 1000 * DIVISOR / CpuFreq) + 0.5;
+        return (float(ticks) * 1000 * Divisor / CpuFreq) + 0.5;
     }
 
     /// #### static uint16_t getTicks16()
@@ -167,155 +151,115 @@ public:
         return tocks;
     }
 
-    /// #### static bool addInterrupt(void (*callback)(void*), void* data, uint16_t delay)
-    /// Add a tick precision interrupt.<br>
-    /// Returns true if successful.
-    static bool addInterrupt(void (*callback)(void*), void* data, uint16_t delay) {
+    /// #### static bool delayedCall(callback_t callback, void* data, int32_t delay)
+    /// Add a callback to call after delay ticks.<br>
+    /// Returns true if successful added.
+    // TODO This function is quite time consuming, ~5 ticks. Need to make it faster.
+    static bool delayedCall(callback_t callback, void* data, int32_t delay) {
+        auto& self = getInstance();
+        auto& calls = self._calls;
+
+        if(callback == nullptr) {
+            return false;
+        }
+
+        bool success;
+
+        delay = max(delay, int32_t(0));
+
         atomic {
-            Clock& self = getInstance();
+            uint32_t now = getTicks();
 
-            uint16_t now = getTicks16();
+            DelayedCall dc(callback, data, now + uint32_t(delay));
 
-            if(callback == nullptr) {
-                return false;
-            }
+            success = calls.push_(dc);
 
-            // Check if queue is full.
-            if(self._interrupts.size >= MAX_TICK_INTERRUPTS) {
-                return false;
-            }
+            if(success) {
+                calls.peek_(&dc);
 
-            // Enforce a minimum delay to prevent missed interrupts.
-            if(delay < MIN_INTERRUPT_TICK) {
-                delay = MIN_INTERRUPT_TICK;
-            }
+                int32_t delta = dc.tick - now;
 
-            // Ensure the delay isn't in the faked negative range.
-            uint16_t limit = 0U - INTERRUPT_TICK_BUFFER - 1U;
+                // FIXME This could cancel potential calls.
+                TimerCounter::OutputCompareA::intFlagClear();
 
-            if(delay > limit) {
-                delay = limit;
-            }
-
-            uint16_t interruptTick = now + delay;
-
-            // Add the interrupt to the queue
-            Interrupt interrupt = {callback, data, interruptTick};
-            push(&self._interrupts, now - INTERRUPT_TICK_BUFFER, interrupt);
-
-            // Set the timer to the first interrupt.
-            block TimerCounter::outputA(peek(&self._interrupts).tick);
-
-            // If the queue was previously empty, clear the flag and enable interrupt.
-            if(self._interrupts.size == 1) {
-                atomic {
-                    TimerCounter::outputAIntFlagClear();
-                    TimerCounter::outputAIntEnable(true);
+                // TODO Need to come up with a more reliable system. Something
+                //  that guarantees the interrupt won't be missed.
+                if(delta <= 10) {
+                    handleDelayedCallback();
+                    // XXX What happens if another call is due to happen right now?
+                } else if(delta < 65536) {
+                    TimerCounter::OutputCompareA::value(uint16_t(dc.tick & 0xffff));
+                    TimerCounter::OutputCompareA::intEnable(true);
+                } else {
+                    TimerCounter::OutputCompareA::intEnable(false);
                 }
             }
         }
 
-        return true;
+        return success;
     }
 
 private:
 
-    // Push an interrupt to the queue.
-    // Check queue size before calling.
-    static void push(Queue* queue, uint16_t base, Interrupt interrupt) {
-        Interrupt* interrupts = queue->interrupts;
-
-        interrupts[queue->tail] = interrupt;
-
-        uint8_t t = queue->tail;
-        uint8_t h = queue->head;
-
-        queue->size++;
-        queue->tail++;
-
-        if(queue->tail >= MAX_TICK_INTERRUPTS) {
-            queue->tail = 0;
-        }
-
-        while(t != h) {
-            uint8_t p;
-
-            if(t == 0) {
-                p = MAX_TICK_INTERRUPTS - 1;
-            } else {
-                p = t - 1;
-            }
-
-            if(compare(base, interrupts[t].tick, interrupts[p].tick)) {
-                Interrupt temp = interrupts[p];
-                interrupts[p] = interrupts[t];
-                interrupts[t] = temp;
-            } else {
-                break;
-            }
-
-            t = p;
-        }
-    }
-
-    // Pop an interrupt from the queue.
-    // Check queue size before calling.
-    force_inline static void pop(Queue* queue) {
-        queue->size--;
-        queue->head++;
-
-        if(queue->head >= MAX_TICK_INTERRUPTS) {
-            queue->head = 0;
-        }
-    }
-
-    // Look at the top interrupt in the queue.
-    // Will return rubbish if the queue is empty.
-    force_inline static Interrupt peek(Queue* queue) {
-        return queue->interrupts[queue->head];
-    }
-
-    // Indicates which of b or c is closer to a.
-    // true if b is sooner.
-    // otherwise false.
-    force_inline static bool compare(uint16_t a, uint16_t b, uint16_t c) {
-        if((a > b) == (b >= c)) {
-            return a < c;
-        } else {
-            return a > c;
-        }
-    }
-
     // Called when a tick interrupt occurs.
-    static void timerCounterOutputCompareA(void* data) {
-        Clock& self = getInstance();
+    static void handleDelayedCallback(void* data = nullptr) {
+        auto& self = getInstance();
+        auto& calls = self._calls;
 
-        loop: ;
+        DelayedCall dc;
 
-        Interrupt interrupt = peek(&self._interrupts);
+        if(calls.peek_(&dc)) {
+            loop: ;
 
-        interrupt.callback(interrupt.data);
+            dc.callback(dc.data);
 
-        pop(&self._interrupts);
+            calls.pop_();
 
-        if(self._interrupts.size > 0) {
-            uint16_t next = peek(&self._interrupts).tick;
+            if(calls.peek_(&dc)) {
+                int32_t delta = dc.tick - getTicks();
 
-            block TimerCounter::OutputCompareA::value(next);
-            block TimerCounter::OutputCompareA::intFlagClear();
+                // FIXME This could cancel potential calls.
+                TimerCounter::OutputCompareA::intFlagClear();
 
-            if(!compare(interrupt.tick, self.getTicks16() + 1, next)) {
-                goto loop;
+                if(delta <= 10) {
+                    goto loop;
+                } else if(delta < 65536) {
+                    TimerCounter::OutputCompareA::value(dc.tick);
+                    TimerCounter::OutputCompareA::intEnable(true);
+                } else {
+                    TimerCounter::OutputCompareA::intEnable(false);
+                }
+            } else {
+                TimerCounter::OutputCompareA::intEnable(false);
             }
         } else {
-            block TimerCounter::OutputCompareA::intEnable(false);
+            TimerCounter::OutputCompareA::intEnable(false);
         }
     }
 
-    static void timerCounterOverflow(void* data) {
-        Clock& self = getInstance();
+    static void handleTimerOverflow(void* data) {
+        auto& self = getInstance();
+        auto& calls = self._calls;
 
         self._tocks++;
+
+        if(!TimerCounter::OutputCompareA::intEnabled() && !calls.empty()) {
+            DelayedCall dc;
+
+            calls.peek_(&dc);
+
+            int32_t delta = dc.tick - getTicks();
+
+            // FIXME This could cancel potential calls.
+            TimerCounter::OutputCompareA::intFlagClear();
+
+            if(delta <= 10) {
+                handleDelayedCallback();
+            } else if(delta < 65536) {
+                TimerCounter::OutputCompareA::value(dc.tick);
+                TimerCounter::OutputCompareA::intEnable(true);
+            }
+        }
     }
 };
 
