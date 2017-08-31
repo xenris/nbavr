@@ -60,8 +60,17 @@ class Clock {
     uint16_t _tocks = 0;
     PriorityQueue<DelayedCall, MaxCalls> _calls;
 
-    Clock() {}
+    Clock() {
+        atomic {
+            TimerCounter::OutputCompareA::callback(handleDelayedCallback, nullptr);
+            TimerCounter::overflowCallback(handleTimerOverflow, nullptr);
+            TimerCounter::overflowIntEnable(true);
+            TimerCounter::clock(TimerCounter::Clock::Div64);
+        }
+    }
+
     Clock(Clock const&);
+
     void operator=(Clock const&);
 
 public:
@@ -72,18 +81,6 @@ public:
     static force_inline Clock& getInstance() {
         static Clock clock;
         return clock;
-    }
-
-    // TODO Consider putting this in the constructor.
-    /// #### static void init()
-    /// Initialise and start the clock.
-    static force_inline void init() {
-        atomic {
-            TimerCounter::OutputCompareA::callback(handleDelayedCallback, nullptr);
-            TimerCounter::overflowCallback(handleTimerOverflow, nullptr);
-            TimerCounter::overflowIntEnable(true);
-            TimerCounter::clock(TimerCounter::Clock::Div64);
-        }
     }
 
     /// #### static constexpr uint32_t millisToTicks(uint32_t ms)
