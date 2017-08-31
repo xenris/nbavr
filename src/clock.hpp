@@ -62,7 +62,7 @@ class Clock {
 
     Clock() {
         atomic {
-            TimerCounter::OutputCompareA::callback(handleDelayedCallback, nullptr);
+            TimerCounter::OutputCompareA::callback(handleDelayedCall, nullptr);
             TimerCounter::overflowCallback(handleTimerOverflow, nullptr);
             TimerCounter::overflowIntEnable(true);
             TimerCounter::clock(TimerCounter::Clock::Div64);
@@ -188,7 +188,7 @@ public:
                 // TODO Need to come up with a more reliable system. Something
                 //  that guarantees the interrupt won't be missed.
                 if(delta <= 2) {
-                    handleDelayedCallback();
+                    handleDelayedCall();
                     // XXX What happens if another call is due to happen right now?
                 } else if(delta < 65536) {
                     TimerCounter::OutputCompareA::value(uint16_t(dc.tick & 0xffff));
@@ -205,7 +205,7 @@ public:
 private:
 
     // Called when a tick interrupt occurs.
-    static void handleDelayedCallback(void* data = nullptr) {
+    static void handleDelayedCall(void* data = nullptr) {
         auto& self = getInstance();
         auto& calls = self._calls;
 
@@ -257,7 +257,7 @@ private:
             TimerCounter::OutputCompareA::intFlagClear();
 
             if(delta <= 2) {
-                handleDelayedCallback();
+                handleDelayedCall();
             } else if(delta < 65536) {
                 TimerCounter::OutputCompareA::value(dc.tick);
                 TimerCounter::OutputCompareA::intEnable(true);
