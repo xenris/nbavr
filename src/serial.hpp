@@ -31,7 +31,7 @@ struct Serial {
 
 private:
     static void usartRxComplete(void* data) {
-        cin_t* in = reinterpret_cast<cin_t*>(data);
+        cin_t* in = (cin_t*)(data);
 
         char c = Usart::pop();
 
@@ -43,7 +43,7 @@ private:
     }
 
     static void usartDataRegisterEmpty(void* data) {
-        cout_t* out = reinterpret_cast<cout_t*>(data);
+        cout_t* out = (cout_t*)(data);
 
         char d;
 

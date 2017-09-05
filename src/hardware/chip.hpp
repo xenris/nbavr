@@ -36,9 +36,9 @@
     #define __test_fake_register 0
 #endif
 
-#define REG8(addr) reinterpret_cast<volatile uint8_t*>(__test_fake_register + addr)
-#define REG16(addr) reinterpret_cast<volatile uint16_t*>(__test_fake_register + addr)
-#define REG32(addr) reinterpret_cast<volatile uint32_t*>(__test_fake_register + addr)
+#define REG8(addr) (volatile uint8_t*)(__test_fake_register + addr)
+#define REG16(addr) (volatile uint16_t*)(__test_fake_register + addr)
+#define REG32(addr) (volatile uint32_t*)(__test_fake_register + addr)
 
 #define VECT(N) VECT_(DEC(N))
 #define VECT_(N) VECT__(N)
