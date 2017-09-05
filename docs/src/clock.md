@@ -26,6 +26,9 @@ Every cpu clock cycle is 1 / freq seconds. (62.5ns at 16MHz)<br>
 Every 64 clock cycles is a tick. (4us at 16MHz)<br>
 Every 2^16 ticks is a tock. (262.144ms at 16MHz)<br>
 Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
+
+If Clock is given an 8 bit timer (rather than 16 bit) each tick will be
+4x longer.
 ## class Clock\<class TimerCounter, uint32_t CpuFreq, int MaxCalls = 8\>
 #### static constexpr uint32_t millisToTicks(uint32_t ms)
 Convert milliseconds to ticks.

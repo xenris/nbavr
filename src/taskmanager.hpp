@@ -25,14 +25,13 @@
 #include "task.hpp"
 #include "clock.hpp"
 
-// Milliseconds until a task is considered to have halted.
-#define TASK_TIMEOUT_MS 6
-#define TASK_TIMEOUT_HALTED_MS 1
-
 /// ## class TaskManager\<class Clock\>
 template <class Clock>
 class TaskManager {
     typedef Task<Clock> TaskT;
+
+    static constexpr uint32_t TaskTimeout = Clock::millisToTicks(4);
+    static constexpr uint32_t TaskTimeoutHalted = Clock::microsToTicks(100);
 
     TaskT** tasks;
     const uint8_t numTasks;
@@ -44,7 +43,7 @@ public:
     /// Runs the given array of tasks. Does not return.
     template <uint8_t S>
     TaskManager(TaskT* (&tasks)[S]) : tasks(tasks), numTasks(S) {
-        block Clock::timer::OutputCompareB::callback(haltCallback, this);
+        Clock::haltCallback(haltCallback, this);
 
         block WDT::enable();
 
@@ -86,15 +85,11 @@ private:
         }
 
         if(task.state == TaskT::State::Awake) {
-            // Setup halt callback.
-            block Clock::timer::OutputCompareB::value(Clock::getTicks16() + Clock::millisToTicks(TASK_TIMEOUT_MS));
-            block Clock::timer::OutputCompareB::intFlagClear();
-            block Clock::timer::OutputCompareB::intEnable(true);
+            Clock::haltStart(TaskTimeout);
 
             task.loop();
 
-            // Disable halt callback.
-            block Clock::timer::OutputCompareB::intEnable(false);
+            Clock::haltEnd();
         }
 
         taskI = (taskI + 1) % numTasks;
@@ -110,10 +105,7 @@ private:
 
         task.state = TaskT::State::Awake;
 
-        // Setup halt callback.
-        block Clock::timer::OutputCompareB::value(Clock::getTicks16() + Clock::millisToTicks(TASK_TIMEOUT_HALTED_MS));
-        block Clock::timer::OutputCompareB::intFlagClear();
-        block Clock::timer::OutputCompareB::intEnable(true);
+        Clock::haltStart(TaskTimeoutHalted);
     }
 
     static void haltCallback(void* data) {

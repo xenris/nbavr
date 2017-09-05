@@ -31,6 +31,10 @@
 /// Every 64 clock cycles is a tick. (4us at 16MHz)<br>
 /// Every 2^16 ticks is a tock. (262.144ms at 16MHz)<br>
 /// Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
+///
+/// If Clock is given an 8 bit timer (rather than 16 bit) each tick will be
+/// 4x longer.
+
 
 #include "priorityqueue.hpp"
 
@@ -55,11 +59,13 @@ struct DelayedCall {
 template<class TimerCounter, uint32_t CpuFreq, int MaxCalls = 8>
 class Clock {
     static_assert(TimerCounter::getHardwareType() == HardwareType::TimerCounter, "Clock requires a TimerCounter");
-    static_assert(sizeof(typename TimerCounter::type) == 2, "Clock requires a 16 bit TimerCounter");
 
-    static constexpr int32_t Divisor = 64;
+    static constexpr bool EightBitCounter = sizeof(typename TimerCounter::type) == 1;
+    static constexpr int32_t Divisor = EightBitCounter ? 256 : 64;
 
     uint16_t _tocks = 0;
+    // Only used for eight bit TimerCounter.
+    uint8_t _ticksHigh = 0;
     PriorityQueue<DelayedCall, MaxCalls> _calls;
 
     Clock() {
@@ -67,7 +73,7 @@ class Clock {
             TimerCounter::OutputCompareA::callback(handleDelayedCall, nullptr);
             TimerCounter::overflowCallback(handleTimerOverflow, nullptr);
             TimerCounter::overflowIntEnable(true);
-            TimerCounter::clock(TimerCounter::Clock::Div64);
+            TimerCounter::clock(EightBitCounter ? TimerCounter::Clock::Div256 : TimerCounter::Clock::Div64);
         }
     }
 
@@ -77,7 +83,6 @@ class Clock {
 
 public:
 
-    typedef TimerCounter timer;
     static const uint32_t freq = CpuFreq;
 
     static force_inline Clock& getInstance() {
@@ -113,31 +118,67 @@ public:
     /// Gets the current value of the 16 bit tick counter.<br>
     /// Wraps every 2^16 ticks. (262.144ms at 16MHz)
     static force_inline uint16_t getTicks16() {
-        // FIXME This should probably have a "block".
-        return TimerCounter::counter();
+        if constexpr (EightBitCounter) {
+            uint16_t ticks;
+
+            atomic {
+                uint8_t low = TimerCounter::counter();
+                uint8_t high = getInstance()._ticksHigh;
+
+                if(TimerCounter::overflowIntFlag()) {
+                    // If it has overflowed then there is a possibility that
+                    // the numbers are not synchronised.
+                    low = TimerCounter::counter();
+                    high++;
+                }
+
+                ticks = (uint16_t(high) << 8) | low;
+            }
+
+            return ticks;
+        } else {
+            return TimerCounter::counter();
+        }
     }
 
     /// #### static uint32_t getTicks()
     /// Gets the current value of the 32 bit tick counter.<br>
     /// Wraps every 2^32 ticks. (4.77 hours at 16Mhz)
     static uint32_t getTicks() {
+        auto& self = getInstance();
         uint32_t ticks;
 
         atomic {
-            // Get the value of the counter.
-            uint16_t low = getTicks16();
-            // Get the value of the overflow counter.
-            uint16_t high = getInstance()._tocks;
+            if constexpr (EightBitCounter) {
+                uint8_t low = TimerCounter::counter();
+                uint8_t mid = self._ticksHigh;
+                uint16_t high = self._tocks;
 
-            // Check if the counter has overflowed since atomic started.
-            if(TimerCounter::overflowIntFlag()) {
-                // If it has then there is a possibility that the numbers are not synchronised.
-                // Get the new counter value, and increment "high".
-                low = getTicks16();
-                high++;
+                if(TimerCounter::overflowIntFlag()) {
+                    // If it has overflowed then there is a possibility that
+                    // the numbers are not synchronised.
+                    low = TimerCounter::counter();
+                    mid++;
+
+                    if(mid == 0) {
+                        high++;
+                    }
+                }
+
+                ticks = (uint32_t(high) << 16) | (uint32_t(mid) << 8) | low;
+            } else {
+                uint16_t low = TimerCounter::counter();
+                uint16_t high = self._tocks;
+
+                if(TimerCounter::overflowIntFlag()) {
+                    // If it has overflowed then there is a possibility that
+                    // the numbers are not synchronised.
+                    low = TimerCounter::counter();
+                    high++;
+                }
+
+                ticks = (uint32_t(high) << 16) | low;
             }
-
-            ticks = (uint32_t(high) << 16) | low;
         }
 
         return ticks;
@@ -192,8 +233,8 @@ public:
                 if(delta <= 2) {
                     handleDelayedCall();
                     // XXX What happens if another call is due to happen right now?
-                } else if(delta < 65536) {
-                    TimerCounter::OutputCompareA::value(uint16_t(dc.tick & 0xffff));
+                } else if(delta < (EightBitCounter ? 255 : 65536)) {
+                    TimerCounter::OutputCompareA::value(dc.tick);
                     TimerCounter::OutputCompareA::intEnable(true);
                 } else {
                     TimerCounter::OutputCompareA::intEnable(false);
@@ -202,6 +243,19 @@ public:
         }
 
         return success;
+    }
+
+    static void haltCallback(callback_t callback, void* data) {
+        TimerCounter::OutputCompareB::callback(callback, data);
+    }
+
+    static void haltStart(typename TimerCounter::type ticks) {
+        block TimerCounter::OutputCompareB::value(TimerCounter::counter() + ticks);
+        block TimerCounter::OutputCompareB::intEnable(true);
+    }
+
+    static void haltEnd() {
+        block TimerCounter::OutputCompareB::intEnable(false);
     }
 
 private:
@@ -228,7 +282,7 @@ private:
 
                 if(delta <= 2) {
                     goto loop;
-                } else if(delta < 65536) {
+                } else if(delta < (EightBitCounter ? 255 : 65536)) {
                     TimerCounter::OutputCompareA::value(dc.tick);
                     TimerCounter::OutputCompareA::intEnable(true);
                 } else {
@@ -246,7 +300,15 @@ private:
         auto& self = getInstance();
         auto& calls = self._calls;
 
-        self._tocks++;
+        if constexpr (EightBitCounter) {
+            self._ticksHigh++;
+
+            if(self._ticksHigh == 0) {
+                self._tocks++;
+            }
+        } else {
+            self._tocks++;
+        }
 
         if(!TimerCounter::OutputCompareA::intEnabled()) {
             DelayedCall dc;
@@ -259,7 +321,7 @@ private:
 
                 if(delta <= 2) {
                     handleDelayedCall();
-                } else if(delta < 65536) {
+                } else if(delta < (EightBitCounter ? 255 : 65536)) {
                     TimerCounter::OutputCompareA::value(dc.tick);
                     TimerCounter::OutputCompareA::intEnable(true);
                 }
