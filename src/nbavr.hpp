@@ -1,25 +1,24 @@
 #ifndef NBAVR_HPP
 #define NBAVR_HPP
 
-#include <stddef.h>
-#include <stdint.h>
-
-#include "util/type_info.hpp"
-
+#include "type.hpp"
 #include "hardware.hpp"
-#include "atomic.hpp"
-#include "array.hpp"
-#include "queue.hpp"
-#include "priorityqueue.hpp"
-#include "stack.hpp"
-#include "clock.hpp"
-#include "taskmanager.hpp"
-#include "print.hpp"
-#include "cxa.hpp"
 
-#include "tasks/lcd.hpp"
-#include "tasks/serial.hpp"
-#include "tasks/servo.hpp"
-#include "tasks/twi.hpp"
+#include "algorithm.hpp"
+#include "array.hpp"
+#include "atomic.hpp"
+#include "clock.hpp"
+#include "cxa.hpp"
+#include "iterator.hpp"
+#include "math.hpp"
+#include "print.hpp"
+#include "priorityqueue.hpp"
+#include "queue.hpp"
+#include "serial.hpp"
+#include "stack.hpp"
+#include "task.hpp"
+#include "taskmanager.hpp"
+
+#include "tasks.hpp"
 
 #endif

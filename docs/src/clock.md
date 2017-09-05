@@ -26,13 +26,15 @@ Every cpu clock cycle is 1 / freq seconds. (62.5ns at 16MHz)<br>
 Every 64 clock cycles is a tick. (4us at 16MHz)<br>
 Every 2^16 ticks is a tock. (262.144ms at 16MHz)<br>
 Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
-## class Clock\<class TimerCounter, uint32_t CpuFreq\>
-#### static void init()
-Initialise and start the clock.
+## class Clock\<class TimerCounter, uint32_t CpuFreq, int MaxCalls = 8\>
 #### static constexpr uint32_t millisToTicks(uint32_t ms)
-Converts milliseconds to ticks.
-#### static constexpr uint32_t ticksToMillis(uint32_t ms)
-Converts ticks to milliseconds.
+Convert milliseconds to ticks.
+#### static constexpr uint32_t microsToTicks(uint32_t us)
+Convert microseconds to ticks.
+#### static constexpr uint32_t ticksToMillis(uint32_t ticks)
+Convert ticks to milliseconds.
+#### static constexpr uint32_t ticksToMicros(uint32_t ticks)
+Convert ticks to microseconds.
 #### static uint16_t getTicks16()
 Gets the current value of the 16 bit tick counter.<br>
 Wraps every 2^16 ticks. (262.144ms at 16MHz)
@@ -42,6 +44,6 @@ Wraps every 2^32 ticks. (4.77 hours at 16Mhz)
 #### static uint16_t getTocks()
 Gets the current value of the 16 bit tock counter.<br>
 Wraps every 2^16 tocks. (4.77 hours at 16Mhz)
-#### static bool addInterrupt(void (*callback)(void*), void* data, uint16_t delay)
-Add a tick precision interrupt.<br>
-Returns true if successful.
+#### static bool delayedCall(callback_t callback, void* data, int32_t delay)
+Add a callback to call after delay ticks.<br>
+Returns true if successful added.

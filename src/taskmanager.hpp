@@ -23,6 +23,7 @@
 #define NBAVR_TASKMANAGER_HPP
 
 #include "task.hpp"
+#include "clock.hpp"
 
 // Milliseconds until a task is considered to have halted.
 #define TASK_TIMEOUT_MS 6

@@ -1,7 +1,16 @@
 #ifndef NBAVR_CALLBACKS_HPP
 #define NBAVR_CALLBACKS_HPP
 
-using callback_t = void (*)(void*);
+#ifndef TEST
+
+#define ISR(vector, ...) \
+    extern "C" void vector(void) __attribute__((signal,used,externally_visible)) __VA_ARGS__; \
+    void vector(void)
+#else
+
+#define ISR(vector, ...) void vector(void)
+
+#endif
 
 #define MAKE_CALLBACK_HEADER(...) \
     extern void (*UNDERLINE(__VA_ARGS__, Callback))(void*); \
@@ -16,13 +25,6 @@ using callback_t = void (*)(void*);
         } \
     }
 
-#define INCLUDE_DEFAULT_CALLBACK() ISR(VECT(default)) {}
-
-// TODO WDT
-// TODO spi,stc
-// TODO ee
-// TODO analog comp
-// TODO twi
-// TODO spm mem
+#define INCLUDE_DEFAULT_CALLBACK() ISR(__vector_default) {}
 
 #endif

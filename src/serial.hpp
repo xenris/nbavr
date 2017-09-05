@@ -1,8 +1,6 @@
 #ifndef NBAVR_SERIAL_HPP
 #define NBAVR_SERIAL_HPP
 
-#include <nbavr.hpp>
-
 template <class Usart, class cout_t, class cin_t = Queue<char, 0>>
 struct Serial {
     static inline void init(uint32_t CpuFreq, uint32_t baud, cout_t* out, cin_t* in = nullptr) {

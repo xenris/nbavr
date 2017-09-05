@@ -1,5 +1,5 @@
-#ifndef NBAVR_XXX_H
-#define NBAVR_XXX_H
+#ifndef NBAVR_XXX_HPP
+#define NBAVR_XXX_HPP
 
 #define ATXXX
 
@@ -205,7 +205,6 @@
 #define CHIP_TIMERCOUNTER_X_WAVEFORM_CTC_ID                             X
 #define CHIP_TIMERCOUNTER_X_WAVEFORM_FAST_PWM_ID                        X
 #define CHIP_TIMERCOUNTER_X_WAVEFORM_FAST_PWM_OCRA_ID                   X
-#define CHIP_TIMERCOUNTER_X_WAVEFORM_BIT_COUNT                          X
 #define CHIP_TIMERCOUNTER_X_WAVEFORM_BIT_0_REG                          REG8(0xXX)
 #define CHIP_TIMERCOUNTER_X_WAVEFORM_BIT_1_REG                          REG8(0xXX)
 #define CHIP_TIMERCOUNTER_X_WAVEFORM_BIT_2_REG                          REG8(0xXX)
@@ -299,7 +298,6 @@
 #define CHIP_USART_X_MODE_ASYNCHRONOUS_ID                               X
 #define CHIP_USART_X_MODE_SYNCHRONOUS_ID                                X
 #define CHIP_USART_X_MODE_MASTER_SPI_ID                                 X
-#define CHIP_USART_X_MODE_BIT_COUNT                                     X
 #define CHIP_USART_X_MODE_BIT_0_REG                                     REG8(0xXX)
 #define CHIP_USART_X_MODE_BIT_1_REG                                     REG8(0xXX)
 #define CHIP_USART_X_MODE_BIT_0_BIT                                     X

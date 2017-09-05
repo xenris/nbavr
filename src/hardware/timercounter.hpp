@@ -71,20 +71,26 @@ struct TimerCounterN {
         None = C(CLOCK_NONE_ID),
         Div1 = C(CLOCK_1_ID),
         Div8 = C(CLOCK_8_ID),
+
         #if C(CLOCK_32_ID)
-        Div32 = C(CLOCK_32_ID),
+            Div32 = C(CLOCK_32_ID),
         #endif
+
         Div64 = C(CLOCK_64_ID),
+
         #if C(CLOCK_128_ID)
-        Div128 = C(CLOCK_128_ID),
+            Div128 = C(CLOCK_128_ID),
         #endif
+
         Div256 = C(CLOCK_256_ID),
         Div1024 = C(CLOCK_1024_ID),
+
         #if C(CLOCK_EXT_FALLING_ID)
-        ExtFalling = C(CLOCK_EXT_FALLING_ID),
+            ExtFalling = C(CLOCK_EXT_FALLING_ID),
         #endif
+
         #if C(CLOCK_EXT_RISING_ID)
-        ExtRising = C(CLOCK_EXT_RISING_ID),
+            ExtRising = C(CLOCK_EXT_RISING_ID),
         #endif
     };
 
@@ -102,18 +108,23 @@ struct TimerCounterN {
     #if C(WAVEFORM)
     enum class Waveform : uint8_t {
         Normal = C(WAVEFORM_NORMAL_ID),
+
         #if C(WAVEFORM_PWM_PHASE_CORRECT_ID)
-        PWM = C(WAVEFORM_PWM_PHASE_CORRECT_ID),
+            PWM = C(WAVEFORM_PWM_PHASE_CORRECT_ID),
         #endif
+
         CTCOCRA = C(WAVEFORM_CTC_OCRA_ID),
+
         #if C(WAVEFORM_FAST_PWM_ID)
-        FastPWM = C(WAVEFORM_FAST_PWM_ID),
+            FastPWM = C(WAVEFORM_FAST_PWM_ID),
         #endif
+
         #if C(WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID)
-        PWMOCRA = C(WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID),
+            PWMOCRA = C(WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID),
         #endif
+
         #if C(WAVEFORM_FAST_PWM_OCRA_ID)
-        FastPWMOCRA = C(WAVEFORM_FAST_PWM_OCRA_ID),
+            FastPWMOCRA = C(WAVEFORM_FAST_PWM_OCRA_ID),
         #endif
     };
     #endif
@@ -168,17 +179,20 @@ struct TimerCounterN {
     /// Set the counting method.
     #if C(WAVEFORM)
     static force_inline void waveform(Waveform waveform) {
-        #if C(WAVEFORM_BIT_COUNT) > 0
-        setBit_(C(WAVEFORM_BIT_0_REG), C(WAVEFORM_BIT_0_BIT), uint8_t(waveform) & 0x01);
+        #if DEFINED(C(WAVEFORM_BIT_0_BIT))
+            setBit_(C(WAVEFORM_BIT_0_REG), C(WAVEFORM_BIT_0_BIT), uint8_t(waveform) & 0x01);
         #endif
-        #if C(WAVEFORM_BIT_COUNT) > 1
-        setBit_(C(WAVEFORM_BIT_1_REG), C(WAVEFORM_BIT_1_BIT), uint8_t(waveform) & 0x02);
+
+        #if DEFINED(C(WAVEFORM_BIT_1_BIT))
+            setBit_(C(WAVEFORM_BIT_1_REG), C(WAVEFORM_BIT_1_BIT), uint8_t(waveform) & 0x02);
         #endif
-        #if C(WAVEFORM_BIT_COUNT) > 2
-        setBit_(C(WAVEFORM_BIT_2_REG), C(WAVEFORM_BIT_2_BIT), uint8_t(waveform) & 0x04);
+
+        #if DEFINED(C(WAVEFORM_BIT_2_BIT))
+            setBit_(C(WAVEFORM_BIT_2_REG), C(WAVEFORM_BIT_2_BIT), uint8_t(waveform) & 0x04);
         #endif
-        #if C(WAVEFORM_BIT_COUNT) > 3
-        setBit_(C(WAVEFORM_BIT_3_REG), C(WAVEFORM_BIT_3_BIT), uint8_t(waveform) & 0x08);
+
+        #if DEFINED(C(WAVEFORM_BIT_3_BIT))
+            setBit_(C(WAVEFORM_BIT_3_REG), C(WAVEFORM_BIT_3_BIT), uint8_t(waveform) & 0x08);
         #endif
     }
     #endif

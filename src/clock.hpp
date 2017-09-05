@@ -32,6 +32,8 @@
 /// Every 2^16 ticks is a tock. (262.144ms at 16MHz)<br>
 /// Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
 
+#include "priorityqueue.hpp"
+
 struct DelayedCall {
     callback_t callback;
     void* data;

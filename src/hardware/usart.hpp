@@ -103,21 +103,22 @@ struct UsartN {
     /// #### static void mode(Mode)
     /// Set USART mode.
     static force_inline void mode(Mode m) {
-        #if C(USART_REG_SELECT)
-        setBit_(C(USART_REG_SELECT_REG), C(USART_REG_SELECT_BIT), true);
+        #if DEFINED(C(USART_REG_SELECT_BIT))
+            setBit_(C(USART_REG_SELECT_REG), C(USART_REG_SELECT_BIT), true);
         #endif
 
         setBit_(C(MODE_BIT_0_REG), C(MODE_BIT_0_BIT), uint8_t(m) & 0x01);
-        #if C(MODE_BIT_COUNT) > 1
-        setBit_(C(MODE_BIT_1_REG), C(MODE_BIT_1_BIT), uint8_t(m) & 0x02);
+
+        #if DEFINED(C(MODE_BIT_1_BIT))
+            setBit_(C(MODE_BIT_1_REG), C(MODE_BIT_1_BIT), uint8_t(m) & 0x02);
         #endif
     }
 
     /// #### static void parity(Parity)
     /// Set USART parity.
     static force_inline void parity(Parity p) {
-        #if C(USART_REG_SELECT)
-        setBit_(C(USART_REG_SELECT_REG), C(USART_REG_SELECT_BIT), true);
+        #if DEFINED(C(USART_REG_SELECT_BIT))
+            setBit_(C(USART_REG_SELECT_REG), C(USART_REG_SELECT_BIT), true);
         #endif
 
         setBit_(C(PARITY_BIT_0_REG), C(PARITY_BIT_0_BIT), uint8_t(p) & 0x01);
@@ -127,18 +128,18 @@ struct UsartN {
     /// #### static void stopBits(StopBits)
     /// Set number of stop bits.
     static force_inline void stopBits(StopBits b) {
-        #if C(USART_REG_SELECT)
-        setBit_(C(USART_REG_SELECT_REG), C(USART_REG_SELECT_BIT), true);
+        #if DEFINED(C(USART_REG_SELECT_BIT))
+            setBit_(C(USART_REG_SELECT_REG), C(USART_REG_SELECT_BIT), true);
         #endif
 
-        setBit_(C(STOP_BITS_REG), C(STOP_BITS_BIT), b == StopBits::Bits2);
+        setBit_(C(STOP_BITS_REG), C(STOP_BITS_BIT), bool(b));
     }
 
     /// #### static void characterSize(CharacterSize)
     /// Set USART character size.
     static force_inline void characterSize(CharacterSize s) {
-        #if C(USART_REG_SELECT)
-        setBit_(C(USART_REG_SELECT_REG), C(USART_REG_SELECT_BIT), true);
+        #if DEFINED(C(USART_REG_SELECT_BIT))
+            setBit_(C(USART_REG_SELECT_REG), C(USART_REG_SELECT_BIT), true);
         #endif
 
         setBit_(C(CHARACTER_SIZE_BIT_0_REG), C(CHARACTER_SIZE_BIT_0_BIT), uint8_t(s) & 0x01);
@@ -149,8 +150,8 @@ struct UsartN {
     /// #### static void polarity(Polarity)
     /// Set USART clock polarity.
     static force_inline void polarity(Polarity p) {
-        #if C(USART_REG_SELECT)
-        setBit_(C(USART_REG_SELECT_REG), C(USART_REG_SELECT_BIT), true);
+        #if DEFINED(C(USART_REG_SELECT_BIT))
+            setBit_(C(USART_REG_SELECT_REG), C(USART_REG_SELECT_BIT), true);
         #endif
 
         setBit_(C(CLOCK_POLARITY_REG), C(CLOCK_POLARITY_BIT), p == Polarity::TxFallingRxRising);
@@ -161,8 +162,12 @@ struct UsartN {
     static force_inline void baud(uint16_t b) {
         b &= 0x0fff;
 
-        *C(BAUD_RATE_REG_HIGH) = b >> 8;
-        *C(BAUD_RATE_REG_LOW) = b;
+        #if C(BAUD_RATE_REG_SPLIT)
+            *C(BAUD_RATE_REG_HIGH) = b >> 8;
+            *C(BAUD_RATE_REG_LOW) = b;
+        #else
+            *C(BAUD_RATE_REG) = b;
+        #endif
     }
 
     /// #### static void use2X(bool)

@@ -13,6 +13,7 @@ enum class HardwareType : uint8_t {
     WDT
 };
 
+#include "hardware/macros.hpp"
 #include "hardware/chip.hpp"
 #include "hardware/util.hpp"
 #include "hardware/callbacks.hpp"

@@ -40,7 +40,9 @@
 #define REG16(addr) reinterpret_cast<volatile uint16_t*>(__test_fake_register + addr)
 #define REG32(addr) reinterpret_cast<volatile uint32_t*>(__test_fake_register + addr)
 
-#define VECT(n) __vector_ ## n
+#define VECT(N) VECT_(DEC(N))
+#define VECT_(N) VECT__(N)
+#define VECT__(N) __vector_ ## N
 
 #define TRUE 1
 

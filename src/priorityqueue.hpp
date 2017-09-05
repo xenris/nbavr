@@ -1,7 +1,10 @@
 #ifndef NBAVR_PRIORITYQUEUE_HPP
 #define NBAVR_PRIORITYQUEUE_HPP
 
-template <typename T, int S, typename cmp_t = lesser<T>>
+#include "algorithm.hpp"
+#include "math.hpp"
+
+template <class T, int S, class cmp_t = lesser<T>>
 struct PriorityQueue {
     using size_t = typename conditional<S <= 126, int8_t, int16_t>::type;
     using type = T;

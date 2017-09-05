@@ -1,7 +1,7 @@
 #ifndef NBAVR_STACK_HPP
 #define NBAVR_STACK_HPP
 
-template <typename T, int S>
+template <class T, int S>
 struct Stack {
     using size_t = typename conditional<S <= 127, int8_t, int16_t>::type;
     using type = T;

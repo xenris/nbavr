@@ -1,7 +1,10 @@
 #ifndef NBAVR_PRINT_HPP
 #define NBAVR_PRINT_HPP
 
-#include <stdlib.h>
+// #include <stdlib.h>
+#include "algorithm.hpp"
+#include "math.hpp"
+#include "queue.hpp"
 
 constexpr char endl = '\n';
 
@@ -147,7 +150,7 @@ inline int8_t itoa(char* buffer, T n, int8_t base) {
 
 template <int S, class T>
 inline bool printint(Queue<char, S>& queue, T n, int8_t base) {
-    char buffer[type_info<T>::num_digits + 1 + 1];
+    char buffer[sizeof(T) * 8 + 1 + 1];
 
     itoa(buffer, n, base);
 
@@ -159,7 +162,9 @@ inline bool printfloat(Queue<char, S>& queue, float n) {
     char buffer[14];
 
     #ifndef TEST
-    dtostre(n, buffer, 6, 0);
+    // dtostre(n, buffer, 6, 0);
+    buffer[0] = '?';
+    buffer[1] = '\0';
     #endif
 
 

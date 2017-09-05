@@ -1,11 +1,13 @@
 #ifndef NBAVR_QUEUE_HPP
 #define NBAVR_QUEUE_HPP
 
+#include "math.hpp"
+#include "type.hpp"
+
 template <class T, int S>
 struct Queue {
     using size_t = typename conditional<S <= 127, int8_t, int16_t>::type;
     using type = T;
-    using notify_t = void (*)(void*);
 
 private:
 
@@ -13,7 +15,7 @@ private:
     size_t _head = 0;
     size_t _tail = 0;
     bool _full = false;
-    notify_t notify_func = nullptr;
+    callback_t notify_func = nullptr;
     void* notify_data = nullptr;
 
 public:
@@ -167,7 +169,7 @@ public:
         return _full || (S == 0);
     }
 
-    void setNotify(notify_t f, void* d) {
+    void setNotify(callback_t f, void* d) {
         atomic {
             notify_func = f;
             notify_data = d;
