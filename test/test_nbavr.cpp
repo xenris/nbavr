@@ -36,6 +36,9 @@ TEST(Clock, ticksToMillis) {
     EXPECT_EQ((Clock<TimerCounter1, 20000000>::ticksToMillis(312500)), 1000);
 }
 
+INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(1, A);
+INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(1);
+
 TEST(Clock, delayedCall) {
     typedef Clock<TimerCounter1, 16000000> Clock;
 
