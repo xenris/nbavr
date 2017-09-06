@@ -245,6 +245,30 @@ public:
         return success;
     }
 
+    /// #### static void delay(uint16_t us)
+    /// Delays the cpu for the given number of microseconds.<br>
+    /// Should only be used for very short delays.
+    static force_inline void delay(uint16_t us) {
+        // Each loop is 4 cpu cycles.
+
+        uint16_t f = CpuFreq / 1000000;
+
+        uint16_t l = (4 + f - 1) / f;
+        // Actually 4 * 65535 / f, but that can be outside 16 bit int.
+        uint16_t h = 65535 / f;
+
+        us = clip(us, l, h);
+
+        uint16_t c = us * f / 4;
+
+        asm volatile (
+            "1: sbiw %0, 1\n"
+            "brne 1b\n"
+            : "=w" (c)
+            : "0" (c)
+        );
+    }
+
     static void haltCallback(callback_t callback, void* data) {
         TimerCounter::OutputCompareB::callback(callback, data);
     }

@@ -2,13 +2,6 @@
 #define NBAVR_LCD_HPP
 
 #include <nbavr.hpp>
-#ifndef TEST
-// FIXME Shouldn't really be using these blocking calls...?
-#include <util/delay.h>
-#else
-#define _delay_us(n)
-#define _delay_ms(n)
-#endif
 
 // \r = clear display and return curser to home position.
 // \n = move to start of next line, wrapping to first line.
@@ -238,9 +231,9 @@ private:
         RW::output(Value::Low);
         RS::output(rs ? Value::High : Value::Low);
 
-        _delay_us(1);
+        Clock::delay(1);
         E::output(Value::High);
-        _delay_us(1);
+        Clock::delay(1);
         E::output(Value::Low);
     }
 
@@ -260,10 +253,10 @@ private:
         RW::output(Value::High);
         RS::output(rs ? Value::High : Value::Low);
 
-        _delay_us(1);
+        Clock::delay(1);
 
         E::output(Value::High);
-        _delay_us(1);
+        Clock::delay(1);
 
         data |= (D7::input() == Value::High) ? (1 << 7) : 0;
         data |= (D6::input() == Value::High) ? (1 << 6) : 0;
@@ -272,10 +265,10 @@ private:
 
         E::output(Value::Low);
 
-        _delay_us(1);
+        Clock::delay(1);
 
         E::output(Value::High);
-        _delay_us(1);
+        Clock::delay(1);
 
         data |= (D7::input() == Value::High) ? (1 << 3) : 0;
         data |= (D6::input() == Value::High) ? (1 << 2) : 0;
