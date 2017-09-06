@@ -93,10 +93,10 @@ w TimerCounter0::OutputCompareA::intEnable(false) 39:ff:fb:
 w TimerCounter0::OutputCompareA::intEnable(true) 39:00:04:
 w TimerCounter0::OutputCompareA::intFlag()
 w TimerCounter0::OutputCompareA::intFlagClear() 38:00:10:
-w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Clear) 2a:00:80:2a:ff:bf:
-w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Disconnected) 2a:ff:3f:
-w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Set) 2a:00:c0:
-w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputMode::Toggle) 2a:00:40:2a:ff:7f:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputCompareA::Mode::Clear) 2a:00:80:2a:ff:bf:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputCompareA::Mode::Disconnected) 2a:ff:3f:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputCompareA::Mode::Set) 2a:00:c0:
+w TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputCompareA::Mode::Toggle) 2a:00:40:2a:ff:7f:
 w TimerCounter0::OutputCompareA::value()
 w TimerCounter0::OutputCompareA::value(0xc8) 29:00:c8:29:ff:c8:
 w TimerCounter0::OutputCompareB::callback(func,data)
@@ -104,10 +104,10 @@ w TimerCounter0::OutputCompareB::intEnable(false) 39:ff:f7:
 w TimerCounter0::OutputCompareB::intEnable(true) 39:00:08:
 w TimerCounter0::OutputCompareB::intFlag()
 w TimerCounter0::OutputCompareB::intFlagClear() 38:00:08:
-w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Clear) 2a:00:20:2a:ff:ef:
-w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Disconnected) 2a:ff:cf:
-w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Set) 2a:00:30:
-w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputMode::Toggle) 2a:00:10:2a:ff:df:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputCompareB::Mode::Clear) 2a:00:20:2a:ff:ef:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputCompareB::Mode::Disconnected) 2a:ff:cf:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputCompareB::Mode::Set) 2a:00:30:
+w TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputCompareB::Mode::Toggle) 2a:00:10:2a:ff:df:
 w TimerCounter0::OutputCompareB::value()
 w TimerCounter0::OutputCompareB::value(0x7a) 28:00:7a:28:ff:7a:
 w TimerCounter0::clock(TimerCounter0::Clock::Div1) 33:00:01:33:ff:f9:
@@ -136,10 +136,10 @@ w TimerCounter1::OutputCompareA::intEnable(false) 39:ff:bf:
 w TimerCounter1::OutputCompareA::intEnable(true) 39:00:40:
 w TimerCounter1::OutputCompareA::intFlag()
 w TimerCounter1::OutputCompareA::intFlagClear() 38:00:40:
-w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Clear) 30:00:20:30:ff:ef:
-w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Disconnected) 30:ff:cf:
-w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Set) 30:00:30:
-w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Toggle) 30:00:10:30:ff:df:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Clear) 30:00:20:30:ff:ef:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Disconnected) 30:ff:cf:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Set) 30:00:30:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Toggle) 30:00:10:30:ff:df:
 w TimerCounter1::OutputCompareA::value()
 w TimerCounter1::OutputCompareA::value(0xd9) 2e:00:d9:2e:ff:d9:
 w TimerCounter1::OutputCompareB::callback(func,data)
@@ -147,10 +147,10 @@ w TimerCounter1::OutputCompareB::intEnable(false) 39:ff:df:
 w TimerCounter1::OutputCompareB::intEnable(true) 39:00:20:
 w TimerCounter1::OutputCompareB::intFlag()
 w TimerCounter1::OutputCompareB::intFlagClear() 38:00:20:
-w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Clear) 2c:00:20:2c:ff:ef:
-w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Disconnected) 2c:ff:cf:
-w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Set) 2c:00:30:
-w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Toggle) 2c:00:10:2c:ff:df:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Clear) 2c:00:20:2c:ff:ef:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Disconnected) 2c:ff:cf:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Set) 2c:00:30:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Toggle) 2c:00:10:2c:ff:df:
 w TimerCounter1::OutputCompareB::value()
 w TimerCounter1::OutputCompareB::value(0x8d) 2b:00:8d:2b:ff:8d:
 w TimerCounter1::OutputCompareC::value()

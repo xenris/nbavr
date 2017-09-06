@@ -39,12 +39,6 @@ The underlying type of this timer/counter. (uint8_t or uint16_t)
 * PWMOCRA
 * FastPWMOCRA
 
-#### enum OutputMode
-* Disconnected
-* Toggle
-* Clear
-* Set
-
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.
 

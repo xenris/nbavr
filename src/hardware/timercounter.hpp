@@ -127,20 +127,6 @@ struct TimerCounterN {
     };
     #endif
 
-    /// #### enum OutputMode
-    /// * Disconnected
-    /// * Toggle
-    /// * Clear
-    /// * Set
-    #if C(OUTPUTCOMPARE_MODE)
-    enum class OutputMode : uint8_t {
-        Disconnected = C(OUTPUTCOMPARE_MODE_DISCONNECTED_ID),
-        Toggle = C(OUTPUTCOMPARE_MODE_TOGGLE_ID),
-        Clear = C(OUTPUTCOMPARE_MODE_CLEAR_ID),
-        Set = C(OUTPUTCOMPARE_MODE_SET_ID),
-    };
-    #endif
-
     /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {

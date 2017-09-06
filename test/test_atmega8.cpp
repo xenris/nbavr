@@ -426,21 +426,21 @@ TEST(TimerCounter2, outputX) {
 }
 
 TEST(TimerCounter1, outputXMode) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Disconnected));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Toggle));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Clear));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Set));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Disconnected));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Toggle));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Clear));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Set));
+    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Disconnected));
+    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Toggle));
+    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Clear));
+    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Set));
+    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Disconnected));
+    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Toggle));
+    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Clear));
+    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Set));
 }
 
 TEST(TimerCounter2, outputXMode) {
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Disconnected));
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Toggle));
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Clear));
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Set));
+    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Disconnected));
+    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Toggle));
+    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Clear));
+    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Set));
 }
 
 //------------------------------------------------

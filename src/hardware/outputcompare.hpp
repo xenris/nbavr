@@ -14,6 +14,20 @@
 
 /// ## class OutputCompareX
 struct OutputCompareX {
+    /// #### enum Mode
+    /// * Disconnected
+    /// * Toggle
+    /// * Clear
+    /// * Set
+    #if C(OUTPUTCOMPARE_MODE)
+    enum class Mode : uint8_t {
+        Disconnected = C(OUTPUTCOMPARE_MODE_DISCONNECTED_ID),
+        Toggle = C(OUTPUTCOMPARE_MODE_TOGGLE_ID),
+        Clear = C(OUTPUTCOMPARE_MODE_CLEAR_ID),
+        Set = C(OUTPUTCOMPARE_MODE_SET_ID),
+    };
+    #endif
+
     /// #### static void value(T v)
     /// Set the compare register of output compare X.
     static force_inline void value(C(TYPE) v) {
@@ -26,10 +40,10 @@ struct OutputCompareX {
         return *CC(REG);
     }
 
-    /// #### static void mode(OutputMode m)
+    /// #### static void mode(Mode m)
     /// Set the mode of output compare X.
     #if CC(MODE_BIT_1_BIT)
-    static force_inline void mode(OutputMode m) {
+    static force_inline void mode(Mode m) {
         setBit_(CC(MODE_BIT_0_REG), CC(MODE_BIT_0_BIT), uint8_t(m) & 0x01);
         setBit_(CC(MODE_BIT_1_REG), CC(MODE_BIT_1_BIT), uint8_t(m) & 0x02);
     }

@@ -183,16 +183,16 @@ w TimerCounter0::overflowIntEnable(false) 59:ff:fe:
 w TimerCounter0::overflowIntEnable(true) 59:00:01:
 w TimerCounter0::overflowIntFlag()
 w TimerCounter0::overflowIntFlagClear() 58:00:01:
-w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Clear) 4f:00:80:4f:ff:bf:
-w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Disconnected) 4f:ff:3f:
-w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Set) 4f:00:c0:
-w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputMode::Toggle) 4f:00:40:4f:ff:7f:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Clear) 4f:00:80:4f:ff:bf:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Disconnected) 4f:ff:3f:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Set) 4f:00:c0:
+w TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Toggle) 4f:00:40:4f:ff:7f:
 w TimerCounter1::OutputCompareA::value()
 w TimerCounter1::OutputCompareA::value(0x3c3c) 4a:00:3c:4a:ff:3c:
-w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Clear) 4f:00:20:4f:ff:ef:
-w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Disconnected) 4f:ff:cf:
-w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Set) 4f:00:30:
-w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputMode::Toggle) 4f:00:10:4f:ff:df:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Clear) 4f:00:20:4f:ff:ef:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Disconnected) 4f:ff:cf:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Set) 4f:00:30:
+w TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Toggle) 4f:00:10:4f:ff:df:
 w TimerCounter1::OutputCompareB::value()
 w TimerCounter1::OutputCompareB::value(0x3c3c) 48:00:3c:48:ff:3c:
 w TimerCounter1::clock(TimerCounter1::Clock::Div1) 4e:00:01:4e:ff:f9:
@@ -218,10 +218,10 @@ w TimerCounter1::waveform(TimerCounter1::Waveform::FastPWMOCRA) 4e:00:18:4f:00:0
 w TimerCounter1::waveform(TimerCounter1::Waveform::Normal) 4e:ff:e7:4f:ff:fc:
 w TimerCounter1::waveform(TimerCounter1::Waveform::PWM) 4e:00:10:4f:00:02:4e:ff:f7:4f:ff:fe:
 w TimerCounter1::waveform(TimerCounter1::Waveform::PWMOCRA) 4e:00:10:4f:00:03:4e:ff:f7:
-w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Clear) 45:00:20:45:ff:ef:
-w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Disconnected) 45:ff:cf:
-w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Set) 45:00:30:
-w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputMode::Toggle) 45:00:10:45:ff:df:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Clear) 45:00:20:45:ff:ef:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Disconnected) 45:ff:cf:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Set) 45:00:30:
+w TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Toggle) 45:00:10:45:ff:df:
 w TimerCounter2::OutputCompareA::value()
 w TimerCounter2::OutputCompareA::value(0x3c) 43:00:3c:43:ff:3c:
 w TimerCounter2::clock(TimerCounter2::Clock::Div1) 45:00:01:45:ff:f9:
