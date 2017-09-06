@@ -79,77 +79,6 @@ force_inline void __ssreg(const uint8_t *s) {
 #define ISR(vector, ...) void vector(void)
 #endif
 
-// /// #### T max(T, T)
-// /// Get the bigger of the two values.
-// template<class T>
-// constexpr force_inline T max(T a, T b) {
-//     return a > b ? a : b;
-// }
-//
-// /// #### T max(T, T)
-// /// Get the smaller of the two values.
-// template<class T>
-// constexpr force_inline T min(T a, T b) {
-//     return a < b ? a : b;
-// }
-//
-// /// #### T clip(T x, T l, T h)
-// /// Clip x between l and h.
-// template<class T>
-// constexpr force_inline T clip(T x, T l, T h) {
-//     return max(min(x, h), l);
-// }
-//
-// /// #### T abs(T)
-// /// Get the absolute (positive) value.
-// template<class T>
-// constexpr force_inline T abs(T a) {
-//     return a >= 0 ? a : -a;
-// }
-//
-// /// #### T* reverse(T* array, size_t length)
-// /// Reverse an array.
-// template <typename T>
-// force_inline T* reverse(T* array, size_t length) {
-//     for(size_t i = 0; i < (length + 1) / 2; i++) {
-//         const size_t j = (length - 1) - i;
-//         const T temp = array[i];
-//         array[i] = array[j];
-//         array[j] = temp;
-//     }
-//
-//     return array;
-// }
-//
-// /// #### void swap(T& a, T& b)
-// /// Swap two variables.
-// template <typename T>
-// force_inline void swap(T& a, T& b) {
-//     T t = a;
-//     a = b;
-//     b = t;
-// }
-//
-// template<class T>
-// auto begin(T& t) -> decltype(t.begin()) {
-//     return t.begin();
-// }
-//
-// template<class T>
-// auto end(T& t) -> decltype(t.end()) {
-//     return t.end();
-// }
-//
-// template<class T>
-// auto begin(T* t) -> decltype(t->begin()) {
-//     return t->begin();
-// }
-//
-// template<class T>
-// auto end(T* t) -> decltype(t->end()) {
-//     return t->end();
-// }
-
 /// #### void setBit(volatile uint8_t\* register, uint8_t bit, bool value)
 /// Set or clear a bit in a volatile register immediately.
 force_inline void setBit(volatile uint8_t* reg, uint8_t bit, bool value) {
@@ -172,19 +101,5 @@ force_inline void setBit_(volatile uint8_t* reg, uint8_t bit, bool value) {
         *reg_ &= ~bv(bit);
     }
 }
-
-// template <typename T>
-// struct lesser {
-//     constexpr bool operator()(const T &a, const T &b) const {
-//         return a < b;
-//     }
-// };
-//
-// template <typename T>
-// struct greater {
-//     constexpr bool operator()(const T &a, const T &b) const {
-//         return a > b;
-//     }
-// };
 
 #endif
