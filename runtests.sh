@@ -4,7 +4,7 @@ set -e
 
 cd test/
 
-cflags="-Werror -Wall -fmax-errors=3"
+cflags="-Werror -Wall -fmax-errors=3 -std=c++17"
 includes="-I ../src/"
 libs="-lgtest -lgtest_main"
 
