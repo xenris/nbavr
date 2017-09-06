@@ -3,6 +3,9 @@
 #### macro force_inline
 Force a function to always be inlined. Use like "inline".
 
+#### T bv(T n)
+Equivalent to "1 << n", but works with types bigger than int.
+
 #### void cli()
 Clear the global interrupt flag.
 

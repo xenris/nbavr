@@ -7,6 +7,8 @@
 /// Force a function to always be inlined. Use like "inline".
 #define force_inline inline __attribute__((always_inline))
 
+/// #### T bv(T n)
+/// Equivalent to "1 << n", but works with types bigger than int.
 template <typename T>
 force_inline T bv(T n) {
     return T(1) << n;
