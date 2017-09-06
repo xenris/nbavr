@@ -1,24 +1,24 @@
 /// # Clock
-///
+
 /// ## Example
 
 /// ```c++
 /// const uint32_t CpuFreq = 16000000;
-///
+
 /// typedef PinB5 ledPin;
 /// typedef TimerCounter1 systemTimer;
-///
+
 /// typedef Clock<systemTimer, CpuFreq> Clock;
-///
+
 /// Clock::init();
-///
+
 /// Flash<Clock, ledPin> flash;
-///
+
 /// Task* tasks[] = {&flash};
-///
+
 /// TaskManager tm(tasks);
-///
-///
+
+
 /// // Within Flash::loop()
 /// uint32_t ticks = Clock::getTicks();
 /// uint32_t millis = Clock::ticksToMillis(ticks);
@@ -31,7 +31,7 @@
 /// Every 64 clock cycles is a tick. (4us at 16MHz)<br>
 /// Every 2^16 ticks is a tock. (262.144ms at 16MHz)<br>
 /// Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
-///
+
 /// If Clock is given an 8 bit timer (rather than 16 bit) each tick will be
 /// 4x longer.
 

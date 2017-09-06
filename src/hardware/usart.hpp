@@ -43,7 +43,6 @@ struct UsartN {
     /// * Asynchronous
     /// * Synchronous
     /// * MasterSpi
-    ///
     enum class Mode : uint8_t {
         Asynchronous = C(MODE_ASYNCHRONOUS_ID),
         Synchronous = C(MODE_SYNCHRONOUS_ID),
@@ -56,7 +55,6 @@ struct UsartN {
     /// * Disabled
     /// * Even
     /// * Odd
-    ///
     enum class Parity : uint8_t {
         Disabled = C(PARITY_DISABLE_ID),
         Even = C(PARITY_EVEN_ID),
@@ -66,7 +64,6 @@ struct UsartN {
     /// #### enum StopBits
     /// * Bits1
     /// * Bits2
-    ///
     enum class StopBits : uint8_t {
         Bits1 = C(STOP_BITS_1_ID),
         Bits2 = C(STOP_BITS_2_ID),

@@ -1,11 +1,15 @@
 # Output Compares
+
 ## Example
 ```c++
 // TODO
 ```
+
 X is the output compare id (A, B, etc).<br>
 T is the type of the output compare's register, either uint8_t or uint16_t.<br>
+
 ## class OutputCompareX
+
 #### static void value(T)
 Set the compare register of output compare X.
 

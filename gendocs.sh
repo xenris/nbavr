@@ -11,7 +11,8 @@ do
 
     mkdir -p $(dirname $mdfile)
 
-    cat $srcfile | grep -o '^ *///.*' | sed 's: *///\( \|\)::' > $mdfile
+    cat $srcfile | sed -e '/^ *\/\/\/ /! s:.*::' -e 's:^ */// ::' | cat -s | sed -e :a -e '/./,$!d;/^\n*$/{$d;N;};/\n$/ba' > $mdfile
+    # cat $srcfile | grep -o '^ *///.*' | sed 's: *///\( \|\)::' > $mdfile
 done
 
 find docs/ -empty -delete

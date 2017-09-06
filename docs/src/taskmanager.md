@@ -1,6 +1,7 @@
 # TaskManager
 
 ## Example
+
 ```c++
 const uint32_t CpuFreq = 16000000;
 
@@ -17,6 +18,8 @@ Task* tasks[] = {&flash};
 
 TaskManager<Clock> tm(tasks);
 ```
+
 ## class TaskManager\<class Clock\>
+
 #### TaskManager(TaskT* (&tasks)[])
 Runs the given array of tasks. Does not return.

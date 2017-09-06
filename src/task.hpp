@@ -11,10 +11,10 @@
 ///     Flash() {
 ///         ledPin::direction(ledPin::Direction::Output);
 ///     }
-///
+
 ///     void loop() override {
 ///         ledPin::toggle();
-///
+
 ///         this->sleep(Clock::millisToTicks(500));
 ///     }
 /// };

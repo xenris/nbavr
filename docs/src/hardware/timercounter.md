@@ -1,15 +1,21 @@
 # Timer/Counters
+
 ## Example
 ```c++
 // TODO
 ```
+
 N is the timer/counter id (1, 2, etc).<br>
 T is the type of the timer's counter, either uint8_t or uint16_t.<br>
+
 #### macro INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(N, X)
 Include this to use TimerCounter output compare callbacks.
+
 #### macro INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(N)
 Include this to use TimerCounter overflow callbacks.
+
 ## Class TimerCounterN
+
 #### typedef T type
 The underlying type of this timer/counter. (uint8_t or uint16_t)
 

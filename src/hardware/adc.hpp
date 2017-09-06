@@ -1,24 +1,24 @@
 /// # Analog to Digital Converter
-///
+
 /// ## Example
 
 /// ```c++
 /// // Start the analog to digital converter.
-///
+
 /// atomic {
 ///     Adc::reference(Adc::Reference::AVCC);
 ///     Adc::channel(Adc::Channel::ADC1);
 ///     Adc::prescaler(Adc::Prescaler::Div128);
 ///     Adc::trigger(Adc::Trigger::SingleConversion);
 /// }
-///
+
 /// Adc::start();
-///
+
 /// // In the main loop.
-///
+
 /// if(Adc::intFlag()) {
 ///     adcValue = Adc::value();
-///
+
 ///     Adc::intFlagClear();
 /// } else {
 ///     // Conversion not done yet.

@@ -3,8 +3,10 @@
 ## Example
 
 TODO
+
 #### macro INCLUDE_TWI_CALLBACK()
 Include this to use Twi callbacks.
+
 ## class Twi
 
 #### enum Prescaler
@@ -59,6 +61,7 @@ Clear the interrupt flag.
 
 #### static void enableAcknowledge(bool e)
 Enable/disable acknowledge pulse.
+
 #### static void startCondition(bool e)
 Enable/disable start condition.
 

@@ -1,6 +1,7 @@
 # Analog to Digital Converter
 
 ## Example
+
 ```c++
 // Start the analog to digital converter.
 
@@ -23,13 +24,17 @@ if(Adc::intFlag()) {
     // Conversion not done yet.
 }
 ```
+
 #### macro INCLUDE_ADC_CALLBACK()
 Include this to use Adc callbacks.
+
 ## class Adc
+
 #### enum Reference
 * AREF
 * AVCC
 * Internal
+
 #### enum Channel
 * ADC0
 * ADC1
@@ -42,6 +47,7 @@ Include this to use Adc callbacks.
 * ADC8
 * VBG
 * GND
+
 #### enum Prescaler
 * Div2
 * Div4
@@ -50,6 +56,7 @@ Include this to use Adc callbacks.
 * Div32
 * Div64
 * Div128
+
 #### enum Trigger
 * SingleConversion
 * FreeRunning
@@ -61,29 +68,42 @@ Include this to use Adc callbacks.
 * Timer1Overflow
 * Timer1CaptureEvent
 * FreeRunning
+
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.
+
 #### static void enable(bool)
 Enable/disable the analog to digital converter.
+
 #### static void start()
 Start a convertion if set to single conversion or free running modes.
+
 #### static uint16_t value()
 Get the the most recent conversion.
+
 #### static void reference(Reference)
 Set the reference voltage source.
+
 #### static void channel(Channel)
 Set the input channel.
+
 #### static void prescaler(Prescaler)
 Set the clock prescaler.
+
 #### static void leftAdjust(bool)
 Enable/disable left adjustment of 10 bit data in 16 bit register.
+
 #### static void trigger(Trigger)
 Set the conversion trigger source.
+
 #### static void callback(void (\*)(void\*), void\*)
 Set the callback and data for when a conversion is complete.
+
 #### static void intEnable(bool)
 Enable/disable the ADC interrupt.
+
 #### static bool intFlag()
 Returns true if the interrupt flag is set.
+
 #### static void intFlagClear()
 Clear the interrupt flag.

@@ -55,7 +55,6 @@ struct TimerCounterN {
 
     TimerCounterN() = delete;
 
-    ///
     /// #### enum Clock
     /// * None (No clock)
     /// * Div1 (cpu frequency / 1)
@@ -97,7 +96,6 @@ struct TimerCounterN {
     // TODO Make it such that there is always a waveform enumeration with at least "Normal"
     //  so that waveform(Waveform::Normal) compiles on all chips.
 
-    ///
     /// #### enum Waveform
     /// * Normal
     /// * PWM
@@ -129,7 +127,6 @@ struct TimerCounterN {
     };
     #endif
 
-    ///
     /// #### enum OutputMode
     /// * Disconnected
     /// * Toggle
@@ -144,28 +141,24 @@ struct TimerCounterN {
     };
     #endif
 
-    ///
     /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
         return HardwareType::TimerCounter;
     }
 
-    ///
     /// #### static void counter(T)
     /// Set the counter value.
     static force_inline void counter(C(TYPE) value) {
         *C(COUNTER_REG) = value;
     }
 
-    ///
     /// #### static T counter()
     /// Get the counter value.
     static force_inline C(TYPE) counter() {
         return *C(COUNTER_REG);
     }
 
-    ///
     /// #### static void clock(Clock)
     /// Set the clock source.
     static force_inline void clock(Clock clock) {
@@ -174,7 +167,6 @@ struct TimerCounterN {
         setBit_(C(CLOCK_BIT_2_REG), C(CLOCK_BIT_2_BIT), uint8_t(clock) & 0x04);
     }
 
-    ///
     /// #### static void waveform(Waveform)
     /// Set the counting method.
     #if C(WAVEFORM)
@@ -197,7 +189,6 @@ struct TimerCounterN {
     }
     #endif
 
-    ///
     /// #### static void overflowCallback(void (\*)(void\*), void\*)
     /// Set the callback and data for the counter overflow interrupt.
     static force_inline void overflowCallback(void (*func)(void*), void* data) {
@@ -205,7 +196,6 @@ struct TimerCounterN {
         _C(OVERFLOW_CallbackData) = data;
     }
 
-    ///
     /// #### static void overflowIntEnable(bool)
     /// Enable/disable the counter overflow interrupt.
     static force_inline void overflowIntEnable(bool b) {
@@ -216,21 +206,18 @@ struct TimerCounterN {
         }
     }
 
-    ///
     /// #### static bool overflowIntFlag()
     /// Returns true if the counter overflow flag is set.
     static force_inline bool overflowIntFlag() {
         return *C(OVERFLOW_INT_FLAG_REG) & bv(C(OVERFLOW_INT_FLAG_BIT));
     }
 
-    ///
     /// #### static void overflowIntFlagClear()
     /// Clear the counter overflow interrupt flag.
     static force_inline void overflowIntFlagClear() {
         *C(OVERFLOW_INT_FLAG_REG) |= bv(C(OVERFLOW_INT_FLAG_BIT));
     }
 
-    ///
     /// ## class OutputCompareX
     /// See [OutputCompareX](outputcompare.md)
 
