@@ -20,7 +20,7 @@
 /// };
 /// ```
 
-/// ## Class Task<class Clock>
+/// ## Class Task\<class Clock\>
 template <class Clock>
 struct Task {
     enum class State : int8_t {
@@ -33,20 +33,20 @@ struct Task {
     State state = State::Awake;
     uint32_t wakeTick = 0;
 
-    /// #### void **sleep**(uint32_t ticks)
+    /// #### void sleep(uint32_t ticks)
     /// Put this task to sleep until the given number of ticks have passed.
     void sleep(uint32_t ticks) {
         wakeTick = Clock::getTicks() + ticks;
         state = State::Delay;
     }
 
-    /// #### void **sleep**()
+    /// #### void sleep()
     /// Put this task to sleep until woken with wake().
     void sleep() {
         state = State::Asleep;
     }
 
-    /// #### void **wake**()
+    /// #### void wake()
     /// Wake this task from sleep.
     void wake() {
         if(state != State::Halt) {
@@ -54,8 +54,9 @@ struct Task {
         }
     }
 
-    /// #### virtual void **loop**()
-    /// The main loop of the task. Override this and fill with your own code.
+    /// #### virtual void loop()
+    /// The main loop of the task.<br>
+    /// Override this and fill with your own code.
     virtual void loop() {};
 };
 

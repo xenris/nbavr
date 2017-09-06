@@ -97,7 +97,7 @@ struct UsartN {
         return HardwareType::Usart;
     }
 
-    /// #### static void mode(Mode)
+    /// #### static void mode(Mode m)
     /// Set USART mode.
     static force_inline void mode(Mode m) {
         #if DEFINED(C(USART_REG_SELECT_BIT))
@@ -111,7 +111,7 @@ struct UsartN {
         #endif
     }
 
-    /// #### static void parity(Parity)
+    /// #### static void parity(Parity p)
     /// Set USART parity.
     static force_inline void parity(Parity p) {
         #if DEFINED(C(USART_REG_SELECT_BIT))
@@ -122,7 +122,7 @@ struct UsartN {
         setBit_(C(PARITY_BIT_1_REG), C(PARITY_BIT_1_BIT), uint8_t(p) & 0x02);
     }
 
-    /// #### static void stopBits(StopBits)
+    /// #### static void stopBits(StopBits b)
     /// Set number of stop bits.
     static force_inline void stopBits(StopBits b) {
         #if DEFINED(C(USART_REG_SELECT_BIT))
@@ -132,7 +132,7 @@ struct UsartN {
         setBit_(C(STOP_BITS_REG), C(STOP_BITS_BIT), bool(b));
     }
 
-    /// #### static void characterSize(CharacterSize)
+    /// #### static void characterSize(CharacterSize s)
     /// Set USART character size.
     static force_inline void characterSize(CharacterSize s) {
         #if DEFINED(C(USART_REG_SELECT_BIT))
@@ -144,7 +144,7 @@ struct UsartN {
         setBit_(C(CHARACTER_SIZE_BIT_2_REG), C(CHARACTER_SIZE_BIT_2_BIT), uint8_t(s) & 0x04);
     }
 
-    /// #### static void polarity(Polarity)
+    /// #### static void polarity(Polarity p)
     /// Set USART clock polarity.
     static force_inline void polarity(Polarity p) {
         #if DEFINED(C(USART_REG_SELECT_BIT))
@@ -154,7 +154,7 @@ struct UsartN {
         setBit_(C(CLOCK_POLARITY_REG), C(CLOCK_POLARITY_BIT), p == Polarity::TxFallingRxRising);
     }
 
-    /// #### static void baud(uint16_t)
+    /// #### static void baud(uint16_t b)
     /// Set USART baud rate.
     static force_inline void baud(uint16_t b) {
         b &= 0x0fff;
@@ -167,76 +167,76 @@ struct UsartN {
         #endif
     }
 
-    /// #### static void use2X(bool)
+    /// #### static void use2X(bool u)
     /// Enable/disable baud rate 2x speed.
     static force_inline void use2X(bool u) {
         setBit_(C(DOUBLE_SPEED_REG), C(DOUBLE_SPEED_BIT), u);
     }
 
-    /// #### static void receiverEnable(bool)
+    /// #### static void receiverEnable(bool e)
     /// Enable/disable receiver.
     static force_inline void receiverEnable(bool e) {
         setBit_(C(RX_ENABLE_REG), C(RX_ENABLE_BIT), e);
     }
 
-    /// #### static void transmitterEnable(bool)
+    /// #### static void transmitterEnable(bool e)
     /// Enable/disable transmitter.
     static force_inline void transmitterEnable(bool e) {
         setBit_(C(TX_ENABLE_REG), C(TX_ENABLE_BIT), e);
     }
 
-    /// #### static void multiprocessorCummunicationMode(bool)
+    /// #### static void multiprocessorCummunicationMode(bool e)
     /// Enable/disable multiprocessor cummunication mode.
     static force_inline void multiprocessorCummunicationMode(bool e) {
         setBit_(C(MULTI_PROCESSOR_COMMUNICATION_REG), C(MULTI_PROCESSOR_COMMUNICATION_BIT), e);
     }
 
-    /// #### static void rxCompleteIntEnable(bool)
+    /// #### static void rxCompleteIntEnable(bool e)
     /// Enable/disable receive complete interrupt.
     static force_inline void rxCompleteIntEnable(bool e) {
         setBit_(C(RX_COMPLETE_INT_ENABLE_REG), C(RX_COMPLETE_INT_ENABLE_BIT), e);
     }
 
-    /// #### static void txCompleteIntEnable(bool)
+    /// #### static void txCompleteIntEnable(bool e)
     /// Enable/disable transmit complete interrupt.
     static force_inline void txCompleteIntEnable(bool e) {
         setBit_(C(TX_COMPLETE_INT_ENABLE_REG), C(TX_COMPLETE_INT_ENABLE_BIT), e);
     }
 
-    /// #### static void dataRegisterEmptyIntEnable(bool)
+    /// #### static void dataRegisterEmptyIntEnable(bool e)
     /// Enable/disable data register empty interrupt.
     static force_inline void dataRegisterEmptyIntEnable(bool e) {
         setBit_(C(DATA_REG_EMPTY_INT_ENABLE_REG), C(DATA_REG_EMPTY_INT_ENABLE_BIT), e);
     }
 
-    /// #### static void rxCompleteCallback(void (\*)(void\*), void\*)
+    /// #### static void rxCompleteCallback(callback_t callback, void\* data)
     /// Set callback for receive complete interrupt.
-    static force_inline void rxCompleteCallback(void (*func)(void*), void* data) {
-        _C(RX_Callback) = func;
+    static force_inline void rxCompleteCallback(callback_t callback, void* data) {
+        _C(RX_Callback) = callback;
         _C(RX_CallbackData) = data;
     }
 
-    /// #### static void txCompleteCallback(void (\*)(void\*), void\*)
+    /// #### static void txCompleteCallback(callback_t callback, void\* data)
     /// Set callback for transmit complete interrupt.
-    static force_inline void txCompleteCallback(void (*func)(void*), void* data) {
-        _C(TX_Callback) = func;
+    static force_inline void txCompleteCallback(callback_t callback, void* data) {
+        _C(TX_Callback) = callback;
         _C(TX_CallbackData) = data;
     }
 
-    /// #### static void dataRegisterEmptyCallback(void (\*)(void\*), void\*)
+    /// #### static void dataRegisterEmptyCallback(callback_t callback, void\* data)
     /// Set callback for data register empty interrupt.
-    static force_inline void dataRegisterEmptyCallback(void (*func)(void*), void* data) {
-        _C(DE_Callback) = func;
+    static force_inline void dataRegisterEmptyCallback(callback_t callback, void* data) {
+        _C(DE_Callback) = callback;
         _C(DE_CallbackData) = data;
     }
 
-    /// #### static void push(uint8_t)
+    /// #### static void push(uint8_t b)
     /// Send a byte.
     static force_inline void push(uint8_t b) {
         *C(DATA_REG) = b;
     }
 
-    /// #### static void push9(uint16_t)
+    /// #### static void push9(uint16_t b)
     /// Send a 9 bit byte.
     static force_inline void push9(uint16_t b) {
         setBit_(C(TX_DATA_BIT_8_REG), C(TX_DATA_BIT_8_BIT), b & 0x0100);

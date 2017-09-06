@@ -14,7 +14,7 @@
 
 /// ## class OutputCompareX
 struct OutputCompareX {
-    /// #### static void value(T)
+    /// #### static void value(T v)
     /// Set the compare register of output compare X.
     static force_inline void value(C(TYPE) v) {
         *CC(REG) = v;
@@ -26,7 +26,7 @@ struct OutputCompareX {
         return *CC(REG);
     }
 
-    /// #### static void mode(OutputMode)
+    /// #### static void mode(OutputMode m)
     /// Set the mode of output compare X.
     #if CC(MODE_BIT_1_BIT)
     static force_inline void mode(OutputMode m) {
@@ -35,16 +35,16 @@ struct OutputCompareX {
     }
     #endif
 
-    /// #### static void callback(void (\*)(void\*), void\*)
+    /// #### static void callback(callback_t callback, void\* data)
     /// Set the callback and data for output compare X interrupt.
     #if CC(MODE_BIT_1_BIT)
-    static force_inline void callback(void (*func)(void*), void* data) {
-        _CC(Callback) = func;
+    static force_inline void callback(callback_t callback, void* data) {
+        _CC(Callback) = callback;
         _CC(CallbackData) = data;
     }
     #endif
 
-    /// #### static void intEnable(bool)
+    /// #### static void intEnable(bool b)
     /// Enable/disable the output compare X interrupt.
     #if CC(MODE_BIT_1_BIT)
     static force_inline void intEnable(bool b) {

@@ -48,22 +48,22 @@ The underlying type of this timer/counter. (uint8_t or uint16_t)
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.
 
-#### static void counter(T)
+#### static void counter(T value)
 Set the counter value.
 
 #### static T counter()
 Get the counter value.
 
-#### static void clock(Clock)
+#### static void clock(Clock c)
 Set the clock source.
 
-#### static void waveform(Waveform)
+#### static void waveform(Waveform w)
 Set the counting method.
 
-#### static void overflowCallback(void (\*)(void\*), void\*)
+#### static void overflowCallback(callback_t callback, void\* data)
 Set the callback and data for the counter overflow interrupt.
 
-#### static void overflowIntEnable(bool)
+#### static void overflowIntEnable(bool b)
 Enable/disable the counter overflow interrupt.
 
 #### static bool overflowIntFlag()

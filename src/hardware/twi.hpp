@@ -95,13 +95,13 @@ struct Twi {
         return HardwareType::Twi;
     }
 
-    /// #### static void enable(bool)
+    /// #### static void enable(bool e)
     /// Enable/disable the two wire serial interface.
     static force_inline void enable(bool e) {
         setBit_(CHIP_TWI_ENABLE_REG, CHIP_TWI_ENABLE_BIT, e);
     }
 
-    /// #### static void baud(uint16_t)
+    /// #### static void baud(uint16_t b)
     /// Set USART baud rate.
     static force_inline void bitRate(uint8_t b) {
         *CHIP_TWI_BIT_RATE_REG = b;
@@ -167,10 +167,10 @@ struct Twi {
         setBit_(CHIP_TWI_INT_ENABLE_REG, CHIP_TWI_INT_ENABLE_BIT, e);
     }
 
-    /// #### static void callback(void (\*)(void\*), void\*)
+    /// #### static void callback(callback_t callback, void\* data)
     /// Set the callback and data for Twi interrupts.
-    static force_inline void callback(void (*func)(void*), void* data) {
-        _TWI_Callback_ = func;
+    static force_inline void callback(callback_t callback, void* data) {
+        _TWI_Callback_ = callback;
         _TWI_CallbackData_ = data;
     }
 
@@ -180,14 +180,14 @@ struct Twi {
         return Status(*CHIP_TWI_STATUS_REG & 0xF8);
     }
 
-    /// #### static void prescaler(Prescaler)
+    /// #### static void prescaler(Prescaler p)
     /// Set the prescaler.
-    static force_inline void prescaler(Prescaler pre) {
-        setBit_(CHIP_TWI_PRESCALER_BIT_0_REG, CHIP_TWI_PRESCALER_BIT_0_BIT, uint8_t(pre) & 0x01);
-        setBit_(CHIP_TWI_PRESCALER_BIT_1_REG, CHIP_TWI_PRESCALER_BIT_1_BIT, uint8_t(pre) & 0x02);
+    static force_inline void prescaler(Prescaler p) {
+        setBit_(CHIP_TWI_PRESCALER_BIT_0_REG, CHIP_TWI_PRESCALER_BIT_0_BIT, uint8_t(p) & 0x01);
+        setBit_(CHIP_TWI_PRESCALER_BIT_1_REG, CHIP_TWI_PRESCALER_BIT_1_BIT, uint8_t(p) & 0x02);
     }
 
-    /// #### static void push(uint8_t)
+    /// #### static void push(uint8_t b)
     /// Send a byte.
     static force_inline void push(uint8_t b) {
         *CHIP_TWI_DATA_REG = b;
@@ -199,13 +199,13 @@ struct Twi {
         return *CHIP_TWI_DATA_REG;
     }
 
-    /// #### static void slaveAddress(uint8_t)
+    /// #### static void slaveAddress(uint8_t b)
     /// Set the address for transmitting and receiving as a slave.
     static force_inline void slaveAddress(uint8_t b) {
         *CHIP_TWI_SLAVE_ADDRESS_REG = b & 0xfe;
     }
 
-    /// #### static void slaveAddressMask(uint8_t)
+    /// #### static void slaveAddressMask(uint8_t b)
     /// Set the slave address mask.
     static force_inline void slaveAddressMask(uint8_t b) {
         *CHIP_TWI_SLAVE_ADDRESS_MASK_REG = b & 0xfe;

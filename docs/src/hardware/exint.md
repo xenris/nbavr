@@ -16,13 +16,13 @@ Include this to use ExInt callbacks.
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.
 
-#### static void enable(bool)
+#### static void enable(bool e)
 Enable/disable this interrupt.
 
-#### static void trigger(Trigger)
+#### static void trigger(Trigger t)
 Set the trigger action.
 
-#### static void callback(void (\*)(void\*), void\*)
+#### static void callback(callback_t callback, void\* data)
 Set the callback and data for this interrupt.
 
 #### static bool intFlag()

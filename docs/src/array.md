@@ -1,6 +1,6 @@
 # Array
 
-## class Array<class T, int S>
+## class Array<class Type, int Size>
 
 #### type size_t
 The smallest signed integer type which can index the entire array.

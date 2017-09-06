@@ -10,19 +10,19 @@ T is the type of the output compare's register, either uint8_t or uint16_t.<br>
 
 ## class OutputCompareX
 
-#### static void value(T)
+#### static void value(T v)
 Set the compare register of output compare X.
 
 #### static T value()
 Get the compare register of output compare X.
 
-#### static void mode(OutputMode)
+#### static void mode(OutputMode m)
 Set the mode of output compare X.
 
-#### static void callback(void (\*)(void\*), void\*)
+#### static void callback(callback_t callback, void\* data)
 Set the callback and data for output compare X interrupt.
 
-#### static void intEnable(bool)
+#### static void intEnable(bool b)
 Enable/disable the output compare X interrupt.
 
 #### static bool intFlag()

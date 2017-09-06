@@ -43,58 +43,58 @@ complete), or DE (data register empty).
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.
 
-#### static void mode(Mode)
+#### static void mode(Mode m)
 Set USART mode.
 
-#### static void parity(Parity)
+#### static void parity(Parity p)
 Set USART parity.
 
-#### static void stopBits(StopBits)
+#### static void stopBits(StopBits b)
 Set number of stop bits.
 
-#### static void characterSize(CharacterSize)
+#### static void characterSize(CharacterSize s)
 Set USART character size.
 
-#### static void polarity(Polarity)
+#### static void polarity(Polarity p)
 Set USART clock polarity.
 
-#### static void baud(uint16_t)
+#### static void baud(uint16_t b)
 Set USART baud rate.
 
-#### static void use2X(bool)
+#### static void use2X(bool u)
 Enable/disable baud rate 2x speed.
 
-#### static void receiverEnable(bool)
+#### static void receiverEnable(bool e)
 Enable/disable receiver.
 
-#### static void transmitterEnable(bool)
+#### static void transmitterEnable(bool e)
 Enable/disable transmitter.
 
-#### static void multiprocessorCummunicationMode(bool)
+#### static void multiprocessorCummunicationMode(bool e)
 Enable/disable multiprocessor cummunication mode.
 
-#### static void rxCompleteIntEnable(bool)
+#### static void rxCompleteIntEnable(bool e)
 Enable/disable receive complete interrupt.
 
-#### static void txCompleteIntEnable(bool)
+#### static void txCompleteIntEnable(bool e)
 Enable/disable transmit complete interrupt.
 
-#### static void dataRegisterEmptyIntEnable(bool)
+#### static void dataRegisterEmptyIntEnable(bool e)
 Enable/disable data register empty interrupt.
 
-#### static void rxCompleteCallback(void (\*)(void\*), void\*)
+#### static void rxCompleteCallback(callback_t callback, void\* data)
 Set callback for receive complete interrupt.
 
-#### static void txCompleteCallback(void (\*)(void\*), void\*)
+#### static void txCompleteCallback(callback_t callback, void\* data)
 Set callback for transmit complete interrupt.
 
-#### static void dataRegisterEmptyCallback(void (\*)(void\*), void\*)
+#### static void dataRegisterEmptyCallback(callback_t callback, void\* data)
 Set callback for data register empty interrupt.
 
-#### static void push(uint8_t)
+#### static void push(uint8_t b)
 Send a byte.
 
-#### static void push9(uint16_t)
+#### static void push9(uint16_t b)
 Send a 9 bit byte.
 
 #### static uint8_t pop()

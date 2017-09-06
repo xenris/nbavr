@@ -21,5 +21,5 @@ TaskManager<Clock> tm(tasks);
 
 ## class TaskManager\<class Clock\>
 
-#### TaskManager(TaskT* (&tasks)[])
+#### TaskManager(TaskT\* (&tasks)[])
 Runs the given array of tasks. Does not return.

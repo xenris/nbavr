@@ -47,23 +47,23 @@ struct ExIntN {
         return HardwareType::ExInt;
     }
 
-    /// #### static void enable(bool)
+    /// #### static void enable(bool e)
     /// Enable/disable this interrupt.
     static force_inline void enable(bool e) {
         setBit_(C(ENABLE_REG), C(ENABLE_BIT), e);
     }
 
-    /// #### static void trigger(Trigger)
+    /// #### static void trigger(Trigger t)
     /// Set the trigger action.
-    static force_inline void trigger(Trigger trigger) {
-        setBit_(C(TRIGGER_BIT_0_REG), C(TRIGGER_BIT_0_BIT), uint8_t(trigger) & 0x01);
-        setBit_(C(TRIGGER_BIT_1_REG), C(TRIGGER_BIT_1_BIT), uint8_t(trigger) & 0x02);
+    static force_inline void trigger(Trigger t) {
+        setBit_(C(TRIGGER_BIT_0_REG), C(TRIGGER_BIT_0_BIT), uint8_t(t) & 0x01);
+        setBit_(C(TRIGGER_BIT_1_REG), C(TRIGGER_BIT_1_BIT), uint8_t(t) & 0x02);
     }
 
-    /// #### static void callback(void (\*)(void\*), void\*)
+    /// #### static void callback(callback_t callback, void\* data)
     /// Set the callback and data for this interrupt.
-    static force_inline void callback(void (*func)(void*), void* data) {
-        _C(Callback) = func;
+    static force_inline void callback(callback_t callback, void* data) {
+        _C(Callback) = callback;
         _C(CallbackData) = data;
     }
 

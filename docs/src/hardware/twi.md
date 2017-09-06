@@ -47,10 +47,10 @@ Include this to use Twi callbacks.
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.
 
-#### static void enable(bool)
+#### static void enable(bool e)
 Enable/disable the two wire serial interface.
 
-#### static void baud(uint16_t)
+#### static void baud(uint16_t b)
 Set USART baud rate.
 
 #### static bool intFlag()
@@ -83,25 +83,25 @@ Clear the write collision flag.
 #### static void intEnable(bool e)
 Enable/disable the Twi interrupt.
 
-#### static void callback(void (\*)(void\*), void\*)
+#### static void callback(callback_t callback, void\* data)
 Set the callback and data for Twi interrupts.
 
 #### static Status status()
 Get the Twi status.
 
-#### static void prescaler(Prescaler)
+#### static void prescaler(Prescaler p)
 Set the prescaler.
 
-#### static void push(uint8_t)
+#### static void push(uint8_t b)
 Send a byte.
 
 #### static uint8_t pop()
 Get the last received byte.
 
-#### static void slaveAddress(uint8_t)
+#### static void slaveAddress(uint8_t b)
 Set the address for transmitting and receiving as a slave.
 
-#### static void slaveAddressMask(uint8_t)
+#### static void slaveAddressMask(uint8_t b)
 Set the slave address mask.
 
 #### static void generalCallRecognitionEnable(bool e)

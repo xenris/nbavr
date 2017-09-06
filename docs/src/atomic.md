@@ -19,7 +19,7 @@ static void callback(void* data) {
 }
 ```
 
-## class Atomic<class T>
+## class Atomic<class Type>
 
 #### T getSet(T t)
 Sets the value to t, and returns its previous value.

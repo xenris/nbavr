@@ -147,7 +147,7 @@ struct TimerCounterN {
         return HardwareType::TimerCounter;
     }
 
-    /// #### static void counter(T)
+    /// #### static void counter(T value)
     /// Set the counter value.
     static force_inline void counter(C(TYPE) value) {
         *C(COUNTER_REG) = value;
@@ -159,44 +159,44 @@ struct TimerCounterN {
         return *C(COUNTER_REG);
     }
 
-    /// #### static void clock(Clock)
+    /// #### static void clock(Clock c)
     /// Set the clock source.
-    static force_inline void clock(Clock clock) {
-        setBit_(C(CLOCK_BIT_0_REG), C(CLOCK_BIT_0_BIT), uint8_t(clock) & 0x01);
-        setBit_(C(CLOCK_BIT_1_REG), C(CLOCK_BIT_1_BIT), uint8_t(clock) & 0x02);
-        setBit_(C(CLOCK_BIT_2_REG), C(CLOCK_BIT_2_BIT), uint8_t(clock) & 0x04);
+    static force_inline void clock(Clock c) {
+        setBit_(C(CLOCK_BIT_0_REG), C(CLOCK_BIT_0_BIT), uint8_t(c) & 0x01);
+        setBit_(C(CLOCK_BIT_1_REG), C(CLOCK_BIT_1_BIT), uint8_t(c) & 0x02);
+        setBit_(C(CLOCK_BIT_2_REG), C(CLOCK_BIT_2_BIT), uint8_t(c) & 0x04);
     }
 
-    /// #### static void waveform(Waveform)
+    /// #### static void waveform(Waveform w)
     /// Set the counting method.
     #if C(WAVEFORM)
-    static force_inline void waveform(Waveform waveform) {
+    static force_inline void waveform(Waveform w) {
         #if DEFINED(C(WAVEFORM_BIT_0_BIT))
-            setBit_(C(WAVEFORM_BIT_0_REG), C(WAVEFORM_BIT_0_BIT), uint8_t(waveform) & 0x01);
+            setBit_(C(WAVEFORM_BIT_0_REG), C(WAVEFORM_BIT_0_BIT), uint8_t(w) & 0x01);
         #endif
 
         #if DEFINED(C(WAVEFORM_BIT_1_BIT))
-            setBit_(C(WAVEFORM_BIT_1_REG), C(WAVEFORM_BIT_1_BIT), uint8_t(waveform) & 0x02);
+            setBit_(C(WAVEFORM_BIT_1_REG), C(WAVEFORM_BIT_1_BIT), uint8_t(w) & 0x02);
         #endif
 
         #if DEFINED(C(WAVEFORM_BIT_2_BIT))
-            setBit_(C(WAVEFORM_BIT_2_REG), C(WAVEFORM_BIT_2_BIT), uint8_t(waveform) & 0x04);
+            setBit_(C(WAVEFORM_BIT_2_REG), C(WAVEFORM_BIT_2_BIT), uint8_t(w) & 0x04);
         #endif
 
         #if DEFINED(C(WAVEFORM_BIT_3_BIT))
-            setBit_(C(WAVEFORM_BIT_3_REG), C(WAVEFORM_BIT_3_BIT), uint8_t(waveform) & 0x08);
+            setBit_(C(WAVEFORM_BIT_3_REG), C(WAVEFORM_BIT_3_BIT), uint8_t(w) & 0x08);
         #endif
     }
     #endif
 
-    /// #### static void overflowCallback(void (\*)(void\*), void\*)
+    /// #### static void overflowCallback(callback_t callback, void\* data)
     /// Set the callback and data for the counter overflow interrupt.
-    static force_inline void overflowCallback(void (*func)(void*), void* data) {
-        _C(OVERFLOW_Callback) = func;
+    static force_inline void overflowCallback(callback_t callback, void* data) {
+        _C(OVERFLOW_Callback) = callback;
         _C(OVERFLOW_CallbackData) = data;
     }
 
-    /// #### static void overflowIntEnable(bool)
+    /// #### static void overflowIntEnable(bool b)
     /// Enable/disable the counter overflow interrupt.
     static force_inline void overflowIntEnable(bool b) {
         if(b) {

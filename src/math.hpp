@@ -17,11 +17,11 @@ constexpr force_inline T min(T a, T b) {
     return a < b ? a : b;
 }
 
-/// #### T clip(T x, T l, T h)
+/// #### T clip(T n, T l, T h)
 /// Clip x between l and h.
 template<class T>
-constexpr force_inline T clip(T x, T l, T h) {
-    return max(min(x, h), l);
+constexpr force_inline T clip(T n, T l, T h) {
+    return max(min(n, h), l);
 }
 
 /// #### T abs(T a)

@@ -39,7 +39,7 @@ class TaskManager {
 
 public:
 
-    /// #### TaskManager(TaskT* (&tasks)[])
+    /// #### TaskManager(TaskT\* (&tasks)[])
     /// Runs the given array of tasks. Does not return.
     template <uint8_t S>
     TaskManager(TaskT* (&tasks)[S]) : tasks(tasks), numTasks(S) {

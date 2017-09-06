@@ -33,22 +33,22 @@ struct PcIntN {
         return HardwareType::PcInt;
     }
 
-    /// #### static void enable(bool)
+    /// #### static void enable(bool e)
     /// Enable/disable this interrupt.
     static force_inline void enable(bool e) {
         setBit_(C(ENABLE_REG), C(ENABLE_BIT), e);
     }
 
-    /// #### static void mask(uint8_t)
+    /// #### static void mask(uint8_t m)
     /// Set which pins trigger this interrupt.
     static force_inline void mask(uint8_t m) {
         *C(MASK_REG) = m;
     }
 
-    /// #### static void callback(void (\*)(void\*), void\*)
+    /// #### static void callback(callback_t callback, void\* data)
     /// Set the callback and data for this interrupt.
-    static force_inline void callback(void (*func)(void*), void* data) {
-        _C(Callback) = func;
+    static force_inline void callback(callback_t callback, void* data) {
+        _C(Callback) = callback;
         _C(CallbackData) = data;
     }
 

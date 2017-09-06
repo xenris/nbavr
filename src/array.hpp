@@ -6,7 +6,7 @@
 #include "math.hpp"
 #include "type.hpp"
 
-/// ## class Array<class T, int S>
+/// ## class Array<class Type, int Size>
 template <class T, int S>
 struct Array {
     /// #### type size_t

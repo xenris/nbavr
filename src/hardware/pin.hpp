@@ -50,13 +50,13 @@ enum class Value : int8_t {
 struct PinXN {
     PinXN() = delete;
 
-    /// #### static constexpr [HardwareType](../hardware.hpp.md) getHardwareType()
+    /// #### static constexpr [HardwareType](../hardware.md) getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
         return HardwareType::Pin;
     }
 
-    /// #### static void direction(Direction)
+    /// #### static void direction(Direction d)
     /// Set the direction. (Input/Output)
     static force_inline void direction(Direction d) {
         setBit_(C(DIRECTION_REG), BIT, d == Direction::Output);
@@ -69,7 +69,7 @@ struct PinXN {
         return (*C(DIRECTION_REG) & bv(BIT)) ? Direction::Output : Direction::Input;
     }
 
-    /// #### static void pullup(bool)
+    /// #### static void pullup(bool p)
     /// Enable/disable the pullup resistor.
     static force_inline void pullup(bool p) {
         output(p ? Value::High : Value::Low);
@@ -81,7 +81,7 @@ struct PinXN {
         return output();
     }
 
-    /// #### static void output(Value)
+    /// #### static void output(Value v)
     /// Set the output state. (High/Low)
     static force_inline void output(Value v) {
         setBit_(C(OUTPUT_REG), BIT, v == Value::High);

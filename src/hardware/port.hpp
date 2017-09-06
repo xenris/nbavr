@@ -39,7 +39,7 @@ struct PortX {
         return HardwareType::Port;
     }
 
-    /// #### static void direction(uint8_t)
+    /// #### static void direction(uint8_t d)
     /// Set the direction of each pin. 0 = input, 1 = output.
     static force_inline void direction(uint8_t d) {
         *C(DIRECTION_REG) = d;
@@ -51,7 +51,7 @@ struct PortX {
         return *C(DIRECTION_REG);
     }
 
-    /// #### static void pullup(uint8_t)
+    /// #### static void pullup(uint8_t p)
     /// Enable/disable the pullup resistor of each pin.
     static force_inline void pullup(uint8_t p) {
         output(p);
@@ -63,10 +63,10 @@ struct PortX {
         return output();
     }
 
-    /// #### static void output(uint8_t)
+    /// #### static void output(uint8_t bits)
     /// Set the output state of each pin.
-    static force_inline void output(uint8_t v) {
-        *C(OUTPUT_REG) = v;
+    static force_inline void output(uint8_t bits) {
+        *C(OUTPUT_REG) = bits;
     }
 
     /// #### static uint8_t output()
@@ -81,7 +81,7 @@ struct PortX {
         return *C(INPUT_REG);
     }
 
-    /// #### static void toggle(uint8_t)
+    /// #### static void toggle(uint8_t bits)
     /// Toggle the output state of each pin.
     static force_inline void toggle(uint8_t bits) {
         *C(INPUT_REG) = bits;

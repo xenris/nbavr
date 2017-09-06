@@ -22,7 +22,7 @@
 /// }
 /// ```
 
-/// ## class Atomic<class T>
+/// ## class Atomic<class Type>
 template <class T>
 class Atomic {
     T _t;

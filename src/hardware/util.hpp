@@ -150,7 +150,7 @@ force_inline void __ssreg(const uint8_t *s) {
 //     return t->end();
 // }
 
-/// #### void setBit(volatile uint8_t* register, uint8_t bit, bool)
+/// #### void setBit(volatile uint8_t\* register, uint8_t bit, bool value)
 /// Set or clear a bit in a volatile register immediately.
 force_inline void setBit(volatile uint8_t* reg, uint8_t bit, bool value) {
     if(value) {
@@ -160,7 +160,7 @@ force_inline void setBit(volatile uint8_t* reg, uint8_t bit, bool value) {
     }
 }
 
-/// #### void setBit_(volatile uint8_t* register, uint8_t bit, bool)
+/// #### void setBit_(volatile uint8_t\* register, uint8_t bit, bool value)
 /// Set or clear a bit in a volatile register lazily.
 /// (i.e. Allow compiler to rearrange instructions.)
 force_inline void setBit_(volatile uint8_t* reg, uint8_t bit, bool value) {
