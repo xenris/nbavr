@@ -16,6 +16,7 @@ namespace nbavr {
 #include "print.hpp"
 #include "priorityqueue.hpp"
 #include "queue.hpp"
+#include "random.hpp"
 #include "serial.hpp"
 #include "stack.hpp"
 #include "task.hpp"
