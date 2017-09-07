@@ -1,6 +1,36 @@
 #ifndef NBAVR_MACROS_HPP
 #define NBAVR_MACROS_HPP
 
+/// #### macro force_inline
+/// Force a function to always be inlined. Use like "inline".
+#define force_inline inline __attribute__((always_inline))
+
+force_inline uint8_t __cli();
+force_inline uint8_t __sei();
+force_inline void __ssreg(const uint8_t *s);
+force_inline uint8_t _MemoryBarrier(const uint8_t *s = nullptr);
+
+/// #### macro atomic
+/// Make sure an expression or block of expressions run with global interrupts disabled.
+#define atomic for(uint8_t __sreg __attribute__((cleanup(__ssreg))) = __cli(), __once = 1; __once; __once = 0)
+
+/// #### macro nonatomic
+/// Make sure an expression or block of expressions run with global interrupts enabled.
+#define nonatomic for(uint8_t __sreg __attribute__((cleanup(__ssreg))) = __sei(), __once = 1; __once; __once = 0)
+
+/// #### macro block
+/// Make sure an expression or block of expressions is compiled in the order it is written in.
+/// i.e. Prevents the compiler from doing memory accesses optimisations that reorder code.
+#define block for(uint8_t __once __attribute__((cleanup(_MemoryBarrier))) = _MemoryBarrier(); __once; __once = 0)
+
+#ifndef TEST
+#define ISR(vector, ...) \
+    extern "C" void vector(void) __attribute__((signal,used,externally_visible)) __VA_ARGS__; \
+    void vector(void)
+#else
+#define ISR(vector, ...) void vector(void)
+#endif
+
 /// #### macro CONCAT(...)
 /// Concatinates a list of identifiers together.<br>
 /// e.g. CONCAT(Foo, Bar) -> FooBar

@@ -157,6 +157,15 @@ template<>
 struct is_integer<uint64_t> : integral_constant<bool, true> {};
 
 template<class T>
+struct is_floating : integral_constant<bool, false> {};
+
+template<>
+struct is_floating<float> : integral_constant<bool, true> {};
+
+template<>
+struct is_floating<double> : integral_constant<bool, true> {};
+
+template<class T>
 struct double_width {};
 
 template<>

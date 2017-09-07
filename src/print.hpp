@@ -1,12 +1,10 @@
 #ifndef NBAVR_PRINT_HPP
 #define NBAVR_PRINT_HPP
 
-// #include <stdlib.h>
 #include "algorithm.hpp"
+#include "external.hpp"
 #include "math.hpp"
 #include "queue.hpp"
-
-constexpr char endl = '\n';
 
 template<int S>
 inline bool printchar(Queue<char, S>& queue, const char c) {
@@ -161,12 +159,7 @@ template<int S>
 inline bool printfloat(Queue<char, S>& queue, float n) {
     char buffer[14];
 
-    #ifndef TEST
-    // dtostre(n, buffer, 6, 0);
-    buffer[0] = '?';
-    buffer[1] = '\0';
-    #endif
-
+    ext::dtostre(n, buffer, 6, 0);
 
     return printstr(queue, buffer);
 }

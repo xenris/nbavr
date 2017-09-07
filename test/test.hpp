@@ -1,11 +1,19 @@
 #include <gtest/gtest.h>
 #include <string>
 #include <fstream>
+
+#define CHIP_REGISTER_SIZE 0x200
+
+uint8_t register_memory[CHIP_REGISTER_SIZE];
+#define register_offset register_memory
+
 #include <nbavr.hpp>
 
 #ifndef RECORD_ID
     #error RECORD_ID not defined
 #endif
+
+using namespace nbavr;
 
 // TODO Ensure correct program flow. (Tasks take turns. Halted tasks don't
 //  prevent other tasks.) This may need to be done on a real chip.
@@ -92,13 +100,13 @@ struct MyEnvironment : public ::testing::Environment {
     { \
         std::stringstream ss; \
         for(int _c = 0x00; ; _c = 0xff) { \
-            memset(__test_fake_register, _c, CHIP_REGISTER_SIZE); \
+            memset(register_memory, _c, CHIP_REGISTER_SIZE); \
             FUNC; \
             for(int _i = 0; _i < CHIP_REGISTER_SIZE; _i++) { \
-                if(__test_fake_register[_i] != _c) { \
+                if(register_memory[_i] != _c) { \
                     ss << std::setfill('0') << std::setw(2) << std::hex << _i << ":"; \
                     ss << std::setfill('0') << std::setw(2) << _c << ":"; \
-                    ss << std::setfill('0') << std::setw(2) << (int)__test_fake_register[_i] << ":"; \
+                    ss << std::setfill('0') << std::setw(2) << (int)register_memory[_i] << ":"; \
                 } \
             } \
             if(_c == 0xff) break; \
@@ -125,7 +133,7 @@ struct MyEnvironment : public ::testing::Environment {
         std::stringstream ss; \
         for(int _i = 0; _i < 10; _i++) { \
             for(int _r = 0; _r < CHIP_REGISTER_SIZE; _r++) { \
-                __test_fake_register[_r] = (_seed / 65536) % 32768; \
+                register_memory[_r] = (_seed / 65536) % 32768; \
                 _seed = _seed * 1103515245 + 12345; \
             } \
             auto _t = FUNC; \

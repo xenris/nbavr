@@ -28,17 +28,13 @@
 #ifndef NBAVR_CHIP_HPP
 #define NBAVR_CHIP_HPP
 
-#define CHIP_REGISTER_SIZE 0x200
-
-#ifdef TEST
-    uint8_t __test_fake_register[CHIP_REGISTER_SIZE];
-#else
-    #define __test_fake_register 0
+#ifndef register_offset
+    #define register_offset 0
 #endif
 
-#define REG8(addr) (volatile uint8_t*)(__test_fake_register + addr)
-#define REG16(addr) (volatile uint16_t*)(__test_fake_register + addr)
-#define REG32(addr) (volatile uint32_t*)(__test_fake_register + addr)
+#define REG8(addr) (volatile uint8_t*)(addr + register_offset)
+#define REG16(addr) (volatile uint16_t*)(addr + register_offset)
+#define REG32(addr) (volatile uint32_t*)(addr + register_offset)
 
 #define VECT(N) VECT_(DEC(N))
 #define VECT_(N) VECT__(N)

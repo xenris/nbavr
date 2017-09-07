@@ -17,11 +17,11 @@
     extern void* UNDERLINE(__VA_ARGS__, CallbackData);
 
 #define MAKE_CALLBACK(...) \
-    void (*UNDERLINE(__VA_ARGS__, Callback))(void*); \
-    void* UNDERLINE(__VA_ARGS__, CallbackData); \
+    void (*nbavr::UNDERLINE(__VA_ARGS__, Callback))(void*); \
+    void* nbavr::UNDERLINE(__VA_ARGS__, CallbackData); \
     ISR(CONCAT(CHIP, UNDERLINE(__VA_ARGS__), INT_VECTOR)) { \
-        if(UNDERLINE(__VA_ARGS__, Callback) != nullptr) { \
-            UNDERLINE(__VA_ARGS__, Callback)(UNDERLINE(__VA_ARGS__, CallbackData)); \
+        if(nbavr::UNDERLINE(__VA_ARGS__, Callback) != nullptr) { \
+            nbavr::UNDERLINE(__VA_ARGS__, Callback)(nbavr::UNDERLINE(__VA_ARGS__, CallbackData)); \
         } \
     }
 
