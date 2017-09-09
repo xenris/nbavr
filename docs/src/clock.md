@@ -61,6 +61,9 @@ Wraps every 2^16 tocks. (4.77 hours at 16Mhz)
 Add a callback to call after delay ticks.<br>
 Returns true if successful added.
 
-#### static void delay(uint16_t us)
-Delays the cpu for the given number of microseconds.<br>
-Should only be used for very short delays.
+#### static void delay<uint32_t ns>()
+Delays the cpu for the given number of nanoseconds.<br>
+Should only be used for very short delays.<br>
+Limited to 2 milliseconds.<br>
+Rounds to the nearest possible delay. E.g. at 16MHz, delay<50>() will
+delay for 62.5 nanoseconds (1 cpu clock cycle).
