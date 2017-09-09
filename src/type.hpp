@@ -271,4 +271,58 @@ struct type_name<bool> {
     static constexpr const char* value = "bool";
 };
 
+template<class T>
+struct integer_max {};
+
+template<>
+struct integer_max<int8_t> : integral_constant<int8_t, 0x7F> {};
+
+template<>
+struct integer_max<uint8_t> : integral_constant<uint8_t, 0xFF> {};
+
+template<>
+struct integer_max<int16_t> : integral_constant<int16_t, 0x7FFF> {};
+
+template<>
+struct integer_max<uint16_t> : integral_constant<uint16_t, 0xFFFF> {};
+
+template<>
+struct integer_max<int32_t> : integral_constant<int32_t, 0x7FFFFFFF> {};
+
+template<>
+struct integer_max<uint32_t> : integral_constant<uint32_t, 0xFFFFFFFF> {};
+
+template<>
+struct integer_max<int64_t> : integral_constant<int64_t, 0x7FFFFFFFFFFFFFFF> {};
+
+template<>
+struct integer_max<uint64_t> : integral_constant<uint64_t, 0xFFFFFFFFFFFFFFFF> {};
+
+template<class T>
+struct integer_min {};
+
+template<>
+struct integer_min<int8_t> : integral_constant<int8_t, 0xFF> {};
+
+template<>
+struct integer_min<uint8_t> : integral_constant<uint8_t, 0x00> {};
+
+template<>
+struct integer_min<int16_t> : integral_constant<int16_t, 0xFFFF> {};
+
+template<>
+struct integer_min<uint16_t> : integral_constant<uint16_t, 0x0000> {};
+
+template<>
+struct integer_min<int32_t> : integral_constant<int32_t, 0xFFFFFFFF> {};
+
+template<>
+struct integer_min<uint32_t> : integral_constant<uint32_t, 0x00000000> {};
+
+template<>
+struct integer_min<int64_t> : integral_constant<int64_t, 0xFFFFFFFFFFFFFFFF> {};
+
+template<>
+struct integer_min<uint64_t> : integral_constant<uint64_t, 0x0000000000000000> {};
+
 #endif
