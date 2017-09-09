@@ -5,18 +5,16 @@
 ```c++
 const uint32_t CpuFreq = 16000000;
 
-typedef PinB5 ledPin;
-typedef TimerCounter1 systemTimer;
+using LedPin = nbavr::PinB5;
+using SystemTimer = nbavr::TimerCounter1;
 
-typedef Clock<systemTimer, CpuFreq> Clock;
+using Clock = nbavr::Clock<SystemTimer, CpuFreq>;
 
-Clock::init();
+Flash<Clock, LedPin> flash;
 
-Flash<Clock, ledPin> flash;
+nbavr::Task<Clock>* tasks[] = {&flash};
 
-Task* tasks[] = {&flash};
-
-TaskManager<Clock> tm(tasks);
+nbavr::TaskManager<Clock> tm(tasks);
 ```
 
 ## class TaskManager\<class Clock\>
