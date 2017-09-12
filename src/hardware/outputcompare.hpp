@@ -14,6 +14,12 @@
 
 /// ## class OutputCompareX
 struct OutputCompareX {
+    /// #### type Pin
+    /// The IO pin which relates to this output compare.
+    #if C(OUTPUTCOMPARE_MODE)
+        using Pin = CC(PIN);
+    #endif
+
     /// #### enum Mode
     /// * Disconnected
     /// * Toggle

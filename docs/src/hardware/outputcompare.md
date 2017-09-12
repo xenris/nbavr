@@ -10,6 +10,9 @@ T is the type of the output compare's register, either uint8_t or uint16_t.<br>
 
 ## class OutputCompareX
 
+#### type Pin
+The IO pin which relates to this output compare.
+
 #### enum Mode
 * Disconnected
 * Toggle

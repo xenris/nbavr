@@ -2,6 +2,10 @@
 
 /// ## class InputCapture
 struct InputCapture {
+    /// #### type Pin
+    /// The IO pin which relates to this input capture.
+    using Pin = C(INPUTCAPTURE_PIN);
+
     /// #### enum Edge
     /// * Rising
     /// * Falling

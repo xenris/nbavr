@@ -2,6 +2,9 @@
 
 ## class InputCapture
 
+#### type Pin
+The IO pin which relates to this input capture.
+
 #### enum Edge
 * Rising
 * Falling
