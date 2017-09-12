@@ -39,6 +39,10 @@
 
 MAKE_CALLBACK_HEADER(TIMERCOUNTER, N, OVERFLOW);
 
+#if C(INPUTCAPTURE)
+    MAKE_CALLBACK_HEADER(TIMERCOUNTER, N, INPUTCAPTURE);
+#endif
+
 /// #### macro INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(N, X)
 /// Include this to use TimerCounter output compare callbacks.
 #define INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(N, X) MAKE_CALLBACK(TIMERCOUNTER, N, OUTPUTCOMPARE, X)
@@ -46,6 +50,10 @@ MAKE_CALLBACK_HEADER(TIMERCOUNTER, N, OVERFLOW);
 /// #### macro INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(N)
 /// Include this to use TimerCounter overflow callbacks.
 #define INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(N) MAKE_CALLBACK(TIMERCOUNTER, N, OVERFLOW)
+
+/// #### macro INCLUDE_TIMERCOUNTER_INPUT_CALLBACK(N)
+/// Include this to use TimerCounter input capture callbacks.
+#define INCLUDE_TIMERCOUNTER_INPUT_CALLBACK(N) MAKE_CALLBACK(TIMERCOUNTER, N, INPUTCAPTURE)
 
 /// ## Class TimerCounterN
 struct TimerCounterN {
@@ -223,6 +231,13 @@ struct TimerCounterN {
         #define ID C
         #include "outputcompare.hpp"
         #undef ID
+    #endif
+
+    /// ## class InputCapture
+    /// See [InputCapture](inputcapture.md)
+
+    #if C(INPUTCAPTURE)
+        #include "inputcapture.hpp"
     #endif
 };
 

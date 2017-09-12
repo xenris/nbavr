@@ -14,6 +14,9 @@ Include this to use TimerCounter output compare callbacks.
 #### macro INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(N)
 Include this to use TimerCounter overflow callbacks.
 
+#### macro INCLUDE_TIMERCOUNTER_INPUT_CALLBACK(N)
+Include this to use TimerCounter input capture callbacks.
+
 ## Class TimerCounterN
 
 #### typedef T type
@@ -68,3 +71,6 @@ Clear the counter overflow interrupt flag.
 
 ## class OutputCompareX
 See [OutputCompareX](outputcompare.md)
+
+## class InputCapture
+See [InputCapture](inputcapture.md)
