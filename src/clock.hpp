@@ -81,6 +81,7 @@ class Clock {
 public:
 
     static const uint32_t freq = CpuFreq;
+    using Timer = TimerCounter;
 
     static force_inline Clock& getInstance() {
         static Clock clock;
