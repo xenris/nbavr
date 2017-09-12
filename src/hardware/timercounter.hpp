@@ -224,8 +224,6 @@ struct TimerCounterN {
         #include "outputcompare.hpp"
         #undef ID
     #endif
-
-    #undef MAKE_OUTPUTCOMPARE
 };
 
 #undef TimerCounterN
