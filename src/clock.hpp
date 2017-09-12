@@ -78,14 +78,18 @@ class Clock {
 
     void operator=(Clock const&);
 
+    static force_inline Clock& getInstance() {
+        static Clock clock;
+        return clock;
+    }
+
 public:
 
     static const uint32_t freq = CpuFreq;
     using Timer = TimerCounter;
 
-    static force_inline Clock& getInstance() {
-        static Clock clock;
-        return clock;
+    static void init() {
+        getInstance();
     }
 
     /// #### static constexpr uint32_t millisToTicks(uint32_t ms)

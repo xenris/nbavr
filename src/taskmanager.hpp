@@ -43,6 +43,8 @@ public:
     TaskManager(TaskT* (&tasks)[S]) : tasks(tasks), numTasks(S) {
         Clock::haltCallback(haltCallback, this);
 
+        Clock::init();
+
         block WDT::enable();
 
         while(true) {
