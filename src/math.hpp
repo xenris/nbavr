@@ -32,6 +32,13 @@ constexpr force_inline T abs(T a) {
 }
 
 template <class T>
+T cos(T n) {
+    static_assert(is_floating<T>::value, "cos requires either float or double");
+
+    return __builtin_cos(n);
+}
+
+template <class T>
 T floor(T n) {
     static_assert(is_floating<T>::value, "floor requires either float or double");
 
@@ -68,6 +75,20 @@ T round(T n) {
     static_assert(is_floating<T>::value, "round requires either float or double");
 
     return __builtin_round(n);
+}
+
+template <class T>
+T sin(T n) {
+    static_assert(is_floating<T>::value, "sin requires either float or double");
+
+    return __builtin_sin(n);
+}
+
+template <class T>
+T tan(T n) {
+    static_assert(is_floating<T>::value, "tan requires either float or double");
+
+    return __builtin_tan(n);
 }
 
 template <typename T>
