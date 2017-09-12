@@ -1,8 +1,6 @@
 #ifndef NBAVR_MATH_HPP
 #define NBAVR_MATH_HPP
 
-#include "external.hpp"
-
 /// # Maths
 
 /// #### T max(T a, T b)
@@ -37,14 +35,14 @@ template <class T>
 T floor(T n) {
     static_assert(is_floating<T>::value, "floor requires either float or double");
 
-    return ext::floor(n);
+    return __builtin_floor(n);
 }
 
 template <class T>
 T log10(T n) {
     static_assert(is_floating<T>::value, "log10 requires either float or double");
 
-    return ext::log10(n);
+    return __builtin_log10(n);
 }
 
 template <class T>
@@ -52,9 +50,9 @@ T modf(T n, T* i) {
     static_assert(is_floating<T>::value, "modf requires either float or double");
 
     if constexpr (is_same<T, float>::value) {
-        return ext::modff(n, i);
+        return __builtin_modff(n, i);
     } else if constexpr (is_same<T, double>::value) {
-        return ext::modf(n, i);
+        return __builtin_modf(n, i);
     }
 }
 
@@ -62,14 +60,14 @@ template <class T>
 T pow(T n, T p) {
     static_assert(is_floating<T>::value, "pow requires either float or double");
 
-    return ext::pow(n, p);
+    return __builtin_pow(n, p);
 }
 
 template <class T>
 T round(T n) {
     static_assert(is_floating<T>::value, "round requires either float or double");
 
-    return ext::round(n);
+    return __builtin_round(n);
 }
 
 template <typename T>

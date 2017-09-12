@@ -2,7 +2,7 @@
 #define NBAVR_PRINT_HPP
 
 #include "algorithm.hpp"
-#include "external.hpp"
+#include "libc.hpp"
 #include "math.hpp"
 #include "queue.hpp"
 
@@ -159,7 +159,7 @@ template<int S>
 inline bool printfloat(Queue<char, S>& queue, float n) {
     char buffer[14];
 
-    ext::dtostre(n, buffer, 6, 0);
+    libc::dtostre(n, buffer, 6, 0);
 
     return printstr(queue, buffer);
 }
