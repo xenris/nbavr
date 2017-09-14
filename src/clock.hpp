@@ -61,8 +61,7 @@ class Clock {
     static constexpr int32_t Divisor = EightBitCounter ? 256 : 64;
 
     uint16_t _tocks = 0;
-    // Only used for eight bit TimerCounter.
-    uint8_t _ticksHigh = 0;
+    typename conditional<EightBitCounter, uint8_t, nulltype>::type _ticksHigh = 0;
     PriorityQueue<DelayedCall, MaxCalls> _calls;
 
     Clock() {

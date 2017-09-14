@@ -22,6 +22,10 @@ using ssize_t = signed int;
 
 using callback_t = void (*)(void*);
 
+struct nulltype {
+    nulltype(auto n) {}
+};
+
 template<bool B, class T, class F>
 struct conditional {
     typedef T type;

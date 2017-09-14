@@ -1,10 +1,13 @@
 #ifndef NBAVR_SERIAL_HPP
 #define NBAVR_SERIAL_HPP
 
-template <class Usart, class cout_t, class cin_t = Queue<char, 0>>
+template <class Usart, class cout_t, class cin_t = nulltype>
 struct Serial {
     static inline void init(uint32_t CpuFreq, uint32_t baud, cout_t* out, cin_t* in = nullptr) {
         static_assert(Usart::getHardwareType() == HardwareType::Usart, "Serial requires a Usart");
+
+        // Mitigate "set but not used" error.
+        (void)in;
 
         if(out == nullptr) {
             return;
@@ -19,10 +22,12 @@ struct Serial {
             Usart::baud(ubrr);
             Usart::use2X(false);
 
-            if(in != nullptr) {
-                Usart::receiverEnable(true);
-                Usart::rxCompleteIntEnable(true);
-                Usart::rxCompleteCallback(usartRxComplete, in);
+            if constexpr (!is_same<cin_t, nulltype>::value) {
+                if(in != nullptr) {
+                    Usart::receiverEnable(true);
+                    Usart::rxCompleteIntEnable(true);
+                    Usart::rxCompleteCallback(usartRxComplete, in);
+                }
             }
 
             Usart::dataRegisterEmptyCallback(usartDataRegisterEmpty, out);
@@ -31,14 +36,16 @@ struct Serial {
 
 private:
     static void usartRxComplete(void* data) {
-        cin_t* in = (cin_t*)(data);
+        if constexpr (!is_same<cin_t, nulltype>::value) {
+            cin_t* in = (cin_t*)(data);
 
-        char c = Usart::pop();
+            char c = Usart::pop();
 
-        in->push_(c);
+            in->push_(c);
 
-        if(c == '\n') {
-            in->notify();
+            if(c == '\n') {
+                in->notify();
+            }
         }
     }
 
