@@ -16,7 +16,7 @@
 struct OutputCompareX {
     /// #### type Pin
     /// The IO pin which relates to this output compare.
-    #if C(OUTPUTCOMPARE_MODE)
+    #if DEFINED(CC(MODE_TOGGLE_ID))
         using Pin = CC(PIN);
     #endif
 
@@ -25,12 +25,12 @@ struct OutputCompareX {
     /// * Toggle
     /// * Clear
     /// * Set
-    #if C(OUTPUTCOMPARE_MODE)
+    #if DEFINED(CC(MODE_TOGGLE_ID))
     enum class Mode : uint8_t {
-        Disconnected = C(OUTPUTCOMPARE_MODE_DISCONNECTED_ID),
-        Toggle = C(OUTPUTCOMPARE_MODE_TOGGLE_ID),
-        Clear = C(OUTPUTCOMPARE_MODE_CLEAR_ID),
-        Set = C(OUTPUTCOMPARE_MODE_SET_ID),
+        Disconnected = CC(MODE_DISCONNECTED_ID),
+        Toggle = CC(MODE_TOGGLE_ID),
+        Clear = CC(MODE_CLEAR_ID),
+        Set = CC(MODE_SET_ID),
     };
     #endif
 
@@ -48,7 +48,7 @@ struct OutputCompareX {
 
     /// #### static void mode(Mode m)
     /// Set the mode of output compare X.
-    #if CC(MODE_BIT_1_BIT)
+    #if DEFINED(CC(MODE_TOGGLE_ID))
     static force_inline void mode(Mode m) {
         setBit_(CC(MODE_BIT_0_REG), CC(MODE_BIT_0_BIT), uint8_t(m) & 0x01);
         setBit_(CC(MODE_BIT_1_REG), CC(MODE_BIT_1_BIT), uint8_t(m) & 0x02);
