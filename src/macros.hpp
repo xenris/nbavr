@@ -23,14 +23,6 @@ force_inline uint8_t _MemoryBarrier(const uint8_t *s = nullptr);
 /// i.e. Prevents the compiler from doing memory accesses optimisations that reorder code.
 #define block for(uint8_t __once __attribute__((cleanup(_MemoryBarrier))) = _MemoryBarrier(); __once; __once = 0)
 
-#ifndef TEST
-#define ISR(vector, ...) \
-    extern "C" void vector(void) __attribute__((signal,used,externally_visible)) __VA_ARGS__; \
-    void vector(void)
-#else
-#define ISR(vector, ...) void vector(void)
-#endif
-
 /// #### macro CONCAT(...)
 /// Concatinates a list of identifiers together.<br>
 /// e.g. CONCAT(Foo, Bar) -> FooBar
