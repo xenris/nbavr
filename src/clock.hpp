@@ -256,9 +256,11 @@ public:
     static force_inline void delay() {
         static_assert(ns <= 2000000, "Cannot delay for more than 2 milliseconds");
 
-        const uint32_t mhz = CpuFreq / 1000000;
-        const uint32_t clocks = (ns * mhz + 500) / 1000;
-        const uint32_t clocksPerLoop = 4;
+        // Ensure that this delay separates hardware actions, even when 0ns.
+        block;
+
+        const uint64_t clocks = (uint64_t(ns) * CpuFreq + 500000000) / 1000000000;
+        const uint64_t clocksPerLoop = 4;
 
         // TODO Handle higher cpu frequencies.
         static_assert(clocks / 4 <= integer_max<uint16_t>::value, "Cannot handle this length of delay at this cpu frequency");
