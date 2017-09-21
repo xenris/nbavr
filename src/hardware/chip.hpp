@@ -50,6 +50,10 @@
     #include "chips/atmega328p.hpp"
 #endif
 
+#if defined(__AVR_ATmega48__)
+    #include "chips/atmega48.hpp"
+#endif
+
 #if defined(__AVR_ATmega8__)
     #include "chips/atmega8.hpp"
 #endif
