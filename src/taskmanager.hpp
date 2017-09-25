@@ -45,7 +45,7 @@ public:
 
         Clock::init();
 
-        block WDT::enable();
+        block hw::WDT::enable();
 
         while(true) {
             stepAll();
@@ -67,7 +67,7 @@ private:
     void stepOne() {
         TaskT& task = *tasks[taskI];
 
-        WDT::reset();
+        hw::WDT::reset();
 
         sei();
 

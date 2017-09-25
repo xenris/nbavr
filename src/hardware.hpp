@@ -18,15 +18,17 @@ enum class HardwareType : uint8_t {
 #include "hardware/util.hpp"
 #include "hardware/callbacks.hpp"
 
-#include "hardware/adc.hpp"
-#include "hardware/eeprom.hpp"
-#include "hardware/exint.hpp"
-#include "hardware/pcint.hpp"
-#include "hardware/pin.hpp"
-#include "hardware/port.hpp"
-#include "hardware/timercounter.hpp"
-#include "hardware/twi.hpp"
-#include "hardware/usart.hpp"
-#include "hardware/watchdog.hpp"
+namespace hw {
+    #include "hardware/adc.hpp"
+    #include "hardware/eeprom.hpp"
+    #include "hardware/exint.hpp"
+    #include "hardware/pcint.hpp"
+    #include "hardware/pin.hpp"
+    #include "hardware/port.hpp"
+    #include "hardware/timercounter.hpp"
+    #include "hardware/twi.hpp"
+    #include "hardware/usart.hpp"
+    #include "hardware/watchdog.hpp"
+}
 
 #endif
