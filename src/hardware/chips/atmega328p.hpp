@@ -744,4 +744,40 @@
 #define CHIP_TWI_SLAVE_ADDRESS_REG                                      REG8(CHIP_ADDR_TWAR)
 #define CHIP_TWI_SLAVE_ADDRESS_MASK_REG                                 REG8(CHIP_ADDR_TWAMR)
 
+#define CHIP_TWI_INT_VECTOR                                             VECT(CHIP_VECT_TWI)
+
+//------------------------------------------------
+// EEPROM
+
+#define CHIP_EEPROM                                                     TRUE
+
+// #define CHIP_EEPROM_ADDRESS_REG_SPLIT                                   TRUE
+// #define CHIP_EEPROM_ADDRESS_REG_HIGH                                    REG8(CHIP_ADDR_EEARH)
+// #define CHIP_EEPROM_ADDRESS_REG_LOW                                     REG8(CHIP_ADDR_EEARL)
+#define CHIP_EEPROM_ADDRESS_REG                                         REG8(CHIP_ADDR_EEARL)
+
+#define CHIP_EEPROM_DATA_REG                                            REG8(CHIP_ADDR_EEDR)
+
+#define CHIP_EEPROM_PROGRAMMING_MODE_ERASE_WRITE_ID                     0
+#define CHIP_EEPROM_PROGRAMMING_MODE_ERASE_ONLY_ID                      1
+#define CHIP_EEPROM_PROGRAMMING_MODE_WRITE_ONLY_ID                      2
+#define CHIP_EEPROM_PROGRAMMING_MODE_BIT_0_REG                          REG8(CHIP_ADDR_EECR)
+#define CHIP_EEPROM_PROGRAMMING_MODE_BIT_0_BIT                          4
+#define CHIP_EEPROM_PROGRAMMING_MODE_BIT_1_REG                          REG8(CHIP_ADDR_EECR)
+#define CHIP_EEPROM_PROGRAMMING_MODE_BIT_1_BIT                          5
+
+#define CHIP_EEPROM_READY_INT_ENABLE_REG                                REG8(CHIP_ADDR_EECR)
+#define CHIP_EEPROM_READY_INT_ENABLE_BIT                                3
+
+#define CHIP_EEPROM_MASTER_WRITE_ENABLE_REG                             REG8(CHIP_ADDR_EECR)
+#define CHIP_EEPROM_MASTER_WRITE_ENABLE_BIT                             2
+
+#define CHIP_EEPROM_WRITE_ENABLE_REG                                    REG8(CHIP_ADDR_EECR)
+#define CHIP_EEPROM_WRITE_ENABLE_BIT                                    1
+
+#define CHIP_EEPROM_READ_ENABLE_REG                                     REG8(CHIP_ADDR_EECR)
+#define CHIP_EEPROM_READ_ENABLE_BIT                                     0
+
+#define CHIP_EEPROM_EE_READY_INT_VECTOR                                 VECT(CHIP_VECT_EE_READY)
+
 #endif

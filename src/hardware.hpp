@@ -4,6 +4,7 @@
 enum class HardwareType : uint8_t {
     ADC,
     ExInt,
+    Eeprom,
     PcInt,
     Pin,
     Port,
@@ -18,6 +19,7 @@ enum class HardwareType : uint8_t {
 #include "hardware/callbacks.hpp"
 
 #include "hardware/adc.hpp"
+#include "hardware/eeprom.hpp"
 #include "hardware/exint.hpp"
 #include "hardware/pcint.hpp"
 #include "hardware/pin.hpp"
