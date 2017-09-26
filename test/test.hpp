@@ -14,6 +14,7 @@ uint8_t register_memory[CHIP_REGISTER_SIZE];
 #endif
 
 using namespace nbavr;
+using namespace hw;
 
 // TODO Ensure correct program flow. (Tasks take turns. Halted tasks don't
 //  prevent other tasks.) This may need to be done on a real chip.
