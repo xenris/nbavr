@@ -324,8 +324,6 @@
 #define CHIP_TIMERCOUNTER_0_OVERFLOW_INT_FLAG_BIT                       1
 #define CHIP_TIMERCOUNTER_0_OVERFLOW_INT_VECTOR                         VECT(CHIP_VECT_TIMER0_OVF)
 
-// TODO Add input capture definitions.
-
 //------------------------------------------------
 // Timer Counter X
 
@@ -345,29 +343,28 @@
 
 #define CHIP_TIMERCOUNTER_1_CLOCK_NONE_ID                               0
 #define CHIP_TIMERCOUNTER_1_CLOCK_1_ID                                  1
-// #define CHIP_TIMERCOUNTER_1_CLOCK_2_ID                                  2
-// #define CHIP_TIMERCOUNTER_1_CLOCK_4_ID                                  3
+#define CHIP_TIMERCOUNTER_1_CLOCK_2_ID                                  2
+#define CHIP_TIMERCOUNTER_1_CLOCK_4_ID                                  3
 #define CHIP_TIMERCOUNTER_1_CLOCK_8_ID                                  4
-// #define CHIP_TIMERCOUNTER_1_CLOCK_16_ID                                 5
+#define CHIP_TIMERCOUNTER_1_CLOCK_16_ID                                 5
 #define CHIP_TIMERCOUNTER_1_CLOCK_32_ID                                 6
 #define CHIP_TIMERCOUNTER_1_CLOCK_64_ID                                 7
 #define CHIP_TIMERCOUNTER_1_CLOCK_128_ID                                8
 #define CHIP_TIMERCOUNTER_1_CLOCK_256_ID                                9
-// #define CHIP_TIMERCOUNTER_1_CLOCK_512_ID                                10
+#define CHIP_TIMERCOUNTER_1_CLOCK_512_ID                                10
 #define CHIP_TIMERCOUNTER_1_CLOCK_1024_ID                               11
-// #define CHIP_TIMERCOUNTER_1_CLOCK_2048_ID                               12
-// #define CHIP_TIMERCOUNTER_1_CLOCK_4096_ID                               13
-// #define CHIP_TIMERCOUNTER_1_CLOCK_8192_ID                               14
-// #define CHIP_TIMERCOUNTER_1_CLOCK_16384_ID                              15
+#define CHIP_TIMERCOUNTER_1_CLOCK_2048_ID                               12
+#define CHIP_TIMERCOUNTER_1_CLOCK_4096_ID                               13
+#define CHIP_TIMERCOUNTER_1_CLOCK_8192_ID                               14
+#define CHIP_TIMERCOUNTER_1_CLOCK_16384_ID                              15
 #define CHIP_TIMERCOUNTER_1_CLOCK_BIT_0_REG                             REG8(CHIP_ADDR_TCCR1)
 #define CHIP_TIMERCOUNTER_1_CLOCK_BIT_1_REG                             REG8(CHIP_ADDR_TCCR1)
 #define CHIP_TIMERCOUNTER_1_CLOCK_BIT_2_REG                             REG8(CHIP_ADDR_TCCR1)
-// #define CHIP_TIMERCOUNTER_1_CLOCK_BIT_3_REG                             REG8(CHIP_ADDR_TCCR1)
+#define CHIP_TIMERCOUNTER_1_CLOCK_BIT_3_REG                             REG8(CHIP_ADDR_TCCR1)
 #define CHIP_TIMERCOUNTER_1_CLOCK_BIT_0_BIT                             0
 #define CHIP_TIMERCOUNTER_1_CLOCK_BIT_1_BIT                             1
 #define CHIP_TIMERCOUNTER_1_CLOCK_BIT_2_BIT                             2
-// #define CHIP_TIMERCOUNTER_1_CLOCK_BIT_3_BIT                             3
-// TODO Add more clock modes to hardware code.
+#define CHIP_TIMERCOUNTER_1_CLOCK_BIT_3_BIT                             3
 
 #define CHIP_TIMERCOUNTER_1_COUNTER_REG                                 REG8(CHIP_ADDR_TCNT1)
 

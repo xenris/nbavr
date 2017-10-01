@@ -77,7 +77,20 @@ struct TimerCounterN {
     enum class Clock : uint8_t {
         None = C(CLOCK_NONE_ID),
         Div1 = C(CLOCK_1_ID),
+
+        #if DEFINED(C(CLOCK_2_ID))
+            Div2 = C(CLOCK_2_ID),
+        #endif
+
+        #if DEFINED(C(CLOCK_4_ID))
+            Div4 = C(CLOCK_4_ID),
+        #endif
+
         Div8 = C(CLOCK_8_ID),
+
+        #if DEFINED(C(CLOCK_16_ID))
+            Div16 = C(CLOCK_16_ID),
+        #endif
 
         #if C(CLOCK_32_ID)
             Div32 = C(CLOCK_32_ID),
@@ -90,7 +103,28 @@ struct TimerCounterN {
         #endif
 
         Div256 = C(CLOCK_256_ID),
+
+        #if DEFINED(C(CLOCK_512_ID))
+            Div512 = C(CLOCK_512_ID),
+        #endif
+
         Div1024 = C(CLOCK_1024_ID),
+
+        #if DEFINED(C(CLOCK_2048_ID))
+            Div2048 = C(CLOCK_2048_ID),
+        #endif
+
+        #if DEFINED(C(CLOCK_4096_ID))
+            Div4096 = C(CLOCK_4096_ID),
+        #endif
+
+        #if DEFINED(C(CLOCK_8192_ID))
+            Div8192 = C(CLOCK_8192_ID),
+        #endif
+
+        #if DEFINED(C(CLOCK_16384_ID))
+            Div16384 = C(CLOCK_16384_ID),
+        #endif
 
         #if C(CLOCK_EXT_FALLING_ID)
             ExtFalling = C(CLOCK_EXT_FALLING_ID),
@@ -159,6 +193,10 @@ struct TimerCounterN {
         setBit_(C(CLOCK_BIT_0_REG), C(CLOCK_BIT_0_BIT), uint8_t(c) & 0x01);
         setBit_(C(CLOCK_BIT_1_REG), C(CLOCK_BIT_1_BIT), uint8_t(c) & 0x02);
         setBit_(C(CLOCK_BIT_2_REG), C(CLOCK_BIT_2_BIT), uint8_t(c) & 0x04);
+
+        #if DEFINED(C(CLOCK_BIT_3_BIT))
+            setBit_(C(CLOCK_BIT_3_REG), C(CLOCK_BIT_3_BIT), uint8_t(c) & 0x08);
+        #endif
     }
 
     /// #### static void waveform(Waveform w)
