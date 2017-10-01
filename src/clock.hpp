@@ -299,6 +299,7 @@ public:
 
     static void haltStart(typename TimerCounter::type ticks) {
         block TimerCounter::OutputCompareB::value(TimerCounter::counter() + ticks);
+        block TimerCounter::OutputCompareB::intFlagClear();
         block TimerCounter::OutputCompareB::intEnable(true);
     }
 
