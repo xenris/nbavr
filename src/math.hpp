@@ -46,6 +46,13 @@ T floor(T n) {
 }
 
 template <class T>
+T fmod(T n, T p) {
+    static_assert(is_floating<T>::value, "fmod requires either float or double");
+
+    return __builtin_fmod(n, p);
+}
+
+template <class T>
 T log10(T n) {
     static_assert(is_floating<T>::value, "log10 requires either float or double");
 
