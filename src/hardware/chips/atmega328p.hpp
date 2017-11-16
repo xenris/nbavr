@@ -715,6 +715,8 @@
 
 #define CHIP_TWI_STATUS_REG                                             REG8(CHIP_ADDR_TWSR)
 
+#define CHIP_TWI_CONTROL_REG                                            REG8(CHIP_ADDR_TWCR)
+
 #define CHIP_TWI_BIT_RATE_REG                                           REG8(CHIP_ADDR_TWBR)
 
 #define CHIP_TWI_ENABLE_REG                                             REG8(CHIP_ADDR_TWCR)

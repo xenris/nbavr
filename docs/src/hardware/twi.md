@@ -1,9 +1,5 @@
 # Two Wire Serial Interface
 
-## Example
-
-TODO
-
 #### macro INCLUDE_TWI_CALLBACK()
 Include this to use Twi callbacks.
 
@@ -48,31 +44,28 @@ Include this to use Twi callbacks.
 Get the type of hardware that this class represents.
 
 #### static void enable(bool e)
-Enable/disable the two wire serial interface.
+Enable/disable the Twi.
 
-#### static void baud(uint16_t b)
-Set USART baud rate.
+#### static void sendStart(bool intEnable = true)
+Send a start condition.
+
+#### static void sendStop(bool intEnable = true)
+Send stop condition.
+
+#### static void sendAck(bool intEnable = true)
+Send acknowledge condition.
+
+#### static void sendNack(bool intEnable = true)
+Send not acknowledge condition.
+
+#### static void bitRate(uint8_t b)
+Set Twi bitRate.
 
 #### static bool intFlag()
 Returns true if the interrupt flag is set.
 
-#### static void intFlagClear()
-Clear the interrupt flag.
-
-#### static void enableAcknowledge(bool e)
-Enable/disable acknowledge pulse.
-
-#### static void startCondition(bool e)
-Enable/disable start condition.
-
-#### static bool startCondition()
-Returns true if start condition is set.
-
-#### static void stopCondition(bool e)
-Enable/disable stop condition.
-
-#### static bool stopCondition()
-Returns true if stop condition is set.
+#### static bool active()
+Returns true if the twi hardware is busy.
 
 #### static bool writeCollisionFlag()
 Returns true if the write collision flag is set.
@@ -93,10 +86,10 @@ Get the Twi status.
 Set the prescaler.
 
 #### static void push(uint8_t b)
-Send a byte.
+Put byte in data buffer.
 
 #### static uint8_t pop()
-Get the last received byte.
+Get byte from data buffer.
 
 #### static void slaveAddress(uint8_t b)
 Set the address for transmitting and receiving as a slave.

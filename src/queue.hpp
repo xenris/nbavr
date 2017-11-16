@@ -88,6 +88,31 @@ public:
         return true;
     }
 
+    /// #### bool pop()
+    /// Removes the next value from the queue.<br>
+    /// Returns true on success.
+    bool pop() {
+        bool b;
+
+        atomic {
+            b = pop_();
+        }
+
+        return b;
+    }
+
+    bool pop_() {
+        if(empty_()) {
+            return false;
+        }
+
+        _tail = (_tail + 1) % S;
+
+        _full = false;
+
+        return true;
+    }
+
     /// #### bool peek(T\* t)
     /// Get the next value from the queue, but don't remove it.<br>
     /// Returns true on success.

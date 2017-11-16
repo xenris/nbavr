@@ -1,9 +1,5 @@
 /// # Two Wire Serial Interface
 
-/// ## Example
-
-/// TODO
-
 #ifndef NBAVR_TWI_HPP
 #define NBAVR_TWI_HPP
 
@@ -60,6 +56,7 @@ struct Twi {
     /// * NoState
     /// * BusError
     enum class Status : uint8_t {
+        BusError = 0x00,
         StartTransmitted = 0x08,
         RepeatedStartTransmitted = 0x10,
         SLAWTransmittedAck = 0x18,
@@ -86,7 +83,6 @@ struct Twi {
         DataInTWDRTransmittedNack = 0xC0,
         LastDataTransmittedAck = 0xC8,
         NoState = 0xF8,
-        BusError = 0x00,
     };
 
     /// #### static constexpr HardwareType getHardwareType()
@@ -96,13 +92,55 @@ struct Twi {
     }
 
     /// #### static void enable(bool e)
-    /// Enable/disable the two wire serial interface.
+    /// Enable/disable the Twi.
     static force_inline void enable(bool e) {
         setBit_(CHIP_TWI_ENABLE_REG, CHIP_TWI_ENABLE_BIT, e);
     }
 
-    /// #### static void baud(uint16_t b)
-    /// Set USART baud rate.
+    /// #### static void sendStart(bool intEnable = true)
+    /// Send a start condition.
+    static force_inline void sendStart(bool intEnable = true) {
+        const uint8_t enable = bv(CHIP_TWI_ENABLE_BIT);
+        const uint8_t start = bv(CHIP_TWI_START_CONDITION_BIT);
+        const uint8_t flagClear = bv(CHIP_TWI_INT_FLAG_BIT);
+        const uint8_t interrupt = intEnable ? bv(CHIP_TWI_INT_ENABLE_BIT) : 0;
+
+        *CHIP_TWI_CONTROL_REG = enable | start | flagClear | interrupt;
+    }
+
+    /// #### static void sendStop(bool intEnable = true)
+    /// Send stop condition.
+    static force_inline void sendStop() {
+        const uint8_t enable = bv(CHIP_TWI_ENABLE_BIT);
+        const uint8_t stop = bv(CHIP_TWI_STOP_CONDITION_BIT);
+        const uint8_t flagClear = bv(CHIP_TWI_INT_FLAG_BIT);
+
+        *CHIP_TWI_CONTROL_REG = enable | stop | flagClear;
+    }
+
+    /// #### static void sendAck(bool intEnable = true)
+    /// Send acknowledge condition.
+    static force_inline void sendAck(bool intEnable = true) {
+        const uint8_t enable = bv(CHIP_TWI_ENABLE_BIT);
+        const uint8_t ack = bv(CHIP_TWI_ENABLE_ACK_BIT);
+        const uint8_t flagClear = bv(CHIP_TWI_INT_FLAG_BIT);
+        const uint8_t interrupt = intEnable ? bv(CHIP_TWI_INT_ENABLE_BIT) : 0;
+
+        *CHIP_TWI_CONTROL_REG = enable | ack | flagClear | interrupt;
+    }
+
+    /// #### static void sendNack(bool intEnable = true)
+    /// Send not acknowledge condition.
+    static force_inline void sendNack(bool intEnable = true) {
+        const uint8_t enable = bv(CHIP_TWI_ENABLE_BIT);
+        const uint8_t flagClear = bv(CHIP_TWI_INT_FLAG_BIT);
+        const uint8_t interrupt = intEnable ? bv(CHIP_TWI_INT_ENABLE_BIT) : 0;
+
+        *CHIP_TWI_CONTROL_REG = enable | flagClear | interrupt;
+    }
+
+    /// #### static void bitRate(uint8_t b)
+    /// Set Twi bitRate.
     static force_inline void bitRate(uint8_t b) {
         *CHIP_TWI_BIT_RATE_REG = b;
     }
@@ -113,40 +151,14 @@ struct Twi {
         return *CHIP_TWI_INT_FLAG_REG & bv(CHIP_TWI_INT_FLAG_BIT);
     }
 
-    /// #### static void intFlagClear()
-    /// Clear the interrupt flag.
-    static force_inline void intFlagClear() {
-        setBit_(CHIP_TWI_INT_FLAG_REG, CHIP_TWI_INT_FLAG_BIT, true);
-    }
-
-    /// #### static void enableAcknowledge(bool e)
-    /// Enable/disable acknowledge pulse.
-    static force_inline void enableAcknowledge(bool e) {
-        setBit_(CHIP_TWI_ENABLE_ACK_REG, CHIP_TWI_ENABLE_ACK_BIT, e);
-    }
-
-    /// #### static void startCondition(bool e)
-    /// Enable/disable start condition.
-    static force_inline void startCondition(bool e) {
-        setBit_(CHIP_TWI_START_CONDITION_REG, CHIP_TWI_START_CONDITION_BIT, e);
-    }
-
-    /// #### static bool startCondition()
-    /// Returns true if start condition is set.
-    static force_inline bool startCondition() {
-        return *CHIP_TWI_START_CONDITION_REG & bv(CHIP_TWI_START_CONDITION_BIT);
-    }
-
-    /// #### static void stopCondition(bool e)
-    /// Enable/disable stop condition.
-    static force_inline void stopCondition(bool e) {
-        setBit_(CHIP_TWI_STOP_CONDITION_REG, CHIP_TWI_STOP_CONDITION_BIT, e);
-    }
-
-    /// #### static bool stopCondition()
-    /// Returns true if stop condition is set.
-    static force_inline bool stopCondition() {
-        return *CHIP_TWI_STOP_CONDITION_REG & bv(CHIP_TWI_STOP_CONDITION_BIT);
+    /// #### static bool active()
+    /// Returns true if the twi hardware is busy.
+    static force_inline bool active() {
+        if(*CHIP_TWI_CONTROL_REG | bv(CHIP_TWI_ENABLE_BIT)) {
+            return *CHIP_TWI_CONTROL_REG & (bv(CHIP_TWI_START_CONDITION_BIT) | bv(CHIP_TWI_STOP_CONDITION_BIT));
+        } else {
+            return false;
+        }
     }
 
     /// #### static bool writeCollisionFlag()
@@ -188,13 +200,13 @@ struct Twi {
     }
 
     /// #### static void push(uint8_t b)
-    /// Send a byte.
+    /// Put byte in data buffer.
     static force_inline void push(uint8_t b) {
         *CHIP_TWI_DATA_REG = b;
     }
 
     /// #### static uint8_t pop()
-    /// Get the last received byte.
+    /// Get byte from data buffer.
     static force_inline uint8_t pop() {
         return *CHIP_TWI_DATA_REG;
     }

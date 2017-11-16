@@ -11,6 +11,7 @@ namespace nbavr {
 #include "array.hpp"
 #include "atomic.hpp"
 #include "clock.hpp"
+#include "i2c.hpp"
 #include "iterator.hpp"
 #include "math.hpp"
 #include "print.hpp"
