@@ -2,6 +2,12 @@
 
 set -e
 
+function clean {
+    rm -f test_exe
+}
+
+trap clean EXIT
+
 cd test/
 
 cflags="-Werror -Wall -fmax-errors=3 -std=c++17"
@@ -22,6 +28,4 @@ do
     g++ $includes $cflags $libs "test_${test}.cpp" -o test_exe
 
     ./test_exe
-
-    rm test_exe
 done
