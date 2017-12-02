@@ -17,6 +17,7 @@
 * Examples
     * [nbavr-project-template](https://github.com/xenris/nbavr-project-template)
     * [8x8 LED Matrix Display](https://github.com/xenris/led-matrix-display)
+    * [Optima Hitec Receiver PWM/PPM](https://github.com/xenris/hitec-receiver)
 * [Adding Chips/Tests](src/hardware/chip.md)
 
 ## Editing documentation
