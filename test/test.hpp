@@ -95,62 +95,85 @@ struct MyEnvironment : public ::testing::Environment {
 
 ::testing::Environment* const env = ::testing::AddGlobalTestEnvironment(new MyEnvironment);
 
-// Macros for testing function side effects and memory access.
+// Macros and functions for testing function side effects and memory access.
+
+void test_reg_write(void (*f)(), const char* str) {
+    std::stringstream ss;
+
+    for(int c = 0x00; ; c = 0xff) {
+        memset(register_memory, c, CHIP_REGISTER_SIZE);
+
+        f();
+
+        for(int i = 0; i < CHIP_REGISTER_SIZE; i++) {
+            if(register_memory[i] != c) {
+                ss << std::setfill('0') << std::setw(2) << std::hex << i << ":";
+                ss << std::setfill('0') << std::setw(2) << c << ":";
+                ss << std::setfill('0') << std::setw(2) << (int)register_memory[i] << ":";
+            }
+        }
+
+        if(c == 0xff) {
+            break;
+        }
+    }
+
+    std::string key;
+
+    key += "w ";
+    key += str;
+
+    auto it = record->find(key);
+
+    if(it == record->end()) {
+        ADD_FAILURE() << "Couldn't find record for w " << str << " " << ss.str();
+        missing->insert(std::pair<std::string, std::string>(key, ss.str()));
+    } else {
+        std::string current = ss.str();
+        std::string previous = it->second;
+        EXPECT_EQ(current, previous) << "The side effect of " << str << " has changed";
+        record->erase(it);
+    }
+}
+
+template <class T>
+void test_reg_read_write(T (*f)(), const char* str) {
+    unsigned long seed = 59329876;
+
+    std::stringstream ss;
+
+    for(int i = 0; i < 10; i++) {
+        for(int _r = 0; _r < CHIP_REGISTER_SIZE; _r++) {
+            register_memory[_r] = (seed / 65536) % 32768;
+            seed = seed * 1103515245 + 12345;
+        }
+
+        auto t = f();
+
+        ss << std::hex << (long)t;
+    }
+
+    std::string key;
+
+    key += "r ";
+    key += str;
+
+    auto it = record->find(key);
+
+    if(it == record->end()) {
+        ADD_FAILURE() << "Couldn't find record for r " << str << " " << ss.str();
+        missing->insert(std::pair<std::string, std::string>(key, ss.str()));
+    } else {
+        std::string current = ss.str();
+        std::string previous = it->second;
+        EXPECT_EQ(current, previous) << "The return value of " << str << " has changed";
+        record->erase(it);
+    }
+}
 
 #define TEST_REG_WRITE(FUNC) \
-    { \
-        std::stringstream ss; \
-        for(int _c = 0x00; ; _c = 0xff) { \
-            memset(register_memory, _c, CHIP_REGISTER_SIZE); \
-            FUNC; \
-            for(int _i = 0; _i < CHIP_REGISTER_SIZE; _i++) { \
-                if(register_memory[_i] != _c) { \
-                    ss << std::setfill('0') << std::setw(2) << std::hex << _i << ":"; \
-                    ss << std::setfill('0') << std::setw(2) << _c << ":"; \
-                    ss << std::setfill('0') << std::setw(2) << (int)register_memory[_i] << ":"; \
-                } \
-            } \
-            if(_c == 0xff) break; \
-        } \
-        std::string key; \
-        key += "w "; \
-        key += #FUNC; \
-        auto it = record->find(key); \
-        if(it == record->end()) { \
-            ADD_FAILURE() << "Couldn't find record for w " << #FUNC << " " << ss.str(); \
-            missing->insert(std::pair<std::string, std::string>(key, ss.str())); \
-        } else { \
-            std::string current = ss.str(); \
-            std::string previous = it->second; \
-            EXPECT_EQ(current, previous) << "The side effect of " << #FUNC << " has changed"; \
-            record->erase(it); \
-        } \
-    }
+    test_reg_write([]() { FUNC; }, #FUNC)
 
 #define TEST_REG_READ_WRITE(FUNC) \
-    TEST_REG_WRITE(FUNC) \
-    { \
-        unsigned long _seed = 59329876; \
-        std::stringstream ss; \
-        for(int _i = 0; _i < 10; _i++) { \
-            for(int _r = 0; _r < CHIP_REGISTER_SIZE; _r++) { \
-                register_memory[_r] = (_seed / 65536) % 32768; \
-                _seed = _seed * 1103515245 + 12345; \
-            } \
-            auto _t = FUNC; \
-            ss << std::hex << (long)_t; \
-        } \
-        std::string key; \
-        key += "r "; \
-        key += #FUNC; \
-        auto it = record->find(key); \
-        if(it == record->end()) { \
-            ADD_FAILURE() << "Couldn't find record for r " << #FUNC << " " << ss.str(); \
-            missing->insert(std::pair<std::string, std::string>(key, ss.str())); \
-        } else { \
-            std::string current = ss.str(); \
-            std::string previous = it->second; \
-            EXPECT_EQ(current, previous) << "The return value of " << #FUNC << " has changed"; \
-            record->erase(it); \
-        } \
-    }
+    TEST_REG_WRITE(FUNC); \
+    test_reg_read_write<decltype(FUNC)>([]() { return FUNC; }, #FUNC)
