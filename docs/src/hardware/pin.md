@@ -1,49 +1,34 @@
 # Digital IO Pins
 
-X is the port id (A, B, etc).<br>
-N is the pin id (1, 2, etc).
+N is the pin id (0, 1, 2, etc).
 
 ## Example
 
 ```c++
-PinB5::direction(Direction::Output);
-PinB5::output(Value::High);
+PortB::Pin5::mode(Pin::Mode::output);
+PortB::Pin5::output(Pin::Value::high);
 ```
 
-#### enum Direction
-* Input
-* Output
-
-#### enum Value
-* Low
-* High
-
-## Class PinXN
+## Class PinN
 
 #### static constexpr [HardwareType](../hardware.md) getHardwareType()
 Get the type of hardware that this class represents.
 
-#### static void direction(Direction d)
-Set the direction. (Input/Output)
+#### static void mode(Mode m)
+Set the pin mode. (e.g. input/output)
 
-#### static Direction direction()
-Get the direction. (Input/Output)
+#### static Mode mode()
+Get the pin mode. (e.g. input/output)
 paragraph
-
-#### static void pullup(bool p)
-Enable/disable the pullup resistor.
-
-#### static bool pullup()
-Returns true if the pullup resistor is enabled.
 
 #### static void output(Value v)
 Set the output state. (High/Low)
 
 #### static Value output()
-Get the output state. (High/Low)
+Get the output value.
 
 #### static Value input()
-Get the input state. (High/Low)
+Get the input value.
 
 #### static void toggle()
 Toggle the output state. (High/Low)

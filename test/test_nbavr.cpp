@@ -1,4 +1,4 @@
-#define __AVR_ATmega328P__
+#define __atmega328p__
 
 #define RECORD_ID "nbavr"
 
@@ -9,38 +9,38 @@
 // }
 
 TEST(Clock, millisToTicks) {
-    EXPECT_EQ((Clock<TimerCounter1, 1000000>::millisToTicks(0)), 0);
-    EXPECT_EQ((Clock<TimerCounter1, 1000000>::millisToTicks(1)), 16);
-    EXPECT_EQ((Clock<TimerCounter1, 1000000>::millisToTicks(1000)), 15625);
-    EXPECT_EQ((Clock<TimerCounter1, 1000000>::millisToTicks(1001)), 15641);
-    EXPECT_EQ((Clock<TimerCounter1, 1000000>::millisToTicks(16000000)), 250000000);
-    EXPECT_EQ((Clock<TimerCounter1, 16000000>::millisToTicks(0)), 0);
-    EXPECT_EQ((Clock<TimerCounter1, 16000000>::millisToTicks(1)), 250);
-    EXPECT_EQ((Clock<TimerCounter1, 16000000>::millisToTicks(1000)), 250000);
-    EXPECT_EQ((Clock<TimerCounter1, 16000000>::millisToTicks(16000000)), 4000000000);
-    EXPECT_EQ((Clock<TimerCounter1, 20000000>::millisToTicks(0)), 0);
-    EXPECT_EQ((Clock<TimerCounter1, 20000000>::millisToTicks(1)), 313);
-    EXPECT_EQ((Clock<TimerCounter1, 20000000>::millisToTicks(1000)), 312500);
+    EXPECT_EQ((Clock<Timer1, 1000000>::millisToTicks(0)), 0);
+    EXPECT_EQ((Clock<Timer1, 1000000>::millisToTicks(1)), 16);
+    EXPECT_EQ((Clock<Timer1, 1000000>::millisToTicks(1000)), 15625);
+    EXPECT_EQ((Clock<Timer1, 1000000>::millisToTicks(1001)), 15641);
+    EXPECT_EQ((Clock<Timer1, 1000000>::millisToTicks(16000000)), 250000000);
+    EXPECT_EQ((Clock<Timer1, 16000000>::millisToTicks(0)), 0);
+    EXPECT_EQ((Clock<Timer1, 16000000>::millisToTicks(1)), 250);
+    EXPECT_EQ((Clock<Timer1, 16000000>::millisToTicks(1000)), 250000);
+    EXPECT_EQ((Clock<Timer1, 16000000>::millisToTicks(16000000)), 4000000000);
+    EXPECT_EQ((Clock<Timer1, 20000000>::millisToTicks(0)), 0);
+    EXPECT_EQ((Clock<Timer1, 20000000>::millisToTicks(1)), 313);
+    EXPECT_EQ((Clock<Timer1, 20000000>::millisToTicks(1000)), 312500);
 }
 
 TEST(Clock, ticksToMillis) {
-    EXPECT_EQ((Clock<TimerCounter1, 1000000>::ticksToMillis(0)), 0);
-    EXPECT_EQ((Clock<TimerCounter1, 1000000>::ticksToMillis(15)), 1);
-    EXPECT_EQ((Clock<TimerCounter1, 1000000>::ticksToMillis(250)), 16);
-    EXPECT_EQ((Clock<TimerCounter1, 16000000>::ticksToMillis(0)), 0);
-    EXPECT_EQ((Clock<TimerCounter1, 16000000>::ticksToMillis(200)), 1);
-    EXPECT_EQ((Clock<TimerCounter1, 16000000>::ticksToMillis(4000000000)), 16000000);
-    EXPECT_EQ((Clock<TimerCounter1, 20000000>::ticksToMillis(0)), 0);
-    EXPECT_EQ((Clock<TimerCounter1, 20000000>::ticksToMillis(316)), 1);
-    EXPECT_EQ((Clock<TimerCounter1, 20000000>::ticksToMillis(312500)), 1000);
-    EXPECT_EQ((Clock<TimerCounter1, 20000000>::ticksToMillis(312500)), 1000);
+    EXPECT_EQ((Clock<Timer1, 1000000>::ticksToMillis(0)), 0);
+    EXPECT_EQ((Clock<Timer1, 1000000>::ticksToMillis(15)), 1);
+    EXPECT_EQ((Clock<Timer1, 1000000>::ticksToMillis(250)), 16);
+    EXPECT_EQ((Clock<Timer1, 16000000>::ticksToMillis(0)), 0);
+    EXPECT_EQ((Clock<Timer1, 16000000>::ticksToMillis(200)), 1);
+    EXPECT_EQ((Clock<Timer1, 16000000>::ticksToMillis(4000000000)), 16000000);
+    EXPECT_EQ((Clock<Timer1, 20000000>::ticksToMillis(0)), 0);
+    EXPECT_EQ((Clock<Timer1, 20000000>::ticksToMillis(316)), 1);
+    EXPECT_EQ((Clock<Timer1, 20000000>::ticksToMillis(312500)), 1000);
+    EXPECT_EQ((Clock<Timer1, 20000000>::ticksToMillis(312500)), 1000);
 }
 
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(1, A);
-INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(1);
+INCLUDE_TIMER_OUTPUT_CALLBACK(1, A);
+INCLUDE_TIMER_OVERFLOW_CALLBACK(1);
 
 TEST(Clock, delayedCall) {
-    typedef Clock<TimerCounter1, 16000000> Clock;
+    typedef Clock<Timer1, 16000000> Clock;
 
     Clock::delayedCall(nullptr, nullptr, Clock::millisToTicks(3000));
 
@@ -336,7 +336,7 @@ TEST(A, A) {
     cout_t cout;
     cin_t cin;
 
-    typedef Clock<TimerCounter1, 16000000> Clock;
+    typedef Clock<Timer1, 16000000> Clock;
 
     Taskk<Clock, cout_t, cin_t> t(cout, cin);
 }

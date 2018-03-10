@@ -29,7 +29,7 @@ Every 2^32 ticks the clock overflows. (4.77 hours at 16Mhz)
 If Clock is given an 8 bit timer (rather than 16 bit) each tick will be
 4x longer.
 
-## class Clock\<class TimerCounter, uint32_t CpuFreq, int MaxCalls = 8\>
+## class Clock\<class Timer, uint32_t CpuFreq, int MaxCalls = 8\>
 
 #### static constexpr uint32_t millisToTicks(uint32_t ms)
 Convert milliseconds to ticks.

@@ -25,7 +25,7 @@ if(Adc::intFlag()) {
 }
 ```
 
-#### macro INCLUDE_ADC_CALLBACK()
+#### macro INCLUDE_ADC_CALLBACK(N)
 Include this to use Adc callbacks.
 
 ## class Adc

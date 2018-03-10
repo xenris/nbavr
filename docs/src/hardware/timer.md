@@ -1,25 +1,25 @@
-# Timer/Counters
+# Timers
 
 ## Example
 ```c++
 // TODO
 ```
 
-N is the timer/counter id (1, 2, etc).<br>
+N is the timer's id (1, 2, etc).<br>
 T is the type of the timer's counter, either uint8_t or uint16_t.<br>
 
-#### macro INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(N, X)
-Include this to use TimerCounter output compare callbacks.
+#### macro INCLUDE_TIMER_OUTPUT_CALLBACK(N, X)
+Include this to use Timer output callbacks.
 
-#### macro INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(N)
-Include this to use TimerCounter overflow callbacks.
+#### macro INCLUDE_TIMER_OVERFLOW_CALLBACK(N)
+Include this to use Timer overflow callbacks.
 
-#### macro INCLUDE_TIMERCOUNTER_INPUT_CALLBACK(N)
-Include this to use TimerCounter input capture callbacks.
+#### macro INCLUDE_TIMER_INPUT_CALLBACK(N)
+Include this to use Timer input callbacks.
 
-## Class TimerCounterN
+## Class TimerN
 
-#### typedef T type
+#### using type = T
 The underlying type of this timer/counter. (uint8_t or uint16_t)
 
 #### enum Clock
@@ -69,8 +69,8 @@ Returns true if the counter overflow flag is set.
 #### static void overflowIntFlagClear()
 Clear the counter overflow interrupt flag.
 
-## class OutputCompareX
-See [OutputCompareX](outputcompare.md)
+## class OutputX
+See [OutputX](output.md)
 
-## class InputCapture
-See [InputCapture](inputcapture.md)
+## class Input
+See [Input](input.md)

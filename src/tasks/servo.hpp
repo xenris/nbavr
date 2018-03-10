@@ -81,7 +81,7 @@ public:
 template <class Clock, class Pin>
 struct ServoT : Servo<Clock> {
     ServoT() {
-        static_assert(Pin::getHardwareType() == HardwareType::Pin, "ServoT requires a Pin");
+        static_assert(Pin::getHardwareType() == hw::HardwareType::pin, "ServoT requires a Pin");
 
         Pin::direction(Pin::Direction::Output);
         Pin::value(Pin::Value::Low);

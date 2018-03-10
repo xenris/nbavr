@@ -5,15 +5,17 @@
 // TODO Some things have been excluded from testing. Need to work out how to
 //  include them.
 
+#ifdef CHIP_WATCHDOG_TIMER_CONTROL_REG
+
 #ifndef TEST
 uint8_t _resetStatus __attribute__((section(".noinit")));
 #endif
 
-struct WDT {
-    WDT() = delete;
+struct Wdt {
+    Wdt() = delete;
 
     static constexpr HardwareType getHardwareType() {
-        return HardwareType::WDT;
+        return HardwareType::wdt;
     }
 
     static force_inline void reset() {
@@ -43,8 +45,10 @@ void _getResetStatus() {
    _resetStatus = *CHIP_RESET_STATUS_REG;
    *CHIP_RESET_STATUS_REG = 0;
 
-   WDT::disable();
+   Wdt::disable();
 }
+#endif
+
 #endif
 
 #endif

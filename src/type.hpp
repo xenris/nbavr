@@ -26,6 +26,51 @@ struct nulltype {
     nulltype(auto n) {}
 };
 
+template <class A, class B = A>
+struct tuple2 {
+    A a;
+    B b;
+
+    tuple2(A a, B b)
+        : a(a), b(b) {}
+};
+
+template <class A, class B = A>
+using tuple = tuple2<A, B>;
+
+template <class A, class B = A, class C = B>
+struct tuple3 {
+    A a;
+    B b;
+    C c;
+
+    tuple3(A a, B b, C c)
+        : a(a), b(b), c(c) {}
+};
+
+template <class A, class B = A, class C = B, class D = C>
+struct tuple4 {
+    A a;
+    B b;
+    C c;
+    D d;
+
+    tuple4(A a, B b, C c, D d)
+        : a(a), b(b), c(c), d(d) {}
+};
+
+template <class A, class B = A, class C = B, class D = C, class E = D>
+struct tuple5 {
+    A a;
+    B b;
+    C c;
+    D d;
+    E e;
+
+    tuple5(A a, B b, C c, D d, E e)
+        : a(a), b(b), c(c), d(d), e(e) {}
+};
+
 template<bool B, class T, class F>
 struct conditional {
     typedef T type;
@@ -328,5 +373,27 @@ struct integer_min<int64_t> : integral_constant<int64_t, 0xFFFFFFFFFFFFFFFF> {};
 
 template<>
 struct integer_min<uint64_t> : integral_constant<uint64_t, 0x0000000000000000> {};
+
+template <class T>
+class optional {
+    bool hasValue;
+    T value;
+
+public:
+
+    optional() : hasValue(false) {
+    }
+
+    optional(T v) : hasValue(true), value(v) {
+    }
+
+    operator bool() const {
+        return hasValue;
+    }
+
+    T& operator *() {
+        return value;
+    }
+};
 
 #endif

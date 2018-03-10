@@ -11,6 +11,6 @@ Make sure an expression or block of expressions run with global interrupts enabl
 Make sure an expression or block of expressions is compiled in the order it is written in.
 i.e. Prevents the compiler from doing memory accesses optimisations that reorder code.
 
-#### macro CONCAT(...)
+#### macro CAT(...)
 Concatinates a list of identifiers together.<br>
-e.g. CONCAT(Foo, Bar) -> FooBar
+e.g. CAT(Foo, Bar) -> FooBar

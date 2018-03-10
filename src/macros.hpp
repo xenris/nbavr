@@ -1,14 +1,19 @@
 #ifndef NBAVR_MACROS_HPP
 #define NBAVR_MACROS_HPP
 
+#include "type.hpp"
+
 /// #### macro force_inline
 /// Force a function to always be inlined. Use like "inline".
 #define force_inline inline __attribute__((always_inline))
 
+force_inline uint8_t _MemoryBarrier(const uint8_t *s = nullptr);
+
+#ifdef CHIP_STATUS_REG
+
 force_inline uint8_t __cli();
 force_inline uint8_t __sei();
 force_inline void __ssreg(const uint8_t *s);
-force_inline uint8_t _MemoryBarrier(const uint8_t *s = nullptr);
 
 /// #### macro atomic
 /// Make sure an expression or block of expressions run with global interrupts disabled.
@@ -18,26 +23,35 @@ force_inline uint8_t _MemoryBarrier(const uint8_t *s = nullptr);
 /// Make sure an expression or block of expressions run with global interrupts enabled.
 #define nonatomic for(uint8_t __sreg __attribute__((cleanup(__ssreg))) = __sei(), __once = 1; __once; __once = 0)
 
+#else
+
+// FIXME TODO What to do here?
+#define atomic
+
+#define nonatomic
+
+#endif
+
 /// #### macro block
 /// Make sure an expression or block of expressions is compiled in the order it is written in.
 /// i.e. Prevents the compiler from doing memory accesses optimisations that reorder code.
 #define block for(uint8_t __once __attribute__((cleanup(_MemoryBarrier))) = _MemoryBarrier(); __once; __once = 0)
 
-/// #### macro CONCAT(...)
+/// #### macro CAT(...)
 /// Concatinates a list of identifiers together.<br>
-/// e.g. CONCAT(Foo, Bar) -> FooBar
-#define CONCAT(...) GET_CONCAT(__VA_ARGS__, CONCAT8, CONCAT7, CONCAT6, CONCAT5, CONCAT4, CONCAT3, CONCAT2, CONCAT1)(__VA_ARGS__)
+/// e.g. CAT(Foo, Bar) -> FooBar
+#define CAT(...) GET_CAT(__VA_ARGS__, CAT8, CAT7, CAT6, CAT5, CAT4, CAT3, CAT2, CAT1)(__VA_ARGS__)
 
-#define CONCAT1(A) A
-#define CONCAT2(A, B) A ## B
-#define CONCAT3(A, B, C) A ## B ## C
-#define CONCAT4(A, B, C, D) A ## B ## C ## D
-#define CONCAT5(A, B, C, D, E) A ## B ## C ## D ## E
-#define CONCAT6(A, B, C, D, E, F) A ## B ## C ## D ## E ## F
-#define CONCAT7(A, B, C, D, E, F, G) A ## B ## C ## D ## E ## F ## G
-#define CONCAT8(A, B, C, D, E, F, G, H) A ## B ## C ## D ## E ## F ## G ## H
+#define CAT1(A) A
+#define CAT2(A, B) A ## B
+#define CAT3(A, B, C) A ## B ## C
+#define CAT4(A, B, C, D) A ## B ## C ## D
+#define CAT5(A, B, C, D, E) A ## B ## C ## D ## E
+#define CAT6(A, B, C, D, E, F) A ## B ## C ## D ## E ## F
+#define CAT7(A, B, C, D, E, F, G) A ## B ## C ## D ## E ## F ## G
+#define CAT8(A, B, C, D, E, F, G, H) A ## B ## C ## D ## E ## F ## G ## H
 
-#define GET_CONCAT(_1, _2, _3, _4, _5, _6, _7, _8, NAME, ...) NAME
+#define GET_CAT(_1, _2, _3, _4, _5, _6, _7, _8, NAME, ...) NAME
 
 #define UNDERLINE(...) GET_UNDERLINE(__VA_ARGS__, UNDERLINE8, UNDERLINE7, UNDERLINE6, UNDERLINE5, UNDERLINE4, UNDERLINE3, UNDERLINE2, UNDERLINE1)(__VA_ARGS__)
 
@@ -80,6 +94,35 @@ force_inline uint8_t _MemoryBarrier(const uint8_t *s = nullptr);
 #define TO_LETTER_23 X
 #define TO_LETTER_24 Y
 #define TO_LETTER_25 Z
+
+#define TO_NUMBER(L) TO_NUMBER_(L)
+#define TO_NUMBER_(L) TO_NUMBER_ ## L
+#define TO_NUMBER_A 0
+#define TO_NUMBER_B 1
+#define TO_NUMBER_C 2
+#define TO_NUMBER_D 3
+#define TO_NUMBER_E 4
+#define TO_NUMBER_F 5
+#define TO_NUMBER_G 6
+#define TO_NUMBER_H 7
+#define TO_NUMBER_I 8
+#define TO_NUMBER_J 9
+#define TO_NUMBER_K 10
+#define TO_NUMBER_L 11
+#define TO_NUMBER_M 12
+#define TO_NUMBER_N 13
+#define TO_NUMBER_O 14
+#define TO_NUMBER_P 15
+#define TO_NUMBER_Q 16
+#define TO_NUMBER_R 17
+#define TO_NUMBER_S 18
+#define TO_NUMBER_T 19
+#define TO_NUMBER_U 20
+#define TO_NUMBER_V 21
+#define TO_NUMBER_W 22
+#define TO_NUMBER_X 23
+#define TO_NUMBER_Y 24
+#define TO_NUMBER_Z 25
 
 #define INC(N) INC_(N)
 #define INC_(N) INC_ ## N
@@ -167,9 +210,12 @@ force_inline uint8_t _MemoryBarrier(const uint8_t *s = nullptr);
 #define DEC_39 38
 #define DEC_40 39
 
-// Any number including 0 and "" (nothing) -> true
-// Not defined -> false
+// If A evaluates to any number or nothing -> true
+// If A evaluates to something not defined -> false
 #define DEFINED(A) DEFINED_(A)
 #define DEFINED_(A) A ## 1
+
+#define REG_DEFINED(A) REG_DEFINED_(A)
+#define REG_DEFINED_(A) A ## _ADDR
 
 #endif

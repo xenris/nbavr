@@ -1,19 +1,6 @@
 #ifndef NBAVR_HARDWARE_HPP
 #define NBAVR_HARDWARE_HPP
 
-enum class HardwareType : uint8_t {
-    ADC,
-    ExInt,
-    Eeprom,
-    PcInt,
-    Pin,
-    Port,
-    TimerCounter,
-    Twi,
-    Usart,
-    WDT
-};
-
 #include "hardware/chip.hpp"
 #include "hardware/util.hpp"
 #include "hardware/callbacks.hpp"
@@ -25,7 +12,7 @@ namespace hw {
     #include "hardware/pcint.hpp"
     #include "hardware/pin.hpp"
     #include "hardware/port.hpp"
-    #include "hardware/timercounter.hpp"
+    #include "hardware/timer.hpp"
     #include "hardware/twi.hpp"
     #include "hardware/usart.hpp"
     #include "hardware/watchdog.hpp"

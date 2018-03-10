@@ -3,6 +3,9 @@
 
 /// # Maths
 
+#include "macros.hpp"
+#include "type.hpp"
+
 /// #### T max(T a, T b)
 /// Get the bigger of the two values.
 template<class T>

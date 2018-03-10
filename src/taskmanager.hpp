@@ -20,8 +20,11 @@
 #ifndef NBAVR_TASKMANAGER_HPP
 #define NBAVR_TASKMANAGER_HPP
 
-#include "task.hpp"
 #include "clock.hpp"
+#include "hardware.hpp"
+#include "macros.hpp"
+#include "task.hpp"
+#include "type.hpp"
 
 /// ## class TaskManager\<class Clock\>
 template <class Clock>
@@ -45,7 +48,9 @@ public:
 
         Clock::init();
 
-        block hw::WDT::enable();
+        #ifdef CHIP_WATCHDOG_TIMER_CONTROL_REG
+            block hw::WDT::enable();
+        #endif
 
         while(true) {
             stepAll();
@@ -67,9 +72,11 @@ private:
     void stepOne() {
         TaskT& task = *tasks[taskI];
 
-        hw::WDT::reset();
+        #ifdef CHIP_WATCHDOG_TIMER_CONTROL_REG
+            hw::WDT::reset();
+        #endif
 
-        sei();
+        interruptsEnable();
 
         if(task.state == TaskT::State::Delay) {
             // Check if it is time for this task to wake up.

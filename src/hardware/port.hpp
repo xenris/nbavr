@@ -13,97 +13,155 @@
 
 #ifndef NBAVR_PORT_HPP
 
-#ifndef X
-    // Port id.
-    #define X 0
-#endif
+#include "callbacks.hpp"
+#include "chip.hpp"
+#include "hardwaretype.hpp"
+#include "macros.hpp"
+#include "type.hpp"
+#include "util.hpp"
 
-#if X < CHIP_PORT_COUNT
-    #define PORT TO_LETTER(X)
+#define X TO_LETTER(_I)
+#define PortX CAT(Port, X)
+#define PORT_X(A) CAT(CHIP_PORT_, X, _, A)
+#define _PORT_X(A) UNDERLINE(PORT, X, A)
 
-    // If this hardware exists.
-    #if CONCAT(CHIP_PORT_, PORT)
+#include "loopi"
 
-//--------------------------------------------------------
+#ifdef _I
+    #if CAT(CHIP_PORT_, X)
 
-#define PortX CONCAT(Port, PORT)
-#define C(X) CONCAT(CHIP_PORT_, PORT, _, X)
+//------------------------------------------------------------------
 
 /// ## Class PortX
 struct PortX {
     PortX() = delete;
+    PortX& operator=(const PortX&) = delete;
+    PortX(const PortX&) = delete;
+
+    #include "pin.hpp"
 
     /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
-        return HardwareType::Port;
+        return HardwareType::port;
     }
 
-    /// #### static void direction(uint8_t d)
-    /// Set the direction of each pin. 0 = input, 1 = output.
-    static force_inline void direction(uint8_t d) {
-        *C(DIRECTION_REG) = d;
+    /// #### static void enableClock(bool e)
+    /// Enable/disable the hardware clock for this port.
+    #if DEFINED(PORT_X(CLOCK_ENABLE_BIT))
+        static force_inline void enableClock(bool e) {
+            setBit_(REG(PORT_X(CLOCK_ENABLE_REG)), PORT_X(CLOCK_ENABLE_BIT), e);
+        }
+    #endif
+
+    /// #### static void mode(Pin::Mode m)
+    /// Set the mode of all the pins on this port.
+    static force_inline void mode(Pin::Mode m) {
+        #if DEFINED(CAT(CHIP_PIN_, X, 0, _INPUT_BIT_0_BIT))
+            Pin0::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 1, _INPUT_BIT_0_BIT))
+            Pin1::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 2, _INPUT_BIT_0_BIT))
+            Pin2::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 3, _INPUT_BIT_0_BIT))
+            Pin3::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 4, _INPUT_BIT_0_BIT))
+            Pin4::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 5, _INPUT_BIT_0_BIT))
+            Pin5::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 6, _INPUT_BIT_0_BIT))
+            Pin6::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 7, _INPUT_BIT_0_BIT))
+            Pin7::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 8, _INPUT_BIT_0_BIT))
+            Pin8::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 9, _INPUT_BIT_0_BIT))
+            Pin9::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 10, _INPUT_BIT_0_BIT))
+            Pin10::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 11, _INPUT_BIT_0_BIT))
+            Pin11::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 12, _INPUT_BIT_0_BIT))
+            Pin12::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 13, _INPUT_BIT_0_BIT))
+            Pin13::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 14, _INPUT_BIT_0_BIT))
+            Pin14::mode(m);
+        #endif
+        #if DEFINED(CAT(CHIP_PIN_, X, 15, _INPUT_BIT_0_BIT))
+            Pin15::mode(m);
+        #endif
     }
 
-    /// #### static uint8_t direction()
-    /// Get the direction of each pin. 0 = input, 1 = output.
-    static force_inline uint8_t direction() {
-        return *C(DIRECTION_REG);
+    /// #### static void output(T value)
+    /// Set the output value of the port.
+    static force_inline void output(CAT(PORT_X(OUTPUT_REG), _TYPE) value) {
+        *REG(PORT_X(OUTPUT_REG)) = value;
     }
 
-    /// #### static void pullup(uint8_t p)
-    /// Enable/disable the pullup resistor of each pin.
-    static force_inline void pullup(uint8_t p) {
-        output(p);
+    /// #### static void setOutputs(T bits)
+    /// Set the given bits of the port.
+    #if CAT(PORT_X(SET_OUTPUTS_REG),_ADDR)
+        static force_inline void setOutputs(CAT(PORT_X(SET_OUTPUTS_REG), _TYPE) bits) {
+            *REG(PORT_X(SET_OUTPUTS_REG)) = bits;
+        }
+    #endif
+
+    /// #### static void clearOutputs(T bits)
+    /// Clear the given bits of the port.
+    #if CAT(PORT_X(CLEAR_OUTPUTS_REG),_ADDR)
+        static force_inline void clearOutputs(CAT(PORT_X(CLEAR_OUTPUTS_REG),_TYPE) bits) {
+            *REG(PORT_X(CLEAR_OUTPUTS_REG)) = bits;
+        }
+    #endif
+
+    /// #### static T output()
+    /// Get the output state of the port.
+    static force_inline CAT(PORT_X(OUTPUT_REG),_TYPE) output() {
+        return *REG(PORT_X(OUTPUT_REG));
     }
 
-    /// #### static uint8_t pullup()
-    /// Get the pullup resistor state of each pin.
-    static force_inline uint8_t pullup() {
-        return output();
+    /// #### static T input()
+    /// Get the input state of the port.
+    static force_inline CAT(PORT_X(INPUT_REG),_TYPE) input() {
+        return *REG(PORT_X(INPUT_REG));
     }
 
-    /// #### static void output(uint8_t bits)
-    /// Set the output state of each pin.
-    static force_inline void output(uint8_t bits) {
-        *C(OUTPUT_REG) = bits;
-    }
-
-    /// #### static uint8_t output()
-    /// Get the output state of each pin.
-    static force_inline uint8_t output() {
-        return *C(OUTPUT_REG);
-    }
-
-    /// #### static uint8_t input()
-    /// Get the input state of each pin.
-    static force_inline uint8_t input() {
-        return *C(INPUT_REG);
-    }
-
-    /// #### static void toggle(uint8_t bits)
-    /// Toggle the output state of each pin.
-    static force_inline void toggle(uint8_t bits) {
-        *C(INPUT_REG) = bits;
-    }
+    /// #### static void toggle(T bits)
+    /// Toggle the given bits of the port.
+    #if CAT(PORT_X(TOGGLE_OUTPUTS_REG),_ADDR)
+        static force_inline void toggle(CAT(PORT_X(TOGGLE_OUTPUTS_REG),_TYPE) bits) {
+            *REG(PORT_X(TOGGLE_OUTPUTS_REG)) = bits;
+        }
+    #endif
 };
-
-#undef PortX
-#undef C
 
 //--------------------------------------------------------
 
-    #endif // CONCAT(CHIP_PORT_, PORT)
-
-    #undef PORT
-
-    #include "incx.hpp"
+    #endif
 
     #include "port.hpp"
-#else // X < CHIP_PORT_COUNT
-    #undef X
-
+#else
     #define NBAVR_PORT_HPP
-#endif // X < CHIP_PORT_COUNT
+#endif
+
+#undef X
+#undef PortX
+#undef PORT_X
+#undef _PORT_X
 
 #endif

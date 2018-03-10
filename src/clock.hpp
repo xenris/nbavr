@@ -34,6 +34,7 @@
 
 
 #include "priorityqueue.hpp"
+#include "hardware.hpp"
 
 struct DelayedCall {
     callback_t callback;
@@ -52,12 +53,12 @@ struct DelayedCall {
     }
 };
 
-/// ## class Clock\<class TimerCounter, uint32_t CpuFreq, int MaxCalls = 8\>
-template<class TimerCounter, uint32_t CpuFreq, int MaxCalls = 8>
+/// ## class Clock\<class Timer, uint32_t CpuFreq, int MaxCalls = 8\>
+template<class TimerT, uint32_t CpuFreq, int MaxCalls = 8>
 class Clock {
-    static_assert(TimerCounter::getHardwareType() == HardwareType::TimerCounter, "Clock requires a TimerCounter");
+    static_assert(TimerT::getHardwareType() == hw::HardwareType::timer, "Clock requires a Timer");
 
-    static constexpr bool EightBitCounter = sizeof(typename TimerCounter::type) == 1;
+    static constexpr bool EightBitCounter = sizeof(typename TimerT::type) == 1;
     static constexpr int32_t Divisor = EightBitCounter ? 256 : 64;
 
     uint16_t _tocks = 0;
@@ -66,16 +67,15 @@ class Clock {
 
     Clock() {
         atomic {
-            TimerCounter::OutputCompareA::callback(handleDelayedCall, nullptr);
-            TimerCounter::overflowCallback(handleTimerOverflow, nullptr);
-            TimerCounter::overflowIntEnable(true);
-            TimerCounter::clock(EightBitCounter ? TimerCounter::Clock::Div256 : TimerCounter::Clock::Div64);
+            TimerT::OutputA::callback(handleDelayedCall, nullptr);
+            TimerT::overflowCallback(handleTimerOverflow, nullptr);
+            TimerT::overflowIntEnable(true);
+            TimerT::clock(EightBitCounter ? TimerT::Clock::Div256 : TimerT::Clock::Div64);
         }
     }
 
     Clock(Clock const&);
-
-    void operator=(Clock const&);
+    Clock& operator=(const Clock&);
 
     static force_inline Clock& getInstance() {
         static Clock clock;
@@ -85,7 +85,7 @@ class Clock {
 public:
 
     static const uint32_t freq = CpuFreq;
-    using Timer = TimerCounter;
+    using Timer = TimerT;
 
     static void init() {
         getInstance();
@@ -123,13 +123,13 @@ public:
             uint16_t ticks;
 
             atomic {
-                uint8_t low = TimerCounter::counter();
+                uint8_t low = TimerT::counter();
                 uint8_t high = getInstance()._ticksHigh;
 
-                if(TimerCounter::overflowIntFlag()) {
+                if(TimerT::overflowIntFlag()) {
                     // If it has overflowed then there is a possibility that
                     // the numbers are not synchronised.
-                    low = TimerCounter::counter();
+                    low = TimerT::counter();
                     high++;
                 }
 
@@ -138,7 +138,7 @@ public:
 
             return ticks;
         } else {
-            return TimerCounter::counter();
+            return TimerT::counter();
         }
     }
 
@@ -151,14 +151,14 @@ public:
 
         atomic {
             if constexpr (EightBitCounter) {
-                uint8_t low = TimerCounter::counter();
+                uint8_t low = TimerT::counter();
                 uint8_t mid = self._ticksHigh;
                 uint16_t high = self._tocks;
 
-                if(TimerCounter::overflowIntFlag()) {
+                if(TimerT::overflowIntFlag()) {
                     // If it has overflowed then there is a possibility that
                     // the numbers are not synchronised.
-                    low = TimerCounter::counter();
+                    low = TimerT::counter();
                     mid++;
 
                     if(mid == 0) {
@@ -168,13 +168,13 @@ public:
 
                 ticks = (uint32_t(high) << 16) | (uint32_t(mid) << 8) | low;
             } else {
-                uint16_t low = TimerCounter::counter();
+                uint16_t low = TimerT::counter();
                 uint16_t high = self._tocks;
 
-                if(TimerCounter::overflowIntFlag()) {
+                if(TimerT::overflowIntFlag()) {
                     // If it has overflowed then there is a possibility that
                     // the numbers are not synchronised.
-                    low = TimerCounter::counter();
+                    low = TimerT::counter();
                     high++;
                 }
 
@@ -227,7 +227,7 @@ public:
                 int32_t delta = dc.tick - now;
 
                 // FIXME This could cancel potential calls.
-                TimerCounter::OutputCompareA::intFlagClear();
+                TimerT::OutputA::intFlagClear();
 
                 // TODO Need to come up with a more reliable system. Something
                 //  that guarantees the interrupt won't be missed.
@@ -235,10 +235,10 @@ public:
                     handleDelayedCall();
                     // XXX What happens if another call is due to happen right now?
                 } else if(delta < (EightBitCounter ? 255 : 65536)) {
-                    TimerCounter::OutputCompareA::value(dc.tick);
-                    TimerCounter::OutputCompareA::intEnable(true);
+                    TimerT::OutputA::value(dc.tick);
+                    TimerT::OutputA::intEnable(true);
                 } else {
-                    TimerCounter::OutputCompareA::intEnable(false);
+                    TimerT::OutputA::intEnable(false);
                 }
             }
         }
@@ -294,17 +294,17 @@ public:
     }
 
     static void haltCallback(callback_t callback, void* data) {
-        TimerCounter::OutputCompareB::callback(callback, data);
+        TimerT::OutputB::callback(callback, data);
     }
 
-    static void haltStart(typename TimerCounter::type ticks) {
-        block TimerCounter::OutputCompareB::value(TimerCounter::counter() + ticks);
-        block TimerCounter::OutputCompareB::intFlagClear();
-        block TimerCounter::OutputCompareB::intEnable(true);
+    static void haltStart(typename TimerT::type ticks) {
+        block TimerT::OutputB::value(TimerT::counter() + ticks);
+        block TimerT::OutputB::intFlagClear();
+        block TimerT::OutputB::intEnable(true);
     }
 
     static void haltEnd() {
-        block TimerCounter::OutputCompareB::intEnable(false);
+        block TimerT::OutputB::intEnable(false);
     }
 
 private:
@@ -327,21 +327,21 @@ private:
                 int32_t delta = dc.tick - getTicks();
 
                 // FIXME This could cancel potential calls.
-                TimerCounter::OutputCompareA::intFlagClear();
+                TimerT::OutputA::intFlagClear();
 
                 if(delta <= 2) {
                     goto loop;
                 } else if(delta < (EightBitCounter ? 255 : 65536)) {
-                    TimerCounter::OutputCompareA::value(dc.tick);
-                    TimerCounter::OutputCompareA::intEnable(true);
+                    TimerT::OutputA::value(dc.tick);
+                    TimerT::OutputA::intEnable(true);
                 } else {
-                    TimerCounter::OutputCompareA::intEnable(false);
+                    TimerT::OutputA::intEnable(false);
                 }
             } else {
-                TimerCounter::OutputCompareA::intEnable(false);
+                TimerT::OutputA::intEnable(false);
             }
         } else {
-            TimerCounter::OutputCompareA::intEnable(false);
+            TimerT::OutputA::intEnable(false);
         }
     }
 
@@ -359,23 +359,23 @@ private:
             self._tocks++;
         }
 
-        if(!TimerCounter::OutputCompareA::intEnabled()) {
+        if(!TimerT::OutputA::intEnabled()) {
             DelayedCall dc;
 
             if(calls.peek_(&dc)) {
                 int32_t delta = dc.tick - getTicks();
 
                 // FIXME This could cancel potential calls.
-                TimerCounter::OutputCompareA::intFlagClear();
+                TimerT::OutputA::intFlagClear();
 
                 if(delta <= 2) {
                     handleDelayedCall();
                 } else if(delta < (EightBitCounter ? 255 : 65536)) {
-                    TimerCounter::OutputCompareA::value(dc.tick);
-                    TimerCounter::OutputCompareA::intEnable(true);
+                    TimerT::OutputA::value(dc.tick);
+                    TimerT::OutputA::intEnable(true);
                 }
             } else {
-                TimerCounter::OutputCompareA::intEnable(false);
+                TimerT::OutputA::intEnable(false);
             }
         }
     }

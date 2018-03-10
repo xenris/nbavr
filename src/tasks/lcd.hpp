@@ -55,13 +55,13 @@ class LCD : public Task<Clock> {
 
 public:
     LCD(lcdout_t& lcdout) : lcdout(lcdout) {
-        static_assert(D4::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
-        static_assert(D5::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
-        static_assert(D6::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
-        static_assert(D7::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
-        static_assert(RW::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
-        static_assert(RS::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
-        static_assert(E::getHardwareType() == HardwareType::Pin, "LCD requires 7 Pins");
+        static_assert(D4::getHardwareType() == HardwareType::pin, "LCD requires 7 Pins");
+        static_assert(D5::getHardwareType() == HardwareType::pin, "LCD requires 7 Pins");
+        static_assert(D6::getHardwareType() == HardwareType::pin, "LCD requires 7 Pins");
+        static_assert(D7::getHardwareType() == HardwareType::pin, "LCD requires 7 Pins");
+        static_assert(RW::getHardwareType() == HardwareType::pin, "LCD requires 7 Pins");
+        static_assert(RS::getHardwareType() == HardwareType::pin, "LCD requires 7 Pins");
+        static_assert(E::getHardwareType() == HardwareType::pin, "LCD requires 7 Pins");
 
         RW::direction(hw::Direction::Output);
         RS::direction(hw::Direction::Output);

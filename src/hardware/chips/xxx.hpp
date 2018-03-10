@@ -1,7 +1,23 @@
 #ifndef NBAVR_XXX_HPP
 #define NBAVR_XXX_HPP
 
-#define ATXXX
+// #define CHIP_ADDR_XXX                                            0x00
+// #define CHIP_REG_XXX_ADDR                                        CHIP_ADDR_XXX
+// #define CHIP_REG_XXX_TYPE                                        uint16_t
+
+// #define CHIP_VECT_XXX                                            0
+
+// #define CHIP_
+
+// #define CHIP_PORT_MIN                                            A
+// #define CHIP_PORT_MAX                                            Z
+
+// #define CHIP_PORT_A                                              TRUE
+// #define CHIP_PORT_A_PIN_MIN                                      0
+// #define CHIP_PORT_A_PIN_MAX                                      7
+// #define CHIP_PORT_A_OUTPUT_REG                                   CHIP_REG_PORTB
+// #define CHIP_PORT_A_TOGGLE_OUTPUTS_REG                           CHIP_REG_PINB
+// #define CHIP_PORT_A_INPUT_REG                                    CHIP_REG_PINB
 
 #define NBAVR_CHIP_DEFINED
 

@@ -28,13 +28,24 @@
 #ifndef NBAVR_CHIP_HPP
 #define NBAVR_CHIP_HPP
 
+#include "type.hpp"
+
 #ifndef register_offset
     #define register_offset 0
 #endif
 
-#define REG8(addr) (volatile uint8_t*)(addr + register_offset)
-#define REG16(addr) (volatile uint16_t*)(addr + register_offset)
-#define REG32(addr) (volatile uint32_t*)(addr + register_offset)
+template <class T>
+struct _reg {
+    volatile T* p;
+
+    _reg(size_t addr) : p((T*)(addr + register_offset)) {}
+};
+
+// Use of _reg makes the compiler throw a more meaningful message if _TYPE or _ADDR isn't defined.
+#define REG(R) _reg<volatile CAT(R, _TYPE)>(CAT(R, _ADDR)).p
+#define REGL(R) _reg<CAT(R, _TYPE)>(CAT(R, _ADDR)).p
+
+#define REGTYPE(R) CAT(R, _TYPE)
 
 #define VECT(N) VECT_(DEC(N))
 #define VECT_(N) VECT__(N)
@@ -42,28 +53,32 @@
 
 #define TRUE 1
 
-#if defined(__AVR_ATmega328__)
-    #include "chips/atmega328.hpp"
+#if defined(__atmega328__)
+    #include "chips/avr/atmega328.hpp"
 #endif
 
-#if defined(__AVR_ATmega328P__)
-    #include "chips/atmega328p.hpp"
+#if defined(__atmega328p__)
+    #include "chips/avr/atmega328p.hpp"
 #endif
 
-#if defined(__AVR_ATmega48__)
-    #include "chips/atmega48.hpp"
+#if defined(__atmega48__)
+    #include "chips/avr/atmega48.hpp"
 #endif
 
-#if defined(__AVR_ATmega8__)
-    #include "chips/atmega8.hpp"
+#if defined(__atmega8__)
+    #include "chips/avr/atmega8.hpp"
 #endif
 
-#if defined(__AVR_ATtiny85__)
-    #include "chips/attiny85.hpp"
+#if defined(__attiny85__)
+    #include "chips/avr/attiny85.hpp"
 #endif
 
-#if defined(__AVR_ATmega2560__)
-    #include "chips/atmega2560.hpp"
+#if defined(__atmega2560__)
+    #include "chips/avr/atmega2560.hpp"
+#endif
+
+#if defined(__stm32f103c8_md__)
+    #include "chips/stm32/stm32f103c8_md.hpp"
 #endif
 
 //#if defined(__AVR_XXX__)

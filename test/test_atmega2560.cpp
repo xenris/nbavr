@@ -1,4 +1,4 @@
-#define __AVR_ATmega2560__
+#define __atmega2560__
 
 #define RECORD_ID "atmega2560"
 
@@ -12,87 +12,87 @@ static void* data = (void*)0x5678;
 //------------------------------------------------
 // Analog to Digital
 
-INCLUDE_ADC_CALLBACK();
+INCLUDE_ADC_CALLBACK(0);
 
 TEST(Adc, getHardwareType) {
-    ASSERT_EQ(Adc::getHardwareType(), HardwareType::ADC);
+    ASSERT_EQ(Adc0::getHardwareType(), HardwareType::adc);
 }
 
 TEST(Adc, enable) {
-    TEST_REG_WRITE(Adc::enable(true));
-    TEST_REG_WRITE(Adc::enable(false));
+    TEST_REG_WRITE(Adc0::enable(true));
+    TEST_REG_WRITE(Adc0::enable(false));
 }
 
 TEST(Adc, start) {
-    TEST_REG_WRITE(Adc::start());
+    TEST_REG_WRITE(Adc0::start());
 }
 
 TEST(Adc, value) {
-    TEST_REG_READ_WRITE(Adc::value());
+    TEST_REG_READ_WRITE(Adc0::value());
 }
 
 TEST(Adc, reference) {
-    TEST_REG_WRITE(Adc::reference(Adc::Reference::AREF));
-    TEST_REG_WRITE(Adc::reference(Adc::Reference::AVCC));
-    TEST_REG_WRITE(Adc::reference(Adc::Reference::Internal));
+    TEST_REG_WRITE(Adc0::reference(Adc0::Reference::AREF));
+    TEST_REG_WRITE(Adc0::reference(Adc0::Reference::AVCC));
+    TEST_REG_WRITE(Adc0::reference(Adc0::Reference::Internal));
 }
 
 TEST(Adc, channel) {
-    TEST_REG_WRITE(Adc::channel(Adc::Channel::ADC0));
-    TEST_REG_WRITE(Adc::channel(Adc::Channel::ADC1));
-    TEST_REG_WRITE(Adc::channel(Adc::Channel::ADC2));
-    TEST_REG_WRITE(Adc::channel(Adc::Channel::ADC3));
-    TEST_REG_WRITE(Adc::channel(Adc::Channel::ADC4));
-    TEST_REG_WRITE(Adc::channel(Adc::Channel::ADC5));
-    TEST_REG_WRITE(Adc::channel(Adc::Channel::ADC6));
-    TEST_REG_WRITE(Adc::channel(Adc::Channel::ADC7));
-    // TEST_REG_WRITE(Adc::channel(Adc::Channel::ADC8));
-    // TEST_REG_WRITE(Adc::channel(Adc::Channel::VBG));
-    // TEST_REG_WRITE(Adc::channel(Adc::Channel::GND));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC0));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC1));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC2));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC3));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC4));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC5));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC6));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC7));
+    // TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC8));
+    // TEST_REG_WRITE(Adc0::channel(Adc0::Channel::VBG));
+    // TEST_REG_WRITE(Adc0::channel(Adc0::Channel::GND));
 }
 
 TEST(Adc, prescaler) {
-    TEST_REG_WRITE(Adc::prescaler(Adc::Prescaler::Div2));
-    TEST_REG_WRITE(Adc::prescaler(Adc::Prescaler::Div4));
-    TEST_REG_WRITE(Adc::prescaler(Adc::Prescaler::Div8));
-    TEST_REG_WRITE(Adc::prescaler(Adc::Prescaler::Div16));
-    TEST_REG_WRITE(Adc::prescaler(Adc::Prescaler::Div32));
-    TEST_REG_WRITE(Adc::prescaler(Adc::Prescaler::Div64));
-    TEST_REG_WRITE(Adc::prescaler(Adc::Prescaler::Div128));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div2));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div4));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div8));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div16));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div32));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div64));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div128));
 }
 
 TEST(Adc, leftAdjust) {
-    TEST_REG_WRITE(Adc::leftAdjust(true));
-    TEST_REG_WRITE(Adc::leftAdjust(false));
+    TEST_REG_WRITE(Adc0::leftAdjust(true));
+    TEST_REG_WRITE(Adc0::leftAdjust(false));
 }
 
 TEST(Adc, trigger) {
-    TEST_REG_WRITE(Adc::trigger(Adc::Trigger::SingleConversion));
-    TEST_REG_WRITE(Adc::trigger(Adc::Trigger::FreeRunning));
-    TEST_REG_WRITE(Adc::trigger(Adc::Trigger::AnalogComparator));
-    TEST_REG_WRITE(Adc::trigger(Adc::Trigger::ExternalInt0));
-    TEST_REG_WRITE(Adc::trigger(Adc::Trigger::Timer0CompareMatchA));
-    TEST_REG_WRITE(Adc::trigger(Adc::Trigger::Timer0Overflow));
-    TEST_REG_WRITE(Adc::trigger(Adc::Trigger::Timer1CompareMatchB));
-    TEST_REG_WRITE(Adc::trigger(Adc::Trigger::Timer1Overflow));
-    TEST_REG_WRITE(Adc::trigger(Adc::Trigger::Timer1CaptureEvent));
+    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::SingleConversion));
+    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::FreeRunning));
+    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::AnalogComparator));
+    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::ExternalInt0));
+    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::Timer0CompareMatchA));
+    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::Timer0Overflow));
+    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::Timer1CompareMatchB));
+    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::Timer1Overflow));
+    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::Timer1CaptureEvent));
 }
 
 TEST(Adc, callback) {
-    TEST_REG_WRITE(Adc::callback(func,data));
+    TEST_REG_WRITE(Adc0::callback(func,data));
 }
 
 TEST(Adc, intEnable) {
-    TEST_REG_WRITE(Adc::intEnable(false));
-    TEST_REG_WRITE(Adc::intEnable(true));
+    TEST_REG_WRITE(Adc0::intEnable(false));
+    TEST_REG_WRITE(Adc0::intEnable(true));
 }
 
 TEST(Adc, intFlag) {
-    TEST_REG_READ_WRITE(Adc::intFlag());
+    TEST_REG_READ_WRITE(Adc0::intFlag());
 }
 
 TEST(Adc, intFlagClear) {
-    TEST_REG_WRITE(Adc::intFlagClear());
+    TEST_REG_WRITE(Adc0::intFlagClear());
 }
 
 //------------------------------------------------
@@ -108,14 +108,14 @@ INCLUDE_EXINT_CALLBACK(6);
 INCLUDE_EXINT_CALLBACK(7);
 
 TEST(ExIntN, getHardwareType) {
-    ASSERT_EQ(ExInt0::getHardwareType(), HardwareType::ExInt);
-    ASSERT_EQ(ExInt1::getHardwareType(), HardwareType::ExInt);
-    ASSERT_EQ(ExInt2::getHardwareType(), HardwareType::ExInt);
-    ASSERT_EQ(ExInt3::getHardwareType(), HardwareType::ExInt);
-    ASSERT_EQ(ExInt4::getHardwareType(), HardwareType::ExInt);
-    ASSERT_EQ(ExInt5::getHardwareType(), HardwareType::ExInt);
-    ASSERT_EQ(ExInt6::getHardwareType(), HardwareType::ExInt);
-    ASSERT_EQ(ExInt7::getHardwareType(), HardwareType::ExInt);
+    ASSERT_EQ(ExInt0::getHardwareType(), HardwareType::exInt);
+    ASSERT_EQ(ExInt1::getHardwareType(), HardwareType::exInt);
+    ASSERT_EQ(ExInt2::getHardwareType(), HardwareType::exInt);
+    ASSERT_EQ(ExInt3::getHardwareType(), HardwareType::exInt);
+    ASSERT_EQ(ExInt4::getHardwareType(), HardwareType::exInt);
+    ASSERT_EQ(ExInt5::getHardwareType(), HardwareType::exInt);
+    ASSERT_EQ(ExInt6::getHardwareType(), HardwareType::exInt);
+    ASSERT_EQ(ExInt7::getHardwareType(), HardwareType::exInt);
 }
 
 TEST(ExIntN, enable) {
@@ -220,9 +220,9 @@ INCLUDE_PCINT_CALLBACK(1);
 INCLUDE_PCINT_CALLBACK(2);
 
 TEST(PcIntN, getHardwareType) {
-    ASSERT_EQ(PcInt0::getHardwareType(), HardwareType::PcInt);
-    ASSERT_EQ(PcInt1::getHardwareType(), HardwareType::PcInt);
-    ASSERT_EQ(PcInt2::getHardwareType(), HardwareType::PcInt);
+    ASSERT_EQ(PcInt0::getHardwareType(), HardwareType::pcInt);
+    ASSERT_EQ(PcInt1::getHardwareType(), HardwareType::pcInt);
+    ASSERT_EQ(PcInt2::getHardwareType(), HardwareType::pcInt);
 }
 
 TEST(PcIntN, enable) {
@@ -261,166 +261,96 @@ TEST(PcIntN, intFlagClear) {
 //------------------------------------------------
 // Digital Pins
 
-TEST(PinXN, getHardwareType) {
-    ASSERT_EQ(PinA0::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinA7::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinB0::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinB7::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinC0::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinC6::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinD0::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinD7::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinE0::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinE7::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinF0::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinF7::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinG0::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinG5::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinH0::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinH7::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinJ0::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinJ7::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinK0::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinK7::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinL0::getHardwareType(), HardwareType::Pin);
-    ASSERT_EQ(PinL7::getHardwareType(), HardwareType::Pin);
+TEST(PortXPinN, getHardwareType) {
+    ASSERT_EQ(PortA::Pin0::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortA::Pin7::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortB::Pin0::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortB::Pin7::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortC::Pin0::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortC::Pin6::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortD::Pin0::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortD::Pin7::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortE::Pin0::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortE::Pin7::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortF::Pin0::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortF::Pin7::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortG::Pin0::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortG::Pin5::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortH::Pin0::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortH::Pin7::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortJ::Pin0::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortJ::Pin7::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortK::Pin0::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortK::Pin7::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortL::Pin0::getHardwareType(), HardwareType::pin);
+    ASSERT_EQ(PortL::Pin7::getHardwareType(), HardwareType::pin);
 }
 
-TEST(PinXN, direction) {
-    TEST_REG_WRITE(PinB0::direction(Direction::Input));
-    TEST_REG_WRITE(PinB0::direction(Direction::Output));
-    TEST_REG_READ_WRITE(PinB0::direction());
+TEST(PortXPinN, mode) {
+    TEST_REG_WRITE(PortB::Pin0::mode(Pin::Mode::input));
+    TEST_REG_WRITE(PortB::Pin0::mode(Pin::Mode::output));
+    TEST_REG_READ_WRITE(PortB::Pin0::mode());
 
-    TEST_REG_WRITE(PinC6::direction(Direction::Input));
-    TEST_REG_WRITE(PinC6::direction(Direction::Output));
-    TEST_REG_READ_WRITE(PinC6::direction());
+    TEST_REG_WRITE(PortC::Pin6::mode(Pin::Mode::input));
+    TEST_REG_WRITE(PortC::Pin6::mode(Pin::Mode::output));
+    TEST_REG_READ_WRITE(PortC::Pin6::mode());
 
-    TEST_REG_WRITE(PinD3::direction(Direction::Input));
-    TEST_REG_WRITE(PinD3::direction(Direction::Output));
-    TEST_REG_READ_WRITE(PinD3::direction());
+    TEST_REG_WRITE(PortD::Pin3::mode(Pin::Mode::input));
+    TEST_REG_WRITE(PortD::Pin3::mode(Pin::Mode::output));
+    TEST_REG_READ_WRITE(PortD::Pin3::mode());
 }
 
-TEST(PinXN, pullup) {
-    TEST_REG_WRITE(PinB1::pullup(true));
-    TEST_REG_WRITE(PinB1::pullup(false));
-    TEST_REG_READ_WRITE(PinB1::pullup());
+TEST(PortXPinN, output) {
+    TEST_REG_READ_WRITE(PortB::Pin2::output());
 
-    TEST_REG_WRITE(PinC5::pullup(true));
-    TEST_REG_WRITE(PinC5::pullup(false));
-    TEST_REG_READ_WRITE(PinC5::pullup());
+    TEST_REG_READ_WRITE(PortC::Pin4::output());
 
-    TEST_REG_WRITE(PinD4::pullup(true));
-    TEST_REG_WRITE(PinD4::pullup(false));
-    TEST_REG_READ_WRITE(PinD4::pullup());
+    TEST_REG_READ_WRITE(PortD::Pin4::output());
 }
 
-TEST(PinXN, output) {
-    TEST_REG_READ_WRITE(PinB2::output());
+TEST(PortXPinN, input) {
+    TEST_REG_READ_WRITE(PortB::Pin3::input());
 
-    TEST_REG_READ_WRITE(PinC4::output());
+    TEST_REG_READ_WRITE(PortC::Pin3::input());
 
-    TEST_REG_READ_WRITE(PinD4::output());
+    TEST_REG_READ_WRITE(PortD::Pin4::input());
 }
 
-TEST(PinXN, input) {
-    TEST_REG_READ_WRITE(PinB3::input());
-
-    TEST_REG_READ_WRITE(PinC3::input());
-
-    TEST_REG_READ_WRITE(PinD4::input());
-}
-
-TEST(PinXN, toggle) {
-    TEST_REG_WRITE(PinB4::toggle());
-    TEST_REG_WRITE(PinC2::toggle());
-    TEST_REG_WRITE(PinD5::toggle());
+TEST(PortXPinN, toggle) {
+    TEST_REG_WRITE(PortB::Pin4::toggle());
+    TEST_REG_WRITE(PortC::Pin2::toggle());
+    TEST_REG_WRITE(PortD::Pin5::toggle());
 }
 
 //------------------------------------------------
 // Digital Ports
 
 TEST(PortX, getHardwareType) {
-    ASSERT_EQ(PortA::getHardwareType(), HardwareType::Port);
-    ASSERT_EQ(PortB::getHardwareType(), HardwareType::Port);
-    ASSERT_EQ(PortC::getHardwareType(), HardwareType::Port);
-    ASSERT_EQ(PortD::getHardwareType(), HardwareType::Port);
-    ASSERT_EQ(PortE::getHardwareType(), HardwareType::Port);
-    ASSERT_EQ(PortF::getHardwareType(), HardwareType::Port);
-    ASSERT_EQ(PortG::getHardwareType(), HardwareType::Port);
-    ASSERT_EQ(PortH::getHardwareType(), HardwareType::Port);
-    ASSERT_EQ(PortJ::getHardwareType(), HardwareType::Port);
-    ASSERT_EQ(PortK::getHardwareType(), HardwareType::Port);
-    ASSERT_EQ(PortL::getHardwareType(), HardwareType::Port);
+    ASSERT_EQ(PortA::getHardwareType(), HardwareType::port);
+    ASSERT_EQ(PortB::getHardwareType(), HardwareType::port);
+    ASSERT_EQ(PortC::getHardwareType(), HardwareType::port);
+    ASSERT_EQ(PortD::getHardwareType(), HardwareType::port);
+    ASSERT_EQ(PortE::getHardwareType(), HardwareType::port);
+    ASSERT_EQ(PortF::getHardwareType(), HardwareType::port);
+    ASSERT_EQ(PortG::getHardwareType(), HardwareType::port);
+    ASSERT_EQ(PortH::getHardwareType(), HardwareType::port);
+    ASSERT_EQ(PortJ::getHardwareType(), HardwareType::port);
+    ASSERT_EQ(PortK::getHardwareType(), HardwareType::port);
+    ASSERT_EQ(PortL::getHardwareType(), HardwareType::port);
 }
 
 TEST(PortX, direction) {
-    TEST_REG_WRITE(PortA::direction(0x1f));
-    TEST_REG_READ_WRITE(PortA::direction());
-
-    TEST_REG_WRITE(PortB::direction(0x3c));
-    TEST_REG_READ_WRITE(PortB::direction());
-
-    TEST_REG_WRITE(PortC::direction(0x74));
-    TEST_REG_READ_WRITE(PortC::direction());
-
-    TEST_REG_WRITE(PortD::direction(0x98));
-    TEST_REG_READ_WRITE(PortD::direction());
-
-    TEST_REG_WRITE(PortE::direction(0x51));
-    TEST_REG_READ_WRITE(PortE::direction());
-
-    TEST_REG_WRITE(PortF::direction(0xa6));
-    TEST_REG_READ_WRITE(PortF::direction());
-
-    TEST_REG_WRITE(PortG::direction(0x5d));
-    TEST_REG_READ_WRITE(PortG::direction());
-
-    TEST_REG_WRITE(PortH::direction(0x2d));
-    TEST_REG_READ_WRITE(PortH::direction());
-
-    TEST_REG_WRITE(PortJ::direction(0xc4));
-    TEST_REG_READ_WRITE(PortJ::direction());
-
-    TEST_REG_WRITE(PortK::direction(0xc2));
-    TEST_REG_READ_WRITE(PortK::direction());
-
-    TEST_REG_WRITE(PortL::direction(0x76));
-    TEST_REG_READ_WRITE(PortL::direction());
-}
-
-TEST(PortX, pullup) {
-    TEST_REG_WRITE(PortA::pullup(0xb8));
-    TEST_REG_READ_WRITE(PortA::pullup());
-
-    TEST_REG_WRITE(PortB::pullup(0x12));
-    TEST_REG_READ_WRITE(PortB::pullup());
-
-    TEST_REG_WRITE(PortC::pullup(0x41));
-    TEST_REG_READ_WRITE(PortC::pullup());
-
-    TEST_REG_WRITE(PortD::pullup(0x26));
-    TEST_REG_READ_WRITE(PortD::pullup());
-
-    TEST_REG_WRITE(PortE::pullup(0x1d));
-    TEST_REG_READ_WRITE(PortE::pullup());
-
-    TEST_REG_WRITE(PortF::pullup(0x7f));
-    TEST_REG_READ_WRITE(PortF::pullup());
-
-    TEST_REG_WRITE(PortG::pullup(0x3d));
-    TEST_REG_READ_WRITE(PortG::pullup());
-
-    TEST_REG_WRITE(PortH::pullup(0xcc));
-    TEST_REG_READ_WRITE(PortH::pullup());
-
-    TEST_REG_WRITE(PortJ::pullup(0x3c));
-    TEST_REG_READ_WRITE(PortJ::pullup());
-
-    TEST_REG_WRITE(PortK::pullup(0x7a));
-    TEST_REG_READ_WRITE(PortK::pullup());
-
-    TEST_REG_WRITE(PortL::pullup(0x5c));
-    TEST_REG_READ_WRITE(PortL::pullup());
+    TEST_REG_WRITE(PortA::mode(Pin::Mode::input));
+    TEST_REG_WRITE(PortB::mode(Pin::Mode::input));
+    TEST_REG_WRITE(PortC::mode(Pin::Mode::input));
+    TEST_REG_WRITE(PortD::mode(Pin::Mode::output));
+    TEST_REG_WRITE(PortE::mode(Pin::Mode::output));
+    TEST_REG_WRITE(PortF::mode(Pin::Mode::output));
+    TEST_REG_WRITE(PortG::mode(Pin::Mode::inputPullup));
+    TEST_REG_WRITE(PortH::mode(Pin::Mode::inputPullup));
+    TEST_REG_WRITE(PortJ::mode(Pin::Mode::inputPullup));
+    TEST_REG_WRITE(PortK::mode(Pin::Mode::input));
+    TEST_REG_WRITE(PortL::mode(Pin::Mode::output));
 }
 
 TEST(PortX, output) {
@@ -508,795 +438,794 @@ TEST(PortX, toggle) {
 
 //------------------------------------------------
 // Timer/Counters
+INCLUDE_TIMER_OVERFLOW_CALLBACK(0);
+INCLUDE_TIMER_OVERFLOW_CALLBACK(1);
+INCLUDE_TIMER_OVERFLOW_CALLBACK(2);
+INCLUDE_TIMER_OVERFLOW_CALLBACK(3);
+INCLUDE_TIMER_OVERFLOW_CALLBACK(4);
+INCLUDE_TIMER_OVERFLOW_CALLBACK(5);
+INCLUDE_TIMER_OUTPUT_CALLBACK(0, A);
+INCLUDE_TIMER_OUTPUT_CALLBACK(0, B);
+INCLUDE_TIMER_OUTPUT_CALLBACK(1, A);
+INCLUDE_TIMER_OUTPUT_CALLBACK(1, B);
+INCLUDE_TIMER_OUTPUT_CALLBACK(1, C);
+INCLUDE_TIMER_OUTPUT_CALLBACK(2, A);
+INCLUDE_TIMER_OUTPUT_CALLBACK(2, B);
+INCLUDE_TIMER_OUTPUT_CALLBACK(3, A);
+INCLUDE_TIMER_OUTPUT_CALLBACK(3, B);
+INCLUDE_TIMER_OUTPUT_CALLBACK(3, C);
+INCLUDE_TIMER_OUTPUT_CALLBACK(4, A);
+INCLUDE_TIMER_OUTPUT_CALLBACK(4, B);
+INCLUDE_TIMER_OUTPUT_CALLBACK(4, C);
+INCLUDE_TIMER_OUTPUT_CALLBACK(5, A);
+INCLUDE_TIMER_OUTPUT_CALLBACK(5, B);
+INCLUDE_TIMER_OUTPUT_CALLBACK(5, C);
 
-INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(0);
-INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(1);
-INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(2);
-INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(3);
-INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(4);
-INCLUDE_TIMERCOUNTER_OVERFLOW_CALLBACK(5);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(0, A);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(0, B);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(1, A);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(1, B);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(1, C);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(2, A);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(2, B);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(3, A);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(3, B);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(3, C);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(4, A);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(4, B);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(4, C);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(5, A);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(5, B);
-INCLUDE_TIMERCOUNTER_OUTPUT_CALLBACK(5, C);
-
-TEST(TimerCounter0, getHardwareType) {
-    ASSERT_EQ(TimerCounter0::getHardwareType(), HardwareType::TimerCounter);
+TEST(Timer0, getHardwareType) {
+    ASSERT_EQ(Timer0::getHardwareType(), HardwareType::timer);
 }
 
-TEST(TimerCounter0, type) {
-    ::testing::StaticAssertTypeEq<TimerCounter0::type, uint8_t>();
+TEST(Timer0, type) {
+    ::testing::StaticAssertTypeEq<Timer0::type, uint8_t>();
 }
 
-TEST(TimerCounter0, counter) {
-    TEST_REG_WRITE(TimerCounter0::counter(0xc4));
-    TEST_REG_READ_WRITE(TimerCounter0::counter());
+TEST(Timer0, counter) {
+    TEST_REG_WRITE(Timer0::counter(0xc4));
+    TEST_REG_READ_WRITE(Timer0::counter());
 }
 
-TEST(TimerCounter0, clock) {
-    TEST_REG_WRITE(TimerCounter0::clock(TimerCounter0::Clock::None));
-    TEST_REG_WRITE(TimerCounter0::clock(TimerCounter0::Clock::Div1));
-    TEST_REG_WRITE(TimerCounter0::clock(TimerCounter0::Clock::Div8));
-    TEST_REG_WRITE(TimerCounter0::clock(TimerCounter0::Clock::Div64));
-    TEST_REG_WRITE(TimerCounter0::clock(TimerCounter0::Clock::Div256));
-    TEST_REG_WRITE(TimerCounter0::clock(TimerCounter0::Clock::Div1024));
-    TEST_REG_WRITE(TimerCounter0::clock(TimerCounter0::Clock::ExtFalling));
-    TEST_REG_WRITE(TimerCounter0::clock(TimerCounter0::Clock::ExtRising));
+TEST(Timer0, clock) {
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::None));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::Div1));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::Div8));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::Div64));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::Div256));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::Div1024));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::ExtFalling));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::ExtRising));
 }
 
-TEST(TimerCounter0, waveform) {
-    TEST_REG_WRITE(TimerCounter0::waveform(TimerCounter0::Waveform::Normal));
-    TEST_REG_WRITE(TimerCounter0::waveform(TimerCounter0::Waveform::PWM));
-    TEST_REG_WRITE(TimerCounter0::waveform(TimerCounter0::Waveform::CTCOCRA));
-    TEST_REG_WRITE(TimerCounter0::waveform(TimerCounter0::Waveform::FastPWM));
-    TEST_REG_WRITE(TimerCounter0::waveform(TimerCounter0::Waveform::PWMOCRA));
-    TEST_REG_WRITE(TimerCounter0::waveform(TimerCounter0::Waveform::FastPWMOCRA));
+TEST(Timer0, waveform) {
+    TEST_REG_WRITE(Timer0::waveform(Timer0::Waveform::Normal));
+    TEST_REG_WRITE(Timer0::waveform(Timer0::Waveform::PWM));
+    TEST_REG_WRITE(Timer0::waveform(Timer0::Waveform::CTCOCRA));
+    TEST_REG_WRITE(Timer0::waveform(Timer0::Waveform::FastPWM));
+    TEST_REG_WRITE(Timer0::waveform(Timer0::Waveform::PWMOCRA));
+    TEST_REG_WRITE(Timer0::waveform(Timer0::Waveform::FastPWMOCRA));
 }
 
-TEST(TimerCounter0, overflowCallback) {
-    TEST_REG_WRITE(TimerCounter0::overflowCallback(func,data));
+TEST(Timer0, overflowCallback) {
+    TEST_REG_WRITE(Timer0::overflowCallback(func,data));
 }
 
-TEST(TimerCounter0, overflowIntEnable) {
-    TEST_REG_WRITE(TimerCounter0::overflowIntEnable(true));
-    TEST_REG_WRITE(TimerCounter0::overflowIntEnable(false));
+TEST(Timer0, overflowIntEnable) {
+    TEST_REG_WRITE(Timer0::overflowIntEnable(true));
+    TEST_REG_WRITE(Timer0::overflowIntEnable(false));
 }
 
-TEST(TimerCounter0, overflowIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter0::overflowIntFlag());
+TEST(Timer0, overflowIntFlag) {
+    TEST_REG_READ_WRITE(Timer0::overflowIntFlag());
 }
 
-TEST(TimerCounter0, overflowIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter0::overflowIntFlagClear());
+TEST(Timer0, overflowIntFlagClear) {
+    TEST_REG_WRITE(Timer0::overflowIntFlagClear());
 }
 
-TEST(TimerCounter0, outputA) {
-    TEST_REG_WRITE(TimerCounter0::OutputCompareA::value(0xc8));
-    TEST_REG_READ_WRITE(TimerCounter0::OutputCompareA::value());
+TEST(Timer0, outputA) {
+    TEST_REG_WRITE(Timer0::OutputA::value(0xc8));
+    TEST_REG_READ_WRITE(Timer0::OutputA::value());
 }
 
-TEST(TimerCounter0, outputB) {
-    TEST_REG_WRITE(TimerCounter0::OutputCompareB::value(0x7a));
-    TEST_REG_READ_WRITE(TimerCounter0::OutputCompareB::value());
+TEST(Timer0, outputB) {
+    TEST_REG_WRITE(Timer0::OutputB::value(0x7a));
+    TEST_REG_READ_WRITE(Timer0::OutputB::value());
 }
 
-TEST(TimerCounter0, outputAMode) {
-    TEST_REG_WRITE(TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputCompareA::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputCompareA::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputCompareA::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter0::OutputCompareA::mode(TimerCounter0::OutputCompareA::Mode::Set));
+TEST(Timer0, outputAMode) {
+    TEST_REG_WRITE(Timer0::OutputA::mode(Timer0::OutputA::Mode::Disconnected));
+    TEST_REG_WRITE(Timer0::OutputA::mode(Timer0::OutputA::Mode::Toggle));
+    TEST_REG_WRITE(Timer0::OutputA::mode(Timer0::OutputA::Mode::Clear));
+    TEST_REG_WRITE(Timer0::OutputA::mode(Timer0::OutputA::Mode::Set));
 }
 
-TEST(TimerCounter0, outputBMode) {
-    TEST_REG_WRITE(TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputCompareB::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputCompareB::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputCompareB::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter0::OutputCompareB::mode(TimerCounter0::OutputCompareB::Mode::Set));
+TEST(Timer0, outputBMode) {
+    TEST_REG_WRITE(Timer0::OutputB::mode(Timer0::OutputB::Mode::Disconnected));
+    TEST_REG_WRITE(Timer0::OutputB::mode(Timer0::OutputB::Mode::Toggle));
+    TEST_REG_WRITE(Timer0::OutputB::mode(Timer0::OutputB::Mode::Clear));
+    TEST_REG_WRITE(Timer0::OutputB::mode(Timer0::OutputB::Mode::Set));
 }
 
-TEST(TimerCounter0, outputACallback) {
-    TEST_REG_WRITE(TimerCounter0::OutputCompareA::callback(func,data));
+TEST(Timer0, outputACallback) {
+    TEST_REG_WRITE(Timer0::OutputA::callback(func,data));
 }
 
-TEST(TimerCounter0, outputBCallback) {
-    TEST_REG_WRITE(TimerCounter0::OutputCompareB::callback(func,data));
+TEST(Timer0, outputBCallback) {
+    TEST_REG_WRITE(Timer0::OutputB::callback(func,data));
 }
 
-TEST(TimerCounter0, outputAIntEnable) {
-    TEST_REG_WRITE(TimerCounter0::OutputCompareA::intEnable(true));
-    TEST_REG_WRITE(TimerCounter0::OutputCompareA::intEnable(false));
+TEST(Timer0, outputAIntEnable) {
+    TEST_REG_WRITE(Timer0::OutputA::intEnable(true));
+    TEST_REG_WRITE(Timer0::OutputA::intEnable(false));
 }
 
-TEST(TimerCounter0, outputBIntEnable) {
-    TEST_REG_WRITE(TimerCounter0::OutputCompareB::intEnable(true));
-    TEST_REG_WRITE(TimerCounter0::OutputCompareB::intEnable(false));
+TEST(Timer0, outputBIntEnable) {
+    TEST_REG_WRITE(Timer0::OutputB::intEnable(true));
+    TEST_REG_WRITE(Timer0::OutputB::intEnable(false));
 }
 
-TEST(TimerCounter0, outputAIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter0::OutputCompareA::intFlag());
+TEST(Timer0, outputAIntFlag) {
+    TEST_REG_READ_WRITE(Timer0::OutputA::intFlag());
 }
 
-TEST(TimerCounter0, outputBIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter0::OutputCompareB::intFlag());
+TEST(Timer0, outputBIntFlag) {
+    TEST_REG_READ_WRITE(Timer0::OutputB::intFlag());
 }
 
-TEST(TimerCounter0, outputAIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter0::OutputCompareA::intFlagClear());
+TEST(Timer0, outputAIntFlagClear) {
+    TEST_REG_WRITE(Timer0::OutputA::intFlagClear());
 }
 
-TEST(TimerCounter0, outputBIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter0::OutputCompareB::intFlagClear());
+TEST(Timer0, outputBIntFlagClear) {
+    TEST_REG_WRITE(Timer0::OutputB::intFlagClear());
 }
 
-TEST(TimerCounter1, getHardwareType) {
-    ASSERT_EQ(TimerCounter1::getHardwareType(), HardwareType::TimerCounter);
+TEST(Timer1, getHardwareType) {
+    ASSERT_EQ(Timer1::getHardwareType(), HardwareType::timer);
 }
 
-TEST(TimerCounter1, type) {
-    ::testing::StaticAssertTypeEq<TimerCounter1::type, uint16_t>();
+TEST(Timer1, type) {
+    ::testing::StaticAssertTypeEq<Timer1::type, uint16_t>();
 }
 
-TEST(TimerCounter1, counter) {
-    TEST_REG_WRITE(TimerCounter1::counter(0x7c8a));
-    TEST_REG_READ_WRITE(TimerCounter1::counter());
+TEST(Timer1, counter) {
+    TEST_REG_WRITE(Timer1::counter(0x7c8a));
+    TEST_REG_READ_WRITE(Timer1::counter());
 }
 
-TEST(TimerCounter1, clock) {
-    TEST_REG_WRITE(TimerCounter1::clock(TimerCounter1::Clock::None));
-    TEST_REG_WRITE(TimerCounter1::clock(TimerCounter1::Clock::Div1));
-    TEST_REG_WRITE(TimerCounter1::clock(TimerCounter1::Clock::Div8));
-    TEST_REG_WRITE(TimerCounter1::clock(TimerCounter1::Clock::Div64));
-    TEST_REG_WRITE(TimerCounter1::clock(TimerCounter1::Clock::Div256));
-    TEST_REG_WRITE(TimerCounter1::clock(TimerCounter1::Clock::Div1024));
-    TEST_REG_WRITE(TimerCounter1::clock(TimerCounter1::Clock::ExtFalling));
-    TEST_REG_WRITE(TimerCounter1::clock(TimerCounter1::Clock::ExtRising));
+TEST(Timer1, clock) {
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::None));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::Div1));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::Div8));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::Div64));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::Div256));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::Div1024));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::ExtFalling));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::ExtRising));
 }
 
-TEST(TimerCounter1, waveform) {
-    TEST_REG_WRITE(TimerCounter1::waveform(TimerCounter1::Waveform::Normal));
-    TEST_REG_WRITE(TimerCounter1::waveform(TimerCounter1::Waveform::PWM));
-    TEST_REG_WRITE(TimerCounter1::waveform(TimerCounter1::Waveform::CTCOCRA));
-    TEST_REG_WRITE(TimerCounter1::waveform(TimerCounter1::Waveform::FastPWM));
-    TEST_REG_WRITE(TimerCounter1::waveform(TimerCounter1::Waveform::PWMOCRA));
-    TEST_REG_WRITE(TimerCounter1::waveform(TimerCounter1::Waveform::FastPWMOCRA));
+TEST(Timer1, waveform) {
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::Normal));
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::PWM));
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::CTCOCRA));
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::FastPWM));
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::PWMOCRA));
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::FastPWMOCRA));
 }
 
-TEST(TimerCounter1, overflowCallback) {
-    TEST_REG_WRITE(TimerCounter1::overflowCallback(func,data));
+TEST(Timer1, overflowCallback) {
+    TEST_REG_WRITE(Timer1::overflowCallback(func,data));
 }
 
-TEST(TimerCounter1, overflowIntEnable) {
-    TEST_REG_WRITE(TimerCounter1::overflowIntEnable(true));
-    TEST_REG_WRITE(TimerCounter1::overflowIntEnable(false));
+TEST(Timer1, overflowIntEnable) {
+    TEST_REG_WRITE(Timer1::overflowIntEnable(true));
+    TEST_REG_WRITE(Timer1::overflowIntEnable(false));
 }
 
-TEST(TimerCounter1, overflowIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter1::overflowIntFlag());
+TEST(Timer1, overflowIntFlag) {
+    TEST_REG_READ_WRITE(Timer1::overflowIntFlag());
 }
 
-TEST(TimerCounter1, overflowIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter1::overflowIntFlagClear());
+TEST(Timer1, overflowIntFlagClear) {
+    TEST_REG_WRITE(Timer1::overflowIntFlagClear());
 }
 
-TEST(TimerCounter1, outputA) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::value(0xe8d9));
-    TEST_REG_READ_WRITE(TimerCounter1::OutputCompareA::value());
+TEST(Timer1, outputA) {
+    TEST_REG_WRITE(Timer1::OutputA::value(0xe8d9));
+    TEST_REG_READ_WRITE(Timer1::OutputA::value());
 }
 
-TEST(TimerCounter1, outputB) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::value(0x7a8d));
-    TEST_REG_READ_WRITE(TimerCounter1::OutputCompareB::value());
+TEST(Timer1, outputB) {
+    TEST_REG_WRITE(Timer1::OutputB::value(0x7a8d));
+    TEST_REG_READ_WRITE(Timer1::OutputB::value());
 }
 
-TEST(TimerCounter1, outputC) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareC::value(0x6c8a));
-    TEST_REG_READ_WRITE(TimerCounter1::OutputCompareC::value());
+TEST(Timer1, outputC) {
+    TEST_REG_WRITE(Timer1::OutputC::value(0x6c8a));
+    TEST_REG_READ_WRITE(Timer1::OutputC::value());
 }
 
-TEST(TimerCounter1, outputAMode) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::mode(TimerCounter1::OutputCompareA::Mode::Set));
+TEST(Timer1, outputAMode) {
+    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::Disconnected));
+    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::Toggle));
+    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::Clear));
+    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::Set));
 }
 
-TEST(TimerCounter1, outputBMode) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::mode(TimerCounter1::OutputCompareB::Mode::Set));
+TEST(Timer1, outputBMode) {
+    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::Disconnected));
+    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::Toggle));
+    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::Clear));
+    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::Set));
 }
 
-TEST(TimerCounter1, outputCMode) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareC::mode(TimerCounter1::OutputCompareC::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareC::mode(TimerCounter1::OutputCompareC::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareC::mode(TimerCounter1::OutputCompareC::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareC::mode(TimerCounter1::OutputCompareC::Mode::Set));
+TEST(Timer1, outputCMode) {
+    TEST_REG_WRITE(Timer1::OutputC::mode(Timer1::OutputC::Mode::Disconnected));
+    TEST_REG_WRITE(Timer1::OutputC::mode(Timer1::OutputC::Mode::Toggle));
+    TEST_REG_WRITE(Timer1::OutputC::mode(Timer1::OutputC::Mode::Clear));
+    TEST_REG_WRITE(Timer1::OutputC::mode(Timer1::OutputC::Mode::Set));
 }
 
-TEST(TimerCounter1, outputACallback) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::callback(func,data));
+TEST(Timer1, outputACallback) {
+    TEST_REG_WRITE(Timer1::OutputA::callback(func,data));
 }
 
-TEST(TimerCounter1, outputBCallback) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::callback(func,data));
+TEST(Timer1, outputBCallback) {
+    TEST_REG_WRITE(Timer1::OutputB::callback(func,data));
 }
 
-TEST(TimerCounter1, outputCCallback) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareC::callback(func,data));
+TEST(Timer1, outputCCallback) {
+    TEST_REG_WRITE(Timer1::OutputC::callback(func,data));
 }
 
-TEST(TimerCounter1, outputAIntEnable) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::intEnable(true));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::intEnable(false));
+TEST(Timer1, outputAIntEnable) {
+    TEST_REG_WRITE(Timer1::OutputA::intEnable(true));
+    TEST_REG_WRITE(Timer1::OutputA::intEnable(false));
 }
 
-TEST(TimerCounter1, outputBIntEnable) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::intEnable(true));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::intEnable(false));
+TEST(Timer1, outputBIntEnable) {
+    TEST_REG_WRITE(Timer1::OutputB::intEnable(true));
+    TEST_REG_WRITE(Timer1::OutputB::intEnable(false));
 }
 
-TEST(TimerCounter1, outputCIntEnable) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareC::intEnable(true));
-    TEST_REG_WRITE(TimerCounter1::OutputCompareC::intEnable(false));
+TEST(Timer1, outputCIntEnable) {
+    TEST_REG_WRITE(Timer1::OutputC::intEnable(true));
+    TEST_REG_WRITE(Timer1::OutputC::intEnable(false));
 }
 
-TEST(TimerCounter1, outputAIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter1::OutputCompareA::intFlag());
+TEST(Timer1, outputAIntFlag) {
+    TEST_REG_READ_WRITE(Timer1::OutputA::intFlag());
 }
 
-TEST(TimerCounter1, outputBIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter1::OutputCompareB::intFlag());
+TEST(Timer1, outputBIntFlag) {
+    TEST_REG_READ_WRITE(Timer1::OutputB::intFlag());
 }
 
-TEST(TimerCounter1, outputCIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter1::OutputCompareC::intFlag());
+TEST(Timer1, outputCIntFlag) {
+    TEST_REG_READ_WRITE(Timer1::OutputC::intFlag());
 }
 
-TEST(TimerCounter1, outputAIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareA::intFlagClear());
+TEST(Timer1, outputAIntFlagClear) {
+    TEST_REG_WRITE(Timer1::OutputA::intFlagClear());
 }
 
-TEST(TimerCounter1, outputBIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareB::intFlagClear());
+TEST(Timer1, outputBIntFlagClear) {
+    TEST_REG_WRITE(Timer1::OutputB::intFlagClear());
 }
 
-TEST(TimerCounter1, outputCIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter1::OutputCompareC::intFlagClear());
+TEST(Timer1, outputCIntFlagClear) {
+    TEST_REG_WRITE(Timer1::OutputC::intFlagClear());
 }
 
-TEST(TimerCounter2, getHardwareType) {
-    ASSERT_EQ(TimerCounter2::getHardwareType(), HardwareType::TimerCounter);
+TEST(Timer2, getHardwareType) {
+    ASSERT_EQ(Timer2::getHardwareType(), HardwareType::timer);
 }
 
-TEST(TimerCounter2, type) {
-    ::testing::StaticAssertTypeEq<TimerCounter2::type, uint8_t>();
+TEST(Timer2, type) {
+    ::testing::StaticAssertTypeEq<Timer2::type, uint8_t>();
 }
 
-TEST(TimerCounter2, counter) {
-    TEST_REG_WRITE(TimerCounter2::counter(0x23));
-    TEST_REG_READ_WRITE(TimerCounter2::counter());
+TEST(Timer2, counter) {
+    TEST_REG_WRITE(Timer2::counter(0x23));
+    TEST_REG_READ_WRITE(Timer2::counter());
 }
 
-TEST(TimerCounter2, clock) {
-    TEST_REG_WRITE(TimerCounter2::clock(TimerCounter2::Clock::None));
-    TEST_REG_WRITE(TimerCounter2::clock(TimerCounter2::Clock::Div1));
-    TEST_REG_WRITE(TimerCounter2::clock(TimerCounter2::Clock::Div8));
-    TEST_REG_WRITE(TimerCounter2::clock(TimerCounter2::Clock::Div32));
-    TEST_REG_WRITE(TimerCounter2::clock(TimerCounter2::Clock::Div64));
-    TEST_REG_WRITE(TimerCounter2::clock(TimerCounter2::Clock::Div128));
-    TEST_REG_WRITE(TimerCounter2::clock(TimerCounter2::Clock::Div256));
-    TEST_REG_WRITE(TimerCounter2::clock(TimerCounter2::Clock::Div1024));
+TEST(Timer2, clock) {
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::None));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div1));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div8));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div32));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div64));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div128));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div256));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div1024));
 }
 
-TEST(TimerCounter2, waveform) {
-    TEST_REG_WRITE(TimerCounter2::waveform(TimerCounter2::Waveform::Normal));
-    TEST_REG_WRITE(TimerCounter2::waveform(TimerCounter2::Waveform::PWM));
-    TEST_REG_WRITE(TimerCounter2::waveform(TimerCounter2::Waveform::CTCOCRA));
-    TEST_REG_WRITE(TimerCounter2::waveform(TimerCounter2::Waveform::FastPWM));
-    TEST_REG_WRITE(TimerCounter2::waveform(TimerCounter2::Waveform::PWMOCRA));
-    TEST_REG_WRITE(TimerCounter2::waveform(TimerCounter2::Waveform::FastPWMOCRA));
+TEST(Timer2, waveform) {
+    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::Normal));
+    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::PWM));
+    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::CTCOCRA));
+    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::FastPWM));
+    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::PWMOCRA));
+    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::FastPWMOCRA));
 }
 
-TEST(TimerCounter2, overflowCallback) {
-    TEST_REG_WRITE(TimerCounter2::overflowCallback(func,data));
+TEST(Timer2, overflowCallback) {
+    TEST_REG_WRITE(Timer2::overflowCallback(func,data));
 }
 
-TEST(TimerCounter2, overflowIntEnable) {
-    TEST_REG_WRITE(TimerCounter2::overflowIntEnable(true));
-    TEST_REG_WRITE(TimerCounter2::overflowIntEnable(false));
+TEST(Timer2, overflowIntEnable) {
+    TEST_REG_WRITE(Timer2::overflowIntEnable(true));
+    TEST_REG_WRITE(Timer2::overflowIntEnable(false));
 }
 
-TEST(TimerCounter2, overflowIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter2::overflowIntFlag());
+TEST(Timer2, overflowIntFlag) {
+    TEST_REG_READ_WRITE(Timer2::overflowIntFlag());
 }
 
-TEST(TimerCounter2, overflowIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter2::overflowIntFlagClear());
+TEST(Timer2, overflowIntFlagClear) {
+    TEST_REG_WRITE(Timer2::overflowIntFlagClear());
 }
 
-TEST(TimerCounter2, outputA) {
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::value(0xed));
-    TEST_REG_READ_WRITE(TimerCounter2::OutputCompareA::value());
+TEST(Timer2, outputA) {
+    TEST_REG_WRITE(Timer2::OutputA::value(0xed));
+    TEST_REG_READ_WRITE(Timer2::OutputA::value());
 }
 
-TEST(TimerCounter2, outputB) {
-    TEST_REG_WRITE(TimerCounter2::OutputCompareB::value(0xd8));
-    TEST_REG_READ_WRITE(TimerCounter2::OutputCompareB::value());
+TEST(Timer2, outputB) {
+    TEST_REG_WRITE(Timer2::OutputB::value(0xd8));
+    TEST_REG_READ_WRITE(Timer2::OutputB::value());
 }
 
-TEST(TimerCounter2, outputAMode) {
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::mode(TimerCounter2::OutputCompareA::Mode::Set));
+TEST(Timer2, outputAMode) {
+    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::Disconnected));
+    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::Toggle));
+    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::Clear));
+    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::Set));
 }
 
-TEST(TimerCounter2, outputBMode) {
-    TEST_REG_WRITE(TimerCounter2::OutputCompareB::mode(TimerCounter2::OutputCompareB::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter2::OutputCompareB::mode(TimerCounter2::OutputCompareB::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter2::OutputCompareB::mode(TimerCounter2::OutputCompareB::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter2::OutputCompareB::mode(TimerCounter2::OutputCompareB::Mode::Set));
+TEST(Timer2, outputBMode) {
+    TEST_REG_WRITE(Timer2::OutputB::mode(Timer2::OutputB::Mode::Disconnected));
+    TEST_REG_WRITE(Timer2::OutputB::mode(Timer2::OutputB::Mode::Toggle));
+    TEST_REG_WRITE(Timer2::OutputB::mode(Timer2::OutputB::Mode::Clear));
+    TEST_REG_WRITE(Timer2::OutputB::mode(Timer2::OutputB::Mode::Set));
 }
 
-TEST(TimerCounter2, outputACallback) {
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::callback(func,data));
+TEST(Timer2, outputACallback) {
+    TEST_REG_WRITE(Timer2::OutputA::callback(func,data));
 }
 
-TEST(TimerCounter2, outputBCallback) {
-    TEST_REG_WRITE(TimerCounter2::OutputCompareB::callback(func,data));
+TEST(Timer2, outputBCallback) {
+    TEST_REG_WRITE(Timer2::OutputB::callback(func,data));
 }
 
-TEST(TimerCounter2, outputAIntEnable) {
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::intEnable(true));
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::intEnable(false));
+TEST(Timer2, outputAIntEnable) {
+    TEST_REG_WRITE(Timer2::OutputA::intEnable(true));
+    TEST_REG_WRITE(Timer2::OutputA::intEnable(false));
 }
 
-TEST(TimerCounter2, outputBIntEnable) {
-    TEST_REG_WRITE(TimerCounter2::OutputCompareB::intEnable(true));
-    TEST_REG_WRITE(TimerCounter2::OutputCompareB::intEnable(false));
+TEST(Timer2, outputBIntEnable) {
+    TEST_REG_WRITE(Timer2::OutputB::intEnable(true));
+    TEST_REG_WRITE(Timer2::OutputB::intEnable(false));
 }
 
-TEST(TimerCounter2, outputAIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter2::OutputCompareA::intFlag());
+TEST(Timer2, outputAIntFlag) {
+    TEST_REG_READ_WRITE(Timer2::OutputA::intFlag());
 }
 
-TEST(TimerCounter2, outputBIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter2::OutputCompareB::intFlag());
+TEST(Timer2, outputBIntFlag) {
+    TEST_REG_READ_WRITE(Timer2::OutputB::intFlag());
 }
 
-TEST(TimerCounter2, outputAIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter2::OutputCompareA::intFlagClear());
+TEST(Timer2, outputAIntFlagClear) {
+    TEST_REG_WRITE(Timer2::OutputA::intFlagClear());
 }
 
-TEST(TimerCounter2, outputBIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter2::OutputCompareB::intFlagClear());
+TEST(Timer2, outputBIntFlagClear) {
+    TEST_REG_WRITE(Timer2::OutputB::intFlagClear());
 }
 
 
-TEST(TimerCounter3, getHardwareType) {
-    ASSERT_EQ(TimerCounter3::getHardwareType(), HardwareType::TimerCounter);
+TEST(Timer3, getHardwareType) {
+    ASSERT_EQ(Timer3::getHardwareType(), HardwareType::timer);
 }
 
-TEST(TimerCounter3, type) {
-    ::testing::StaticAssertTypeEq<TimerCounter3::type, uint16_t>();
+TEST(Timer3, type) {
+    ::testing::StaticAssertTypeEq<Timer3::type, uint16_t>();
 }
 
-TEST(TimerCounter3, counter) {
-    TEST_REG_WRITE(TimerCounter3::counter(0x378f));
-    TEST_REG_READ_WRITE(TimerCounter3::counter());
+TEST(Timer3, counter) {
+    TEST_REG_WRITE(Timer3::counter(0x378f));
+    TEST_REG_READ_WRITE(Timer3::counter());
 }
 
-TEST(TimerCounter3, clock) {
-    TEST_REG_WRITE(TimerCounter3::clock(TimerCounter3::Clock::None));
-    TEST_REG_WRITE(TimerCounter3::clock(TimerCounter3::Clock::Div1));
-    TEST_REG_WRITE(TimerCounter3::clock(TimerCounter3::Clock::Div8));
-    TEST_REG_WRITE(TimerCounter3::clock(TimerCounter3::Clock::Div64));
-    TEST_REG_WRITE(TimerCounter3::clock(TimerCounter3::Clock::Div256));
-    TEST_REG_WRITE(TimerCounter3::clock(TimerCounter3::Clock::Div1024));
-    TEST_REG_WRITE(TimerCounter3::clock(TimerCounter3::Clock::ExtFalling));
-    TEST_REG_WRITE(TimerCounter3::clock(TimerCounter3::Clock::ExtRising));
+TEST(Timer3, clock) {
+    TEST_REG_WRITE(Timer3::clock(Timer3::Clock::None));
+    TEST_REG_WRITE(Timer3::clock(Timer3::Clock::Div1));
+    TEST_REG_WRITE(Timer3::clock(Timer3::Clock::Div8));
+    TEST_REG_WRITE(Timer3::clock(Timer3::Clock::Div64));
+    TEST_REG_WRITE(Timer3::clock(Timer3::Clock::Div256));
+    TEST_REG_WRITE(Timer3::clock(Timer3::Clock::Div1024));
+    TEST_REG_WRITE(Timer3::clock(Timer3::Clock::ExtFalling));
+    TEST_REG_WRITE(Timer3::clock(Timer3::Clock::ExtRising));
 }
 
-TEST(TimerCounter3, waveform) {
-    TEST_REG_WRITE(TimerCounter3::waveform(TimerCounter3::Waveform::Normal));
-    TEST_REG_WRITE(TimerCounter3::waveform(TimerCounter3::Waveform::PWM));
-    TEST_REG_WRITE(TimerCounter3::waveform(TimerCounter3::Waveform::CTCOCRA));
-    TEST_REG_WRITE(TimerCounter3::waveform(TimerCounter3::Waveform::FastPWM));
-    TEST_REG_WRITE(TimerCounter3::waveform(TimerCounter3::Waveform::PWMOCRA));
-    TEST_REG_WRITE(TimerCounter3::waveform(TimerCounter3::Waveform::FastPWMOCRA));
+TEST(Timer3, waveform) {
+    TEST_REG_WRITE(Timer3::waveform(Timer3::Waveform::Normal));
+    TEST_REG_WRITE(Timer3::waveform(Timer3::Waveform::PWM));
+    TEST_REG_WRITE(Timer3::waveform(Timer3::Waveform::CTCOCRA));
+    TEST_REG_WRITE(Timer3::waveform(Timer3::Waveform::FastPWM));
+    TEST_REG_WRITE(Timer3::waveform(Timer3::Waveform::PWMOCRA));
+    TEST_REG_WRITE(Timer3::waveform(Timer3::Waveform::FastPWMOCRA));
 }
 
-TEST(TimerCounter3, overflowCallback) {
-    TEST_REG_WRITE(TimerCounter3::overflowCallback(func,data));
+TEST(Timer3, overflowCallback) {
+    TEST_REG_WRITE(Timer3::overflowCallback(func,data));
 }
 
-TEST(TimerCounter3, overflowIntEnable) {
-    TEST_REG_WRITE(TimerCounter3::overflowIntEnable(true));
-    TEST_REG_WRITE(TimerCounter3::overflowIntEnable(false));
+TEST(Timer3, overflowIntEnable) {
+    TEST_REG_WRITE(Timer3::overflowIntEnable(true));
+    TEST_REG_WRITE(Timer3::overflowIntEnable(false));
 }
 
-TEST(TimerCounter3, overflowIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter3::overflowIntFlag());
+TEST(Timer3, overflowIntFlag) {
+    TEST_REG_READ_WRITE(Timer3::overflowIntFlag());
 }
 
-TEST(TimerCounter3, overflowIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter3::overflowIntFlagClear());
+TEST(Timer3, overflowIntFlagClear) {
+    TEST_REG_WRITE(Timer3::overflowIntFlagClear());
 }
 
-TEST(TimerCounter3, outputA) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareA::value(0x65d2));
-    TEST_REG_READ_WRITE(TimerCounter3::OutputCompareA::value());
+TEST(Timer3, outputA) {
+    TEST_REG_WRITE(Timer3::OutputA::value(0x65d2));
+    TEST_REG_READ_WRITE(Timer3::OutputA::value());
 }
 
-TEST(TimerCounter3, outputB) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareB::value(0x78ee));
-    TEST_REG_READ_WRITE(TimerCounter3::OutputCompareB::value());
+TEST(Timer3, outputB) {
+    TEST_REG_WRITE(Timer3::OutputB::value(0x78ee));
+    TEST_REG_READ_WRITE(Timer3::OutputB::value());
 }
 
-TEST(TimerCounter3, outputC) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareC::value(0x178f));
-    TEST_REG_READ_WRITE(TimerCounter3::OutputCompareC::value());
+TEST(Timer3, outputC) {
+    TEST_REG_WRITE(Timer3::OutputC::value(0x178f));
+    TEST_REG_READ_WRITE(Timer3::OutputC::value());
 }
 
-TEST(TimerCounter3, outputAMode) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareA::mode(TimerCounter3::OutputCompareA::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareA::mode(TimerCounter3::OutputCompareA::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareA::mode(TimerCounter3::OutputCompareA::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareA::mode(TimerCounter3::OutputCompareA::Mode::Set));
+TEST(Timer3, outputAMode) {
+    TEST_REG_WRITE(Timer3::OutputA::mode(Timer3::OutputA::Mode::Disconnected));
+    TEST_REG_WRITE(Timer3::OutputA::mode(Timer3::OutputA::Mode::Toggle));
+    TEST_REG_WRITE(Timer3::OutputA::mode(Timer3::OutputA::Mode::Clear));
+    TEST_REG_WRITE(Timer3::OutputA::mode(Timer3::OutputA::Mode::Set));
 }
 
-TEST(TimerCounter3, outputBMode) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareB::mode(TimerCounter3::OutputCompareB::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareB::mode(TimerCounter3::OutputCompareB::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareB::mode(TimerCounter3::OutputCompareB::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareB::mode(TimerCounter3::OutputCompareB::Mode::Set));
+TEST(Timer3, outputBMode) {
+    TEST_REG_WRITE(Timer3::OutputB::mode(Timer3::OutputB::Mode::Disconnected));
+    TEST_REG_WRITE(Timer3::OutputB::mode(Timer3::OutputB::Mode::Toggle));
+    TEST_REG_WRITE(Timer3::OutputB::mode(Timer3::OutputB::Mode::Clear));
+    TEST_REG_WRITE(Timer3::OutputB::mode(Timer3::OutputB::Mode::Set));
 }
 
-TEST(TimerCounter3, outputCMode) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareC::mode(TimerCounter3::OutputCompareC::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareC::mode(TimerCounter3::OutputCompareC::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareC::mode(TimerCounter3::OutputCompareC::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareC::mode(TimerCounter3::OutputCompareC::Mode::Set));
+TEST(Timer3, outputCMode) {
+    TEST_REG_WRITE(Timer3::OutputC::mode(Timer3::OutputC::Mode::Disconnected));
+    TEST_REG_WRITE(Timer3::OutputC::mode(Timer3::OutputC::Mode::Toggle));
+    TEST_REG_WRITE(Timer3::OutputC::mode(Timer3::OutputC::Mode::Clear));
+    TEST_REG_WRITE(Timer3::OutputC::mode(Timer3::OutputC::Mode::Set));
 }
 
-TEST(TimerCounter3, outputACallback) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareA::callback(func,data));
+TEST(Timer3, outputACallback) {
+    TEST_REG_WRITE(Timer3::OutputA::callback(func,data));
 }
 
-TEST(TimerCounter3, outputBCallback) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareB::callback(func,data));
+TEST(Timer3, outputBCallback) {
+    TEST_REG_WRITE(Timer3::OutputB::callback(func,data));
 }
 
-TEST(TimerCounter3, outputCCallback) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareC::callback(func,data));
+TEST(Timer3, outputCCallback) {
+    TEST_REG_WRITE(Timer3::OutputC::callback(func,data));
 }
 
-TEST(TimerCounter3, outputAIntEnable) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareA::intEnable(true));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareA::intEnable(false));
+TEST(Timer3, outputAIntEnable) {
+    TEST_REG_WRITE(Timer3::OutputA::intEnable(true));
+    TEST_REG_WRITE(Timer3::OutputA::intEnable(false));
 }
 
-TEST(TimerCounter3, outputBIntEnable) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareB::intEnable(true));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareB::intEnable(false));
+TEST(Timer3, outputBIntEnable) {
+    TEST_REG_WRITE(Timer3::OutputB::intEnable(true));
+    TEST_REG_WRITE(Timer3::OutputB::intEnable(false));
 }
 
-TEST(TimerCounter3, outputCIntEnable) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareC::intEnable(true));
-    TEST_REG_WRITE(TimerCounter3::OutputCompareC::intEnable(false));
+TEST(Timer3, outputCIntEnable) {
+    TEST_REG_WRITE(Timer3::OutputC::intEnable(true));
+    TEST_REG_WRITE(Timer3::OutputC::intEnable(false));
 }
 
-TEST(TimerCounter3, outputAIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter3::OutputCompareA::intFlag());
+TEST(Timer3, outputAIntFlag) {
+    TEST_REG_READ_WRITE(Timer3::OutputA::intFlag());
 }
 
-TEST(TimerCounter3, outputBIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter3::OutputCompareB::intFlag());
+TEST(Timer3, outputBIntFlag) {
+    TEST_REG_READ_WRITE(Timer3::OutputB::intFlag());
 }
 
-TEST(TimerCounter3, outputCIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter3::OutputCompareC::intFlag());
+TEST(Timer3, outputCIntFlag) {
+    TEST_REG_READ_WRITE(Timer3::OutputC::intFlag());
 }
 
-TEST(TimerCounter3, outputAIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareA::intFlagClear());
+TEST(Timer3, outputAIntFlagClear) {
+    TEST_REG_WRITE(Timer3::OutputA::intFlagClear());
 }
 
-TEST(TimerCounter3, outputBIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareB::intFlagClear());
+TEST(Timer3, outputBIntFlagClear) {
+    TEST_REG_WRITE(Timer3::OutputB::intFlagClear());
 }
 
-TEST(TimerCounter3, outputCIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter3::OutputCompareC::intFlagClear());
+TEST(Timer3, outputCIntFlagClear) {
+    TEST_REG_WRITE(Timer3::OutputC::intFlagClear());
 }
 
 
-TEST(TimerCounter4, getHardwareType) {
-    ASSERT_EQ(TimerCounter4::getHardwareType(), HardwareType::TimerCounter);
+TEST(Timer4, getHardwareType) {
+    ASSERT_EQ(Timer4::getHardwareType(), HardwareType::timer);
 }
 
-TEST(TimerCounter4, type) {
-    ::testing::StaticAssertTypeEq<TimerCounter4::type, uint16_t>();
+TEST(Timer4, type) {
+    ::testing::StaticAssertTypeEq<Timer4::type, uint16_t>();
 }
 
-TEST(TimerCounter4, counter) {
-    TEST_REG_WRITE(TimerCounter4::counter(0x78ac));
-    TEST_REG_READ_WRITE(TimerCounter4::counter());
+TEST(Timer4, counter) {
+    TEST_REG_WRITE(Timer4::counter(0x78ac));
+    TEST_REG_READ_WRITE(Timer4::counter());
 }
 
-TEST(TimerCounter4, clock) {
-    TEST_REG_WRITE(TimerCounter4::clock(TimerCounter4::Clock::None));
-    TEST_REG_WRITE(TimerCounter4::clock(TimerCounter4::Clock::Div1));
-    TEST_REG_WRITE(TimerCounter4::clock(TimerCounter4::Clock::Div8));
-    TEST_REG_WRITE(TimerCounter4::clock(TimerCounter4::Clock::Div64));
-    TEST_REG_WRITE(TimerCounter4::clock(TimerCounter4::Clock::Div256));
-    TEST_REG_WRITE(TimerCounter4::clock(TimerCounter4::Clock::Div1024));
-    TEST_REG_WRITE(TimerCounter4::clock(TimerCounter4::Clock::ExtFalling));
-    TEST_REG_WRITE(TimerCounter4::clock(TimerCounter4::Clock::ExtRising));
+TEST(Timer4, clock) {
+    TEST_REG_WRITE(Timer4::clock(Timer4::Clock::None));
+    TEST_REG_WRITE(Timer4::clock(Timer4::Clock::Div1));
+    TEST_REG_WRITE(Timer4::clock(Timer4::Clock::Div8));
+    TEST_REG_WRITE(Timer4::clock(Timer4::Clock::Div64));
+    TEST_REG_WRITE(Timer4::clock(Timer4::Clock::Div256));
+    TEST_REG_WRITE(Timer4::clock(Timer4::Clock::Div1024));
+    TEST_REG_WRITE(Timer4::clock(Timer4::Clock::ExtFalling));
+    TEST_REG_WRITE(Timer4::clock(Timer4::Clock::ExtRising));
 }
 
-TEST(TimerCounter4, waveform) {
-    TEST_REG_WRITE(TimerCounter4::waveform(TimerCounter4::Waveform::Normal));
-    TEST_REG_WRITE(TimerCounter4::waveform(TimerCounter4::Waveform::PWM));
-    TEST_REG_WRITE(TimerCounter4::waveform(TimerCounter4::Waveform::CTCOCRA));
-    TEST_REG_WRITE(TimerCounter4::waveform(TimerCounter4::Waveform::FastPWM));
-    TEST_REG_WRITE(TimerCounter4::waveform(TimerCounter4::Waveform::PWMOCRA));
-    TEST_REG_WRITE(TimerCounter4::waveform(TimerCounter4::Waveform::FastPWMOCRA));
+TEST(Timer4, waveform) {
+    TEST_REG_WRITE(Timer4::waveform(Timer4::Waveform::Normal));
+    TEST_REG_WRITE(Timer4::waveform(Timer4::Waveform::PWM));
+    TEST_REG_WRITE(Timer4::waveform(Timer4::Waveform::CTCOCRA));
+    TEST_REG_WRITE(Timer4::waveform(Timer4::Waveform::FastPWM));
+    TEST_REG_WRITE(Timer4::waveform(Timer4::Waveform::PWMOCRA));
+    TEST_REG_WRITE(Timer4::waveform(Timer4::Waveform::FastPWMOCRA));
 }
 
-TEST(TimerCounter4, overflowCallback) {
-    TEST_REG_WRITE(TimerCounter4::overflowCallback(func,data));
+TEST(Timer4, overflowCallback) {
+    TEST_REG_WRITE(Timer4::overflowCallback(func,data));
 }
 
-TEST(TimerCounter4, overflowIntEnable) {
-    TEST_REG_WRITE(TimerCounter4::overflowIntEnable(true));
-    TEST_REG_WRITE(TimerCounter4::overflowIntEnable(false));
+TEST(Timer4, overflowIntEnable) {
+    TEST_REG_WRITE(Timer4::overflowIntEnable(true));
+    TEST_REG_WRITE(Timer4::overflowIntEnable(false));
 }
 
-TEST(TimerCounter4, overflowIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter4::overflowIntFlag());
+TEST(Timer4, overflowIntFlag) {
+    TEST_REG_READ_WRITE(Timer4::overflowIntFlag());
 }
 
-TEST(TimerCounter4, overflowIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter4::overflowIntFlagClear());
+TEST(Timer4, overflowIntFlagClear) {
+    TEST_REG_WRITE(Timer4::overflowIntFlagClear());
 }
 
-TEST(TimerCounter4, outputA) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareA::value(0x91ff));
-    TEST_REG_READ_WRITE(TimerCounter4::OutputCompareA::value());
+TEST(Timer4, outputA) {
+    TEST_REG_WRITE(Timer4::OutputA::value(0x91ff));
+    TEST_REG_READ_WRITE(Timer4::OutputA::value());
 }
 
-TEST(TimerCounter4, outputB) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareB::value(0xaa72));
-    TEST_REG_READ_WRITE(TimerCounter4::OutputCompareB::value());
+TEST(Timer4, outputB) {
+    TEST_REG_WRITE(Timer4::OutputB::value(0xaa72));
+    TEST_REG_READ_WRITE(Timer4::OutputB::value());
 }
 
-TEST(TimerCounter4, outputC) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareC::value(0xf7f8));
-    TEST_REG_READ_WRITE(TimerCounter4::OutputCompareC::value());
+TEST(Timer4, outputC) {
+    TEST_REG_WRITE(Timer4::OutputC::value(0xf7f8));
+    TEST_REG_READ_WRITE(Timer4::OutputC::value());
 }
 
-TEST(TimerCounter4, outputAMode) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareA::mode(TimerCounter4::OutputCompareA::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareA::mode(TimerCounter4::OutputCompareA::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareA::mode(TimerCounter4::OutputCompareA::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareA::mode(TimerCounter4::OutputCompareA::Mode::Set));
+TEST(Timer4, outputAMode) {
+    TEST_REG_WRITE(Timer4::OutputA::mode(Timer4::OutputA::Mode::Disconnected));
+    TEST_REG_WRITE(Timer4::OutputA::mode(Timer4::OutputA::Mode::Toggle));
+    TEST_REG_WRITE(Timer4::OutputA::mode(Timer4::OutputA::Mode::Clear));
+    TEST_REG_WRITE(Timer4::OutputA::mode(Timer4::OutputA::Mode::Set));
 }
 
-TEST(TimerCounter4, outputBMode) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareB::mode(TimerCounter4::OutputCompareB::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareB::mode(TimerCounter4::OutputCompareB::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareB::mode(TimerCounter4::OutputCompareB::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareB::mode(TimerCounter4::OutputCompareB::Mode::Set));
+TEST(Timer4, outputBMode) {
+    TEST_REG_WRITE(Timer4::OutputB::mode(Timer4::OutputB::Mode::Disconnected));
+    TEST_REG_WRITE(Timer4::OutputB::mode(Timer4::OutputB::Mode::Toggle));
+    TEST_REG_WRITE(Timer4::OutputB::mode(Timer4::OutputB::Mode::Clear));
+    TEST_REG_WRITE(Timer4::OutputB::mode(Timer4::OutputB::Mode::Set));
 }
 
-TEST(TimerCounter4, outputCMode) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareC::mode(TimerCounter4::OutputCompareC::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareC::mode(TimerCounter4::OutputCompareC::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareC::mode(TimerCounter4::OutputCompareC::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareC::mode(TimerCounter4::OutputCompareC::Mode::Set));
+TEST(Timer4, outputCMode) {
+    TEST_REG_WRITE(Timer4::OutputC::mode(Timer4::OutputC::Mode::Disconnected));
+    TEST_REG_WRITE(Timer4::OutputC::mode(Timer4::OutputC::Mode::Toggle));
+    TEST_REG_WRITE(Timer4::OutputC::mode(Timer4::OutputC::Mode::Clear));
+    TEST_REG_WRITE(Timer4::OutputC::mode(Timer4::OutputC::Mode::Set));
 }
 
-TEST(TimerCounter4, outputACallback) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareA::callback(func,data));
+TEST(Timer4, outputACallback) {
+    TEST_REG_WRITE(Timer4::OutputA::callback(func,data));
 }
 
-TEST(TimerCounter4, outputBCallback) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareB::callback(func,data));
+TEST(Timer4, outputBCallback) {
+    TEST_REG_WRITE(Timer4::OutputB::callback(func,data));
 }
 
-TEST(TimerCounter4, outputCCallback) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareC::callback(func,data));
+TEST(Timer4, outputCCallback) {
+    TEST_REG_WRITE(Timer4::OutputC::callback(func,data));
 }
 
-TEST(TimerCounter4, outputAIntEnable) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareA::intEnable(true));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareA::intEnable(false));
+TEST(Timer4, outputAIntEnable) {
+    TEST_REG_WRITE(Timer4::OutputA::intEnable(true));
+    TEST_REG_WRITE(Timer4::OutputA::intEnable(false));
 }
 
-TEST(TimerCounter4, outputBIntEnable) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareB::intEnable(true));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareB::intEnable(false));
+TEST(Timer4, outputBIntEnable) {
+    TEST_REG_WRITE(Timer4::OutputB::intEnable(true));
+    TEST_REG_WRITE(Timer4::OutputB::intEnable(false));
 }
 
-TEST(TimerCounter4, outputCIntEnable) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareC::intEnable(true));
-    TEST_REG_WRITE(TimerCounter4::OutputCompareC::intEnable(false));
+TEST(Timer4, outputCIntEnable) {
+    TEST_REG_WRITE(Timer4::OutputC::intEnable(true));
+    TEST_REG_WRITE(Timer4::OutputC::intEnable(false));
 }
 
-TEST(TimerCounter4, outputAIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter4::OutputCompareA::intFlag());
+TEST(Timer4, outputAIntFlag) {
+    TEST_REG_READ_WRITE(Timer4::OutputA::intFlag());
 }
 
-TEST(TimerCounter4, outputBIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter4::OutputCompareB::intFlag());
+TEST(Timer4, outputBIntFlag) {
+    TEST_REG_READ_WRITE(Timer4::OutputB::intFlag());
 }
 
-TEST(TimerCounter4, outputCIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter4::OutputCompareC::intFlag());
+TEST(Timer4, outputCIntFlag) {
+    TEST_REG_READ_WRITE(Timer4::OutputC::intFlag());
 }
 
-TEST(TimerCounter4, outputAIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareA::intFlagClear());
+TEST(Timer4, outputAIntFlagClear) {
+    TEST_REG_WRITE(Timer4::OutputA::intFlagClear());
 }
 
-TEST(TimerCounter4, outputBIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareB::intFlagClear());
+TEST(Timer4, outputBIntFlagClear) {
+    TEST_REG_WRITE(Timer4::OutputB::intFlagClear());
 }
 
-TEST(TimerCounter4, outputCIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter4::OutputCompareC::intFlagClear());
+TEST(Timer4, outputCIntFlagClear) {
+    TEST_REG_WRITE(Timer4::OutputC::intFlagClear());
 }
 
 
-TEST(TimerCounter5, getHardwareType) {
-    ASSERT_EQ(TimerCounter5::getHardwareType(), HardwareType::TimerCounter);
+TEST(Timer5, getHardwareType) {
+    ASSERT_EQ(Timer5::getHardwareType(), HardwareType::timer);
 }
 
-TEST(TimerCounter5, type) {
-    ::testing::StaticAssertTypeEq<TimerCounter5::type, uint16_t>();
+TEST(Timer5, type) {
+    ::testing::StaticAssertTypeEq<Timer5::type, uint16_t>();
 }
 
-TEST(TimerCounter5, counter) {
-    TEST_REG_WRITE(TimerCounter5::counter(0x028d));
-    TEST_REG_READ_WRITE(TimerCounter5::counter());
+TEST(Timer5, counter) {
+    TEST_REG_WRITE(Timer5::counter(0x028d));
+    TEST_REG_READ_WRITE(Timer5::counter());
 }
 
-TEST(TimerCounter5, clock) {
-    TEST_REG_WRITE(TimerCounter5::clock(TimerCounter5::Clock::None));
-    TEST_REG_WRITE(TimerCounter5::clock(TimerCounter5::Clock::Div1));
-    TEST_REG_WRITE(TimerCounter5::clock(TimerCounter5::Clock::Div8));
-    TEST_REG_WRITE(TimerCounter5::clock(TimerCounter5::Clock::Div64));
-    TEST_REG_WRITE(TimerCounter5::clock(TimerCounter5::Clock::Div256));
-    TEST_REG_WRITE(TimerCounter5::clock(TimerCounter5::Clock::Div1024));
-    TEST_REG_WRITE(TimerCounter5::clock(TimerCounter5::Clock::ExtFalling));
-    TEST_REG_WRITE(TimerCounter5::clock(TimerCounter5::Clock::ExtRising));
+TEST(Timer5, clock) {
+    TEST_REG_WRITE(Timer5::clock(Timer5::Clock::None));
+    TEST_REG_WRITE(Timer5::clock(Timer5::Clock::Div1));
+    TEST_REG_WRITE(Timer5::clock(Timer5::Clock::Div8));
+    TEST_REG_WRITE(Timer5::clock(Timer5::Clock::Div64));
+    TEST_REG_WRITE(Timer5::clock(Timer5::Clock::Div256));
+    TEST_REG_WRITE(Timer5::clock(Timer5::Clock::Div1024));
+    TEST_REG_WRITE(Timer5::clock(Timer5::Clock::ExtFalling));
+    TEST_REG_WRITE(Timer5::clock(Timer5::Clock::ExtRising));
 }
 
-TEST(TimerCounter5, waveform) {
-    TEST_REG_WRITE(TimerCounter5::waveform(TimerCounter5::Waveform::Normal));
-    TEST_REG_WRITE(TimerCounter5::waveform(TimerCounter5::Waveform::PWM));
-    TEST_REG_WRITE(TimerCounter5::waveform(TimerCounter5::Waveform::CTCOCRA));
-    TEST_REG_WRITE(TimerCounter5::waveform(TimerCounter5::Waveform::FastPWM));
-    TEST_REG_WRITE(TimerCounter5::waveform(TimerCounter5::Waveform::PWMOCRA));
-    TEST_REG_WRITE(TimerCounter5::waveform(TimerCounter5::Waveform::FastPWMOCRA));
+TEST(Timer5, waveform) {
+    TEST_REG_WRITE(Timer5::waveform(Timer5::Waveform::Normal));
+    TEST_REG_WRITE(Timer5::waveform(Timer5::Waveform::PWM));
+    TEST_REG_WRITE(Timer5::waveform(Timer5::Waveform::CTCOCRA));
+    TEST_REG_WRITE(Timer5::waveform(Timer5::Waveform::FastPWM));
+    TEST_REG_WRITE(Timer5::waveform(Timer5::Waveform::PWMOCRA));
+    TEST_REG_WRITE(Timer5::waveform(Timer5::Waveform::FastPWMOCRA));
 }
 
-TEST(TimerCounter5, overflowCallback) {
-    TEST_REG_WRITE(TimerCounter5::overflowCallback(func,data));
+TEST(Timer5, overflowCallback) {
+    TEST_REG_WRITE(Timer5::overflowCallback(func,data));
 }
 
-TEST(TimerCounter5, overflowIntEnable) {
-    TEST_REG_WRITE(TimerCounter5::overflowIntEnable(true));
-    TEST_REG_WRITE(TimerCounter5::overflowIntEnable(false));
+TEST(Timer5, overflowIntEnable) {
+    TEST_REG_WRITE(Timer5::overflowIntEnable(true));
+    TEST_REG_WRITE(Timer5::overflowIntEnable(false));
 }
 
-TEST(TimerCounter5, overflowIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter5::overflowIntFlag());
+TEST(Timer5, overflowIntFlag) {
+    TEST_REG_READ_WRITE(Timer5::overflowIntFlag());
 }
 
-TEST(TimerCounter5, overflowIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter5::overflowIntFlagClear());
+TEST(Timer5, overflowIntFlagClear) {
+    TEST_REG_WRITE(Timer5::overflowIntFlagClear());
 }
 
-TEST(TimerCounter5, outputA) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareA::value(0x102f));
-    TEST_REG_READ_WRITE(TimerCounter5::OutputCompareA::value());
+TEST(Timer5, outputA) {
+    TEST_REG_WRITE(Timer5::OutputA::value(0x102f));
+    TEST_REG_READ_WRITE(Timer5::OutputA::value());
 }
 
-TEST(TimerCounter5, outputB) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareB::value(0xff12));
-    TEST_REG_READ_WRITE(TimerCounter5::OutputCompareB::value());
+TEST(Timer5, outputB) {
+    TEST_REG_WRITE(Timer5::OutputB::value(0xff12));
+    TEST_REG_READ_WRITE(Timer5::OutputB::value());
 }
 
-TEST(TimerCounter5, outputC) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareC::value(0x2267));
-    TEST_REG_READ_WRITE(TimerCounter5::OutputCompareC::value());
+TEST(Timer5, outputC) {
+    TEST_REG_WRITE(Timer5::OutputC::value(0x2267));
+    TEST_REG_READ_WRITE(Timer5::OutputC::value());
 }
 
-TEST(TimerCounter5, outputAMode) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareA::mode(TimerCounter5::OutputCompareA::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareA::mode(TimerCounter5::OutputCompareA::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareA::mode(TimerCounter5::OutputCompareA::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareA::mode(TimerCounter5::OutputCompareA::Mode::Set));
+TEST(Timer5, outputAMode) {
+    TEST_REG_WRITE(Timer5::OutputA::mode(Timer5::OutputA::Mode::Disconnected));
+    TEST_REG_WRITE(Timer5::OutputA::mode(Timer5::OutputA::Mode::Toggle));
+    TEST_REG_WRITE(Timer5::OutputA::mode(Timer5::OutputA::Mode::Clear));
+    TEST_REG_WRITE(Timer5::OutputA::mode(Timer5::OutputA::Mode::Set));
 }
 
-TEST(TimerCounter5, outputBMode) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareB::mode(TimerCounter5::OutputCompareB::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareB::mode(TimerCounter5::OutputCompareB::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareB::mode(TimerCounter5::OutputCompareB::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareB::mode(TimerCounter5::OutputCompareB::Mode::Set));
+TEST(Timer5, outputBMode) {
+    TEST_REG_WRITE(Timer5::OutputB::mode(Timer5::OutputB::Mode::Disconnected));
+    TEST_REG_WRITE(Timer5::OutputB::mode(Timer5::OutputB::Mode::Toggle));
+    TEST_REG_WRITE(Timer5::OutputB::mode(Timer5::OutputB::Mode::Clear));
+    TEST_REG_WRITE(Timer5::OutputB::mode(Timer5::OutputB::Mode::Set));
 }
 
-TEST(TimerCounter5, outputCMode) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareC::mode(TimerCounter5::OutputCompareC::Mode::Disconnected));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareC::mode(TimerCounter5::OutputCompareC::Mode::Toggle));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareC::mode(TimerCounter5::OutputCompareC::Mode::Clear));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareC::mode(TimerCounter5::OutputCompareC::Mode::Set));
+TEST(Timer5, outputCMode) {
+    TEST_REG_WRITE(Timer5::OutputC::mode(Timer5::OutputC::Mode::Disconnected));
+    TEST_REG_WRITE(Timer5::OutputC::mode(Timer5::OutputC::Mode::Toggle));
+    TEST_REG_WRITE(Timer5::OutputC::mode(Timer5::OutputC::Mode::Clear));
+    TEST_REG_WRITE(Timer5::OutputC::mode(Timer5::OutputC::Mode::Set));
 }
 
-TEST(TimerCounter5, outputACallback) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareA::callback(func,data));
+TEST(Timer5, outputACallback) {
+    TEST_REG_WRITE(Timer5::OutputA::callback(func,data));
 }
 
-TEST(TimerCounter5, outputBCallback) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareB::callback(func,data));
+TEST(Timer5, outputBCallback) {
+    TEST_REG_WRITE(Timer5::OutputB::callback(func,data));
 }
 
-TEST(TimerCounter5, outputCCallback) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareC::callback(func,data));
+TEST(Timer5, outputCCallback) {
+    TEST_REG_WRITE(Timer5::OutputC::callback(func,data));
 }
 
-TEST(TimerCounter5, outputAIntEnable) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareA::intEnable(true));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareA::intEnable(false));
+TEST(Timer5, outputAIntEnable) {
+    TEST_REG_WRITE(Timer5::OutputA::intEnable(true));
+    TEST_REG_WRITE(Timer5::OutputA::intEnable(false));
 }
 
-TEST(TimerCounter5, outputBIntEnable) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareB::intEnable(true));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareB::intEnable(false));
+TEST(Timer5, outputBIntEnable) {
+    TEST_REG_WRITE(Timer5::OutputB::intEnable(true));
+    TEST_REG_WRITE(Timer5::OutputB::intEnable(false));
 }
 
-TEST(TimerCounter5, outputCIntEnable) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareC::intEnable(true));
-    TEST_REG_WRITE(TimerCounter5::OutputCompareC::intEnable(false));
+TEST(Timer5, outputCIntEnable) {
+    TEST_REG_WRITE(Timer5::OutputC::intEnable(true));
+    TEST_REG_WRITE(Timer5::OutputC::intEnable(false));
 }
 
-TEST(TimerCounter5, outputAIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter5::OutputCompareA::intFlag());
+TEST(Timer5, outputAIntFlag) {
+    TEST_REG_READ_WRITE(Timer5::OutputA::intFlag());
 }
 
-TEST(TimerCounter5, outputBIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter5::OutputCompareB::intFlag());
+TEST(Timer5, outputBIntFlag) {
+    TEST_REG_READ_WRITE(Timer5::OutputB::intFlag());
 }
 
-TEST(TimerCounter5, outputCIntFlag) {
-    TEST_REG_READ_WRITE(TimerCounter5::OutputCompareC::intFlag());
+TEST(Timer5, outputCIntFlag) {
+    TEST_REG_READ_WRITE(Timer5::OutputC::intFlag());
 }
 
-TEST(TimerCounter5, outputAIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareA::intFlagClear());
+TEST(Timer5, outputAIntFlagClear) {
+    TEST_REG_WRITE(Timer5::OutputA::intFlagClear());
 }
 
-TEST(TimerCounter5, outputBIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareB::intFlagClear());
+TEST(Timer5, outputBIntFlagClear) {
+    TEST_REG_WRITE(Timer5::OutputB::intFlagClear());
 }
 
-TEST(TimerCounter5, outputCIntFlagClear) {
-    TEST_REG_WRITE(TimerCounter5::OutputCompareC::intFlagClear());
+TEST(Timer5, outputCIntFlagClear) {
+    TEST_REG_WRITE(Timer5::OutputC::intFlagClear());
 }
 
 //------------------------------------------------
@@ -1316,7 +1245,7 @@ INCLUDE_USART_CALLBACK(3, TX);
 INCLUDE_USART_CALLBACK(3, DE);
 
 TEST(Usart0, getHardwareType) {
-    ASSERT_EQ(Usart0::getHardwareType(), HardwareType::Usart);
+    ASSERT_EQ(Usart0::getHardwareType(), HardwareType::usart);
 }
 
 TEST(Usart0, mode) {
@@ -1441,7 +1370,7 @@ TEST(Usart0, parityErrorClear) {
 }
 
 TEST(Usart1, getHardwareType) {
-    ASSERT_EQ(Usart1::getHardwareType(), HardwareType::Usart);
+    ASSERT_EQ(Usart1::getHardwareType(), HardwareType::usart);
 }
 
 TEST(Usart1, mode) {
@@ -1566,7 +1495,7 @@ TEST(Usart1, parityErrorClear) {
 }
 
 TEST(Usart2, getHardwareType) {
-    ASSERT_EQ(Usart2::getHardwareType(), HardwareType::Usart);
+    ASSERT_EQ(Usart2::getHardwareType(), HardwareType::usart);
 }
 
 TEST(Usart2, mode) {
@@ -1691,7 +1620,7 @@ TEST(Usart2, parityErrorClear) {
 }
 
 TEST(Usart3, getHardwareType) {
-    ASSERT_EQ(Usart3::getHardwareType(), HardwareType::Usart);
+    ASSERT_EQ(Usart3::getHardwareType(), HardwareType::usart);
 }
 
 TEST(Usart3, mode) {

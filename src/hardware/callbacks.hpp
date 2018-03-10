@@ -2,14 +2,11 @@
 #define NBAVR_CALLBACKS_HPP
 
 #ifndef TEST
-
-#define ISR(vector, ...) \
-    extern "C" void vector(void) __attribute__((signal,used,externally_visible)) __VA_ARGS__; \
-    void vector(void)
+    #define ISR(vector, ...) \
+        extern "C" void vector(void) __attribute__((signal,used,externally_visible)) __VA_ARGS__; \
+        void vector(void)
 #else
-
-#define ISR(vector, ...) void vector(void)
-
+    #define ISR(vector, ...) void vector(void)
 #endif
 
 #define MAKE_CALLBACK_HEADER(...) \
@@ -17,11 +14,13 @@
     extern void* UNDERLINE(__VA_ARGS__, CallbackData);
 
 #define MAKE_CALLBACK(...) \
-    void (*nbavr::hw::UNDERLINE(__VA_ARGS__, Callback))(void*); \
-    void* nbavr::hw::UNDERLINE(__VA_ARGS__, CallbackData); \
-    ISR(CONCAT(CHIP, UNDERLINE(__VA_ARGS__), INT_VECTOR)) { \
-        if(nbavr::hw::UNDERLINE(__VA_ARGS__, Callback) != nullptr) { \
-            nbavr::hw::UNDERLINE(__VA_ARGS__, Callback)(nbavr::hw::UNDERLINE(__VA_ARGS__, CallbackData)); \
+    namespace nbavr::hw { \
+        void (*UNDERLINE(__VA_ARGS__, Callback))(void*); \
+        void* UNDERLINE(__VA_ARGS__, CallbackData); \
+        ISR(CAT(CHIP, UNDERLINE(__VA_ARGS__), INT_VECTOR)) { \
+            if(UNDERLINE(__VA_ARGS__, Callback) != nullptr) { \
+                UNDERLINE(__VA_ARGS__, Callback)(UNDERLINE(__VA_ARGS__, CallbackData)); \
+            } \
         } \
     }
 

@@ -1,19 +1,37 @@
 /// # Two Wire Serial Interface
 
 #ifndef NBAVR_TWI_HPP
-#define NBAVR_TWI_HPP
 
-#ifdef CHIP_TWI
+#include "callbacks.hpp"
+#include "chip.hpp"
+#include "hardwaretype.hpp"
+#include "macros.hpp"
+#include "type.hpp"
+#include "util.hpp"
 
-MAKE_CALLBACK_HEADER(TWI);
+#define N _I
+#define TwiN CAT(Twi, N)
+#define TWI_N(A) CAT(CHIP_TWI_, N, _, A)
+#define _TWI_N(A) UNDERLINE(TWI, N, A)
 
-/// #### macro INCLUDE_TWI_CALLBACK()
+/// #### macro INCLUDE_TWI_CALLBACK(N)
 /// Include this to use Twi callbacks.
-#define INCLUDE_TWI_CALLBACK() MAKE_CALLBACK(TWI)
+#define INCLUDE_TWI_CALLBACK(N) MAKE_CALLBACK(TWI, N)
 
-/// ## class Twi
-struct Twi {
-    Twi() = delete;
+#include "loopi"
+
+#ifdef _I
+    #if CAT(CHIP_TWI_, N)
+
+//------------------------------------------------------------------
+
+MAKE_CALLBACK_HEADER(TWI, N);
+
+/// ## class TwiN
+struct TwiN {
+    TwiN() = delete;
+    TwiN& operator=(const TwiN&) = delete;
+    TwiN(const TwiN&) = delete;
 
     /// #### enum Prescaler
     /// * Div1
@@ -21,10 +39,10 @@ struct Twi {
     /// * Div16
     /// * Div64
     enum class Prescaler : uint8_t {
-        Div1 = CHIP_TWI_PRESCALER_1_ID,
-        Div4 = CHIP_TWI_PRESCALER_4_ID,
-        Div16 = CHIP_TWI_PRESCALER_16_ID,
-        Div64 = CHIP_TWI_PRESCALER_64_ID,
+        Div1 = TWI_N(PRESCALER_1_ID),
+        Div4 = TWI_N(PRESCALER_4_ID),
+        Div16 = TWI_N(PRESCALER_16_ID),
+        Div64 = TWI_N(PRESCALER_64_ID),
     };
 
     /// #### enum Status
@@ -88,74 +106,74 @@ struct Twi {
     /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
-        return HardwareType::Twi;
+        return HardwareType::twi;
     }
 
     /// #### static void enable(bool e)
     /// Enable/disable the Twi.
     static force_inline void enable(bool e) {
-        setBit_(CHIP_TWI_ENABLE_REG, CHIP_TWI_ENABLE_BIT, e);
+        setBit_(REG(TWI_N(ENABLE_REG)), TWI_N(ENABLE_BIT), e);
     }
 
     /// #### static void sendStart(bool intEnable = true)
     /// Send a start condition.
     static force_inline void sendStart(bool intEnable = true) {
-        const uint8_t enable = bv(CHIP_TWI_ENABLE_BIT);
-        const uint8_t start = bv(CHIP_TWI_START_CONDITION_BIT);
-        const uint8_t flagClear = bv(CHIP_TWI_INT_FLAG_BIT);
-        const uint8_t interrupt = intEnable ? bv(CHIP_TWI_INT_ENABLE_BIT) : 0;
+        const uint8_t enable = bv(TWI_N(ENABLE_BIT));
+        const uint8_t start = bv(TWI_N(START_CONDITION_BIT));
+        const uint8_t flagClear = bv(TWI_N(INT_FLAG_BIT));
+        const uint8_t interrupt = intEnable ? bv(TWI_N(INT_ENABLE_BIT)) : 0;
 
-        *CHIP_TWI_CONTROL_REG = enable | start | flagClear | interrupt;
+        *REG(TWI_N(CONTROL_REG)) = enable | start | flagClear | interrupt;
     }
 
     /// #### static void sendStop(bool intEnable = true)
     /// Send stop condition.
     static force_inline void sendStop() {
-        const uint8_t enable = bv(CHIP_TWI_ENABLE_BIT);
-        const uint8_t stop = bv(CHIP_TWI_STOP_CONDITION_BIT);
-        const uint8_t flagClear = bv(CHIP_TWI_INT_FLAG_BIT);
+        const uint8_t enable = bv(TWI_N(ENABLE_BIT));
+        const uint8_t stop = bv(TWI_N(STOP_CONDITION_BIT));
+        const uint8_t flagClear = bv(TWI_N(INT_FLAG_BIT));
 
-        *CHIP_TWI_CONTROL_REG = enable | stop | flagClear;
+        *REG(TWI_N(CONTROL_REG)) = enable | stop | flagClear;
     }
 
     /// #### static void sendAck(bool intEnable = true)
     /// Send acknowledge condition.
     static force_inline void sendAck(bool intEnable = true) {
-        const uint8_t enable = bv(CHIP_TWI_ENABLE_BIT);
-        const uint8_t ack = bv(CHIP_TWI_ENABLE_ACK_BIT);
-        const uint8_t flagClear = bv(CHIP_TWI_INT_FLAG_BIT);
-        const uint8_t interrupt = intEnable ? bv(CHIP_TWI_INT_ENABLE_BIT) : 0;
+        const uint8_t enable = bv(TWI_N(ENABLE_BIT));
+        const uint8_t ack = bv(TWI_N(ENABLE_ACK_BIT));
+        const uint8_t flagClear = bv(TWI_N(INT_FLAG_BIT));
+        const uint8_t interrupt = intEnable ? bv(TWI_N(INT_ENABLE_BIT)) : 0;
 
-        *CHIP_TWI_CONTROL_REG = enable | ack | flagClear | interrupt;
+        *REG(TWI_N(CONTROL_REG)) = enable | ack | flagClear | interrupt;
     }
 
     /// #### static void sendNack(bool intEnable = true)
     /// Send not acknowledge condition.
     static force_inline void sendNack(bool intEnable = true) {
-        const uint8_t enable = bv(CHIP_TWI_ENABLE_BIT);
-        const uint8_t flagClear = bv(CHIP_TWI_INT_FLAG_BIT);
-        const uint8_t interrupt = intEnable ? bv(CHIP_TWI_INT_ENABLE_BIT) : 0;
+        const uint8_t enable = bv(TWI_N(ENABLE_BIT));
+        const uint8_t flagClear = bv(TWI_N(INT_FLAG_BIT));
+        const uint8_t interrupt = intEnable ? bv(TWI_N(INT_ENABLE_BIT)) : 0;
 
-        *CHIP_TWI_CONTROL_REG = enable | flagClear | interrupt;
+        *REG(TWI_N(CONTROL_REG)) = enable | flagClear | interrupt;
     }
 
     /// #### static void bitRate(uint8_t b)
     /// Set Twi bitRate.
     static force_inline void bitRate(uint8_t b) {
-        *CHIP_TWI_BIT_RATE_REG = b;
+        *REG(TWI_N(BIT_RATE_REG)) = b;
     }
 
     /// #### static bool intFlag()
     /// Returns true if the interrupt flag is set.
     static force_inline bool intFlag() {
-        return *CHIP_TWI_INT_FLAG_REG & bv(CHIP_TWI_INT_FLAG_BIT);
+        return *REG(TWI_N(INT_FLAG_REG)) & bv(TWI_N(INT_FLAG_BIT));
     }
 
     /// #### static bool active()
     /// Returns true if the twi hardware is busy.
     static force_inline bool active() {
-        if(*CHIP_TWI_CONTROL_REG | bv(CHIP_TWI_ENABLE_BIT)) {
-            return *CHIP_TWI_CONTROL_REG & (bv(CHIP_TWI_START_CONDITION_BIT) | bv(CHIP_TWI_STOP_CONDITION_BIT));
+        if(*REG(TWI_N(CONTROL_REG)) | bv(TWI_N(ENABLE_BIT))) {
+            return *REG(TWI_N(CONTROL_REG)) & (bv(TWI_N(START_CONDITION_BIT)) | bv(TWI_N(STOP_CONDITION_BIT)));
         } else {
             return false;
         }
@@ -164,72 +182,84 @@ struct Twi {
     /// #### static bool writeCollisionFlag()
     /// Returns true if the write collision flag is set.
     static force_inline bool writeCollisionFlag() {
-        return *CHIP_TWI_WRITE_COLLISION_FLAG_REG & bv(CHIP_TWI_WRITE_COLLISION_FLAG_BIT);
+        return *REG(TWI_N(WRITE_COLLISION_FLAG_REG)) & bv(TWI_N(WRITE_COLLISION_FLAG_BIT));
     }
 
     /// #### static void writeCollisionFlagClear()
     /// Clear the write collision flag.
     static force_inline void writeCollisionFlagClear() {
-        setBit_(CHIP_TWI_WRITE_COLLISION_FLAG_REG, CHIP_TWI_WRITE_COLLISION_FLAG_BIT, true);
+        setBit_(REG(TWI_N(WRITE_COLLISION_FLAG_REG)), TWI_N(WRITE_COLLISION_FLAG_BIT), true);
     }
 
     /// #### static void intEnable(bool e)
     /// Enable/disable the Twi interrupt.
     static force_inline void intEnable(bool e) {
-        setBit_(CHIP_TWI_INT_ENABLE_REG, CHIP_TWI_INT_ENABLE_BIT, e);
+        setBit_(REG(TWI_N(INT_ENABLE_REG)), TWI_N(INT_ENABLE_BIT), e);
     }
 
     /// #### static void callback(callback_t callback, void\* data)
     /// Set the callback and data for Twi interrupts.
     static force_inline void callback(callback_t callback, void* data) {
-        _TWI_Callback_ = callback;
-        _TWI_CallbackData_ = data;
+        _TWI_N(Callback) = callback;
+        _TWI_N(CallbackData) = data;
     }
 
     /// #### static Status status()
     /// Get the Twi status.
     static force_inline Status status() {
-        return Status(*CHIP_TWI_STATUS_REG & 0xF8);
+        return Status(*REG(TWI_N(STATUS_REG)) & 0xF8);
     }
 
     /// #### static void prescaler(Prescaler p)
     /// Set the prescaler.
     static force_inline void prescaler(Prescaler p) {
-        setBit_(CHIP_TWI_PRESCALER_BIT_0_REG, CHIP_TWI_PRESCALER_BIT_0_BIT, uint8_t(p) & 0x01);
-        setBit_(CHIP_TWI_PRESCALER_BIT_1_REG, CHIP_TWI_PRESCALER_BIT_1_BIT, uint8_t(p) & 0x02);
+        setBit_(REG(TWI_N(PRESCALER_BIT_0_REG)), TWI_N(PRESCALER_BIT_0_BIT), uint8_t(p) & 0x01);
+        setBit_(REG(TWI_N(PRESCALER_BIT_1_REG)), TWI_N(PRESCALER_BIT_1_BIT), uint8_t(p) & 0x02);
     }
 
     /// #### static void push(uint8_t b)
     /// Put byte in data buffer.
     static force_inline void push(uint8_t b) {
-        *CHIP_TWI_DATA_REG = b;
+        *REG(TWI_N(DATA_REG)) = b;
     }
 
     /// #### static uint8_t pop()
     /// Get byte from data buffer.
     static force_inline uint8_t pop() {
-        return *CHIP_TWI_DATA_REG;
+        return *REG(TWI_N(DATA_REG));
     }
 
     /// #### static void slaveAddress(uint8_t b)
     /// Set the address for transmitting and receiving as a slave.
     static force_inline void slaveAddress(uint8_t b) {
-        *CHIP_TWI_SLAVE_ADDRESS_REG = b & 0xfe;
+        *REG(TWI_N(SLAVE_ADDRESS_REG)) = b & 0xfe;
     }
 
     /// #### static void slaveAddressMask(uint8_t b)
     /// Set the slave address mask.
     static force_inline void slaveAddressMask(uint8_t b) {
-        *CHIP_TWI_SLAVE_ADDRESS_MASK_REG = b & 0xfe;
+        *REG(TWI_N(SLAVE_ADDRESS_MASK_REG)) = b & 0xfe;
     }
 
     /// #### static void generalCallRecognitionEnable(bool e)
     /// Enable/disable the recognition of a Twi general call.
     static force_inline void generalCallRecognitionEnable(bool e) {
-        setBit_(CHIP_TWI_GEN_CALL_REC_ENABLE_REG, CHIP_TWI_GEN_CALL_REC_ENABLE_BIT, e);
+        setBit_(REG(TWI_N(GEN_CALL_REC_ENABLE_REG)), TWI_N(GEN_CALL_REC_ENABLE_BIT), e);
     }
 };
 
-#endif // #ifdef CHIP_TWI
+//--------------------------------------------------------
+
+    #endif
+
+    #include "twi.hpp"
+#else
+    #define NBAVR_TWI_HPP
+#endif
+
+#undef N
+#undef TwiN
+#undef TWI_N
+#undef _TWI_N
 
 #endif

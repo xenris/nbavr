@@ -4,100 +4,109 @@
 
 #ifndef NBAVR_EXINT_HPP
 
-#ifndef N
-    // ExInt id.
-    #define N 0
-#endif
+#include "callbacks.hpp"
+#include "chip.hpp"
+#include "hardwaretype.hpp"
+#include "macros.hpp"
+#include "util.hpp"
 
-#if N < CHIP_EXINT_COUNT
-    // If this hardware exists.
-    #if CONCAT(CHIP_EXINT_, N)
-
-//--------------------------------------------------------
-
-#define ExIntN CONCAT(ExInt, N)
-#define C(X) CONCAT(CHIP_EXINT_, N, _, X)
-#define _C(X) UNDERLINE(EXINT, N, X)
-
-MAKE_CALLBACK_HEADER(EXINT, N);
+#define N _I
+#define ExIntN CAT(ExInt, N)
+#define EXINT_N(A) CAT(CHIP_EXINT_, N, _, A)
+#define _EXINT_N(A) UNDERLINE(EXINT, N, A)
 
 /// #### macro INCLUDE_EXINT_CALLBACK(N)
 /// Include this to use ExInt callbacks.
 #define INCLUDE_EXINT_CALLBACK(N) MAKE_CALLBACK(EXINT, N)
 
+#include "loopi"
+
+#ifdef _I
+    #if CAT(CHIP_EXINT_, N)
+
+//--------------------------------------------------------
+
+MAKE_CALLBACK_HEADER(EXINT, N);
+
 /// ## class ExIntN
 struct ExIntN {
     ExIntN() = delete;
+    ExIntN& operator=(const ExIntN&) = delete;
+    ExIntN(const ExIntN&) = delete;
 
-    /// #### enum Trigger
-    /// * Low
-    /// * Change
-    /// * Falling
-    /// * Rising
-    enum class Trigger : uint8_t {
-        Low = C(TRIGGER_LOW_ID),
-        Change = C(TRIGGER_CHANGE_ID),
-        Falling = C(TRIGGER_FALLING_ID),
-        Rising = C(TRIGGER_RISING_ID),
-    };
+    #if DEFINED(EXINT_N(TRIGGER_BIT_0_BIT))
+        /// #### enum Trigger
+        /// * Low
+        /// * Change
+        /// * Falling
+        /// * Rising
+        enum class Trigger : uint8_t {
+            Low = EXINT_N(TRIGGER_LOW_ID),
+            Change = EXINT_N(TRIGGER_CHANGE_ID),
+            Falling = EXINT_N(TRIGGER_FALLING_ID),
+            Rising = EXINT_N(TRIGGER_RISING_ID),
+        };
+    #endif
 
     /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
-        return HardwareType::ExInt;
+        return HardwareType::exInt;
     }
 
-    /// #### static void enable(bool e)
-    /// Enable/disable this interrupt.
-    static force_inline void enable(bool e) {
-        setBit_(C(ENABLE_REG), C(ENABLE_BIT), e);
-    }
+    #if DEFINED(EXINT_N(ENABLE_BIT_0_BIT))
+        /// #### static void enable(bool e)
+        /// Enable/disable this interrupt.
+        static force_inline void enable(bool e) {
+            setBit_(REG(EXINT_N(ENABLE_BIT_0_REG)), EXINT_N(ENABLE_BIT_0_BIT), e);
+        }
+    #endif
 
-    /// #### static void trigger(Trigger t)
-    /// Set the trigger action.
-    static force_inline void trigger(Trigger t) {
-        setBit_(C(TRIGGER_BIT_0_REG), C(TRIGGER_BIT_0_BIT), uint8_t(t) & 0x01);
-        setBit_(C(TRIGGER_BIT_1_REG), C(TRIGGER_BIT_1_BIT), uint8_t(t) & 0x02);
-    }
+    #if DEFINED(EXINT_N(TRIGGER_BIT_0_BIT))
+        /// #### static void trigger(Trigger t)
+        /// Set the trigger action.
+        static force_inline void trigger(Trigger t) {
+            setBit_(REG(EXINT_N(TRIGGER_BIT_0_REG)), EXINT_N(TRIGGER_BIT_0_BIT), uint8_t(t) & 0x01);
+            setBit_(REG(EXINT_N(TRIGGER_BIT_1_REG)), EXINT_N(TRIGGER_BIT_1_BIT), uint8_t(t) & 0x02);
+        }
+    #endif
 
     /// #### static void callback(callback_t callback, void\* data)
     /// Set the callback and data for this interrupt.
     static force_inline void callback(callback_t callback, void* data) {
-        _C(Callback) = callback;
-        _C(CallbackData) = data;
+        _EXINT_N(Callback) = callback;
+        _EXINT_N(CallbackData) = data;
     }
 
-    /// #### static bool intFlag()
-    /// Returns true if the interrupt flag is set.
-    static force_inline bool intFlag() {
-        return *C(FLAG_REG) & bv(C(FLAG_BIT));
-    }
+    #if DEFINED(EXINT_N(INT_FLAG_BIT_0_BIT))
+        /// #### static bool intFlag()
+        /// Returns true if the interrupt flag is set.
+        static force_inline bool intFlag() {
+            return *REG(EXINT_N(INT_FLAG_BIT_0_REG)) & bv(EXINT_N(INT_FLAG_BIT_0_BIT));
+        }
+    #endif
 
-    /// #### static void intFlagClear()
-    /// Clear the interrupt flag.
-    static force_inline void intFlagClear() {
-        setBit_(C(FLAG_REG), C(FLAG_BIT), true);
-    }
+    #if DEFINED(EXINT_N(INT_FLAG_BIT_0_BIT))
+        /// #### static void intFlagClear()
+        /// Clear the interrupt flag.
+        static force_inline void intFlagClear() {
+            setBit_(REG(EXINT_N(INT_FLAG_BIT_0_REG)), EXINT_N(INT_FLAG_BIT_0_BIT), true);
+        }
+    #endif
 };
-
-#undef ExIntN
-#undef C
-#undef _C
 
 //--------------------------------------------------------
 
-    #endif // CONCAT(CHIP_EXINT_, N)
-
-    #include "incn.hpp"
+    #endif
 
     #include "exint.hpp"
-
-#else // N < CHIP_EXINT_COUNT
-
-    #undef N
-
+#else
     #define NBAVR_EXINT_HPP
+#endif
 
-#endif // N < CHIP_EXINT_COUNT
+#undef N
+#undef ExIntN
+#undef EXINT_N
+#undef _EXINT_N
 
 #endif

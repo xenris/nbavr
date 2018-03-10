@@ -2,16 +2,19 @@
 #define NBAVR_MEMORYBARRIER_HPP
 
 // These need to be outside nbavr namespace so they can be used in cleanup().
+#include "hardware/util.hpp"
+
+#ifdef CHIP_STATUS_REG
 
 force_inline uint8_t __cli() {
     uint8_t s = *CHIP_STATUS_REG;
-    nbavr::cli();
+    nbavr::interruptsDisable();
     return s;
 }
 
 force_inline uint8_t __sei() {
     uint8_t s = *CHIP_STATUS_REG;
-    nbavr::sei();
+    nbavr::interruptsEnable();
     return s;
 }
 
@@ -19,10 +22,10 @@ force_inline void __ssreg(const uint8_t *s) {
     *CHIP_STATUS_REG = *s;
 }
 
+#endif
+
 force_inline uint8_t _MemoryBarrier(const uint8_t *s) {
-    #ifndef TEST
     __asm__ __volatile__("":::"memory");
-    #endif
 
     return 1;
 }

@@ -3,7 +3,4 @@
 
 #include "atmega328p.hpp"
 
-#undef ATMEGA328P
-#define ATMEGA328
-
 #endif

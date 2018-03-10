@@ -1,147 +1,216 @@
 /// # Digital IO Pins
 
-/// X is the port id (A, B, etc).<br>
-/// N is the pin id (1, 2, etc).
+/// N is the pin id (0, 1, 2, etc).
 
 /// ## Example
 
 /// ```c++
-/// PinB5::direction(Direction::Output);
-/// PinB5::output(Value::High);
+/// PortB::Pin5::mode(Pin::Mode::output);
+/// PortB::Pin5::output(Pin::Value::high);
 /// ```
 
-#ifndef NBAVR_PIN_HPP
+#include "hardware/chip.hpp"
+#include "macros.hpp"
+#include "type.hpp"
 
-#ifdef N
-    #if N < CHIP_PIN_COUNT
-        #define PORT TO_LETTER(X)
-        #define BIT N
+#ifndef NBAVR_BASE_PIN
+#define NBAVR_BASE_PIN
 
-        // If this hardware exists.
-        #if CONCAT(CHIP_PIN_, PORT, BIT)
+#define MODE(A) CAT(CHIP_PIN_MODE_, A, _ID)
 
-//--------------------------------------------------------
+struct Pin {
+    Pin() = delete;
+    Pin& operator=(const Pin&) = delete;
+    Pin(const Pin&) = delete;
 
-#ifndef NBAVR_PIN_ENUMS
-#define NBAVR_PIN_ENUMS
+    enum class Mode : uint8_t {
+        #if DEFINED(MODE(INPUT))
+            input = MODE(INPUT),
+        #endif
 
-/// #### enum Direction
-/// * Input
-/// * Output
-enum class Direction : int8_t {
-    Input,
-    Output,
+        #if DEFINED(MODE(INPUT_PULLUP))
+            inputPullup = MODE(INPUT_PULLUP),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT))
+            output = MODE(OUTPUT),
+        #endif
+
+        #if DEFINED(MODE(INPUT_ANALOG))
+            inputAnalog = MODE(INPUT_ANALOG),
+        #endif
+
+        #if DEFINED(MODE(INPUT_FLOATING))
+            inputFloating = MODE(INPUT_FLOATING),
+        #endif
+
+        #if DEFINED(MODE(INPUT_PULLUPDOWN))
+            inputPullUpDown = MODE(INPUT_PULLUPDOWN),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_GENERAL_PUSH_PULL_10MHZ))
+            outputGeneralPushPull10MHz = MODE(OUTPUT_GENERAL_PUSH_PULL_10MHZ),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_GENERAL_OPEN_DRAIN_10MHZ))
+            outputGeneralOpenDrain10MHz = MODE(OUTPUT_GENERAL_OPEN_DRAIN_10MHZ),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_ALTERNATE_PUSH_PULL_10MHZ))
+            outputAlternatePushPull10MHz = MODE(OUTPUT_ALTERNATE_PUSH_PULL_10MHZ),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_10MHZ))
+            outputAlternateOpenDrain10MHz = MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_10MHZ),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_GENERAL_PUSH_PULL_2MHZ))
+            outputGeneralPushPull2MHz = MODE(OUTPUT_GENERAL_PUSH_PULL_2MHZ),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_GENERAL_OPEN_DRAIN_2MHZ))
+            outputGeneralOpenDrain2MHz = MODE(OUTPUT_GENERAL_OPEN_DRAIN_2MHZ),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_ALTERNATE_PUSH_PULL_2MHZ))
+            outputAlternatePushPull2MHz = MODE(OUTPUT_ALTERNATE_PUSH_PULL_2MHZ),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_2MHZ))
+            outputAlternateOpenDrain2MHz = MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_2MHZ),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_GENERAL_PUSH_PULL_50MHZ))
+            outputGeneralPushPull50MHz = MODE(OUTPUT_GENERAL_PUSH_PULL_50MHZ),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_GENERAL_OPEN_DRAIN_50MHZ))
+            outputGeneralOpenDrain50MHz = MODE(OUTPUT_GENERAL_OPEN_DRAIN_50MHZ),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_ALTERNATE_PUSH_PULL_50MHZ))
+            outputAlternatePushPull50MHz = MODE(OUTPUT_ALTERNATE_PUSH_PULL_50MHZ),
+        #endif
+
+        #if DEFINED(MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_50MHZ))
+            outputAlternateOpenDrain50MHz = MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_50MHZ),
+        #endif
+    };
+
+    enum class Value : uint8_t {
+        low = 0,
+        high = 1,
+    };
 };
 
-/// #### enum Value
-/// * Low
-/// * High
-enum class Value : int8_t {
-    Low,
-    High,
-};
+#undef MODE
 
 #endif
 
-#define PinXN CONCAT(Pin, PORT, BIT)
-#define C(X) CONCAT(CHIP_PORT_, PORT, _, X)
+#ifdef PortX
 
-/// ## Class PinXN
-struct PinXN {
-    PinXN() = delete;
+#include "loopj"
+
+#define N _J
+#define PinN CAT(Pin, N)
+#define PIN_N(A) CAT(CHIP_PIN_, X, N, _, A)
+
+#ifdef _J
+    #if CAT(CHIP_PIN_, X, N)
+
+//------------------------------------------------------------------
+
+/// ## Class PinN
+struct PinN : Pin {
+    PinN() = delete;
+    PinN& operator=(const PinN&) = delete;
+    PinN(const PinN&) = delete;
 
     /// #### static constexpr [HardwareType](../hardware.md) getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
-        return HardwareType::Pin;
+        return HardwareType::pin;
     }
 
-    /// #### static void direction(Direction d)
-    /// Set the direction. (Input/Output)
-    static force_inline void direction(Direction d) {
-        setBit_(C(DIRECTION_REG), BIT, d == Direction::Output);
+    /// #### static void mode(Mode m)
+    /// Set the pin mode. (e.g. input/output)
+    static force_inline void mode(Mode m) {
+        setBit_(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT), uint8_t(m) & 0x01);
+
+        #if DEFINED(PIN_N(MODE_BIT_1_BIT))
+            setBit_(REG(PIN_N(MODE_BIT_1_REG)), PIN_N(MODE_BIT_1_BIT), uint8_t(m) & 0x02);
+        #endif
+
+        #if DEFINED(PIN_N(MODE_BIT_2_BIT))
+            setBit_(REG(PIN_N(MODE_BIT_2_REG)), PIN_N(MODE_BIT_2_BIT), uint8_t(m) & 0x04);
+        #endif
+
+        #if DEFINED(PIN_N(MODE_BIT_3_BIT))
+            setBit_(REG(PIN_N(MODE_BIT_3_REG)), PIN_N(MODE_BIT_3_BIT), uint8_t(m) & 0x08);
+        #endif
     }
 
-    /// #### static Direction direction()
-    /// Get the direction. (Input/Output)
+    /// #### static Mode mode()
+    /// Get the pin mode. (e.g. input/output)
     /// paragraph
-    static force_inline Direction direction() {
-        return (*C(DIRECTION_REG) & bv(BIT)) ? Direction::Output : Direction::Input;
-    }
+    static force_inline Mode mode() {
+        uint8_t m = 0;
 
-    /// #### static void pullup(bool p)
-    /// Enable/disable the pullup resistor.
-    static force_inline void pullup(bool p) {
-        output(p ? Value::High : Value::Low);
-    }
+        #if DEFINED(PIN_N(MODE_BIT_0_BIT))
+            m |= getBit(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT)) << 0;
+        #endif
 
-    /// #### static bool pullup()
-    /// Returns true if the pullup resistor is enabled.
-    static force_inline bool pullup() {
-        return output();
+        #if DEFINED(PIN_N(MODE_BIT_1_BIT))
+            m |= getBit(REG(PIN_N(MODE_BIT_1_REG)), PIN_N(MODE_BIT_1_BIT)) << 1;
+        #endif
+
+        #if DEFINED(PIN_N(MODE_BIT_2_BIT))
+            m |= getBit(REG(PIN_N(MODE_BIT_2_REG)), PIN_N(MODE_BIT_2_BIT)) << 2;
+        #endif
+
+        #if DEFINED(PIN_N(MODE_BIT_3_BIT))
+            m |= getBit(REG(PIN_N(MODE_BIT_3_REG)), PIN_N(MODE_BIT_3_BIT)) << 3;
+        #endif
+
+        return Mode(m);
     }
 
     /// #### static void output(Value v)
     /// Set the output state. (High/Low)
     static force_inline void output(Value v) {
-        setBit_(C(OUTPUT_REG), BIT, v == Value::High);
+        setBit_(REG(PIN_N(OUTPUT_BIT_0_REG)), PIN_N(OUTPUT_BIT_0_BIT), v == Value::high);
     }
 
     /// #### static Value output()
-    /// Get the output state. (High/Low)
-    static force_inline bool output() {
-        return *C(OUTPUT_REG) & bv(BIT);
+    /// Get the output value.
+    static force_inline Value output() {
+        return getBit(REG(PIN_N(OUTPUT_BIT_0_REG)), PIN_N(OUTPUT_BIT_0_BIT)) ? Value::high : Value::low;
     }
 
     /// #### static Value input()
-    /// Get the input state. (High/Low)
+    /// Get the input value.
     static force_inline Value input() {
-        return (*C(INPUT_REG) & bv(BIT)) ? Value::High : Value::Low;
+        return getBit(REG(PIN_N(INPUT_BIT_0_REG)), PIN_N(INPUT_BIT_0_BIT)) ? Value::high : Value::low;
     }
 
-    /// #### static void toggle()
-    /// Toggle the output state. (High/Low)
-    static force_inline void toggle() {
-        setBit_(C(INPUT_REG), BIT, true);
-    }
+    #if DEFINED(PIN_N(TOGGLE_BIT_0_BIT))
+        /// #### static void toggle()
+        /// Toggle the output state. (High/Low)
+        static force_inline void toggle() {
+            setBit_(REG(PIN_N(TOGGLE_BIT_0_REG)), PIN_N(TOGGLE_BIT_0_BIT), true);
+        }
+    #endif
 };
 
-#undef PinXN
-#undef C
+//------------------------------------------------------------------
 
-//--------------------------------------------------------
-
-        #endif // CONCAT(CHIP_PIN_, PORT, PIN)
-
-        #undef PORT
-        #undef BIT
-
-        #include "incn.hpp"
-
-        #include "pin.hpp"
-    #endif // N < CHIP_PIN_COUNT
-#else // N
-    #ifndef X
-        // Port id.
-        #define X 0
     #endif
 
-    #if X < CHIP_PORT_COUNT
-        // Pin id.
-        #define N 0
+    #include "pin.hpp"
+#endif
 
-        #include "pin.hpp"
-
-        #undef N
-
-        #include "incx.hpp"
-
-        #include "pin.hpp"
-    #endif // X < CHIP_PORT_COUNT
-
-    #undef X
-
-    #define NBAVR_PIN_HPP
-#endif // N
+#undef N
+#undef PinN
+#undef PIN_N
 
 #endif

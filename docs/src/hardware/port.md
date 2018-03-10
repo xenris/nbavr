@@ -16,26 +16,26 @@ PortC::output(0x01);
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.
 
-#### static void direction(uint8_t d)
-Set the direction of each pin. 0 = input, 1 = output.
+#### static void enableClock(bool e)
+Enable/disable the hardware clock for this port.
 
-#### static uint8_t direction()
-Get the direction of each pin. 0 = input, 1 = output.
+#### static void mode(Pin::Mode m)
+Set the mode of all the pins on this port.
 
-#### static void pullup(uint8_t p)
-Enable/disable the pullup resistor of each pin.
+#### static void output(T value)
+Set the output value of the port.
 
-#### static uint8_t pullup()
-Get the pullup resistor state of each pin.
+#### static void setOutputs(T bits)
+Set the given bits of the port.
 
-#### static void output(uint8_t bits)
-Set the output state of each pin.
+#### static void clearOutputs(T bits)
+Clear the given bits of the port.
 
-#### static uint8_t output()
-Get the output state of each pin.
+#### static T output()
+Get the output state of the port.
 
-#### static uint8_t input()
-Get the input state of each pin.
+#### static T input()
+Get the input state of the port.
 
-#### static void toggle(uint8_t bits)
-Toggle the output state of each pin.
+#### static void toggle(T bits)
+Toggle the given bits of the port.

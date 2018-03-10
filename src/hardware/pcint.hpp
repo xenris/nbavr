@@ -2,26 +2,29 @@
 
 #ifndef NBAVR_PCINT_HPP
 
-#ifndef N
-    // PcInt id.
-    #define N 0
-#endif
+#include "callbacks.hpp"
+#include "chip.hpp"
+#include "hardwaretype.hpp"
+#include "macros.hpp"
+#include "util.hpp"
 
-#if N < CHIP_PCINT_COUNT
-    // If this hardware exists.
-    #if CONCAT(CHIP_PCINT_, N)
-
-//--------------------------------------------------------
-
-#define PcIntN CONCAT(PcInt, N)
-#define C(X) CONCAT(CHIP_PCINT_, N, _, X)
-#define _C(X) UNDERLINE(PCINT, N, X)
-
-MAKE_CALLBACK_HEADER(PCINT, N);
+#define N _I
+#define PcIntN CAT(PcInt, N)
+#define PCINT_N(A) CAT(CHIP_PCINT_, N, _, A)
+#define _PCINT_N(A) UNDERLINE(PCINT, N, A)
 
 /// #### macro INCLUDE_PCINT_CALLBACK(N)
 /// Include this to use PcInt callbacks.
 #define INCLUDE_PCINT_CALLBACK(N) MAKE_CALLBACK(PCINT, N)
+
+#include "loopi"
+
+#ifdef _I
+    #if CAT(CHIP_PCINT_, N)
+
+//--------------------------------------------------------
+
+MAKE_CALLBACK_HEADER(PCINT, N);
 
 /// ## Class PCIntN
 struct PcIntN {
@@ -30,59 +33,61 @@ struct PcIntN {
     /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
-        return HardwareType::PcInt;
+        return HardwareType::pcInt;
     }
 
-    /// #### static void enable(bool e)
-    /// Enable/disable this interrupt.
-    static force_inline void enable(bool e) {
-        setBit_(C(ENABLE_REG), C(ENABLE_BIT), e);
-    }
+    #if DEFINED(PCINT_N(ENABLE_BIT_0_BIT))
+        /// #### static void enable(bool e)
+        /// Enable/disable this interrupt.
+        static force_inline void enable(bool e) {
+            setBit_(REG(PCINT_N(ENABLE_BIT_0_REG)), PCINT_N(ENABLE_BIT_0_BIT), e);
+        }
+    #endif
 
-    /// #### static void mask(uint8_t m)
-    /// Set which pins trigger this interrupt.
-    static force_inline void mask(uint8_t m) {
-        *C(MASK_REG) = m;
-    }
+    #if REG_DEFINED(PCINT_N(MASK_REG))
+        /// #### static void mask(uint8_t m)
+        /// Set which pins trigger this interrupt.
+        static force_inline void mask(uint8_t m) {
+            *REG(PCINT_N(MASK_REG)) = m;
+        }
+    #endif
 
     /// #### static void callback(callback_t callback, void\* data)
     /// Set the callback and data for this interrupt.
     static force_inline void callback(callback_t callback, void* data) {
-        _C(Callback) = callback;
-        _C(CallbackData) = data;
+        _PCINT_N(Callback) = callback;
+        _PCINT_N(CallbackData) = data;
     }
 
-    /// #### static bool intFlag()
-    /// Returns true if the interrupt flag is set.
-    static force_inline bool intFlag() {
-        return *C(FLAG_REG) & bv(C(FLAG_BIT));
-    }
+    #if DEFINED(PCINT_N(INT_FLAG_BIT_0_BIT))
+        /// #### static bool intFlag()
+        /// Returns true if the interrupt flag is set.
+        static force_inline bool intFlag() {
+            return *REG(PCINT_N(INT_FLAG_BIT_0_REG)) & bv(PCINT_N(INT_FLAG_BIT_0_BIT));
+        }
+    #endif
 
-    /// #### static void intFlagClear()
-    /// Clear the interrupt flag.
-    static force_inline void intFlagClear() {
-        setBit_(C(FLAG_REG), C(FLAG_BIT), true);
-    }
+    #if DEFINED(PCINT_N(INT_FLAG_BIT_0_BIT))
+        /// #### static void intFlagClear()
+        /// Clear the interrupt flag.
+        static force_inline void intFlagClear() {
+            setBit_(REG(PCINT_N(INT_FLAG_BIT_0_REG)), PCINT_N(INT_FLAG_BIT_0_BIT), true);
+        }
+    #endif
 };
-
-#undef PcIntN
-#undef C
-#undef _C
 
 //--------------------------------------------------------
 
-    #endif // CONCAT(CHIP_PCINT_, N)
-
-    #include "incn.hpp"
+    #endif
 
     #include "pcint.hpp"
-
-#else // N < CHIP_PCINT_COUNT
-
-    #undef N
-
+#else
     #define NBAVR_PCINT_HPP
+#endif
 
-#endif // N < CHIP_PCINT_COUNT
+#undef N
+#undef PcIntN
+#undef PCINT_N
+#undef _PCINT_N
 
 #endif

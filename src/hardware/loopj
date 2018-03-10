@@ -1,0 +1,103 @@
+#ifndef _J
+    #define _J 0
+#else
+    #if _J == 0
+        #undef _J
+        #define _J 1
+    #elif _J == 1
+        #undef _J
+        #define _J 2
+    #elif _J == 2
+        #undef _J
+        #define _J 3
+    #elif _J == 3
+        #undef _J
+        #define _J 4
+    #elif _J == 4
+        #undef _J
+        #define _J 5
+    #elif _J == 5
+        #undef _J
+        #define _J 6
+    #elif _J == 6
+        #undef _J
+        #define _J 7
+    #elif _J == 7
+        #undef _J
+        #define _J 8
+    #elif _J == 8
+        #undef _J
+        #define _J 9
+    #elif _J == 9
+        #undef _J
+        #define _J 10
+    #elif _J == 10
+        #undef _J
+        #define _J 11
+    #elif _J == 11
+        #undef _J
+        #define _J 12
+    #elif _J == 12
+        #undef _J
+        #define _J 13
+    #elif _J == 13
+        #undef _J
+        #define _J 14
+    #elif _J == 14
+        #undef _J
+        #define _J 15
+    #elif _J == 15
+        #undef _J
+        #define _J 16
+    #elif _J == 16
+        #undef _J
+        #define _J 17
+    #elif _J == 17
+        #undef _J
+        #define _J 18
+    #elif _J == 18
+        #undef _J
+        #define _J 19
+    #elif _J == 19
+        #undef _J
+        #define _J 20
+    #elif _J == 20
+        #undef _J
+        #define _J 21
+    #elif _J == 21
+        #undef _J
+        #define _J 22
+    #elif _J == 22
+        #undef _J
+        #define _J 23
+    #elif _J == 23
+        #undef _J
+        #define _J 24
+    #elif _J == 24
+        #undef _J
+        #define _J 25
+    #elif _J == 25
+        #undef _J
+        #define _J 26
+    #elif _J == 26
+        #undef _J
+        #define _J 27
+    #elif _J == 27
+        #undef _J
+        #define _J 28
+    #elif _J == 28
+        #undef _J
+        #define _J 29
+    #elif _J == 29
+        #undef _J
+        #define _J 30
+    #elif _J == 30
+        #undef _J
+        #define _J 31
+    #elif _J == 31
+        #undef _J
+        #define _J 32
+    #else
+        #undef _J
+    #endif
+#endif
