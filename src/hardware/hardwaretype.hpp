@@ -10,6 +10,7 @@ enum class HardwareType : uint8_t {
     pcInt,
     pin,
     port,
+    spi,
     timer,
     twi,
     usart,

@@ -1020,6 +1020,66 @@
 #define CHIP_USART_0_TX_INT_VECTOR                                  VECT(CHIP_VECT_USART_TX)
 
 //------------------------------------------------
+// Serial peripheral interfaces
+
+#define CHIP_SPI_0                                                  TRUE
+
+#define CHIP_SPI_0_ENABLE_BIT_0_REG                                 CHIP_REG_SPCR
+#define CHIP_SPI_0_ENABLE_BIT_0_BIT                                 6
+
+#define CHIP_SPI_0_INT_ENABLE_BIT_0_REG                             CHIP_REG_SPCR
+#define CHIP_SPI_0_INT_ENABLE_BIT_0_BIT                             7
+
+#define CHIP_SPI_0_DATA_ORDER_MSB_FIRST_ID                          0
+#define CHIP_SPI_0_DATA_ORDER_LSB_FIRST_ID                          1
+#define CHIP_SPI_0_DATA_ORDER_BIT_0_REG                             CHIP_REG_SPCR
+#define CHIP_SPI_0_DATA_ORDER_BIT_0_BIT                             5
+
+#define CHIP_SPI_0_MASTER_SLAVE_SELECT_SLAVE_ID                     0
+#define CHIP_SPI_0_MASTER_SLAVE_SELECT_MASTER_ID                    1
+#define CHIP_SPI_0_MASTER_SLAVE_SELECT_BIT_0_REG                    CHIP_REG_SPCR
+#define CHIP_SPI_0_MASTER_SLAVE_SELECT_BIT_0_BIT                    4
+
+#define CHIP_SPI_0_POLARITY_LEADING_RISING_TRAILING_FALLING_ID      0
+#define CHIP_SPI_0_POLARITY_LEADING_FALLING_TRAILING_RISING_ID      0
+#define CHIP_SPI_0_POLARITY_BIT_0_REG                               CHIP_REG_SPCR
+#define CHIP_SPI_0_POLARITY_BIT_0_BIT                               3
+
+#define CHIP_SPI_0_PHASE_LEADING_SAMPLE_TRAILING_SETUP_ID           0
+#define CHIP_SPI_0_PHASE_LEADING_SETUP_TRAILING_SAMPLE_ID           0
+#define CHIP_SPI_0_PHASE_BIT_0_REG                                  CHIP_REG_SPCR
+#define CHIP_SPI_0_PHASE_BIT_0_BIT                                  2
+
+#define CHIP_SPI_0_CLOCK_DIV_2_ID                                   4
+#define CHIP_SPI_0_CLOCK_DIV_4_ID                                   0
+#define CHIP_SPI_0_CLOCK_DIV_8_ID                                   5
+#define CHIP_SPI_0_CLOCK_DIV_16_ID                                  1
+#define CHIP_SPI_0_CLOCK_DIV_32_ID                                  6
+#define CHIP_SPI_0_CLOCK_DIV_64_ID                                  2
+#define CHIP_SPI_0_CLOCK_DIV_128_ID                                 3
+#define CHIP_SPI_0_CLOCK_BIT_0_REG                                  CHIP_REG_SPCR
+#define CHIP_SPI_0_CLOCK_BIT_0_BIT                                  0
+#define CHIP_SPI_0_CLOCK_BIT_1_REG                                  CHIP_REG_SPCR
+#define CHIP_SPI_0_CLOCK_BIT_1_BIT                                  1
+#define CHIP_SPI_0_CLOCK_BIT_2_REG                                  CHIP_REG_SPSR
+#define CHIP_SPI_0_CLOCK_BIT_2_BIT                                  0
+
+#define CHIP_SPI_0_INT_FLAG_BIT_0_REG                               CHIP_REG_SPSR
+#define CHIP_SPI_0_INT_FLAG_BIT_0_BIT                               7
+
+#define CHIP_SPI_0_COLLISION_FLAG_BIT_0_REG                         CHIP_REG_SPSR
+#define CHIP_SPI_0_COLLISION_FLAG_BIT_0_BIT                         6
+
+#define CHIP_SPI_0_DATA_REG                                         CHIP_REG_SPDR
+
+#define CHIP_SPI_0_INT_VECTOR                                       VECT(CHIP_VECT_SPI_STC)
+
+#define CHIP_SPI_0_PIN_MISO                                         PortB::Pin4
+#define CHIP_SPI_0_PIN_MOSI                                         PortB::Pin3
+#define CHIP_SPI_0_PIN_SCK                                          PortB::Pin5
+#define CHIP_SPI_0_PIN_SS                                           PortB::Pin2
+
+//------------------------------------------------
 // Two wire serial interfaces
 
 #define CHIP_TWI_0                                                  TRUE

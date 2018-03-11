@@ -747,3 +747,74 @@ TEST(Usart0, parityError) {
 TEST(Usart0, parityErrorClear) {
     TEST_REG_WRITE(Usart0::parityErrorClear());
 }
+
+//------------------------------------------------
+// Spi
+
+INCLUDE_SPI_CALLBACK(0);
+
+TEST(Spi0, getHardwareType) {
+    ASSERT_EQ(Spi0::getHardwareType(), HardwareType::spi);
+}
+
+TEST(Spi0, enable) {
+    TEST_REG_WRITE(Spi0::enable(true));
+    TEST_REG_WRITE(Spi0::enable(false));
+}
+
+TEST(Spi0, intEnable) {
+    TEST_REG_WRITE(Spi0::intEnable(true));
+    TEST_REG_WRITE(Spi0::intEnable(false));
+}
+
+TEST(Spi0, dataOrder) {
+    TEST_REG_WRITE(Spi0::dataOrder(Spi0::DataOrder::msbFirst));
+    TEST_REG_WRITE(Spi0::dataOrder(Spi0::DataOrder::lsbFirst));
+}
+
+TEST(Spi0, masterSlave) {
+    TEST_REG_WRITE(Spi0::masterSlave(Spi0::MasterSlave::master));
+    TEST_REG_WRITE(Spi0::masterSlave(Spi0::MasterSlave::slave));
+}
+
+TEST(Spi0, polarity) {
+    TEST_REG_WRITE(Spi0::polarity(Spi0::Polarity::leadingRisingTrailingFalling));
+    TEST_REG_WRITE(Spi0::polarity(Spi0::Polarity::leadingFallingTrailingRising));
+}
+
+TEST(Spi0, phase) {
+    TEST_REG_WRITE(Spi0::phase(Spi0::Phase::leadingSampleTrailingSetup));
+    TEST_REG_WRITE(Spi0::phase(Spi0::Phase::leadingSetupTrailingSample));
+}
+
+TEST(Spi0, clock) {
+    TEST_REG_WRITE(Spi0::clock(Spi0::Clock::div2));
+    TEST_REG_WRITE(Spi0::clock(Spi0::Clock::div4));
+    TEST_REG_WRITE(Spi0::clock(Spi0::Clock::div8));
+    TEST_REG_WRITE(Spi0::clock(Spi0::Clock::div16));
+    TEST_REG_WRITE(Spi0::clock(Spi0::Clock::div32));
+    TEST_REG_WRITE(Spi0::clock(Spi0::Clock::div64));
+}
+
+TEST(Spi0, intFlag) {
+    TEST_REG_READ_WRITE(Spi0::intFlag());
+}
+
+TEST(Spi0, intFlagClear) {
+    TEST_REG_WRITE(Spi0::intFlagClear());
+}
+
+TEST(Spi0, collisionFlag) {
+    TEST_REG_READ_WRITE(Spi0::collisionFlag());
+}
+
+TEST(Spi0, collisionFlagClear) {
+    TEST_REG_WRITE(Spi0::collisionFlagClear());
+}
+
+TEST(Spi0, data) {
+    TEST_REG_READ_WRITE(Spi0::data());
+    TEST_REG_WRITE(Spi0::data(0x00));
+    TEST_REG_WRITE(Spi0::data(0xFF));
+    TEST_REG_WRITE(Spi0::data(0x4E));
+}

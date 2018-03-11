@@ -12,6 +12,7 @@ namespace hw {
     #include "hardware/pcint.hpp"
     #include "hardware/pin.hpp"
     #include "hardware/port.hpp"
+    #include "hardware/spi.hpp"
     #include "hardware/timer.hpp"
     #include "hardware/twi.hpp"
     #include "hardware/usart.hpp"

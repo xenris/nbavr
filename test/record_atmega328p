@@ -20,6 +20,9 @@ r PortD::Pin4::input() 1010101010
 r PortD::Pin4::output() 1110100001
 r PortD::input() de459de41b435a615840
 r PortD::output() 91dc97c25d68e3ce29f4
+r Spi0::collisionFlag() 1011111001
+r Spi0::data() 304081f292636394f485
+r Spi0::intFlag() 1000000001
 r Timer0::OutputA::intFlag() 1010101010
 r Timer0::OutputA::value() d2b0febcea889614261
 r Timer0::OutputB::intFlag() 1100110011
@@ -156,6 +159,32 @@ w PortD::mode(Pin::Mode::output) 2a:00:ff:2b:ff:00:
 w PortD::output()
 w PortD::output(0xa4) 2b:00:a4:2b:ff:a4:
 w PortD::toggle(0x82) 29:00:82:29:ff:82:
+w Spi0::clock(Spi0::Clock::div16) 4c:00:01:4c:ff:fd:4d:ff:fe:
+w Spi0::clock(Spi0::Clock::div2) 4d:00:01:4c:ff:fc:
+w Spi0::clock(Spi0::Clock::div32) 4c:00:02:4d:00:01:4c:ff:fe:
+w Spi0::clock(Spi0::Clock::div4) 4c:ff:fc:4d:ff:fe:
+w Spi0::clock(Spi0::Clock::div64) 4c:00:02:4c:ff:fe:4d:ff:fe:
+w Spi0::clock(Spi0::Clock::div8) 4c:00:01:4d:00:01:4c:ff:fd:
+w Spi0::collisionFlag()
+w Spi0::collisionFlagClear() 4d:00:40:
+w Spi0::data()
+w Spi0::data(0x00) 4e:ff:00:
+w Spi0::data(0x4E) 4e:00:4e:4e:ff:4e:
+w Spi0::data(0xFF) 4e:00:ff:
+w Spi0::dataOrder(Spi0::DataOrder::lsbFirst) 4c:00:20:
+w Spi0::dataOrder(Spi0::DataOrder::msbFirst) 4c:ff:df:
+w Spi0::enable(false) 4c:ff:bf:
+w Spi0::enable(true) 4c:00:40:
+w Spi0::intEnable(false) 4c:ff:7f:
+w Spi0::intEnable(true) 4c:00:80:
+w Spi0::intFlag()
+w Spi0::intFlagClear() 4d:00:80:
+w Spi0::masterSlave(Spi0::MasterSlave::master) 4c:00:10:
+w Spi0::masterSlave(Spi0::MasterSlave::slave) 4c:ff:ef:
+w Spi0::phase(Spi0::Phase::leadingSampleTrailingSetup) 4c:ff:fb:
+w Spi0::phase(Spi0::Phase::leadingSetupTrailingSample) 4c:ff:fb:
+w Spi0::polarity(Spi0::Polarity::leadingFallingTrailingRising) 4c:ff:f7:
+w Spi0::polarity(Spi0::Polarity::leadingRisingTrailingFalling) 4c:ff:f7:
 w Timer0::OutputA::callback(func,data)
 w Timer0::OutputA::intEnable(false) 6e:ff:fd:
 w Timer0::OutputA::intEnable(true) 6e:00:02:
