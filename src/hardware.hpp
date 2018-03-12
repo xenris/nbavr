@@ -16,6 +16,7 @@ namespace hw {
     #include "hardware/timer.hpp"
     #include "hardware/twi.hpp"
     #include "hardware/usart.hpp"
+    #include "hardware/usi.hpp"
     #include "hardware/watchdog.hpp"
 }
 

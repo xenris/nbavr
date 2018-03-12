@@ -14,6 +14,7 @@ enum class HardwareType : uint8_t {
     timer,
     twi,
     usart,
+    usi,
     wdt
 };
 

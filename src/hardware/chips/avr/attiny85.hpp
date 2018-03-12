@@ -529,4 +529,74 @@
 #define CHIP_TIMER_1_OVERFLOW_INT_FLAG_BIT                          2
 #define CHIP_TIMER_1_OVERFLOW_INT_VECTOR                            VECT(CHIP_VECT_TIMER1_OVF)
 
+//------------------------------------------------
+// Universal serial interfaces
+
+#define CHIP_USI_0                                                  TRUE
+
+#define CHIP_USI_0_PIN_DO                                           PortB::Pin1
+#define CHIP_USI_0_PIN_DI                                           PortB::Pin0
+#define CHIP_USI_0_PIN_SDA                                          PortB::Pin0
+#define CHIP_USI_0_PIN_SCL                                          PortB::Pin2
+#define CHIP_USI_0_PIN_USCK                                         PortB::Pin2
+
+#define CHIP_USI_0_DATA_REG                                         CHIP_REG_USIDR
+#define CHIP_USI_0_BUFFER_REG                                       CHIP_REG_USIBR
+
+#define CHIP_USI_0_START_CONDITION_INT_FLAG_BIT_0_REG               CHIP_REG_USISR
+#define CHIP_USI_0_START_CONDITION_INT_FLAG_BIT_0_BIT               7
+
+#define CHIP_USI_0_COUNTER_OVERFLOW_INT_FLAG_BIT_0_REG              CHIP_REG_USISR
+#define CHIP_USI_0_COUNTER_OVERFLOW_INT_FLAG_BIT_0_BIT              6
+
+#define CHIP_USI_0_STOP_CONDITION_INT_FLAG_BIT_0_REG                CHIP_REG_USISR
+#define CHIP_USI_0_STOP_CONDITION_INT_FLAG_BIT_0_BIT                5
+
+#define CHIP_USI_0_COLLISION_FLAG_BIT_0_REG                         CHIP_REG_USISR
+#define CHIP_USI_0_COLLISION_FLAG_BIT_0_BIT                         4
+
+#define CHIP_USI_0_COUNTER_BIT_0_REG                                CHIP_REG_USISR
+#define CHIP_USI_0_COUNTER_BIT_0_BIT                                0
+#define CHIP_USI_0_COUNTER_BIT_1_REG                                CHIP_REG_USISR
+#define CHIP_USI_0_COUNTER_BIT_1_BIT                                1
+#define CHIP_USI_0_COUNTER_BIT_2_REG                                CHIP_REG_USISR
+#define CHIP_USI_0_COUNTER_BIT_2_BIT                                2
+#define CHIP_USI_0_COUNTER_BIT_3_REG                                CHIP_REG_USISR
+#define CHIP_USI_0_COUNTER_BIT_3_BIT                                3
+
+#define CHIP_USI_0_START_CONDITION_INT_ENABLE_BIT_0_REG             CHIP_REG_USICR
+#define CHIP_USI_0_START_CONDITION_INT_ENABLE_BIT_0_BIT             7
+
+#define CHIP_USI_0_COUNTER_OVERFLOW_INT_ENABLE_BIT_0_REG            CHIP_REG_USICR
+#define CHIP_USI_0_COUNTER_OVERFLOW_INT_ENABLE_BIT_0_BIT            6
+
+#define CHIP_USI_0_WIRE_MODE_DISABLED_ID                            0
+#define CHIP_USI_0_WIRE_MODE_THREE_WIRE_ID                          1
+#define CHIP_USI_0_WIRE_MODE_TWO_WIRE_ID                            2
+#define CHIP_USI_0_WIRE_MODE_TWO_WIRE_OVERFLOW_ID                   3
+
+#define CHIP_USI_0_WIRE_MODE_BIT_0_REG                              CHIP_REG_USICR
+#define CHIP_USI_0_WIRE_MODE_BIT_0_BIT                              4
+#define CHIP_USI_0_WIRE_MODE_BIT_1_REG                              CHIP_REG_USICR
+#define CHIP_USI_0_WIRE_MODE_BIT_1_BIT                              5
+
+#define CHIP_USI_0_CLOCK_SELECT_NONE_ID                             0
+#define CHIP_USI_0_CLOCK_SELECT_TIMER_0_COMPARE_MATCH_ID            1
+#define CHIP_USI_0_CLOCK_SELECT_EXTERNAL_POSITIVE_EDGE_ID           2
+#define CHIP_USI_0_CLOCK_SELECT_EXTERNAL_NEGATIVE_EDGE_ID           3
+
+#define CHIP_USI_0_CLOCK_SELECT_BIT_0_REG                           CHIP_REG_USICR
+#define CHIP_USI_0_CLOCK_SELECT_BIT_0_BIT                           2
+#define CHIP_USI_0_CLOCK_SELECT_BIT_1_REG                           CHIP_REG_USICR
+#define CHIP_USI_0_CLOCK_SELECT_BIT_1_BIT                           3
+
+#define CHIP_USI_0_CLOCK_STROBE_BIT_0_REG                           CHIP_REG_USICR
+#define CHIP_USI_0_CLOCK_STROBE_BIT_0_BIT                           1
+
+#define CHIP_USI_0_TOGGLE_CLOCK_PIN_BIT_0_REG                       CHIP_REG_USICR
+#define CHIP_USI_0_TOGGLE_CLOCK_PIN_BIT_0_BIT                       0
+
+#define CHIP_USI_0_OVERFLOW_INT_VECTOR                              VECT(CHIP_VECT_USI_START)
+#define CHIP_USI_0_START_INT_VECTOR                                 VECT(CHIP_VECT_USI_OVF)
+
 #endif

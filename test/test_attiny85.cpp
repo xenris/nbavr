@@ -207,7 +207,7 @@ TEST(PortX, toggle) {
 }
 
 //------------------------------------------------
-// Timer/Counters
+// Timers
 
 INCLUDE_TIMER_OVERFLOW_CALLBACK(0);
 INCLUDE_TIMER_OUTPUT_CALLBACK(0, A);
@@ -441,4 +441,77 @@ TEST(Timer1, outputAIntFlagClear) {
 
 TEST(Timer1, outputBIntFlagClear) {
     TEST_REG_WRITE(Timer1::OutputB::intFlagClear());
+}
+
+//------------------------------------------------
+// Universal serial interfaces
+
+INCLUDE_USI_CALLBACK(0, START);
+INCLUDE_USI_CALLBACK(0, OVERFLOW);
+
+TEST(Usi0, getHardwareType) {
+    ASSERT_EQ(Usi0::getHardwareType(), HardwareType::usi);
+}
+
+TEST(Usi0, data) {
+    TEST_REG_READ_WRITE(Usi0::data());
+    TEST_REG_WRITE(Usi0::data(0x3b));
+}
+
+TEST(Usi0, startConditionIntEnable) {
+    TEST_REG_WRITE(Usi0::startConditionIntEnable(true));
+    TEST_REG_WRITE(Usi0::startConditionIntEnable(false));
+}
+
+TEST(Usi0, counterOverflowIntEnable) {
+    TEST_REG_WRITE(Usi0::counterOverflowIntEnable(true));
+    TEST_REG_WRITE(Usi0::counterOverflowIntEnable(false));
+}
+
+TEST(Usi0, wireMode) {
+    TEST_REG_WRITE(Usi0::wireMode(nbavr::hw::Usi0::WireMode::disabled));
+    TEST_REG_WRITE(Usi0::wireMode(nbavr::hw::Usi0::WireMode::threeWire));
+    TEST_REG_WRITE(Usi0::wireMode(nbavr::hw::Usi0::WireMode::twoWire));
+    TEST_REG_WRITE(Usi0::wireMode(nbavr::hw::Usi0::WireMode::twoWireOverflow));
+}
+
+TEST(Usi0, clock) {
+    TEST_REG_WRITE(Usi0::clock(nbavr::hw::Usi0::Clock::none));
+    TEST_REG_WRITE(Usi0::clock(nbavr::hw::Usi0::Clock::timer0CompareMatch));
+    TEST_REG_WRITE(Usi0::clock(nbavr::hw::Usi0::Clock::externalPositiveEdge));
+    TEST_REG_WRITE(Usi0::clock(nbavr::hw::Usi0::Clock::externalNegativeEdge));
+}
+
+TEST(Usi0, clockStrobe) {
+    TEST_REG_WRITE(Usi0::clockStrobe());
+}
+
+TEST(Usi0, toggleClockPin) {
+    TEST_REG_WRITE(Usi0::toggleClockPin());
+}
+
+TEST(Usi0, startConditionIntFlag) {
+    TEST_REG_READ_WRITE(Usi0::startConditionIntFlag());
+    TEST_REG_WRITE(Usi0::startConditionIntFlagClear());
+}
+
+TEST(Usi0, stopConditionIntFlag) {
+    TEST_REG_READ_WRITE(Usi0::stopConditionIntFlag());
+    TEST_REG_WRITE(Usi0::stopConditionIntFlagClear());
+}
+
+TEST(Usi0, counterOverflowIntFlag) {
+    TEST_REG_READ_WRITE(Usi0::counterOverflowIntFlag());
+    TEST_REG_WRITE(Usi0::counterOverflowIntFlagClear());
+}
+
+TEST(Usi0, collisionFlag) {
+    TEST_REG_READ_WRITE(Usi0::collisionFlag());
+}
+
+TEST(Usi0, counter) {
+    TEST_REG_READ_WRITE(Usi0::counter());
+    TEST_REG_WRITE(Usi0::counter(0x0));
+    TEST_REG_WRITE(Usi0::counter(0x3));
+    TEST_REG_WRITE(Usi0::counter(0xc3));
 }

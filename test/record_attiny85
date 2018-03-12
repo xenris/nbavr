@@ -20,6 +20,12 @@ r Timer1::OutputB::value() 3bddef7163c597d98bad
 r Timer1::OutputC::value() dd1a4765726f5c397c4
 r Timer1::counter() e1a5d87c901486c4084
 r Timer1::overflowIntFlag() 1010101010
+r Usi0::collisionFlag() 0111100110
+r Usi0::counter() 642fda8531
+r Usi0::counterOverflowIntFlag() 1100000000
+r Usi0::data() 88d6d583e2f0af1d3ca
+r Usi0::startConditionIntFlag() 0111101000
+r Usi0::stopConditionIntFlag() 1110100101
 w Adc0::callback(func,data)
 w Adc0::channel(Adc0::Channel::ADC0) 27:ff:f0:
 w Adc0::channel(Adc0::Channel::ADC1) 27:00:01:27:ff:f1:
@@ -176,3 +182,30 @@ w Timer1::overflowIntFlagClear() 58:00:04:
 w Timer1::waveform(Timer1::Waveform::CTCOCRA) 50:00:80:50:ff:bf:
 w Timer1::waveform(Timer1::Waveform::FastPWMOCRC) 50:00:40:50:ff:7f:
 w Timer1::waveform(Timer1::Waveform::Normal) 50:ff:3f:
+w Usi0::clock(nbavr::hw::Usi0::Clock::externalNegativeEdge) 2d:00:0c:
+w Usi0::clock(nbavr::hw::Usi0::Clock::externalPositiveEdge) 2d:00:08:2d:ff:fb:
+w Usi0::clock(nbavr::hw::Usi0::Clock::none) 2d:ff:f3:
+w Usi0::clock(nbavr::hw::Usi0::Clock::timer0CompareMatch) 2d:00:04:2d:ff:f7:
+w Usi0::clockStrobe() 2d:00:02:
+w Usi0::collisionFlag()
+w Usi0::counter()
+w Usi0::counter(0x0) 2e:ff:f0:
+w Usi0::counter(0x3) 2e:00:03:2e:ff:f3:
+w Usi0::counter(0xc3) 2e:00:03:2e:ff:f3:
+w Usi0::counterOverflowIntEnable(false) 2d:ff:bf:
+w Usi0::counterOverflowIntEnable(true) 2d:00:40:
+w Usi0::counterOverflowIntFlag()
+w Usi0::counterOverflowIntFlagClear() 2e:00:40:
+w Usi0::data()
+w Usi0::data(0x3b) 2f:00:3b:2f:ff:3b:
+w Usi0::startConditionIntEnable(false) 2d:ff:7f:
+w Usi0::startConditionIntEnable(true) 2d:00:80:
+w Usi0::startConditionIntFlag()
+w Usi0::startConditionIntFlagClear() 2e:00:80:
+w Usi0::stopConditionIntFlag()
+w Usi0::stopConditionIntFlagClear() 2e:00:20:
+w Usi0::toggleClockPin() 2d:00:01:
+w Usi0::wireMode(nbavr::hw::Usi0::WireMode::disabled) 2d:ff:e7:
+w Usi0::wireMode(nbavr::hw::Usi0::WireMode::threeWire) 2d:00:18:
+w Usi0::wireMode(nbavr::hw::Usi0::WireMode::twoWire) 2d:ff:e7:
+w Usi0::wireMode(nbavr::hw::Usi0::WireMode::twoWireOverflow) 2d:00:18:
