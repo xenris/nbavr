@@ -2,18 +2,21 @@
 
 /// ## Index
 
-/// * [Tasks](src/task.md)
+/// * [Task](src/task.md)
 /// * [TaskManager](src/taskmanager.md)
 /// * Hardware
-///     * [Analog to Digital](src/hardware/adc.md)
-///     * [External Interrupts](src/hardware/exint.md)
-///     * [Pin Change Interrupts](src/hardware/pcint.md)
-///     * [Digital IO Pins](src/hardware/pin.md)
-///     * [Digital IO Ports](src/hardware/port.md)
-///     * [Timer/Counters](src/hardware/timercounter.md)
+///     * [Adc](src/hardware/adc.md)
+///     * [Eeprom](src/hardware/eeprom.md)
+///     * [ExInt](src/hardware/exint.md)
+///     * [PcInt](src/hardware/pcint.md)
+///     * [Pin](src/hardware/pin.md)
+///     * [Port](src/hardware/port.md)
+///     * [Spi](src/hardware/spi.md)
+///     * [Timer](src/hardware/timer.md)
 ///     * [Twi](src/hardware/twi.md)
-///     * [USARTs](src/hardware/usart.md)
-///     * [Utils](src/hardware/util.md)
+///     * [Usart](src/hardware/usart.md)
+///     * [Usi](src/hardware/usi.md)
+///     * [Util](src/hardware/util.md)
 /// * Examples
 ///     * [nbos-project-template](https://github.com/xenris/nbos-project-template)
 ///     * [8x8 LED Matrix Display](https://github.com/xenris/led-matrix-display)
