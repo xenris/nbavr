@@ -1,5 +1,5 @@
-#ifndef NBAVR_WATCHDOG_HPP
-#define NBAVR_WATCHDOG_HPP
+#ifndef NBOS_WATCHDOG_HPP
+#define NBOS_WATCHDOG_HPP
 
 // TODO Add enum class to indicate what sort of reset occured.
 // TODO Some things have been excluded from testing. Need to work out how to

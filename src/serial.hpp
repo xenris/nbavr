@@ -1,5 +1,5 @@
-#ifndef NBAVR_SERIAL_HPP
-#define NBAVR_SERIAL_HPP
+#ifndef NBOS_SERIAL_HPP
+#define NBOS_SERIAL_HPP
 
 template <class Usart, class cout_t, class cin_t = nulltype>
 struct Serial {

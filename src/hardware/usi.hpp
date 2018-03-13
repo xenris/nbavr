@@ -2,7 +2,7 @@
 
 /// N is the USI id (0, 1, 2, etc).
 
-#ifndef NBAVR_USI_HPP
+#ifndef NBOS_USI_HPP
 
 #include "callbacks.hpp"
 #include "chip.hpp"
@@ -305,7 +305,7 @@ struct UsiN {
 
     #include "usi.hpp"
 #else
-    #define NBAVR_USI_HPP
+    #define NBOS_USI_HPP
 #endif
 
 #undef N

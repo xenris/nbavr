@@ -1,5 +1,5 @@
-#ifndef NBAVR_ARRAY_HPP
-#define NBAVR_ARRAY_HPP
+#ifndef NBOS_ARRAY_HPP
+#define NBOS_ARRAY_HPP
 
 /// # Array
 

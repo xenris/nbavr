@@ -25,8 +25,8 @@
 
 ///   e.g. "w Adc::channel(Adc::Channel::ADC4) 7c:00:04:7c:ff:f4:"
 
-#ifndef NBAVR_CHIP_HPP
-#define NBAVR_CHIP_HPP
+#ifndef NBOS_CHIP_HPP
+#define NBOS_CHIP_HPP
 
 #include "type.hpp"
 
@@ -85,7 +85,7 @@ struct _reg {
 //    #include "chips/xxx.hpp"
 //#endif
 
-#ifndef NBAVR_CHIP_DEFINED
+#ifndef NBOS_CHIP_DEFINED
     #error The hardware has not been defined for this chip
 #endif
 

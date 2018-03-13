@@ -1,5 +1,5 @@
-#ifndef NBAVR_QUEUE_HPP
-#define NBAVR_QUEUE_HPP
+#ifndef NBOS_QUEUE_HPP
+#define NBOS_QUEUE_HPP
 
 #include "math.hpp"
 #include "type.hpp"

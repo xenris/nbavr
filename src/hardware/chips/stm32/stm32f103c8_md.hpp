@@ -1,8 +1,8 @@
-#ifndef NBAVR_ARM_HPP
-#define NBAVR_ARM_HPP
+#ifndef NBOS_ARM_HPP
+#define NBOS_ARM_HPP
 
 
-#define NBAVR_CHIP_DEFINED
+#define NBOS_CHIP_DEFINED
 
 //------------------------------------------------
 // Peripherals base address. (All peripherals.)

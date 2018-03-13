@@ -1,6 +1,6 @@
 /// # EEPROM
 
-#ifndef NBAVR_EEPROM_HPP
+#ifndef NBOS_EEPROM_HPP
 
 #include "callbacks.hpp"
 #include "chip.hpp"
@@ -116,7 +116,7 @@ struct Eeprom {
 
     #include "eeprom.hpp"
 #else
-    #define NBAVR_EEPROM_HPP
+    #define NBOS_EEPROM_HPP
 #endif
 
 #undef N

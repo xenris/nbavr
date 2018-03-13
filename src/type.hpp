@@ -1,5 +1,5 @@
-#ifndef NBAVR_TYPE_HPP
-#define NBAVR_TYPE_HPP
+#ifndef NBOS_TYPE_HPP
+#define NBOS_TYPE_HPP
 
 #ifndef TEST
 

@@ -1,5 +1,5 @@
-#ifndef NBAVR_PRINT_HPP
-#define NBAVR_PRINT_HPP
+#ifndef NBOS_PRINT_HPP
+#define NBOS_PRINT_HPP
 
 #include "algorithm.hpp"
 #include "libc.hpp"

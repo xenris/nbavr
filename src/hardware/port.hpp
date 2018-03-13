@@ -11,7 +11,7 @@
 /// PortC::output(0x01);
 /// ```
 
-#ifndef NBAVR_PORT_HPP
+#ifndef NBOS_PORT_HPP
 
 #include "callbacks.hpp"
 #include "chip.hpp"
@@ -156,7 +156,7 @@ struct PortX {
 
     #include "port.hpp"
 #else
-    #define NBAVR_PORT_HPP
+    #define NBOS_PORT_HPP
 #endif
 
 #undef X

@@ -1,10 +1,10 @@
-#ifndef NBAVR_HPP
-#define NBAVR_HPP
+#ifndef NBOS_HPP
+#define NBOS_HPP
 
 #include "type.hpp"
 #include "macros.hpp"
 
-namespace nbavr {
+namespace nbos {
     #include "hardware.hpp"
     #include "algorithm.hpp"
     #include "array.hpp"

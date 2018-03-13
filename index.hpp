@@ -1,4 +1,4 @@
-/// # nbavr Documentation
+/// # nbos Documentation
 
 /// ## Index
 
@@ -15,7 +15,7 @@
 ///     * [USARTs](src/hardware/usart.md)
 ///     * [Utils](src/hardware/util.md)
 /// * Examples
-///     * [nbavr-project-template](https://github.com/xenris/nbavr-project-template)
+///     * [nbos-project-template](https://github.com/xenris/nbos-project-template)
 ///     * [8x8 LED Matrix Display](https://github.com/xenris/led-matrix-display)
 ///     * [Optima Hitec Receiver PWM/PPM](https://github.com/xenris/hitec-receiver)
 /// * [Adding Chips/Tests](src/hardware/chip.md)

@@ -1,7 +1,7 @@
-#ifndef NBAVR_ATTINY85_HPP
-#define NBAVR_ATTINY85_HPP
+#ifndef NBOS_ATTINY85_HPP
+#define NBOS_ATTINY85_HPP
 
-#define NBAVR_CHIP_DEFINED
+#define NBOS_CHIP_DEFINED
 
 //------------------------------------------------
 // Memory

@@ -1,7 +1,7 @@
-#ifndef NBAVR_LCD_HPP
-#define NBAVR_LCD_HPP
+#ifndef NBOS_LCD_HPP
+#define NBOS_LCD_HPP
 
-#include <nbavr.hpp>
+#include <nbos.hpp>
 
 // \r = clear display and return curser to home position.
 // \n = move to start of next line, wrapping to first line.

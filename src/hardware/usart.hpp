@@ -8,7 +8,7 @@
 /// // TODO
 /// ```
 
-#ifndef NBAVR_USART_HPP
+#ifndef NBOS_USART_HPP
 
 #include "callbacks.hpp"
 #include "chip.hpp"
@@ -378,7 +378,7 @@ struct UsartN {
 
     #include "usart.hpp"
 #else
-    #define NBAVR_USART_HPP
+    #define NBOS_USART_HPP
 #endif
 
 #undef N

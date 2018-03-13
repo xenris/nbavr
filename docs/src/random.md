@@ -3,7 +3,7 @@
 ## Example
 
 ```c++
-nbavr::Random random;
+nbos::Random random;
 
 int16_t i = random.next<int16_t>();
 float f = random.next<float>();

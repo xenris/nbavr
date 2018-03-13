@@ -1,5 +1,5 @@
-#ifndef NBAVR_PRIORITYQUEUE_HPP
-#define NBAVR_PRIORITYQUEUE_HPP
+#ifndef NBOS_PRIORITYQUEUE_HPP
+#define NBOS_PRIORITYQUEUE_HPP
 
 #include "algorithm.hpp"
 #include "math.hpp"

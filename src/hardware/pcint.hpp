@@ -1,6 +1,6 @@
 /// # Pin Change Interrupts
 
-#ifndef NBAVR_PCINT_HPP
+#ifndef NBOS_PCINT_HPP
 
 #include "callbacks.hpp"
 #include "chip.hpp"
@@ -82,7 +82,7 @@ struct PcIntN {
 
     #include "pcint.hpp"
 #else
-    #define NBAVR_PCINT_HPP
+    #define NBOS_PCINT_HPP
 #endif
 
 #undef N

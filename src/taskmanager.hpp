@@ -5,20 +5,20 @@
 /// ```c++
 /// const uint32_t CpuFreq = 16000000;
 
-/// using LedPin = nbavr::PinB5;
-/// using SystemTimer = nbavr::TimerCounter1;
+/// using LedPin = nbos::PinB5;
+/// using SystemTimer = nbos::TimerCounter1;
 
-/// using Clock = nbavr::Clock<SystemTimer, CpuFreq>;
+/// using Clock = nbos::Clock<SystemTimer, CpuFreq>;
 
 /// Flash<Clock, LedPin> flash;
 
-/// nbavr::Task<Clock>* tasks[] = {&flash};
+/// nbos::Task<Clock>* tasks[] = {&flash};
 
-/// nbavr::TaskManager<Clock> tm(tasks);
+/// nbos::TaskManager<Clock> tm(tasks);
 /// ```
 
-#ifndef NBAVR_TASKMANAGER_HPP
-#define NBAVR_TASKMANAGER_HPP
+#ifndef NBOS_TASKMANAGER_HPP
+#define NBOS_TASKMANAGER_HPP
 
 #include "clock.hpp"
 #include "hardware.hpp"

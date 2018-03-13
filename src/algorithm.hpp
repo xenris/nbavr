@@ -1,5 +1,5 @@
-#ifndef NBAVR_ALGORITHM_HPP
-#define NBAVR_ALGORITHM_HPP
+#ifndef NBOS_ALGORITHM_HPP
+#define NBOS_ALGORITHM_HPP
 
 /// # Algorithm
 

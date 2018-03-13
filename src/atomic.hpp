@@ -1,5 +1,5 @@
-#ifndef NBAVR_ATOMIC_HPP
-#define NBAVR_ATOMIC_HPP
+#ifndef NBOS_ATOMIC_HPP
+#define NBOS_ATOMIC_HPP
 
 /// # Atomic
 /// Used to access variables atomically.<br>

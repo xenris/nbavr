@@ -2,7 +2,7 @@
 
 /// N is the external interrupt id (1, 2, etc).
 
-#ifndef NBAVR_EXINT_HPP
+#ifndef NBOS_EXINT_HPP
 
 #include "callbacks.hpp"
 #include "chip.hpp"
@@ -101,7 +101,7 @@ struct ExIntN {
 
     #include "exint.hpp"
 #else
-    #define NBAVR_EXINT_HPP
+    #define NBOS_EXINT_HPP
 #endif
 
 #undef N

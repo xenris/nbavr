@@ -7,13 +7,13 @@
 uint8_t register_memory[CHIP_REGISTER_SIZE];
 #define register_offset register_memory
 
-#include <nbavr.hpp>
+#include <nbos.hpp>
 
 #ifndef RECORD_ID
     #error RECORD_ID not defined
 #endif
 
-using namespace nbavr;
+using namespace nbos;
 using namespace hw;
 
 // TODO Ensure correct program flow. (Tasks take turns. Halted tasks don't

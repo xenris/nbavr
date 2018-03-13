@@ -1,5 +1,5 @@
-#ifndef NBAVR_MACROS_HPP
-#define NBAVR_MACROS_HPP
+#ifndef NBOS_MACROS_HPP
+#define NBOS_MACROS_HPP
 
 #include "type.hpp"
 

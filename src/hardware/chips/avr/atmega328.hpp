@@ -1,5 +1,5 @@
-#ifndef NBAVR_ATMEGA328_HPP
-#define NBAVR_ATMEGA328_HPP
+#ifndef NBOS_ATMEGA328_HPP
+#define NBOS_ATMEGA328_HPP
 
 #include "atmega328p.hpp"
 

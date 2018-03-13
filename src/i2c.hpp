@@ -1,7 +1,7 @@
 /// # I2C
 
-#ifndef NBAVR_I2C_HPP
-#define NBAVR_I2C_HPP
+#ifndef NBOS_I2C_HPP
+#define NBOS_I2C_HPP
 
 #include <queue.hpp>
 

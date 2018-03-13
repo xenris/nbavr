@@ -1,5 +1,5 @@
-#ifndef NBAVR_MATH_HPP
-#define NBAVR_MATH_HPP
+#ifndef NBOS_MATH_HPP
+#define NBOS_MATH_HPP
 
 /// # Maths
 

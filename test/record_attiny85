@@ -182,10 +182,10 @@ w Timer1::overflowIntFlagClear() 58:00:04:
 w Timer1::waveform(Timer1::Waveform::CTCOCRA) 50:00:80:50:ff:bf:
 w Timer1::waveform(Timer1::Waveform::FastPWMOCRC) 50:00:40:50:ff:7f:
 w Timer1::waveform(Timer1::Waveform::Normal) 50:ff:3f:
-w Usi0::clock(nbavr::hw::Usi0::Clock::externalNegativeEdge) 2d:00:0c:
-w Usi0::clock(nbavr::hw::Usi0::Clock::externalPositiveEdge) 2d:00:08:2d:ff:fb:
-w Usi0::clock(nbavr::hw::Usi0::Clock::none) 2d:ff:f3:
-w Usi0::clock(nbavr::hw::Usi0::Clock::timer0CompareMatch) 2d:00:04:2d:ff:f7:
+w Usi0::clock(nbos::hw::Usi0::Clock::externalNegativeEdge) 2d:00:0c:
+w Usi0::clock(nbos::hw::Usi0::Clock::externalPositiveEdge) 2d:00:08:2d:ff:fb:
+w Usi0::clock(nbos::hw::Usi0::Clock::none) 2d:ff:f3:
+w Usi0::clock(nbos::hw::Usi0::Clock::timer0CompareMatch) 2d:00:04:2d:ff:f7:
 w Usi0::clockStrobe() 2d:00:02:
 w Usi0::collisionFlag()
 w Usi0::counter()
@@ -205,7 +205,7 @@ w Usi0::startConditionIntFlagClear() 2e:00:80:
 w Usi0::stopConditionIntFlag()
 w Usi0::stopConditionIntFlagClear() 2e:00:20:
 w Usi0::toggleClockPin() 2d:00:01:
-w Usi0::wireMode(nbavr::hw::Usi0::WireMode::disabled) 2d:ff:e7:
-w Usi0::wireMode(nbavr::hw::Usi0::WireMode::threeWire) 2d:00:18:
-w Usi0::wireMode(nbavr::hw::Usi0::WireMode::twoWire) 2d:ff:e7:
-w Usi0::wireMode(nbavr::hw::Usi0::WireMode::twoWireOverflow) 2d:00:18:
+w Usi0::wireMode(nbos::hw::Usi0::WireMode::disabled) 2d:ff:e7:
+w Usi0::wireMode(nbos::hw::Usi0::WireMode::threeWire) 2d:00:18:
+w Usi0::wireMode(nbos::hw::Usi0::WireMode::twoWire) 2d:ff:e7:
+w Usi0::wireMode(nbos::hw::Usi0::WireMode::twoWireOverflow) 2d:00:18:

@@ -1,5 +1,5 @@
-#ifndef NBAVR_UTIL_HPP
-#define NBAVR_UTIL_HPP
+#ifndef NBOS_UTIL_HPP
+#define NBOS_UTIL_HPP
 
 #include "macros.hpp"
 

@@ -1,5 +1,5 @@
-#ifndef NBAVR_CALLBACKS_HPP
-#define NBAVR_CALLBACKS_HPP
+#ifndef NBOS_CALLBACKS_HPP
+#define NBOS_CALLBACKS_HPP
 
 #ifndef TEST
     #define ISR(vector, ...) \
@@ -14,7 +14,7 @@
     extern void* UNDERLINE(__VA_ARGS__, CallbackData);
 
 #define MAKE_CALLBACK(...) \
-    namespace nbavr::hw { \
+    namespace nbos::hw { \
         void (*UNDERLINE(__VA_ARGS__, Callback))(void*); \
         void* UNDERLINE(__VA_ARGS__, CallbackData); \
         ISR(CAT(CHIP, UNDERLINE(__VA_ARGS__), INT_VECTOR)) { \

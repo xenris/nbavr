@@ -8,7 +8,7 @@
 /// // TODO
 /// ```
 
-#ifndef NBAVR_SPI_HPP
+#ifndef NBOS_SPI_HPP
 
 #include "callbacks.hpp"
 #include "chip.hpp"
@@ -258,7 +258,7 @@ struct SpiN {
 
     #include "spi.hpp"
 #else
-    #define NBAVR_SPI_HPP
+    #define NBOS_SPI_HPP
 #endif
 
 #undef N

@@ -1,5 +1,5 @@
-#ifndef NBAVR_STACK_HPP
-#define NBAVR_STACK_HPP
+#ifndef NBOS_STACK_HPP
+#define NBOS_STACK_HPP
 
 template <class T, int S>
 struct Stack {

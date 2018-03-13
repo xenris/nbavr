@@ -13,8 +13,8 @@
 #include "macros.hpp"
 #include "type.hpp"
 
-#ifndef NBAVR_BASE_PIN
-#define NBAVR_BASE_PIN
+#ifndef NBOS_BASE_PIN
+#define NBOS_BASE_PIN
 
 #define MODE(A) CAT(CHIP_PIN_MODE_, A, _ID)
 

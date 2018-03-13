@@ -1,6 +1,6 @@
 #define __atmega328p__
 
-#define RECORD_ID "nbavr"
+#define RECORD_ID "nbos"
 
 #include "test.hpp"
 

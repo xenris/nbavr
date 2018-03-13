@@ -1,6 +1,6 @@
 /// # Two Wire Serial Interface
 
-#ifndef NBAVR_TWI_HPP
+#ifndef NBOS_TWI_HPP
 
 #include "callbacks.hpp"
 #include "chip.hpp"
@@ -254,7 +254,7 @@ struct TwiN {
 
     #include "twi.hpp"
 #else
-    #define NBAVR_TWI_HPP
+    #define NBOS_TWI_HPP
 #endif
 
 #undef N

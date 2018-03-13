@@ -1,20 +1,20 @@
-#ifndef NBAVR_MEMORYBARRIER_HPP
-#define NBAVR_MEMORYBARRIER_HPP
+#ifndef NBOS_MEMORYBARRIER_HPP
+#define NBOS_MEMORYBARRIER_HPP
 
-// These need to be outside nbavr namespace so they can be used in cleanup().
+// These need to be outside nbos namespace so they can be used in cleanup().
 #include "hardware/util.hpp"
 
 #ifdef CHIP_STATUS_REG
 
 force_inline uint8_t __cli() {
     uint8_t s = *CHIP_STATUS_REG;
-    nbavr::interruptsDisable();
+    nbos::interruptsDisable();
     return s;
 }
 
 force_inline uint8_t __sei() {
     uint8_t s = *CHIP_STATUS_REG;
-    nbavr::interruptsEnable();
+    nbos::interruptsEnable();
     return s;
 }
 

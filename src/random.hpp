@@ -1,12 +1,12 @@
-#ifndef NBAVR_RANDOM_HPP
-#define NBAVR_RANDOM_HPP
+#ifndef NBOS_RANDOM_HPP
+#define NBOS_RANDOM_HPP
 
 /// # Random
 
 /// ## Example
 
 /// ```c++
-/// nbavr::Random random;
+/// nbos::Random random;
 
 /// int16_t i = random.next<int16_t>();
 /// float f = random.next<float>();

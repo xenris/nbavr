@@ -1,5 +1,5 @@
-#ifndef NBAVR_ITERATOR_HPP
-#define NBAVR_ITERATOR_HPP
+#ifndef NBOS_ITERATOR_HPP
+#define NBOS_ITERATOR_HPP
 
 template<class T>
 auto begin(T& t) -> decltype(t.begin()) {

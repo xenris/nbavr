@@ -469,17 +469,17 @@ TEST(Usi0, counterOverflowIntEnable) {
 }
 
 TEST(Usi0, wireMode) {
-    TEST_REG_WRITE(Usi0::wireMode(nbavr::hw::Usi0::WireMode::disabled));
-    TEST_REG_WRITE(Usi0::wireMode(nbavr::hw::Usi0::WireMode::threeWire));
-    TEST_REG_WRITE(Usi0::wireMode(nbavr::hw::Usi0::WireMode::twoWire));
-    TEST_REG_WRITE(Usi0::wireMode(nbavr::hw::Usi0::WireMode::twoWireOverflow));
+    TEST_REG_WRITE(Usi0::wireMode(nbos::hw::Usi0::WireMode::disabled));
+    TEST_REG_WRITE(Usi0::wireMode(nbos::hw::Usi0::WireMode::threeWire));
+    TEST_REG_WRITE(Usi0::wireMode(nbos::hw::Usi0::WireMode::twoWire));
+    TEST_REG_WRITE(Usi0::wireMode(nbos::hw::Usi0::WireMode::twoWireOverflow));
 }
 
 TEST(Usi0, clock) {
-    TEST_REG_WRITE(Usi0::clock(nbavr::hw::Usi0::Clock::none));
-    TEST_REG_WRITE(Usi0::clock(nbavr::hw::Usi0::Clock::timer0CompareMatch));
-    TEST_REG_WRITE(Usi0::clock(nbavr::hw::Usi0::Clock::externalPositiveEdge));
-    TEST_REG_WRITE(Usi0::clock(nbavr::hw::Usi0::Clock::externalNegativeEdge));
+    TEST_REG_WRITE(Usi0::clock(nbos::hw::Usi0::Clock::none));
+    TEST_REG_WRITE(Usi0::clock(nbos::hw::Usi0::Clock::timer0CompareMatch));
+    TEST_REG_WRITE(Usi0::clock(nbos::hw::Usi0::Clock::externalPositiveEdge));
+    TEST_REG_WRITE(Usi0::clock(nbos::hw::Usi0::Clock::externalNegativeEdge));
 }
 
 TEST(Usi0, clockStrobe) {

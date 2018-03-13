@@ -1,5 +1,5 @@
-#ifndef NBAVR_XXX_HPP
-#define NBAVR_XXX_HPP
+#ifndef NBOS_XXX_HPP
+#define NBOS_XXX_HPP
 
 // #define CHIP_ADDR_XXX                                            0x00
 // #define CHIP_REG_XXX_ADDR                                        CHIP_ADDR_XXX
@@ -19,7 +19,7 @@
 // #define CHIP_PORT_A_TOGGLE_OUTPUTS_REG                           CHIP_REG_PINB
 // #define CHIP_PORT_A_INPUT_REG                                    CHIP_REG_PINB
 
-#define NBAVR_CHIP_DEFINED
+#define NBOS_CHIP_DEFINED
 
 //------------------------------------------------
 // Ram Size

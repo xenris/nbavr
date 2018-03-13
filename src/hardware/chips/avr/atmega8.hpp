@@ -1,7 +1,7 @@
-#ifndef NBAVR_ATMEGA8_HPP
-#define NBAVR_ATMEGA8_HPP
+#ifndef NBOS_ATMEGA8_HPP
+#define NBOS_ATMEGA8_HPP
 
-#define NBAVR_CHIP_DEFINED
+#define NBOS_CHIP_DEFINED
 
 //------------------------------------------------
 // Memory

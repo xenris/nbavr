@@ -1,5 +1,5 @@
-#ifndef NBAVR_HARDWARE_HPP
-#define NBAVR_HARDWARE_HPP
+#ifndef NBOS_HARDWARE_HPP
+#define NBOS_HARDWARE_HPP
 
 #include "hardware/chip.hpp"
 #include "hardware/util.hpp"

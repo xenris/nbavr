@@ -1,11 +1,11 @@
-#ifndef NBAVR_SERVO_HPP
-#define NBAVR_SERVO_HPP
+#ifndef NBOS_SERVO_HPP
+#define NBOS_SERVO_HPP
 
 // Servos have a range of -128 to 127.
 // Servo speed is a number between 0 and 255, slowest to fastest. Speed is the
 //  maximum step size done each cycle.
 
-#include <nbavr.hpp>
+#include <nbos.hpp>
 
 #define SERVO_MIN_TIME Clock::microsToTick(600)
 #define SERVO_MAX_TIME Clock::microsToTick(2400)

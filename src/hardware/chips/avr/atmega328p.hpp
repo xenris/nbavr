@@ -1,7 +1,7 @@
-#ifndef NBAVR_ATMEGA328P_HPP
-#define NBAVR_ATMEGA328P_HPP
+#ifndef NBOS_ATMEGA328P_HPP
+#define NBOS_ATMEGA328P_HPP
 
-#define NBAVR_CHIP_DEFINED
+#define NBOS_CHIP_DEFINED
 
 //------------------------------------------------
 // Memory

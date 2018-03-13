@@ -1,5 +1,5 @@
-#ifndef NBAVR_TASK_HPP
-#define NBAVR_TASK_HPP
+#ifndef NBOS_TASK_HPP
+#define NBOS_TASK_HPP
 
 /// # Tasks
 

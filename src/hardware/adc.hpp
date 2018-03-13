@@ -25,7 +25,7 @@
 /// }
 /// ```
 
-#ifndef NBAVR_ADC_HPP
+#ifndef NBOS_ADC_HPP
 
 #include "callbacks.hpp"
 #include "chip.hpp"
@@ -338,7 +338,7 @@ struct AdcN {
 
     #include "adc.hpp"
 #else
-    #define NBAVR_ADC_HPP
+    #define NBOS_ADC_HPP
 #endif
 
 #undef N

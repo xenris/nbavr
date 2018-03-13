@@ -1,5 +1,5 @@
-#ifndef NBAVR_HARDWARE_TYPE_HPP
-#define NBAVR_HARDWARE_TYPE_HPP
+#ifndef NBOS_HARDWARE_TYPE_HPP
+#define NBOS_HARDWARE_TYPE_HPP
 
 #include <type.hpp>
 

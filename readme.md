@@ -1,4 +1,4 @@
-# nbavr
+# nbos
 
 Non-blocking AVR.
 
@@ -29,7 +29,7 @@ The code is mostly stable, some things may not work, things will change, and mor
 
 ## Using this library
 
-See [nbavr-project-template](https://github.com/xenris/nbavr-project-template).
+See [nbos-project-template](https://github.com/xenris/nbos-project-template).
 
 ## Documentation
 

@@ -8,7 +8,7 @@
 /// N is the timer's id (1, 2, etc).<br>
 /// T is the type of the timer's counter, either uint8_t or uint16_t.<br>
 
-#ifndef NBAVR_TIMER_HPP
+#ifndef NBOS_TIMER_HPP
 
 #include "callbacks.hpp"
 #include "chip.hpp"
@@ -314,7 +314,7 @@ struct TimerN {
 
     #include "timer.hpp"
 #else
-    #define NBAVR_TIMER_HPP
+    #define NBOS_TIMER_HPP
 #endif
 
 #undef N
