@@ -14,10 +14,10 @@ T is the type of the output's register, either uint8_t or uint16_t.<br>
 The IO pin which relates to this output.
 
 #### enum Mode
-* Disconnected
-* Toggle
-* Clear
-* Set
+* disconnected
+* toggle
+* clear
+* set
 
 #### static void value(T v)
 Set the register of output X.

@@ -6,8 +6,8 @@
 The IO pin which relates to this input.
 
 #### enum Edge
-* Rising
-* Falling
+* rising
+* falling
 
 #### static void value(T v)
 Set the input register.

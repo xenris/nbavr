@@ -32,13 +32,13 @@ struct Eeprom {
     Eeprom() = delete;
 
     /// #### enum Mode
-    /// * EraseWrite
-    /// * EraseOnly
-    /// * WriteOnly
+    /// * eraseWrite
+    /// * eraseOnly
+    /// * writeOnly
     enum class Mode : uint8_t {
-        EraseWrite = EEPROM_N(PROGRAMMING_MODE_ERASE_WRITE_ID),
-        EraseOnly = EEPROM_N(PROGRAMMING_MODE_ERASE_ONLY_ID),
-        WriteOnly = EEPROM_N(PROGRAMMING_MODE_WRITE_ONLY_ID),
+        eraseWrite = EEPROM_N(PROGRAMMING_MODE_ERASE_WRITE_ID),
+        eraseOnly = EEPROM_N(PROGRAMMING_MODE_ERASE_ONLY_ID),
+        writeOnly = EEPROM_N(PROGRAMMING_MODE_WRITE_ONLY_ID),
     };
 
     /// #### static constexpr HardwareType getHardwareType()

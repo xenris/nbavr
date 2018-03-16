@@ -6,9 +6,9 @@ Include this to use Eeprom callbacks.
 ## class Eeprom
 
 #### enum Mode
-* EraseWrite
-* EraseOnly
-* WriteOnly
+* eraseWrite
+* eraseOnly
+* writeOnly
 
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.

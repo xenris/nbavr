@@ -20,37 +20,39 @@
 /// };
 /// ```
 
+#include "type.hpp"
+
 /// ## Class Task\<class Clock\>
 template <class Clock>
 struct Task {
     enum class State : int8_t {
-        Awake,
-        Delay,
-        Asleep,
-        Halt,
+        awake,
+        delay,
+        asleep,
+        halt,
     };
 
-    State state = State::Awake;
+    State state = State::awake;
     uint32_t wakeTick = 0;
 
     /// #### void sleep(uint32_t ticks)
     /// Put this task to sleep until the given number of ticks have passed.
     void sleep(uint32_t ticks) {
         wakeTick = Clock::getTicks() + ticks;
-        state = State::Delay;
+        state = State::delay;
     }
 
     /// #### void sleep()
     /// Put this task to sleep until woken with wake().
     void sleep() {
-        state = State::Asleep;
+        state = State::asleep;
     }
 
     /// #### void wake()
     /// Wake this task from sleep.
     void wake() {
-        if(state != State::Halt) {
-            state = State::Awake;
+        if(state != State::halt) {
+            state = State::awake;
         }
     }
 

@@ -7,11 +7,11 @@ struct Input {
     using Pin = TIMER_N(INPUT_PIN);
 
     /// #### enum Edge
-    /// * Rising
-    /// * Falling
+    /// * rising
+    /// * falling
     enum class Edge : uint8_t {
-        Rising = TIMER_N(INPUT_EDGE_RISING_ID),
-        Falling = TIMER_N(INPUT_EDGE_FALLING_ID),
+        rising = TIMER_N(INPUT_EDGE_RISING_ID),
+        falling = TIMER_N(INPUT_EDGE_FALLING_ID),
     };
 
     /// #### static void value(T v)

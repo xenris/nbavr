@@ -23,24 +23,32 @@ Include this to use Timer input callbacks.
 The underlying type of this timer/counter. (uint8_t or uint16_t)
 
 #### enum Clock
-* None (No clock)
-* Div1 (cpu frequency / 1)
-* Div8
-* Div32
-* Div64
-* Div128
-* Div256
-* Div1024
-* ExtFalling (clock on external pin falling edge)
-* ExtRising
+* none (No clock)
+* div1 (cpu frequency / 1)
+* div2
+* div4
+* div8
+* div16
+* div32
+* div64
+* div128
+* div256
+* div512
+* div1024
+* div2048
+* div4096
+* div8192
+* div16384
+* extFalling (clock on external pin falling edge)
+* extRising
 
 #### enum Waveform
-* Normal
-* PWM
-* CTCOCRA
-* FastPWM
-* PWMOCRA
-* FastPWMOCRA
+* normal
+* pwm
+* ctcOcra
+* fastPwm
+* pwmOcra
+* fastPwmOcra
 
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.

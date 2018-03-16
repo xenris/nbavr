@@ -70,7 +70,7 @@ class Clock {
             TimerT::OutputA::callback(handleDelayedCall, nullptr);
             TimerT::overflowCallback(handleTimerOverflow, nullptr);
             TimerT::overflowIntEnable(true);
-            TimerT::clock(EightBitCounter ? TimerT::Clock::Div256 : TimerT::Clock::Div64);
+            TimerT::clock(EightBitCounter ? TimerT::Clock::div256 : TimerT::Clock::div64);
         }
     }
 

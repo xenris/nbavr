@@ -16,29 +16,29 @@ complete), or DE (data register empty).
 ## class UsartN
 
 #### enum Mode
-* Asynchronous
-* Synchronous
-* MasterSpi
+* asynchronous
+* synchronous
+* masterSpi
 
 #### enum Parity
-* Disabled
-* Even
-* Odd
+* disabled
+* even
+* odd
 
 #### enum StopBits
-* Bits1
-* Bits2
+* bits1
+* bits2
 
 #### enum CharacterSize
-* Size5
-* Size6
-* Size7
-* Size8
-* Size9
+* size5
+* size6
+* size7
+* size8
+* size9
 
 #### enum Polarity
-* TxRisingRxFalling
-* TxFallingRxRising
+* txRisingRxFalling
+* txFallingRxRising
 
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.

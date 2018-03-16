@@ -21,16 +21,16 @@ struct OutputX {
     #endif
 
     /// #### enum Mode
-    /// * Disconnected
-    /// * Toggle
-    /// * Clear
-    /// * Set
+    /// * disconnected
+    /// * toggle
+    /// * clear
+    /// * set
     #if DEFINED(OUTPUT_X(MODE_TOGGLE_ID))
     enum class Mode : uint8_t {
-        Disconnected = OUTPUT_X(MODE_DISCONNECTED_ID),
-        Toggle = OUTPUT_X(MODE_TOGGLE_ID),
-        Clear = OUTPUT_X(MODE_CLEAR_ID),
-        Set = OUTPUT_X(MODE_SET_ID),
+        disconnected = OUTPUT_X(MODE_DISCONNECTED_ID),
+        toggle = OUTPUT_X(MODE_TOGGLE_ID),
+        clear = OUTPUT_X(MODE_CLEAR_ID),
+        set = OUTPUT_X(MODE_SET_ID),
     };
     #endif
 

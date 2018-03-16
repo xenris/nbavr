@@ -58,156 +58,169 @@ struct AdcN {
     AdcN(const AdcN&) = delete;
 
     /// #### enum Reference
-    /// * AREF
-    /// * AVCC
-    /// * Internal
+    /// * aref
+    /// * avcc
+    /// * internal
+    /// * internal_1_1
+    /// * internal_2_56
+    /// * internal_2_56_cap
     enum class Reference : uint8_t {
         #if DEFINED(ADC_N(REFERENCE_AREF_ID))
-            AREF = ADC_N(REFERENCE_AREF_ID),
+            aref = ADC_N(REFERENCE_AREF_ID),
         #endif
 
         #if DEFINED(ADC_N(REFERENCE_AVCC_ID))
-            AVCC = ADC_N(REFERENCE_AVCC_ID),
+            avcc = ADC_N(REFERENCE_AVCC_ID),
         #endif
 
         #if DEFINED(ADC_N(REFERENCE_INTERNAL_ID))
-            Internal = ADC_N(REFERENCE_INTERNAL_ID),
+            internal = ADC_N(REFERENCE_INTERNAL_ID),
         #endif
 
         #if DEFINED(ADC_N(REFERENCE_INTERNAL_1_1_ID))
-            Internal_1_1 = ADC_N(REFERENCE_INTERNAL_1_1_ID),
+            internal_1_1 = ADC_N(REFERENCE_INTERNAL_1_1_ID),
         #endif
 
         #if DEFINED(ADC_N(REFERENCE_INTERNAL_2_56_ID))
-            Internal_2_56 = ADC_N(REFERENCE_INTERNAL_2_56_ID),
+            internal_2_56 = ADC_N(REFERENCE_INTERNAL_2_56_ID),
         #endif
 
         #if DEFINED(ADC_N(REFERENCE_INTERNAL_2_56_CAP_ID))
-            Internal_2_56_CAP = ADC_N(REFERENCE_INTERNAL_2_56_CAP_ID),
+            internal_2_56_cap = ADC_N(REFERENCE_INTERNAL_2_56_CAP_ID),
         #endif
     };
 
     /// #### enum Channel
-    /// * ADC0
-    /// * ADC1
-    /// * ADC2
-    /// * ADC3
-    /// * ADC4
-    /// * ADC5
-    /// * ADC6
-    /// * ADC7
-    /// * ADC8
-    /// * VBG
-    /// * GND
+    /// * adc0
+    /// * adc1
+    /// * adc2
+    /// * adc3
+    /// * adc4
+    /// * adc5
+    /// * adc6
+    /// * adc7
+    /// * adc8
+    /// * vbg
+    /// * gnd
     enum class Channel : uint8_t {
         #if DEFINED(ADC_N(CHANNEL_0_ID))
-            ADC0 = ADC_N(CHANNEL_0_ID),
+            adc0 = ADC_N(CHANNEL_0_ID),
         #endif
+
         #if DEFINED(ADC_N(CHANNEL_1_ID))
-            ADC1 = ADC_N(CHANNEL_1_ID),
+            adc1 = ADC_N(CHANNEL_1_ID),
         #endif
+
         #if DEFINED(ADC_N(CHANNEL_2_ID))
-            ADC2 = ADC_N(CHANNEL_2_ID),
+            adc2 = ADC_N(CHANNEL_2_ID),
         #endif
+
         #if DEFINED(ADC_N(CHANNEL_3_ID))
-            ADC3 = ADC_N(CHANNEL_3_ID),
+            adc3 = ADC_N(CHANNEL_3_ID),
         #endif
+
         #if DEFINED(ADC_N(CHANNEL_4_ID))
-            ADC4 = ADC_N(CHANNEL_4_ID),
+            adc4 = ADC_N(CHANNEL_4_ID),
         #endif
+
         #if DEFINED(ADC_N(CHANNEL_5_ID))
-            ADC5 = ADC_N(CHANNEL_5_ID),
+            adc5 = ADC_N(CHANNEL_5_ID),
         #endif
+
         #if DEFINED(ADC_N(CHANNEL_6_ID))
-            ADC6 = ADC_N(CHANNEL_6_ID),
+            adc6 = ADC_N(CHANNEL_6_ID),
         #endif
+
         #if DEFINED(ADC_N(CHANNEL_7_ID))
-            ADC7 = ADC_N(CHANNEL_7_ID),
+            adc7 = ADC_N(CHANNEL_7_ID),
         #endif
+
         #if DEFINED(ADC_N(CHANNEL_8_ID))
-            ADC8 = ADC_N(CHANNEL_8_ID),
+            adc8 = ADC_N(CHANNEL_8_ID),
         #endif
+
         #if DEFINED(ADC_N(CHANNEL_VBG_ID))
-            VBG = ADC_N(CHANNEL_VBG_ID),
+            vbg = ADC_N(CHANNEL_VBG_ID),
         #endif
+
         #if DEFINED(ADC_N(CHANNEL_GND_ID))
-            GND = ADC_N(CHANNEL_GND_ID),
+            gnd = ADC_N(CHANNEL_GND_ID),
         #endif
     };
 
     #if DEFINED(ADC_N(PRESCALER_BIT_0_BIT))
         /// #### enum Prescaler
-        /// * Div2
-        /// * Div4
-        /// * Div8
-        /// * Div16
-        /// * Div32
-        /// * Div64
-        /// * Div128
+        /// * div2
+        /// * div4
+        /// * div8
+        /// * div16
+        /// * div32
+        /// * div64
+        /// * div128
         enum class Prescaler : uint8_t {
             #if DEFINED(ADC_N(PRESCALER_2_ID))
-                Div2 = ADC_N(PRESCALER_2_ID),
+                div2 = ADC_N(PRESCALER_2_ID),
             #endif
             #if DEFINED(ADC_N(PRESCALER_4_ID))
-                Div4 = ADC_N(PRESCALER_4_ID),
+                div4 = ADC_N(PRESCALER_4_ID),
             #endif
             #if DEFINED(ADC_N(PRESCALER_8_ID))
-                Div8 = ADC_N(PRESCALER_8_ID),
+                div8 = ADC_N(PRESCALER_8_ID),
             #endif
             #if DEFINED(ADC_N(PRESCALER_16_ID))
-                Div16 = ADC_N(PRESCALER_16_ID),
+                div16 = ADC_N(PRESCALER_16_ID),
             #endif
             #if DEFINED(ADC_N(PRESCALER_32_ID))
-                Div32 = ADC_N(PRESCALER_32_ID),
+                div32 = ADC_N(PRESCALER_32_ID),
             #endif
             #if DEFINED(ADC_N(PRESCALER_64_ID))
-                Div64 = ADC_N(PRESCALER_64_ID),
+                div64 = ADC_N(PRESCALER_64_ID),
             #endif
             #if DEFINED(ADC_N(PRESCALER_128_ID))
-                Div128 = ADC_N(PRESCALER_128_ID),
+                div128 = ADC_N(PRESCALER_128_ID),
             #endif
         };
     #endif
 
     #if DEFINED(ADC_N(TRIGGER_BIT_0_BIT))
         /// #### enum Trigger
-        /// * SingleConversion
-        /// * FreeRunning
-        /// * AnalogComparator
-        /// * ExternalInt0
-        /// * Timer0CompareMatchA
-        /// * Timer0Overflow
-        /// * Timer1CompareMatchB
-        /// * Timer1Overflow
-        /// * Timer1CaptureEvent
-        /// * FreeRunning
+        /// * singleConversion
+        /// * freeRunning
+        /// * analogComparator
+        /// * externalInt0
+        /// * timer0CompareMatchA
+        /// * timer0Overflow
+        /// * timer1CompareMatchB
+        /// * timer1Overflow
+        /// * timer1CaptureEvent
+        /// * freeRunning
         enum class Trigger : uint8_t {
             #if DEFINED(ADC_N(TRIGGER_SINGLE_CONVERSION_ID))
-                SingleConversion = ADC_N(TRIGGER_SINGLE_CONVERSION_ID),
+                singleConversion = ADC_N(TRIGGER_SINGLE_CONVERSION_ID),
             #endif
             #if DEFINED(ADC_N(TRIGGER_FREE_RUNNING_ID))
-                FreeRunning = ADC_N(TRIGGER_FREE_RUNNING_ID),
+                freeRunning = ADC_N(TRIGGER_FREE_RUNNING_ID),
             #endif
             #if DEFINED(ADC_N(TRIGGER_ANALOG_COMPARATOR_ID))
-                AnalogComparator = ADC_N(TRIGGER_ANALOG_COMPARATOR_ID),
+                analogComparator = ADC_N(TRIGGER_ANALOG_COMPARATOR_ID),
             #endif
             #if DEFINED(ADC_N(TRIGGER_EXTERNAL_INT_0_ID))
-                ExternalInt0 = ADC_N(TRIGGER_EXTERNAL_INT_0_ID),
+                externalInt0 = ADC_N(TRIGGER_EXTERNAL_INT_0_ID),
             #endif
             #if DEFINED(ADC_N(TRIGGER_TIMER0_COMPARE_MATCH_A_ID))
-                Timer0CompareMatchA = ADC_N(TRIGGER_TIMER0_COMPARE_MATCH_A_ID),
+                timer0CompareMatchA = ADC_N(TRIGGER_TIMER0_COMPARE_MATCH_A_ID),
             #endif
             #if DEFINED(ADC_N(TRIGGER_TIMER0_OVERFLOW_ID))
-                Timer0Overflow = ADC_N(TRIGGER_TIMER0_OVERFLOW_ID),
+                timer0Overflow = ADC_N(TRIGGER_TIMER0_OVERFLOW_ID),
             #endif
             #if DEFINED(ADC_N(TRIGGER_TIMER1_COMPARE_MATCH_B_ID))
-                Timer1CompareMatchB = ADC_N(TRIGGER_TIMER1_COMPARE_MATCH_B_ID),
+                timer1CompareMatchB = ADC_N(TRIGGER_TIMER1_COMPARE_MATCH_B_ID),
             #endif
             #if DEFINED(ADC_N(TRIGGER_TIMER1_OVERFLOW_ID))
-                Timer1Overflow = ADC_N(TRIGGER_TIMER1_OVERFLOW_ID),
+                timer1Overflow = ADC_N(TRIGGER_TIMER1_OVERFLOW_ID),
             #endif
             #if DEFINED(ADC_N(TRIGGER_TIMER1_CAPTURE_EVENT_ID))
-                Timer1CaptureEvent = ADC_N(TRIGGER_TIMER1_CAPTURE_EVENT_ID),
+                timer1CaptureEvent = ADC_N(TRIGGER_TIMER1_CAPTURE_EVENT_ID),
             #endif
         };
     #endif

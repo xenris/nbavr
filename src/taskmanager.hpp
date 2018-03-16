@@ -78,7 +78,7 @@ private:
 
         interruptsEnable();
 
-        if(task.state == TaskT::State::Delay) {
+        if(task.state == TaskT::State::delay) {
             // Check if it is time for this task to wake up.
             uint32_t wakeTick;
 
@@ -87,11 +87,11 @@ private:
             }
 
             if(int32_t(Clock::getTicks() - wakeTick) >= 0) {
-                task.state = TaskT::State::Awake;
+                task.state = TaskT::State::awake;
             }
         }
 
-        if(task.state == TaskT::State::Awake) {
+        if(task.state == TaskT::State::awake) {
             Clock::haltStart(TaskTimeout);
 
             task.loop();
@@ -106,11 +106,11 @@ private:
     void handleHalt() {
         TaskT& task = *tasks[taskI];
 
-        task.state = TaskT::State::Halt;
+        task.state = TaskT::State::halt;
 
         stepAll();
 
-        task.state = TaskT::State::Awake;
+        task.state = TaskT::State::awake;
 
         Clock::haltStart(TaskTimeoutHalted);
     }

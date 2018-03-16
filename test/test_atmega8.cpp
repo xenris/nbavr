@@ -29,32 +29,32 @@ TEST(Adc0, value) {
 }
 
 TEST(Adc0, reference) {
-    TEST_REG_WRITE(Adc0::reference(Adc0::Reference::AREF));
-    TEST_REG_WRITE(Adc0::reference(Adc0::Reference::AVCC));
-    TEST_REG_WRITE(Adc0::reference(Adc0::Reference::Internal));
+    TEST_REG_WRITE(Adc0::reference(Adc0::Reference::aref));
+    TEST_REG_WRITE(Adc0::reference(Adc0::Reference::avcc));
+    TEST_REG_WRITE(Adc0::reference(Adc0::Reference::internal));
 }
 
 TEST(Adc0, channel) {
-    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC0));
-    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC1));
-    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC2));
-    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC3));
-    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC4));
-    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC5));
-    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC6));
-    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::ADC7));
-    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::VBG));
-    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::GND));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::adc0));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::adc1));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::adc2));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::adc3));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::adc4));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::adc5));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::adc6));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::adc7));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::vbg));
+    TEST_REG_WRITE(Adc0::channel(Adc0::Channel::gnd));
 }
 
 TEST(Adc0, prescaler) {
-    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div2));
-    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div4));
-    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div8));
-    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div16));
-    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div32));
-    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div64));
-    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::Div128));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::div2));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::div4));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::div8));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::div16));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::div32));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::div64));
+    TEST_REG_WRITE(Adc0::prescaler(Adc0::Prescaler::div128));
 }
 
 TEST(Adc0, leftAdjust) {
@@ -63,8 +63,8 @@ TEST(Adc0, leftAdjust) {
 }
 
 TEST(Adc0, trigger) {
-    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::SingleConversion));
-    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::FreeRunning));
+    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::singleConversion));
+    TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::freeRunning));
 }
 
 TEST(Adc0, callback) {
@@ -97,15 +97,15 @@ TEST(ExIntN, enable) {
 }
 
 TEST(ExIntN, trigger) {
-    TEST_REG_WRITE(ExInt0::trigger(ExInt0::Trigger::Low));
-    TEST_REG_WRITE(ExInt0::trigger(ExInt0::Trigger::Change));
-    TEST_REG_WRITE(ExInt0::trigger(ExInt0::Trigger::Falling));
-    TEST_REG_WRITE(ExInt0::trigger(ExInt0::Trigger::Rising));
+    TEST_REG_WRITE(ExInt0::trigger(ExInt0::Trigger::low));
+    TEST_REG_WRITE(ExInt0::trigger(ExInt0::Trigger::change));
+    TEST_REG_WRITE(ExInt0::trigger(ExInt0::Trigger::falling));
+    TEST_REG_WRITE(ExInt0::trigger(ExInt0::Trigger::rising));
 
-    TEST_REG_WRITE(ExInt1::trigger(ExInt1::Trigger::Low));
-    TEST_REG_WRITE(ExInt1::trigger(ExInt1::Trigger::Change));
-    TEST_REG_WRITE(ExInt1::trigger(ExInt1::Trigger::Falling));
-    TEST_REG_WRITE(ExInt1::trigger(ExInt1::Trigger::Rising));
+    TEST_REG_WRITE(ExInt1::trigger(ExInt1::Trigger::low));
+    TEST_REG_WRITE(ExInt1::trigger(ExInt1::Trigger::change));
+    TEST_REG_WRITE(ExInt1::trigger(ExInt1::Trigger::falling));
+    TEST_REG_WRITE(ExInt1::trigger(ExInt1::Trigger::rising));
 }
 
 INCLUDE_EXINT_CALLBACK(0);
@@ -265,52 +265,52 @@ TEST(Timer2, counter) {
 }
 
 TEST(Timer0, clock) {
-    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::None));
-    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::Div1));
-    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::Div8));
-    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::Div64));
-    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::Div256));
-    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::Div1024));
-    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::ExtFalling));
-    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::ExtRising));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::none));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::div1));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::div8));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::div64));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::div256));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::div1024));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::extFalling));
+    TEST_REG_WRITE(Timer0::clock(Timer0::Clock::extRising));
 }
 
 TEST(Timer1, clock) {
-    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::None));
-    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::Div1));
-    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::Div8));
-    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::Div64));
-    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::Div256));
-    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::Div1024));
-    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::ExtFalling));
-    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::ExtRising));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::none));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::div1));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::div8));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::div64));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::div256));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::div1024));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::extFalling));
+    TEST_REG_WRITE(Timer1::clock(Timer1::Clock::extRising));
 }
 
 TEST(Timer2, clock) {
-    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::None));
-    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div1));
-    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div8));
-    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div32));
-    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div64));
-    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div128));
-    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div256));
-    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::Div1024));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::none));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::div1));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::div8));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::div32));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::div64));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::div128));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::div256));
+    TEST_REG_WRITE(Timer2::clock(Timer2::Clock::div1024));
 }
 
 TEST(Timer1, waveform) {
-    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::Normal));
-    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::PWM));
-    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::CTCOCRA));
-    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::FastPWM));
-    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::PWMOCRA));
-    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::FastPWMOCRA));
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::normal));
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::pwm));
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::ctcOcra));
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::fastPwm));
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::pwmOcra));
+    TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::fastPwmOcra));
 }
 
 TEST(Timer2, waveform) {
-    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::Normal));
-    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::PWM));
-    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::CTCOCRA));
-    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::FastPWM));
+    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::normal));
+    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::pwm));
+    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::ctcOcra));
+    TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::fastPwm));
 }
 
 INCLUDE_TIMER_OVERFLOW_CALLBACK(0);
@@ -381,21 +381,21 @@ TEST(Timer2, outputX) {
 }
 
 TEST(Timer1, outputXMode) {
-    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::Disconnected));
-    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::Toggle));
-    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::Clear));
-    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::Set));
-    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::Disconnected));
-    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::Toggle));
-    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::Clear));
-    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::Set));
+    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::disconnected));
+    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::toggle));
+    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::clear));
+    TEST_REG_WRITE(Timer1::OutputA::mode(Timer1::OutputA::Mode::set));
+    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::disconnected));
+    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::toggle));
+    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::clear));
+    TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::set));
 }
 
 TEST(Timer2, outputXMode) {
-    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::Disconnected));
-    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::Toggle));
-    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::Clear));
-    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::Set));
+    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::disconnected));
+    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::toggle));
+    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::clear));
+    TEST_REG_WRITE(Timer2::OutputA::mode(Timer2::OutputA::Mode::set));
 }
 
 //------------------------------------------------
@@ -410,32 +410,32 @@ TEST(Usart0, getHardwareType) {
 }
 
 TEST(Usart0, mode) {
-    TEST_REG_WRITE(Usart0::mode(Usart0::Mode::Asynchronous));
-    TEST_REG_WRITE(Usart0::mode(Usart0::Mode::Synchronous));
+    TEST_REG_WRITE(Usart0::mode(Usart0::Mode::asynchronous));
+    TEST_REG_WRITE(Usart0::mode(Usart0::Mode::synchronous));
 }
 
 TEST(Usart0, parity) {
-    TEST_REG_WRITE(Usart0::parity(Usart0::Parity::Disabled));
-    TEST_REG_WRITE(Usart0::parity(Usart0::Parity::Even));
-    TEST_REG_WRITE(Usart0::parity(Usart0::Parity::Odd));
+    TEST_REG_WRITE(Usart0::parity(Usart0::Parity::disabled));
+    TEST_REG_WRITE(Usart0::parity(Usart0::Parity::even));
+    TEST_REG_WRITE(Usart0::parity(Usart0::Parity::odd));
 }
 
 TEST(Usart0, stopBits) {
-    TEST_REG_WRITE(Usart0::stopBits(Usart0::StopBits::Bits1));
-    TEST_REG_WRITE(Usart0::stopBits(Usart0::StopBits::Bits2));
+    TEST_REG_WRITE(Usart0::stopBits(Usart0::StopBits::bits1));
+    TEST_REG_WRITE(Usart0::stopBits(Usart0::StopBits::bits2));
 }
 
 TEST(Usart0, characterSize) {
-    TEST_REG_WRITE(Usart0::characterSize(Usart0::CharacterSize::Size5));
-    TEST_REG_WRITE(Usart0::characterSize(Usart0::CharacterSize::Size6));
-    TEST_REG_WRITE(Usart0::characterSize(Usart0::CharacterSize::Size7));
-    TEST_REG_WRITE(Usart0::characterSize(Usart0::CharacterSize::Size8));
-    TEST_REG_WRITE(Usart0::characterSize(Usart0::CharacterSize::Size9));
+    TEST_REG_WRITE(Usart0::characterSize(Usart0::CharacterSize::size5));
+    TEST_REG_WRITE(Usart0::characterSize(Usart0::CharacterSize::size6));
+    TEST_REG_WRITE(Usart0::characterSize(Usart0::CharacterSize::size7));
+    TEST_REG_WRITE(Usart0::characterSize(Usart0::CharacterSize::size8));
+    TEST_REG_WRITE(Usart0::characterSize(Usart0::CharacterSize::size9));
 }
 
 TEST(Usart0, polarity) {
-    TEST_REG_WRITE(Usart0::polarity(Usart0::Polarity::TxRisingRxFalling));
-    TEST_REG_WRITE(Usart0::polarity(Usart0::Polarity::TxFallingRxRising));
+    TEST_REG_WRITE(Usart0::polarity(Usart0::Polarity::txRisingRxFalling));
+    TEST_REG_WRITE(Usart0::polarity(Usart0::Polarity::txFallingRxRising));
 }
 
 TEST(Usart0, baud) {

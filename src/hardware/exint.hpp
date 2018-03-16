@@ -36,15 +36,15 @@ struct ExIntN {
 
     #if DEFINED(EXINT_N(TRIGGER_BIT_0_BIT))
         /// #### enum Trigger
-        /// * Low
-        /// * Change
-        /// * Falling
-        /// * Rising
+        /// * low
+        /// * change
+        /// * falling
+        /// * rising
         enum class Trigger : uint8_t {
-            Low = EXINT_N(TRIGGER_LOW_ID),
-            Change = EXINT_N(TRIGGER_CHANGE_ID),
-            Falling = EXINT_N(TRIGGER_FALLING_ID),
-            Rising = EXINT_N(TRIGGER_RISING_ID),
+            low = EXINT_N(TRIGGER_LOW_ID),
+            change = EXINT_N(TRIGGER_CHANGE_ID),
+            falling = EXINT_N(TRIGGER_FALLING_ID),
+            rising = EXINT_N(TRIGGER_RISING_ID),
         };
     #endif
 

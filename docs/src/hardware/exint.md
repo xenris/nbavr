@@ -8,10 +8,10 @@ Include this to use ExInt callbacks.
 ## class ExIntN
 
 #### enum Trigger
-* Low
-* Change
-* Falling
-* Rising
+* low
+* change
+* falling
+* rising
 
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.

@@ -3,8 +3,8 @@
 ## class I2c
 
 #### enum Mode
-* Read
-* Write
+* read
+* write
 
 ### class I2c::Action
 

@@ -6,39 +6,39 @@ Include this to use Twi callbacks.
 ## class TwiN
 
 #### enum Prescaler
-* Div1
-* Div4
-* Div16
-* Div64
+* div1
+* div4
+* div16
+* div64
 
 #### enum Status
-* StartTransmitted
-* RepeatedStartTransmitted
-* SLAWTransmittedAck
-* SLAWTransmittedNack
-* DataTransmittedAck
-* DataTransmittedNack
-* ArbitrationLost
-* SLARTransmittedAck
-* SLARTransmittedNack
-* DataReceivedAck
-* DataReceivedNack
-* OwnSLAWReceivedAck
-* ArbitrationLostOwnSLAWAck
-* GeneralCallAddressReceivedAck
-* ArbitrationLostGeneralCallAddressReceivedAck
-* PrevAddressedOwnSLAWDataReceivedAck
-* PrevAddressedOwnSLAWDataReceivedNack
-* PrevAddressedGeneralCallDataReceivedAck
-* PrevAddressedGeneralCallDataReceivedNack
-* StopOrRepeatedStartWhileAddressedAsSlave
-* OwnSLARReceivedAck
-* ArbitrationLostOwnSLARAck
-* DataInTWDRTransmittedAck
-* DataInTWDRTransmittedNack
-* LastDataTransmittedAck
-* NoState
-* BusError
+* startTransmitted
+* repeatedStartTransmitted
+* slawTransmittedAck
+* slawTransmittedNack
+* dataTransmittedAck
+* dataTransmittedNack
+* arbitrationLost
+* slarTransmittedAck
+* slarTransmittedNack
+* dataReceivedAck
+* dataReceivedNack
+* ownSlawReceivedAck
+* arbitrationLostOwnSlawAck
+* generalCallAddressReceivedAck
+* arbitrationLostGeneralCallAddressReceivedAck
+* prevAddressedOwnSlawDataReceivedAck
+* prevAddressedOwnSlawDataReceivedNack
+* prevAddressedGeneralCallDataReceivedAck
+* prevAddressedGeneralCallDataReceivedNack
+* stopOrRepeatedStartWhileAddressedAsSlave
+* ownSlarReceivedAck
+* arbitrationLostOwnSlarAck
+* dataInTwdrTransmittedAck
+* dataInTwdrTransmittedNack
+* lastDataTransmittedAck
+* noState
+* busError
 
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.

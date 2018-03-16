@@ -47,63 +47,63 @@ struct UsartN {
 
     #if DEFINED(USART_N(MODE_BIT_0_BIT))
         /// #### enum Mode
-        /// * Asynchronous
-        /// * Synchronous
-        /// * MasterSpi
+        /// * asynchronous
+        /// * synchronous
+        /// * masterSpi
         enum class Mode : uint8_t {
-            Asynchronous = USART_N(MODE_ASYNCHRONOUS_ID),
-            Synchronous = USART_N(MODE_SYNCHRONOUS_ID),
+            asynchronous = USART_N(MODE_ASYNCHRONOUS_ID),
+            synchronous = USART_N(MODE_SYNCHRONOUS_ID),
             #if USART_N(MODE_MASTER_SPI_ID)
-            MasterSpi = USART_N(MODE_MASTER_SPI_ID),
+            masterSpi = USART_N(MODE_MASTER_SPI_ID),
             #endif
         };
     #endif
 
     #if DEFINED(USART_N(PARITY_BIT_0_BIT))
         /// #### enum Parity
-        /// * Disabled
-        /// * Even
-        /// * Odd
+        /// * disabled
+        /// * even
+        /// * odd
         enum class Parity : uint8_t {
-            Disabled = USART_N(PARITY_DISABLE_ID),
-            Even = USART_N(PARITY_EVEN_ID),
-            Odd = USART_N(PARITY_ODD_ID),
+            disabled = USART_N(PARITY_DISABLE_ID),
+            even = USART_N(PARITY_EVEN_ID),
+            odd = USART_N(PARITY_ODD_ID),
         };
     #endif
 
     #if DEFINED(USART_N(STOP_BITS_BIT_0_BIT))
         /// #### enum StopBits
-        /// * Bits1
-        /// * Bits2
+        /// * bits1
+        /// * bits2
         enum class StopBits : uint8_t {
-            Bits1 = USART_N(STOP_BITS_1_ID),
-            Bits2 = USART_N(STOP_BITS_2_ID),
+            bits1 = USART_N(STOP_BITS_1_ID),
+            bits2 = USART_N(STOP_BITS_2_ID),
         };
     #endif
 
     #if DEFINED(USART_N(CHARACTER_SIZE_BIT_0_BIT))
         /// #### enum CharacterSize
-        /// * Size5
-        /// * Size6
-        /// * Size7
-        /// * Size8
-        /// * Size9
+        /// * size5
+        /// * size6
+        /// * size7
+        /// * size8
+        /// * size9
         enum class CharacterSize : uint8_t {
-            Size5 = USART_N(CHARACTER_SIZE_5_ID),
-            Size6 = USART_N(CHARACTER_SIZE_6_ID),
-            Size7 = USART_N(CHARACTER_SIZE_7_ID),
-            Size8 = USART_N(CHARACTER_SIZE_8_ID),
-            Size9 = USART_N(CHARACTER_SIZE_9_ID),
+            size5 = USART_N(CHARACTER_SIZE_5_ID),
+            size6 = USART_N(CHARACTER_SIZE_6_ID),
+            size7 = USART_N(CHARACTER_SIZE_7_ID),
+            size8 = USART_N(CHARACTER_SIZE_8_ID),
+            size9 = USART_N(CHARACTER_SIZE_9_ID),
         };
     #endif
 
     #if DEFINED(USART_N(POLARITY_BIT_0_BIT))
         /// #### enum Polarity
-        /// * TxRisingRxFalling
-        /// * TxFallingRxRising
+        /// * txRisingRxFalling
+        /// * txFallingRxRising
         enum class Polarity : uint8_t {
-            TxRisingRxFalling = USART_N(POLARITY_TX_RISING_RX_FALLING_ID),
-            TxFallingRxRising = USART_N(POLARITY_TX_FALLING_RX_RISING_ID),
+            txRisingRxFalling = USART_N(POLARITY_TX_RISING_RX_FALLING_ID),
+            txFallingRxRising = USART_N(POLARITY_TX_FALLING_RX_RISING_ID),
         };
     #endif
 

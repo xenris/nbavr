@@ -31,43 +31,46 @@ Include this to use Adc callbacks.
 ## class Adc
 
 #### enum Reference
-* AREF
-* AVCC
-* Internal
+* aref
+* avcc
+* internal
+* internal_1_1
+* internal_2_56
+* internal_2_56_cap
 
 #### enum Channel
-* ADC0
-* ADC1
-* ADC2
-* ADC3
-* ADC4
-* ADC5
-* ADC6
-* ADC7
-* ADC8
-* VBG
-* GND
+* adc0
+* adc1
+* adc2
+* adc3
+* adc4
+* adc5
+* adc6
+* adc7
+* adc8
+* vbg
+* gnd
 
 #### enum Prescaler
-* Div2
-* Div4
-* Div8
-* Div16
-* Div32
-* Div64
-* Div128
+* div2
+* div4
+* div8
+* div16
+* div32
+* div64
+* div128
 
 #### enum Trigger
-* SingleConversion
-* FreeRunning
-* AnalogComparator
-* ExternalInt0
-* Timer0CompareMatchA
-* Timer0Overflow
-* Timer1CompareMatchB
-* Timer1Overflow
-* Timer1CaptureEvent
-* FreeRunning
+* singleConversion
+* freeRunning
+* analogComparator
+* externalInt0
+* timer0CompareMatchA
+* timer0Overflow
+* timer1CompareMatchB
+* timer1Overflow
+* timer1CaptureEvent
+* freeRunning
 
 #### static constexpr HardwareType getHardwareType()
 Get the type of hardware that this class represents.

@@ -9,11 +9,11 @@
 template <class Twi, uint32_t CpuFreq, uint32_t Baud>
 struct I2c {
     /// #### enum Mode
-    /// * Read
-    /// * Write
+    /// * read
+    /// * write
     enum class Mode : int8_t {
-        Read = 1,
-        Write = 0,
+        read = 1,
+        write = 0,
     };
 
     /// ### class I2c::Action

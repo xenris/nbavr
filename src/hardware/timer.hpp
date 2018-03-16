@@ -67,128 +67,136 @@ struct TimerN {
     TimerN() = delete;
 
     /// #### enum Clock
-    /// * None (No clock)
-    /// * Div1 (cpu frequency / 1)
-    /// * Div8
-    /// * Div32
-    /// * Div64
-    /// * Div128
-    /// * Div256
-    /// * Div1024
-    /// * ExtFalling (clock on external pin falling edge)
-    /// * ExtRising
+    /// * none (No clock)
+    /// * div1 (cpu frequency / 1)
+    /// * div2
+    /// * div4
+    /// * div8
+    /// * div16
+    /// * div32
+    /// * div64
+    /// * div128
+    /// * div256
+    /// * div512
+    /// * div1024
+    /// * div2048
+    /// * div4096
+    /// * div8192
+    /// * div16384
+    /// * extFalling (clock on external pin falling edge)
+    /// * extRising
     enum class Clock : uint8_t {
         #if DEFINED(TIMER_N(CLOCK_NONE_ID))
-            None = TIMER_N(CLOCK_NONE_ID),
+            none = TIMER_N(CLOCK_NONE_ID),
         #endif
 
         #if DEFINED(TIMER_N(CLOCK_1_ID))
-            Div1 = TIMER_N(CLOCK_1_ID),
+            div1 = TIMER_N(CLOCK_1_ID),
         #endif
 
         #if DEFINED(TIMER_N(CLOCK_2_ID))
-            Div2 = TIMER_N(CLOCK_2_ID),
+            div2 = TIMER_N(CLOCK_2_ID),
         #endif
 
         #if DEFINED(TIMER_N(CLOCK_4_ID))
-            Div4 = TIMER_N(CLOCK_4_ID),
+            div4 = TIMER_N(CLOCK_4_ID),
         #endif
 
         #if DEFINED(TIMER_N(CLOCK_8_ID))
-            Div8 = TIMER_N(CLOCK_8_ID),
+            div8 = TIMER_N(CLOCK_8_ID),
         #endif
 
         #if DEFINED(TIMER_N(CLOCK_16_ID))
-            Div16 = TIMER_N(CLOCK_16_ID),
+            div16 = TIMER_N(CLOCK_16_ID),
         #endif
 
         #if TIMER_N(CLOCK_32_ID)
-            Div32 = TIMER_N(CLOCK_32_ID),
+            div32 = TIMER_N(CLOCK_32_ID),
         #endif
 
         #if TIMER_N(CLOCK_64_ID)
-            Div64 = TIMER_N(CLOCK_64_ID),
+            div64 = TIMER_N(CLOCK_64_ID),
         #endif
 
         #if TIMER_N(CLOCK_128_ID)
-            Div128 = TIMER_N(CLOCK_128_ID),
+            div128 = TIMER_N(CLOCK_128_ID),
         #endif
 
         #if TIMER_N(CLOCK_256_ID)
-            Div256 = TIMER_N(CLOCK_256_ID),
+            div256 = TIMER_N(CLOCK_256_ID),
         #endif
 
         #if DEFINED(TIMER_N(CLOCK_512_ID))
-            Div512 = TIMER_N(CLOCK_512_ID),
+            div512 = TIMER_N(CLOCK_512_ID),
         #endif
 
         #if DEFINED(TIMER_N(CLOCK_1024_ID))
-            Div1024 = TIMER_N(CLOCK_1024_ID),
+            div1024 = TIMER_N(CLOCK_1024_ID),
         #endif
 
         #if DEFINED(TIMER_N(CLOCK_2048_ID))
-            Div2048 = TIMER_N(CLOCK_2048_ID),
+            div2048 = TIMER_N(CLOCK_2048_ID),
         #endif
 
         #if DEFINED(TIMER_N(CLOCK_4096_ID))
-            Div4096 = TIMER_N(CLOCK_4096_ID),
+            div4096 = TIMER_N(CLOCK_4096_ID),
         #endif
 
         #if DEFINED(TIMER_N(CLOCK_8192_ID))
-            Div8192 = TIMER_N(CLOCK_8192_ID),
+            div8192 = TIMER_N(CLOCK_8192_ID),
         #endif
 
         #if DEFINED(TIMER_N(CLOCK_16384_ID))
-            Div16384 = TIMER_N(CLOCK_16384_ID),
+            div16384 = TIMER_N(CLOCK_16384_ID),
         #endif
 
         #if TIMER_N(CLOCK_EXT_FALLING_ID)
-            ExtFalling = TIMER_N(CLOCK_EXT_FALLING_ID),
+            extFalling = TIMER_N(CLOCK_EXT_FALLING_ID),
         #endif
 
         #if TIMER_N(CLOCK_EXT_RISING_ID)
-            ExtRising = TIMER_N(CLOCK_EXT_RISING_ID),
+            extRising = TIMER_N(CLOCK_EXT_RISING_ID),
         #endif
     };
 
     /// #### enum Waveform
-    /// * Normal
-    /// * PWM
-    /// * CTCOCRA
-    /// * FastPWM
-    /// * PWMOCRA
-    /// * FastPWMOCRA
+    /// * normal
+    /// * pwm
+    /// * ctcOcra
+    /// * fastPwm
+    /// * pwmOcra
+    /// * fastPwmOcra
     enum class Waveform : uint8_t {
         #if DEFINED(TIMER_N(WAVEFORM_NORMAL_ID))
-            Normal = TIMER_N(WAVEFORM_NORMAL_ID),
+            normal = TIMER_N(WAVEFORM_NORMAL_ID),
         #endif
 
         #if DEFINED(TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_ID))
-            PWM = TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_ID),
+            pwm = TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_ID),
         #endif
 
         #if DEFINED(TIMER_N(WAVEFORM_CTC_OCRA_ID))
-            CTCOCRA = TIMER_N(WAVEFORM_CTC_OCRA_ID),
+            ctcOcra = TIMER_N(WAVEFORM_CTC_OCRA_ID),
         #endif
 
         #if DEFINED(TIMER_N(WAVEFORM_CTC_OCRC_ID))
-            CTCOCRC = TIMER_N(WAVEFORM_CTC_OCRC_ID),
+            ctcOcrc = TIMER_N(WAVEFORM_CTC_OCRC_ID),
         #endif
 
         #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_ID))
-            FastPWM = TIMER_N(WAVEFORM_FAST_PWM_ID),
+            fastPwm = TIMER_N(WAVEFORM_FAST_PWM_ID),
         #endif
 
         #if DEFINED(TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID))
-            PWMOCRA = TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID),
+            pwmOcra = TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID),
         #endif
 
         #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_OCRA_ID))
-            FastPWMOCRA = TIMER_N(WAVEFORM_FAST_PWM_OCRA_ID),
+            fastPwmOcra = TIMER_N(WAVEFORM_FAST_PWM_OCRA_ID),
         #endif
 
         #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_OCRC_ID))
-            FastPWMOCRC = TIMER_N(WAVEFORM_FAST_PWM_OCRC_ID),
+            fastPwmOcrc = TIMER_N(WAVEFORM_FAST_PWM_OCRC_ID),
         #endif
     };
 
