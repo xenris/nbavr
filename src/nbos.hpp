@@ -24,6 +24,4 @@ namespace nbos {
     #include "tasks.hpp"
 }
 
-#include "memorybarrier.hpp"
-
 #endif
