@@ -53,28 +53,28 @@ force_inline bool getBit(volatile T* reg, uint8_t bit) {
 }
 
 force_inline void nop() {
-    #ifndef TEST
+    #if defined(__AVR__) || defined(__ARM__)
         asm volatile("nop" ::: "memory");
     #endif
 }
 
-/// #### void interruptsDisable()
-/// Globally disable interrupts.
-force_inline void interruptsDisable() {
-    #if defined(__AVR__)
-        asm volatile("cli" ::: "memory");
-    #elif defined(__ARM__)
-        asm volatile("cpsid i" ::: "memory");
-    #endif
-}
+// TODO Check that these three functions work for arm.
 
 /// #### void interruptsEnable()
 /// Globally enable interrupts.
-force_inline void interruptsEnable() {
+force_inline void interruptsEnable(bool enable) {
     #if defined(__AVR__)
-        asm volatile("sei" ::: "memory");
+        if(enable) {
+            asm volatile("sei" ::: "memory");
+        } else {
+            asm volatile("cli" ::: "memory");
+        }
     #elif defined(__ARM__)
-        asm volatile("cpsie i" ::: "memory");
+        if(enable) {
+            asm volatile("cpsie i" ::: "memory");
+        } else {
+            asm volatile("cpsid i" ::: "memory");
+        }
     #endif
 }
 
@@ -91,72 +91,66 @@ force_inline bool interruptsEnabled() {
         #endif
     #elif defined(__ARM__)
         asm volatile("mrs %[t], PRIMASK" : [t] "=r" (t) :: "memory");
-        // TODO Check that these three functions work.
     #endif
 
     return t;
 }
 
 template <class F>
-force_inline auto atomic2(F f) -> decltype(f()) {
-    bool i = interruptsEnabled();
+force_inline auto atomic(F f) -> decltype(f()) {
+    const bool i = interruptsEnabled();
 
-    interruptsDisable();
+    interruptsEnable(false);
 
     if constexpr(is_same<decltype(f()), void>::value) {
         f();
 
-        if(i) {
-            interruptsEnable();
-        }
+        interruptsEnable(i);
     } else {
         auto r = f();
 
-        if(i) {
-            interruptsEnable();
-        }
+        interruptsEnable(i);
 
         return r;
     }
 }
 
-template <class F>
-force_inline auto nonatomic2(F f) -> decltype(f()) {
-    bool i = interruptsEnabled();
-
-    interruptsEnable();
-
-    if constexpr(is_same<decltype(f()), void>::value) {
-        f();
-
-        if(i) {
-            interruptsDisable();
-        }
-    } else {
-        auto r = f();
-
-        if(i) {
-            interruptsDisable();
-        }
-
-        return r;
-    }
-}
-
-force_inline void block2() {
+/// #### macro block
+/// Make sure an expression or block of expressions is compiled in the order it is written in.
+/// i.e. Prevents the compiler from doing memory access optimisations which reorder code.
+force_inline void block() {
     asm volatile("" ::: "memory");
 }
 
 template <class F>
-force_inline auto block2(F f) -> decltype(f()) {
+force_inline auto block(F f) -> decltype(f()) {
     if constexpr(is_same<decltype(f()), void>::value) {
-        block2();
+        block();
         f();
-        block2();
+        block();
     } else {
-        block2();
+        block();
         auto r = f();
-        block2();
+        block();
+
+        return r;
+    }
+}
+
+template <class F>
+force_inline auto nonatomic(F f) -> decltype(f()) {
+    const bool i = interruptsEnabled();
+
+    interruptsEnable(true);
+
+    if constexpr(is_same<decltype(f()), void>::value) {
+        f();
+
+        interruptsEnable(i);
+    } else {
+        auto r = f();
+
+        interruptsEnable(i);
 
         return r;
     }

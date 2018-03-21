@@ -13,11 +13,12 @@ Set or clear a bit in a volatile register lazily.
 #### void getBit(volatile T\* register, uint8_t bit)
 Get a bit from a volatile register.
 
-#### void interruptsDisable()
-Globally disable interrupts.
-
 #### void interruptsEnable()
 Globally enable interrupts.
 
 #### void interruptsEnabled()
 Globally enable interrupts.
+
+#### macro block
+Make sure an expression or block of expressions is compiled in the order it is written in.
+i.e. Prevents the compiler from doing memory access optimisations which reorder code.

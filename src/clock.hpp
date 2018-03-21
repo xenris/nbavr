@@ -66,12 +66,12 @@ class Clock {
     PriorityQueue<DelayedCall, MaxCalls> _calls;
 
     Clock() {
-        atomic {
+        atomic([]() {
             TimerT::OutputA::callback(handleDelayedCall, nullptr);
             TimerT::overflowCallback(handleTimerOverflow, nullptr);
             TimerT::overflowIntEnable(true);
             TimerT::clock(EightBitCounter ? TimerT::Clock::div256 : TimerT::Clock::div64);
-        }
+        });
     }
 
     Clock(Clock const&);
@@ -120,9 +120,7 @@ public:
     /// Wraps every 2^16 ticks. (262.144ms at 16MHz)
     static force_inline uint16_t getTicks16() {
         if constexpr (EightBitCounter) {
-            uint16_t ticks;
-
-            atomic {
+            return atomic([&]() {
                 uint8_t low = TimerT::counter();
                 uint8_t high = getInstance()._ticksHigh;
 
@@ -133,10 +131,8 @@ public:
                     high++;
                 }
 
-                ticks = (uint16_t(high) << 8) | low;
-            }
-
-            return ticks;
+                return (uint16_t(high) << 8) | low;
+            });
         } else {
             return TimerT::counter();
         }
@@ -146,100 +142,112 @@ public:
     /// Gets the current value of the 32 bit tick counter.<br>
     /// Wraps every 2^32 ticks. (4.77 hours at 16Mhz)
     static uint32_t getTicks() {
+        return atomic([&]() {
+            return getTicks_();
+        });
+    }
+
+    /// #### static uint32_t getTicks_()
+    /// Non-atomic version of getTicks().
+    static uint32_t getTicks_() {
         auto& self = getInstance();
-        uint32_t ticks;
 
-        atomic {
-            if constexpr (EightBitCounter) {
-                uint8_t low = TimerT::counter();
-                uint8_t mid = self._ticksHigh;
-                uint16_t high = self._tocks;
+        if constexpr (EightBitCounter) {
+            uint8_t low = TimerT::counter();
+            uint8_t mid = self._ticksHigh;
+            uint16_t high = self._tocks;
 
-                if(TimerT::overflowIntFlag()) {
-                    // If it has overflowed then there is a possibility that
-                    // the numbers are not synchronised.
-                    low = TimerT::counter();
-                    mid++;
+            if(TimerT::overflowIntFlag()) {
+                // If it has overflowed then there is a possibility that
+                // the numbers are not synchronised.
+                low = TimerT::counter();
+                mid++;
 
-                    if(mid == 0) {
-                        high++;
-                    }
-                }
-
-                ticks = (uint32_t(high) << 16) | (uint32_t(mid) << 8) | low;
-            } else {
-                uint16_t low = TimerT::counter();
-                uint16_t high = self._tocks;
-
-                if(TimerT::overflowIntFlag()) {
-                    // If it has overflowed then there is a possibility that
-                    // the numbers are not synchronised.
-                    low = TimerT::counter();
+                if(mid == 0) {
                     high++;
                 }
-
-                ticks = (uint32_t(high) << 16) | low;
             }
-        }
 
-        return ticks;
+            return (uint32_t(high) << 16) | (uint32_t(mid) << 8) | low;
+        } else {
+            uint16_t low = TimerT::counter();
+            uint16_t high = self._tocks;
+
+            if(TimerT::overflowIntFlag()) {
+                // If it has overflowed then there is a possibility that
+                // the numbers are not synchronised.
+                low = TimerT::counter();
+                high++;
+            }
+
+            return (uint32_t(high) << 16) | low;
+        }
     }
 
     /// #### static uint16_t getTocks()
     /// Gets the current value of the 16 bit tock counter.<br>
     /// Wraps every 2^16 tocks. (4.77 hours at 16Mhz)
     static force_inline uint16_t getTocks() {
-        uint16_t tocks;
+        return atomic([&]() {
+            return getTocks_();
+        });
+    }
 
-        atomic {
-            tocks = getInstance()._tocks;
-        }
-
-        return tocks;
+    /// #### static uint16_t getTocks_()
+    /// Non-atomic version of getTocks().
+    static force_inline uint16_t getTocks_() {
+        return getInstance()._tocks;
     }
 
     /// #### static bool delayedCall(callback_t callback, void* data, int32_t delay)
     /// Add a callback to call after delay ticks.<br>
     /// Returns true if successful added.
-    // TODO This function is quite time consuming, ~5 ticks. Need to make it faster.
     static bool delayedCall(callback_t callback, void* data, int32_t delay) {
-        auto& self = getInstance();
-        auto& calls = self._calls;
+        return atomic([&]() {
+            return delayedCall_(callback, data, delay);
+        });
+    }
 
+    /// #### static bool delayedCall_(callback_t callback, void* data, int32_t delay)
+    /// Non-atomic version of delayedCall().
+    /// Returns true if successful added.
+    // TODO This function is quite time consuming, ~5 ticks. Need to make it faster.
+    static bool delayedCall_(callback_t callback, void* data, int32_t delay) {
         if(callback == nullptr) {
             return false;
         }
+
+        auto& self = getInstance();
+        auto& calls = self._calls;
 
         bool success;
 
         delay = max(delay, int32_t(0));
 
-        atomic {
-            uint32_t now = getTicks();
+        uint32_t now = getTicks();
 
-            DelayedCall dc(callback, data, now + uint32_t(delay));
+        DelayedCall dc(callback, data, now + uint32_t(delay));
 
-            success = calls.push_(dc);
+        success = calls.push_(dc);
 
-            if(success) {
-                calls.peek_(&dc);
+        if(success) {
+            calls.peek_(&dc);
 
-                int32_t delta = dc.tick - now;
+            int32_t delta = dc.tick - now;
 
-                // FIXME This could cancel potential calls.
-                TimerT::OutputA::intFlagClear();
+            // FIXME This could cancel potential calls.
+            TimerT::OutputA::intFlagClear();
 
-                // TODO Need to come up with a more reliable system. Something
-                //  that guarantees the interrupt won't be missed.
-                if(delta <= 2) {
-                    handleDelayedCall();
-                    // XXX What happens if another call is due to happen right now?
-                } else if(delta < (EightBitCounter ? 255 : 65536)) {
-                    TimerT::OutputA::value(dc.tick);
-                    TimerT::OutputA::intEnable(true);
-                } else {
-                    TimerT::OutputA::intEnable(false);
-                }
+            // TODO Need to come up with a more reliable system. Something
+            //  that guarantees the interrupt won't be missed.
+            if(delta <= 2) {
+                handleDelayedCall();
+                // XXX What happens if another call is due to happen right now?
+            } else if(delta < (EightBitCounter ? 255 : 65536)) {
+                TimerT::OutputA::value(dc.tick);
+                TimerT::OutputA::intEnable(true);
+            } else {
+                TimerT::OutputA::intEnable(false);
             }
         }
 
@@ -257,7 +265,7 @@ public:
         static_assert(ns <= 2000000, "Cannot delay for more than 2 milliseconds");
 
         // Ensure that this delay separates hardware actions, even when 0ns.
-        block;
+        block();
 
         const uint64_t clocks = (uint64_t(ns) * CpuFreq + 500000000) / 1000000000;
         const uint64_t clocksPerLoop = 4;
@@ -298,13 +306,19 @@ public:
     }
 
     static void haltStart(typename TimerT::type ticks) {
-        block TimerT::OutputB::value(TimerT::counter() + ticks);
-        block TimerT::OutputB::intFlagClear();
-        block TimerT::OutputB::intEnable(true);
+        block([ticks]() {
+            TimerT::OutputB::value(TimerT::counter() + ticks);
+            block();
+            TimerT::OutputB::intFlagClear();
+            block();
+            TimerT::OutputB::intEnable(true);
+        });
     }
 
     static void haltEnd() {
-        block TimerT::OutputB::intEnable(false);
+        block([]() {
+            TimerT::OutputB::intEnable(false);
+        });
     }
 
 private:

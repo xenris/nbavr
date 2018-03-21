@@ -1,6 +1,8 @@
 #ifndef NBOS_SERIAL_HPP
 #define NBOS_SERIAL_HPP
 
+#include "type.hpp"
+
 template <class Usart, class cout_t, class cin_t = nulltype>
 struct Serial {
     static inline void init(uint32_t CpuFreq, uint32_t baud, cout_t* out, cin_t* in = nullptr) {
@@ -17,7 +19,7 @@ struct Serial {
 
         out->setNotify(outNotify, nullptr);
 
-        atomic {
+        atomic([&]() {
             Usart::transmitterEnable(true);
             Usart::baud(ubrr);
             Usart::use2X(false);
@@ -31,7 +33,7 @@ struct Serial {
             }
 
             Usart::dataRegisterEmptyCallback(usartDataRegisterEmpty, out);
-        }
+        });
     }
 
 private:

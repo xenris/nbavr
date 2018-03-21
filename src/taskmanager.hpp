@@ -76,17 +76,11 @@ private:
             hw::WDT::reset();
         #endif
 
-        interruptsEnable();
+        interruptsEnable(true);
 
         if(task.state == TaskT::State::delay) {
             // Check if it is time for this task to wake up.
-            uint32_t wakeTick;
-
-            atomic {
-                wakeTick = task.wakeTick;
-            }
-
-            if(int32_t(Clock::getTicks() - wakeTick) >= 0) {
+            if(int32_t(Clock::getTicks() - task.wakeTick) >= 0) {
                 task.state = TaskT::State::awake;
             }
         }

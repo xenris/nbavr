@@ -51,12 +51,22 @@ Wraps every 2^16 ticks. (262.144ms at 16MHz)
 Gets the current value of the 32 bit tick counter.<br>
 Wraps every 2^32 ticks. (4.77 hours at 16Mhz)
 
+#### static uint32_t getTicks_()
+Non-atomic version of getTicks().
+
 #### static uint16_t getTocks()
 Gets the current value of the 16 bit tock counter.<br>
 Wraps every 2^16 tocks. (4.77 hours at 16Mhz)
 
+#### static uint16_t getTocks_()
+Non-atomic version of getTocks().
+
 #### static bool delayedCall(callback_t callback, void* data, int32_t delay)
 Add a callback to call after delay ticks.<br>
+Returns true if successful added.
+
+#### static bool delayedCall_(callback_t callback, void* data, int32_t delay)
+Non-atomic version of delayedCall().
 Returns true if successful added.
 
 #### static void delay<uint32_t ns>()

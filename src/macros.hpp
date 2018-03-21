@@ -7,36 +7,6 @@
 /// Force a function to always be inlined. Use like "inline".
 #define force_inline inline __attribute__((always_inline))
 
-force_inline uint8_t _MemoryBarrier(const uint8_t *s = nullptr);
-
-#ifdef CHIP_STATUS_REG
-
-force_inline uint8_t __cli();
-force_inline uint8_t __sei();
-force_inline void __ssreg(const uint8_t *s);
-
-/// #### macro atomic
-/// Make sure an expression or block of expressions run with global interrupts disabled.
-#define atomic for(uint8_t __sreg __attribute__((cleanup(__ssreg))) = __cli(), __once = 1; __once; __once = 0)
-
-/// #### macro nonatomic
-/// Make sure an expression or block of expressions run with global interrupts enabled.
-#define nonatomic for(uint8_t __sreg __attribute__((cleanup(__ssreg))) = __sei(), __once = 1; __once; __once = 0)
-
-#else
-
-// FIXME TODO What to do here?
-#define atomic
-
-#define nonatomic
-
-#endif
-
-/// #### macro block
-/// Make sure an expression or block of expressions is compiled in the order it is written in.
-/// i.e. Prevents the compiler from doing memory accesses optimisations that reorder code.
-#define block for(uint8_t __once __attribute__((cleanup(_MemoryBarrier))) = _MemoryBarrier(); __once; __once = 0)
-
 /// #### macro CAT(...)
 /// Concatinates a list of identifiers together.<br>
 /// e.g. CAT(Foo, Bar) -> FooBar

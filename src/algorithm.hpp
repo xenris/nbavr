@@ -1,6 +1,7 @@
 #ifndef NBOS_ALGORITHM_HPP
 #define NBOS_ALGORITHM_HPP
 
+#include "math.hpp"
 /// # Algorithm
 
 /// #### T\* reverse(T\* array, size_t length)

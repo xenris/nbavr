@@ -21,6 +21,7 @@
 /// ```
 
 #include "type.hpp"
+#include "atomic.hpp"
 
 /// ## Class Task\<class Clock\>
 template <class Clock>
@@ -33,7 +34,7 @@ struct Task {
     };
 
     State state = State::awake;
-    uint32_t wakeTick = 0;
+    Atomic<uint32_t> wakeTick = 0;
 
     /// #### void sleep(uint32_t ticks)
     /// Put this task to sleep until the given number of ticks have passed.

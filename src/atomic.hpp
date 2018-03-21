@@ -18,11 +18,13 @@
 
 /// // Interrupt.
 /// static void callback(void* data) {
-///     counter.direct()++;
+///     counter.nonatomic()++;
 /// }
 /// ```
 
-/// ## class Atomic<class Type>
+#include "hardware/util.hpp"
+
+/// ## class Atomic<class T>
 template <class T>
 class Atomic {
     T _t;
@@ -35,109 +37,94 @@ public:
     }
 
     force_inline Atomic<T>& operator=(const T t) {
-        atomic {
+        atomic([&]() {
             _t = t;
-        }
+        });
 
         return *this;
     }
 
     force_inline operator T() const {
-        T r;
-
-        atomic {
-            r = _t;
-        }
-
-        return r;
+        return atomic([&]() {
+            return _t;
+        });
     }
 
     /// #### T getSet(T t)
     /// Sets the value to t, and returns its previous value.
     force_inline T getSet(T t) {
-        T r;
+        return atomic([&]() {
+            const T r = _t;
 
-        atomic {
-            r = _t;
             _t = t;
-        }
 
-        return r;
+            return r;
+        });
     }
 
     force_inline Atomic<T>& operator+=(T t) {
-        atomic {
+        atomic([&]() {
             _t += t;
-        }
+        });
 
         return *this;
     }
 
     force_inline Atomic<T>& operator-=(T t) {
-        atomic {
+        atomic([&]() {
             _t -= t;
-        }
+        });
 
         return *this;
     }
 
     force_inline Atomic<T>& operator*=(T t) {
-        atomic {
+        atomic([&]() {
             _t *= t;
-        }
+        });
 
         return *this;
     }
 
     force_inline Atomic<T>& operator/=(T t) {
-        atomic {
+        atomic([&]() {
             _t /= t;
-        }
+        });
 
         return *this;
     }
 
     force_inline Atomic<T>& operator++() {
-        atomic {
-            _t++;
-        }
+        atomic([&]() {
+            ++_t;
+        });
 
         return *this;
     }
 
     force_inline Atomic<T> operator++(int) {
-        T r;
-
-        atomic {
-            r = _t;
-            _t++;
-        }
-
-        return r;
+        return atomic([&]() {
+            return _t++;
+        });
     }
 
     force_inline Atomic<T>& operator--() {
-        atomic {
-            _t--;
-        }
+        atomic([&]() {
+            --_t;
+        });
 
         return *this;
     }
 
     force_inline Atomic<T> operator--(int) {
-        T r;
-
-        atomic {
-            r = _t;
-            _t--;
-        }
-
-        return r;
+        return atomic([&]() {
+            return _t--;
+        });
     }
 
-    /// #### T& direct()
+    /// #### T& nonatomic()
     /// Non-atomic access to the value.
-    force_inline T& direct() {
+    force_inline T& nonatomic() {
         return _t;
     }
 };

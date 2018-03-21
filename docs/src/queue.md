@@ -21,10 +21,6 @@ Returns true on success.
 Get the next value from the queue.<br>
 Returns true on success.
 
-#### bool pop()
-Removes the next value from the queue.<br>
-Returns true on success.
-
 #### bool peek(T\* t)
 Get the next value from the queue, but don't remove it.<br>
 Returns true on success.

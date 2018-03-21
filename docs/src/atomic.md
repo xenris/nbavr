@@ -15,14 +15,14 @@ void loop {
 
 // Interrupt.
 static void callback(void* data) {
-    counter.direct()++;
+    counter.nonatomic()++;
 }
 ```
 
-## class Atomic<class Type>
+## class Atomic<class T>
 
 #### T getSet(T t)
 Sets the value to t, and returns its previous value.
 
-#### T& direct()
+#### T& nonatomic()
 Non-atomic access to the value.

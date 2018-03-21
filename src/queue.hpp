@@ -35,17 +35,13 @@ public:
     /// #### bool push(T t)
     /// Add a value to the queue.<br>
     /// Returns true on success.
-    bool push(T t) {
-        bool b;
-
-        atomic {
-            b = push_(t);
-        }
-
-        return b;
+    bool push(const T& t) {
+        return atomic([&]() {
+            return push_(t);
+        });
     }
 
-    bool push_(T t) {
+    bool push_(const T& t) {
         if(full_()) {
             return false;
         }
@@ -64,46 +60,19 @@ public:
     /// #### bool pop(T\* t)
     /// Get the next value from the queue.<br>
     /// Returns true on success.
-    bool pop(T* t) {
-        bool b;
-
-        atomic {
-            b = pop_(t);
-        }
-
-        return b;
+    bool pop(T*const t = nullptr) {
+        return atomic([&]() {
+            return pop_(t);
+        });
     }
 
-    bool pop_(T* t) {
+    bool pop_(T*const t = nullptr) {
         if(empty_()) {
             return false;
         }
 
-        *t = _array[_tail];
-
-        _tail = (_tail + 1) % S;
-
-        _full = false;
-
-        return true;
-    }
-
-    /// #### bool pop()
-    /// Removes the next value from the queue.<br>
-    /// Returns true on success.
-    bool pop() {
-        bool b;
-
-        atomic {
-            b = pop_();
-        }
-
-        return b;
-    }
-
-    bool pop_() {
-        if(empty_()) {
-            return false;
+        if(t != nullptr) {
+            *t = _array[_tail];
         }
 
         _tail = (_tail + 1) % S;
@@ -116,14 +85,10 @@ public:
     /// #### bool peek(T\* t)
     /// Get the next value from the queue, but don't remove it.<br>
     /// Returns true on success.
-    bool peek(T* t) {
-        bool b;
-
-        atomic {
-            b = peek_(t);
-        }
-
-        return b;
+    bool peek(T*const t) {
+        return atomic([&]() {
+            return peek_(t);
+        });
     }
 
     bool peek_(T* t) {
@@ -139,9 +104,9 @@ public:
     /// #### void clear()
     /// Remove all elements from the queue.
     void clear() {
-        atomic {
+        atomic([&]() {
             clear_();
-        }
+        });
     }
 
     void clear_() {
@@ -152,13 +117,9 @@ public:
     /// #### size_t size()
     /// Get the number of elements currently in the queue.
     size_t size() {
-        size_t s;
-
-        atomic {
-            s = size_();
-        }
-
-        return s;
+        return atomic([&]() {
+            return size_();
+        });
     }
 
     size_t size_() {
@@ -178,13 +139,9 @@ public:
     /// #### size_t free()
     /// Get the amount of free space in the queue.
     size_t free() {
-        size_t s;
-
-        atomic {
-            s = free_();
-        }
-
-        return s;
+        return atomic([&]() {
+            return free_();
+        });
     }
 
     size_t free_() {
@@ -197,20 +154,12 @@ public:
         return S;
     }
 
-    static constexpr size_t capacity_() {
-        return S;
-    }
-
     /// #### bool empty()
     /// Returns true if the queue is empty.
     bool empty() {
-        bool e;
-
-        atomic {
-            e = empty_();
-        }
-
-        return e;
+        return atomic([&]() {
+            return empty_();
+        });
     }
 
     bool empty_() {
@@ -230,10 +179,10 @@ public:
     /// #### void setNotify(callback_t callback, void\* data)
     /// Set the callback function and data for queue notifications.
     void setNotify(callback_t callback, void* data) {
-        atomic {
+        atomic([&]() {
             notify_func = callback;
             notify_data = data;
-        }
+        });
     }
 
     /// #### void notify()

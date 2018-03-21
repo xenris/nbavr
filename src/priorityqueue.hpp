@@ -18,14 +18,10 @@ private:
 
 public:
 
-    bool push(T t) {
-        bool b;
-
-        atomic {
-            b = push_(t);
-        }
-
-        return b;
+    bool push(const T& t) {
+        return atomic([&]() {
+            return push_(t);
+        });
     }
 
     bool push_(const T& t) {
@@ -55,17 +51,13 @@ public:
         return true;
     }
 
-    bool pop(T* t = nullptr) {
-        bool b;
-
-        atomic {
-            b = pop_(t);
-        }
-
-        return b;
+    bool pop(T*const t = nullptr) {
+        return atomic([&]() {
+            return pop_(t);
+        });
     }
 
-    bool pop_(T* t = nullptr) {
+    bool pop_(T*const t = nullptr) {
         if(empty_()) {
             return false;
         }
@@ -99,14 +91,10 @@ public:
         return true;
     }
 
-    bool peek(T* t) {
-        bool b;
-
-        atomic {
-            b = peek_(t);
-        }
-
-        return b;
+    bool peek(T*const t) {
+        return atomic([&]() {
+            return peek_(t);
+        });
     }
 
     bool peek_(T* t) {
@@ -120,9 +108,9 @@ public:
     }
 
     void clear() {
-        atomic {
+        atomic([&]() {
             clear_();
-        }
+        });
     }
 
     void clear_() {
@@ -130,13 +118,9 @@ public:
     }
 
     size_t size() {
-        size_t s;
-
-        atomic {
-            s = size_();
-        }
-
-        return s;
+        return atomic([&]() {
+            return size_();
+        });
     }
 
     size_t size_() {
@@ -144,13 +128,9 @@ public:
     }
 
     size_t free() {
-        size_t s;
-
-        atomic {
-            s = free_();
-        }
-
-        return s;
+        return atomic([&]() {
+            return free_();
+        });
     }
 
     size_t free_() {
@@ -166,13 +146,9 @@ public:
     }
 
     bool empty() {
-        bool e;
-
-        atomic {
-            e = empty_();
-        }
-
-        return e;
+        return atomic([&]() {
+            return empty_();
+        });
     }
 
     bool empty_() {
@@ -180,13 +156,9 @@ public:
     }
 
     bool full() {
-        bool f;
-
-        atomic {
-            f = full_();
-        }
-
-        return f;
+        return atomic([&]() {
+            return full_();
+        });
     }
 
     bool full_() {

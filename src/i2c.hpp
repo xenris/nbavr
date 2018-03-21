@@ -53,13 +53,13 @@ struct I2c {
 
 	template <int S>
 	static void i2cQueueNotify(void* data) {
-		auto queue = (Queue<Action, S>*)data;
+        atomic([&]() {
+            auto queue = (Queue<Action, S>*)data;
 
-        atomic {
             if(!Twi::active() && !queue->empty_()) {
                 Twi::sendStart();
             }
-        }
+        });
 	}
 
     // TODO Add slave code.
