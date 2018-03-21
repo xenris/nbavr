@@ -22,7 +22,7 @@
 /// }
 /// ```
 
-#include "hardware/util.hpp"
+#include "hardware/system.hpp"
 
 /// ## class Atomic<class T>
 template <class T>

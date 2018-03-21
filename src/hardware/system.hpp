@@ -1,9 +1,9 @@
-#ifndef NBOS_UTIL_HPP
-#define NBOS_UTIL_HPP
+#ifndef NBOS_SYSTEM_HPP
+#define NBOS_SYSTEM_HPP
 
 #include "macros.hpp"
 
-/// # Util
+/// # System
 
 /// #### T bv(T n)
 /// Equivalent to "1 << n", but works with types bigger than int.

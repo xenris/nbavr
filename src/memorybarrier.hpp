@@ -2,7 +2,7 @@
 #define NBOS_MEMORYBARRIER_HPP
 
 // These need to be outside nbos namespace so they can be used in cleanup().
-#include "hardware/util.hpp"
+#include "hardware/system.hpp"
 
 #ifdef CHIP_STATUS_REG
 

@@ -15,7 +15,7 @@
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "type.hpp"
-#include "util.hpp"
+#include "system.hpp"
 
 #define N _I
 #define UsartN CAT(Usart,N)

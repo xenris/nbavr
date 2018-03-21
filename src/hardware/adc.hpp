@@ -31,7 +31,7 @@
 #include "chip.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
-#include "util.hpp"
+#include "system.hpp"
 
 #define N _I
 #define AdcN CAT(Adc, N)

@@ -9,7 +9,7 @@
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "type.hpp"
-#include "util.hpp"
+#include "system.hpp"
 #include "port.hpp"
 
 #define N _I

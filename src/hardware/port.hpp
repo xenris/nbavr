@@ -18,7 +18,7 @@
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "type.hpp"
-#include "util.hpp"
+#include "system.hpp"
 
 #define X TO_LETTER(_I)
 #define PortX CAT(Port, X)

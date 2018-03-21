@@ -2,7 +2,7 @@
 #define NBOS_HARDWARE_HPP
 
 #include "hardware/chip.hpp"
-#include "hardware/util.hpp"
+#include "hardware/system.hpp"
 #include "hardware/callbacks.hpp"
 
 namespace hw {
