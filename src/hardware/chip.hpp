@@ -36,18 +36,16 @@
 
 namespace nbos {
 
-template <class T>
+template <class T, size_t addr>
 struct _reg {
-    volatile T* p;
-
-    _reg(size_t addr) : p((T*)(addr + register_offset)) {}
+    T*const p = (T*)(addr + register_offset);
 };
 
 } // nbos
 
 // Use of _reg makes the compiler throw a more meaningful message if _TYPE or _ADDR isn't defined.
-#define REG(R) _reg<volatile CAT(R, _TYPE)>(CAT(R, _ADDR)).p
-#define REGL(R) _reg<CAT(R, _TYPE)>(CAT(R, _ADDR)).p
+#define REG(R) _reg<volatile CAT(R, _TYPE), CAT(R, _ADDR)>().p
+#define REGL(R) _reg<CAT(R, _TYPE), CAT(R, _ADDR)>().p
 
 #define REGTYPE(R) CAT(R, _TYPE)
 
