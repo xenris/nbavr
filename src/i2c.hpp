@@ -1,9 +1,11 @@
-/// # I2C
-
 #ifndef NBOS_I2C_HPP
 #define NBOS_I2C_HPP
 
+/// # I2C
+
 #include <queue.hpp>
+
+namespace nbos {
 
 /// ## class I2c
 template <class Twi, uint32_t CpuFreq, uint32_t Baud>
@@ -233,5 +235,7 @@ struct I2c {
 		}
     }
 };
+
+} // nbos
 
 #endif

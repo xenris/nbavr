@@ -1,3 +1,6 @@
+#ifndef NBOS_TASKMANAGER_HPP
+#define NBOS_TASKMANAGER_HPP
+
 /// # TaskManager
 
 /// ## Example
@@ -17,14 +20,12 @@
 /// nbos::TaskManager<Clock> tm(tasks);
 /// ```
 
-#ifndef NBOS_TASKMANAGER_HPP
-#define NBOS_TASKMANAGER_HPP
-
 #include "clock.hpp"
-#include "hardware.hpp"
 #include "macros.hpp"
 #include "task.hpp"
 #include "type.hpp"
+
+namespace nbos {
 
 /// ## class TaskManager\<class Clock\>
 template <class Clock>
@@ -115,5 +116,7 @@ private:
         self->handleHalt();
     }
 };
+
+} // nbos
 
 #endif

@@ -33,11 +33,6 @@
 #include "macros.hpp"
 #include "system.hpp"
 
-#define N _I
-#define AdcN CAT(Adc, N)
-#define ADC_N(A) CAT(CHIP_ADC_, N, _, A)
-#define _ADC_N(A) UNDERLINE(ADC, N, A)
-
 /// #### macro INCLUDE_ADC_CALLBACK(N)
 /// Include this to use Adc callbacks.
 #define INCLUDE_ADC_CALLBACK(N) MAKE_CALLBACK(ADC, N)
@@ -45,9 +40,16 @@
 #include "loopi"
 
 #ifdef _I
+    #define N _I
+    #define AdcN CAT(Adc, N)
+    #define ADC_N(A) CAT(CHIP_ADC_, N, _, A)
+    #define _ADC_N(A) UNDERLINE(ADC, N, A)
+
     #if CAT(CHIP_ADC_, N)
 
 //------------------------------------------------------------------
+
+namespace nbos::hw {
 
 MAKE_CALLBACK_HEADER(ADC, N);
 
@@ -345,18 +347,21 @@ struct AdcN {
     #endif
 };
 
+} // nbos::hw
+
 //------------------------------------------------------------------
 
     #endif
+
+    #undef N
+    #undef AdcN
+    #undef ADC_N
+    #undef _ADC_N
 
     #include "adc.hpp"
 #else
     #define NBOS_ADC_HPP
 #endif
 
-#undef N
-#undef AdcN
-#undef ADC_N
-#undef _ADC_N
 
 #endif

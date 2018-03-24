@@ -24,6 +24,8 @@
 
 #include "hardware/system.hpp"
 
+namespace nbos {
+
 /// ## class Atomic<class T>
 template <class T>
 class Atomic {
@@ -128,5 +130,7 @@ public:
         return _t;
     }
 };
+
+} // nbos
 
 #endif

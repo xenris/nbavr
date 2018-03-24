@@ -17,11 +17,6 @@
 #include "type.hpp"
 #include "system.hpp"
 
-#define N _I
-#define UsartN CAT(Usart,N)
-#define USART_N(A) CAT(CHIP_USART_, N, _, A)
-#define _USART_N(A) UNDERLINE(USART, N, A)
-
 /// #### macro INCLUDE_USART_CALLBACK(N, X)
 /// Include this to use Usart callbacks.<br>
 /// N is the Usart id, and X is one of RX (receive complete), TX (transmit
@@ -31,9 +26,16 @@
 #include "loopi"
 
 #ifdef _I
+    #define N _I
+    #define UsartN CAT(Usart,N)
+    #define USART_N(A) CAT(CHIP_USART_, N, _, A)
+    #define _USART_N(A) UNDERLINE(USART, N, A)
+
     #if CAT(CHIP_USART_, N)
 
 //------------------------------------------------------------------
+
+namespace nbos::hw {
 
 MAKE_CALLBACK_HEADER(USART, N, RX);
 MAKE_CALLBACK_HEADER(USART, N, TX);
@@ -372,18 +374,20 @@ struct UsartN {
     #endif
 };
 
+} // nbos::hw
+
 //------------------------------------------------------------------
 
     #endif
+
+    #undef N
+    #undef UsartN
+    #undef USART_N
+    #undef _USART_N
 
     #include "usart.hpp"
 #else
     #define NBOS_USART_HPP
 #endif
-
-#undef N
-#undef UsartN
-#undef USART_N
-#undef _USART_N
 
 #endif

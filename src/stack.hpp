@@ -1,6 +1,10 @@
 #ifndef NBOS_STACK_HPP
 #define NBOS_STACK_HPP
 
+#include "type.hpp"
+
+namespace nbos {
+
 template <class T, int S>
 struct Stack {
     using size_t = typename conditional<S <= 127, int8_t, int16_t>::type;
@@ -71,5 +75,7 @@ public:
         return _head == S;
     }
 };
+
+} // nbos
 
 #endif

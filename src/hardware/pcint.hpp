@@ -8,11 +8,6 @@
 #include "macros.hpp"
 #include "system.hpp"
 
-#define N _I
-#define PcIntN CAT(PcInt, N)
-#define PCINT_N(A) CAT(CHIP_PCINT_, N, _, A)
-#define _PCINT_N(A) UNDERLINE(PCINT, N, A)
-
 /// #### macro INCLUDE_PCINT_CALLBACK(N)
 /// Include this to use PcInt callbacks.
 #define INCLUDE_PCINT_CALLBACK(N) MAKE_CALLBACK(PCINT, N)
@@ -20,9 +15,16 @@
 #include "loopi"
 
 #ifdef _I
+    #define N _I
+    #define PcIntN CAT(PcInt, N)
+    #define PCINT_N(A) CAT(CHIP_PCINT_, N, _, A)
+    #define _PCINT_N(A) UNDERLINE(PCINT, N, A)
+
     #if CAT(CHIP_PCINT_, N)
 
 //--------------------------------------------------------
+
+namespace nbos::hw {
 
 MAKE_CALLBACK_HEADER(PCINT, N);
 
@@ -76,18 +78,20 @@ struct PcIntN {
     #endif
 };
 
+} // nbos::hw
+
 //--------------------------------------------------------
 
     #endif
+
+    #undef N
+    #undef PcIntN
+    #undef PCINT_N
+    #undef _PCINT_N
 
     #include "pcint.hpp"
 #else
     #define NBOS_PCINT_HPP
 #endif
-
-#undef N
-#undef PcIntN
-#undef PCINT_N
-#undef _PCINT_N
 
 #endif

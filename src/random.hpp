@@ -12,6 +12,10 @@
 /// float f = random.next<float>();
 /// ```
 
+#include "type.hpp"
+
+namespace nbos {
+
 /// ## class Random
 class Random {
     uint32_t _next;
@@ -43,5 +47,7 @@ public:
         }
     }
 };
+
+} // nbos
 
 #endif

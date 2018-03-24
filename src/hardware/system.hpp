@@ -2,8 +2,11 @@
 #define NBOS_SYSTEM_HPP
 
 #include "macros.hpp"
+#include "type.hpp"
 
 /// # System
+
+namespace nbos {
 
 /// #### T bv(T n)
 /// Equivalent to "1 << n", but works with types bigger than int.
@@ -155,5 +158,7 @@ force_inline auto nonatomic(F f) -> decltype(f()) {
         return r;
     }
 }
+
+} // nbos::hw
 
 #endif

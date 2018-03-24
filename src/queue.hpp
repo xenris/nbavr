@@ -11,6 +11,8 @@
 /// All functions are atomic (i.e. interrupt safe). Equivalient non-atomic functions
 /// have \_ after the function name, e.g. queue.push\_(t).
 
+namespace nbos {
+
 /// ## class Queue\<class Type, int Size\>
 template <class T, int S>
 struct Queue {
@@ -193,5 +195,7 @@ public:
         }
     }
 };
+
+} // nbos
 
 #endif

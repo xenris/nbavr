@@ -6,6 +6,8 @@
 #include "math.hpp"
 #include "type.hpp"
 
+namespace nbos {
+
 /// ## class Array<class Type, int Size>
 template <class T, int S>
 struct Array {
@@ -53,5 +55,7 @@ public:
         return &_array[S];
     }
 };
+
+} // nbos
 
 #endif

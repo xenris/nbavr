@@ -17,20 +17,23 @@
 #include "chip.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
-#include "type.hpp"
+#include "pin.hpp"
 #include "system.hpp"
-
-#define X TO_LETTER(_I)
-#define PortX CAT(Port, X)
-#define PORT_X(A) CAT(CHIP_PORT_, X, _, A)
-#define _PORT_X(A) UNDERLINE(PORT, X, A)
+#include "type.hpp"
 
 #include "loopi"
 
 #ifdef _I
+    #define X TO_LETTER(_I)
+    #define PortX CAT(Port, X)
+    #define PORT_X(A) CAT(CHIP_PORT_, X, _, A)
+    #define _PORT_X(A) UNDERLINE(PORT, X, A)
+
     #if CAT(CHIP_PORT_, X)
 
 //------------------------------------------------------------------
+
+namespace nbos::hw {
 
 /// ## Class PortX
 struct PortX {
@@ -150,18 +153,21 @@ struct PortX {
     #endif
 };
 
+} // nbos::hw
+
 //--------------------------------------------------------
 
     #endif
+
+    #undef X
+    #undef PortX
+    #undef PORT_X
+    #undef _PORT_X
 
     #include "port.hpp"
 #else
     #define NBOS_PORT_HPP
 #endif
 
-#undef X
-#undef PortX
-#undef PORT_X
-#undef _PORT_X
 
 #endif

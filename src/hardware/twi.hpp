@@ -9,11 +9,6 @@
 #include "type.hpp"
 #include "system.hpp"
 
-#define N _I
-#define TwiN CAT(Twi, N)
-#define TWI_N(A) CAT(CHIP_TWI_, N, _, A)
-#define _TWI_N(A) UNDERLINE(TWI, N, A)
-
 /// #### macro INCLUDE_TWI_CALLBACK(N)
 /// Include this to use Twi callbacks.
 #define INCLUDE_TWI_CALLBACK(N) MAKE_CALLBACK(TWI, N)
@@ -21,9 +16,16 @@
 #include "loopi"
 
 #ifdef _I
+    #define N _I
+    #define TwiN CAT(Twi, N)
+    #define TWI_N(A) CAT(CHIP_TWI_, N, _, A)
+    #define _TWI_N(A) UNDERLINE(TWI, N, A)
+
     #if CAT(CHIP_TWI_, N)
 
 //------------------------------------------------------------------
+
+namespace nbos::hw {
 
 MAKE_CALLBACK_HEADER(TWI, N);
 
@@ -248,18 +250,20 @@ struct TwiN {
     }
 };
 
+} // nbos::hw
+
 //--------------------------------------------------------
 
     #endif
+
+    #undef N
+    #undef TwiN
+    #undef TWI_N
+    #undef _TWI_N
 
     #include "twi.hpp"
 #else
     #define NBOS_TWI_HPP
 #endif
-
-#undef N
-#undef TwiN
-#undef TWI_N
-#undef _TWI_N
 
 #endif

@@ -6,6 +6,8 @@
 #include "macros.hpp"
 #include "type.hpp"
 
+namespace nbos {
+
 /// #### T max(T a, T b)
 /// Get the bigger of the two values.
 template<class T>
@@ -114,5 +116,7 @@ struct greater {
         return a > b;
     }
 };
+
+} // nbos
 
 #endif

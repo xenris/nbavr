@@ -18,11 +18,6 @@
 #include "system.hpp"
 #include "port.hpp"
 
-#define N _I
-#define SpiN CAT(Spi,N)
-#define SPI_N(A) CAT(CHIP_SPI_, N, _, A)
-#define _SPI_N(A) UNDERLINE(SPI, N, A)
-
 /// #### macro INCLUDE_SPI_CALLBACK(N)
 /// Include this to use Spi callback.<br>
 /// N is the Spi id.
@@ -31,9 +26,16 @@
 #include "loopi"
 
 #ifdef _I
+    #define N _I
+    #define SpiN CAT(Spi,N)
+    #define SPI_N(A) CAT(CHIP_SPI_, N, _, A)
+    #define _SPI_N(A) UNDERLINE(SPI, N, A)
+
     #if CAT(CHIP_SPI_, N)
 
 //------------------------------------------------------------------
+
+namespace nbos::hw {
 
 MAKE_CALLBACK_HEADER(SPI, N);
 
@@ -252,18 +254,21 @@ struct SpiN {
     #endif
 };
 
+} // nbos::hw
+
 //------------------------------------------------------------------
 
     #endif
+
+    #undef N
+    #undef SpiN
+    #undef SPI_N
+    #undef _SPI_N
 
     #include "spi.hpp"
 #else
     #define NBOS_SPI_HPP
 #endif
 
-#undef N
-#undef SpiN
-#undef SPI_N
-#undef _SPI_N
 
 #endif

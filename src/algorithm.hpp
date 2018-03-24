@@ -1,8 +1,11 @@
 #ifndef NBOS_ALGORITHM_HPP
 #define NBOS_ALGORITHM_HPP
 
-#include "math.hpp"
 /// # Algorithm
+
+#include "math.hpp"
+
+namespace nbos {
 
 /// #### T\* reverse(T\* array, size_t length)
 /// Reverse an array.<br>
@@ -39,5 +42,7 @@ force_inline void swap(T& a, T& b) {
     a = b;
     b = t;
 }
+
+} // nbos
 
 #endif

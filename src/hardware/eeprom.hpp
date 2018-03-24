@@ -9,11 +9,6 @@
 #include "type.hpp"
 #include "system.hpp"
 
-#define N _I
-#define EepromN CAT(Eeprom, N)
-#define EEPROM_N(A) CAT(CHIP_EEPROM_, N, _, A)
-#define _EEPROM_N(A) UNDERLINE(EEPROM, N, A)
-
 /// #### macro INCLUDE_EEPROM_CALLBACK()
 /// Include this to use Eeprom callbacks.
 #define INCLUDE_EEPROM_CALLBACK(N) MAKE_CALLBACK(EEPROM, N)
@@ -21,9 +16,16 @@
 #include "loopi"
 
 #ifdef _I
+    #define N _I
+    #define EepromN CAT(Eeprom, N)
+    #define EEPROM_N(A) CAT(CHIP_EEPROM_, N, _, A)
+    #define _EEPROM_N(A) UNDERLINE(EEPROM, N, A)
+
     #if CAT(CHIP_EEPROM_, N)
 
 //------------------------------------------------------------------
+
+namespace nbos::hw {
 
 MAKE_CALLBACK_HEADER(EEPROM, N);
 
@@ -110,18 +112,20 @@ struct Eeprom {
     }
 };
 
+} // nbos::hw
+
 //--------------------------------------------------------
 
     #endif
+
+    #undef N
+    #undef EepromN
+    #undef EEPROM_N
+    #undef _EEPROM_N
 
     #include "eeprom.hpp"
 #else
     #define NBOS_EEPROM_HPP
 #endif
-
-#undef N
-#undef EepromN
-#undef EEPROM_N
-#undef _EEPROM_N
 
 #endif

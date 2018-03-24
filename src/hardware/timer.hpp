@@ -16,11 +16,6 @@
 #include "macros.hpp"
 #include "system.hpp"
 
-#define N _I
-#define TimerN CAT(Timer, N)
-#define TIMER_N(A) CAT(CHIP_TIMER_, N, _, A)
-#define _TIMER_N(A) UNDERLINE(TIMER, N, A)
-
 /// #### macro INCLUDE_TIMER_OUTPUT_CALLBACK(N, X)
 /// Include this to use Timer output callbacks.
 #define INCLUDE_TIMER_OUTPUT_CALLBACK(N, X) MAKE_CALLBACK(TIMER, N, OUTPUT, X)
@@ -36,9 +31,16 @@
 #include "loopi"
 
 #ifdef _I
+    #define N _I
+    #define TimerN CAT(Timer, N)
+    #define TIMER_N(A) CAT(CHIP_TIMER_, N, _, A)
+    #define _TIMER_N(A) UNDERLINE(TIMER, N, A)
+
     #if CAT(CHIP_TIMER_, N)
 
 //--------------------------------------------------------
+
+namespace nbos::hw {
 
 #if TIMER_N(OUTPUT_A)
     MAKE_CALLBACK_HEADER(TIMER, N, OUTPUT_A);
@@ -316,18 +318,21 @@ struct TimerN {
     #endif
 };
 
+} // nbos::hw
+
 //--------------------------------------------------------
 
     #endif
+
+    #undef N
+    #undef TimerN
+    #undef TIMER_N
+    #undef _TIMER_N
 
     #include "timer.hpp"
 #else
     #define NBOS_TIMER_HPP
 #endif
 
-#undef N
-#undef TimerN
-#undef TIMER_N
-#undef _TIMER_N
 
 #endif

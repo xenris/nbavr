@@ -4,6 +4,8 @@
 #include "algorithm.hpp"
 #include "math.hpp"
 
+namespace nbos {
+
 template <class T, int S, class cmp_t = lesser<T>>
 struct PriorityQueue {
     using size_t = typename conditional<S <= 126, int8_t, int16_t>::type;
@@ -165,5 +167,7 @@ public:
         return (_head - 1) == S;
     }
 };
+
+} // nbos
 
 #endif

@@ -6,6 +6,8 @@
 #include "math.hpp"
 #include "queue.hpp"
 
+namespace nbos {
+
 template<int S>
 inline bool printchar(Queue<char, S>& queue, const char c) {
     bool result = queue.push(c);
@@ -247,5 +249,7 @@ inline Queue<char, S>& operator<<(Queue<char, S>& queue, double n) {
     printfloat(queue, float(n));
     return queue;
 }
+
+} // nbos
 
 #endif

@@ -5,6 +5,8 @@
 // TODO Some things have been excluded from testing. Need to work out how to
 //  include them.
 
+namespace nbos::hw {
+
 #ifdef CHIP_WATCHDOG_TIMER_CONTROL_REG
 
 #ifndef TEST
@@ -50,5 +52,7 @@ void _getResetStatus() {
 #endif
 
 #endif
+
+} // nbos::hw
 
 #endif

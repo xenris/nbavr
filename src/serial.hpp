@@ -3,6 +3,8 @@
 
 #include "type.hpp"
 
+namespace nbos {
+
 template <class Usart, class cout_t, class cin_t = nulltype>
 struct Serial {
     static inline void init(uint32_t CpuFreq, uint32_t baud, cout_t* out, cin_t* in = nullptr) {
@@ -67,5 +69,7 @@ private:
         Usart::dataRegisterEmptyIntEnable(true);
     }
 };
+
+} // nbos
 
 #endif

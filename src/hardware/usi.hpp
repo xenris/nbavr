@@ -12,11 +12,6 @@
 #include "system.hpp"
 #include "port.hpp"
 
-#define N _I
-#define UsiN CAT(Usi,N)
-#define USI_N(A) CAT(CHIP_USI_, N, _, A)
-#define _USI_N(A) UNDERLINE(USI, N, A)
-
 /// #### macro INCLUDE_USI_CALLBACK(N, X)
 /// Include this to use Usi callbacks.<br>
 /// N is the Usi id, X is one of START or OVERFLOW.
@@ -25,9 +20,16 @@
 #include "loopi"
 
 #ifdef _I
+    #define N _I
+    #define UsiN CAT(Usi,N)
+    #define USI_N(A) CAT(CHIP_USI_, N, _, A)
+    #define _USI_N(A) UNDERLINE(USI, N, A)
+
     #if CAT(CHIP_USI_, N)
 
 //------------------------------------------------------------------
+
+namespace nbos::hw {
 
 MAKE_CALLBACK_HEADER(USI, N, START);
 MAKE_CALLBACK_HEADER(USI, N, OVERFLOW);
@@ -299,18 +301,21 @@ struct UsiN {
     #endif
 };
 
+} // nbos::hw
+
 //------------------------------------------------------------------
 
     #endif
+
+    #undef N
+    #undef UsiN
+    #undef USI_N
+    #undef _USI_N
 
     #include "usi.hpp"
 #else
     #define NBOS_USI_HPP
 #endif
 
-#undef N
-#undef UsiN
-#undef USI_N
-#undef _USI_N
 
 #endif

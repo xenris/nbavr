@@ -23,6 +23,8 @@
 #include "type.hpp"
 #include "atomic.hpp"
 
+namespace nbos {
+
 /// ## Class Task\<class Clock\>
 template <class Clock>
 struct Task {
@@ -62,5 +64,7 @@ struct Task {
     /// Override this and fill with your own code.
     virtual void loop() {};
 };
+
+} // nbos
 
 #endif

@@ -1,8 +1,8 @@
+#ifndef NBOS_EXINT_HPP
+
 /// # External Interrupts
 
 /// N is the external interrupt id (1, 2, etc).
-
-#ifndef NBOS_EXINT_HPP
 
 #include "callbacks.hpp"
 #include "chip.hpp"
@@ -25,6 +25,8 @@
     #if CAT(CHIP_EXINT_, N)
 
 //--------------------------------------------------------
+
+namespace nbos::hw {
 
 MAKE_CALLBACK_HEADER(EXINT, N);
 
@@ -94,6 +96,8 @@ struct ExIntN {
         }
     #endif
 };
+
+} // nbos::hw
 
 //--------------------------------------------------------
 

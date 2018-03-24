@@ -1,3 +1,6 @@
+#ifndef NBOS_CLOCK_HPP
+#define NBOS_CLOCK_HPP
+
 /// # Clock
 
 /// ## Example
@@ -21,9 +24,6 @@
 /// uint32_t millis = Clock::ticksToMillis(ticks);
 /// ```
 
-#ifndef NBOS_CLOCK_HPP
-#define NBOS_CLOCK_HPP
-
 /// Every cpu clock cycle is 1 / freq seconds. (62.5ns at 16MHz)<br>
 /// Every 64 clock cycles is a tick. (4us at 16MHz)<br>
 /// Every 2^16 ticks is a tock. (262.144ms at 16MHz)<br>
@@ -32,9 +32,10 @@
 /// If Clock is given an 8 bit timer (rather than 16 bit) each tick will be
 /// 4x longer.
 
-
 #include "priorityqueue.hpp"
-#include "hardware.hpp"
+#include "hardware/hardwaretype.hpp"
+
+namespace nbos {
 
 struct DelayedCall {
     callback_t callback;
@@ -394,5 +395,7 @@ private:
         }
     }
 };
+
+} // nbos
 
 #endif

@@ -34,12 +34,16 @@
     #define register_offset 0
 #endif
 
+namespace nbos {
+
 template <class T>
 struct _reg {
     volatile T* p;
 
     _reg(size_t addr) : p((T*)(addr + register_offset)) {}
 };
+
+} // nbos
 
 // Use of _reg makes the compiler throw a more meaningful message if _TYPE or _ADDR isn't defined.
 #define REG(R) _reg<volatile CAT(R, _TYPE)>(CAT(R, _ADDR)).p

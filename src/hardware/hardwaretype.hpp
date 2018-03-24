@@ -3,6 +3,9 @@
 
 #include <type.hpp>
 
+// TODO Move to system.hpp.
+namespace nbos::hw {
+
 enum class HardwareType : uint8_t {
     adc,
     exInt,
@@ -17,5 +20,7 @@ enum class HardwareType : uint8_t {
     usi,
     wdt
 };
+
+} // nbos::hw
 
 #endif
