@@ -3,6 +3,7 @@
 
 #include "macros.hpp"
 #include "type.hpp"
+#include "chip.hpp"
 
 /// # System
 
