@@ -53,8 +53,6 @@ struct _reg {
 #define VECT_(N) VECT__(N)
 #define VECT__(N) __vector_ ## N
 
-#define TRUE 1
-
 #if defined(__atmega328__)
     #include "chips/avr/atmega328.hpp"
 #endif

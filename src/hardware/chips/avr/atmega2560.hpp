@@ -424,57 +424,57 @@
 //------------------------------------------------
 // IO ports
 
-#define CHIP_PORT_A                                                 TRUE
+#define CHIP_PORT_A                                                 true
 #define CHIP_PORT_A_OUTPUT_REG                                      CHIP_REG_PORTA
 #define CHIP_PORT_A_TOGGLE_OUTPUTS_REG                              CHIP_REG_PINA
 #define CHIP_PORT_A_INPUT_REG                                       CHIP_REG_PINA
 
-#define CHIP_PORT_B                                                 TRUE
+#define CHIP_PORT_B                                                 true
 #define CHIP_PORT_B_OUTPUT_REG                                      CHIP_REG_PORTB
 #define CHIP_PORT_B_TOGGLE_OUTPUTS_REG                              CHIP_REG_PINB
 #define CHIP_PORT_B_INPUT_REG                                       CHIP_REG_PINB
 
-#define CHIP_PORT_C                                                 TRUE
+#define CHIP_PORT_C                                                 true
 #define CHIP_PORT_C_OUTPUT_REG                                      CHIP_REG_PORTC
 #define CHIP_PORT_C_TOGGLE_OUTPUTS_REG                              CHIP_REG_PINC
 #define CHIP_PORT_C_INPUT_REG                                       CHIP_REG_PINC
 
-#define CHIP_PORT_D                                                 TRUE
+#define CHIP_PORT_D                                                 true
 #define CHIP_PORT_D_OUTPUT_REG                                      CHIP_REG_PORTD
 #define CHIP_PORT_D_TOGGLE_OUTPUTS_REG                              CHIP_REG_PIND
 #define CHIP_PORT_D_INPUT_REG                                       CHIP_REG_PIND
 
-#define CHIP_PORT_E                                                 TRUE
+#define CHIP_PORT_E                                                 true
 #define CHIP_PORT_E_OUTPUT_REG                                      CHIP_REG_PORTE
 #define CHIP_PORT_E_TOGGLE_OUTPUTS_REG                              CHIP_REG_PINE
 #define CHIP_PORT_E_INPUT_REG                                       CHIP_REG_PINE
 
-#define CHIP_PORT_F                                                 TRUE
+#define CHIP_PORT_F                                                 true
 #define CHIP_PORT_F_OUTPUT_REG                                      CHIP_REG_PORTF
 #define CHIP_PORT_F_TOGGLE_OUTPUTS_REG                              CHIP_REG_PINF
 #define CHIP_PORT_F_INPUT_REG                                       CHIP_REG_PINF
 
-#define CHIP_PORT_G                                                 TRUE
+#define CHIP_PORT_G                                                 true
 #define CHIP_PORT_G_OUTPUT_REG                                      CHIP_REG_PORTG
 #define CHIP_PORT_G_TOGGLE_OUTPUTS_REG                              CHIP_REG_PING
 #define CHIP_PORT_G_INPUT_REG                                       CHIP_REG_PING
 
-#define CHIP_PORT_H                                                 TRUE
+#define CHIP_PORT_H                                                 true
 #define CHIP_PORT_H_OUTPUT_REG                                      CHIP_REG_PORTH
 #define CHIP_PORT_H_TOGGLE_OUTPUTS_REG                              CHIP_REG_PINH
 #define CHIP_PORT_H_INPUT_REG                                       CHIP_REG_PINH
 
-#define CHIP_PORT_J                                                 TRUE
+#define CHIP_PORT_J                                                 true
 #define CHIP_PORT_J_OUTPUT_REG                                      CHIP_REG_PORTJ
 #define CHIP_PORT_J_TOGGLE_OUTPUTS_REG                              CHIP_REG_PINJ
 #define CHIP_PORT_J_INPUT_REG                                       CHIP_REG_PINJ
 
-#define CHIP_PORT_K                                                 TRUE
+#define CHIP_PORT_K                                                 true
 #define CHIP_PORT_K_OUTPUT_REG                                      CHIP_REG_PORTK
 #define CHIP_PORT_K_TOGGLE_OUTPUTS_REG                              CHIP_REG_PINK
 #define CHIP_PORT_K_INPUT_REG                                       CHIP_REG_PINK
 
-#define CHIP_PORT_L                                                 TRUE
+#define CHIP_PORT_L                                                 true
 #define CHIP_PORT_L_OUTPUT_REG                                      CHIP_REG_PORTL
 #define CHIP_PORT_L_TOGGLE_OUTPUTS_REG                              CHIP_REG_PINL
 #define CHIP_PORT_L_INPUT_REG                                       CHIP_REG_PINL
@@ -486,7 +486,7 @@
 #define CHIP_PIN_MODE_OUTPUT_ID                                     1
 #define CHIP_PIN_MODE_INPUT_PULLUP_ID                               2
 
-#define CHIP_PIN_A0                                                 TRUE
+#define CHIP_PIN_A0                                                 true
 #define CHIP_PIN_A0_MODE_BIT_0_BIT                                  0
 #define CHIP_PIN_A0_MODE_BIT_0_REG                                  CHIP_REG_DDRA
 #define CHIP_PIN_A0_MODE_BIT_1_BIT                                  0
@@ -498,7 +498,7 @@
 #define CHIP_PIN_A0_TOGGLE_BIT_0_BIT                                0
 #define CHIP_PIN_A0_TOGGLE_BIT_0_REG                                CHIP_REG_PINA
 
-#define CHIP_PIN_A1                                                 TRUE
+#define CHIP_PIN_A1                                                 true
 #define CHIP_PIN_A1_MODE_BIT_0_BIT                                  1
 #define CHIP_PIN_A1_MODE_BIT_0_REG                                  CHIP_REG_DDRA
 #define CHIP_PIN_A1_MODE_BIT_1_BIT                                  1
@@ -510,7 +510,7 @@
 #define CHIP_PIN_A1_TOGGLE_BIT_0_BIT                                1
 #define CHIP_PIN_A1_TOGGLE_BIT_0_REG                                CHIP_REG_PINA
 
-#define CHIP_PIN_A2                                                 TRUE
+#define CHIP_PIN_A2                                                 true
 #define CHIP_PIN_A2_MODE_BIT_0_BIT                                  2
 #define CHIP_PIN_A2_MODE_BIT_0_REG                                  CHIP_REG_DDRA
 #define CHIP_PIN_A2_MODE_BIT_1_BIT                                  2
@@ -522,7 +522,7 @@
 #define CHIP_PIN_A2_TOGGLE_BIT_0_BIT                                2
 #define CHIP_PIN_A2_TOGGLE_BIT_0_REG                                CHIP_REG_PINA
 
-#define CHIP_PIN_A3                                                 TRUE
+#define CHIP_PIN_A3                                                 true
 #define CHIP_PIN_A3_MODE_BIT_0_BIT                                  3
 #define CHIP_PIN_A3_MODE_BIT_0_REG                                  CHIP_REG_DDRA
 #define CHIP_PIN_A3_MODE_BIT_1_BIT                                  3
@@ -534,7 +534,7 @@
 #define CHIP_PIN_A3_TOGGLE_BIT_0_BIT                                3
 #define CHIP_PIN_A3_TOGGLE_BIT_0_REG                                CHIP_REG_PINA
 
-#define CHIP_PIN_A4                                                 TRUE
+#define CHIP_PIN_A4                                                 true
 #define CHIP_PIN_A4_MODE_BIT_0_BIT                                  4
 #define CHIP_PIN_A4_MODE_BIT_0_REG                                  CHIP_REG_DDRA
 #define CHIP_PIN_A4_MODE_BIT_1_BIT                                  4
@@ -546,7 +546,7 @@
 #define CHIP_PIN_A4_TOGGLE_BIT_0_BIT                                4
 #define CHIP_PIN_A4_TOGGLE_BIT_0_REG                                CHIP_REG_PINA
 
-#define CHIP_PIN_A5                                                 TRUE
+#define CHIP_PIN_A5                                                 true
 #define CHIP_PIN_A5_MODE_BIT_0_BIT                                  5
 #define CHIP_PIN_A5_MODE_BIT_0_REG                                  CHIP_REG_DDRA
 #define CHIP_PIN_A5_MODE_BIT_1_BIT                                  5
@@ -558,7 +558,7 @@
 #define CHIP_PIN_A5_TOGGLE_BIT_0_BIT                                5
 #define CHIP_PIN_A5_TOGGLE_BIT_0_REG                                CHIP_REG_PINA
 
-#define CHIP_PIN_A6                                                 TRUE
+#define CHIP_PIN_A6                                                 true
 #define CHIP_PIN_A6_MODE_BIT_0_BIT                                  6
 #define CHIP_PIN_A6_MODE_BIT_0_REG                                  CHIP_REG_DDRA
 #define CHIP_PIN_A6_MODE_BIT_1_BIT                                  6
@@ -570,7 +570,7 @@
 #define CHIP_PIN_A6_TOGGLE_BIT_0_BIT                                6
 #define CHIP_PIN_A6_TOGGLE_BIT_0_REG                                CHIP_REG_PINA
 
-#define CHIP_PIN_A7                                                 TRUE
+#define CHIP_PIN_A7                                                 true
 #define CHIP_PIN_A7_MODE_BIT_0_BIT                                  7
 #define CHIP_PIN_A7_MODE_BIT_0_REG                                  CHIP_REG_DDRA
 #define CHIP_PIN_A7_MODE_BIT_1_BIT                                  7
@@ -582,7 +582,7 @@
 #define CHIP_PIN_A7_TOGGLE_BIT_0_BIT                                7
 #define CHIP_PIN_A7_TOGGLE_BIT_0_REG                                CHIP_REG_PINA
 
-#define CHIP_PIN_B0                                                 TRUE
+#define CHIP_PIN_B0                                                 true
 #define CHIP_PIN_B0_MODE_BIT_0_BIT                                  0
 #define CHIP_PIN_B0_MODE_BIT_0_REG                                  CHIP_REG_DDRB
 #define CHIP_PIN_B0_MODE_BIT_1_BIT                                  0
@@ -594,7 +594,7 @@
 #define CHIP_PIN_B0_TOGGLE_BIT_0_BIT                                0
 #define CHIP_PIN_B0_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
 
-#define CHIP_PIN_B1                                                 TRUE
+#define CHIP_PIN_B1                                                 true
 #define CHIP_PIN_B1_MODE_BIT_0_BIT                                  1
 #define CHIP_PIN_B1_MODE_BIT_0_REG                                  CHIP_REG_DDRB
 #define CHIP_PIN_B1_MODE_BIT_1_BIT                                  1
@@ -606,7 +606,7 @@
 #define CHIP_PIN_B1_TOGGLE_BIT_0_BIT                                1
 #define CHIP_PIN_B1_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
 
-#define CHIP_PIN_B2                                                 TRUE
+#define CHIP_PIN_B2                                                 true
 #define CHIP_PIN_B2_MODE_BIT_0_BIT                                  2
 #define CHIP_PIN_B2_MODE_BIT_0_REG                                  CHIP_REG_DDRB
 #define CHIP_PIN_B2_MODE_BIT_1_BIT                                  2
@@ -618,7 +618,7 @@
 #define CHIP_PIN_B2_TOGGLE_BIT_0_BIT                                2
 #define CHIP_PIN_B2_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
 
-#define CHIP_PIN_B3                                                 TRUE
+#define CHIP_PIN_B3                                                 true
 #define CHIP_PIN_B3_MODE_BIT_0_BIT                                  3
 #define CHIP_PIN_B3_MODE_BIT_0_REG                                  CHIP_REG_DDRB
 #define CHIP_PIN_B3_MODE_BIT_1_BIT                                  3
@@ -630,7 +630,7 @@
 #define CHIP_PIN_B3_TOGGLE_BIT_0_BIT                                3
 #define CHIP_PIN_B3_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
 
-#define CHIP_PIN_B4                                                 TRUE
+#define CHIP_PIN_B4                                                 true
 #define CHIP_PIN_B4_MODE_BIT_0_BIT                                  4
 #define CHIP_PIN_B4_MODE_BIT_0_REG                                  CHIP_REG_DDRB
 #define CHIP_PIN_B4_MODE_BIT_1_BIT                                  4
@@ -642,7 +642,7 @@
 #define CHIP_PIN_B4_TOGGLE_BIT_0_BIT                                4
 #define CHIP_PIN_B4_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
 
-#define CHIP_PIN_B5                                                 TRUE
+#define CHIP_PIN_B5                                                 true
 #define CHIP_PIN_B5_MODE_BIT_0_BIT                                  5
 #define CHIP_PIN_B5_MODE_BIT_0_REG                                  CHIP_REG_DDRB
 #define CHIP_PIN_B5_MODE_BIT_1_BIT                                  5
@@ -654,7 +654,7 @@
 #define CHIP_PIN_B5_TOGGLE_BIT_0_BIT                                5
 #define CHIP_PIN_B5_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
 
-#define CHIP_PIN_B6                                                 TRUE
+#define CHIP_PIN_B6                                                 true
 #define CHIP_PIN_B6_MODE_BIT_0_BIT                                  6
 #define CHIP_PIN_B6_MODE_BIT_0_REG                                  CHIP_REG_DDRB
 #define CHIP_PIN_B6_MODE_BIT_1_BIT                                  6
@@ -666,7 +666,7 @@
 #define CHIP_PIN_B6_TOGGLE_BIT_0_BIT                                6
 #define CHIP_PIN_B6_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
 
-#define CHIP_PIN_B7                                                 TRUE
+#define CHIP_PIN_B7                                                 true
 #define CHIP_PIN_B7_MODE_BIT_0_BIT                                  7
 #define CHIP_PIN_B7_MODE_BIT_0_REG                                  CHIP_REG_DDRB
 #define CHIP_PIN_B7_MODE_BIT_1_BIT                                  7
@@ -678,7 +678,7 @@
 #define CHIP_PIN_B7_TOGGLE_BIT_0_BIT                                7
 #define CHIP_PIN_B7_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
 
-#define CHIP_PIN_C0                                                 TRUE
+#define CHIP_PIN_C0                                                 true
 #define CHIP_PIN_C0_MODE_BIT_0_BIT                                  0
 #define CHIP_PIN_C0_MODE_BIT_0_REG                                  CHIP_REG_DDRC
 #define CHIP_PIN_C0_MODE_BIT_1_BIT                                  0
@@ -690,7 +690,7 @@
 #define CHIP_PIN_C0_TOGGLE_BIT_0_BIT                                0
 #define CHIP_PIN_C0_TOGGLE_BIT_0_REG                                CHIP_REG_PINC
 
-#define CHIP_PIN_C1                                                 TRUE
+#define CHIP_PIN_C1                                                 true
 #define CHIP_PIN_C1_MODE_BIT_0_BIT                                  1
 #define CHIP_PIN_C1_MODE_BIT_0_REG                                  CHIP_REG_DDRC
 #define CHIP_PIN_C1_MODE_BIT_1_BIT                                  1
@@ -702,7 +702,7 @@
 #define CHIP_PIN_C1_TOGGLE_BIT_0_BIT                                1
 #define CHIP_PIN_C1_TOGGLE_BIT_0_REG                                CHIP_REG_PINC
 
-#define CHIP_PIN_C2                                                 TRUE
+#define CHIP_PIN_C2                                                 true
 #define CHIP_PIN_C2_MODE_BIT_0_BIT                                  2
 #define CHIP_PIN_C2_MODE_BIT_0_REG                                  CHIP_REG_DDRC
 #define CHIP_PIN_C2_MODE_BIT_1_BIT                                  2
@@ -714,7 +714,7 @@
 #define CHIP_PIN_C2_TOGGLE_BIT_0_BIT                                2
 #define CHIP_PIN_C2_TOGGLE_BIT_0_REG                                CHIP_REG_PINC
 
-#define CHIP_PIN_C3                                                 TRUE
+#define CHIP_PIN_C3                                                 true
 #define CHIP_PIN_C3_MODE_BIT_0_BIT                                  3
 #define CHIP_PIN_C3_MODE_BIT_0_REG                                  CHIP_REG_DDRC
 #define CHIP_PIN_C3_MODE_BIT_1_BIT                                  3
@@ -726,7 +726,7 @@
 #define CHIP_PIN_C3_TOGGLE_BIT_0_BIT                                3
 #define CHIP_PIN_C3_TOGGLE_BIT_0_REG                                CHIP_REG_PINC
 
-#define CHIP_PIN_C4                                                 TRUE
+#define CHIP_PIN_C4                                                 true
 #define CHIP_PIN_C4_MODE_BIT_0_BIT                                  4
 #define CHIP_PIN_C4_MODE_BIT_0_REG                                  CHIP_REG_DDRC
 #define CHIP_PIN_C4_MODE_BIT_1_BIT                                  4
@@ -738,7 +738,7 @@
 #define CHIP_PIN_C4_TOGGLE_BIT_0_BIT                                4
 #define CHIP_PIN_C4_TOGGLE_BIT_0_REG                                CHIP_REG_PINC
 
-#define CHIP_PIN_C5                                                 TRUE
+#define CHIP_PIN_C5                                                 true
 #define CHIP_PIN_C5_MODE_BIT_0_BIT                                  5
 #define CHIP_PIN_C5_MODE_BIT_0_REG                                  CHIP_REG_DDRC
 #define CHIP_PIN_C5_MODE_BIT_1_BIT                                  5
@@ -750,7 +750,7 @@
 #define CHIP_PIN_C5_TOGGLE_BIT_0_BIT                                5
 #define CHIP_PIN_C5_TOGGLE_BIT_0_REG                                CHIP_REG_PINC
 
-#define CHIP_PIN_C6                                                 TRUE
+#define CHIP_PIN_C6                                                 true
 #define CHIP_PIN_C6_MODE_BIT_0_BIT                                  6
 #define CHIP_PIN_C6_MODE_BIT_0_REG                                  CHIP_REG_DDRC
 #define CHIP_PIN_C6_MODE_BIT_1_BIT                                  6
@@ -762,7 +762,7 @@
 #define CHIP_PIN_C6_TOGGLE_BIT_0_BIT                                6
 #define CHIP_PIN_C6_TOGGLE_BIT_0_REG                                CHIP_REG_PINC
 
-#define CHIP_PIN_D0                                                 TRUE
+#define CHIP_PIN_D0                                                 true
 #define CHIP_PIN_D0_MODE_BIT_0_BIT                                  0
 #define CHIP_PIN_D0_MODE_BIT_0_REG                                  CHIP_REG_DDRD
 #define CHIP_PIN_D0_MODE_BIT_1_BIT                                  0
@@ -774,7 +774,7 @@
 #define CHIP_PIN_D0_TOGGLE_BIT_0_BIT                                0
 #define CHIP_PIN_D0_TOGGLE_BIT_0_REG                                CHIP_REG_PIND
 
-#define CHIP_PIN_D1                                                 TRUE
+#define CHIP_PIN_D1                                                 true
 #define CHIP_PIN_D1_MODE_BIT_0_BIT                                  1
 #define CHIP_PIN_D1_MODE_BIT_0_REG                                  CHIP_REG_DDRD
 #define CHIP_PIN_D1_MODE_BIT_1_BIT                                  1
@@ -786,7 +786,7 @@
 #define CHIP_PIN_D1_TOGGLE_BIT_0_BIT                                1
 #define CHIP_PIN_D1_TOGGLE_BIT_0_REG                                CHIP_REG_PIND
 
-#define CHIP_PIN_D2                                                 TRUE
+#define CHIP_PIN_D2                                                 true
 #define CHIP_PIN_D2_MODE_BIT_0_BIT                                  2
 #define CHIP_PIN_D2_MODE_BIT_0_REG                                  CHIP_REG_DDRD
 #define CHIP_PIN_D2_MODE_BIT_1_BIT                                  2
@@ -798,7 +798,7 @@
 #define CHIP_PIN_D2_TOGGLE_BIT_0_BIT                                2
 #define CHIP_PIN_D2_TOGGLE_BIT_0_REG                                CHIP_REG_PIND
 
-#define CHIP_PIN_D3                                                 TRUE
+#define CHIP_PIN_D3                                                 true
 #define CHIP_PIN_D3_MODE_BIT_0_BIT                                  3
 #define CHIP_PIN_D3_MODE_BIT_0_REG                                  CHIP_REG_DDRD
 #define CHIP_PIN_D3_MODE_BIT_1_BIT                                  3
@@ -810,7 +810,7 @@
 #define CHIP_PIN_D3_TOGGLE_BIT_0_BIT                                3
 #define CHIP_PIN_D3_TOGGLE_BIT_0_REG                                CHIP_REG_PIND
 
-#define CHIP_PIN_D4                                                 TRUE
+#define CHIP_PIN_D4                                                 true
 #define CHIP_PIN_D4_MODE_BIT_0_BIT                                  4
 #define CHIP_PIN_D4_MODE_BIT_0_REG                                  CHIP_REG_DDRD
 #define CHIP_PIN_D4_MODE_BIT_1_BIT                                  4
@@ -822,7 +822,7 @@
 #define CHIP_PIN_D4_TOGGLE_BIT_0_BIT                                4
 #define CHIP_PIN_D4_TOGGLE_BIT_0_REG                                CHIP_REG_PIND
 
-#define CHIP_PIN_D5                                                 TRUE
+#define CHIP_PIN_D5                                                 true
 #define CHIP_PIN_D5_MODE_BIT_0_BIT                                  5
 #define CHIP_PIN_D5_MODE_BIT_0_REG                                  CHIP_REG_DDRD
 #define CHIP_PIN_D5_MODE_BIT_1_BIT                                  5
@@ -834,7 +834,7 @@
 #define CHIP_PIN_D5_TOGGLE_BIT_0_BIT                                5
 #define CHIP_PIN_D5_TOGGLE_BIT_0_REG                                CHIP_REG_PIND
 
-#define CHIP_PIN_D6                                                 TRUE
+#define CHIP_PIN_D6                                                 true
 #define CHIP_PIN_D6_MODE_BIT_0_BIT                                  6
 #define CHIP_PIN_D6_MODE_BIT_0_REG                                  CHIP_REG_DDRD
 #define CHIP_PIN_D6_MODE_BIT_1_BIT                                  6
@@ -846,7 +846,7 @@
 #define CHIP_PIN_D6_TOGGLE_BIT_0_BIT                                6
 #define CHIP_PIN_D6_TOGGLE_BIT_0_REG                                CHIP_REG_PIND
 
-#define CHIP_PIN_D7                                                 TRUE
+#define CHIP_PIN_D7                                                 true
 #define CHIP_PIN_D7_MODE_BIT_0_BIT                                  7
 #define CHIP_PIN_D7_MODE_BIT_0_REG                                  CHIP_REG_DDRD
 #define CHIP_PIN_D7_MODE_BIT_1_BIT                                  7
@@ -858,7 +858,7 @@
 #define CHIP_PIN_D7_TOGGLE_BIT_0_BIT                                7
 #define CHIP_PIN_D7_TOGGLE_BIT_0_REG                                CHIP_REG_PIND
 
-#define CHIP_PIN_E0                                                 TRUE
+#define CHIP_PIN_E0                                                 true
 #define CHIP_PIN_E0_MODE_BIT_0_BIT                                  0
 #define CHIP_PIN_E0_MODE_BIT_0_REG                                  CHIP_REG_DDRE
 #define CHIP_PIN_E0_MODE_BIT_1_BIT                                  0
@@ -870,7 +870,7 @@
 #define CHIP_PIN_E0_TOGGLE_BIT_0_BIT                                0
 #define CHIP_PIN_E0_TOGGLE_BIT_0_REG                                CHIP_REG_PINE
 
-#define CHIP_PIN_E1                                                 TRUE
+#define CHIP_PIN_E1                                                 true
 #define CHIP_PIN_E1_MODE_BIT_0_BIT                                  1
 #define CHIP_PIN_E1_MODE_BIT_0_REG                                  CHIP_REG_DDRE
 #define CHIP_PIN_E1_MODE_BIT_1_BIT                                  1
@@ -882,7 +882,7 @@
 #define CHIP_PIN_E1_TOGGLE_BIT_0_BIT                                1
 #define CHIP_PIN_E1_TOGGLE_BIT_0_REG                                CHIP_REG_PINE
 
-#define CHIP_PIN_E2                                                 TRUE
+#define CHIP_PIN_E2                                                 true
 #define CHIP_PIN_E2_MODE_BIT_0_BIT                                  2
 #define CHIP_PIN_E2_MODE_BIT_0_REG                                  CHIP_REG_DDRE
 #define CHIP_PIN_E2_MODE_BIT_1_BIT                                  2
@@ -894,7 +894,7 @@
 #define CHIP_PIN_E2_TOGGLE_BIT_0_BIT                                2
 #define CHIP_PIN_E2_TOGGLE_BIT_0_REG                                CHIP_REG_PINE
 
-#define CHIP_PIN_E3                                                 TRUE
+#define CHIP_PIN_E3                                                 true
 #define CHIP_PIN_E3_MODE_BIT_0_BIT                                  3
 #define CHIP_PIN_E3_MODE_BIT_0_REG                                  CHIP_REG_DDRE
 #define CHIP_PIN_E3_MODE_BIT_1_BIT                                  3
@@ -906,7 +906,7 @@
 #define CHIP_PIN_E3_TOGGLE_BIT_0_BIT                                3
 #define CHIP_PIN_E3_TOGGLE_BIT_0_REG                                CHIP_REG_PINE
 
-#define CHIP_PIN_E4                                                 TRUE
+#define CHIP_PIN_E4                                                 true
 #define CHIP_PIN_E4_MODE_BIT_0_BIT                                  4
 #define CHIP_PIN_E4_MODE_BIT_0_REG                                  CHIP_REG_DDRE
 #define CHIP_PIN_E4_MODE_BIT_1_BIT                                  4
@@ -918,7 +918,7 @@
 #define CHIP_PIN_E4_TOGGLE_BIT_0_BIT                                4
 #define CHIP_PIN_E4_TOGGLE_BIT_0_REG                                CHIP_REG_PINE
 
-#define CHIP_PIN_E5                                                 TRUE
+#define CHIP_PIN_E5                                                 true
 #define CHIP_PIN_E5_MODE_BIT_0_BIT                                  5
 #define CHIP_PIN_E5_MODE_BIT_0_REG                                  CHIP_REG_DDRE
 #define CHIP_PIN_E5_MODE_BIT_1_BIT                                  5
@@ -930,7 +930,7 @@
 #define CHIP_PIN_E5_TOGGLE_BIT_0_BIT                                5
 #define CHIP_PIN_E5_TOGGLE_BIT_0_REG                                CHIP_REG_PINE
 
-#define CHIP_PIN_E6                                                 TRUE
+#define CHIP_PIN_E6                                                 true
 #define CHIP_PIN_E6_MODE_BIT_0_BIT                                  6
 #define CHIP_PIN_E6_MODE_BIT_0_REG                                  CHIP_REG_DDRE
 #define CHIP_PIN_E6_MODE_BIT_1_BIT                                  6
@@ -942,7 +942,7 @@
 #define CHIP_PIN_E6_TOGGLE_BIT_0_BIT                                6
 #define CHIP_PIN_E6_TOGGLE_BIT_0_REG                                CHIP_REG_PINE
 
-#define CHIP_PIN_E7                                                 TRUE
+#define CHIP_PIN_E7                                                 true
 #define CHIP_PIN_E7_MODE_BIT_0_BIT                                  7
 #define CHIP_PIN_E7_MODE_BIT_0_REG                                  CHIP_REG_DDRE
 #define CHIP_PIN_E7_MODE_BIT_1_BIT                                  7
@@ -954,7 +954,7 @@
 #define CHIP_PIN_E7_TOGGLE_BIT_0_BIT                                7
 #define CHIP_PIN_E7_TOGGLE_BIT_0_REG                                CHIP_REG_PINE
 
-#define CHIP_PIN_F0                                                 TRUE
+#define CHIP_PIN_F0                                                 true
 #define CHIP_PIN_F0_MODE_BIT_0_BIT                                  0
 #define CHIP_PIN_F0_MODE_BIT_0_REG                                  CHIP_REG_DDRF
 #define CHIP_PIN_F0_MODE_BIT_1_BIT                                  0
@@ -966,7 +966,7 @@
 #define CHIP_PIN_F0_TOGGLE_BIT_0_BIT                                0
 #define CHIP_PIN_F0_TOGGLE_BIT_0_REG                                CHIP_REG_PINF
 
-#define CHIP_PIN_F1                                                 TRUE
+#define CHIP_PIN_F1                                                 true
 #define CHIP_PIN_F1_MODE_BIT_0_BIT                                  1
 #define CHIP_PIN_F1_MODE_BIT_0_REG                                  CHIP_REG_DDRF
 #define CHIP_PIN_F1_MODE_BIT_1_BIT                                  1
@@ -978,7 +978,7 @@
 #define CHIP_PIN_F1_TOGGLE_BIT_0_BIT                                1
 #define CHIP_PIN_F1_TOGGLE_BIT_0_REG                                CHIP_REG_PINF
 
-#define CHIP_PIN_F2                                                 TRUE
+#define CHIP_PIN_F2                                                 true
 #define CHIP_PIN_F2_MODE_BIT_0_BIT                                  2
 #define CHIP_PIN_F2_MODE_BIT_0_REG                                  CHIP_REG_DDRF
 #define CHIP_PIN_F2_MODE_BIT_1_BIT                                  2
@@ -990,7 +990,7 @@
 #define CHIP_PIN_F2_TOGGLE_BIT_0_BIT                                2
 #define CHIP_PIN_F2_TOGGLE_BIT_0_REG                                CHIP_REG_PINF
 
-#define CHIP_PIN_F3                                                 TRUE
+#define CHIP_PIN_F3                                                 true
 #define CHIP_PIN_F3_MODE_BIT_0_BIT                                  3
 #define CHIP_PIN_F3_MODE_BIT_0_REG                                  CHIP_REG_DDRF
 #define CHIP_PIN_F3_MODE_BIT_1_BIT                                  3
@@ -1002,7 +1002,7 @@
 #define CHIP_PIN_F3_TOGGLE_BIT_0_BIT                                3
 #define CHIP_PIN_F3_TOGGLE_BIT_0_REG                                CHIP_REG_PINF
 
-#define CHIP_PIN_F4                                                 TRUE
+#define CHIP_PIN_F4                                                 true
 #define CHIP_PIN_F4_MODE_BIT_0_BIT                                  4
 #define CHIP_PIN_F4_MODE_BIT_0_REG                                  CHIP_REG_DDRF
 #define CHIP_PIN_F4_MODE_BIT_1_BIT                                  4
@@ -1014,7 +1014,7 @@
 #define CHIP_PIN_F4_TOGGLE_BIT_0_BIT                                4
 #define CHIP_PIN_F4_TOGGLE_BIT_0_REG                                CHIP_REG_PINF
 
-#define CHIP_PIN_F5                                                 TRUE
+#define CHIP_PIN_F5                                                 true
 #define CHIP_PIN_F5_MODE_BIT_0_BIT                                  5
 #define CHIP_PIN_F5_MODE_BIT_0_REG                                  CHIP_REG_DDRF
 #define CHIP_PIN_F5_MODE_BIT_1_BIT                                  5
@@ -1026,7 +1026,7 @@
 #define CHIP_PIN_F5_TOGGLE_BIT_0_BIT                                5
 #define CHIP_PIN_F5_TOGGLE_BIT_0_REG                                CHIP_REG_PINF
 
-#define CHIP_PIN_F6                                                 TRUE
+#define CHIP_PIN_F6                                                 true
 #define CHIP_PIN_F6_MODE_BIT_0_BIT                                  6
 #define CHIP_PIN_F6_MODE_BIT_0_REG                                  CHIP_REG_DDRF
 #define CHIP_PIN_F6_MODE_BIT_1_BIT                                  6
@@ -1038,7 +1038,7 @@
 #define CHIP_PIN_F6_TOGGLE_BIT_0_BIT                                6
 #define CHIP_PIN_F6_TOGGLE_BIT_0_REG                                CHIP_REG_PINF
 
-#define CHIP_PIN_F7                                                 TRUE
+#define CHIP_PIN_F7                                                 true
 #define CHIP_PIN_F7_MODE_BIT_0_BIT                                  7
 #define CHIP_PIN_F7_MODE_BIT_0_REG                                  CHIP_REG_DDRF
 #define CHIP_PIN_F7_MODE_BIT_1_BIT                                  7
@@ -1050,7 +1050,7 @@
 #define CHIP_PIN_F7_TOGGLE_BIT_0_BIT                                7
 #define CHIP_PIN_F7_TOGGLE_BIT_0_REG                                CHIP_REG_PINF
 
-#define CHIP_PIN_G0                                                 TRUE
+#define CHIP_PIN_G0                                                 true
 #define CHIP_PIN_G0_MODE_BIT_0_BIT                                  0
 #define CHIP_PIN_G0_MODE_BIT_0_REG                                  CHIP_REG_DDRG
 #define CHIP_PIN_G0_MODE_BIT_1_BIT                                  0
@@ -1062,7 +1062,7 @@
 #define CHIP_PIN_G0_TOGGLE_BIT_0_BIT                                0
 #define CHIP_PIN_G0_TOGGLE_BIT_0_REG                                CHIP_REG_PING
 
-#define CHIP_PIN_G1                                                 TRUE
+#define CHIP_PIN_G1                                                 true
 #define CHIP_PIN_G1_MODE_BIT_0_BIT                                  1
 #define CHIP_PIN_G1_MODE_BIT_0_REG                                  CHIP_REG_DDRG
 #define CHIP_PIN_G1_MODE_BIT_1_BIT                                  1
@@ -1074,7 +1074,7 @@
 #define CHIP_PIN_G1_TOGGLE_BIT_0_BIT                                1
 #define CHIP_PIN_G1_TOGGLE_BIT_0_REG                                CHIP_REG_PING
 
-#define CHIP_PIN_G2                                                 TRUE
+#define CHIP_PIN_G2                                                 true
 #define CHIP_PIN_G2_MODE_BIT_0_BIT                                  2
 #define CHIP_PIN_G2_MODE_BIT_0_REG                                  CHIP_REG_DDRG
 #define CHIP_PIN_G2_MODE_BIT_1_BIT                                  2
@@ -1086,7 +1086,7 @@
 #define CHIP_PIN_G2_TOGGLE_BIT_0_BIT                                2
 #define CHIP_PIN_G2_TOGGLE_BIT_0_REG                                CHIP_REG_PING
 
-#define CHIP_PIN_G3                                                 TRUE
+#define CHIP_PIN_G3                                                 true
 #define CHIP_PIN_G3_MODE_BIT_0_BIT                                  3
 #define CHIP_PIN_G3_MODE_BIT_0_REG                                  CHIP_REG_DDRG
 #define CHIP_PIN_G3_MODE_BIT_1_BIT                                  3
@@ -1098,7 +1098,7 @@
 #define CHIP_PIN_G3_TOGGLE_BIT_0_BIT                                3
 #define CHIP_PIN_G3_TOGGLE_BIT_0_REG                                CHIP_REG_PING
 
-#define CHIP_PIN_G4                                                 TRUE
+#define CHIP_PIN_G4                                                 true
 #define CHIP_PIN_G4_MODE_BIT_0_BIT                                  4
 #define CHIP_PIN_G4_MODE_BIT_0_REG                                  CHIP_REG_DDRG
 #define CHIP_PIN_G4_MODE_BIT_1_BIT                                  4
@@ -1110,7 +1110,7 @@
 #define CHIP_PIN_G4_TOGGLE_BIT_0_BIT                                4
 #define CHIP_PIN_G4_TOGGLE_BIT_0_REG                                CHIP_REG_PING
 
-#define CHIP_PIN_G5                                                 TRUE
+#define CHIP_PIN_G5                                                 true
 #define CHIP_PIN_G5_MODE_BIT_0_BIT                                  5
 #define CHIP_PIN_G5_MODE_BIT_0_REG                                  CHIP_REG_DDRG
 #define CHIP_PIN_G5_MODE_BIT_1_BIT                                  5
@@ -1122,7 +1122,7 @@
 #define CHIP_PIN_G5_TOGGLE_BIT_0_BIT                                5
 #define CHIP_PIN_G5_TOGGLE_BIT_0_REG                                CHIP_REG_PING
 
-#define CHIP_PIN_G6                                                 TRUE
+#define CHIP_PIN_G6                                                 true
 #define CHIP_PIN_G6_MODE_BIT_0_BIT                                  6
 #define CHIP_PIN_G6_MODE_BIT_0_REG                                  CHIP_REG_DDRG
 #define CHIP_PIN_G6_MODE_BIT_1_BIT                                  6
@@ -1134,7 +1134,7 @@
 #define CHIP_PIN_G6_TOGGLE_BIT_0_BIT                                6
 #define CHIP_PIN_G6_TOGGLE_BIT_0_REG                                CHIP_REG_PING
 
-#define CHIP_PIN_G7                                                 TRUE
+#define CHIP_PIN_G7                                                 true
 #define CHIP_PIN_G7_MODE_BIT_0_BIT                                  7
 #define CHIP_PIN_G7_MODE_BIT_0_REG                                  CHIP_REG_DDRG
 #define CHIP_PIN_G7_MODE_BIT_1_BIT                                  7
@@ -1146,7 +1146,7 @@
 #define CHIP_PIN_G7_TOGGLE_BIT_0_BIT                                7
 #define CHIP_PIN_G7_TOGGLE_BIT_0_REG                                CHIP_REG_PING
 
-#define CHIP_PIN_H0                                                 TRUE
+#define CHIP_PIN_H0                                                 true
 #define CHIP_PIN_H0_MODE_BIT_0_BIT                                  0
 #define CHIP_PIN_H0_MODE_BIT_0_REG                                  CHIP_REG_DDRH
 #define CHIP_PIN_H0_MODE_BIT_1_BIT                                  0
@@ -1158,7 +1158,7 @@
 #define CHIP_PIN_H0_TOGGLE_BIT_0_BIT                                0
 #define CHIP_PIN_H0_TOGGLE_BIT_0_REG                                CHIP_REG_PINH
 
-#define CHIP_PIN_H1                                                 TRUE
+#define CHIP_PIN_H1                                                 true
 #define CHIP_PIN_H1_MODE_BIT_0_BIT                                  1
 #define CHIP_PIN_H1_MODE_BIT_0_REG                                  CHIP_REG_DDRH
 #define CHIP_PIN_H1_MODE_BIT_1_BIT                                  1
@@ -1170,7 +1170,7 @@
 #define CHIP_PIN_H1_TOGGLE_BIT_0_BIT                                1
 #define CHIP_PIN_H1_TOGGLE_BIT_0_REG                                CHIP_REG_PINH
 
-#define CHIP_PIN_H2                                                 TRUE
+#define CHIP_PIN_H2                                                 true
 #define CHIP_PIN_H2_MODE_BIT_0_BIT                                  2
 #define CHIP_PIN_H2_MODE_BIT_0_REG                                  CHIP_REG_DDRH
 #define CHIP_PIN_H2_MODE_BIT_1_BIT                                  2
@@ -1182,7 +1182,7 @@
 #define CHIP_PIN_H2_TOGGLE_BIT_0_BIT                                2
 #define CHIP_PIN_H2_TOGGLE_BIT_0_REG                                CHIP_REG_PINH
 
-#define CHIP_PIN_H3                                                 TRUE
+#define CHIP_PIN_H3                                                 true
 #define CHIP_PIN_H3_MODE_BIT_0_BIT                                  3
 #define CHIP_PIN_H3_MODE_BIT_0_REG                                  CHIP_REG_DDRH
 #define CHIP_PIN_H3_MODE_BIT_1_BIT                                  3
@@ -1194,7 +1194,7 @@
 #define CHIP_PIN_H3_TOGGLE_BIT_0_BIT                                3
 #define CHIP_PIN_H3_TOGGLE_BIT_0_REG                                CHIP_REG_PINH
 
-#define CHIP_PIN_H4                                                 TRUE
+#define CHIP_PIN_H4                                                 true
 #define CHIP_PIN_H4_MODE_BIT_0_BIT                                  4
 #define CHIP_PIN_H4_MODE_BIT_0_REG                                  CHIP_REG_DDRH
 #define CHIP_PIN_H4_MODE_BIT_1_BIT                                  4
@@ -1206,7 +1206,7 @@
 #define CHIP_PIN_H4_TOGGLE_BIT_0_BIT                                4
 #define CHIP_PIN_H4_TOGGLE_BIT_0_REG                                CHIP_REG_PINH
 
-#define CHIP_PIN_H5                                                 TRUE
+#define CHIP_PIN_H5                                                 true
 #define CHIP_PIN_H5_MODE_BIT_0_BIT                                  5
 #define CHIP_PIN_H5_MODE_BIT_0_REG                                  CHIP_REG_DDRH
 #define CHIP_PIN_H5_MODE_BIT_1_BIT                                  5
@@ -1218,7 +1218,7 @@
 #define CHIP_PIN_H5_TOGGLE_BIT_0_BIT                                5
 #define CHIP_PIN_H5_TOGGLE_BIT_0_REG                                CHIP_REG_PINH
 
-#define CHIP_PIN_H6                                                 TRUE
+#define CHIP_PIN_H6                                                 true
 #define CHIP_PIN_H6_MODE_BIT_0_BIT                                  6
 #define CHIP_PIN_H6_MODE_BIT_0_REG                                  CHIP_REG_DDRH
 #define CHIP_PIN_H6_MODE_BIT_1_BIT                                  6
@@ -1230,7 +1230,7 @@
 #define CHIP_PIN_H6_TOGGLE_BIT_0_BIT                                6
 #define CHIP_PIN_H6_TOGGLE_BIT_0_REG                                CHIP_REG_PINH
 
-#define CHIP_PIN_H7                                                 TRUE
+#define CHIP_PIN_H7                                                 true
 #define CHIP_PIN_H7_MODE_BIT_0_BIT                                  7
 #define CHIP_PIN_H7_MODE_BIT_0_REG                                  CHIP_REG_DDRH
 #define CHIP_PIN_H7_MODE_BIT_1_BIT                                  7
@@ -1242,7 +1242,7 @@
 #define CHIP_PIN_H7_TOGGLE_BIT_0_BIT                                7
 #define CHIP_PIN_H7_TOGGLE_BIT_0_REG                                CHIP_REG_PINH
 
-#define CHIP_PIN_J0                                                 TRUE
+#define CHIP_PIN_J0                                                 true
 #define CHIP_PIN_J0_MODE_BIT_0_BIT                                  0
 #define CHIP_PIN_J0_MODE_BIT_0_REG                                  CHIP_REG_DDRJ
 #define CHIP_PIN_J0_MODE_BIT_1_BIT                                  0
@@ -1254,7 +1254,7 @@
 #define CHIP_PIN_J0_TOGGLE_BIT_0_BIT                                0
 #define CHIP_PIN_J0_TOGGLE_BIT_0_REG                                CHIP_REG_PINJ
 
-#define CHIP_PIN_J1                                                 TRUE
+#define CHIP_PIN_J1                                                 true
 #define CHIP_PIN_J1_MODE_BIT_0_BIT                                  1
 #define CHIP_PIN_J1_MODE_BIT_0_REG                                  CHIP_REG_DDRJ
 #define CHIP_PIN_J1_MODE_BIT_1_BIT                                  1
@@ -1266,7 +1266,7 @@
 #define CHIP_PIN_J1_TOGGLE_BIT_0_BIT                                1
 #define CHIP_PIN_J1_TOGGLE_BIT_0_REG                                CHIP_REG_PINJ
 
-#define CHIP_PIN_J2                                                 TRUE
+#define CHIP_PIN_J2                                                 true
 #define CHIP_PIN_J2_MODE_BIT_0_BIT                                  2
 #define CHIP_PIN_J2_MODE_BIT_0_REG                                  CHIP_REG_DDRJ
 #define CHIP_PIN_J2_MODE_BIT_1_BIT                                  2
@@ -1278,7 +1278,7 @@
 #define CHIP_PIN_J2_TOGGLE_BIT_0_BIT                                2
 #define CHIP_PIN_J2_TOGGLE_BIT_0_REG                                CHIP_REG_PINJ
 
-#define CHIP_PIN_J3                                                 TRUE
+#define CHIP_PIN_J3                                                 true
 #define CHIP_PIN_J3_MODE_BIT_0_BIT                                  3
 #define CHIP_PIN_J3_MODE_BIT_0_REG                                  CHIP_REG_DDRJ
 #define CHIP_PIN_J3_MODE_BIT_1_BIT                                  3
@@ -1290,7 +1290,7 @@
 #define CHIP_PIN_J3_TOGGLE_BIT_0_BIT                                3
 #define CHIP_PIN_J3_TOGGLE_BIT_0_REG                                CHIP_REG_PINJ
 
-#define CHIP_PIN_J4                                                 TRUE
+#define CHIP_PIN_J4                                                 true
 #define CHIP_PIN_J4_MODE_BIT_0_BIT                                  4
 #define CHIP_PIN_J4_MODE_BIT_0_REG                                  CHIP_REG_DDRJ
 #define CHIP_PIN_J4_MODE_BIT_1_BIT                                  4
@@ -1302,7 +1302,7 @@
 #define CHIP_PIN_J4_TOGGLE_BIT_0_BIT                                4
 #define CHIP_PIN_J4_TOGGLE_BIT_0_REG                                CHIP_REG_PINJ
 
-#define CHIP_PIN_J5                                                 TRUE
+#define CHIP_PIN_J5                                                 true
 #define CHIP_PIN_J5_MODE_BIT_0_BIT                                  5
 #define CHIP_PIN_J5_MODE_BIT_0_REG                                  CHIP_REG_DDRJ
 #define CHIP_PIN_J5_MODE_BIT_1_BIT                                  5
@@ -1314,7 +1314,7 @@
 #define CHIP_PIN_J5_TOGGLE_BIT_0_BIT                                5
 #define CHIP_PIN_J5_TOGGLE_BIT_0_REG                                CHIP_REG_PINJ
 
-#define CHIP_PIN_J6                                                 TRUE
+#define CHIP_PIN_J6                                                 true
 #define CHIP_PIN_J6_MODE_BIT_0_BIT                                  6
 #define CHIP_PIN_J6_MODE_BIT_0_REG                                  CHIP_REG_DDRJ
 #define CHIP_PIN_J6_MODE_BIT_1_BIT                                  6
@@ -1326,7 +1326,7 @@
 #define CHIP_PIN_J6_TOGGLE_BIT_0_BIT                                6
 #define CHIP_PIN_J6_TOGGLE_BIT_0_REG                                CHIP_REG_PINJ
 
-#define CHIP_PIN_J7                                                 TRUE
+#define CHIP_PIN_J7                                                 true
 #define CHIP_PIN_J7_MODE_BIT_0_BIT                                  7
 #define CHIP_PIN_J7_MODE_BIT_0_REG                                  CHIP_REG_DDRJ
 #define CHIP_PIN_J7_MODE_BIT_1_BIT                                  7
@@ -1338,7 +1338,7 @@
 #define CHIP_PIN_J7_TOGGLE_BIT_0_BIT                                7
 #define CHIP_PIN_J7_TOGGLE_BIT_0_REG                                CHIP_REG_PINJ
 
-#define CHIP_PIN_K0                                                 TRUE
+#define CHIP_PIN_K0                                                 true
 #define CHIP_PIN_K0_MODE_BIT_0_BIT                                  0
 #define CHIP_PIN_K0_MODE_BIT_0_REG                                  CHIP_REG_DDRK
 #define CHIP_PIN_K0_MODE_BIT_1_BIT                                  0
@@ -1350,7 +1350,7 @@
 #define CHIP_PIN_K0_TOGGLE_BIT_0_BIT                                0
 #define CHIP_PIN_K0_TOGGLE_BIT_0_REG                                CHIP_REG_PINK
 
-#define CHIP_PIN_K1                                                 TRUE
+#define CHIP_PIN_K1                                                 true
 #define CHIP_PIN_K1_MODE_BIT_0_BIT                                  1
 #define CHIP_PIN_K1_MODE_BIT_0_REG                                  CHIP_REG_DDRK
 #define CHIP_PIN_K1_MODE_BIT_1_BIT                                  1
@@ -1362,7 +1362,7 @@
 #define CHIP_PIN_K1_TOGGLE_BIT_0_BIT                                1
 #define CHIP_PIN_K1_TOGGLE_BIT_0_REG                                CHIP_REG_PINK
 
-#define CHIP_PIN_K2                                                 TRUE
+#define CHIP_PIN_K2                                                 true
 #define CHIP_PIN_K2_MODE_BIT_0_BIT                                  2
 #define CHIP_PIN_K2_MODE_BIT_0_REG                                  CHIP_REG_DDRK
 #define CHIP_PIN_K2_MODE_BIT_1_BIT                                  2
@@ -1374,7 +1374,7 @@
 #define CHIP_PIN_K2_TOGGLE_BIT_0_BIT                                2
 #define CHIP_PIN_K2_TOGGLE_BIT_0_REG                                CHIP_REG_PINK
 
-#define CHIP_PIN_K3                                                 TRUE
+#define CHIP_PIN_K3                                                 true
 #define CHIP_PIN_K3_MODE_BIT_0_BIT                                  3
 #define CHIP_PIN_K3_MODE_BIT_0_REG                                  CHIP_REG_DDRK
 #define CHIP_PIN_K3_MODE_BIT_1_BIT                                  3
@@ -1386,7 +1386,7 @@
 #define CHIP_PIN_K3_TOGGLE_BIT_0_BIT                                3
 #define CHIP_PIN_K3_TOGGLE_BIT_0_REG                                CHIP_REG_PINK
 
-#define CHIP_PIN_K4                                                 TRUE
+#define CHIP_PIN_K4                                                 true
 #define CHIP_PIN_K4_MODE_BIT_0_BIT                                  4
 #define CHIP_PIN_K4_MODE_BIT_0_REG                                  CHIP_REG_DDRK
 #define CHIP_PIN_K4_MODE_BIT_1_BIT                                  4
@@ -1398,7 +1398,7 @@
 #define CHIP_PIN_K4_TOGGLE_BIT_0_BIT                                4
 #define CHIP_PIN_K4_TOGGLE_BIT_0_REG                                CHIP_REG_PINK
 
-#define CHIP_PIN_K5                                                 TRUE
+#define CHIP_PIN_K5                                                 true
 #define CHIP_PIN_K5_MODE_BIT_0_BIT                                  5
 #define CHIP_PIN_K5_MODE_BIT_0_REG                                  CHIP_REG_DDRK
 #define CHIP_PIN_K5_MODE_BIT_1_BIT                                  5
@@ -1410,7 +1410,7 @@
 #define CHIP_PIN_K5_TOGGLE_BIT_0_BIT                                5
 #define CHIP_PIN_K5_TOGGLE_BIT_0_REG                                CHIP_REG_PINK
 
-#define CHIP_PIN_K6                                                 TRUE
+#define CHIP_PIN_K6                                                 true
 #define CHIP_PIN_K6_MODE_BIT_0_BIT                                  6
 #define CHIP_PIN_K6_MODE_BIT_0_REG                                  CHIP_REG_DDRK
 #define CHIP_PIN_K6_MODE_BIT_1_BIT                                  6
@@ -1422,7 +1422,7 @@
 #define CHIP_PIN_K6_TOGGLE_BIT_0_BIT                                6
 #define CHIP_PIN_K6_TOGGLE_BIT_0_REG                                CHIP_REG_PINK
 
-#define CHIP_PIN_K7                                                 TRUE
+#define CHIP_PIN_K7                                                 true
 #define CHIP_PIN_K7_MODE_BIT_0_BIT                                  7
 #define CHIP_PIN_K7_MODE_BIT_0_REG                                  CHIP_REG_DDRK
 #define CHIP_PIN_K7_MODE_BIT_1_BIT                                  7
@@ -1434,7 +1434,7 @@
 #define CHIP_PIN_K7_TOGGLE_BIT_0_BIT                                7
 #define CHIP_PIN_K7_TOGGLE_BIT_0_REG                                CHIP_REG_PINK
 
-#define CHIP_PIN_L0                                                 TRUE
+#define CHIP_PIN_L0                                                 true
 #define CHIP_PIN_L0_MODE_BIT_0_BIT                                  0
 #define CHIP_PIN_L0_MODE_BIT_0_REG                                  CHIP_REG_DDRL
 #define CHIP_PIN_L0_MODE_BIT_1_BIT                                  0
@@ -1446,7 +1446,7 @@
 #define CHIP_PIN_L0_TOGGLE_BIT_0_BIT                                0
 #define CHIP_PIN_L0_TOGGLE_BIT_0_REG                                CHIP_REG_PINL
 
-#define CHIP_PIN_L1                                                 TRUE
+#define CHIP_PIN_L1                                                 true
 #define CHIP_PIN_L1_MODE_BIT_0_BIT                                  1
 #define CHIP_PIN_L1_MODE_BIT_0_REG                                  CHIP_REG_DDRL
 #define CHIP_PIN_L1_MODE_BIT_1_BIT                                  1
@@ -1458,7 +1458,7 @@
 #define CHIP_PIN_L1_TOGGLE_BIT_0_BIT                                1
 #define CHIP_PIN_L1_TOGGLE_BIT_0_REG                                CHIP_REG_PINL
 
-#define CHIP_PIN_L2                                                 TRUE
+#define CHIP_PIN_L2                                                 true
 #define CHIP_PIN_L2_MODE_BIT_0_BIT                                  2
 #define CHIP_PIN_L2_MODE_BIT_0_REG                                  CHIP_REG_DDRL
 #define CHIP_PIN_L2_MODE_BIT_1_BIT                                  2
@@ -1470,7 +1470,7 @@
 #define CHIP_PIN_L2_TOGGLE_BIT_0_BIT                                2
 #define CHIP_PIN_L2_TOGGLE_BIT_0_REG                                CHIP_REG_PINL
 
-#define CHIP_PIN_L3                                                 TRUE
+#define CHIP_PIN_L3                                                 true
 #define CHIP_PIN_L3_MODE_BIT_0_BIT                                  3
 #define CHIP_PIN_L3_MODE_BIT_0_REG                                  CHIP_REG_DDRL
 #define CHIP_PIN_L3_MODE_BIT_1_BIT                                  3
@@ -1482,7 +1482,7 @@
 #define CHIP_PIN_L3_TOGGLE_BIT_0_BIT                                3
 #define CHIP_PIN_L3_TOGGLE_BIT_0_REG                                CHIP_REG_PINL
 
-#define CHIP_PIN_L4                                                 TRUE
+#define CHIP_PIN_L4                                                 true
 #define CHIP_PIN_L4_MODE_BIT_0_BIT                                  4
 #define CHIP_PIN_L4_MODE_BIT_0_REG                                  CHIP_REG_DDRL
 #define CHIP_PIN_L4_MODE_BIT_1_BIT                                  4
@@ -1494,7 +1494,7 @@
 #define CHIP_PIN_L4_TOGGLE_BIT_0_BIT                                4
 #define CHIP_PIN_L4_TOGGLE_BIT_0_REG                                CHIP_REG_PINL
 
-#define CHIP_PIN_L5                                                 TRUE
+#define CHIP_PIN_L5                                                 true
 #define CHIP_PIN_L5_MODE_BIT_0_BIT                                  5
 #define CHIP_PIN_L5_MODE_BIT_0_REG                                  CHIP_REG_DDRL
 #define CHIP_PIN_L5_MODE_BIT_1_BIT                                  5
@@ -1506,7 +1506,7 @@
 #define CHIP_PIN_L5_TOGGLE_BIT_0_BIT                                5
 #define CHIP_PIN_L5_TOGGLE_BIT_0_REG                                CHIP_REG_PINL
 
-#define CHIP_PIN_L6                                                 TRUE
+#define CHIP_PIN_L6                                                 true
 #define CHIP_PIN_L6_MODE_BIT_0_BIT                                  6
 #define CHIP_PIN_L6_MODE_BIT_0_REG                                  CHIP_REG_DDRL
 #define CHIP_PIN_L6_MODE_BIT_1_BIT                                  6
@@ -1518,7 +1518,7 @@
 #define CHIP_PIN_L6_TOGGLE_BIT_0_BIT                                6
 #define CHIP_PIN_L6_TOGGLE_BIT_0_REG                                CHIP_REG_PINL
 
-#define CHIP_PIN_L7                                                 TRUE
+#define CHIP_PIN_L7                                                 true
 #define CHIP_PIN_L7_MODE_BIT_0_BIT                                  7
 #define CHIP_PIN_L7_MODE_BIT_0_REG                                  CHIP_REG_DDRL
 #define CHIP_PIN_L7_MODE_BIT_1_BIT                                  7
@@ -1533,7 +1533,7 @@
 //------------------------------------------------
 // Analog to digital converters
 
-#define CHIP_ADC_0                                                  TRUE
+#define CHIP_ADC_0                                                  true
 
 #define CHIP_ADC_0_DATA_REG                                         CHIP_REG_ADC
 
@@ -1627,7 +1627,7 @@
 //------------------------------------------------
 // External Interrupts
 
-#define CHIP_EXINT_0                                                TRUE
+#define CHIP_EXINT_0                                                true
 #define CHIP_EXINT_0_ENABLE_BIT_0_REG                               CHIP_REG_EIMSK
 #define CHIP_EXINT_0_ENABLE_BIT_0_BIT                               0
 #define CHIP_EXINT_0_INT_FLAG_BIT_0_REG                             CHIP_REG_EIFR
@@ -1642,7 +1642,7 @@
 #define CHIP_EXINT_0_TRIGGER_RISING_ID                              3
 #define CHIP_EXINT_0_INT_VECTOR                                     VECT(CHIP_VECT_INT0)
 
-#define CHIP_EXINT_1                                                TRUE
+#define CHIP_EXINT_1                                                true
 #define CHIP_EXINT_1_ENABLE_BIT_0_REG                               CHIP_REG_EIMSK
 #define CHIP_EXINT_1_ENABLE_BIT_0_BIT                               1
 #define CHIP_EXINT_1_INT_FLAG_BIT_0_REG                             CHIP_REG_EIFR
@@ -1657,7 +1657,7 @@
 #define CHIP_EXINT_1_TRIGGER_RISING_ID                              3
 #define CHIP_EXINT_1_INT_VECTOR                                     VECT(CHIP_VECT_INT1)
 
-#define CHIP_EXINT_2                                                TRUE
+#define CHIP_EXINT_2                                                true
 #define CHIP_EXINT_2_ENABLE_BIT_0_REG                               CHIP_REG_EIMSK
 #define CHIP_EXINT_2_ENABLE_BIT_0_BIT                               2
 #define CHIP_EXINT_2_INT_FLAG_BIT_0_REG                             CHIP_REG_EIFR
@@ -1672,7 +1672,7 @@
 #define CHIP_EXINT_2_TRIGGER_RISING_ID                              3
 #define CHIP_EXINT_2_INT_VECTOR                                     VECT(CHIP_VECT_INT2)
 
-#define CHIP_EXINT_3                                                TRUE
+#define CHIP_EXINT_3                                                true
 #define CHIP_EXINT_3_ENABLE_BIT_0_REG                               CHIP_REG_EIMSK
 #define CHIP_EXINT_3_ENABLE_BIT_0_BIT                               3
 #define CHIP_EXINT_3_INT_FLAG_BIT_0_REG                             CHIP_REG_EIFR
@@ -1687,7 +1687,7 @@
 #define CHIP_EXINT_3_TRIGGER_RISING_ID                              3
 #define CHIP_EXINT_3_INT_VECTOR                                     VECT(CHIP_VECT_INT3)
 
-#define CHIP_EXINT_4                                                TRUE
+#define CHIP_EXINT_4                                                true
 #define CHIP_EXINT_4_ENABLE_BIT_0_REG                               CHIP_REG_EIMSK
 #define CHIP_EXINT_4_ENABLE_BIT_0_BIT                               4
 #define CHIP_EXINT_4_INT_FLAG_BIT_0_REG                             CHIP_REG_EIFR
@@ -1702,7 +1702,7 @@
 #define CHIP_EXINT_4_TRIGGER_RISING_ID                              3
 #define CHIP_EXINT_4_INT_VECTOR                                     VECT(CHIP_VECT_INT4)
 
-#define CHIP_EXINT_5                                                TRUE
+#define CHIP_EXINT_5                                                true
 #define CHIP_EXINT_5_ENABLE_BIT_0_REG                               CHIP_REG_EIMSK
 #define CHIP_EXINT_5_ENABLE_BIT_0_BIT                               5
 #define CHIP_EXINT_5_INT_FLAG_BIT_0_REG                             CHIP_REG_EIFR
@@ -1717,7 +1717,7 @@
 #define CHIP_EXINT_5_TRIGGER_RISING_ID                              3
 #define CHIP_EXINT_5_INT_VECTOR                                     VECT(CHIP_VECT_INT5)
 
-#define CHIP_EXINT_6                                                TRUE
+#define CHIP_EXINT_6                                                true
 #define CHIP_EXINT_6_ENABLE_BIT_0_REG                               CHIP_REG_EIMSK
 #define CHIP_EXINT_6_ENABLE_BIT_0_BIT                               6
 #define CHIP_EXINT_6_INT_FLAG_BIT_0_REG                             CHIP_REG_EIFR
@@ -1732,7 +1732,7 @@
 #define CHIP_EXINT_6_TRIGGER_RISING_ID                              3
 #define CHIP_EXINT_6_INT_VECTOR                                     VECT(CHIP_VECT_INT6)
 
-#define CHIP_EXINT_7                                                TRUE
+#define CHIP_EXINT_7                                                true
 #define CHIP_EXINT_7_ENABLE_BIT_0_REG                               CHIP_REG_EIMSK
 #define CHIP_EXINT_7_ENABLE_BIT_0_BIT                               7
 #define CHIP_EXINT_7_INT_FLAG_BIT_0_REG                             CHIP_REG_EIFR
@@ -1750,7 +1750,7 @@
 //------------------------------------------------
 // Pin Change Interrupts
 
-#define CHIP_PCINT_0                                                TRUE
+#define CHIP_PCINT_0                                                true
 #define CHIP_PCINT_0_ENABLE_BIT_0_REG                               CHIP_REG_PCICR
 #define CHIP_PCINT_0_ENABLE_BIT_0_BIT                               0
 #define CHIP_PCINT_0_INT_FLAG_BIT_0_REG                             CHIP_REG_PCIFR
@@ -1758,7 +1758,7 @@
 #define CHIP_PCINT_0_MASK_REG                                       CHIP_REG_PCMSK0
 #define CHIP_PCINT_0_INT_VECTOR                                     VECT(CHIP_VECT_PCINT0)
 
-#define CHIP_PCINT_1                                                TRUE
+#define CHIP_PCINT_1                                                true
 #define CHIP_PCINT_1_ENABLE_BIT_0_REG                               CHIP_REG_PCICR
 #define CHIP_PCINT_1_ENABLE_BIT_0_BIT                               1
 #define CHIP_PCINT_1_INT_FLAG_BIT_0_REG                             CHIP_REG_PCIFR
@@ -1766,7 +1766,7 @@
 #define CHIP_PCINT_1_MASK_REG                                       CHIP_REG_PCMSK1
 #define CHIP_PCINT_1_INT_VECTOR                                     VECT(CHIP_VECT_PCINT1)
 
-#define CHIP_PCINT_2                                                TRUE
+#define CHIP_PCINT_2                                                true
 #define CHIP_PCINT_2_ENABLE_BIT_0_REG                               CHIP_REG_PCICR
 #define CHIP_PCINT_2_ENABLE_BIT_0_BIT                               2
 #define CHIP_PCINT_2_INT_FLAG_BIT_0_REG                             CHIP_REG_PCIFR
@@ -1782,11 +1782,11 @@
 //------------------------------------------------
 // Timer Counter 0
 
-#define CHIP_TIMER_0                                                TRUE
+#define CHIP_TIMER_0                                                true
 
 #define CHIP_TIMER_0_TYPE                                           uint8_t
 
-#define CHIP_TIMER_0_WAVEFORM                                       TRUE
+#define CHIP_TIMER_0_WAVEFORM                                       true
 #define CHIP_TIMER_0_WAVEFORM_NORMAL_ID                             0
 #define CHIP_TIMER_0_WAVEFORM_PWM_PHASE_CORRECT_ID                  1
 #define CHIP_TIMER_0_WAVEFORM_CTC_OCRA_ID                           2
@@ -1817,7 +1817,7 @@
 
 #define CHIP_TIMER_0_COUNTER_REG                                    CHIP_REG_TCNT0
 
-#define CHIP_TIMER_0_OUTPUT_A                                       TRUE
+#define CHIP_TIMER_0_OUTPUT_A                                       true
 #define CHIP_TIMER_0_OUTPUT_A_PIN                                   PortB::Pin7
 #define CHIP_TIMER_0_OUTPUT_A_MODE_BIT_0_REG                        CHIP_REG_TCCR0A
 #define CHIP_TIMER_0_OUTPUT_A_MODE_BIT_1_REG                        CHIP_REG_TCCR0A
@@ -1834,7 +1834,7 @@
 #define CHIP_TIMER_0_OUTPUT_A_INT_FLAG_BIT                          1
 #define CHIP_TIMER_0_OUTPUT_A_INT_VECTOR                            VECT(CHIP_VECT_TIMER0_COMPA)
 
-#define CHIP_TIMER_0_OUTPUT_B                                       TRUE
+#define CHIP_TIMER_0_OUTPUT_B                                       true
 #define CHIP_TIMER_0_OUTPUT_B_PIN                                   PortG::Pin5
 #define CHIP_TIMER_0_OUTPUT_B_MODE_BIT_0_REG                        CHIP_REG_TCCR0A
 #define CHIP_TIMER_0_OUTPUT_B_MODE_BIT_1_REG                        CHIP_REG_TCCR0A
@@ -1860,11 +1860,11 @@
 //------------------------------------------------
 // Timer Counter 1
 
-#define CHIP_TIMER_1                                                TRUE
+#define CHIP_TIMER_1                                                true
 
 #define CHIP_TIMER_1_TYPE                                           uint16_t
 
-#define CHIP_TIMER_1_WAVEFORM                                       TRUE
+#define CHIP_TIMER_1_WAVEFORM                                       true
 #define CHIP_TIMER_1_WAVEFORM_NORMAL_ID                             0
 #define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_CORRECT_8_ID                1
 #define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_CORRECT_9_ID                2
@@ -1906,7 +1906,7 @@
 
 #define CHIP_TIMER_1_COUNTER_REG                                    CHIP_REG_TCNT1
 
-#define CHIP_TIMER_1_OUTPUT_A                                       TRUE
+#define CHIP_TIMER_1_OUTPUT_A                                       true
 #define CHIP_TIMER_1_OUTPUT_A_PIN                                   PortB::Pin5
 #define CHIP_TIMER_1_OUTPUT_A_MODE_BIT_0_REG                        CHIP_REG_TCCR1A
 #define CHIP_TIMER_1_OUTPUT_A_MODE_BIT_1_REG                        CHIP_REG_TCCR1A
@@ -1923,7 +1923,7 @@
 #define CHIP_TIMER_1_OUTPUT_A_INT_FLAG_BIT                          1
 #define CHIP_TIMER_1_OUTPUT_A_INT_VECTOR                            VECT(CHIP_VECT_TIMER1_COMPA)
 
-#define CHIP_TIMER_1_OUTPUT_B                                       TRUE
+#define CHIP_TIMER_1_OUTPUT_B                                       true
 #define CHIP_TIMER_1_OUTPUT_B_PIN                                   PortB::Pin6
 #define CHIP_TIMER_1_OUTPUT_B_MODE_BIT_0_REG                        CHIP_REG_TCCR1A
 #define CHIP_TIMER_1_OUTPUT_B_MODE_BIT_1_REG                        CHIP_REG_TCCR1A
@@ -1940,7 +1940,7 @@
 #define CHIP_TIMER_1_OUTPUT_B_INT_FLAG_BIT                          2
 #define CHIP_TIMER_1_OUTPUT_B_INT_VECTOR                            VECT(CHIP_VECT_TIMER1_COMPB)
 
-#define CHIP_TIMER_1_OUTPUT_C                                       TRUE
+#define CHIP_TIMER_1_OUTPUT_C                                       true
 #define CHIP_TIMER_1_OUTPUT_C_PIN                                   PortB::Pin7
 #define CHIP_TIMER_1_OUTPUT_C_MODE_BIT_0_REG                        CHIP_REG_TCCR1A
 #define CHIP_TIMER_1_OUTPUT_C_MODE_BIT_1_REG                        CHIP_REG_TCCR1A
@@ -1966,11 +1966,11 @@
 //------------------------------------------------
 // Timer Counter 2
 
-#define CHIP_TIMER_2                                                TRUE
+#define CHIP_TIMER_2                                                true
 
 #define CHIP_TIMER_2_TYPE                                           uint8_t
 
-#define CHIP_TIMER_2_WAVEFORM                                       TRUE
+#define CHIP_TIMER_2_WAVEFORM                                       true
 #define CHIP_TIMER_2_WAVEFORM_NORMAL_ID                             0
 #define CHIP_TIMER_2_WAVEFORM_PWM_PHASE_CORRECT_ID                  1
 #define CHIP_TIMER_2_WAVEFORM_CTC_OCRA_ID                           2
@@ -2001,7 +2001,7 @@
 
 #define CHIP_TIMER_2_COUNTER_REG                                    CHIP_REG_TCNT2
 
-#define CHIP_TIMER_2_OUTPUT_A                                       TRUE
+#define CHIP_TIMER_2_OUTPUT_A                                       true
 #define CHIP_TIMER_2_OUTPUT_A_PIN                                   PortB::Pin4
 #define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_0_REG                        CHIP_REG_TCCR2A
 #define CHIP_TIMER_2_OUTPUT_A_MODE_BIT_1_REG                        CHIP_REG_TCCR2A
@@ -2018,7 +2018,7 @@
 #define CHIP_TIMER_2_OUTPUT_A_INT_FLAG_BIT                          1
 #define CHIP_TIMER_2_OUTPUT_A_INT_VECTOR                            VECT(CHIP_VECT_TIMER2_COMPA)
 
-#define CHIP_TIMER_2_OUTPUT_B                                       TRUE
+#define CHIP_TIMER_2_OUTPUT_B                                       true
 #define CHIP_TIMER_2_OUTPUT_B_PIN                                   PortH::Pin6
 #define CHIP_TIMER_2_OUTPUT_B_MODE_BIT_0_REG                        CHIP_REG_TCCR2A
 #define CHIP_TIMER_2_OUTPUT_B_MODE_BIT_1_REG                        CHIP_REG_TCCR2A
@@ -2046,11 +2046,11 @@
 //------------------------------------------------
 // Timer Counter 3
 
-#define CHIP_TIMER_3                                                TRUE
+#define CHIP_TIMER_3                                                true
 
 #define CHIP_TIMER_3_TYPE                                           uint16_t
 
-#define CHIP_TIMER_3_WAVEFORM                                       TRUE
+#define CHIP_TIMER_3_WAVEFORM                                       true
 #define CHIP_TIMER_3_WAVEFORM_NORMAL_ID                             0
 #define CHIP_TIMER_3_WAVEFORM_PWM_PHASE_CORRECT_8_ID                1
 #define CHIP_TIMER_3_WAVEFORM_PWM_PHASE_CORRECT_9_ID                2
@@ -2092,7 +2092,7 @@
 
 #define CHIP_TIMER_3_COUNTER_REG                                    CHIP_REG_TCNT3
 
-#define CHIP_TIMER_3_OUTPUT_A                                       TRUE
+#define CHIP_TIMER_3_OUTPUT_A                                       true
 #define CHIP_TIMER_3_OUTPUT_A_PIN                                   PortE::Pin3
 #define CHIP_TIMER_3_OUTPUT_A_MODE_BIT_0_REG                        CHIP_REG_TCCR3A
 #define CHIP_TIMER_3_OUTPUT_A_MODE_BIT_1_REG                        CHIP_REG_TCCR3A
@@ -2109,7 +2109,7 @@
 #define CHIP_TIMER_3_OUTPUT_A_INT_FLAG_BIT                          1
 #define CHIP_TIMER_3_OUTPUT_A_INT_VECTOR                            VECT(CHIP_VECT_TIMER3_COMPA)
 
-#define CHIP_TIMER_3_OUTPUT_B                                       TRUE
+#define CHIP_TIMER_3_OUTPUT_B                                       true
 #define CHIP_TIMER_3_OUTPUT_B_PIN                                   PortE::Pin4
 #define CHIP_TIMER_3_OUTPUT_B_MODE_BIT_0_REG                        CHIP_REG_TCCR3A
 #define CHIP_TIMER_3_OUTPUT_B_MODE_BIT_1_REG                        CHIP_REG_TCCR3A
@@ -2126,7 +2126,7 @@
 #define CHIP_TIMER_3_OUTPUT_B_INT_FLAG_BIT                          2
 #define CHIP_TIMER_3_OUTPUT_B_INT_VECTOR                            VECT(CHIP_VECT_TIMER3_COMPB)
 
-#define CHIP_TIMER_3_OUTPUT_C                                       TRUE
+#define CHIP_TIMER_3_OUTPUT_C                                       true
 #define CHIP_TIMER_3_OUTPUT_C_PIN                                   PortE::Pin5
 #define CHIP_TIMER_3_OUTPUT_C_MODE_BIT_0_REG                        CHIP_REG_TCCR3A
 #define CHIP_TIMER_3_OUTPUT_C_MODE_BIT_1_REG                        CHIP_REG_TCCR3A
@@ -2152,11 +2152,11 @@
 //------------------------------------------------
 // Timer Counter 4
 
-#define CHIP_TIMER_4                                                TRUE
+#define CHIP_TIMER_4                                                true
 
 #define CHIP_TIMER_4_TYPE                                           uint16_t
 
-#define CHIP_TIMER_4_WAVEFORM                                       TRUE
+#define CHIP_TIMER_4_WAVEFORM                                       true
 #define CHIP_TIMER_4_WAVEFORM_NORMAL_ID                             0
 #define CHIP_TIMER_4_WAVEFORM_PWM_PHASE_CORRECT_8_ID                1
 #define CHIP_TIMER_4_WAVEFORM_PWM_PHASE_CORRECT_9_ID                2
@@ -2198,7 +2198,7 @@
 
 #define CHIP_TIMER_4_COUNTER_REG                                    CHIP_REG_TCNT4
 
-#define CHIP_TIMER_4_OUTPUT_A                                       TRUE
+#define CHIP_TIMER_4_OUTPUT_A                                       true
 #define CHIP_TIMER_4_OUTPUT_A_PIN                                   PortH::Pin3
 #define CHIP_TIMER_4_OUTPUT_A_MODE_BIT_0_REG                        CHIP_REG_TCCR4A
 #define CHIP_TIMER_4_OUTPUT_A_MODE_BIT_1_REG                        CHIP_REG_TCCR4A
@@ -2215,7 +2215,7 @@
 #define CHIP_TIMER_4_OUTPUT_A_INT_FLAG_BIT                          1
 #define CHIP_TIMER_4_OUTPUT_A_INT_VECTOR                            VECT(CHIP_VECT_TIMER4_COMPA)
 
-#define CHIP_TIMER_4_OUTPUT_B                                       TRUE
+#define CHIP_TIMER_4_OUTPUT_B                                       true
 #define CHIP_TIMER_4_OUTPUT_B_PIN                                   PortH::Pin4
 #define CHIP_TIMER_4_OUTPUT_B_MODE_BIT_0_REG                        CHIP_REG_TCCR4A
 #define CHIP_TIMER_4_OUTPUT_B_MODE_BIT_1_REG                        CHIP_REG_TCCR4A
@@ -2232,7 +2232,7 @@
 #define CHIP_TIMER_4_OUTPUT_B_INT_FLAG_BIT                          2
 #define CHIP_TIMER_4_OUTPUT_B_INT_VECTOR                            VECT(CHIP_VECT_TIMER4_COMPB)
 
-#define CHIP_TIMER_4_OUTPUT_C                                       TRUE
+#define CHIP_TIMER_4_OUTPUT_C                                       true
 #define CHIP_TIMER_4_OUTPUT_C_PIN                                   PortH::Pin5
 #define CHIP_TIMER_4_OUTPUT_C_MODE_BIT_0_REG                        CHIP_REG_TCCR4A
 #define CHIP_TIMER_4_OUTPUT_C_MODE_BIT_1_REG                        CHIP_REG_TCCR4A
@@ -2258,9 +2258,9 @@
 //------------------------------------------------
 // Timer Counter 5
 
-#define CHIP_TIMER_5                                                TRUE
+#define CHIP_TIMER_5                                                true
 
-#define CHIP_TIMER_5_WAVEFORM                                       TRUE
+#define CHIP_TIMER_5_WAVEFORM                                       true
 #define CHIP_TIMER_5_WAVEFORM_NORMAL_ID                             0
 #define CHIP_TIMER_5_WAVEFORM_PWM_PHASE_CORRECT_8_ID                1
 #define CHIP_TIMER_5_WAVEFORM_PWM_PHASE_CORRECT_9_ID                2
@@ -2302,7 +2302,7 @@
 
 #define CHIP_TIMER_5_COUNTER_REG                                    CHIP_REG_TCNT5
 
-#define CHIP_TIMER_5_OUTPUT_A                                       TRUE
+#define CHIP_TIMER_5_OUTPUT_A                                       true
 #define CHIP_TIMER_5_OUTPUT_A_PIN                                   PortL::Pin3
 #define CHIP_TIMER_5_OUTPUT_A_MODE_BIT_0_REG                        CHIP_REG_TCCR5A
 #define CHIP_TIMER_5_OUTPUT_A_MODE_BIT_1_REG                        CHIP_REG_TCCR5A
@@ -2319,7 +2319,7 @@
 #define CHIP_TIMER_5_OUTPUT_A_INT_FLAG_BIT                          1
 #define CHIP_TIMER_5_OUTPUT_A_INT_VECTOR                            VECT(CHIP_VECT_TIMER5_COMPA)
 
-#define CHIP_TIMER_5_OUTPUT_B                                       TRUE
+#define CHIP_TIMER_5_OUTPUT_B                                       true
 #define CHIP_TIMER_5_OUTPUT_B_PIN                                   PortL::Pin4
 #define CHIP_TIMER_5_OUTPUT_B_MODE_BIT_0_REG                        CHIP_REG_TCCR5A
 #define CHIP_TIMER_5_OUTPUT_B_MODE_BIT_1_REG                        CHIP_REG_TCCR5A
@@ -2336,7 +2336,7 @@
 #define CHIP_TIMER_5_OUTPUT_B_INT_FLAG_BIT                          2
 #define CHIP_TIMER_5_OUTPUT_B_INT_VECTOR                            VECT(CHIP_VECT_TIMER5_COMPB)
 
-#define CHIP_TIMER_5_OUTPUT_C                                       TRUE
+#define CHIP_TIMER_5_OUTPUT_C                                       true
 #define CHIP_TIMER_5_OUTPUT_C_PIN                                   PortL::Pin5
 #define CHIP_TIMER_5_OUTPUT_C_MODE_BIT_0_REG                        CHIP_REG_TCCR5A
 #define CHIP_TIMER_5_OUTPUT_C_MODE_BIT_1_REG                        CHIP_REG_TCCR5A
@@ -2362,7 +2362,7 @@
 //------------------------------------------------
 // Usart 0
 
-#define CHIP_USART_0                                                TRUE
+#define CHIP_USART_0                                                true
 
 #define CHIP_USART_0_DATA_REG                                       CHIP_REG_UDR0
 
@@ -2443,7 +2443,7 @@
 //------------------------------------------------
 // Usart 1
 
-#define CHIP_USART_1                                                TRUE
+#define CHIP_USART_1                                                true
 
 #define CHIP_USART_1_DATA_REG                                       CHIP_REG_UDR1
 
@@ -2524,7 +2524,7 @@
 //------------------------------------------------
 // Usart 2
 
-#define CHIP_USART_2                                                TRUE
+#define CHIP_USART_2                                                true
 
 #define CHIP_USART_2_DATA_REG                                       CHIP_REG_UDR2
 
@@ -2605,7 +2605,7 @@
 //------------------------------------------------
 // Usart 3
 
-#define CHIP_USART_3                                                TRUE
+#define CHIP_USART_3                                                true
 
 #define CHIP_USART_3_DATA_REG                                       CHIP_REG_UDR3
 
