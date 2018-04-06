@@ -4,10 +4,6 @@
 
 #include "test.hpp"
 
-// TEST(Adc, getHardwareType) {
-//     ASSERT_EQ(Adc::getHardwareType(), HardwareType::ADC);
-// }
-
 TEST(Clock, millisToTicks) {
     EXPECT_EQ((Clock<Timer1, 1000000>::millisToTicks(0)), 0);
     EXPECT_EQ((Clock<Timer1, 1000000>::millisToTicks(1)), 16);
