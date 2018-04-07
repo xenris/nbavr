@@ -1,16 +1,26 @@
 #ifndef NBOS_TYPE_HPP
 #define NBOS_TYPE_HPP
 
+template<bool B, class T, class F>
+struct conditional {
+    using type = T;
+};
+
+template<class T, class F>
+struct conditional<false, T, F> {
+    using type = F;
+};
+
 #ifndef TEST
 
 using int8_t = signed char;
 using uint8_t = unsigned char;
 
-using int16_t = signed int;
-using uint16_t = unsigned int;
+using int16_t = conditional<sizeof(signed int) == 2, signed int, signed short>::type;
+using uint16_t = conditional<sizeof(unsigned int) == 2, unsigned int, unsigned short>::type;
 
-using int32_t = signed long;
-using uint32_t = unsigned long;
+using int32_t = conditional<sizeof(signed int) == 4, signed int, signed long>::type;
+using uint32_t = conditional<sizeof(unsigned int) == 4, unsigned int, unsigned long>::type;
 
 using int64_t = signed long long;
 using uint64_t = unsigned long long;
@@ -19,6 +29,15 @@ using size_t = unsigned int;
 using ssize_t = signed int;
 
 #endif
+
+static_assert(sizeof(int8_t) == 1, "int8_t is not the right size");
+static_assert(sizeof(uint8_t) == 1, "uint8_t is not the right size");
+static_assert(sizeof(int16_t) == 2, "int16_t is not the right size");
+static_assert(sizeof(uint16_t) == 2, "uint16_t is not the right size");
+static_assert(sizeof(int32_t) == 4, "int32_t is not the right size");
+static_assert(sizeof(uint32_t) == 4, "uint32_t is not the right size");
+static_assert(sizeof(int64_t) == 8, "int64_t is not the right size");
+static_assert(sizeof(uint64_t) == 8, "uint64_t is not the right size");
 
 using callback_t = void (*)(void*);
 
@@ -69,16 +88,6 @@ struct tuple5 {
 
     tuple5(A a, B b, C c, D d, E e)
         : a(a), b(b), c(c), d(d), e(e) {}
-};
-
-template<bool B, class T, class F>
-struct conditional {
-    typedef T type;
-};
-
-template<class T, class F>
-struct conditional<false, T, F> {
-    typedef F type;
 };
 
 template<class T, T v>
