@@ -286,7 +286,7 @@ public:
                 "1: sbiw r30, 1\n"
                 "brne 1b\n"
                 :
-                : "r" (uint8_t(c)), "r" (uint8_t(c >> 8))
+                : "" (uint8_t(c)), "" (uint8_t(c >> 8))
                 : "r30", "r31"
             );
         }
