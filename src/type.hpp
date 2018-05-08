@@ -42,7 +42,8 @@ static_assert(sizeof(uint64_t) == 8, "uint64_t is not the right size");
 using callback_t = void (*)(void*);
 
 struct nulltype {
-    nulltype(auto n) {}
+    template <class T>
+    nulltype(T) {}
 };
 
 template <class A, class B = A>
