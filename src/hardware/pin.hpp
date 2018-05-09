@@ -18,6 +18,8 @@
 
 #define MODE(A) CAT(CHIP_PIN_MODE_, A, _ID)
 
+namespace nbos::hw {
+
 struct Pin {
     Pin() = delete;
     Pin& operator=(const Pin&) = delete;
@@ -102,6 +104,9 @@ struct Pin {
         high = 1,
     };
 };
+
+} // nbos::hw
+
 
 #undef MODE
 
