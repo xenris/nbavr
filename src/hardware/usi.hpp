@@ -239,6 +239,20 @@ struct UsiN {
             return c;
         }
     #endif
+
+    /// #### static void startConditionCallback(callback_t callback, void\* data)
+    /// Set callback for start condition interrupt.
+    static force_inline void startConditionCallback(callback_t callback, void* data) {
+        _USI_N(START_Callback) = callback;
+        _USI_N(START_CallbackData) = data;
+    }
+
+    /// #### static void counterOverflowCallback(callback_t callback, void\* data)
+    /// Set callback for timer overflow interrupt.
+    static force_inline void counterOverflowCallback(callback_t callback, void* data) {
+        _USI_N(OVERFLOW_Callback) = callback;
+        _USI_N(OVERFLOW_CallbackData) = data;
+    }
 };
 
 } // nbos::hw
