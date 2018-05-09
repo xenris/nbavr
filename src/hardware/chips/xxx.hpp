@@ -12,7 +12,7 @@
 // #define CHIP_PORT_MIN                                            A
 // #define CHIP_PORT_MAX                                            Z
 
-// #define CHIP_PORT_A                                              TRUE
+// #define CHIP_PORT_A                                              true
 // #define CHIP_PORT_A_PIN_MIN                                      0
 // #define CHIP_PORT_A_PIN_MAX                                      7
 // #define CHIP_PORT_A_OUTPUT_REG                                   CHIP_REG_PORTB
@@ -55,7 +55,7 @@
 // Including non-existant ports.
 #define CHIP_PORT_COUNT                                                 X
 
-#define CHIP_PORT_X                                                     TRUE
+#define CHIP_PORT_X                                                     true
 #define CHIP_PORT_X_OUTPUT_REG                                          REG8(0xXX)
 #define CHIP_PORT_X_DIRECTION_REG                                       REG8(0xXX)
 #define CHIP_PORT_X_INPUT_REG                                           REG8(0xXX)
@@ -66,12 +66,12 @@
 // Maximum number of pins per port.
 #define CHIP_PIN_COUNT                                                  8
 
-#define CHIP_PIN_XX                                                     TRUE
+#define CHIP_PIN_XX                                                     true
 
 //------------------------------------------------
 // ADC
 
-#define CHIP_ADC                                                        TRUE
+#define CHIP_ADC                                                        true
 
 #define CHIP_ADC_ENABLE_REG                                             REG8(0xXX)
 #define CHIP_ADC_ENABLE_BIT                                             X
@@ -110,7 +110,7 @@
 #define CHIP_ADC_FREE_RUNNING_ENABLE_REG                                REG8(0xXX)
 #define CHIP_ADC_FREE_RUNNING_ENABLE_BIT                                X
 
-#define CHIP_ADC_TRIGGER                                                TRUE
+#define CHIP_ADC_TRIGGER                                                true
 #define CHIP_ADC_TRIGGER_ENABLE_REG                                     REG8(0xXX)
 #define CHIP_ADC_TRIGGER_ENABLE_BIT                                     X
 #define CHIP_ADC_TRIGGER_BIT_0_REG                                      REG8(0xXX)
@@ -139,7 +139,7 @@
 
 #define CHIP_ADC_DATA_REG                                               REGX(0xXX)
 
-#define CHIP_ADC_PRESCALER                                              TRUE
+#define CHIP_ADC_PRESCALER                                              true
 #define CHIP_ADC_PRESCALER_BIT_0_REG                                    REG8(0xXX)
 #define CHIP_ADC_PRESCALER_BIT_1_REG                                    REG8(0xXX)
 #define CHIP_ADC_PRESCALER_BIT_2_REG                                    REG8(0xXX)
@@ -159,7 +159,7 @@
 
 #define CHIP_EXINT_COUNT                                                X
 
-#define CHIP_EXINT_X                                                    TRUE
+#define CHIP_EXINT_X                                                    true
 #define CHIP_EXINT_X_ENABLE_REG                                         REG8(0xXX)
 #define CHIP_EXINT_X_ENABLE_BIT                                         X
 #define CHIP_EXINT_X_FLAG_REG                                           REG8(0xXX)
@@ -179,7 +179,7 @@
 
 #define CHIP_PCINT_COUNT                                                X
 
-#define CHIP_PCINT_X                                                    TRUE
+#define CHIP_PCINT_X                                                    true
 #define CHIP_PCINT_X_ENABLE_REG                                         REG8(0xXX)
 #define CHIP_PCINT_X_ENABLE_BIT                                         X
 #define CHIP_PCINT_X_FLAG_REG                                           REG8(0xXX)
@@ -195,17 +195,17 @@
 //------------------------------------------------
 // Timer Counter X
 
-#define CHIP_TIMERCOUNTER_X                                             TRUE
+#define CHIP_TIMERCOUNTER_X                                             true
 
 #define CHIP_TIMERCOUNTER_X_TYPE                                        uintX_t
 
-#define CHIP_TIMERCOUNTER_X_OUTPUTCOMPARE_MODE                          TRUE
+#define CHIP_TIMERCOUNTER_X_OUTPUTCOMPARE_MODE                          true
 #define CHIP_TIMERCOUNTER_X_OUTPUTCOMPARE_MODE_DISCONNECTED_ID          X
 #define CHIP_TIMERCOUNTER_X_OUTPUTCOMPARE_MODE_TOGGLE_ID                X
 #define CHIP_TIMERCOUNTER_X_OUTPUTCOMPARE_MODE_CLEAR_ID                 X
 #define CHIP_TIMERCOUNTER_X_OUTPUTCOMPARE_MODE_SET_ID                   X
 
-#define CHIP_TIMERCOUNTER_X_WAVEFORM                                    TRUE
+#define CHIP_TIMERCOUNTER_X_WAVEFORM                                    true
 #define CHIP_TIMERCOUNTER_X_WAVEFORM_NORMAL_ID                          X
 #define CHIP_TIMERCOUNTER_X_WAVEFORM_PWM_PHASE_CORRECT_8_ID             X
 #define CHIP_TIMERCOUNTER_X_WAVEFORM_PWM_PHASE_CORRECT_9_ID             X
@@ -249,7 +249,7 @@
 
 #define CHIP_TIMERCOUNTER_X_COUNTER_REG                                 REGX(0xXX)
 
-#define CHIP_TIMERCOUNTER_X_OUTPUTCOMPARE_X                             TRUE
+#define CHIP_TIMERCOUNTER_X_OUTPUTCOMPARE_X                             true
 #define CHIP_TIMERCOUNTER_X_OUTPUTCOMPARE_X_MODE_BIT_0_REG              REG8(0xXX)
 #define CHIP_TIMERCOUNTER_X_OUTPUTCOMPARE_X_MODE_BIT_1_REG              REG8(0xXX)
 #define CHIP_TIMERCOUNTER_X_OUTPUTCOMPARE_X_MODE_BIT_0_BIT              X
@@ -274,7 +274,7 @@
 
 #define CHIP_USART_COUNT                                                1
 
-#define CHIP_USART_X                                                    TRUE
+#define CHIP_USART_X                                                    true
 
 #define CHIP_USART_X_DATA_REG                                           REG8(0xXX)
 
