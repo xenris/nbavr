@@ -88,66 +88,6 @@ struct UsiN {
         };
     #endif
 
-    // #if DEFINED(USI_N(POLARITY_BIT_0_BIT))
-    //     /// #### enum Polarity
-    //     /// * leadingRisingTrailingFalling
-    //     /// * leadingFallingTrailingRising
-    //     enum class Polarity : uint8_t {
-    //         leadingRisingTrailingFalling = USI_N(POLARITY_LEADING_RISING_TRAILING_FALLING_ID),
-    //         leadingFallingTrailingRising = USI_N(POLARITY_LEADING_FALLING_TRAILING_RISING_ID),
-    //     };
-    // #endif
-
-    // #if DEFINED(USI_N(PHASE_BIT_0_BIT))
-    //     /// #### enum Phase
-    //     /// * leadingSampleTrailingSetup
-    //     /// * leadingSetupTrailingSample
-    //     enum class Phase : uint8_t {
-    //         leadingSampleTrailingSetup = USI_N(PHASE_LEADING_SAMPLE_TRAILING_SETUP_ID),
-    //         leadingSetupTrailingSample = USI_N(PHASE_LEADING_SETUP_TRAILING_SAMPLE_ID),
-    //     };
-    // #endif
-
-    // #if DEFINED(USI_N(CLOCK_BIT_0_BIT))
-    //     /// #### enum Clock
-    //     /// * div2
-    //     /// * div4
-    //     /// * div8
-    //     /// * div16
-    //     /// * div32
-    //     /// * div64
-    //     /// * div128
-    //     enum class Clock : uint8_t {
-    //         #if DEFINED(USI_N(CLOCK_DIV_2_ID))
-    //             div2 = USI_N(CLOCK_DIV_2_ID),
-    //         #endif
-
-    //         #if DEFINED(USI_N(CLOCK_DIV_4_ID))
-    //             div4 = USI_N(CLOCK_DIV_4_ID),
-    //         #endif
-
-    //         #if DEFINED(USI_N(CLOCK_DIV_8_ID))
-    //             div8 = USI_N(CLOCK_DIV_8_ID),
-    //         #endif
-
-    //         #if DEFINED(USI_N(CLOCK_DIV_16_ID))
-    //             div16 = USI_N(CLOCK_DIV_16_ID),
-    //         #endif
-
-    //         #if DEFINED(USI_N(CLOCK_DIV_32_ID))
-    //             div32 = USI_N(CLOCK_DIV_32_ID),
-    //         #endif
-
-    //         #if DEFINED(USI_N(CLOCK_DIV_64_ID))
-    //             div64 = USI_N(CLOCK_DIV_64_ID),
-    //         #endif
-
-    //         #if DEFINED(USI_N(CLOCK_DIV_128_ID))
-    //             div128 = USI_N(CLOCK_DIV_128_ID),
-    //         #endif
-    //     };
-    // #endif
-
     /// #### static constexpr HardwareType getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
