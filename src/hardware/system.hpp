@@ -160,6 +160,53 @@ force_inline auto nonatomic(F f) -> decltype(f()) {
     }
 }
 
+    /// #### void delay<uint32_t ns>()
+    /// Delays the cpu for the given number of nanoseconds.<br>
+    /// Should only be used for very short delays.<br>
+    /// Limited to 2 milliseconds.<br>
+    /// Rounds to the nearest possible delay time. E.g. at 16MHz, delay<50>() will
+    /// delay for 62.5 nanoseconds (1 cpu clock cycle).
+    template <uint32_t cpuFreq, uint32_t ns>
+    force_inline void delay() {
+        static_assert(ns <= 2000000, "Cannot delay for more than 2 milliseconds");
+
+        // Ensure that this delay separates hardware actions, even when 0ns.
+        block();
+
+        const uint64_t clocks = (uint64_t(ns) * cpuFreq + 500000000) / 1000000000;
+        const uint64_t clocksPerLoop = 4;
+
+        // TODO Handle higher cpu frequencies.
+        static_assert(clocks / 4 <= integer_max<uint16_t>::value, "Cannot handle this length of delay at this cpu frequency");
+
+        const uint16_t loops = (clocks <= 0) ? (0) : ((clocks - 1) / clocksPerLoop);
+        const uint16_t nops = (clocks <= 4) ? (clocks) : ((clocks - 1) % clocksPerLoop);
+
+        if constexpr (loops != 0) {
+            const uint16_t c = loops;
+
+            asm volatile (
+                "ldi r30, %0\n"
+                "ldi r31, %1\n"
+                "1: sbiw r30, 1\n"
+                "brne 1b\n"
+                :
+                : "" (uint8_t(c)), "" (uint8_t(c >> 8))
+                : "r30", "r31"
+            );
+        }
+
+        if constexpr (nops == 1) {
+            nop();
+        } else if constexpr (nops == 2) {
+            nop(); nop();
+        } else if constexpr (nops == 3) {
+            nop(); nop(); nop();
+        } else if constexpr (nops == 4) {
+            nop(); nop(); nop(); nop();
+        }
+    }
+
 } // nbos::hw
 
 #endif
