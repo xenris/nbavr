@@ -163,6 +163,13 @@ struct SpiN {
         }
     #endif
 
+    /// #### static void callback(callback_t callback, void\* data)
+    /// Set callback for serial transfer complete interrupt.
+    static force_inline void callback(callback_t callback, void* data) {
+        _SPI_N(Callback) = callback;
+        _SPI_N(CallbackData) = data;
+    }
+
     #if DEFINED(SPI_N(DATA_ORDER_BIT_0_BIT))
         /// #### static void dataOrder(DataOrder d)
         /// Set the data order msb/lsb first
