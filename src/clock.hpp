@@ -33,6 +33,7 @@
 /// 4x longer.
 
 #include "priorityqueue.hpp"
+#include "hardware/system.hpp"
 #include "hardware/hardwaretype.hpp"
 
 namespace nbos {
@@ -263,7 +264,7 @@ public:
     /// delay for 62.5 nanoseconds (1 cpu clock cycle).
     template <uint32_t ns>
     static force_inline void delay() {
-        delay<CpuFreq, ns>();
+        nbos::delay<CpuFreq, ns>();
     }
 
     static void haltCallback(callback_t callback, void* data) {
