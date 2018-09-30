@@ -88,3 +88,9 @@ Set the counter register.
 
 #### static uint8_t counter()
 Get the counter register.
+
+#### static void startConditionCallback(callback_t callback, void\* data)
+Set callback for start condition interrupt.
+
+#### static void counterOverflowCallback(callback_t callback, void\* data)
+Set callback for timer overflow interrupt.

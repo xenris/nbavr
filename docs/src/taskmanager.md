@@ -3,12 +3,12 @@
 ## Example
 
 ```c++
-const uint32_t CpuFreq = 16000000;
+const uint64_t cpuFreq = 16000000;
 
-using LedPin = nbos::PinB5;
-using SystemTimer = nbos::TimerCounter1;
+using LedPin = nbos::hw::PortB::Pin5;
+using SystemTimer = nbos::hw::Timer1;
 
-using Clock = nbos::Clock<SystemTimer, CpuFreq>;
+using Clock = nbos::Clock<SystemTimer, cpuFreq>;
 
 Flash<Clock, LedPin> flash;
 

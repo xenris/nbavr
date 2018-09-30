@@ -1,4 +1,4 @@
-# Util
+# System
 
 #### T bv(T n)
 Equivalent to "1 << n", but works with types bigger than int.
@@ -22,3 +22,11 @@ Globally enable interrupts.
 #### macro block
 Make sure an expression or block of expressions is compiled in the order it is written in.
 i.e. Prevents the compiler from doing memory access optimisations which reorder code.
+
+#### void delay<uint64_t ns>()
+Delays the cpu for the given number of nanoseconds.<br>
+Should only be used for very short delays.<br>
+Limited to 10 milliseconds.<br>
+Rounds to the nearest possible delay time. e.g. at 16MHz, delay<50>() will
+delay for 62.5 nanoseconds (1 cpu clock cycle).<br>
+Is limited further by faster clock speeds. e.g. at 100MHz it will be limited to 2621434ns.

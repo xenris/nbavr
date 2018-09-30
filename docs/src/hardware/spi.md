@@ -60,6 +60,9 @@ Enable the SPI hardware.
 #### static void intEnable(bool b)
 Enable the SPI interrupt.
 
+#### static void callback(callback_t callback, void\* data)
+Set callback for serial transfer complete interrupt.
+
 #### static void dataOrder(DataOrder d)
 Set the data order msb/lsb first
 
