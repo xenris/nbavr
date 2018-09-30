@@ -160,15 +160,16 @@ force_inline auto nonatomic(F f) -> decltype(f()) {
     }
 }
 
-    /// #### void delay<uint32_t ns>()
+    /// #### void delay<uint64_t ns>()
     /// Delays the cpu for the given number of nanoseconds.<br>
     /// Should only be used for very short delays.<br>
-    /// Limited to 2 milliseconds.<br>
-    /// Rounds to the nearest possible delay time. E.g. at 16MHz, delay<50>() will
-    /// delay for 62.5 nanoseconds (1 cpu clock cycle).
-    template <uint32_t cpuFreq, uint32_t ns>
+    /// Limited to 10 milliseconds.<br>
+    /// Rounds to the nearest possible delay time. e.g. at 16MHz, delay<50>() will
+    /// delay for 62.5 nanoseconds (1 cpu clock cycle).<br>
+    /// Is limited further by faster clock speeds. e.g. at 100MHz it will be limited to 2621434ns.
+    template <uint64_t cpuFreq, uint64_t ns>
     force_inline void delay() {
-        static_assert(ns <= 2000000, "Cannot delay for more than 2 milliseconds");
+        static_assert(ns <= 10000000, "Delay limited to 10 milliseconds (10000000 ns)");
 
         // Ensure that this delay separates hardware actions, even when 0ns.
         block();

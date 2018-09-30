@@ -3,25 +3,20 @@
 
 /// # Clock
 
+/// Useful class for managing the passing of time.<br>
+/// Required by TaskManager.
+
 /// ## Example
 
 /// ```c++
-/// const uint32_t CpuFreq = 16000000;
+/// const uint64_t cpuFreq = 16000000;
 
-/// using LedPin = nbos::PinB5;
-/// using SystemTimer = nbos::TimerCounter1;
+/// using SystemTimer = nbos::hw::Timer1;
 
-/// using Clock = nbos::Clock<SystemTimer, CpuFreq>;
+/// using Clock = nbos::Clock<SystemTimer, cpuFreq>;
 
-/// Flash<Clock, LedPin> flash;
-
-/// nbos::Task<Clock>* tasks[] = {&flash};
-
-/// nbos::TaskManager<Clock> tm(tasks);
-
-/// // Within Flash::loop()
-/// uint32_t ticks = Clock::getTicks();
-/// uint32_t millis = Clock::ticksToMillis(ticks);
+/// uint64_t ticks = Clock::getTicks();
+/// uint64_t millis = Clock::ticksToMillis(ticks);
 /// ```
 
 /// Every cpu clock cycle is 1 / freq seconds. (62.5ns at 16MHz)<br>
@@ -41,31 +36,30 @@ namespace nbos {
 struct DelayedCall {
     callback_t callback;
     void* data;
-    uint32_t tick;
+    uint64_t tick;
 
     DelayedCall() {
     }
 
-    DelayedCall(callback_t callback, void* data, uint32_t tick)
+    DelayedCall(callback_t callback, void* data, uint64_t tick)
     : callback(callback), data(data), tick(tick) {
     }
 
     bool operator<(const DelayedCall& other) const {
-        return int32_t(other.tick - tick) > 0;
+        return int64_t(other.tick - tick) > 0;
     }
 };
 
-/// ## class Clock\<class Timer, uint32_t CpuFreq, int MaxCalls = 8\>
-template<class TimerT, uint32_t CpuFreq, int MaxCalls = 8>
+/// ## class Clock\<class Timer, uint64_t cpuFreq, int maxCalls = 8\>
+template<class TimerT, uint64_t cpuFreq, int maxCalls = 8>
 class Clock {
     static_assert(TimerT::getHardwareType() == hw::HardwareType::timer, "Clock requires a Timer");
 
     static constexpr bool EightBitCounter = sizeof(typename TimerT::type) == 1;
     static constexpr int32_t Divisor = EightBitCounter ? 256 : 64;
 
-    uint16_t _tocks = 0;
-    typename conditional<EightBitCounter, uint8_t, nulltype>::type _ticksHigh = 0;
-    PriorityQueue<DelayedCall, MaxCalls> _calls;
+    uint64_t _ticks = 0;
+    PriorityQueue<DelayedCall, maxCalls> _calls;
 
     Clock() {
         atomic([]() {
@@ -86,135 +80,78 @@ class Clock {
 
 public:
 
-    static const uint32_t freq = CpuFreq;
+    static constexpr uint64_t freq = cpuFreq;
     using Timer = TimerT;
 
     static void init() {
         getInstance();
     }
 
-    /// #### static constexpr uint32_t millisToTicks(uint32_t ms)
+    /// #### static constexpr uint64_t millisToTicks(uint64_t ms)
     /// Convert milliseconds to ticks.
-    static constexpr uint32_t millisToTicks(uint32_t ms) {
-        return (float(ms) * (CpuFreq / 1000) / Divisor) + 0.5;
+    static constexpr uint64_t millisToTicks(uint64_t ms) {
+        return (float(ms) * (cpuFreq / 1000) / Divisor) + 0.5;
     }
 
-    /// #### static constexpr uint32_t microsToTicks(uint32_t us)
+    /// #### static constexpr uint64_t microsToTicks(uint64_t us)
     /// Convert microseconds to ticks.
-    static constexpr uint32_t microsToTicks(uint32_t us) {
-        return ((float(us) / 1000) * (CpuFreq / 1000) / Divisor) + 0.5;
+    static constexpr uint64_t microsToTicks(uint64_t us) {
+        return ((float(us) / 1000) * (cpuFreq / 1000) / Divisor) + 0.5;
     }
 
-    /// #### static constexpr uint32_t ticksToMillis(uint32_t ticks)
+    /// #### static constexpr uint64_t ticksToMillis(uint64_t ticks)
     /// Convert ticks to milliseconds.
-    static constexpr uint32_t ticksToMillis(uint32_t ticks) {
-        return (float(ticks) * 1000 * Divisor / CpuFreq) + 0.5;
+    static constexpr uint64_t ticksToMillis(uint64_t ticks) {
+        return (float(ticks) * 1000 * Divisor / cpuFreq) + 0.5;
     }
 
-    /// #### static constexpr uint32_t ticksToMicros(uint32_t ticks)
+    /// #### static constexpr uint64_t ticksToMicros(uint64_t ticks)
     /// Convert ticks to microseconds.
-    static constexpr uint32_t ticksToMicros(uint32_t ticks) {
-        return (float(ticks) * 1000 * Divisor / (CpuFreq / 1000)) + 0.5;
+    static constexpr uint64_t ticksToMicros(uint64_t ticks) {
+        return (float(ticks) * 1000 * Divisor / (cpuFreq / 1000)) + 0.5;
     }
 
-    /// #### static uint16_t getTicks16()
-    /// Gets the current value of the 16 bit tick counter.<br>
-    /// Wraps every 2^16 ticks. (262.144ms at 16MHz)
-    static force_inline uint16_t getTicks16() {
-        if constexpr (EightBitCounter) {
-            return atomic([&]() {
-                uint8_t low = TimerT::counter();
-                uint8_t high = getInstance()._ticksHigh;
-
-                if(TimerT::overflowIntFlag()) {
-                    // If it has overflowed then there is a possibility that
-                    // the numbers are not synchronised.
-                    low = TimerT::counter();
-                    high++;
-                }
-
-                return (uint16_t(high) << 8) | low;
-            });
-        } else {
-            return TimerT::counter();
-        }
-    }
-
-    /// #### static uint32_t getTicks()
+    /// #### static uint64_t getTicks()
     /// Gets the current value of the 32 bit tick counter.<br>
     /// Wraps every 2^32 ticks. (4.77 hours at 16Mhz)
-    static uint32_t getTicks() {
-        return atomic([&]() {
+    static uint64_t getTicks() {
+        return atomic([]() {
             return getTicks_();
         });
     }
 
-    /// #### static uint32_t getTicks_()
-    /// Non-atomic version of getTicks().
-    static uint32_t getTicks_() {
-        auto& self = getInstance();
+    /// #### static uint64_t getTicks_()
+    /// Non-atomic version of getTicks().<br>
+    /// Only use this when the global interrupt flag is clear, such
+    /// as during hardware interrupts.
+    static uint64_t getTicks_() {
+        const auto& self = getInstance();
 
-        if constexpr (EightBitCounter) {
-            uint8_t low = TimerT::counter();
-            uint8_t mid = self._ticksHigh;
-            uint16_t high = self._tocks;
+        uint64_t ticks = self._ticks;
+        auto counter = TimerT::counter();
 
-            if(TimerT::overflowIntFlag()) {
-                // If it has overflowed then there is a possibility that
-                // the numbers are not synchronised.
-                low = TimerT::counter();
-                mid++;
-
-                if(mid == 0) {
-                    high++;
-                }
-            }
-
-            return (uint32_t(high) << 16) | (uint32_t(mid) << 8) | low;
-        } else {
-            uint16_t low = TimerT::counter();
-            uint16_t high = self._tocks;
-
-            if(TimerT::overflowIntFlag()) {
-                // If it has overflowed then there is a possibility that
-                // the numbers are not synchronised.
-                low = TimerT::counter();
-                high++;
-            }
-
-            return (uint32_t(high) << 16) | low;
+        if(TimerT::overflowIntFlag()) {
+            ticks += bv<uint64_t>(sizeof(typename TimerT::type) * 8);
+            counter = TimerT::counter();
         }
+
+        return ticks | counter;
     }
 
-    /// #### static uint16_t getTocks()
-    /// Gets the current value of the 16 bit tock counter.<br>
-    /// Wraps every 2^16 tocks. (4.77 hours at 16Mhz)
-    static force_inline uint16_t getTocks() {
-        return atomic([&]() {
-            return getTocks_();
-        });
-    }
-
-    /// #### static uint16_t getTocks_()
-    /// Non-atomic version of getTocks().
-    static force_inline uint16_t getTocks_() {
-        return getInstance()._tocks;
-    }
-
-    /// #### static bool delayedCall(callback_t callback, void* data, int32_t delay)
+    /// #### static bool delayedCall(callback_t callback, void* data, uint64_t delay)
     /// Add a callback to call after delay ticks.<br>
     /// Returns true if successful added.
-    static bool delayedCall(callback_t callback, void* data, int32_t delay) {
+    static bool delayedCall(callback_t callback, void* data, uint64_t delay) {
         return atomic([&]() {
             return delayedCall_(callback, data, delay);
         });
     }
 
-    /// #### static bool delayedCall_(callback_t callback, void* data, int32_t delay)
+    /// #### static bool delayedCall_(callback_t callback, void* data, uint64_t delay)
     /// Non-atomic version of delayedCall().
     /// Returns true if successful added.
     // TODO This function is quite time consuming, ~5 ticks. Need to make it faster.
-    static bool delayedCall_(callback_t callback, void* data, int32_t delay) {
+    static bool delayedCall_(callback_t callback, void* data, uint64_t delay) {
         if(callback == nullptr) {
             return false;
         }
@@ -224,18 +161,18 @@ public:
 
         bool success;
 
-        delay = max(delay, int32_t(0));
+        delay = max(delay, uint64_t(0));
 
-        uint32_t now = getTicks();
+        uint64_t now = getTicks_();
 
-        DelayedCall dc(callback, data, now + uint32_t(delay));
+        DelayedCall dc(callback, data, now + uint64_t(delay));
 
         success = calls.push_(dc);
 
         if(success) {
             calls.peek_(&dc);
 
-            int32_t delta = dc.tick - now;
+            int64_t delta = dc.tick - now;
 
             // FIXME This could cancel potential calls.
             TimerT::OutputA::intFlagClear();
@@ -256,15 +193,15 @@ public:
         return success;
     }
 
-    /// #### static void delay<uint32_t ns>()
+    /// #### static void delay<uint64_t ns>()
     /// Delays the cpu for the given number of nanoseconds.<br>
     /// Should only be used for very short delays.<br>
     /// Limited to 2 milliseconds.<br>
     /// Rounds to the nearest possible delay. E.g. at 16MHz, delay<50>() will
     /// delay for 62.5 nanoseconds (1 cpu clock cycle).
-    template <uint32_t ns>
+    template <uint64_t ns>
     static force_inline void delay() {
-        nbos::delay<CpuFreq, ns>();
+        nbos::delay<cpuFreq, ns>();
     }
 
     static void haltCallback(callback_t callback, void* data) {
@@ -294,17 +231,17 @@ private:
         auto& self = getInstance();
         auto& calls = self._calls;
 
-        DelayedCall dc;
+        DelayedCall delayedCall;
 
-        if(calls.peek_(&dc)) {
+        if(calls.peek_(&delayedCall)) {
             loop: ;
 
-            dc.callback(dc.data);
+            delayedCall.callback(delayedCall.data);
 
             calls.pop_();
 
-            if(calls.peek_(&dc)) {
-                int32_t delta = dc.tick - getTicks();
+            if(calls.peek_(&delayedCall)) {
+                int64_t delta = delayedCall.tick - getTicks();
 
                 // FIXME This could cancel potential calls.
                 TimerT::OutputA::intFlagClear();
@@ -312,7 +249,7 @@ private:
                 if(delta <= 2) {
                     goto loop;
                 } else if(delta < (EightBitCounter ? 255 : 65536)) {
-                    TimerT::OutputA::value(dc.tick);
+                    TimerT::OutputA::value(delayedCall.tick);
                     TimerT::OutputA::intEnable(true);
                 } else {
                     TimerT::OutputA::intEnable(false);
@@ -329,21 +266,13 @@ private:
         auto& self = getInstance();
         auto& calls = self._calls;
 
-        if constexpr (EightBitCounter) {
-            self._ticksHigh++;
-
-            if(self._ticksHigh == 0) {
-                self._tocks++;
-            }
-        } else {
-            self._tocks++;
-        }
+        self._ticks += bv<uint64_t>(sizeof(typename TimerT::type) * 8);
 
         if(!TimerT::OutputA::intEnabled()) {
-            DelayedCall dc;
+            DelayedCall delayedCall;
 
-            if(calls.peek_(&dc)) {
-                int32_t delta = dc.tick - getTicks();
+            if(calls.peek_(&delayedCall)) {
+                int64_t delta = delayedCall.tick - getTicks();
 
                 // FIXME This could cancel potential calls.
                 TimerT::OutputA::intFlagClear();
@@ -351,7 +280,7 @@ private:
                 if(delta <= 2) {
                     handleDelayedCall();
                 } else if(delta < (EightBitCounter ? 255 : 65536)) {
-                    TimerT::OutputA::value(dc.tick);
+                    TimerT::OutputA::value(delayedCall.tick);
                     TimerT::OutputA::intEnable(true);
                 }
             } else {

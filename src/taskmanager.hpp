@@ -6,12 +6,12 @@
 /// ## Example
 
 /// ```c++
-/// const uint32_t CpuFreq = 16000000;
+/// const uint64_t cpuFreq = 16000000;
 
-/// using LedPin = nbos::PinB5;
-/// using SystemTimer = nbos::TimerCounter1;
+/// using LedPin = nbos::hw::PortB::Pin5;
+/// using SystemTimer = nbos::hw::Timer1;
 
-/// using Clock = nbos::Clock<SystemTimer, CpuFreq>;
+/// using Clock = nbos::Clock<SystemTimer, cpuFreq>;
 
 /// Flash<Clock, LedPin> flash;
 
@@ -32,8 +32,8 @@ template <class Clock>
 class TaskManager {
     typedef Task<Clock> TaskT;
 
-    static constexpr uint32_t TaskTimeout = Clock::millisToTicks(4);
-    static constexpr uint32_t TaskTimeoutHalted = Clock::microsToTicks(100);
+    static constexpr typename Clock::Timer::type taskTimeout = Clock::millisToTicks(4);
+    static constexpr typename Clock::Timer::type taskTimeoutHalted = Clock::microsToTicks(100);
 
     TaskT** tasks;
     const uint8_t numTasks;
@@ -81,13 +81,13 @@ private:
 
         if(task.state == TaskT::State::delay) {
             // Check if it is time for this task to wake up.
-            if(int32_t(Clock::getTicks() - task.wakeTick) >= 0) {
+            if(int64_t(Clock::getTicks() - task.wakeTick) >= 0) {
                 task.state = TaskT::State::awake;
             }
         }
 
         if(task.state == TaskT::State::awake) {
-            Clock::haltStart(TaskTimeout);
+            Clock::haltStart(taskTimeout);
 
             task.loop();
 
@@ -107,7 +107,7 @@ private:
 
         task.state = TaskT::State::awake;
 
-        Clock::haltStart(TaskTimeoutHalted);
+        Clock::haltStart(taskTimeoutHalted);
     }
 
     static void haltCallback(void* data) {
