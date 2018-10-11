@@ -1,12 +1,11 @@
 # Algorithm
 
-#### T\* reverse(T\* array, size_t length)
-Reverse an array.<br>
-Returns the given array.
+#### void reverse<T\>(T\* array, int length)
 
-#### T\* copy(T\* src, T\* dst, size_t length)
-Copy an array, from src to dst.<br>
-Returns the dst array.
+#### void reverse<T\>(const T\* from, T\* to, int length)
 
-#### void swap(T& a, T& b)
-Swap two variables.
+#### void copy<T\>(const T\* from, T\* to, int length)
+
+#### void swap<T\>(T& a, T& b)
+
+#### void quicksort(T\* array, int size)

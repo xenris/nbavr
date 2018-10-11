@@ -1,28 +1,56 @@
 # Atomic
-Used to access variables atomically.<br>
 
-## Example
+Used to access variables atomically.
+
 ```c++
 Atomic<int32_t> counter = 0;
 
-void loop {
-    int32_t c = counter;
-    int32_t c = counter.getSet(0);
-    counter += 2;
-    if(counter == 5) {
+int32_t c = counter;
+counter += 2;
+bool b = (counter == 5);
+counter->nonatomic()++;
+
+struct S {
+    int f(int n)
+        return n + 1;
     }
 }
 
-// Interrupt.
-static void callback(void* data) {
-    counter.nonatomic()++;
-}
+Atomic<S> s;
+
+int i = s.call(&S::f, 100);
 ```
 
-## class Atomic<class T>
+## class Atomic<class Type\>
 
-#### T getSet(T t)
-Sets the value to t, and returns its previous value.
+#### Atomic()
 
-#### T& nonatomic()
+#### Atomic(Type t)
+
+#### Atomic<Type>& operator=(Type t)
+
+#### operator Type()
+Returns a copy of the value.
+
+#### Type getSet(Type t)
+Sets the value to t, and returns the previous value.
+
+#### Atomic<Type\>& operator+=(Type t)
+
+#### Atomic<Type\>& operator-=(Type t)
+
+#### Atomic<Type\>& operator*=(Type t)
+
+#### Atomic<Type\>& operator/=(Type t)
+
+#### Atomic<Type\>& operator++()
+
+#### Atomic<Type\>& operator--()
+
+#### Atomic<Type\>& operator<<<U\>(U u)
+
+#### auto call(F f, ...)
+Call member function f with arguments atomically.
+
+#### Type& nonatomic()
 Non-atomic access to the value.

@@ -1,40 +1,58 @@
 # Queue
 
-Queues are first in first out containers.
+```c++
+nbos::Queue<int, 6> queue;
 
-All functions are atomic (i.e. interrupt safe). Equivalient non-atomic functions
-have \_ after the function name, e.g. queue.push\_(t).
+queue.push(3);
+queue.push(7);
+queue.push(1);
+queue.push(2);
 
-## class Queue\<class Type, int Size\>
+int s = queue.size(); // s = 4
 
-#### size_t
-The smallest signed integer type which can represent the queue's size.
+int a = 0;
 
-#### type
-The type of the Queue.
+queue.pop(&a); // a = 3
+queue.pop(&a); // a = 7
 
-#### bool push(T t)
-Add a value to the queue.<br>
+s = queue.size(); // s = 2
+
+nbos::Queue<int>* pointer = &queue;
+
+pointer->push(4);
+
+s = queue.size(); // s = 3
+```
+
+## class Queue<class Type, int bufferSize\>
+
+#### Queue()
+Construct a queue with space on the stack for the contents.
+
+## class Queue<class Type\>
+
+#### Queue(Type\* buffer, int bufferSize)
+Construct a queue with the given buffer.
+
+#### bool push(Type t)
 Returns true on success.
 
-#### bool pop(T\* t)
-Get the next value from the queue.<br>
+#### bool pop(Type\* t)
 Returns true on success.
 
-#### bool peek(T\* t)
-Get the next value from the queue, but don't remove it.<br>
+#### bool peek(Type\* t)
 Returns true on success.
 
 #### void clear()
 Remove all elements from the queue.
 
-#### size_t size()
+#### int size()
 Get the number of elements currently in the queue.
 
-#### size_t free()
+#### int free()
 Get the amount of free space in the queue.
 
-### static constexpr size_t capacity()
+### int capacity()
 Get the total capacity of the queue.
 
 #### bool empty()
@@ -43,8 +61,8 @@ Returns true if the queue is empty.
 #### bool full()
 Returns true if the queue is full.
 
-#### void setNotify(callback_t callback, void\* data)
+#### void notify(callback_t callback, void\* data)
 Set the callback function and data for queue notifications.
 
 #### void notify()
-Call the notification callback.
+Call the callback function previously given.

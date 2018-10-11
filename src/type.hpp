@@ -25,9 +25,6 @@ using uint32_t = conditional<sizeof(unsigned int) == 4, unsigned int, unsigned l
 using int64_t = signed long long;
 using uint64_t = unsigned long long;
 
-using size_t = unsigned int;
-using ssize_t = signed int;
-
 #endif
 
 static_assert(sizeof(int8_t) == 1, "int8_t is not the right size");
@@ -385,23 +382,23 @@ template<>
 struct integer_min<uint64_t> : integral_constant<uint64_t, 0x0000000000000000> {};
 
 template <class T>
-class optional {
-    bool hasValue;
-    T value;
+class Optional {
+    const bool hasValue;
+    const T value;
 
 public:
 
-    optional() : hasValue(false) {
+    Optional() : hasValue(false) {
     }
 
-    optional(T v) : hasValue(true), value(v) {
+    Optional(T v) : hasValue(true), value(v) {
     }
 
     operator bool() const {
         return hasValue;
     }
 
-    T& operator *() {
+    T operator *() const {
         return value;
     }
 };

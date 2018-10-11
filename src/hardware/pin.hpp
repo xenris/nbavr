@@ -6,7 +6,13 @@
 
 /// ```c++
 /// PortB::Pin5::mode(Pin::Mode::output);
+///
 /// PortB::Pin5::output(Pin::Value::high);
+///
+/// while(true) {
+///     PortB::Pin5::toggle();
+///     nbos::block();
+/// }
 /// ```
 
 #include "hardware/chip.hpp"
@@ -20,11 +26,31 @@
 
 namespace nbos::hw {
 
+/// ## class Pin
 struct Pin {
     Pin() = delete;
     Pin& operator=(const Pin&) = delete;
     Pin(const Pin&) = delete;
 
+    /// #### enum Mode
+    /// * input
+    /// * inputPullup
+    /// * output
+    /// * inputAnalog
+    /// * inputFloating
+    /// * inputPullUpDown
+    /// * outputGeneralPushPull10MHz
+    /// * outputGeneralOpenDrain10MHz
+    /// * outputAlternatePushPull10MHz
+    /// * outputAlternateOpenDrain10MHz
+    /// * outputGeneralPushPull2MHz
+    /// * outputGeneralOpenDrain2MHz
+    /// * outputAlternatePushPull2MHz
+    /// * outputAlternateOpenDrain2MHz
+    /// * outputGeneralPushPull50MHz
+    /// * outputGeneralOpenDrain50MHz
+    /// * outputAlternatePushPull50MHz
+    /// * outputAlternateOpenDrain50MHz
     enum class Mode : uint8_t {
         #if DEFINED(MODE(INPUT))
             input = MODE(INPUT),
@@ -99,6 +125,9 @@ struct Pin {
         #endif
     };
 
+    /// #### enum Value
+    /// * low
+    /// * high
     enum class Value : uint8_t {
         low = 0,
         high = 1,
@@ -125,20 +154,18 @@ struct Pin {
 
 //------------------------------------------------------------------
 
-/// ## Class PinN
+/// ## Class PinN : Pin
 struct PinN : Pin {
     PinN() = delete;
     PinN& operator=(const PinN&) = delete;
     PinN(const PinN&) = delete;
 
     /// #### static constexpr [HardwareType](../hardware.md) getHardwareType()
-    /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
         return HardwareType::pin;
     }
 
     /// #### static void mode(Mode m)
-    /// Set the pin mode. (e.g. input/output)
     static force_inline void mode(Mode m) {
         setBit_(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT), uint8_t(m) & 0x01);
 
@@ -156,8 +183,6 @@ struct PinN : Pin {
     }
 
     /// #### static Mode mode()
-    /// Get the pin mode. (e.g. input/output)
-    /// paragraph
     static force_inline Mode mode() {
         uint8_t m = 0;
 
@@ -181,26 +206,22 @@ struct PinN : Pin {
     }
 
     /// #### static void output(Value v)
-    /// Set the output state. (High/Low)
     static force_inline void output(Value v) {
         setBit_(REG(PIN_N(OUTPUT_BIT_0_REG)), PIN_N(OUTPUT_BIT_0_BIT), v == Value::high);
     }
 
     /// #### static Value output()
-    /// Get the output value.
     static force_inline Value output() {
         return getBit(REG(PIN_N(OUTPUT_BIT_0_REG)), PIN_N(OUTPUT_BIT_0_BIT)) ? Value::high : Value::low;
     }
 
     /// #### static Value input()
-    /// Get the input value.
     static force_inline Value input() {
         return getBit(REG(PIN_N(INPUT_BIT_0_REG)), PIN_N(INPUT_BIT_0_BIT)) ? Value::high : Value::low;
     }
 
     #if DEFINED(PIN_N(TOGGLE_BIT_0_BIT))
         /// #### static void toggle()
-        /// Toggle the output state. (High/Low)
         static force_inline void toggle() {
             setBit_(REG(PIN_N(TOGGLE_BIT_0_REG)), PIN_N(TOGGLE_BIT_0_BIT), true);
         }

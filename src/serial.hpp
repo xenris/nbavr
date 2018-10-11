@@ -1,51 +1,68 @@
+/// # Serial
+
+/// ```c++
+/// const uint64_t cpuFreq = 16000000;
+/// const uint32_t baud = 115200;
+///
+/// nbos::Queue<char, 40> coutQueue;
+/// nbos::Atomic<nbos::Queue<char>> cout(coutQueue);
+///
+/// nbos::Serial<nbos::hw::Usart0>::init(cpuFreq, baud, &cout.nonatomic());
+///
+/// cout << "5 * 3 = " << (5 * 3) << '\n';
+/// ```
+
 #ifndef NBOS_SERIAL_HPP
 #define NBOS_SERIAL_HPP
 
 #include "type.hpp"
+#include "queue.hpp"
+#include "atomic.hpp"
+#include "hardware/hardwaretype.hpp"
 
 namespace nbos {
 
-template <class Usart, class cout_t, class cin_t = nulltype>
+/// ## class Serial<class Usart>
+template <class Usart>
 struct Serial {
-    static inline void init(uint32_t CpuFreq, uint32_t baud, cout_t* out, cin_t* in = nullptr) {
+    /// #### static void init(uint64_t cpuFreq, uint32_t baud, Queue<char>* out, Queue<char>* in);
+    static inline void init(uint64_t cpuFreq, uint32_t baud, Queue<char>* out, Queue<char>* in = nullptr) {
         static_assert(Usart::getHardwareType() == hw::HardwareType::usart, "Serial requires a Usart");
 
-        // Mitigate "set but not used" error.
-        (void)in;
+        const uint16_t ubrr1x = cpuFreq / (16 * float(baud)) - 1 + 0.5;
+        const uint16_t ubrr2x = cpuFreq / (8 * float(baud)) - 1 + 0.5;
 
-        if(out == nullptr) {
-            return;
-        }
+        const uint32_t baudTrue1x = cpuFreq / (16 * (ubrr1x + 1));
+        const uint32_t baudTrue2x = cpuFreq / (8 * (ubrr1x + 1));
 
-        const uint16_t ubrr = CpuFreq / (16 * float(baud)) - 1 + 0.5;
+        const float ubrr1xError = (float(baudTrue1x) / baud) - 1;
+        const float ubrr2xError = (float(baudTrue2x) / baud) - 1;
 
-        out->setNotify(outNotify, nullptr);
+        const bool use2x = ubrr2xError < ubrr1xError;
 
         atomic([&]() {
-            Usart::transmitterEnable(true);
-            Usart::baud(ubrr);
-            Usart::use2X(false);
+            out->notify(outNotify, nullptr);
 
-            if constexpr (!is_same<cin_t, nulltype>::value) {
-                if(in != nullptr) {
-                    Usart::receiverEnable(true);
-                    Usart::rxCompleteIntEnable(true);
-                    Usart::rxCompleteCallback(usartRxComplete, in);
-                }
-            }
+            Usart::baud(use2x ? ubrr2x : ubrr1x);
+            Usart::use2X(use2x);
 
-            Usart::dataRegisterEmptyCallback(usartDataRegisterEmpty, out);
+            Usart::transmitterEnable(out != nullptr);
+            Usart::txCompleteIntEnable(false);
+            Usart::dataRegisterEmptyIntEnable(false);
+            Usart::dataRegisterEmptyCallback((callback_t)usartDataRegisterEmpty, out);
+
+            Usart::receiverEnable(in != nullptr);
+            Usart::rxCompleteIntEnable(in != nullptr);
+            Usart::rxCompleteCallback((callback_t)usartRxComplete, in);
         });
     }
 
 private:
-    static void usartRxComplete(void* data) {
-        if constexpr (!is_same<cin_t, nulltype>::value) {
-            cin_t* in = (cin_t*)(data);
+    static void usartRxComplete(Queue<char>* in) {
+        char c = Usart::pop();
 
-            char c = Usart::pop();
-
-            in->push_(c);
+        if(in != nullptr) {
+            in->push(c);
 
             if(c == '\n') {
                 in->notify();
@@ -53,12 +70,10 @@ private:
         }
     }
 
-    static void usartDataRegisterEmpty(void* data) {
-        cout_t* out = (cout_t*)(data);
-
+    static void usartDataRegisterEmpty(Queue<char>* out) {
         char d;
 
-        if(out->pop_(&d)) {
+        if((out != nullptr) && out->pop(&d)) {
             Usart::push(d);
         } else {
             Usart::dataRegisterEmptyIntEnable(false);

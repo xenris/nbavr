@@ -1,9 +1,4 @@
-#ifndef NBOS_TASKMANAGER_HPP
-#define NBOS_TASKMANAGER_HPP
-
 /// # TaskManager
-
-/// ## Example
 
 /// ```c++
 /// const uint64_t cpuFreq = 16000000;
@@ -19,6 +14,9 @@
 
 /// nbos::TaskManager<Clock> tm(tasks);
 /// ```
+
+#ifndef NBOS_TASKMANAGER_HPP
+#define NBOS_TASKMANAGER_HPP
 
 #include "clock.hpp"
 #include "macros.hpp"

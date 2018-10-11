@@ -70,7 +70,7 @@ template <class T>
 inline int8_t itoa(char* buffer, T n, int8_t base) {
     const int8_t l = _itoa(buffer, n, base);
 
-    reverse(buffer, l);
+    reverse(buffer, buffer, l);
 
     return l;
 }

@@ -1,10 +1,12 @@
-/// # SPI
+/// # Universal Serial Interface
 
-/// N is the USI id (0, 1, 2, etc).
+/// ```c++
+/// // TODO
+/// ```
 
 #ifndef NBOS_USI_HPP
 
-#include "callbacks.hpp"
+#include "isr.hpp"
 #include "chip.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
@@ -12,27 +14,18 @@
 #include "system.hpp"
 #include "port.hpp"
 
-/// #### macro INCLUDE_USI_CALLBACK(N, X)
-/// Include this to use Usi callbacks.<br>
-/// N is the Usi id, X is one of START or OVERFLOW.
-#define INCLUDE_USI_CALLBACK(N, X) MAKE_CALLBACK(USI, N, X)
-
 #include "loopi"
 
 #ifdef _I
     #define N _I
     #define UsiN CAT(Usi,N)
     #define USI_N(A) CAT(CHIP_USI_, N, _, A)
-    #define _USI_N(A) UNDERLINE(USI, N, A)
 
     #if CAT(CHIP_USI_, N)
 
 //------------------------------------------------------------------
 
 namespace nbos::hw {
-
-MAKE_CALLBACK_HEADER(USI, N, START);
-MAKE_CALLBACK_HEADER(USI, N, OVERFLOW);
 
 /// ## class UsiN
 struct UsiN {
@@ -41,23 +34,18 @@ struct UsiN {
     UsiN(const UsiN&) = delete;
 
     /// #### type PinDo
-    /// The DO IO pin.
     using PinDo = USI_N(PIN_DO);
 
     /// #### type PinDi
-    /// The DI IO pin.
     using PinDi = USI_N(PIN_DI);
 
     /// #### type PinSda
-    /// The SDA IO pin.
     using PinSda = USI_N(PIN_SDA);
 
     /// #### type PinScl
-    /// The SCL IO pin.
     using PinScl = USI_N(PIN_SCL);
 
     /// #### type PinUsck
-    /// The USCK IO pin.
     using PinUsck = USI_N(PIN_USCK);
 
     #if DEFINED(USI_N(WIRE_MODE_BIT_0_BIT))
@@ -88,15 +76,13 @@ struct UsiN {
         };
     #endif
 
-    /// #### static constexpr HardwareType getHardwareType()
-    /// Get the type of hardware that this class represents.
+    /// #### static HardwareType getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::usi;
     }
 
     #if REG_DEFINED(USI_N(DATA_REG))
         /// #### static void data(uint8_t d)
-        /// Put value d into the data register.
         static force_inline void data(uint8_t d) {
             *REG(USI_N(DATA_REG)) = d;
         }
@@ -104,31 +90,29 @@ struct UsiN {
 
     #if REG_DEFINED(USI_N(BUFFER_REG))
         /// #### static uint8_t data()
-        /// Get value from the data register.
         static force_inline uint8_t data() {
             return *REG(USI_N(BUFFER_REG));
         }
     #endif
 
     #if DEFINED(USI_N(START_CONDITION_INT_ENABLE_BIT_0_BIT))
-        /// #### static void startConditionIntEnable(bool b)
+        /// #### static void startIntEnable(bool b)
         /// Enable the start condition interrupt.
-        static force_inline void startConditionIntEnable(bool b) {
+        static force_inline void startIntEnable(bool b) {
             setBit_(REG(USI_N(START_CONDITION_INT_ENABLE_BIT_0_REG)), USI_N(START_CONDITION_INT_ENABLE_BIT_0_BIT), b);
         }
     #endif
 
     #if DEFINED(USI_N(COUNTER_OVERFLOW_INT_ENABLE_BIT_0_BIT))
-        /// #### static void counterOverflowIntEnable(bool b)
+        /// #### static void overflowIntEnable(bool b)
         /// Enable the counter overflow interrupt.
-        static force_inline void counterOverflowIntEnable(bool b) {
+        static force_inline void overflowIntEnable(bool b) {
             setBit_(REG(USI_N(COUNTER_OVERFLOW_INT_ENABLE_BIT_0_REG)), USI_N(COUNTER_OVERFLOW_INT_ENABLE_BIT_0_BIT), b);
         }
     #endif
 
     #if DEFINED(USI_N(WIRE_MODE_BIT_0_BIT))
         /// #### static void wireMode(WireMode m)
-        /// Set the USI interface mode.
         static force_inline void wireMode(WireMode m) {
             setBit_(REG(USI_N(WIRE_MODE_BIT_0_REG)), USI_N(WIRE_MODE_BIT_0_BIT), uint8_t(m) & 0x01);
 
@@ -140,7 +124,6 @@ struct UsiN {
 
     #if DEFINED(USI_N(CLOCK_SELECT_BIT_0_BIT))
         /// #### static void clock(Clock c)
-        /// Set the clock source.
         static force_inline void clock(Clock c) {
             setBit_(REG(USI_N(CLOCK_SELECT_BIT_0_REG)), USI_N(CLOCK_SELECT_BIT_0_BIT), uint8_t(c) & 0x01);
 
@@ -167,43 +150,43 @@ struct UsiN {
     #endif
 
     #if DEFINED(USI_N(START_CONDITION_INT_FLAG_BIT_0_BIT))
-        /// #### static void startConditionIntFlag()
+        /// #### static void startIntFlag()
         /// Get the start condition interrupt flag's state.
-        static force_inline bool startConditionIntFlag() {
+        static force_inline bool startIntFlag() {
             return getBit(REG(USI_N(START_CONDITION_INT_FLAG_BIT_0_REG)), USI_N(START_CONDITION_INT_FLAG_BIT_0_BIT));
         }
 
-        /// #### static void startConditionIntFlagClear()
+        /// #### static void startIntFlagClear()
         /// Clear the start condition interrupt flag.
-        static force_inline void startConditionIntFlagClear() {
+        static force_inline void startIntFlagClear() {
             setBit_(REG(USI_N(START_CONDITION_INT_FLAG_BIT_0_REG)), USI_N(START_CONDITION_INT_FLAG_BIT_0_BIT), true);
         }
     #endif
 
     #if DEFINED(USI_N(STOP_CONDITION_INT_FLAG_BIT_0_BIT))
-        /// #### static void stopConditionIntFlag()
+        /// #### static void stopIntFlag()
         /// Get the stop condition interrupt flag's state.
-        static force_inline bool stopConditionIntFlag() {
+        static force_inline bool stopIntFlag() {
             return getBit(REG(USI_N(STOP_CONDITION_INT_FLAG_BIT_0_REG)), USI_N(STOP_CONDITION_INT_FLAG_BIT_0_BIT));
         }
 
-        /// #### static void stopConditionIntFlagClear()
+        /// #### static void stopIntFlagClear()
         /// Clear the stop condition interrupt flag.
-        static force_inline void stopConditionIntFlagClear() {
+        static force_inline void stopIntFlagClear() {
             setBit_(REG(USI_N(STOP_CONDITION_INT_FLAG_BIT_0_REG)), USI_N(STOP_CONDITION_INT_FLAG_BIT_0_BIT), true);
         }
     #endif
 
     #if DEFINED(USI_N(COUNTER_OVERFLOW_INT_FLAG_BIT_0_BIT))
-        /// #### static bool counterOverflowIntFlag()
+        /// #### static bool overflowIntFlag()
         /// Get the counter overflow interrupt flag's state.
-        static force_inline bool counterOverflowIntFlag() {
+        static force_inline bool overflowIntFlag() {
             return getBit(REG(USI_N(COUNTER_OVERFLOW_INT_FLAG_BIT_0_REG)), USI_N(COUNTER_OVERFLOW_INT_FLAG_BIT_0_BIT));
         }
 
-        /// #### static void counterOverflowIntFlagClear()
+        /// #### static void overflowIntFlagClear()
         /// Clear the counter overflow interrupt flag.
-        static force_inline void counterOverflowIntFlagClear() {
+        static force_inline void overflowIntFlagClear() {
             setBit_(REG(USI_N(COUNTER_OVERFLOW_INT_FLAG_BIT_0_REG)), USI_N(COUNTER_OVERFLOW_INT_FLAG_BIT_0_BIT), true);
         }
     #endif
@@ -218,7 +201,6 @@ struct UsiN {
 
     #if DEFINED(USI_N(COUNTER_BIT_0_BIT))
         /// #### static void counter(uint8_t c)
-        /// Set the counter register.
         static force_inline void counter(uint8_t c) {
             setBit_(REG(USI_N(COUNTER_BIT_0_REG)), USI_N(COUNTER_BIT_0_BIT), c & 0x01);
             setBit_(REG(USI_N(COUNTER_BIT_1_REG)), USI_N(COUNTER_BIT_1_BIT), c & 0x02);
@@ -227,7 +209,6 @@ struct UsiN {
         }
 
         /// #### static uint8_t counter()
-        /// Get the counter register.
         static force_inline uint8_t counter() {
             uint8_t c = 0;
 
@@ -240,20 +221,46 @@ struct UsiN {
         }
     #endif
 
-    /// #### static void startConditionCallback(callback_t callback, void\* data)
+    /// #### static void startCallback(callback_t callback, void\* data)
     /// Set callback for start condition interrupt.
-    static force_inline void startConditionCallback(callback_t callback, void* data) {
-        _USI_N(START_Callback) = callback;
-        _USI_N(START_CallbackData) = data;
+    static force_inline void startCallback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 
-    /// #### static void counterOverflowCallback(callback_t callback, void\* data)
+    /// #### static void overflowCallback(callback_t callback, void\* data)
     /// Set callback for timer overflow interrupt.
-    static force_inline void counterOverflowCallback(callback_t callback, void* data) {
-        _USI_N(OVERFLOW_Callback) = callback;
-        _USI_N(OVERFLOW_CallbackData) = data;
+    static force_inline void overflowCallback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 };
+
+ISR(USI_N(START_INT_VECTOR)) {
+    UsiN::startCallback();
+}
+
+ISR(USI_N(OVERFLOW_INT_VECTOR)) {
+    UsiN::overflowCallback();
+}
 
 } // nbos::hw
 
@@ -264,12 +271,10 @@ struct UsiN {
     #undef N
     #undef UsiN
     #undef USI_N
-    #undef _USI_N
 
     #include "usi.hpp"
 #else
     #define NBOS_USI_HPP
 #endif
-
 
 #endif

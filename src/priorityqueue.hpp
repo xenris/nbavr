@@ -1,3 +1,24 @@
+/// # Priority Queue
+
+/// ```c++
+/// nbos::PriorityQueue<int, 6> priorityQueue;
+///
+/// priorityQueue.push(6);
+/// priorityQueue.push(8);
+/// priorityQueue.push(4);
+/// priorityQueue.push(5);
+/// priorityQueue.push(1);
+/// priorityQueue.push(2);
+///
+/// nbos::PriorityQueue<int>* pointer = &priorityQueue;
+///
+/// int n;
+///
+/// while(pointer->pop(&n)) {
+///     // 1, 2, 4, 5, 6, 8
+/// }
+/// ```
+
 #ifndef NBOS_PRIORITYQUEUE_HPP
 #define NBOS_PRIORITYQUEUE_HPP
 
@@ -6,42 +27,57 @@
 
 namespace nbos {
 
-template <class T, int S, class cmp_t = lesser<T>>
-struct PriorityQueue {
-    using size_t = typename conditional<S <= 126, int8_t, int16_t>::type;
-    using type = T;
-
-    static_assert(is_same<cmp_t, lesser<T>>::value || is_same<cmp_t, greater<T>>::value, "Must use one of lesser<T> or greater<T>");
-
-private:
-
-    T _array[S + 1];
-    size_t _head = 1;
+/// ## class PriorityQueue<class Type, int size\>
+template <class Type, int size = -1>
+class PriorityQueue : public PriorityQueue<Type> {
+    Type _buffer[size];
 
 public:
 
-    bool push(const T& t) {
-        return atomic([&]() {
-            return push_(t);
-        });
+    /// #### PriorityQueue()
+    /// Construct a priority queue with space on the stack for the contents.
+    explicit PriorityQueue() : PriorityQueue<Type>(_buffer, size) {
+    }
+};
+
+/// ## class PriorityQueue<class Type\>
+template <class T>
+struct PriorityQueue<T, -1> {
+    using Type = T;
+
+private:
+
+    T*const _buffer;
+    const int _size;
+    int _head;
+    bool (*_compare)(const T& a, const T& b);
+
+public:
+
+    /// #### PriorityQueue(T\* buffer, int size)
+    /// Construct a priority queue with the given buffer.
+    PriorityQueue(T* buffer, int size) : _buffer(buffer - 1), _size(size) {
+        _head = 1;
+        _compare = defaultCompare;
     }
 
-    bool push_(const T& t) {
-        if(full_()) {
+    /// #### bool push(T t)
+    /// Returns true on success.
+    bool push(const T& t) {
+        if(full()) {
             return false;
         }
 
-        _array[_head] = t;
+        _buffer[_head] = t;
 
-        size_t c = _head;
-        size_t p = c / 2;
-        cmp_t cmp;
+        int c = _head;
+        int p = c / 2;
 
         _head++;
 
         while(p != 0) {
-            if(cmp(_array[c], _array[p])) {
-                swap(_array[c], _array[p]);
+            if(_compare(_buffer[c], _buffer[p])) {
+                swap(&_buffer[c], &_buffer[p]);
 
                 c = p;
                 p = c / 2;
@@ -53,36 +89,31 @@ public:
         return true;
     }
 
+    /// #### bool pop(T\* t)
+    /// Returns true on success.
     bool pop(T*const t = nullptr) {
-        return atomic([&]() {
-            return pop_(t);
-        });
-    }
-
-    bool pop_(T*const t = nullptr) {
-        if(empty_()) {
+        if(empty()) {
             return false;
         }
 
         if(t != nullptr) {
-            *t = _array[1];
+            *t = _buffer[1];
         }
 
         _head--;
 
-        _array[1] = _array[_head];
+        _buffer[1] = _buffer[_head];
 
-        size_t p = 1;
-        cmp_t cmp;
+        int p = 1;
 
         while((p * 2) <= _head) {
-            size_t c1 = p * 2;
-            size_t c2 = p * 2 + 1;
+            int c1 = p * 2;
+            int c2 = p * 2 + 1;
 
-            size_t c = (c2 > _head) ? (c1) : (cmp(_array[c1], _array[c2]) ? c1 : c2);
+            int c = (c2 > _head) ? (c1) : (_compare(_buffer[c1], _buffer[c2]) ? c1 : c2);
 
-            if(cmp(_array[c], _array[p])) {
-                swap(_array[c], _array[p]);
+            if(_compare(_buffer[c], _buffer[p])) {
+                swap(&_buffer[c], &_buffer[p]);
 
                 p = c;
             } else {
@@ -93,78 +124,70 @@ public:
         return true;
     }
 
-    bool peek(T*const t) {
-        return atomic([&]() {
-            return peek_(t);
-        });
-    }
-
-    bool peek_(T* t) {
-        if(empty_()) {
+    /// #### bool peek(T\* t)
+    /// Returns true on success.
+    bool peek(T* t) const {
+        if(empty()) {
             return false;
         }
 
-        *t = _array[1];
+        *t = _buffer[1];
 
         return true;
     }
 
+    /// #### void clear()
+    /// Remove all elements from the priority queue.
     void clear() {
-        atomic([&]() {
-            clear_();
-        });
-    }
-
-    void clear_() {
         _head = 1;
     }
 
-    size_t size() {
-        return atomic([&]() {
-            return size_();
-        });
-    }
-
-    size_t size_() {
+    /// #### int size()
+    /// Get the number of elements currently in the priority queue.
+    int size() const {
         return (_head - 1);
     }
 
-    size_t free() {
-        return atomic([&]() {
-            return free_();
-        });
+    /// #### int free()
+    /// Get the amount of free space in the priority queue.
+    int free() const {
+        return _size - (_head - 1);
     }
 
-    size_t free_() {
-        return S - (_head - 1);
+    /// #### int capacity()
+    /// Get the total capacity of the priority queue.
+    int capacity() const {
+        return _size;
     }
 
-    static constexpr size_t capacity() {
-        return S;
-    }
-
-    static constexpr size_t capacity_() {
-        return S;
-    }
-
-    bool empty() {
-        return atomic([&]() {
-            return empty_();
-        });
-    }
-
-    bool empty_() {
+    /// #### bool empty()
+    /// Returns true if the priority queue is empty.
+    bool empty() const {
         return (_head - 1) == 0;
     }
 
-    bool full() {
-        return atomic([&]() {
-            return full_();
-        });
+    /// #### bool full()
+    /// Returns true if the priority queue is full.
+    bool full() const {
+        return (_head - 1) == _size;
     }
 
-    bool full_() {
-        return (_head - 1) == S;
+    /// #### void compare(bool (*f)(const T& a, const T& b))
+    /// Set the function used to compare elements.
+    void compare(bool (*f)(const T& a, const T& b)) {
+        _compare = f;
+    }
+
+    /// #### bool compare(T a, T b)
+    /// Returns true if a comes before b.
+    bool compare(const T& a, const T& b) const {
+        return _compare(a, b);
+    }
+
+private:
+
+    static bool defaultCompare(const T& a, const T& b) {
+        return a < b;
     }
 };
 

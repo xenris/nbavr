@@ -6,29 +6,53 @@ N is the pin id (0, 1, 2, etc).
 
 ```c++
 PortB::Pin5::mode(Pin::Mode::output);
+
 PortB::Pin5::output(Pin::Value::high);
+
+while(true) {
+    PortB::Pin5::toggle();
+    nbos::block();
+}
 ```
 
-## Class PinN
+## class Pin
+
+#### enum Mode
+* input
+* inputPullup
+* output
+* inputAnalog
+* inputFloating
+* inputPullUpDown
+* outputGeneralPushPull10MHz
+* outputGeneralOpenDrain10MHz
+* outputAlternatePushPull10MHz
+* outputAlternateOpenDrain10MHz
+* outputGeneralPushPull2MHz
+* outputGeneralOpenDrain2MHz
+* outputAlternatePushPull2MHz
+* outputAlternateOpenDrain2MHz
+* outputGeneralPushPull50MHz
+* outputGeneralOpenDrain50MHz
+* outputAlternatePushPull50MHz
+* outputAlternateOpenDrain50MHz
+
+#### enum Value
+* low
+* high
+
+## Class PinN : Pin
 
 #### static constexpr [HardwareType](../hardware.md) getHardwareType()
-Get the type of hardware that this class represents.
 
 #### static void mode(Mode m)
-Set the pin mode. (e.g. input/output)
 
 #### static Mode mode()
-Get the pin mode. (e.g. input/output)
-paragraph
 
 #### static void output(Value v)
-Set the output state. (High/Low)
 
 #### static Value output()
-Get the output value.
 
 #### static Value input()
-Get the input value.
 
 #### static void toggle()
-Toggle the output state. (High/Low)

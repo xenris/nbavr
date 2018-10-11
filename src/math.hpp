@@ -1,7 +1,7 @@
+/// # Maths
+
 #ifndef NBOS_MATH_HPP
 #define NBOS_MATH_HPP
-
-/// # Maths
 
 #include "macros.hpp"
 #include "type.hpp"

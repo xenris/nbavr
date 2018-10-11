@@ -36,7 +36,7 @@
 
 namespace nbos {
 
-template <class T, size_t addr>
+template <class T, int addr>
 struct _reg {
     T*const p = (T*)(addr + register_offset);
 };
@@ -55,37 +55,19 @@ struct _reg {
 
 #if defined(__atmega328__)
     #include "chips/avr/atmega328.hpp"
-#endif
-
-#if defined(__atmega328p__)
+#elif defined(__atmega328p__)
     #include "chips/avr/atmega328p.hpp"
-#endif
-
-#if defined(__atmega48__)
+#elif defined(__atmega48__)
     #include "chips/avr/atmega48.hpp"
-#endif
-
-#if defined(__atmega8__)
+#elif defined(__atmega8__)
     #include "chips/avr/atmega8.hpp"
-#endif
-
-#if defined(__attiny85__)
+#elif defined(__attiny85__)
     #include "chips/avr/attiny85.hpp"
-#endif
-
-#if defined(__atmega2560__)
+#elif defined(__atmega2560__)
     #include "chips/avr/atmega2560.hpp"
-#endif
-
-#if defined(__stm32f103c8_md__)
+#elif defined(__stm32f103c8_md__)
     #include "chips/stm32/stm32f103c8_md.hpp"
-#endif
-
-//#if defined(__AVR_XXX__)
-//    #include "chips/xxx.hpp"
-//#endif
-
-#ifndef NBOS_CHIP_DEFINED
+#else
     #error The hardware has not been defined for this chip
 #endif
 

@@ -1,9 +1,16 @@
-# External Interrupts
+# External Interrupt
 
-N is the external interrupt id (1, 2, etc).
+```c++
+const auto f = [](void*) {
+    nbos::hw::PortB::Pin5::toggle();
+};
 
-#### macro INCLUDE_EXINT_CALLBACK(N)
-Include this to use ExInt callbacks.
+atomic([]() {
+    nbos::hw::ExInt0::trigger(nbos::hw::ExInt0::Trigger::rising);
+    nbos::hw::ExInt0::callback((callback_t)f);
+    nbos::hw::ExInt0::intEnable(true);
+});
+```
 
 ## class ExIntN
 
@@ -13,20 +20,14 @@ Include this to use ExInt callbacks.
 * falling
 * rising
 
-#### static constexpr HardwareType getHardwareType()
-Get the type of hardware that this class represents.
+#### static HardwareType getHardwareType()
 
-#### static void enable(bool e)
-Enable/disable this interrupt.
+#### static void intEnable(bool e)
 
 #### static void trigger(Trigger t)
-Set the trigger action.
 
 #### static void callback(callback_t callback, void\* data)
-Set the callback and data for this interrupt.
 
 #### static bool intFlag()
-Returns true if the interrupt flag is set.
 
 #### static void intFlagClear()
-Clear the interrupt flag.

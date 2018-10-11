@@ -1,41 +1,28 @@
 /// # Analog to Digital Converter
 
-/// ## Example
-
 /// ```c++
-/// // Start the analog to digital converter.
-
-/// atomic {
+/// atomic([]() {
 ///     Adc::reference(Adc::Reference::AVCC);
 ///     Adc::channel(Adc::Channel::ADC1);
 ///     Adc::prescaler(Adc::Prescaler::Div128);
 ///     Adc::trigger(Adc::Trigger::SingleConversion);
-/// }
-
-/// Adc::start();
-
-/// // In the main loop.
-
-/// if(Adc::intFlag()) {
-///     adcValue = Adc::value();
-
 ///     Adc::intFlagClear();
-/// } else {
-///     // Conversion not done yet.
-/// }
+/// });
+///
+/// Adc::start();
+///
+/// while(!Adc::intFlag());
+///
+/// const uint16_t value = Adc::value();
 /// ```
 
 #ifndef NBOS_ADC_HPP
 
-#include "callbacks.hpp"
 #include "chip.hpp"
 #include "hardwaretype.hpp"
+#include "isr.hpp"
 #include "macros.hpp"
 #include "system.hpp"
-
-/// #### macro INCLUDE_ADC_CALLBACK(N)
-/// Include this to use Adc callbacks.
-#define INCLUDE_ADC_CALLBACK(N) MAKE_CALLBACK(ADC, N)
 
 #include "loopi"
 
@@ -43,7 +30,6 @@
     #define N _I
     #define AdcN CAT(Adc, N)
     #define ADC_N(A) CAT(CHIP_ADC_, N, _, A)
-    #define _ADC_N(A) UNDERLINE(ADC, N, A)
 
     #if CAT(CHIP_ADC_, N)
 
@@ -51,9 +37,7 @@
 
 namespace nbos::hw {
 
-MAKE_CALLBACK_HEADER(ADC, N);
-
-/// ## class Adc
+/// ## class AdcN
 struct AdcN {
     AdcN() = delete;
     AdcN& operator=(const AdcN&) = delete;
@@ -227,15 +211,13 @@ struct AdcN {
         };
     #endif
 
-    /// #### static constexpr HardwareType getHardwareType()
-    /// Get the type of hardware that this class represents.
+    /// #### static HardwareType getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::adc;
     }
 
     #if DEFINED(ADC_N(ENABLE_BIT_0_BIT))
         /// #### static void enable(bool e)
-        /// Enable/disable the analog to digital converter.
         static force_inline void enable(bool e) {
             setBit_(REG(ADC_N(ENABLE_BIT_0_REG)), ADC_N(ENABLE_BIT_0_BIT), e);
         }
@@ -243,7 +225,6 @@ struct AdcN {
 
     #if DEFINED(ADC_N(START_BIT_0_BIT))
         /// #### static void start()
-        /// Start a convertion if set to single conversion or free running modes.
         static force_inline void start() {
             setBit_(REG(ADC_N(START_BIT_0_REG)), ADC_N(START_BIT_0_BIT), true);
         }
@@ -251,7 +232,6 @@ struct AdcN {
 
     #if REG_DEFINED(ADC_N(DATA_REG))
         /// #### static uint16_t value()
-        /// Get the the most recent conversion.
         static force_inline uint16_t value() {
             return *REG(ADC_N(DATA_REG));
         }
@@ -259,7 +239,6 @@ struct AdcN {
 
     #if DEFINED(ADC_N(REFERENCE_BIT_0_BIT))
         /// #### static void reference(Reference r)
-        /// Set the reference voltage source.
         static force_inline void reference(Reference r) {
             setBit_(REG(ADC_N(REFERENCE_BIT_0_REG)), ADC_N(REFERENCE_BIT_0_BIT), uint8_t(r) & 0x01);
             setBit_(REG(ADC_N(REFERENCE_BIT_1_REG)), ADC_N(REFERENCE_BIT_1_BIT), uint8_t(r) & 0x02);
@@ -268,7 +247,6 @@ struct AdcN {
 
     #if DEFINED(ADC_N(CHANNEL_BIT_0_BIT))
         /// #### static void channel(Channel c)
-        /// Set the input channel.
         static force_inline void channel(Channel c) {
             setBit_(REG(ADC_N(CHANNEL_BIT_0_REG)), ADC_N(CHANNEL_BIT_0_BIT), uint8_t(c) & 0x01);
             setBit_(REG(ADC_N(CHANNEL_BIT_1_REG)), ADC_N(CHANNEL_BIT_1_BIT), uint8_t(c) & 0x02);
@@ -279,7 +257,6 @@ struct AdcN {
 
     #if DEFINED(ADC_N(PRESCALER_BIT_0_BIT))
         /// #### static void prescaler(Prescaler p)
-        /// Set the clock prescaler.
         static force_inline void prescaler(Prescaler p) {
             setBit_(REG(ADC_N(PRESCALER_BIT_0_REG)), ADC_N(PRESCALER_BIT_0_BIT), uint8_t(p) & 0x01);
             setBit_(REG(ADC_N(PRESCALER_BIT_1_REG)), ADC_N(PRESCALER_BIT_1_BIT), uint8_t(p) & 0x02);
@@ -289,7 +266,6 @@ struct AdcN {
 
     #if DEFINED(ADC_N(LEFT_ADJUST_BIT_0_BIT))
         /// #### static void leftAdjust(bool l)
-        /// Enable/disable left adjustment of 10 bit data in 16 bit register.
         static force_inline void leftAdjust(bool l) {
             setBit_(REG(ADC_N(LEFT_ADJUST_BIT_0_REG)), ADC_N(LEFT_ADJUST_BIT_0_BIT), l);
         }
@@ -297,7 +273,6 @@ struct AdcN {
 
     #if DEFINED(ADC_N(TRIGGER_BIT_0_BIT))
         /// #### static void trigger(Trigger t)
-        /// Set the conversion trigger source.
         static force_inline void trigger(Trigger t) {
             setBit_(REG(ADC_N(TRIGGER_BIT_0_REG)), ADC_N(TRIGGER_BIT_0_BIT), uint8_t(t) & 0x01);
 
@@ -316,15 +291,22 @@ struct AdcN {
     #endif
 
     /// #### static void callback(callback_t callback, void\* data)
-    /// Set the callback and data for when a conversion is complete.
-    static force_inline void callback(callback_t callback, void* data) {
-        _ADC_N(Callback) = callback;
-        _ADC_N(CallbackData) = data;
+    static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 
     #if DEFINED(ADC_N(INT_ENABLE_BIT_0_BIT))
         /// #### static void intEnable(bool e)
-        /// Enable/disable the ADC interrupt.
         static force_inline void intEnable(bool e) {
             setBit_(REG(ADC_N(INT_ENABLE_BIT_0_REG)), ADC_N(INT_ENABLE_BIT_0_BIT), e);
         }
@@ -332,7 +314,6 @@ struct AdcN {
 
     #if DEFINED(ADC_N(INT_FLAG_BIT_0_BIT))
         /// #### static bool intFlag()
-        /// Returns true if the interrupt flag is set.
         static force_inline bool intFlag() {
             return *REG(ADC_N(INT_FLAG_BIT_0_REG)) & bv(ADC_N(INT_FLAG_BIT_0_BIT));
         }
@@ -340,12 +321,15 @@ struct AdcN {
 
     #if DEFINED(ADC_N(INT_FLAG_BIT_0_BIT))
         /// #### static void intFlagClear()
-        /// Clear the interrupt flag.
         static force_inline void intFlagClear() {
             setBit_(REG(ADC_N(INT_FLAG_BIT_0_REG)), ADC_N(INT_FLAG_BIT_0_BIT), true);
         }
     #endif
 };
+
+ISR(ADC_N(INT_VECTOR)) {
+    AdcN::callback();
+}
 
 } // nbos::hw
 
@@ -356,7 +340,6 @@ struct AdcN {
     #undef N
     #undef AdcN
     #undef ADC_N
-    #undef _ADC_N
 
     #include "adc.hpp"
 #else

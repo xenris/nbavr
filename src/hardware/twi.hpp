@@ -2,16 +2,12 @@
 
 #ifndef NBOS_TWI_HPP
 
-#include "callbacks.hpp"
+#include "isr.hpp"
 #include "chip.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "type.hpp"
 #include "system.hpp"
-
-/// #### macro INCLUDE_TWI_CALLBACK(N)
-/// Include this to use Twi callbacks.
-#define INCLUDE_TWI_CALLBACK(N) MAKE_CALLBACK(TWI, N)
 
 #include "loopi"
 
@@ -26,8 +22,6 @@
 //------------------------------------------------------------------
 
 namespace nbos::hw {
-
-MAKE_CALLBACK_HEADER(TWI, N);
 
 /// ## class TwiN
 struct TwiN {
@@ -201,9 +195,18 @@ struct TwiN {
 
     /// #### static void callback(callback_t callback, void\* data)
     /// Set the callback and data for Twi interrupts.
-    static force_inline void callback(callback_t callback, void* data) {
-        _TWI_N(Callback) = callback;
-        _TWI_N(CallbackData) = data;
+    static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 
     /// #### static Status status()
@@ -249,6 +252,10 @@ struct TwiN {
         setBit_(REG(TWI_N(GEN_CALL_REC_ENABLE_REG)), TWI_N(GEN_CALL_REC_ENABLE_BIT), e);
     }
 };
+
+ISR(TWI_N(INT_VECTOR)) {
+    TwiN::callback();
+}
 
 } // nbos::hw
 

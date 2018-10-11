@@ -1,44 +1,49 @@
-#ifndef NBOS_ATOMIC_HPP
-#define NBOS_ATOMIC_HPP
-
 /// # Atomic
-/// Used to access variables atomically.<br>
 
-/// ## Example
+/// Used to access variables atomically.
+///
 /// ```c++
 /// Atomic<int32_t> counter = 0;
-
-/// void loop {
-///     int32_t c = counter;
-///     int32_t c = counter.getSet(0);
-///     counter += 2;
-///     if(counter == 5) {
+///
+/// int32_t c = counter;
+/// counter += 2;
+/// bool b = (counter == 5);
+/// counter->nonatomic()++;
+///
+/// struct S {
+///     int f(int n)
+///         return n + 1;
 ///     }
 /// }
-
-/// // Interrupt.
-/// static void callback(void* data) {
-///     counter.nonatomic()++;
-/// }
+///
+/// Atomic<S> s;
+///
+/// int i = s.call(&S::f, 100);
 /// ```
+
+#ifndef NBOS_ATOMIC_HPP
+#define NBOS_ATOMIC_HPP
 
 #include "hardware/system.hpp"
 
 namespace nbos {
 
-/// ## class Atomic<class T>
-template <class T>
+/// ## class Atomic<class Type\>
+template <class Type>
 class Atomic {
-    T _t;
+    Type _t;
 
 public:
-    Atomic(T t) : _t(t) {
-    }
-
+    /// #### Atomic()
     Atomic() : _t() {
     }
 
-    force_inline Atomic<T>& operator=(const T t) {
+    /// #### Atomic(Type t)
+    Atomic(Type t) : _t(t) {
+    }
+
+    /// #### Atomic<Type>& operator=(Type t)
+    force_inline Atomic<Type>& operator=(const Type& t) {
         atomic([&]() {
             _t = t;
         });
@@ -46,17 +51,19 @@ public:
         return *this;
     }
 
-    force_inline operator T() const {
+    /// #### operator Type()
+    /// Returns a copy of the value.
+    force_inline operator Type() const {
         return atomic([&]() {
             return _t;
         });
     }
 
-    /// #### T getSet(T t)
-    /// Sets the value to t, and returns its previous value.
-    force_inline T getSet(T t) {
+    /// #### Type getSet(Type t)
+    /// Sets the value to t, and returns the previous value.
+    force_inline Type getSet(Type t) {
         return atomic([&]() {
-            const T r = _t;
+            const Type r = _t;
 
             _t = t;
 
@@ -64,7 +71,8 @@ public:
         });
     }
 
-    force_inline Atomic<T>& operator+=(T t) {
+    /// #### Atomic<Type\>& operator+=(Type t)
+    force_inline Atomic<Type>& operator+=(Type t) {
         atomic([&]() {
             _t += t;
         });
@@ -72,7 +80,8 @@ public:
         return *this;
     }
 
-    force_inline Atomic<T>& operator-=(T t) {
+    /// #### Atomic<Type\>& operator-=(Type t)
+    force_inline Atomic<Type>& operator-=(Type t) {
         atomic([&]() {
             _t -= t;
         });
@@ -80,7 +89,8 @@ public:
         return *this;
     }
 
-    force_inline Atomic<T>& operator*=(T t) {
+    /// #### Atomic<Type\>& operator*=(Type t)
+    force_inline Atomic<Type>& operator*=(Type t) {
         atomic([&]() {
             _t *= t;
         });
@@ -88,7 +98,8 @@ public:
         return *this;
     }
 
-    force_inline Atomic<T>& operator/=(T t) {
+    /// #### Atomic<Type\>& operator/=(Type t)
+    force_inline Atomic<Type>& operator/=(Type t) {
         atomic([&]() {
             _t /= t;
         });
@@ -96,7 +107,8 @@ public:
         return *this;
     }
 
-    force_inline Atomic<T>& operator++() {
+    /// #### Atomic<Type\>& operator++()
+    force_inline Atomic<Type>& operator++() {
         atomic([&]() {
             ++_t;
         });
@@ -104,13 +116,14 @@ public:
         return *this;
     }
 
-    force_inline Atomic<T> operator++(int) {
+    force_inline Atomic<Type> operator++(int) {
         return atomic([&]() {
             return _t++;
         });
     }
 
-    force_inline Atomic<T>& operator--() {
+    /// #### Atomic<Type\>& operator--()
+    force_inline Atomic<Type>& operator--() {
         atomic([&]() {
             --_t;
         });
@@ -118,15 +131,95 @@ public:
         return *this;
     }
 
-    force_inline Atomic<T> operator--(int) {
+    force_inline Atomic<Type> operator--(int) {
         return atomic([&]() {
             return _t--;
         });
     }
 
-    /// #### T& nonatomic()
+    /// #### Atomic<Type\>& operator<<<U\>(U u)
+    template <class U>
+    force_inline Atomic<Type>& operator<<(const U u) {
+        atomic([&]() {
+            _t << u;
+        });
+
+        return *this;
+    }
+
+    // template <class ...A, class R>
+    // R call(R (Type::* f)(A...), A&& ...args) {
+    //     return (_t.*f)(args...);
+    // }
+
+    /// #### auto call(F f, ...)
+    /// Call member function f with arguments atomically.
+    template <class F>
+    force_inline auto call(F f) -> decltype((_t.*f)()) {
+        atomic([&]() {
+            return (_t.*f)();
+        });
+    }
+
+    template <class F, class A1>
+    force_inline auto call(F f, A1 a1) -> decltype((_t.*f)(a1)) {
+        atomic([&]() {
+            return (_t.*f)(a1);
+        });
+    }
+
+    template <class F, class A1, class A2>
+    force_inline auto call(F f, A1 a1, A2 a2) -> decltype((_t.*f)(a1, a2)) {
+        atomic([&]() {
+            return (_t.*f)(a1, a2);
+        });
+    }
+
+    template <class F, class A1, class A2, class A3>
+    force_inline auto call(F f, A1 a1, A2 a2, A3 a3) -> decltype((_t.*f)(a1, a2, a3)) {
+        atomic([&]() {
+            return (_t.*f)(a1, a2, a3);
+        });
+    }
+
+    template <class F, class A1, class A2, class A3, class A4>
+    force_inline auto call(F f, A1 a1, A2 a2, A3 a3, A4 a4) -> decltype((_t.*f)(a1, a2, a3, a4)) {
+        atomic([&]() {
+            return (_t.*f)(a1, a2, a3, a4);
+        });
+    }
+
+    template <class F, class A1, class A2, class A3, class A4, class A5>
+    force_inline auto call(F f, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) -> decltype((_t.*f)(a1, a2, a3, a4, a5)) {
+        atomic([&]() {
+            return (_t.*f)(a1, a2, a3, a4, a5);
+        });
+    }
+
+    template <class F, class A1, class A2, class A3, class A4, class A5, class A6>
+    force_inline auto call(F f, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) -> decltype((_t.*f)(a1, a2, a3, a4, a5, a6)) {
+        atomic([&]() {
+            return (_t.*f)(a1, a2, a3, a4, a5, a6);
+        });
+    }
+
+    template <class F, class A1, class A2, class A3, class A4, class A5, class A6, class A7>
+    force_inline auto call(F f, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) -> decltype((_t.*f)(a1, a2, a3, a4, a5, a6, a7)) {
+        atomic([&]() {
+            return (_t.*f)(a1, a2, a3, a4, a5, a6, a7);
+        });
+    }
+
+    template <class F, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
+    force_inline auto call(F f, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) -> decltype((_t.*f)(a1, a2, a3, a4, a5, a6, a7, a8)) {
+        atomic([&]() {
+            return (_t.*f)(a1, a2, a3, a4, a5, a6, a7, a8);
+        });
+    }
+
+    /// #### Type& nonatomic()
     /// Non-atomic access to the value.
-    force_inline T& nonatomic() {
+    force_inline Type& nonatomic() {
         return _t;
     }
 };

@@ -1,3 +1,5 @@
+# Macros
+
 #### macro force_inline
 Force a function to always be inlined. Use like "inline".
 

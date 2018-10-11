@@ -1,8 +1,5 @@
 # Two Wire Serial Interface
 
-#### macro INCLUDE_TWI_CALLBACK(N)
-Include this to use Twi callbacks.
-
 ## class TwiN
 
 #### enum Prescaler

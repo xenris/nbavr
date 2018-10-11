@@ -1,6 +1,4 @@
-# Tasks
-
-## Example
+# Task
 
 ```c++
 template <class Clock, class ledPin>

@@ -12,8 +12,6 @@ static void* data = (void*)0x5678;
 //------------------------------------------------
 // Analog to Digital
 
-INCLUDE_ADC_CALLBACK(0);
-
 TEST(Adc0, getHardwareType) {
     ASSERT_EQ(Adc0::getHardwareType(), HardwareType::adc);
 }
@@ -98,19 +96,16 @@ TEST(Adc0, intFlagClear) {
 //------------------------------------------------
 // External Interrupts
 
-INCLUDE_EXINT_CALLBACK(0);
-INCLUDE_EXINT_CALLBACK(1);
-
 TEST(ExIntN, getHardwareType) {
     ASSERT_EQ(ExInt0::getHardwareType(), HardwareType::exInt);
     ASSERT_EQ(ExInt1::getHardwareType(), HardwareType::exInt);
 }
 
-TEST(ExIntN, enable) {
-    TEST_REG_WRITE(ExInt0::enable(true));
-    TEST_REG_WRITE(ExInt0::enable(false));
-    TEST_REG_WRITE(ExInt1::enable(true));
-    TEST_REG_WRITE(ExInt1::enable(false));
+TEST(ExIntN, intEnable) {
+    TEST_REG_WRITE(ExInt0::intEnable(true));
+    TEST_REG_WRITE(ExInt0::intEnable(false));
+    TEST_REG_WRITE(ExInt1::intEnable(true));
+    TEST_REG_WRITE(ExInt1::intEnable(false));
 }
 
 TEST(ExIntN, trigger) {
@@ -143,23 +138,19 @@ TEST(ExIntN, intFlagClear) {
 //------------------------------------------------
 // Pin Change Interrupts
 
-INCLUDE_PCINT_CALLBACK(0);
-INCLUDE_PCINT_CALLBACK(1);
-INCLUDE_PCINT_CALLBACK(2);
-
 TEST(PcIntN, getHardwareType) {
     ASSERT_EQ(PcInt0::getHardwareType(), HardwareType::pcInt);
     ASSERT_EQ(PcInt1::getHardwareType(), HardwareType::pcInt);
     ASSERT_EQ(PcInt2::getHardwareType(), HardwareType::pcInt);
 }
 
-TEST(PcIntN, enable) {
-    TEST_REG_WRITE(PcInt0::enable(true));
-    TEST_REG_WRITE(PcInt0::enable(false));
-    TEST_REG_WRITE(PcInt1::enable(true));
-    TEST_REG_WRITE(PcInt1::enable(false));
-    TEST_REG_WRITE(PcInt2::enable(true));
-    TEST_REG_WRITE(PcInt2::enable(false));
+TEST(PcIntN, intEnable) {
+    TEST_REG_WRITE(PcInt0::intEnable(true));
+    TEST_REG_WRITE(PcInt0::intEnable(false));
+    TEST_REG_WRITE(PcInt1::intEnable(true));
+    TEST_REG_WRITE(PcInt1::intEnable(false));
+    TEST_REG_WRITE(PcInt2::intEnable(true));
+    TEST_REG_WRITE(PcInt2::intEnable(false));
 }
 
 TEST(PcIntN, mask) {
@@ -282,16 +273,6 @@ TEST(PortX, toggle) {
 //------------------------------------------------
 // Timer/Counters
 
-INCLUDE_TIMER_OVERFLOW_CALLBACK(0);
-INCLUDE_TIMER_OVERFLOW_CALLBACK(1);
-INCLUDE_TIMER_OVERFLOW_CALLBACK(2);
-INCLUDE_TIMER_OUTPUT_CALLBACK(0, A);
-INCLUDE_TIMER_OUTPUT_CALLBACK(0, B);
-INCLUDE_TIMER_OUTPUT_CALLBACK(1, A);
-INCLUDE_TIMER_OUTPUT_CALLBACK(1, B);
-INCLUDE_TIMER_OUTPUT_CALLBACK(2, A);
-INCLUDE_TIMER_OUTPUT_CALLBACK(2, B);
-
 TEST(Timer0, getHardwareType) {
     ASSERT_EQ(Timer0::getHardwareType(), HardwareType::timer);
 }
@@ -325,21 +306,21 @@ TEST(Timer0, waveform) {
     TEST_REG_WRITE(Timer0::waveform(Timer0::Waveform::fastPwmOcra));
 }
 
-TEST(Timer0, overflowCallback) {
-    TEST_REG_WRITE(Timer0::overflowCallback(func,data));
+TEST(Timer0, callback) {
+    TEST_REG_WRITE(Timer0::callback(func,data));
 }
 
-TEST(Timer0, overflowIntEnable) {
-    TEST_REG_WRITE(Timer0::overflowIntEnable(true));
-    TEST_REG_WRITE(Timer0::overflowIntEnable(false));
+TEST(Timer0, intEnable) {
+    TEST_REG_WRITE(Timer0::intEnable(true));
+    TEST_REG_WRITE(Timer0::intEnable(false));
 }
 
-TEST(Timer0, overflowIntFlag) {
-    TEST_REG_READ_WRITE(Timer0::overflowIntFlag());
+TEST(Timer0, intFlag) {
+    TEST_REG_READ_WRITE(Timer0::intFlag());
 }
 
-TEST(Timer0, overflowIntFlagClear) {
-    TEST_REG_WRITE(Timer0::overflowIntFlagClear());
+TEST(Timer0, intFlagClear) {
+    TEST_REG_WRITE(Timer0::intFlagClear());
 }
 
 TEST(Timer0, outputA) {
@@ -433,21 +414,21 @@ TEST(Timer1, waveform) {
     TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::fastPwmOcra));
 }
 
-TEST(Timer1, overflowCallback) {
-    TEST_REG_WRITE(Timer1::overflowCallback(func,data));
+TEST(Timer1, callback) {
+    TEST_REG_WRITE(Timer1::callback(func,data));
 }
 
-TEST(Timer1, overflowIntEnable) {
-    TEST_REG_WRITE(Timer1::overflowIntEnable(true));
-    TEST_REG_WRITE(Timer1::overflowIntEnable(false));
+TEST(Timer1, intEnable) {
+    TEST_REG_WRITE(Timer1::intEnable(true));
+    TEST_REG_WRITE(Timer1::intEnable(false));
 }
 
-TEST(Timer1, overflowIntFlag) {
-    TEST_REG_READ_WRITE(Timer1::overflowIntFlag());
+TEST(Timer1, intFlag) {
+    TEST_REG_READ_WRITE(Timer1::intFlag());
 }
 
-TEST(Timer1, overflowIntFlagClear) {
-    TEST_REG_WRITE(Timer1::overflowIntFlagClear());
+TEST(Timer1, intFlagClear) {
+    TEST_REG_WRITE(Timer1::intFlagClear());
 }
 
 TEST(Timer1, outputA) {
@@ -541,21 +522,21 @@ TEST(Timer2, waveform) {
     TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::fastPwmOcra));
 }
 
-TEST(Timer2, overflowCallback) {
-    TEST_REG_WRITE(Timer2::overflowCallback(func,data));
+TEST(Timer2, callback) {
+    TEST_REG_WRITE(Timer2::callback(func,data));
 }
 
-TEST(Timer2, overflowIntEnable) {
-    TEST_REG_WRITE(Timer2::overflowIntEnable(true));
-    TEST_REG_WRITE(Timer2::overflowIntEnable(false));
+TEST(Timer2, intEnable) {
+    TEST_REG_WRITE(Timer2::intEnable(true));
+    TEST_REG_WRITE(Timer2::intEnable(false));
 }
 
-TEST(Timer2, overflowIntFlag) {
-    TEST_REG_READ_WRITE(Timer2::overflowIntFlag());
+TEST(Timer2, intFlag) {
+    TEST_REG_READ_WRITE(Timer2::intFlag());
 }
 
-TEST(Timer2, overflowIntFlagClear) {
-    TEST_REG_WRITE(Timer2::overflowIntFlagClear());
+TEST(Timer2, intFlagClear) {
+    TEST_REG_WRITE(Timer2::intFlagClear());
 }
 
 TEST(Timer2, outputA) {
@@ -618,10 +599,6 @@ TEST(Timer2, outputBIntFlagClear) {
 
 //------------------------------------------------
 // Usart
-
-INCLUDE_USART_CALLBACK(0, RX);
-INCLUDE_USART_CALLBACK(0, TX);
-INCLUDE_USART_CALLBACK(0, DE);
 
 TEST(Usart0, getHardwareType) {
     ASSERT_EQ(Usart0::getHardwareType(), HardwareType::usart);
@@ -750,8 +727,6 @@ TEST(Usart0, parityErrorClear) {
 
 //------------------------------------------------
 // Spi
-
-INCLUDE_SPI_CALLBACK(0);
 
 TEST(Spi0, getHardwareType) {
     ASSERT_EQ(Spi0::getHardwareType(), HardwareType::spi);

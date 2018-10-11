@@ -13,17 +13,23 @@ Set or clear a bit in a volatile register lazily.
 #### void getBit(volatile T\* register, uint8_t bit)
 Get a bit from a volatile register.
 
-#### void interruptsEnable()
-Globally enable interrupts.
+#### void interruptsEnable(bool)
+Globally enable/disable interrupts.
 
 #### void interruptsEnabled()
 Globally enable interrupts.
 
-#### macro block
+#### auto atomic<F>(F f)
+Run function f atomically.<br>
+Returns the value returned by f.
+
+#### void block()
 Make sure an expression or block of expressions is compiled in the order it is written in.
 i.e. Prevents the compiler from doing memory access optimisations which reorder code.
 
-#### void delay<uint64_t ns>()
+#### auto block<F>(F f)
+
+#### void delay<uint64_t cpuFreq, uint64_t ns>()
 Delays the cpu for the given number of nanoseconds.<br>
 Should only be used for very short delays.<br>
 Limited to 10 milliseconds.<br>

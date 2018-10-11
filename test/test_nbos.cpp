@@ -32,9 +32,6 @@ TEST(Clock, ticksToMillis) {
     EXPECT_EQ((Clock<Timer1, 20000000>::ticksToMillis(312500)), 1000);
 }
 
-INCLUDE_TIMER_OUTPUT_CALLBACK(1, A);
-INCLUDE_TIMER_OVERFLOW_CALLBACK(1);
-
 TEST(Clock, delayedCall) {
     typedef Clock<Timer1, 16000000> Clock;
 
@@ -65,19 +62,24 @@ TEST(Util, reverse) {
     char str[8];
 
     strcpy(str, "");
-    EXPECT_STREQ(reverse(str, 0), "");
+    reverse(str, 0);
+    EXPECT_STREQ(str, "");
 
     strcpy(str, "a");
-    EXPECT_STREQ(reverse(str, 1), "a");
+    reverse(str, 1);
+    EXPECT_STREQ(str, "a");
 
     strcpy(str, "ab");
-    EXPECT_STREQ(reverse(str, 2), "ba");
+    reverse(str, 2);
+    EXPECT_STREQ(str, "ba");
 
     strcpy(str, "abc");
-    EXPECT_STREQ(reverse(str, 3), "cba");
+    reverse(str, 3);
+    EXPECT_STREQ(str, "cba");
 
     strcpy(str, "abc");
-    EXPECT_STREQ(reverse(str, 2), "bac");
+    reverse(str, 2);
+    EXPECT_STREQ(str, "bac");
 }
 
 TEST(Print, itoa) {
@@ -126,10 +128,6 @@ TEST(Print, itoa) {
 TEST(Container, Queue) {
     Queue<int16_t, 3> queue;
 
-    ::testing::StaticAssertTypeEq<Queue<int16_t, 3>::size_t, int8_t>();
-    ::testing::StaticAssertTypeEq<Queue<int16_t, 127>::size_t, int8_t>();
-    ::testing::StaticAssertTypeEq<Queue<int16_t, 128>::size_t, int16_t>();
-
     EXPECT_EQ(queue.size(), 0);
     EXPECT_EQ(queue.capacity(), 3);
 
@@ -177,14 +175,38 @@ TEST(Container, Queue) {
     EXPECT_EQ(queue.empty(), false);
     queue.clear();
     EXPECT_EQ(queue.empty(), true);
+
+    // Make sure notify callbacks don't interfere.
+
+    Queue<int16_t, 3> queueF;
+    Queue<int16_t, 3> queueG;
+
+    auto f = [](void* c) {
+        *(char*)c = 'f';
+    };
+
+    auto g = [](void* c) {
+        *(char*)c = 'g';
+    };
+
+    char c = 'a';
+
+    queueF.notify(f, &c);
+    queueG.notify(g, &c);
+
+    EXPECT_EQ(c, 'a');
+
+    queueF.notify();
+
+    EXPECT_EQ(c, 'f');
+
+    queueG.notify();
+
+    EXPECT_EQ(c, 'g');
 }
 
 TEST(Container, Stack) {
     Stack<int16_t, 3> stack;
-
-    ::testing::StaticAssertTypeEq<Stack<int16_t, 3>::size_t, int8_t>();
-    ::testing::StaticAssertTypeEq<Stack<int16_t, 127>::size_t, int8_t>();
-    ::testing::StaticAssertTypeEq<Stack<int16_t, 128>::size_t, int16_t>();
 
     EXPECT_EQ(stack.size(), 0);
     EXPECT_EQ(stack.capacity(), 3);
@@ -238,10 +260,6 @@ TEST(Container, Stack) {
 TEST(Container, Array) {
     Array<int16_t, 3> array;
 
-    ::testing::StaticAssertTypeEq<Array<int16_t, 3>::size_t, int8_t>();
-    ::testing::StaticAssertTypeEq<Array<int16_t, 127>::size_t, int8_t>();
-    ::testing::StaticAssertTypeEq<Array<int16_t, 128>::size_t, int16_t>();
-
     EXPECT_EQ(array.size(), 3);
 
     array[0] = 6;
@@ -251,16 +269,26 @@ TEST(Container, Array) {
     EXPECT_EQ(array[0], 6);
     EXPECT_EQ(array[1], 7);
     EXPECT_EQ(array[2], 8);
-    EXPECT_EQ(array[3], 8);
-    EXPECT_EQ(array[-1], 6);
 
-    for(Array<int16_t, 3>::type& n : array) {
+    for(auto& n : array) {
         n = 0;
     }
 
     EXPECT_EQ(array[0], 0);
     EXPECT_EQ(array[1], 0);
     EXPECT_EQ(array[2], 0);
+
+    array.fill(3);
+
+    EXPECT_EQ(array[0], 3);
+    EXPECT_EQ(array[1], 3);
+    EXPECT_EQ(array[2], 3);
+
+    Array<int16_t, 3> array2 = array;
+
+    EXPECT_EQ(array2[0], 3);
+    EXPECT_EQ(array2[1], 3);
+    EXPECT_EQ(array2[2], 3);
 }
 
 TEST(Container, PriorityQueue) {
@@ -315,6 +343,57 @@ TEST(Container, PriorityQueue) {
     EXPECT_FALSE(pq.empty());
     EXPECT_FALSE(pq.full());
     EXPECT_EQ(pq.size(), 1);
+}
+
+TEST(Container, PriorityQueueMemoryUse) {
+    int a[5] = {};
+
+    PriorityQueue<int> pq(&a[1], 3);
+
+    pq.push(1);
+    pq.push(2);
+    pq.push(3);
+    pq.push(4);
+    pq.push(5);
+
+    EXPECT_EQ(pq.size(), 3);
+    EXPECT_EQ(pq.capacity(), 3);
+
+    EXPECT_EQ(a[0], 0);
+    EXPECT_EQ(a[4], 0);
+}
+
+TEST(Algorithm, quicksort) {
+    int array1[6];
+
+    array1[0] = 6;
+    array1[1] = 8;
+    array1[2] = 4;
+    array1[3] = 5;
+    array1[4] = 1;
+    array1[5] = 2;
+
+    quicksort(array1, 6);
+
+    EXPECT_EQ(array1[0], 1);
+    EXPECT_EQ(array1[1], 2);
+    EXPECT_EQ(array1[2], 4);
+    EXPECT_EQ(array1[3], 5);
+    EXPECT_EQ(array1[4], 6);
+    EXPECT_EQ(array1[5], 8);
+}
+
+TEST(Random, Limits) {
+    Random r;
+
+    EXPECT_TRUE(r.next<float>() != r.next<float>());
+
+    for(int i = 0; i < 1000; i++) {
+        const float n = r.next<float>();
+
+        EXPECT_LE(n, 1);
+        EXPECT_GE(n, 0);
+    }
 }
 
 template <typename Clock, typename cout_t, typename cin_t>

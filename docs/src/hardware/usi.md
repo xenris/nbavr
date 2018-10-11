@@ -1,27 +1,20 @@
-# SPI
+# Universal Serial Interface
 
-N is the USI id (0, 1, 2, etc).
-
-#### macro INCLUDE_USI_CALLBACK(N, X)
-Include this to use Usi callbacks.<br>
-N is the Usi id, X is one of START or OVERFLOW.
+```c++
+// TODO
+```
 
 ## class UsiN
 
 #### type PinDo
-The DO IO pin.
 
 #### type PinDi
-The DI IO pin.
 
 #### type PinSda
-The SDA IO pin.
 
 #### type PinScl
-The SCL IO pin.
 
 #### type PinUsck
-The USCK IO pin.
 
 #### enum WireMode
 * disabled
@@ -35,26 +28,21 @@ The USCK IO pin.
 * externalPositiveEdge
 * externalNegativeEdge
 
-#### static constexpr HardwareType getHardwareType()
-Get the type of hardware that this class represents.
+#### static HardwareType getHardwareType()
 
 #### static void data(uint8_t d)
-Put value d into the data register.
 
 #### static uint8_t data()
-Get value from the data register.
 
-#### static void startConditionIntEnable(bool b)
+#### static void startIntEnable(bool b)
 Enable the start condition interrupt.
 
-#### static void counterOverflowIntEnable(bool b)
+#### static void overflowIntEnable(bool b)
 Enable the counter overflow interrupt.
 
 #### static void wireMode(WireMode m)
-Set the USI interface mode.
 
 #### static void clock(Clock c)
-Set the clock source.
 
 #### static void clockStrobe()
 Increment counter and Shift the USI data register.
@@ -62,35 +50,33 @@ Increment counter and Shift the USI data register.
 #### static void toggleClockPin()
 Toggle the clock pin or increment the counter
 
-#### static void startConditionIntFlag()
+#### static void startIntFlag()
 Get the start condition interrupt flag's state.
 
-#### static void startConditionIntFlagClear()
+#### static void startIntFlagClear()
 Clear the start condition interrupt flag.
 
-#### static void stopConditionIntFlag()
+#### static void stopIntFlag()
 Get the stop condition interrupt flag's state.
 
-#### static void stopConditionIntFlagClear()
+#### static void stopIntFlagClear()
 Clear the stop condition interrupt flag.
 
-#### static bool counterOverflowIntFlag()
+#### static bool overflowIntFlag()
 Get the counter overflow interrupt flag's state.
 
-#### static void counterOverflowIntFlagClear()
+#### static void overflowIntFlagClear()
 Clear the counter overflow interrupt flag.
 
 #### static bool collisionFlag()
 Get the data output collision flag's state.
 
 #### static void counter(uint8_t c)
-Set the counter register.
 
 #### static uint8_t counter()
-Get the counter register.
 
-#### static void startConditionCallback(callback_t callback, void\* data)
+#### static void startCallback(callback_t callback, void\* data)
 Set callback for start condition interrupt.
 
-#### static void counterOverflowCallback(callback_t callback, void\* data)
+#### static void overflowCallback(callback_t callback, void\* data)
 Set callback for timer overflow interrupt.

@@ -1,6 +1,24 @@
 # Timer Input
 
-## class Input
+```c++
+using Timer = nbos::hw::Timer1;
+
+uint16_t value = 0;
+
+const auto f = [](nbos::hw::Pin::Value* value) {
+    *value = Timer::Input::value();
+};
+
+atomic([]() {
+    Timer::waveform(Timer::Waveform::normal);
+    Timer::clock(Timer::Clock::Div1);
+    Timer::Input::edge(Timer::Edge::rising);
+    Timer::Input::intEnable(true);
+    Timer::Input::callback((callback_t)f, &value);
+});
+```
+
+## class TimerN::Input
 
 #### type Pin
 The IO pin which relates to this input.
@@ -10,22 +28,15 @@ The IO pin which relates to this input.
 * falling
 
 #### static void value(T v)
-Set the input register.
 
 #### static T value()
-Get the input register.
 
 #### static void edge(Edge e)
-Set the trigger edge.
 
 #### static void callback(callback_t callback, void\* data)
-Set the callback and data for int input interrupt.
 
 #### static void intEnable(bool b)
-Enable/disable the input interrupt.
 
 #### static bool intFlag()
-Returns true if the input interrupt flag is set.
 
 #### static void intFlagClear()
-Clear the input interrupt flag.

@@ -1,9 +1,4 @@
-#ifndef NBOS_TASK_HPP
-#define NBOS_TASK_HPP
-
-/// # Tasks
-
-/// ## Example
+/// # Task
 
 /// ```c++
 /// template <class Clock, class ledPin>
@@ -19,6 +14,9 @@
 ///     }
 /// };
 /// ```
+
+#ifndef NBOS_TASK_HPP
+#define NBOS_TASK_HPP
 
 #include "type.hpp"
 #include "atomic.hpp"

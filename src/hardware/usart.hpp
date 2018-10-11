@@ -1,27 +1,28 @@
-/// # USARTs
-
-/// N is the usart id (1, 2, etc).
-
-/// ## Example
+/// # Universal Synchronous Asynchronous Receiver Transmitter
 
 /// ```c++
-/// // TODO
+/// using Usart = nbos::hw::Usart0;
+///
+/// const auto f = [](void*) {
+///     Usart::push('?')
+/// };
+///
+/// Usart::baud(103);
+/// Usart::use2X(false);
+///
+/// Usart::transmitterEnable(true);
+/// Usart::dataRegisterEmptyIntEnable(true);
+/// Usart::dataRegisterEmptyCallback((callback_t)f);
 /// ```
 
 #ifndef NBOS_USART_HPP
 
-#include "callbacks.hpp"
+#include "isr.hpp"
 #include "chip.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "type.hpp"
 #include "system.hpp"
-
-/// #### macro INCLUDE_USART_CALLBACK(N, X)
-/// Include this to use Usart callbacks.<br>
-/// N is the Usart id, and X is one of RX (receive complete), TX (transmit
-/// complete), or DE (data register empty).
-#define INCLUDE_USART_CALLBACK(N, X) MAKE_CALLBACK(USART, N, X)
 
 #include "loopi"
 
@@ -36,10 +37,6 @@
 //------------------------------------------------------------------
 
 namespace nbos::hw {
-
-MAKE_CALLBACK_HEADER(USART, N, RX);
-MAKE_CALLBACK_HEADER(USART, N, TX);
-MAKE_CALLBACK_HEADER(USART, N, DE);
 
 /// ## class UsartN
 struct UsartN {
@@ -270,23 +267,50 @@ struct UsartN {
 
     /// #### static void rxCompleteCallback(callback_t callback, void\* data)
     /// Set callback for receive complete interrupt.
-    static force_inline void rxCompleteCallback(callback_t callback, void* data) {
-        _USART_N(RX_Callback) = callback;
-        _USART_N(RX_CallbackData) = data;
+    static force_inline void rxCompleteCallback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 
     /// #### static void txCompleteCallback(callback_t callback, void\* data)
     /// Set callback for transmit complete interrupt.
-    static force_inline void txCompleteCallback(callback_t callback, void* data) {
-        _USART_N(TX_Callback) = callback;
-        _USART_N(TX_CallbackData) = data;
+    static force_inline void txCompleteCallback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 
     /// #### static void dataRegisterEmptyCallback(callback_t callback, void\* data)
     /// Set callback for data register empty interrupt.
-    static force_inline void dataRegisterEmptyCallback(callback_t callback, void* data) {
-        _USART_N(DE_Callback) = callback;
-        _USART_N(DE_CallbackData) = data;
+    static force_inline void dataRegisterEmptyCallback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 
     /// #### static void push(uint8_t b)
@@ -373,6 +397,18 @@ struct UsartN {
         }
     #endif
 };
+
+ISR(USART_N(RX_INT_VECTOR)) {
+    UsartN::rxCompleteCallback();
+}
+
+ISR(USART_N(TX_INT_VECTOR)) {
+    UsartN::txCompleteCallback();
+}
+
+ISR(USART_N(DE_INT_VECTOR)) {
+    UsartN::dataRegisterEmptyCallback();
+}
 
 } // nbos::hw
 

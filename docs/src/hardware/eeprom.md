@@ -1,29 +1,37 @@
 # EEPROM
 
-#### macro INCLUDE_EEPROM_CALLBACK()
-Include this to use Eeprom callbacks.
+```c++
+atomic([]() {
+    nbos::hw::Eeprom0::address(0x00);
+    nbos::hw::Eeprom0::data(0x01);
+    nbos::hw::Eeprom0::masterWriteEnable();
+    nbos::hw::Eeprom0::writeEnable();
+});
 
-## class Eeprom
+while(nbos::hw::Eeprom0::writeEnabled());
+
+nbos::hw::Eeprom0::address(0x00);
+nbos::hw::Eeprom0::readEnable();
+
+uint8_t n = nbos::hw::Eeprom0::data();
+```
+
+## class EepromN
 
 #### enum Mode
 * eraseWrite
 * eraseOnly
 * writeOnly
 
-#### static constexpr HardwareType getHardwareType()
-Get the type of hardware that this class represents.
+#### static HardwareType getHardwareType()
 
 #### static void mode(Mode m)
-Set the programming mode.
 
 #### static void address(uint16_t a)
-Set the eeprom memory address to access.
 
 #### static void data(uint8_t d)
-Set the data to write.
 
 #### static uint8_t data()
-Returns the data read or written.
 
 #### static void masterWriteEnable()
 Enable the Eeprom write.
@@ -38,7 +46,5 @@ Returns true if Eeprom is currently writing.
 Start an Eeprom read.
 
 #### static void callback(callback_t callback, void\* data)
-Set the callback and data for when the Eeprom is ready.
 
 #### static void intEnable(bool e)
-Enable/disable the Eeprom ready interrupt.

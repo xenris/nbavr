@@ -1,17 +1,19 @@
-# USARTs
-
-N is the usart id (1, 2, etc).
-
-## Example
+# Universal Synchronous Asynchronous Receiver Transmitter
 
 ```c++
-// TODO
-```
+using Usart = nbos::hw::Usart0;
 
-#### macro INCLUDE_USART_CALLBACK(N, X)
-Include this to use Usart callbacks.<br>
-N is the Usart id, and X is one of RX (receive complete), TX (transmit
-complete), or DE (data register empty).
+const auto f = [](void*) {
+    Usart::push('?')
+};
+
+Usart::baud(103);
+Usart::use2X(false);
+
+Usart::transmitterEnable(true);
+Usart::dataRegisterEmptyIntEnable(true);
+Usart::dataRegisterEmptyCallback((callback_t)f);
+```
 
 ## class UsartN
 

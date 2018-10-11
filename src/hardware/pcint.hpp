@@ -1,16 +1,24 @@
-/// # Pin Change Interrupts
+/// # Pin Change Interrupt
+
+/// ```c++
+/// const auto f = [](void*) {
+///     nbos::hw::PortB::Pin5::toggle();
+/// };
+///
+/// atomic([]() {
+///     nbos::hw::PcInt1::mask(0x0F);
+///     nbos::hw::PcInt1::callback((callback_t)f);
+///     nbos::hw::PcInt1::intEnable(true);
+/// });
+/// ```
 
 #ifndef NBOS_PCINT_HPP
 
-#include "callbacks.hpp"
+#include "isr.hpp"
 #include "chip.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "system.hpp"
-
-/// #### macro INCLUDE_PCINT_CALLBACK(N)
-/// Include this to use PcInt callbacks.
-#define INCLUDE_PCINT_CALLBACK(N) MAKE_CALLBACK(PCINT, N)
 
 #include "loopi"
 
@@ -18,7 +26,6 @@
     #define N _I
     #define PcIntN CAT(PcInt, N)
     #define PCINT_N(A) CAT(CHIP_PCINT_, N, _, A)
-    #define _PCINT_N(A) UNDERLINE(PCINT, N, A)
 
     #if CAT(CHIP_PCINT_, N)
 
@@ -26,22 +33,18 @@
 
 namespace nbos::hw {
 
-MAKE_CALLBACK_HEADER(PCINT, N);
-
-/// ## Class PCIntN
+/// ## Class PcIntN
 struct PcIntN {
     PcIntN() = delete;
 
-    /// #### static constexpr HardwareType getHardwareType()
-    /// Get the type of hardware that this class represents.
+    /// #### static HardwareType getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::pcInt;
     }
 
     #if DEFINED(PCINT_N(ENABLE_BIT_0_BIT))
-        /// #### static void enable(bool e)
-        /// Enable/disable this interrupt.
-        static force_inline void enable(bool e) {
+        /// #### static void intEnable(bool e)
+        static force_inline void intEnable(bool e) {
             setBit_(REG(PCINT_N(ENABLE_BIT_0_REG)), PCINT_N(ENABLE_BIT_0_BIT), e);
         }
     #endif
@@ -55,15 +58,22 @@ struct PcIntN {
     #endif
 
     /// #### static void callback(callback_t callback, void\* data)
-    /// Set the callback and data for this interrupt.
-    static force_inline void callback(callback_t callback, void* data) {
-        _PCINT_N(Callback) = callback;
-        _PCINT_N(CallbackData) = data;
+    static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 
     #if DEFINED(PCINT_N(INT_FLAG_BIT_0_BIT))
         /// #### static bool intFlag()
-        /// Returns true if the interrupt flag is set.
         static force_inline bool intFlag() {
             return *REG(PCINT_N(INT_FLAG_BIT_0_REG)) & bv(PCINT_N(INT_FLAG_BIT_0_BIT));
         }
@@ -71,12 +81,15 @@ struct PcIntN {
 
     #if DEFINED(PCINT_N(INT_FLAG_BIT_0_BIT))
         /// #### static void intFlagClear()
-        /// Clear the interrupt flag.
         static force_inline void intFlagClear() {
             setBit_(REG(PCINT_N(INT_FLAG_BIT_0_REG)), PCINT_N(INT_FLAG_BIT_0_BIT), true);
         }
     #endif
 };
+
+ISR(PCINT_N(INT_VECTOR)) {
+    PcIntN::callback();
+}
 
 } // nbos::hw
 
@@ -87,7 +100,6 @@ struct PcIntN {
     #undef N
     #undef PcIntN
     #undef PCINT_N
-    #undef _PCINT_N
 
     #include "pcint.hpp"
 #else

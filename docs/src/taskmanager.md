@@ -1,7 +1,5 @@
 # TaskManager
 
-## Example
-
 ```c++
 const uint64_t cpuFreq = 16000000;
 
