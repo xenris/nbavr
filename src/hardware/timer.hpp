@@ -1,4 +1,4 @@
-/// # Timer
+/// # {{Timers}}
 
 /// ```c++
 /// // Constant interval.
@@ -41,7 +41,7 @@
 
 namespace nbos::hw {
 
-/// ## Class TimerN
+/// ## Class {{TimerN}}
 struct TimerN {
     /// #### using type = T
     /// The underlying type of this timer/counter. (uint8_t or uint16_t)
@@ -49,7 +49,7 @@ struct TimerN {
 
     TimerN() = delete;
 
-    /// #### enum Clock
+    /// #### enum {{TimerN::Clock}}
     /// * none
     /// * div1
     /// * div2
@@ -142,7 +142,7 @@ struct TimerN {
         #endif
     };
 
-    /// #### enum Waveform
+    /// #### enum {{TimerN::Waveform}}
     /// * normal
     /// * pwm
     /// * ctcOcra
@@ -183,7 +183,7 @@ struct TimerN {
         #endif
     };
 
-    /// #### static HardwareType getHardwareType()
+    /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::timer;
     }
@@ -199,7 +199,7 @@ struct TimerN {
     }
 
     #if DEFINED(TIMER_N(CLOCK_BIT_0_BIT))
-        /// #### static void clock(Clock c)
+        /// #### static void clock([[TimerN::Clock]] c)
         static force_inline void clock(Clock c) {
             setBit_(REG(TIMER_N(CLOCK_BIT_0_REG)), TIMER_N(CLOCK_BIT_0_BIT), uint8_t(c) & 0x01);
             setBit_(REG(TIMER_N(CLOCK_BIT_1_REG)), TIMER_N(CLOCK_BIT_1_BIT), uint8_t(c) & 0x02);
@@ -212,7 +212,7 @@ struct TimerN {
     #endif
 
     #if DEFINED(TIMER_N(WAVEFORM_BIT_0_BIT))
-        /// #### static void waveform(Waveform w)
+        /// #### static void waveform([[TimerN::Waveform]] w)
         static force_inline void waveform(Waveform w) {
             setBit_(REG(TIMER_N(WAVEFORM_BIT_0_REG)), TIMER_N(WAVEFORM_BIT_0_BIT), uint8_t(w) & 0x01);
 
@@ -230,7 +230,7 @@ struct TimerN {
         }
     #endif
 
-    /// #### static void callback(callback_t callback, void\* data)
+    /// #### static void callback([[callback_t]] callback, void\* data)
     /// Set the timer overflow callback.
     static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;
@@ -272,7 +272,7 @@ struct TimerN {
     #endif
 
     /// ## class OutputX
-    /// See [OutputX](output.md)
+    /// See [[TimerN::OutputX]]
 
     #if TIMER_N(OUTPUT_A)
         #define ID A
@@ -293,7 +293,7 @@ struct TimerN {
     #endif
 
     /// ## class Input
-    /// See [Input](input.md)
+    /// See [[TimerN::Input]]
 
     #if TIMER_N(INPUT)
         #include "input.hpp"

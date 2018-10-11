@@ -1,4 +1,4 @@
-/// # External Interrupt
+/// # {{External Interrupts}}
 
 /// ```c++
 /// const auto f = [](void*) {
@@ -33,14 +33,14 @@
 
 namespace nbos::hw {
 
-/// ## class ExIntN
+/// ## class {{ExIntN}}
 struct ExIntN {
     ExIntN() = delete;
     ExIntN& operator=(const ExIntN&) = delete;
     ExIntN(const ExIntN&) = delete;
 
     #if DEFINED(EXINT_N(TRIGGER_BIT_0_BIT))
-        /// #### enum Trigger
+        /// #### enum {{ExIntN::Trigger}}
         /// * low
         /// * change
         /// * falling
@@ -53,7 +53,7 @@ struct ExIntN {
         };
     #endif
 
-    /// #### static HardwareType getHardwareType()
+    /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::exInt;
     }
@@ -66,14 +66,14 @@ struct ExIntN {
     #endif
 
     #if DEFINED(EXINT_N(TRIGGER_BIT_0_BIT))
-        /// #### static void trigger(Trigger t)
+        /// #### static void trigger([[ExIntN::Trigger]] t)
         static force_inline void trigger(Trigger t) {
             setBit_(REG(EXINT_N(TRIGGER_BIT_0_REG)), EXINT_N(TRIGGER_BIT_0_BIT), uint8_t(t) & 0x01);
             setBit_(REG(EXINT_N(TRIGGER_BIT_1_REG)), EXINT_N(TRIGGER_BIT_1_BIT), uint8_t(t) & 0x02);
         }
     #endif
 
-    /// #### static void callback(callback_t callback, void\* data)
+    /// #### static void callback([[callback_t]] callback, void\* data)
     static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;
         static void* d = nullptr;

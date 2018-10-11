@@ -23,7 +23,7 @@ atomic([]() {
 #### type Pin
 The IO pin which relates to this input.
 
-#### enum Edge
+#### enum TimerN::Edge
 * rising
 * falling
 
@@ -31,9 +31,9 @@ The IO pin which relates to this input.
 
 #### static T value()
 
-#### static void edge(Edge e)
+#### static void edge([TimerN::Edge](input.hpp.md#enum-timernedge) e)
 
-#### static void callback(callback_t callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 
 #### static void intEnable(bool b)
 

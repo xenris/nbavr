@@ -1,14 +1,14 @@
-# Two Wire Serial Interface
+# Two Wire Serial Interfaces
 
 ## class TwiN
 
-#### enum Prescaler
+#### enum TwiN::Prescaler
 * div1
 * div4
 * div16
 * div64
 
-#### enum Status
+#### enum TwiN::Status
 * startTransmitted
 * repeatedStartTransmitted
 * slawTransmittedAck
@@ -37,7 +37,7 @@
 * noState
 * busError
 
-#### static constexpr HardwareType getHardwareType()
+#### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 Get the type of hardware that this class represents.
 
 #### static void enable(bool e)
@@ -73,13 +73,13 @@ Clear the write collision flag.
 #### static void intEnable(bool e)
 Enable/disable the Twi interrupt.
 
-#### static void callback(callback_t callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 Set the callback and data for Twi interrupts.
 
-#### static Status status()
+#### static [TwiN::Status](twi.hpp.md#enum-twinstatus) status()
 Get the Twi status.
 
-#### static void prescaler(Prescaler p)
+#### static void prescaler([TwiN::Prescaler](twi.hpp.md#enum-twinprescaler) p)
 Set the prescaler.
 
 #### static void push(uint8_t b)

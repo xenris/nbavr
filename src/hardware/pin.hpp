@@ -1,4 +1,4 @@
-/// # Digital IO Pins
+/// # {{Digital IO Pins}}
 
 /// N is the pin id (0, 1, 2, etc).
 
@@ -26,13 +26,13 @@
 
 namespace nbos::hw {
 
-/// ## class Pin
+/// ## class {{Pin}}
 struct Pin {
     Pin() = delete;
     Pin& operator=(const Pin&) = delete;
     Pin(const Pin&) = delete;
 
-    /// #### enum Mode
+    /// #### enum {{Pin::Mode}}
     /// * input
     /// * inputPullup
     /// * output
@@ -125,7 +125,7 @@ struct Pin {
         #endif
     };
 
-    /// #### enum Value
+    /// #### enum {{Pin::Value}}
     /// * low
     /// * high
     enum class Value : uint8_t {
@@ -154,18 +154,18 @@ struct Pin {
 
 //------------------------------------------------------------------
 
-/// ## Class PinN : Pin
+/// ## Class {{PinN}} : Pin
 struct PinN : Pin {
     PinN() = delete;
     PinN& operator=(const PinN&) = delete;
     PinN(const PinN&) = delete;
 
-    /// #### static constexpr [HardwareType](../hardware.md) getHardwareType()
+    /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::pin;
     }
 
-    /// #### static void mode(Mode m)
+    /// #### static void mode([[Pin::Mode]] m)
     static force_inline void mode(Mode m) {
         setBit_(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT), uint8_t(m) & 0x01);
 
@@ -182,7 +182,7 @@ struct PinN : Pin {
         #endif
     }
 
-    /// #### static Mode mode()
+    /// #### static [[Pin::Mode]] mode()
     static force_inline Mode mode() {
         uint8_t m = 0;
 
@@ -205,17 +205,17 @@ struct PinN : Pin {
         return Mode(m);
     }
 
-    /// #### static void output(Value v)
+    /// #### static void output([[Pin::Value]] v)
     static force_inline void output(Value v) {
         setBit_(REG(PIN_N(OUTPUT_BIT_0_REG)), PIN_N(OUTPUT_BIT_0_BIT), v == Value::high);
     }
 
-    /// #### static Value output()
+    /// #### static [[Pin::Value]] output()
     static force_inline Value output() {
         return getBit(REG(PIN_N(OUTPUT_BIT_0_REG)), PIN_N(OUTPUT_BIT_0_BIT)) ? Value::high : Value::low;
     }
 
-    /// #### static Value input()
+    /// #### static [[Pin::Value]] input()
     static force_inline Value input() {
         return getBit(REG(PIN_N(INPUT_BIT_0_REG)), PIN_N(INPUT_BIT_0_BIT)) ? Value::high : Value::low;
     }

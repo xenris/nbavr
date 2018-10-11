@@ -1,4 +1,4 @@
-/// # EEPROM
+/// # {{Eeprom}}
 
 /// ```c++
 /// atomic([]() {
@@ -38,11 +38,11 @@
 
 namespace nbos::hw {
 
-/// ## class EepromN
+/// ## class {{EepromN}}
 struct EepromN {
     EepromN() = delete;
 
-    /// #### enum Mode
+    /// #### enum {{AdcN::Mode}}
     /// * eraseWrite
     /// * eraseOnly
     /// * writeOnly
@@ -52,12 +52,12 @@ struct EepromN {
         writeOnly = EEPROM_N(PROGRAMMING_MODE_WRITE_ONLY_ID),
     };
 
-    /// #### static HardwareType getHardwareType()
+    /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::eeprom;
     }
 
-    /// #### static void mode(Mode m)
+    /// #### static void mode([[AdcN::Mode]] m)
     static force_inline void mode(Mode m) {
         setBit_(REG(EEPROM_N(PROGRAMMING_MODE_BIT_0_REG)), EEPROM_N(PROGRAMMING_MODE_BIT_0_BIT), uint8_t(m) & 0x01);
         setBit_(REG(EEPROM_N(PROGRAMMING_MODE_BIT_1_REG)), EEPROM_N(PROGRAMMING_MODE_BIT_1_BIT), uint8_t(m) & 0x02);
@@ -102,7 +102,7 @@ struct EepromN {
         setBit_(REG(EEPROM_N(READ_ENABLE_REG)), EEPROM_N(READ_ENABLE_BIT), true);
     }
 
-    /// #### static void callback(callback_t callback, void\* data)
+    /// #### static void callback([[callback_t]] callback, void\* data)
     static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;
         static void* d = nullptr;

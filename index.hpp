@@ -2,26 +2,25 @@
 
 /// ## Index
 
-/// * [Task](src/task.md)
-/// * [TaskManager](src/taskmanager.md)
+/// * [[Task]]
+/// * [[TaskManager]]
 /// * Hardware
-///     * [Adc](src/hardware/adc.md)
-///     * [Eeprom](src/hardware/eeprom.md)
-///     * [ExInt](src/hardware/exint.md)
-///     * [PcInt](src/hardware/pcint.md)
-///     * [Pin](src/hardware/pin.md)
-///     * [Port](src/hardware/port.md)
-///     * [Spi](src/hardware/spi.md)
-///     * [Timer](src/hardware/timer.md)
-///     * [Twi](src/hardware/twi.md)
-///     * [Usart](src/hardware/usart.md)
-///     * [Usi](src/hardware/usi.md)
-///     * [Util](src/hardware/util.md)
+///     * [[Analog to Digital Converters]]
+///     * [[Eeprom]]
+///     * [[External Interrupts]]
+///     * [[Pin Change Interrupts]]
+///     * [[Digital IO Pins]]
+///     * [[Digital IO Ports]]
+///     * [[Serial Peripheral Interfaces]]
+///     * [[Timers]]
+///     * [[Two Wire Serial Interfaces]]
+///     * [[Universal Synchronous Asynchronous Receiver Transmitters]]
+///     * [[Universal Serial Interfaces]]
 /// * Examples
 ///     * [nbos-project-template](https://github.com/xenris/nbos-project-template)
 ///     * [8x8 LED Matrix Display](https://github.com/xenris/led-matrix-display)
 ///     * [Optima Hitec Receiver PWM/PPM](https://github.com/xenris/hitec-receiver)
-/// * [Adding Chips/Tests](src/hardware/chip.md)
+/// * [[Adding Chips]]
 
 /// ## Editing documentation
 

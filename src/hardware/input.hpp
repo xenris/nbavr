@@ -1,4 +1,4 @@
-/// # Timer Input
+/// # {{Timer Input}}
 
 /// ```c++
 /// using Timer = nbos::hw::Timer1;
@@ -18,13 +18,13 @@
 /// });
 /// ```
 
-/// ## class TimerN::Input
+/// ## class {{TimerN::Input}}
 struct Input {
     /// #### type Pin
     /// The IO pin which relates to this input.
     using Pin = TIMER_N(INPUT_PIN);
 
-    /// #### enum Edge
+    /// #### enum {{TimerN::Edge}}
     /// * rising
     /// * falling
     enum class Edge : uint8_t {
@@ -42,12 +42,12 @@ struct Input {
         return *REG(TIMER_N(INPUT_REG));
     }
 
-    /// #### static void edge(Edge e)
+    /// #### static void edge([[TimerN::Edge]] e)
     static force_inline void edge(Edge e) {
         setBit_(REG(TIMER_N(INPUT_EDGE_SELECT_REG)), TIMER_N(INPUT_EDGE_SELECT_BIT), uint8_t(e) & 0x01);
     }
 
-    /// #### static void callback(callback_t callback, void\* data)
+    /// #### static void callback([[callback_t]] callback, void\* data)
     static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;
         static void* d = nullptr;

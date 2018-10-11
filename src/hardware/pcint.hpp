@@ -1,4 +1,4 @@
-/// # Pin Change Interrupt
+/// # {{Pin Change Interrupts}}
 
 /// ```c++
 /// const auto f = [](void*) {
@@ -33,11 +33,11 @@
 
 namespace nbos::hw {
 
-/// ## Class PcIntN
+/// ## Class {{PcIntN}}
 struct PcIntN {
     PcIntN() = delete;
 
-    /// #### static HardwareType getHardwareType()
+    /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::pcInt;
     }
@@ -57,7 +57,7 @@ struct PcIntN {
         }
     #endif
 
-    /// #### static void callback(callback_t callback, void\* data)
+    /// #### static void callback([[callback_t]] callback, void\* data)
     static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;
         static void* d = nullptr;

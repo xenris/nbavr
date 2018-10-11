@@ -1,4 +1,4 @@
-# EEPROM
+# Eeprom
 
 ```c++
 atomic([]() {
@@ -18,14 +18,14 @@ uint8_t n = nbos::hw::Eeprom0::data();
 
 ## class EepromN
 
-#### enum Mode
+#### enum AdcN::Mode
 * eraseWrite
 * eraseOnly
 * writeOnly
 
-#### static HardwareType getHardwareType()
+#### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
-#### static void mode(Mode m)
+#### static void mode([AdcN::Mode](eeprom.hpp.md#enum-adcnmode) m)
 
 #### static void address(uint16_t a)
 
@@ -45,6 +45,6 @@ Returns true if Eeprom is currently writing.
 #### static void readEnable()
 Start an Eeprom read.
 
-#### static void callback(callback_t callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 
 #### static void intEnable(bool e)

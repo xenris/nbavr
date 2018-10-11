@@ -1,4 +1,4 @@
-# Pin Change Interrupt
+# Pin Change Interrupts
 
 ```c++
 const auto f = [](void*) {
@@ -14,14 +14,14 @@ atomic([]() {
 
 ## Class PcIntN
 
-#### static HardwareType getHardwareType()
+#### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
 #### static void intEnable(bool e)
 
 #### static void mask(uint8_t m)
 Set which pins trigger this interrupt.
 
-#### static void callback(callback_t callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 
 #### static bool intFlag()
 

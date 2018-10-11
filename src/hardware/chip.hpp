@@ -1,4 +1,4 @@
-/// # Adding Chips
+/// # {{Adding Chips}}
 /// 1. Copy src/hardware/chips/xxx.hpp for the new chip.
 /// 1. Change values to suit.
 /// 1. Add header to src/hardware/chip.hpp

@@ -1,4 +1,4 @@
-# Serial Peripheral Interface
+# Serial Peripheral Interfaces
 
 ```c++
 atomic([]() {
@@ -31,23 +31,23 @@ while(!nbos::hw::Spi0::intFlag());
 
 #### type PinSs
 
-#### enum DataOrder
+#### enum SpiN::DataOrder
 * msbFirst
 * lsbFirst
 
-#### enum MasterSlave
+#### enum SpiN::MasterSlave
 * master
 * slave
 
-#### enum Polarity
+#### enum SpiN::Polarity
 * leadingRisingTrailingFalling
 * leadingFallingTrailingRising
 
-#### enum Phase
+#### enum SpiN::Phase
 * leadingSampleTrailingSetup
 * leadingSetupTrailingSample
 
-#### enum Clock
+#### enum SpiN::Clock
 * div2
 * div4
 * div8
@@ -56,24 +56,24 @@ while(!nbos::hw::Spi0::intFlag());
 * div64
 * div128
 
-#### static HardwareType getHardwareType()
+#### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
 #### static void enable(bool b)
 
 #### static void intEnable(bool b)
 
-#### static void callback(callback_t callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 Set the callback for when the serial transfer is complete.
 
-#### static void dataOrder(DataOrder d)
+#### static void dataOrder([SpiN::DataOrder](spi.hpp.md#enum-spindataorder) d)
 
-#### static void masterSlave(MasterSlave m)
+#### static void masterSlave([SpiN::MasterSlave](spi.hpp.md#enum-spinmasterslave) m)
 
-#### static void polarity(Polarity p)
+#### static void polarity([SpiN::Polarity](spi.hpp.md#enum-spinpolarity) p)
 
-#### static void phase(Phase p)
+#### static void phase([SpiN::Phase](spi.hpp.md#enum-spinphase) p)
 
-#### static void clock(Clock c)
+#### static void clock([SpiN::Clock](spi.hpp.md#enum-spinclock) c)
 
 #### static bool intFlag()
 

@@ -1,4 +1,4 @@
-# Timer
+# Timers
 
 ```c++
 // Constant interval.
@@ -25,7 +25,7 @@ atomic([]() {
 #### using type = T
 The underlying type of this timer/counter. (uint8_t or uint16_t)
 
-#### enum Clock
+#### enum TimerN::Clock
 * none
 * div1
 * div2
@@ -45,7 +45,7 @@ The underlying type of this timer/counter. (uint8_t or uint16_t)
 * extFalling
 * extRising
 
-#### enum Waveform
+#### enum TimerN::Waveform
 * normal
 * pwm
 * ctcOcra
@@ -53,17 +53,17 @@ The underlying type of this timer/counter. (uint8_t or uint16_t)
 * pwmOcra
 * fastPwmOcra
 
-#### static HardwareType getHardwareType()
+#### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
 #### static void counter(T value)
 
 #### static T counter()
 
-#### static void clock(Clock c)
+#### static void clock([TimerN::Clock](timer.hpp.md#enum-timernclock) c)
 
-#### static void waveform(Waveform w)
+#### static void waveform([TimerN::Waveform](timer.hpp.md#enum-timernwaveform) w)
 
-#### static void callback(callback_t callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 Set the timer overflow callback.
 
 #### static void intEnable(bool b)
@@ -73,7 +73,7 @@ Set the timer overflow callback.
 #### static void intFlagClear()
 
 ## class OutputX
-See [OutputX](output.md)
+See [TimerN::OutputX](output.hpp.md#class-timernoutputx)
 
 ## class Input
-See [Input](input.md)
+See [TimerN::Input](input.hpp.md#class-timerninput)

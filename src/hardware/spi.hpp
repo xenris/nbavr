@@ -1,4 +1,4 @@
-/// # Serial Peripheral Interface
+/// # {{Serial Peripheral Interfaces}}
 
 /// ```c++
 /// atomic([]() {
@@ -44,7 +44,7 @@
 
 namespace nbos::hw {
 
-/// ## class SpiN
+/// ## class {{SpiN}}
 struct SpiN {
     SpiN() = delete;
     SpiN& operator=(const SpiN&) = delete;
@@ -63,7 +63,7 @@ struct SpiN {
     using PinSs = SPI_N(PIN_SS);
 
     #if DEFINED(SPI_N(DATA_ORDER_BIT_0_BIT))
-        /// #### enum DataOrder
+        /// #### enum {{SpiN::DataOrder}}
         /// * msbFirst
         /// * lsbFirst
         enum class DataOrder : uint8_t {
@@ -73,7 +73,7 @@ struct SpiN {
     #endif
 
     #if DEFINED(SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT))
-        /// #### enum MasterSlave
+        /// #### enum {{SpiN::MasterSlave}}
         /// * master
         /// * slave
         enum class MasterSlave : uint8_t {
@@ -83,7 +83,7 @@ struct SpiN {
     #endif
 
     #if DEFINED(SPI_N(POLARITY_BIT_0_BIT))
-        /// #### enum Polarity
+        /// #### enum {{SpiN::Polarity}}
         /// * leadingRisingTrailingFalling
         /// * leadingFallingTrailingRising
         enum class Polarity : uint8_t {
@@ -93,7 +93,7 @@ struct SpiN {
     #endif
 
     #if DEFINED(SPI_N(PHASE_BIT_0_BIT))
-        /// #### enum Phase
+        /// #### enum {{SpiN::Phase}}
         /// * leadingSampleTrailingSetup
         /// * leadingSetupTrailingSample
         enum class Phase : uint8_t {
@@ -103,7 +103,7 @@ struct SpiN {
     #endif
 
     #if DEFINED(SPI_N(CLOCK_BIT_0_BIT))
-        /// #### enum Clock
+        /// #### enum {{SpiN::Clock}}
         /// * div2
         /// * div4
         /// * div8
@@ -142,7 +142,7 @@ struct SpiN {
         };
     #endif
 
-    /// #### static HardwareType getHardwareType()
+    /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::spi;
     }
@@ -161,7 +161,7 @@ struct SpiN {
         }
     #endif
 
-    /// #### static void callback(callback_t callback, void\* data)
+    /// #### static void callback([[callback_t]] callback, void\* data)
     /// Set the callback for when the serial transfer is complete.
     static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;
@@ -178,35 +178,35 @@ struct SpiN {
     }
 
     #if DEFINED(SPI_N(DATA_ORDER_BIT_0_BIT))
-        /// #### static void dataOrder(DataOrder d)
+        /// #### static void dataOrder([[SpiN::DataOrder]] d)
         static force_inline void dataOrder(DataOrder d) {
             setBit_(REG(SPI_N(DATA_ORDER_BIT_0_REG)), SPI_N(DATA_ORDER_BIT_0_BIT), uint8_t(d) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT))
-        /// #### static void masterSlave(MasterSlave m)
+        /// #### static void masterSlave([[SpiN::MasterSlave]] m)
         static force_inline void masterSlave(MasterSlave m) {
             setBit_(REG(SPI_N(MASTER_SLAVE_SELECT_BIT_0_REG)), SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT), uint8_t(m) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(POLARITY_BIT_0_BIT))
-        /// #### static void polarity(Polarity p)
+        /// #### static void polarity([[SpiN::Polarity]] p)
         static force_inline void polarity(Polarity p) {
             setBit_(REG(SPI_N(POLARITY_BIT_0_REG)), SPI_N(POLARITY_BIT_0_BIT), uint8_t(p) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(PHASE_BIT_0_BIT))
-        /// #### static void phase(Phase p)
+        /// #### static void phase([[SpiN::Phase]] p)
         static force_inline void phase(Phase p) {
             setBit_(REG(SPI_N(PHASE_BIT_0_REG)), SPI_N(PHASE_BIT_0_BIT), uint8_t(p) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(CLOCK_BIT_0_BIT))
-        /// #### static void clock(Clock c)
+        /// #### static void clock([[SpiN::Clock]] c)
         static force_inline void clock(Clock c) {
             setBit_(REG(SPI_N(CLOCK_BIT_0_REG)), SPI_N(CLOCK_BIT_0_BIT), uint8_t(c) & 0x01);
 

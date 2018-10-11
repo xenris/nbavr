@@ -1,4 +1,4 @@
-/// # Two Wire Serial Interface
+/// # {{Two Wire Serial Interfaces}}
 
 #ifndef NBOS_TWI_HPP
 
@@ -23,13 +23,13 @@
 
 namespace nbos::hw {
 
-/// ## class TwiN
+/// ## class {{TwiN}}
 struct TwiN {
     TwiN() = delete;
     TwiN& operator=(const TwiN&) = delete;
     TwiN(const TwiN&) = delete;
 
-    /// #### enum Prescaler
+    /// #### enum {{TwiN::Prescaler}}
     /// * div1
     /// * div4
     /// * div16
@@ -41,7 +41,7 @@ struct TwiN {
         div64 = TWI_N(PRESCALER_64_ID),
     };
 
-    /// #### enum Status
+    /// #### enum {{TwiN::Status}}
     /// * startTransmitted
     /// * repeatedStartTransmitted
     /// * slawTransmittedAck
@@ -99,7 +99,7 @@ struct TwiN {
         noState = 0xF8,
     };
 
-    /// #### static constexpr HardwareType getHardwareType()
+    /// #### static [[HardwareType]] getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
         return HardwareType::twi;
@@ -193,7 +193,7 @@ struct TwiN {
         setBit_(REG(TWI_N(INT_ENABLE_REG)), TWI_N(INT_ENABLE_BIT), e);
     }
 
-    /// #### static void callback(callback_t callback, void\* data)
+    /// #### static void callback([[callback_t]] callback, void\* data)
     /// Set the callback and data for Twi interrupts.
     static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;
@@ -209,13 +209,13 @@ struct TwiN {
         }
     }
 
-    /// #### static Status status()
+    /// #### static [[TwiN::Status]] status()
     /// Get the Twi status.
     static force_inline Status status() {
         return Status(*REG(TWI_N(STATUS_REG)) & 0xF8);
     }
 
-    /// #### static void prescaler(Prescaler p)
+    /// #### static void prescaler([[TwiN::Prescaler]] p)
     /// Set the prescaler.
     static force_inline void prescaler(Prescaler p) {
         setBit_(REG(TWI_N(PRESCALER_BIT_0_REG)), TWI_N(PRESCALER_BIT_0_BIT), uint8_t(p) & 0x01);

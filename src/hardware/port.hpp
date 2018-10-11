@@ -1,4 +1,4 @@
-/// # Digital IO Port
+/// # {{Digital IO Ports}}
 
 /// ```c++
 /// using PortC = nbos::hw::PortC;
@@ -38,13 +38,13 @@
 
 namespace nbos::hw {
 
-/// ## Class PortX
+/// ## Class {{PortX}}
 struct PortX {
     PortX() = delete;
     PortX& operator=(const PortX&) = delete;
     PortX(const PortX&) = delete;
 
-    /// #### static HardwareType getHardwareType()
+    /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::port;
     }
@@ -56,7 +56,7 @@ struct PortX {
         }
     #endif
 
-    /// #### static void mode(Pin::Mode m)
+    /// #### static void mode([[Pin::Mode]] m)
     static force_inline void mode(Pin::Mode m) {
         #if DEFINED(CAT(CHIP_PIN_, X, 0, _INPUT_BIT_0_BIT))
             Pin0::mode(m);

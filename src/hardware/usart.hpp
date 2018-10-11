@@ -1,4 +1,4 @@
-/// # Universal Synchronous Asynchronous Receiver Transmitter
+/// # {{Universal Synchronous Asynchronous Receiver Transmitters}}
 
 /// ```c++
 /// using Usart = nbos::hw::Usart0;
@@ -38,14 +38,14 @@
 
 namespace nbos::hw {
 
-/// ## class UsartN
+/// ## class {{UsartN}}
 struct UsartN {
     UsartN() = delete;
     UsartN& operator=(const UsartN&) = delete;
     UsartN(const UsartN&) = delete;
 
     #if DEFINED(USART_N(MODE_BIT_0_BIT))
-        /// #### enum Mode
+        /// #### enum {{UsartN::Mode}}
         /// * asynchronous
         /// * synchronous
         /// * masterSpi
@@ -59,7 +59,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(PARITY_BIT_0_BIT))
-        /// #### enum Parity
+        /// #### enum {{UsartN::Parity}}
         /// * disabled
         /// * even
         /// * odd
@@ -71,7 +71,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(STOP_BITS_BIT_0_BIT))
-        /// #### enum StopBits
+        /// #### enum {{UsartN::StopBits}}
         /// * bits1
         /// * bits2
         enum class StopBits : uint8_t {
@@ -81,7 +81,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(CHARACTER_SIZE_BIT_0_BIT))
-        /// #### enum CharacterSize
+        /// #### enum {{UsartN::CharacterSize}}
         /// * size5
         /// * size6
         /// * size7
@@ -97,7 +97,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(POLARITY_BIT_0_BIT))
-        /// #### enum Polarity
+        /// #### enum {{UsartN::Polarity}}
         /// * txRisingRxFalling
         /// * txFallingRxRising
         enum class Polarity : uint8_t {
@@ -106,14 +106,14 @@ struct UsartN {
         };
     #endif
 
-    /// #### static constexpr HardwareType getHardwareType()
+    /// #### static [[HardwareType]] getHardwareType()
     /// Get the type of hardware that this class represents.
     static constexpr HardwareType getHardwareType() {
         return HardwareType::usart;
     }
 
     #if DEFINED(USART_N(MODE_BIT_0_BIT))
-        /// #### static void mode(Mode m)
+        /// #### static void mode([[UsartN::Mode]] m)
         /// Set USART mode.
         static force_inline void mode(Mode m) {
             // #if DEFINED(USART_N(USART_REG_SELECT_BIT))
@@ -133,7 +133,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(PARITY_BIT_0_BIT))
-        /// #### static void parity(Parity p)
+        /// #### static void parity([[UsartN::Parity]] p)
         /// Set USART parity.
         static force_inline void parity(Parity p) {
             setBit_(REG(USART_N(PARITY_BIT_0_REG)), USART_N(PARITY_BIT_0_BIT), uint8_t(p) & 0x01);
@@ -149,7 +149,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(STOP_BITS_BIT_0_BIT))
-        /// #### static void stopBits(StopBits b)
+        /// #### static void stopBits([[UsartN::StopBits]] b)
         /// Set number of stop bits.
         static force_inline void stopBits(StopBits b) {
             // #if DEFINED(USART_N(USART_REG_SELECT_BIT))
@@ -165,7 +165,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(CHARACTER_SIZE_BIT_0_BIT))
-        /// #### static void characterSize(CharacterSize s)
+        /// #### static void characterSize([[UsartN::CharacterSize]] s)
         /// Set USART character size.
         static force_inline void characterSize(CharacterSize s) {
             setBit_(REG(USART_N(CHARACTER_SIZE_BIT_0_REG)), USART_N(CHARACTER_SIZE_BIT_0_BIT), uint8_t(s) & 0x01);
@@ -185,7 +185,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(POLARITY_BIT_0_BIT))
-        /// #### static void polarity(Polarity p)
+        /// #### static void polarity([[UsartN::Polarity]] p)
         /// Set USART clock polarity.
         static force_inline void polarity(Polarity p) {
             setBit_(REG(USART_N(POLARITY_BIT_0_REG)), USART_N(POLARITY_BIT_0_BIT), uint8_t(p) & 0x01);
@@ -265,7 +265,7 @@ struct UsartN {
         }
     #endif
 
-    /// #### static void rxCompleteCallback(callback_t callback, void\* data)
+    /// #### static void rxCompleteCallback([[callback_t]] callback, void\* data)
     /// Set callback for receive complete interrupt.
     static force_inline void rxCompleteCallback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;
@@ -281,7 +281,7 @@ struct UsartN {
         }
     }
 
-    /// #### static void txCompleteCallback(callback_t callback, void\* data)
+    /// #### static void txCompleteCallback([[callback_t]] callback, void\* data)
     /// Set callback for transmit complete interrupt.
     static force_inline void txCompleteCallback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;
@@ -297,7 +297,7 @@ struct UsartN {
         }
     }
 
-    /// #### static void dataRegisterEmptyCallback(callback_t callback, void\* data)
+    /// #### static void dataRegisterEmptyCallback([[callback_t]] callback, void\* data)
     /// Set callback for data register empty interrupt.
     static force_inline void dataRegisterEmptyCallback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;

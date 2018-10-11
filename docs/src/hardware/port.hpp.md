@@ -1,4 +1,4 @@
-# Digital IO Port
+# Digital IO Ports
 
 ```c++
 using PortC = nbos::hw::PortC;
@@ -17,11 +17,11 @@ while(true) {
 
 ## Class PortX
 
-#### static HardwareType getHardwareType()
+#### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
 #### static void enableClock(bool e)
 
-#### static void mode(Pin::Mode m)
+#### static void mode([Pin::Mode](pin.hpp.md#enum-pinmode) m)
 
 #### static void output(T value)
 

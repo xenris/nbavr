@@ -23,7 +23,7 @@ atomic([]() {
 #### type Pin
 The IO pin which relates to this output.
 
-#### enum Mode
+#### enum TimerN::Mode
 * disconnected
 * toggle
 * clear
@@ -33,9 +33,9 @@ The IO pin which relates to this output.
 
 #### static T value()
 
-#### static void mode(Mode m)
+#### static void mode([TimerN::Mode](output.hpp.md#enum-timernmode) m)
 
-#### static void callback(callback_t callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 
 #### static void intEnable(bool b)
 

@@ -1,4 +1,4 @@
-# External Interrupt
+# External Interrupts
 
 ```c++
 const auto f = [](void*) {
@@ -14,19 +14,19 @@ atomic([]() {
 
 ## class ExIntN
 
-#### enum Trigger
+#### enum ExIntN::Trigger
 * low
 * change
 * falling
 * rising
 
-#### static HardwareType getHardwareType()
+#### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
 #### static void intEnable(bool e)
 
-#### static void trigger(Trigger t)
+#### static void trigger([ExIntN::Trigger](exint.hpp.md#enum-exintntrigger) t)
 
-#### static void callback(callback_t callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 
 #### static bool intFlag()
 

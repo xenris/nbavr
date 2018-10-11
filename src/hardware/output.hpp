@@ -21,7 +21,7 @@
 #define OutputX CAT(Output, ID)
 #define OUTPUT_X(X) CAT(TIMER_N(OUTPUT), _, ID, _, X)
 
-/// ## class TimerN::OutputX
+/// ## class {{TimerN::OutputX}}
 struct OutputX {
     /// #### type Pin
     /// The IO pin which relates to this output.
@@ -29,7 +29,7 @@ struct OutputX {
         using Pin = OUTPUT_X(PIN);
     #endif
 
-    /// #### enum Mode
+    /// #### enum {{TimerN::Mode}}
     /// * disconnected
     /// * toggle
     /// * clear
@@ -53,7 +53,7 @@ struct OutputX {
         return *REG(OUTPUT_X(REG));
     }
 
-    /// #### static void mode(Mode m)
+    /// #### static void mode([[TimerN::Mode]] m)
     #if DEFINED(OUTPUT_X(MODE_TOGGLE_ID))
     static force_inline void mode(Mode m) {
         setBit_(REG(OUTPUT_X(MODE_BIT_0_REG)), OUTPUT_X(MODE_BIT_0_BIT), uint8_t(m) & 0x01);
@@ -61,7 +61,7 @@ struct OutputX {
     }
     #endif
 
-    /// #### static void callback(callback_t callback, void\* data)
+    /// #### static void callback([[callback_t]] callback, void\* data)
     #if OUTPUT_X(MODE_BIT_1_BIT)
     static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;

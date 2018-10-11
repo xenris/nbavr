@@ -1,4 +1,4 @@
-/// # Analog to Digital Converter
+/// # {{Analog to Digital Converters}}
 
 /// ```c++
 /// atomic([]() {
@@ -37,13 +37,13 @@
 
 namespace nbos::hw {
 
-/// ## class AdcN
+/// ## class {{AdcN}}
 struct AdcN {
     AdcN() = delete;
     AdcN& operator=(const AdcN&) = delete;
     AdcN(const AdcN&) = delete;
 
-    /// #### enum Reference
+    /// #### enum {{AdcN::Reference}}
     /// * aref
     /// * avcc
     /// * internal
@@ -76,7 +76,7 @@ struct AdcN {
         #endif
     };
 
-    /// #### enum Channel
+    /// #### enum {{AdcN::Channel}}
     /// * adc0
     /// * adc1
     /// * adc2
@@ -135,7 +135,7 @@ struct AdcN {
     };
 
     #if DEFINED(ADC_N(PRESCALER_BIT_0_BIT))
-        /// #### enum Prescaler
+        /// #### enum {{AdcN::Prescaler}}
         /// * div2
         /// * div4
         /// * div8
@@ -169,7 +169,7 @@ struct AdcN {
     #endif
 
     #if DEFINED(ADC_N(TRIGGER_BIT_0_BIT))
-        /// #### enum Trigger
+        /// #### enum {{AdcN::Trigger}}
         /// * singleConversion
         /// * freeRunning
         /// * analogComparator
@@ -211,7 +211,7 @@ struct AdcN {
         };
     #endif
 
-    /// #### static HardwareType getHardwareType()
+    /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::adc;
     }
@@ -238,7 +238,7 @@ struct AdcN {
     #endif
 
     #if DEFINED(ADC_N(REFERENCE_BIT_0_BIT))
-        /// #### static void reference(Reference r)
+        /// #### static void reference([[AdcN::Reference]] r)
         static force_inline void reference(Reference r) {
             setBit_(REG(ADC_N(REFERENCE_BIT_0_REG)), ADC_N(REFERENCE_BIT_0_BIT), uint8_t(r) & 0x01);
             setBit_(REG(ADC_N(REFERENCE_BIT_1_REG)), ADC_N(REFERENCE_BIT_1_BIT), uint8_t(r) & 0x02);
@@ -246,7 +246,7 @@ struct AdcN {
     #endif
 
     #if DEFINED(ADC_N(CHANNEL_BIT_0_BIT))
-        /// #### static void channel(Channel c)
+        /// #### static void channel([[AdcN::Channel]] c)
         static force_inline void channel(Channel c) {
             setBit_(REG(ADC_N(CHANNEL_BIT_0_REG)), ADC_N(CHANNEL_BIT_0_BIT), uint8_t(c) & 0x01);
             setBit_(REG(ADC_N(CHANNEL_BIT_1_REG)), ADC_N(CHANNEL_BIT_1_BIT), uint8_t(c) & 0x02);
@@ -256,7 +256,7 @@ struct AdcN {
     #endif
 
     #if DEFINED(ADC_N(PRESCALER_BIT_0_BIT))
-        /// #### static void prescaler(Prescaler p)
+        /// #### static void prescaler([[AdcN::Prescaler]] p)
         static force_inline void prescaler(Prescaler p) {
             setBit_(REG(ADC_N(PRESCALER_BIT_0_REG)), ADC_N(PRESCALER_BIT_0_BIT), uint8_t(p) & 0x01);
             setBit_(REG(ADC_N(PRESCALER_BIT_1_REG)), ADC_N(PRESCALER_BIT_1_BIT), uint8_t(p) & 0x02);
@@ -272,7 +272,7 @@ struct AdcN {
     #endif
 
     #if DEFINED(ADC_N(TRIGGER_BIT_0_BIT))
-        /// #### static void trigger(Trigger t)
+        /// #### static void trigger([[AdcN::Trigger]] t)
         static force_inline void trigger(Trigger t) {
             setBit_(REG(ADC_N(TRIGGER_BIT_0_REG)), ADC_N(TRIGGER_BIT_0_BIT), uint8_t(t) & 0x01);
 
@@ -290,7 +290,7 @@ struct AdcN {
         }
     #endif
 
-    /// #### static void callback(callback_t callback, void\* data)
+    /// #### static void callback([[callback_t]] callback, void\* data)
     static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
         static callback_t f = nullptr;
         static void* d = nullptr;

@@ -1,4 +1,4 @@
-# Analog to Digital Converter
+# Analog to Digital Converters
 
 ```c++
 atomic([]() {
@@ -18,7 +18,7 @@ const uint16_t value = Adc::value();
 
 ## class AdcN
 
-#### enum Reference
+#### enum AdcN::Reference
 * aref
 * avcc
 * internal
@@ -26,7 +26,7 @@ const uint16_t value = Adc::value();
 * internal_2_56
 * internal_2_56_cap
 
-#### enum Channel
+#### enum AdcN::Channel
 * adc0
 * adc1
 * adc2
@@ -39,7 +39,7 @@ const uint16_t value = Adc::value();
 * vbg
 * gnd
 
-#### enum Prescaler
+#### enum AdcN::Prescaler
 * div2
 * div4
 * div8
@@ -48,7 +48,7 @@ const uint16_t value = Adc::value();
 * div64
 * div128
 
-#### enum Trigger
+#### enum AdcN::Trigger
 * singleConversion
 * freeRunning
 * analogComparator
@@ -60,7 +60,7 @@ const uint16_t value = Adc::value();
 * timer1CaptureEvent
 * freeRunning
 
-#### static HardwareType getHardwareType()
+#### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
 #### static void enable(bool e)
 
@@ -68,17 +68,17 @@ const uint16_t value = Adc::value();
 
 #### static uint16_t value()
 
-#### static void reference(Reference r)
+#### static void reference([AdcN::Reference](adc.hpp.md#enum-adcnreference) r)
 
-#### static void channel(Channel c)
+#### static void channel([AdcN::Channel](adc.hpp.md#enum-adcnchannel) c)
 
-#### static void prescaler(Prescaler p)
+#### static void prescaler([AdcN::Prescaler](adc.hpp.md#enum-adcnprescaler) p)
 
 #### static void leftAdjust(bool l)
 
-#### static void trigger(Trigger t)
+#### static void trigger([AdcN::Trigger](adc.hpp.md#enum-adcntrigger) t)
 
-#### static void callback(callback_t callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 
 #### static void intEnable(bool e)
 

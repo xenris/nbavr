@@ -2,26 +2,25 @@
 
 ## Index
 
-* [Task](src/task.md)
-* [TaskManager](src/taskmanager.md)
+* [Task](src/task.hpp.md#task)
+* [TaskManager](src/taskmanager.hpp.md#taskmanager)
 * Hardware
-    * [Adc](src/hardware/adc.md)
-    * [Eeprom](src/hardware/eeprom.md)
-    * [ExInt](src/hardware/exint.md)
-    * [PcInt](src/hardware/pcint.md)
-    * [Pin](src/hardware/pin.md)
-    * [Port](src/hardware/port.md)
-    * [Spi](src/hardware/spi.md)
-    * [Timer](src/hardware/timer.md)
-    * [Twi](src/hardware/twi.md)
-    * [Usart](src/hardware/usart.md)
-    * [Usi](src/hardware/usi.md)
-    * [Util](src/hardware/util.md)
+    * [Analog to Digital Converters](src/hardware/adc.hpp.md#analog-to-digital-converters)
+    * [Eeprom](src/hardware/eeprom.hpp.md#eeprom)
+    * [External Interrupts](src/hardware/exint.hpp.md#external-interrupts)
+    * [Pin Change Interrupts](src/hardware/pcint.hpp.md#pin-change-interrupts)
+    * [Digital IO Pins](src/hardware/pin.hpp.md#digital-io-pins)
+    * [Digital IO Ports](src/hardware/port.hpp.md#digital-io-ports)
+    * [Serial Peripheral Interfaces](src/hardware/spi.hpp.md#serial-peripheral-interfaces)
+    * [Timers](src/hardware/timer.hpp.md#timers)
+    * [Two Wire Serial Interfaces](src/hardware/twi.hpp.md#two-wire-serial-interfaces)
+    * [Universal Synchronous Asynchronous Receiver Transmitters](src/hardware/usart.hpp.md#universal-synchronous-asynchronous-receiver-transmitters)
+    * [Universal Serial Interfaces](src/hardware/usi.hpp.md#universal-serial-interfaces)
 * Examples
     * [nbos-project-template](https://github.com/xenris/nbos-project-template)
     * [8x8 LED Matrix Display](https://github.com/xenris/led-matrix-display)
     * [Optima Hitec Receiver PWM/PPM](https://github.com/xenris/hitec-receiver)
-* [Adding Chips/Tests](src/hardware/chip.md)
+* [Adding Chips](src/hardware/chip.hpp.md#adding-chips)
 
 ## Editing documentation
 

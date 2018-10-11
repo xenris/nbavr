@@ -1,4 +1,4 @@
-# Universal Synchronous Asynchronous Receiver Transmitter
+# Universal Synchronous Asynchronous Receiver Transmitters
 
 ```c++
 using Usart = nbos::hw::Usart0;
@@ -17,47 +17,47 @@ Usart::dataRegisterEmptyCallback((callback_t)f);
 
 ## class UsartN
 
-#### enum Mode
+#### enum UsartN::Mode
 * asynchronous
 * synchronous
 * masterSpi
 
-#### enum Parity
+#### enum UsartN::Parity
 * disabled
 * even
 * odd
 
-#### enum StopBits
+#### enum UsartN::StopBits
 * bits1
 * bits2
 
-#### enum CharacterSize
+#### enum UsartN::CharacterSize
 * size5
 * size6
 * size7
 * size8
 * size9
 
-#### enum Polarity
+#### enum UsartN::Polarity
 * txRisingRxFalling
 * txFallingRxRising
 
-#### static constexpr HardwareType getHardwareType()
+#### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 Get the type of hardware that this class represents.
 
-#### static void mode(Mode m)
+#### static void mode([UsartN::Mode](usart.hpp.md#enum-usartnmode) m)
 Set USART mode.
 
-#### static void parity(Parity p)
+#### static void parity([UsartN::Parity](usart.hpp.md#enum-usartnparity) p)
 Set USART parity.
 
-#### static void stopBits(StopBits b)
+#### static void stopBits([UsartN::StopBits](usart.hpp.md#enum-usartnstopbits) b)
 Set number of stop bits.
 
-#### static void characterSize(CharacterSize s)
+#### static void characterSize([UsartN::CharacterSize](usart.hpp.md#enum-usartncharactersize) s)
 Set USART character size.
 
-#### static void polarity(Polarity p)
+#### static void polarity([UsartN::Polarity](usart.hpp.md#enum-usartnpolarity) p)
 Set USART clock polarity.
 
 #### static void baud(uint16_t b)
@@ -84,13 +84,13 @@ Enable/disable transmit complete interrupt.
 #### static void dataRegisterEmptyIntEnable(bool e)
 Enable/disable data register empty interrupt.
 
-#### static void rxCompleteCallback(callback_t callback, void\* data)
+#### static void rxCompleteCallback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 Set callback for receive complete interrupt.
 
-#### static void txCompleteCallback(callback_t callback, void\* data)
+#### static void txCompleteCallback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 Set callback for transmit complete interrupt.
 
-#### static void dataRegisterEmptyCallback(callback_t callback, void\* data)
+#### static void dataRegisterEmptyCallback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
 Set callback for data register empty interrupt.
 
 #### static void push(uint8_t b)

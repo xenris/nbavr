@@ -17,7 +17,7 @@ while(true) {
 
 ## class Pin
 
-#### enum Mode
+#### enum Pin::Mode
 * input
 * inputPullup
 * output
@@ -37,22 +37,22 @@ while(true) {
 * outputAlternatePushPull50MHz
 * outputAlternateOpenDrain50MHz
 
-#### enum Value
+#### enum Pin::Value
 * low
 * high
 
 ## Class PinN : Pin
 
-#### static constexpr [HardwareType](../hardware.md) getHardwareType()
+#### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
-#### static void mode(Mode m)
+#### static void mode([Pin::Mode](pin.hpp.md#enum-pinmode) m)
 
-#### static Mode mode()
+#### static [Pin::Mode](pin.hpp.md#enum-pinmode) mode()
 
-#### static void output(Value v)
+#### static void output([Pin::Value](pin.hpp.md#enum-pinvalue) v)
 
-#### static Value output()
+#### static [Pin::Value](pin.hpp.md#enum-pinvalue) output()
 
-#### static Value input()
+#### static [Pin::Value](pin.hpp.md#enum-pinvalue) input()
 
 #### static void toggle()
