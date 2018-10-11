@@ -1,3 +1,5 @@
+/// [[Index]]
+
 /// # {{Analog to Digital Converters}}
 
 /// ```c++

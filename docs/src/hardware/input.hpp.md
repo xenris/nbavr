@@ -1,3 +1,5 @@
+[Index](../../index.hpp.md#index)
+
 # Timer Input
 
 ```c++

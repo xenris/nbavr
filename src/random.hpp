@@ -1,4 +1,6 @@
-/// # Random
+/// [[Index]]
+
+/// # {{Random}}
 
 /// ## Example
 

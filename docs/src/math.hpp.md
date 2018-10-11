@@ -1,3 +1,5 @@
+[Index](../index.hpp.md#index)
+
 # Maths
 
 #### T max(T a, T b)

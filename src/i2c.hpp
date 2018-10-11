@@ -1,4 +1,6 @@
-/// # I2C
+/// [[Index]]
+
+/// # {{I2c}}
 
 #ifndef NBOS_I2C_HPP
 #define NBOS_I2C_HPP

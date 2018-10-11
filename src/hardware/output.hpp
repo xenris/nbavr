@@ -1,3 +1,5 @@
+/// [[Index]]
+
 /// # Timer Output
 
 /// ```c++

@@ -1,4 +1,6 @@
-# Algorithm
+[Index](../index.hpp.md#index)
+
+# Algorithms
 
 #### void reverse<T\>(T\* array, int length)
 

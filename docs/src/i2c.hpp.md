@@ -1,4 +1,6 @@
-# I2C
+[Index](../index.hpp.md#index)
+
+# I2c
 
 ## class I2c
 

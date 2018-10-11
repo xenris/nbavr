@@ -1,4 +1,6 @@
-/// # Stack
+/// [[Index]]
+
+/// # {{Stack}}
 
 /// ```c++
 /// nbos::Stack<int, 6> stack;

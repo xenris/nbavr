@@ -1,4 +1,6 @@
-/// # Array
+/// [[Index]]
+
+/// # {{Array}}
 
 /// ```c++
 /// nbos::Array<int, 6> array;

@@ -1,3 +1,5 @@
+[Index](../index.hpp.md#index)
+
 # Clock
 
 Useful class for managing the passing of time.<br>

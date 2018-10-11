@@ -1,4 +1,6 @@
-/// # Queue
+/// [[Index]]
+
+/// # {{Queue}}
 
 /// ```c++
 /// nbos::Queue<int, 6> queue;

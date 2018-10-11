@@ -1,3 +1,5 @@
+[Index](../../index.hpp.md#index)
+
 # Two Wire Serial Interfaces
 
 ## class TwiN

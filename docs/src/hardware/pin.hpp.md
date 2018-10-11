@@ -1,3 +1,5 @@
+[Index](../../index.hpp.md#index)
+
 # Digital IO Pins
 
 N is the pin id (0, 1, 2, etc).

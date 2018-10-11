@@ -1,4 +1,6 @@
-/// # Clock
+/// [[Index]]
+
+/// # {{Clock}}
 
 /// Useful class for managing the passing of time.<br>
 /// Required by TaskManager.

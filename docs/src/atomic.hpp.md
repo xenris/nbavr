@@ -1,3 +1,5 @@
+[Index](../index.hpp.md#index)
+
 # Atomic
 
 Used to access variables atomically.

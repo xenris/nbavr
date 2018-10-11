@@ -1,3 +1,5 @@
+/// [[Index]]
+
 /// # {{Two Wire Serial Interfaces}}
 
 #ifndef NBOS_TWI_HPP

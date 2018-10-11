@@ -1,3 +1,5 @@
+/// [[Index]]
+
 /// # {{Digital IO Pins}}
 
 /// N is the pin id (0, 1, 2, etc).

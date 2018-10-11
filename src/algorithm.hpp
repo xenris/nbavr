@@ -1,4 +1,6 @@
-/// # Algorithm
+/// [[Index]]
+
+/// # {{Algorithms}}
 
 #ifndef NBOS_ALGORITHM_HPP
 #define NBOS_ALGORITHM_HPP

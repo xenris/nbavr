@@ -1,3 +1,5 @@
+/// [[Index]]
+
 /// # {{Serial Peripheral Interfaces}}
 
 /// ```c++

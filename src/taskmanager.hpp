@@ -1,4 +1,6 @@
-/// # {{TaskManager}}
+/// [[Index]]
+
+/// # {{Task Manager}}
 
 /// ```c++
 /// const uint64_t cpuFreq = 16000000;

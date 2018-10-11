@@ -1,4 +1,6 @@
-/// # Atomic
+/// [[Index]]
+
+/// # {{Atomic}}
 
 /// Used to access variables atomically.
 ///

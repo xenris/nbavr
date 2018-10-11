@@ -1,4 +1,6 @@
-/// # Vector
+/// [[Index]]
+
+/// # {{Vector}}
 
 /// ```c++
 /// nbos::Vector<int, 6> vector;

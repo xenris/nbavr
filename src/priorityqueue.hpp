@@ -1,4 +1,6 @@
-/// # Priority Queue
+/// [[Index]]
+
+/// # {{Priority Queue}}
 
 /// ```c++
 /// nbos::PriorityQueue<int, 6> priorityQueue;

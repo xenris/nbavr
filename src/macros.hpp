@@ -1,4 +1,6 @@
-/// # Macros
+/// [[Index]]
+
+/// # {{Macros}}
 
 #ifndef NBOS_MACROS_HPP
 #define NBOS_MACROS_HPP

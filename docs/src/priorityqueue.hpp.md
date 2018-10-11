@@ -1,3 +1,5 @@
+[Index](../index.hpp.md#index)
+
 # Priority Queue
 
 ```c++

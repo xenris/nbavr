@@ -1,9 +1,25 @@
 /// # nbos Documentation
 
-/// ## Index
+/// ## {{Index}}
 
-/// * [[Task]]
-/// * [[TaskManager]]
+/// * Multi-Tasking
+///     * [[Task]]
+///     * [[Task Manager]]
+///     * [[Clock]]
+/// * Utilities
+///     * [[Algorithms]]
+///     * [[Array]]
+///     * [[Atomic]]
+///     * [[I2c]]
+///     * [[Macros]]
+///     * [[Maths]]
+///     * [[Priority Queue]]
+///     * [[Queue]]
+///     * [[Random]]
+///     * [[Serial]]
+///     * [[Stack]]
+///     * [[Types]]
+///     * [[Vector]]
 /// * Hardware
 ///     * [[Analog to Digital Converters]]
 ///     * [[Eeprom]]

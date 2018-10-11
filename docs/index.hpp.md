@@ -2,8 +2,24 @@
 
 ## Index
 
-* [Task](src/task.hpp.md#task)
-* [TaskManager](src/taskmanager.hpp.md#taskmanager)
+* Multi-Tasking
+    * [Task](src/task.hpp.md#task)
+    * [Task Manager](src/taskmanager.hpp.md#task-manager)
+    * [Clock](src/clock.hpp.md#clock)
+* Utilities
+    * [Algorithms](src/algorithm.hpp.md#algorithms)
+    * [Array](src/array.hpp.md#array)
+    * [Atomic](src/atomic.hpp.md#atomic)
+    * [I2c](src/i2c.hpp.md#i2c)
+    * [Macros](src/macros.hpp.md#macros)
+    * [Maths](src/math.hpp.md#maths)
+    * [Priority Queue](src/priorityqueue.hpp.md#priority-queue)
+    * [Queue](src/queue.hpp.md#queue)
+    * [Random](src/random.hpp.md#random)
+    * [Serial](src/serial.hpp.md#serial)
+    * [Stack](src/stack.hpp.md#stack)
+    * [Types](src/type.hpp.md#types)
+    * [Vector](src/vector.hpp.md#vector)
 * Hardware
     * [Analog to Digital Converters](src/hardware/adc.hpp.md#analog-to-digital-converters)
     * [Eeprom](src/hardware/eeprom.hpp.md#eeprom)

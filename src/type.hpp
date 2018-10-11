@@ -1,3 +1,7 @@
+/// [[Index]]
+
+/// # {{Types}}
+
 #ifndef NBOS_TYPE_HPP
 #define NBOS_TYPE_HPP
 

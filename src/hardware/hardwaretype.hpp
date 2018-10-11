@@ -1,3 +1,5 @@
+/// [[Index]]
+
 /// # {{Hardware Types}}
 
 #ifndef NBOS_HARDWARE_TYPE_HPP
