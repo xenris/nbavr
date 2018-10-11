@@ -7,7 +7,7 @@ srcfiles=$(find . -not -path '*/.*' -type f -name '*.hpp')
 for srcfile in $srcfiles
 do
     mdfile=${srcfile##./}
-    mdfile="docs/${mdfile%.hpp}.md"
+    mdfile="docs/${mdfile}.md"
 
     mkdir -p $(dirname $mdfile)
 
