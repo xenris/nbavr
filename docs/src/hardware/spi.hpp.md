@@ -64,7 +64,7 @@ while(!nbos::hw::Spi0::intFlag());
 
 #### static void intEnable(bool b)
 
-#### static void callback([callback_t](../type.hpp.md#callbackt--void-void) callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
 Set the callback for when the serial transfer is complete.
 
 #### static void dataOrder([SpiN::DataOrder](spi.hpp.md#enum-spindataorder) d)

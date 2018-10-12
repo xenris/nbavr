@@ -65,7 +65,7 @@ The underlying type of this timer/counter. (uint8_t or uint16_t)
 
 #### static void waveform([TimerN::Waveform](timer.hpp.md#enum-timernwaveform) w)
 
-#### static void callback([callback_t](../type.hpp.md#callbackt--void-void) callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
 Set the timer overflow callback.
 
 #### static void intEnable(bool b)

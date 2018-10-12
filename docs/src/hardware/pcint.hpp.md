@@ -23,7 +23,7 @@ atomic([]() {
 #### static void mask(uint8_t m)
 Set which pins trigger this interrupt.
 
-#### static void callback([callback_t](../type.hpp.md#callbackt--void-void) callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
 
 #### static bool intFlag()
 

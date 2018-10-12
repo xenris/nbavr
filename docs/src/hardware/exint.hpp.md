@@ -28,7 +28,7 @@ atomic([]() {
 
 #### static void trigger([ExIntN::Trigger](exint.hpp.md#enum-exintntrigger) t)
 
-#### static void callback([callback_t](../type.hpp.md#callbackt--void-void) callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
 
 #### static bool intFlag()
 

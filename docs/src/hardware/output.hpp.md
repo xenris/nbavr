@@ -37,7 +37,7 @@ The IO pin which relates to this output.
 
 #### static void mode([TimerN::Mode](output.hpp.md#enum-timernmode) m)
 
-#### static void callback([callback_t](../type.hpp.md#callbackt--void-void) callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
 
 #### static void intEnable(bool b)
 
