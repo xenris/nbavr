@@ -396,6 +396,21 @@ TEST(Random, Limits) {
     }
 }
 
+TEST(Type, Optional) {
+    Optional<int> a;
+
+    EXPECT_FALSE(a);
+
+    a = 5;
+
+    EXPECT_TRUE(a);
+    EXPECT_EQ(*a, 5);
+
+    a = {};
+
+    EXPECT_FALSE(a);
+}
+
 template <typename Clock, typename cout_t, typename cin_t>
 struct Taskk : Task<Clock> {
     cout_t& cout;

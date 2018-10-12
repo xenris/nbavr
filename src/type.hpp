@@ -386,24 +386,51 @@ struct integer_min<int64_t> : integral_constant<int64_t, 0xFFFFFFFFFFFFFFFF> {};
 template<>
 struct integer_min<uint64_t> : integral_constant<uint64_t, 0x0000000000000000> {};
 
+/// ## class {{Optional}}<class T>
+/// Class who's value can be either something or nothing.
+///
+/// ```c++
+/// Optional<int> o;
+///
+/// bool b = o; // b = false
+///
+/// o = 5;
+///
+/// b = o; // b = true
+///
+/// int a = *b; // a = 5
+/// int x = b; // x = 1 (a.k.a. true)
+///
+/// o = {};
+///
+/// b = o; // b = false
+/// ```
 template <class T>
 class Optional {
-    const bool hasValue;
-    const T value;
+    bool hasValue;
+    T value;
 
 public:
 
+    /// #### Optional()
+    /// Constructor for "nothing"
     Optional() : hasValue(false) {
     }
 
-    Optional(T v) : hasValue(true), value(v) {
+    /// #### Optional(T value)
+    /// Constructor for "something"
+    Optional(const T& v) : hasValue(true), value(v) {
     }
 
+    /// #### operator bool()
+    /// True if "something", false if "nothing".
     operator bool() const {
         return hasValue;
     }
 
-    T operator *() const {
+    /// #### T operator *()
+    /// Returns the stored value.
+    const T& operator *() const {
         return value;
     }
 };
