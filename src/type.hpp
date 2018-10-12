@@ -386,7 +386,7 @@ struct integer_min<int64_t> : integral_constant<int64_t, 0xFFFFFFFFFFFFFFFF> {};
 template<>
 struct integer_min<uint64_t> : integral_constant<uint64_t, 0x0000000000000000> {};
 
-/// ## class {{Optional}}<class T>
+/// ## class {{Optional}}<class T\>
 /// Class who's value can be either something or nothing.
 ///
 /// ```c++

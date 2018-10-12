@@ -4,7 +4,7 @@
 
 #### using callback_t = void (*)(void*)
 
-## class Optional<class T>
+## class Optional<class T\>
 Class who's value can be either something or nothing.
 
 ```c++
