@@ -35,7 +35,7 @@ The IO pin which relates to this input.
 
 #### static void edge([TimerN::Edge](input.hpp.md#enum-timernedge) e)
 
-#### static void callback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#callbackt--void-void) callback, void\* data)
 
 #### static void intEnable(bool b)
 

@@ -80,7 +80,7 @@ const uint16_t value = Adc::value();
 
 #### static void trigger([AdcN::Trigger](adc.hpp.md#enum-adcntrigger) t)
 
-#### static void callback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
+#### static void callback([callback_t](../type.hpp.md#callbackt--void-void) callback, void\* data)
 
 #### static void intEnable(bool e)
 

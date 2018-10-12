@@ -2,7 +2,8 @@
 
 # Types
 
-#### using callback_t = void (*)(void*)
+#### callback_t = void (\*)(void\*)
+The basic callback function type commonly used.
 
 ## class Optional<class T\>
 Class who's value can be either something or nothing.

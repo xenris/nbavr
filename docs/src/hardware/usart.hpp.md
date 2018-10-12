@@ -72,11 +72,11 @@ Usart::dataRegisterEmptyCallback((callback_t)f);
 
 #### static void dataRegisterEmptyIntEnable(bool e)
 
-#### static void rxCompleteCallback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
+#### static void rxCompleteCallback([callback_t](../type.hpp.md#callbackt--void-void) callback, void\* data)
 
-#### static void txCompleteCallback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
+#### static void txCompleteCallback([callback_t](../type.hpp.md#callbackt--void-void) callback, void\* data)
 
-#### static void dataRegisterEmptyCallback([callback_t](../type.hpp.md#using-callbackt--void-void) callback, void\* data)
+#### static void dataRegisterEmptyCallback([callback_t](../type.hpp.md#callbackt--void-void) callback, void\* data)
 
 #### static void push(uint8_t b)
 
