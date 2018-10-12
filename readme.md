@@ -33,7 +33,7 @@ See [nbos-project-template](https://github.com/xenris/nbos-project-template).
 
 ## Documentation
 
-[Documentation](docs/index.md) is limited, but there should be enough to get started.
+[Documentation](docs/index.hpp.md) is limited, but there should be enough to get started.
 
 ## Devices included
 
