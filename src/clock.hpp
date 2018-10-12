@@ -161,7 +161,7 @@ public:
         const bool success = calls.push(dc);
 
         if(success) {
-            calls.peek(&dc);
+            dc = *calls.peek();
 
             int64_t delta = dc.tick - now;
 
@@ -222,17 +222,17 @@ private:
         auto& self = getInstance();
         auto& calls = self._calls;
 
-        DelayedCall delayedCall;
+        Optional<DelayedCall> delayedCall;
 
-        if(calls.peek(&delayedCall)) {
+        if((delayedCall = calls.peek())) {
             loop: ;
 
-            delayedCall.callback(delayedCall.data);
+            delayedCall->callback(delayedCall->data);
 
             calls.pop();
 
-            if(calls.peek(&delayedCall)) {
-                int64_t delta = delayedCall.tick - getTicks();
+            if((delayedCall = calls.peek())) {
+                int64_t delta = delayedCall->tick - getTicks();
 
                 // FIXME This could cancel potential calls.
                 TimerT::OutputA::intFlagClear();
@@ -240,7 +240,7 @@ private:
                 if(delta <= 2) {
                     goto loop;
                 } else if(delta < (EightBitCounter ? 255 : 65536)) {
-                    TimerT::OutputA::value(delayedCall.tick);
+                    TimerT::OutputA::value(delayedCall->tick);
                     TimerT::OutputA::intEnable(true);
                 } else {
                     TimerT::OutputA::intEnable(false);
@@ -260,10 +260,10 @@ private:
         self._ticks += bv<uint64_t>(sizeof(typename TimerT::type) * 8);
 
         if(!TimerT::OutputA::intEnabled()) {
-            DelayedCall delayedCall;
+            Optional<DelayedCall> delayedCall;
 
-            if(calls.peek(&delayedCall)) {
-                int64_t delta = delayedCall.tick - getTicks();
+            if((delayedCall = calls.peek())) {
+                int64_t delta = delayedCall->tick - getTicks();
 
                 // FIXME This could cancel potential calls.
                 TimerT::OutputA::intFlagClear();
@@ -271,7 +271,7 @@ private:
                 if(delta <= 2) {
                     handleDelayedCall();
                 } else if(delta < (EightBitCounter ? 255 : 65536)) {
-                    TimerT::OutputA::value(delayedCall.tick);
+                    TimerT::OutputA::value(delayedCall->tick);
                     TimerT::OutputA::intEnable(true);
                 }
             } else {

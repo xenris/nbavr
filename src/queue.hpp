@@ -84,34 +84,28 @@ public:
         return true;
     }
 
-    /// #### bool pop(Type\* t)
-    /// Returns true on success.
-    bool pop(Type*const t = nullptr) {
+    /// #### [[Optional]]<Type\> pop()
+    Optional<Type> pop() {
         if(empty()) {
-            return false;
+            return {};
         }
 
-        if(t != nullptr) {
-            *t = _buffer[_tail];
-        }
+        const Optional<Type> result = _buffer[_tail];
 
         _tail = (_tail + 1) % _bufferSize;
 
         _full = false;
 
-        return true;
+        return result;
     }
 
-    /// #### bool peek(Type\* t)
-    /// Returns true on success.
-    bool peek(Type* t) {
+    /// #### [[Optional]]<Type\> peek()
+    Optional<Type> peek() const {
         if(empty()) {
-            return false;
+            return {};
         }
 
-        *t = _buffer[_tail];
-
-        return true;
+        return _buffer[_tail];
     }
 
     /// #### void clear()

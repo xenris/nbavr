@@ -144,30 +144,30 @@ TEST(Container, Queue) {
     EXPECT_EQ(queue.size(), 3);
     EXPECT_EQ(queue.capacity(), 3);
 
-    int16_t n;
-    EXPECT_EQ(queue.pop(&n), true);
+    Optional<int16_t> n;
+    EXPECT_EQ(n = queue.pop(), true);
     EXPECT_EQ(queue.size(), 2);
-    EXPECT_EQ(n, 1);
-    EXPECT_EQ(queue.pop(&n), true);
+    EXPECT_EQ(*n, 1);
+    EXPECT_EQ(n = queue.pop(), true);
     EXPECT_EQ(queue.size(), 1);
-    EXPECT_EQ(n, 2);
+    EXPECT_EQ(*n, 2);
 
     EXPECT_EQ(queue.full(), false);
 
     EXPECT_EQ(queue.push(5), true);
     EXPECT_EQ(queue.size(), 2);
 
-    EXPECT_EQ(queue.pop(&n), true);
+    EXPECT_EQ(n = queue.pop(), true);
     EXPECT_EQ(queue.size(), 1);
-    EXPECT_EQ(n, 3);
+    EXPECT_EQ(*n, 3);
 
-    EXPECT_EQ(queue.pop(&n), true);
+    EXPECT_EQ(n = queue.pop(), true);
     EXPECT_EQ(queue.size(), 0);
-    EXPECT_EQ(n, 5);
+    EXPECT_EQ(*n, 5);
 
     EXPECT_EQ(queue.empty(), true);
 
-    EXPECT_EQ(queue.pop(&n), false);
+    EXPECT_EQ(n = queue.pop(), false);
     EXPECT_EQ(queue.size(), 0);
 
     EXPECT_EQ(queue.push(6), true);
@@ -224,30 +224,30 @@ TEST(Container, Stack) {
     EXPECT_EQ(stack.size(), 3);
     EXPECT_EQ(stack.capacity(), 3);
 
-    int16_t n;
-    EXPECT_EQ(stack.pop(&n), true);
+    Optional<int16_t> n;
+    EXPECT_EQ(n = stack.pop(), true);
     EXPECT_EQ(stack.size(), 2);
-    EXPECT_EQ(n, 3);
-    EXPECT_EQ(stack.pop(&n), true);
+    EXPECT_EQ(*n, 3);
+    EXPECT_EQ(n = stack.pop(), true);
     EXPECT_EQ(stack.size(), 1);
-    EXPECT_EQ(n, 2);
+    EXPECT_EQ(*n, 2);
 
     EXPECT_EQ(stack.full(), false);
 
     EXPECT_EQ(stack.push(5), true);
     EXPECT_EQ(stack.size(), 2);
 
-    EXPECT_EQ(stack.pop(&n), true);
+    EXPECT_EQ(n = stack.pop(), true);
     EXPECT_EQ(stack.size(), 1);
-    EXPECT_EQ(n, 5);
+    EXPECT_EQ(*n, 5);
 
-    EXPECT_EQ(stack.pop(&n), true);
+    EXPECT_EQ(n = stack.pop(), true);
     EXPECT_EQ(stack.size(), 0);
-    EXPECT_EQ(n, 1);
+    EXPECT_EQ(*n, 1);
 
     EXPECT_EQ(stack.empty(), true);
 
-    EXPECT_EQ(stack.pop(&n), false);
+    EXPECT_EQ(n = stack.pop(), false);
     EXPECT_EQ(stack.size(), 0);
 
     EXPECT_EQ(stack.push(6), true);
@@ -313,26 +313,26 @@ TEST(Container, PriorityQueue) {
     EXPECT_TRUE(pq.full());
     EXPECT_EQ(pq.size(), 5);
 
-    int8_t n;
+    Optional<int8_t> n;
 
-    EXPECT_TRUE(pq.pop(&n));
-    EXPECT_EQ(n, 1);
+    EXPECT_TRUE(n = pq.pop());
+    EXPECT_EQ(*n, 1);
 
-    EXPECT_TRUE(pq.pop(&n));
-    EXPECT_EQ(n, 2);
+    EXPECT_TRUE(n = pq.pop());
+    EXPECT_EQ(*n, 2);
 
     EXPECT_FALSE(pq.empty());
     EXPECT_FALSE(pq.full());
     EXPECT_EQ(pq.size(), 3);
 
-    EXPECT_TRUE(pq.pop(&n));
-    EXPECT_EQ(n, 3);
+    EXPECT_TRUE(n = pq.pop());
+    EXPECT_EQ(*n, 3);
 
-    EXPECT_TRUE(pq.pop(&n));
-    EXPECT_EQ(n, 4);
+    EXPECT_TRUE(n = pq.pop());
+    EXPECT_EQ(*n, 4);
 
-    EXPECT_TRUE(pq.pop(&n));
-    EXPECT_EQ(n, 6);
+    EXPECT_TRUE(n = pq.pop());
+    EXPECT_EQ(*n, 6);
 
     EXPECT_TRUE(pq.empty());
     EXPECT_FALSE(pq.full());

@@ -34,11 +34,9 @@ Construct a priority queue with the given buffer.
 #### bool push(T t)
 Returns true on success.
 
-#### bool pop(T\* t)
-Returns true on success.
+#### [Optional](type.hpp.md#class-optionalclass-t)<Type> pop()
 
-#### bool peek(T\* t)
-Returns true on success.
+#### [Optional](type.hpp.md#class-optionalclass-t)<Type\> peek()
 
 #### void clear()
 Remove all elements from the priority queue.

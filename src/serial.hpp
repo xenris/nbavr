@@ -73,10 +73,10 @@ private:
     }
 
     static void usartDataRegisterEmpty(Queue<char>* out) {
-        char d;
+        Optional<char> d;
 
-        if((out != nullptr) && out->pop(&d)) {
-            Usart::push(d);
+        if((out != nullptr) && (d = out->pop())) {
+            Usart::push(*d);
         } else {
             Usart::dataRegisterEmptyIntEnable(false);
         }

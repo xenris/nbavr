@@ -39,11 +39,9 @@ Construct a queue with the given buffer.
 #### bool push(Type t)
 Returns true on success.
 
-#### bool pop(Type\* t)
-Returns true on success.
+#### [Optional](type.hpp.md#class-optionalclass-t)<Type\> pop()
 
-#### bool peek(Type\* t)
-Returns true on success.
+#### [Optional](type.hpp.md#class-optionalclass-t)<Type\> peek()
 
 #### void clear()
 Remove all elements from the queue.
