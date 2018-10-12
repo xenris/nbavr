@@ -3,4 +3,5 @@
 /// # {{Editing documentation}}
 
 /// All documents in the docs/ directory are generated with [docgen](https://github.com/xenris/docgen)
-/// To modify documents find their equivalent .hpp file and modify that.
+/// using the command "docgen -d $(find . -regex '.+\..pp')". To modify documents find their
+/// equivalent .hpp file, modify that, then run docgen.
