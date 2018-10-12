@@ -35,3 +35,6 @@ True if "something", false if "nothing".
 
 #### T operator *()
 Returns the stored value.
+
+#### T\* operator ->()
+Pointer access to the stored value.

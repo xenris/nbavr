@@ -433,6 +433,12 @@ public:
     const T& operator *() const {
         return value;
     }
+
+    /// #### T\* operator ->()
+    /// Pointer access to the stored value.
+    const T* operator ->() const {
+        return &value;
+    }
 };
 
 #endif
