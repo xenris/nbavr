@@ -15,7 +15,7 @@
 ///
 /// while(!Adc::intFlag());
 ///
-/// const uint16_t value = Adc::value();
+/// const Word16 value = Adc::value();
 /// ```
 
 #ifndef NBOS_ADC_HPP
@@ -25,6 +25,7 @@
 #include "isr.hpp"
 #include "macros.hpp"
 #include "system.hpp"
+#include "callback.hpp"
 
 #include "loopi"
 
@@ -52,7 +53,7 @@ struct AdcN {
     /// * internal_1_1
     /// * internal_2_56
     /// * internal_2_56_cap
-    enum class Reference : uint8_t {
+    enum class Reference {
         #if DEFINED(ADC_N(REFERENCE_AREF_ID))
             aref = ADC_N(REFERENCE_AREF_ID),
         #endif
@@ -90,7 +91,7 @@ struct AdcN {
     /// * adc8
     /// * vbg
     /// * gnd
-    enum class Channel : uint8_t {
+    enum class Channel {
         #if DEFINED(ADC_N(CHANNEL_0_ID))
             adc0 = ADC_N(CHANNEL_0_ID),
         #endif
@@ -145,7 +146,7 @@ struct AdcN {
         /// * div32
         /// * div64
         /// * div128
-        enum class Prescaler : uint8_t {
+        enum class Prescaler {
             #if DEFINED(ADC_N(PRESCALER_2_ID))
                 div2 = ADC_N(PRESCALER_2_ID),
             #endif
@@ -182,7 +183,7 @@ struct AdcN {
         /// * timer1Overflow
         /// * timer1CaptureEvent
         /// * freeRunning
-        enum class Trigger : uint8_t {
+        enum class Trigger {
             #if DEFINED(ADC_N(TRIGGER_SINGLE_CONVERSION_ID))
                 singleConversion = ADC_N(TRIGGER_SINGLE_CONVERSION_ID),
             #endif
@@ -219,8 +220,8 @@ struct AdcN {
     }
 
     #if DEFINED(ADC_N(ENABLE_BIT_0_BIT))
-        /// #### static void enable(bool e)
-        static force_inline void enable(bool e) {
+        /// #### static void enable(Bool e)
+        static force_inline void enable(Bool e) {
             setBit_(REG(ADC_N(ENABLE_BIT_0_REG)), ADC_N(ENABLE_BIT_0_BIT), e);
         }
     #endif
@@ -233,8 +234,8 @@ struct AdcN {
     #endif
 
     #if REG_DEFINED(ADC_N(DATA_REG))
-        /// #### static uint16_t value()
-        static force_inline uint16_t value() {
+        /// #### static Word16 value()
+        static force_inline Word16 value() {
             return *REG(ADC_N(DATA_REG));
         }
     #endif
@@ -242,33 +243,33 @@ struct AdcN {
     #if DEFINED(ADC_N(REFERENCE_BIT_0_BIT))
         /// #### static void reference([[AdcN::Reference]] r)
         static force_inline void reference(Reference r) {
-            setBit_(REG(ADC_N(REFERENCE_BIT_0_REG)), ADC_N(REFERENCE_BIT_0_BIT), uint8_t(r) & 0x01);
-            setBit_(REG(ADC_N(REFERENCE_BIT_1_REG)), ADC_N(REFERENCE_BIT_1_BIT), uint8_t(r) & 0x02);
+            setBit_(REG(ADC_N(REFERENCE_BIT_0_REG)), ADC_N(REFERENCE_BIT_0_BIT), Int(r) & 0x01);
+            setBit_(REG(ADC_N(REFERENCE_BIT_1_REG)), ADC_N(REFERENCE_BIT_1_BIT), Int(r) & 0x02);
         }
     #endif
 
     #if DEFINED(ADC_N(CHANNEL_BIT_0_BIT))
         /// #### static void channel([[AdcN::Channel]] c)
         static force_inline void channel(Channel c) {
-            setBit_(REG(ADC_N(CHANNEL_BIT_0_REG)), ADC_N(CHANNEL_BIT_0_BIT), uint8_t(c) & 0x01);
-            setBit_(REG(ADC_N(CHANNEL_BIT_1_REG)), ADC_N(CHANNEL_BIT_1_BIT), uint8_t(c) & 0x02);
-            setBit_(REG(ADC_N(CHANNEL_BIT_2_REG)), ADC_N(CHANNEL_BIT_2_BIT), uint8_t(c) & 0x04);
-            setBit_(REG(ADC_N(CHANNEL_BIT_3_REG)), ADC_N(CHANNEL_BIT_3_BIT), uint8_t(c) & 0x08);
+            setBit_(REG(ADC_N(CHANNEL_BIT_0_REG)), ADC_N(CHANNEL_BIT_0_BIT), Int(c) & 0x01);
+            setBit_(REG(ADC_N(CHANNEL_BIT_1_REG)), ADC_N(CHANNEL_BIT_1_BIT), Int(c) & 0x02);
+            setBit_(REG(ADC_N(CHANNEL_BIT_2_REG)), ADC_N(CHANNEL_BIT_2_BIT), Int(c) & 0x04);
+            setBit_(REG(ADC_N(CHANNEL_BIT_3_REG)), ADC_N(CHANNEL_BIT_3_BIT), Int(c) & 0x08);
         }
     #endif
 
     #if DEFINED(ADC_N(PRESCALER_BIT_0_BIT))
         /// #### static void prescaler([[AdcN::Prescaler]] p)
         static force_inline void prescaler(Prescaler p) {
-            setBit_(REG(ADC_N(PRESCALER_BIT_0_REG)), ADC_N(PRESCALER_BIT_0_BIT), uint8_t(p) & 0x01);
-            setBit_(REG(ADC_N(PRESCALER_BIT_1_REG)), ADC_N(PRESCALER_BIT_1_BIT), uint8_t(p) & 0x02);
-            setBit_(REG(ADC_N(PRESCALER_BIT_2_REG)), ADC_N(PRESCALER_BIT_2_BIT), uint8_t(p) & 0x04);
+            setBit_(REG(ADC_N(PRESCALER_BIT_0_REG)), ADC_N(PRESCALER_BIT_0_BIT), Int(p) & 0x01);
+            setBit_(REG(ADC_N(PRESCALER_BIT_1_REG)), ADC_N(PRESCALER_BIT_1_BIT), Int(p) & 0x02);
+            setBit_(REG(ADC_N(PRESCALER_BIT_2_REG)), ADC_N(PRESCALER_BIT_2_BIT), Int(p) & 0x04);
         }
     #endif
 
     #if DEFINED(ADC_N(LEFT_ADJUST_BIT_0_BIT))
-        /// #### static void leftAdjust(bool l)
-        static force_inline void leftAdjust(bool l) {
+        /// #### static void leftAdjust(Bool l)
+        static force_inline void leftAdjust(Bool l) {
             setBit_(REG(ADC_N(LEFT_ADJUST_BIT_0_REG)), ADC_N(LEFT_ADJUST_BIT_0_BIT), l);
         }
     #endif
@@ -276,48 +277,44 @@ struct AdcN {
     #if DEFINED(ADC_N(TRIGGER_BIT_0_BIT))
         /// #### static void trigger([[AdcN::Trigger]] t)
         static force_inline void trigger(Trigger t) {
-            setBit_(REG(ADC_N(TRIGGER_BIT_0_REG)), ADC_N(TRIGGER_BIT_0_BIT), uint8_t(t) & 0x01);
+            setBit_(REG(ADC_N(TRIGGER_BIT_0_REG)), ADC_N(TRIGGER_BIT_0_BIT), Int(t) & 0x01);
 
             #if DEFINED(ADC_N(TRIGGER_BIT_1_BIT))
-                setBit_(REG(ADC_N(TRIGGER_BIT_1_REG)), ADC_N(TRIGGER_BIT_1_BIT), uint8_t(t) & 0x02);
+                setBit_(REG(ADC_N(TRIGGER_BIT_1_REG)), ADC_N(TRIGGER_BIT_1_BIT), Int(t) & 0x02);
             #endif
 
             #if DEFINED(ADC_N(TRIGGER_BIT_2_BIT))
-                setBit_(REG(ADC_N(TRIGGER_BIT_2_REG)), ADC_N(TRIGGER_BIT_2_BIT), uint8_t(t) & 0x04);
+                setBit_(REG(ADC_N(TRIGGER_BIT_2_REG)), ADC_N(TRIGGER_BIT_2_BIT), Int(t) & 0x04);
             #endif
 
             #if DEFINED(ADC_N(TRIGGER_BIT_3_BIT))
-                setBit_(REG(ADC_N(TRIGGER_BIT_3_REG)), ADC_N(TRIGGER_BIT_3_BIT), uint8_t(t) & 0x08);
+                setBit_(REG(ADC_N(TRIGGER_BIT_3_REG)), ADC_N(TRIGGER_BIT_3_BIT), Int(t) & 0x08);
             #endif
         }
     #endif
 
-    /// #### static void callback([[callback_t]] callback, void\* data)
-    static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
-        static callback_t f = nullptr;
-        static void* d = nullptr;
+    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
+    template <class T>
+    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
+        callback((Callback<void>)function, data);
+    }
 
-        if(callback == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = callback;
-            d = data;
-        }
+    /// #### static void callCallback()
+    static force_inline void callCallback() {
+        callback();
     }
 
     #if DEFINED(ADC_N(INT_ENABLE_BIT_0_BIT))
-        /// #### static void intEnable(bool e)
-        static force_inline void intEnable(bool e) {
+        /// #### static void intEnable(Bool e)
+        static force_inline void intEnable(Bool e) {
             setBit_(REG(ADC_N(INT_ENABLE_BIT_0_REG)), ADC_N(INT_ENABLE_BIT_0_BIT), e);
         }
     #endif
 
     #if DEFINED(ADC_N(INT_FLAG_BIT_0_BIT))
-        /// #### static bool intFlag()
-        static force_inline bool intFlag() {
-            return *REG(ADC_N(INT_FLAG_BIT_0_REG)) & bv(ADC_N(INT_FLAG_BIT_0_BIT));
+        /// #### static Bool intFlag()
+        static force_inline Bool intFlag() {
+            return Bool(*REG(ADC_N(INT_FLAG_BIT_0_REG)) & bv(ADC_N(INT_FLAG_BIT_0_BIT)));
         }
     #endif
 
@@ -327,10 +324,26 @@ struct AdcN {
             setBit_(REG(ADC_N(INT_FLAG_BIT_0_REG)), ADC_N(INT_FLAG_BIT_0_BIT), true);
         }
     #endif
+
+private:
+
+    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
+        static Callback<void> f = nullptr;
+        static void* d = nullptr;
+
+        if(function == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = function;
+            d = data;
+        }
+    }
 };
 
 ISR(ADC_N(INT_VECTOR)) {
-    AdcN::callback();
+    AdcN::callCallback();
 }
 
 } // nbos::hw

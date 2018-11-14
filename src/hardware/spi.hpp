@@ -29,8 +29,8 @@
 #include "chip.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
-#include "type.hpp"
 #include "system.hpp"
+#include "callback.hpp"
 #include "port.hpp"
 
 #include "loopi"
@@ -68,7 +68,7 @@ struct SpiN {
         /// #### enum {{SpiN::DataOrder}}
         /// * msbFirst
         /// * lsbFirst
-        enum class DataOrder : uint8_t {
+        enum class DataOrder {
             msbFirst = SPI_N(DATA_ORDER_MSB_FIRST_ID),
             lsbFirst = SPI_N(DATA_ORDER_LSB_FIRST_ID),
         };
@@ -78,7 +78,7 @@ struct SpiN {
         /// #### enum {{SpiN::MasterSlave}}
         /// * master
         /// * slave
-        enum class MasterSlave : uint8_t {
+        enum class MasterSlave {
             master = SPI_N(MASTER_SLAVE_SELECT_MASTER_ID),
             slave = SPI_N(MASTER_SLAVE_SELECT_SLAVE_ID),
         };
@@ -88,7 +88,7 @@ struct SpiN {
         /// #### enum {{SpiN::Polarity}}
         /// * leadingRisingTrailingFalling
         /// * leadingFallingTrailingRising
-        enum class Polarity : uint8_t {
+        enum class Polarity {
             leadingRisingTrailingFalling = SPI_N(POLARITY_LEADING_RISING_TRAILING_FALLING_ID),
             leadingFallingTrailingRising = SPI_N(POLARITY_LEADING_FALLING_TRAILING_RISING_ID),
         };
@@ -98,7 +98,7 @@ struct SpiN {
         /// #### enum {{SpiN::Phase}}
         /// * leadingSampleTrailingSetup
         /// * leadingSetupTrailingSample
-        enum class Phase : uint8_t {
+        enum class Phase {
             leadingSampleTrailingSetup = SPI_N(PHASE_LEADING_SAMPLE_TRAILING_SETUP_ID),
             leadingSetupTrailingSample = SPI_N(PHASE_LEADING_SETUP_TRAILING_SAMPLE_ID),
         };
@@ -113,7 +113,7 @@ struct SpiN {
         /// * div32
         /// * div64
         /// * div128
-        enum class Clock : uint8_t {
+        enum class Clock {
             #if DEFINED(SPI_N(CLOCK_DIV_2_ID))
                 div2 = SPI_N(CLOCK_DIV_2_ID),
             #endif
@@ -150,81 +150,77 @@ struct SpiN {
     }
 
     #if DEFINED(SPI_N(ENABLE_BIT_0_BIT))
-        /// #### static void enable(bool b)
-        static force_inline void enable(bool b) {
+        /// #### static void enable(Bool b)
+        static force_inline void enable(Bool b) {
             setBit_(REG(SPI_N(ENABLE_BIT_0_REG)), SPI_N(ENABLE_BIT_0_BIT), b);
         }
     #endif
 
     #if DEFINED(SPI_N(INT_ENABLE_BIT_0_BIT))
-        /// #### static void intEnable(bool b)
-        static force_inline void intEnable(bool b) {
+        /// #### static void intEnable(Bool b)
+        static force_inline void intEnable(Bool b) {
             setBit_(REG(SPI_N(INT_ENABLE_BIT_0_REG)), SPI_N(INT_ENABLE_BIT_0_BIT), b);
         }
     #endif
 
-    /// #### static void callback([[callback_t]] callback, void\* data)
+    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
     /// Set the callback for when the serial transfer is complete.
-    static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
-        static callback_t f = nullptr;
-        static void* d = nullptr;
+    template <class T>
+    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
+        callback((Callback<void>)function, data);
+    }
 
-        if(callback == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = callback;
-            d = data;
-        }
+    /// #### static void callCallback()
+    static force_inline void callCallback() {
+        callback();
     }
 
     #if DEFINED(SPI_N(DATA_ORDER_BIT_0_BIT))
         /// #### static void dataOrder([[SpiN::DataOrder]] d)
         static force_inline void dataOrder(DataOrder d) {
-            setBit_(REG(SPI_N(DATA_ORDER_BIT_0_REG)), SPI_N(DATA_ORDER_BIT_0_BIT), uint8_t(d) & 0x01);
+            setBit_(REG(SPI_N(DATA_ORDER_BIT_0_REG)), SPI_N(DATA_ORDER_BIT_0_BIT), Int(d) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT))
         /// #### static void masterSlave([[SpiN::MasterSlave]] m)
         static force_inline void masterSlave(MasterSlave m) {
-            setBit_(REG(SPI_N(MASTER_SLAVE_SELECT_BIT_0_REG)), SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT), uint8_t(m) & 0x01);
+            setBit_(REG(SPI_N(MASTER_SLAVE_SELECT_BIT_0_REG)), SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT), Int(m) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(POLARITY_BIT_0_BIT))
         /// #### static void polarity([[SpiN::Polarity]] p)
         static force_inline void polarity(Polarity p) {
-            setBit_(REG(SPI_N(POLARITY_BIT_0_REG)), SPI_N(POLARITY_BIT_0_BIT), uint8_t(p) & 0x01);
+            setBit_(REG(SPI_N(POLARITY_BIT_0_REG)), SPI_N(POLARITY_BIT_0_BIT), Int(p) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(PHASE_BIT_0_BIT))
         /// #### static void phase([[SpiN::Phase]] p)
         static force_inline void phase(Phase p) {
-            setBit_(REG(SPI_N(PHASE_BIT_0_REG)), SPI_N(PHASE_BIT_0_BIT), uint8_t(p) & 0x01);
+            setBit_(REG(SPI_N(PHASE_BIT_0_REG)), SPI_N(PHASE_BIT_0_BIT), Int(p) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(CLOCK_BIT_0_BIT))
         /// #### static void clock([[SpiN::Clock]] c)
         static force_inline void clock(Clock c) {
-            setBit_(REG(SPI_N(CLOCK_BIT_0_REG)), SPI_N(CLOCK_BIT_0_BIT), uint8_t(c) & 0x01);
+            setBit_(REG(SPI_N(CLOCK_BIT_0_REG)), SPI_N(CLOCK_BIT_0_BIT), Int(c) & 0x01);
 
             #if DEFINED(SPI_N(CLOCK_BIT_1_BIT))
-                setBit_(REG(SPI_N(CLOCK_BIT_1_REG)), SPI_N(CLOCK_BIT_1_BIT), uint8_t(c) & 0x02);
+                setBit_(REG(SPI_N(CLOCK_BIT_1_REG)), SPI_N(CLOCK_BIT_1_BIT), Int(c) & 0x02);
             #endif
 
             #if DEFINED(SPI_N(CLOCK_BIT_2_BIT))
-                setBit_(REG(SPI_N(CLOCK_BIT_2_REG)), SPI_N(CLOCK_BIT_2_BIT), uint8_t(c) & 0x04);
+                setBit_(REG(SPI_N(CLOCK_BIT_2_REG)), SPI_N(CLOCK_BIT_2_BIT), Int(c) & 0x04);
             #endif
         }
     #endif
 
     #if DEFINED(SPI_N(INT_FLAG_BIT_0_BIT))
-        /// #### static bool intFlag()
-        static force_inline bool intFlag() {
+        /// #### static Bool intFlag()
+        static force_inline Bool intFlag() {
             return getBit(REG(SPI_N(INT_FLAG_BIT_0_REG)), SPI_N(INT_FLAG_BIT_0_BIT));
         }
 
@@ -235,8 +231,8 @@ struct SpiN {
     #endif
 
     #if DEFINED(SPI_N(COLLISION_FLAG_BIT_0_BIT))
-        /// #### static bool collisionFlag()
-        static force_inline bool collisionFlag() {
+        /// #### static Bool collisionFlag()
+        static force_inline Bool collisionFlag() {
             return getBit(REG(SPI_N(COLLISION_FLAG_BIT_0_REG)), SPI_N(COLLISION_FLAG_BIT_0_BIT));
         }
 
@@ -247,20 +243,36 @@ struct SpiN {
     #endif
 
     #if REG_DEFINED(SPI_N(DATA_REG))
-        /// #### static void data(uint8_t d)
-        static force_inline void data(uint8_t d) {
+        /// #### static void data(Word8 d)
+        static force_inline void data(Word8 d) {
             *REG(SPI_N(DATA_REG)) = d;
         }
 
-        /// #### static uint8_t data()
-        static force_inline uint8_t data() {
+        /// #### static Word8 data()
+        static force_inline Word8 data() {
             return *REG(SPI_N(DATA_REG));
         }
     #endif
+
+private:
+
+    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
+        static Callback<void> f = nullptr;
+        static void* d = nullptr;
+
+        if(function == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = function;
+            d = data;
+        }
+    }
 };
 
 ISR(SPI_N(INT_VECTOR)) {
-    SpiN::callback();
+    SpiN::callCallback();
 }
 
 } // nbos::hw

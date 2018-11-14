@@ -35,14 +35,16 @@ The IO pin which relates to this output.
 
 #### static T value()
 
-#### static void mode([TimerN::Mode](output.hpp.md#enum-timernmode) m)
+#### static void mode([TimerN::Mode](output.xpp.md#enum-timernmode) m)
 
-#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
+#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 
-#### static void intEnable(bool b)
+#### static void callCallback()
 
-#### static bool intEnabled()
+#### static void intEnable(Bool b)
 
-#### static bool intFlag()
+#### static Bool intEnabled()
+
+#### static Bool intFlag()
 
 #### static void intFlagClear()

@@ -3,7 +3,7 @@
 /// # {{Array}}
 
 /// ```c++
-/// nbos::Array<int, 6> array;
+/// nbos::Array<Int32, 6> array;
 ///
 /// array[0] = 6;
 /// array[1] = 8;
@@ -14,9 +14,9 @@
 ///
 /// nbos::quicksort(array->begin(), array->size());
 ///
-/// nbos::Array<int>* pointer = &array;
+/// nbos::Array<Int32>* pointer = &array;
 ///
-/// int n = pointer->get(0); // n = 1
+/// Int32 n = pointer->get(0); // n = 1
 ///
 /// pointer->fill(0);
 ///
@@ -28,14 +28,13 @@
 #ifndef NBOS_ARRAY_HPP
 #define NBOS_ARRAY_HPP
 
+#include "initializer_list.hpp"
 #include "math.hpp"
-#include "algorithm.hpp"
-#include "type.hpp"
 
 namespace nbos {
 
 /// ## class Array<class Type, int size\>
-template <class Type, int size = -1>
+template <class Type, Int size = -1>
 class Array : public Array<Type> {
     Type _buffer[size];
 
@@ -50,12 +49,15 @@ public:
 template <class Type>
 class Array<Type, -1> {
     Type*const _buffer;
-    const int _size;
+    const Int _size;
 
 public:
 
     /// #### Array(Type\* buffer, int size)
-    Array(Type* buffer, int size) : _buffer(buffer), _size(size) {
+    Array(Type* buffer, Int size) : _buffer(buffer), _size(size) {
+    }
+
+    Array(initializer_list<Type> buffer) : _buffer(buffer), _size(size) {
     }
 
     /// #### void fill(Type t)
@@ -65,34 +67,34 @@ public:
         }
     }
 
-    /// #### int size()
-    int size() const {
+    /// #### Int size()
+    Int size() const {
         return _size;
     }
 
-    /// #### Type& operator \[\](int i)
-    Type& operator [](int i) {
+    /// #### Type& operator \[\](Int i)
+    Type& operator [](Int i) {
         return _buffer[i];
     }
 
-    const Type& operator [](int i) const {
+    const Type& operator [](Int i) const {
         return _buffer[i];
     }
 
-    /// #### Type& get(int i)
-    Type& get(int i) {
+    /// #### Type& get(Int i)
+    Type& get(Int i) {
         return _buffer[i];
     }
 
-    const Type& get(int i) const {
+    const Type& get(Int i) const {
         return _buffer[i];
     }
 
     /// #### Array<Type\>& operator =(Array<Type\> other)
     Array<Type>& operator =(const Array<Type>& other) {
-        const int count = nbos::min(size(), other.size());
+        const Int count = min(size(), other.size());
 
-        for(int i = 0; i < count; i++) {
+        for(Int i = 0; i < count; i++) {
             _buffer[i] = other[i];
         }
 

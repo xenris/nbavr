@@ -68,8 +68,8 @@ TEST(Adc0, trigger) {
     TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::freeRunning));
 }
 
-TEST(Adc0, callback) {
-    TEST_REG_WRITE(Adc0::callback(func,&data));
+TEST(Adc0, setCallback) {
+    TEST_REG_WRITE(Adc0::setCallback(func,data));
 }
 
 TEST(Adc0, intEnable) {
@@ -109,9 +109,9 @@ TEST(ExIntN, trigger) {
     TEST_REG_WRITE(ExInt1::trigger(ExInt1::Trigger::rising));
 }
 
-TEST(ExIntN, callback) {
-    TEST_REG_WRITE(ExInt0::callback(func,&data));
-    TEST_REG_WRITE(ExInt1::callback(func,&data));
+TEST(ExIntN, setCallback) {
+    TEST_REG_WRITE(ExInt0::setCallback(func,data));
+    TEST_REG_WRITE(ExInt1::setCallback(func,data));
 }
 
 TEST(ExIntN, intFlag) {
@@ -230,15 +230,15 @@ TEST(Timer2, getHardwareType) {
 }
 
 TEST(Timer0, type) {
-    ::testing::StaticAssertTypeEq<Timer0::type, uint8_t>();
+    ::testing::StaticAssertTypeEq<Timer0::Type, Word8>();
 }
 
 TEST(Timer1, type) {
-    ::testing::StaticAssertTypeEq<Timer1::type, uint16_t>();
+    ::testing::StaticAssertTypeEq<Timer1::Type, Word16>();
 }
 
 TEST(Timer2, type) {
-    ::testing::StaticAssertTypeEq<Timer2::type, uint8_t>();
+    ::testing::StaticAssertTypeEq<Timer2::Type, Word8>();
 }
 
 TEST(Timer0, counter) {
@@ -311,16 +311,16 @@ TEST(Timer2, waveform) {
     TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::fastPwm));
 }
 
-TEST(Timer0, callback) {
-    TEST_REG_WRITE(Timer0::callback(func,&data));
+TEST(Timer0, setCallback) {
+    TEST_REG_WRITE(Timer0::setCallback(func,data));
 }
 
-TEST(Timer1, callback) {
-    TEST_REG_WRITE(Timer1::callback(func,&data));
+TEST(Timer1, setCallback) {
+    TEST_REG_WRITE(Timer1::setCallback(func,data));
 }
 
-TEST(Timer2, callback) {
-    TEST_REG_WRITE(Timer2::callback(func,&data));
+TEST(Timer2, setCallback) {
+    TEST_REG_WRITE(Timer2::setCallback(func,data));
 }
 
 TEST(Timer0, intEnable) {
@@ -467,16 +467,16 @@ TEST(Usart0, dataRegisterEmptyIntEnable) {
     TEST_REG_WRITE(Usart0::dataRegisterEmptyIntEnable(false));
 }
 
-TEST(Usart0, rxCompleteCallback) {
-    TEST_REG_WRITE(Usart0::rxCompleteCallback(func,data));
+TEST(Usart0, setRxCallback) {
+    TEST_REG_WRITE(Usart0::setRxCallback(func,data));
 }
 
-TEST(Usart0, txCompleteCallback) {
-    TEST_REG_WRITE(Usart0::txCompleteCallback(func,data));
+TEST(Usart0, setTxCallback) {
+    TEST_REG_WRITE(Usart0::setTxCallback(func,data));
 }
 
-TEST(Usart0, dataRegisterEmptyCallback) {
-    TEST_REG_WRITE(Usart0::dataRegisterEmptyCallback(func,data));
+TEST(Usart0, setDeCallback) {
+    TEST_REG_WRITE(Usart0::setDeCallback(func,data));
 }
 
 TEST(Usart0, push) {

@@ -18,13 +18,15 @@ atomic([]() {
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
-#### static void intEnable(bool e)
+#### static void intEnable(Bool e)
 
-#### static void mask(uint8_t m)
+#### static void mask(Word8 m)
 Set which pins trigger this interrupt.
 
-#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
+#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 
-#### static bool intFlag()
+#### static void callCallback()
+
+#### static Bool intFlag()
 
 #### static void intFlagClear()

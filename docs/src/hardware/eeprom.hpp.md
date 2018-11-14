@@ -15,7 +15,7 @@ while(nbos::hw::Eeprom0::writeEnabled());
 nbos::hw::Eeprom0::address(0x00);
 nbos::hw::Eeprom0::readEnable();
 
-uint8_t n = nbos::hw::Eeprom0::data();
+Word8 n = nbos::hw::Eeprom0::data();
 ```
 
 ## class EepromN
@@ -29,11 +29,11 @@ uint8_t n = nbos::hw::Eeprom0::data();
 
 #### static void mode([AdcN::Mode](eeprom.hpp.md#enum-adcnmode) m)
 
-#### static void address(uint16_t a)
+#### static void address(Word16 a)
 
-#### static void data(uint8_t d)
+#### static void data(Word8 d)
 
-#### static uint8_t data()
+#### static Word8 data()
 
 #### static void masterWriteEnable()
 Enable the Eeprom write.
@@ -41,12 +41,14 @@ Enable the Eeprom write.
 #### static void writeEnable()
 Start an Eeprom write.
 
-#### static bool writeEnabled()
+#### static Bool writeEnabled()
 Returns true if Eeprom is currently writing.
 
 #### static void readEnable()
 Start an Eeprom read.
 
-#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
+#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 
-#### static void intEnable(bool e)
+#### static void callCallback()
+
+#### static void intEnable(Bool e)

@@ -29,7 +29,7 @@ struct Input {
     /// #### enum {{TimerN::Edge}}
     /// * rising
     /// * falling
-    enum class Edge : uint8_t {
+    enum class Edge {
         rising = TIMER_N(INPUT_EDGE_RISING_ID),
         falling = TIMER_N(INPUT_EDGE_FALLING_ID),
     };
@@ -46,26 +46,22 @@ struct Input {
 
     /// #### static void edge([[TimerN::Edge]] e)
     static force_inline void edge(Edge e) {
-        setBit_(REG(TIMER_N(INPUT_EDGE_SELECT_REG)), TIMER_N(INPUT_EDGE_SELECT_BIT), uint8_t(e) & 0x01);
+        setBit_(REG(TIMER_N(INPUT_EDGE_SELECT_REG)), TIMER_N(INPUT_EDGE_SELECT_BIT), Int(e) & 0x01);
     }
 
-    /// #### static void callback([[callback_t]] callback, void\* data)
-    static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
-        static callback_t f = nullptr;
-        static void* d = nullptr;
-
-        if(callback == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = callback;
-            d = data;
-        }
+    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
+    template <class T>
+    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
+        callback((Callback<void>)function, data);
     }
 
-    /// #### static void intEnable(bool b)
-    static force_inline void intEnable(bool b) {
+    /// #### static void callCallback()
+    static force_inline void callCallback() {
+        callback();
+    }
+
+    /// #### static void intEnable(Bool b)
+    static force_inline void intEnable(Bool b) {
         if(b) {
             *REG(TIMER_N(INPUT_INT_ENABLE_REG)) |= bv(TIMER_N(INPUT_INT_ENABLE_BIT));
         } else {
@@ -73,17 +69,33 @@ struct Input {
         }
     }
 
-    static force_inline bool intEnabled() {
-        return *REG(TIMER_N(INPUT_INT_ENABLE_REG)) & bv(TIMER_N(INPUT_INT_ENABLE_BIT));
+    static force_inline Bool intEnabled() {
+        return Bool(*REG(TIMER_N(INPUT_INT_ENABLE_REG)) & bv(TIMER_N(INPUT_INT_ENABLE_BIT)));
     }
 
-    /// #### static bool intFlag()
-    static force_inline bool intFlag() {
-        return *REG(TIMER_N(INPUT_INT_FLAG_REG)) & bv(TIMER_N(INPUT_INT_FLAG_BIT));
+    /// #### static Bool intFlag()
+    static force_inline Bool intFlag() {
+        return Bool(*REG(TIMER_N(INPUT_INT_FLAG_REG)) & bv(TIMER_N(INPUT_INT_FLAG_BIT)));
     }
 
     /// #### static void intFlagClear()
     static force_inline void intFlagClear() {
         *REG(TIMER_N(INPUT_INT_FLAG_REG)) |= bv(TIMER_N(INPUT_INT_FLAG_BIT));
+    }
+
+private:
+
+    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
+        static Callback<void> f = nullptr;
+        static void* d = nullptr;
+
+        if(function == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = function;
+            d = data;
+        }
     }
 };

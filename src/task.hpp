@@ -20,7 +20,6 @@
 #ifndef NBOS_TASK_HPP
 #define NBOS_TASK_HPP
 
-#include "type.hpp"
 #include "atomic.hpp"
 
 namespace nbos {
@@ -28,7 +27,7 @@ namespace nbos {
 /// ## Class Task\<class Clock\>
 template <class Clock>
 struct Task {
-    enum class State : int8_t {
+    enum class State {
         awake,
         delay,
         asleep,
@@ -36,11 +35,11 @@ struct Task {
     };
 
     State state = State::awake;
-    Atomic<uint64_t> wakeTick = 0;
+    Atomic<Word64> wakeTick;
 
-    /// #### void sleep(uint64_t ticks)
+    /// #### void sleep(Word64 ticks)
     /// Put this task to sleep until the given number of ticks have passed.
-    void sleep(uint64_t ticks) {
+    void sleep(Word64 ticks) {
         wakeTick = Clock::getTicks() + ticks;
         state = State::delay;
     }

@@ -3,23 +3,23 @@
 /// # {{Stack}}
 
 /// ```c++
-/// nbos::Stack<int, 6> stack;
+/// nbos::Stack<Int, 6> stack;
 ///
 /// stack.push(3);
 /// stack.push(7);
 /// stack.push(1);
 /// stack.push(2);
 ///
-/// int s = stack.size(); // s = 4
+/// Int s = stack.size(); // s = 4
 ///
-/// int a = 0;
+/// Int a = 0;
 ///
 /// stack.pop(&a); // a = 2
 /// stack.pop(&a); // a = 1
 ///
 /// s = stack.size(); // s = 2
 ///
-/// nbos::Stack<int>* pointer = &stack;
+/// nbos::Stack<Int>* pointer = &stack;
 ///
 /// pointer->push(4);
 ///
@@ -29,12 +29,13 @@
 #ifndef NBOS_STACK_HPP
 #define NBOS_STACK_HPP
 
-#include "type.hpp"
+#include "safe.hpp"
+#include "optional.hpp"
 
 namespace nbos {
 
-/// ## class Stack<class Type, int bufferSize\>
-template <class Type, int bufferSize = -1>
+/// ## class Stack<class Type, Int bufferSize\>
+template <class Type, Int bufferSize = -1>
 class Stack : public Stack<Type> {
     Type _buffer[bufferSize];
 
@@ -54,20 +55,20 @@ struct Stack<T, -1> {
 private:
 
     T*const _buffer;
-    const int _bufferSize;
-    int _head;
+    const Int _bufferSize;
+    Int _head;
 
 public:
 
-    /// #### Stack(Type\* buffer, int bufferSize)
+    /// #### Stack(Type\* buffer, Int bufferSize)
     /// Construct a stack with the given buffer.
-    Stack(Type* buffer, int bufferSize) : _buffer(buffer), _bufferSize(bufferSize) {
+    Stack(Type* buffer, Int bufferSize) : _buffer(buffer), _bufferSize(bufferSize) {
         _head = 0;;
     }
 
-    /// #### bool push(Type t)
+    /// #### Bool push(Type t)
     /// Returns true on success.
-    bool push(T t) {
+    Bool push(T t) {
         if(full()) {
             return false;
         }
@@ -105,33 +106,33 @@ public:
         _head = 0;
     }
 
-    /// #### int size()
+    /// #### Int size()
     /// Get the number of elements currently in the stack.
-    int size() const {
+    Int size() const {
         return _head;
     }
 
-    /// #### int free()
+    /// #### Int free()
     /// Get the amount of free space in the stack.
-    int free() const {
+    Int free() const {
         return _bufferSize - _head;
     }
 
-    /// ### int capacity()
+    /// ### Int capacity()
     /// Get the total capacity of the stack.
-    int capacity() const {
+    Int capacity() const {
         return _bufferSize;
     }
 
-    /// #### bool empty()
+    /// #### Bool empty()
     /// Returns true if the stack is empty.
-    bool empty() const {
+    Bool empty() const {
         return _head == 0;
     }
 
-    /// #### bool full()
+    /// #### Bool full()
     /// Returns true if the stack is full.
-    bool full() const {
+    Bool full() const {
         return _head == _bufferSize;
     }
 };

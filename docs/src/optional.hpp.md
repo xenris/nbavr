@@ -1,24 +1,17 @@
-[Index](../index.hpp.md#index)
-
-# Types
-
-#### callback_t = void (\*)(void\*)
-The basic callback function type commonly used.
-
 ## class Optional<class T\>
 Class who's value can be either something or nothing.
 
 ```c++
-Optional<int> o;
+Optional<Int32> o;
 
-bool b = o; // b = false
+Bool b = o; // b = false
 
 o = 5;
 
 b = o; // b = true
 
-int a = *b; // a = 5
-int x = b; // x = 1 (a.k.a. true)
+Int32 a = *b; // a = 5
+Int32 x = b; // x = 1 (a.k.a. true)
 
 o = {};
 
@@ -31,7 +24,7 @@ Constructor for "nothing"
 #### Optional(T value)
 Constructor for "something"
 
-#### operator bool()
+#### operator primitive_bool()
 True if "something", false if "nothing".
 
 #### T operator *()

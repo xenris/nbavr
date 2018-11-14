@@ -31,7 +31,7 @@ r Usart0::frameError() 1110100001
 r Usart0::parityError() 0110100101
 r Usart0::pop() b9bdc02234f6688a5c
 r Usart0::pop9() 1b910bdc02234f6688a5c
-w Adc0::callback(func,&data)
+w Adc0::setCallback(func,data)
 w Adc0::channel(Adc0::Channel::adc0) 27:ff:f0:
 w Adc0::channel(Adc0::Channel::adc1) 27:00:01:27:ff:f1:
 w Adc0::channel(Adc0::Channel::adc2) 27:00:02:27:ff:f2:
@@ -64,7 +64,7 @@ w Adc0::start() 26:00:40:
 w Adc0::trigger(Adc0::Trigger::freeRunning) 26:00:20:
 w Adc0::trigger(Adc0::Trigger::singleConversion) 26:ff:df:
 w Adc0::value()
-w ExInt0::callback(func,&data)
+w ExInt0::setCallback(func,data)
 w ExInt0::intEnable(false) 5b:ff:bf:
 w ExInt0::intEnable(true) 5b:00:40:
 w ExInt0::intFlag()
@@ -73,7 +73,7 @@ w ExInt0::trigger(ExInt0::Trigger::change) 55:00:01:55:ff:fd:
 w ExInt0::trigger(ExInt0::Trigger::falling) 55:00:02:55:ff:fe:
 w ExInt0::trigger(ExInt0::Trigger::low) 55:ff:fc:
 w ExInt0::trigger(ExInt0::Trigger::rising) 55:00:03:
-w ExInt1::callback(func,&data)
+w ExInt1::setCallback(func,data)
 w ExInt1::intEnable(false) 5b:ff:7f:
 w ExInt1::intEnable(true) 5b:00:80:
 w ExInt1::intFlag()
@@ -130,7 +130,7 @@ w PortD::output(0xff) 32:00:ff:
 w PortD::toggle(0x00) 30:ff:00:
 w PortD::toggle(0x3c) 30:00:3c:30:ff:3c:
 w PortD::toggle(0xff) 30:00:ff:
-w Timer0::callback(func,&data)
+w Timer0::setCallback(func,data)
 w Timer0::clock(Timer0::Clock::div1) 53:00:01:53:ff:f9:
 w Timer0::clock(Timer0::Clock::div1024) 53:00:05:53:ff:fd:
 w Timer0::clock(Timer0::Clock::div256) 53:00:04:53:ff:fc:
@@ -159,7 +159,7 @@ w Timer1::OutputB::mode(Timer1::OutputB::Mode::set) 4f:00:30:
 w Timer1::OutputB::mode(Timer1::OutputB::Mode::toggle) 4f:00:10:4f:ff:df:
 w Timer1::OutputB::value()
 w Timer1::OutputB::value(0x3c3c) 48:00:3c:49:00:3c:48:ff:3c:49:ff:3c:
-w Timer1::callback(func,&data)
+w Timer1::setCallback(func,data)
 w Timer1::clock(Timer1::Clock::div1) 4e:00:01:4e:ff:f9:
 w Timer1::clock(Timer1::Clock::div1024) 4e:00:05:4e:ff:fd:
 w Timer1::clock(Timer1::Clock::div256) 4e:00:04:4e:ff:fc:
@@ -188,7 +188,7 @@ w Timer2::OutputA::mode(Timer2::OutputA::Mode::set) 45:00:30:
 w Timer2::OutputA::mode(Timer2::OutputA::Mode::toggle) 45:00:10:45:ff:df:
 w Timer2::OutputA::value()
 w Timer2::OutputA::value(0x3c) 43:00:3c:43:ff:3c:
-w Timer2::callback(func,&data)
+w Timer2::setCallback(func,data)
 w Timer2::clock(Timer2::Clock::div1) 45:00:01:45:ff:f9:
 w Timer2::clock(Timer2::Clock::div1024) 45:00:07:
 w Timer2::clock(Timer2::Clock::div128) 45:00:05:45:ff:fd:
@@ -217,7 +217,7 @@ w Usart0::characterSize(Usart0::CharacterSize::size8) 40:00:86:2a:ff:fb:
 w Usart0::characterSize(Usart0::CharacterSize::size9) 2a:00:04:40:00:86:
 w Usart0::dataOverRun()
 w Usart0::dataOverRunClear() 2b:ff:f7:
-w Usart0::dataRegisterEmptyCallback(func,data)
+w Usart0::setDeCallback(func,data)
 w Usart0::dataRegisterEmptyIntEnable(false) 2a:ff:df:
 w Usart0::dataRegisterEmptyIntEnable(true) 2a:00:20:
 w Usart0::frameError()
@@ -239,14 +239,14 @@ w Usart0::push(0x18) 2c:00:18:2c:ff:18:
 w Usart0::push9(0x3261) 2c:00:61:2a:ff:fe:2c:ff:61:
 w Usart0::receiverEnable(false) 2a:ff:ef:
 w Usart0::receiverEnable(true) 2a:00:10:
-w Usart0::rxCompleteCallback(func,data)
+w Usart0::setRxCallback(func,data)
 w Usart0::rxCompleteIntEnable(false) 2a:ff:7f:
 w Usart0::rxCompleteIntEnable(true) 2a:00:80:
 w Usart0::stopBits(Usart0::StopBits::bits1) 40:00:80:40:ff:f7:
 w Usart0::stopBits(Usart0::StopBits::bits2) 40:00:88:
 w Usart0::transmitterEnable(false) 2a:ff:f7:
 w Usart0::transmitterEnable(true) 2a:00:08:
-w Usart0::txCompleteCallback(func,data)
+w Usart0::setTxCallback(func,data)
 w Usart0::txCompleteIntEnable(false) 2a:ff:bf:
 w Usart0::txCompleteIntEnable(true) 2a:00:40:
 w Usart0::use2X(false) 2b:ff:fd:

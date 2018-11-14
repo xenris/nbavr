@@ -23,9 +23,8 @@
 #include "chip.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
-#include "pin.hpp"
+#include "pin.xpp"
 #include "system.hpp"
-#include "type.hpp"
 
 #include "loopi"
 
@@ -146,7 +145,7 @@ struct PortX {
         }
     #endif
 
-    #include "pin.hpp"
+    #include "pin.xpp"
 };
 
 } // nbos::hw

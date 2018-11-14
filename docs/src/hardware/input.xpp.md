@@ -33,12 +33,14 @@ The IO pin which relates to this input.
 
 #### static T value()
 
-#### static void edge([TimerN::Edge](input.hpp.md#enum-timernedge) e)
+#### static void edge([TimerN::Edge](input.xpp.md#enum-timernedge) e)
 
-#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
+#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 
-#### static void intEnable(bool b)
+#### static void callCallback()
 
-#### static bool intFlag()
+#### static void intEnable(Bool b)
+
+#### static Bool intFlag()
 
 #### static void intFlagClear()

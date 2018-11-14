@@ -2,27 +2,27 @@
 #define NBOS_PRINT_HPP
 
 #include "algorithm.hpp"
+#include "array.hpp"
 #include "libc.hpp"
-#include "math.hpp"
 #include "queue.hpp"
+#include "string.hpp"
 
 namespace nbos {
 
-template<int S>
-inline bool printchar(Queue<char, S>& queue, const char c) {
-    bool result = queue.push(c);
+inline Bool printChar(Queue<Char>& queue, Char c) {
+    const Bool result = queue.push(c);
 
     if(c == '\n') {
-        queue.notify();
+        queue.callCallback();
     }
 
     return result;
 }
 
-template<int S>
-inline bool printstr(Queue<char, S>& queue, const char* str) {
-    for(const char* p = str; *p != '\0'; p++) {
-        if(!printchar(queue, *p)) {
+// inline Bool printString(Queue<Char>& queue, const Array<Char> str) {
+inline Bool printString(Queue<Char>& queue, const String<>& str) {
+    for(const Char p : str) {
+        if(!printChar(queue, p)) {
             return false;
         }
     }
@@ -30,28 +30,28 @@ inline bool printstr(Queue<char, S>& queue, const char* str) {
     return true;
 }
 
-// Converts integer T to reverse ascii string.
-template <class T>
-inline int8_t _itoa(char* buffer, T n, int8_t base) {
-    int8_t i = 0;
+template <class Type, Int base = 10>
+inline constexpr Int itoa(Char* buffer, Type n) {
+    static_assert((base >= 2) && (base <= 36), "Base must be between 2 and 36 inclusive");
+
+    Int i = 0;
 
     if(n == 0) {
         buffer[i++] = '0';
     } else {
-        const bool negative = n < 0;
+        const Bool negative = n < 0;
 
-        base = clip(base, int8_t(2), int8_t(36));
         n = abs(n);
 
         while(n != 0) {
-            int8_t d = n % base;
+            const Int d = Int(n % base);
 
             n /= base;
 
             if(d < 10) {
                 buffer[i++] = '0' + d;
             } else {
-                buffer[i++] = 'a' + (d - 10);
+                buffer[i++] = 'A' + (d - 10);
             }
         }
 
@@ -62,25 +62,17 @@ inline int8_t _itoa(char* buffer, T n, int8_t base) {
 
     buffer[i] = '\0';
 
+    reverse(buffer, i);
+
     return i;
 }
 
-// Converts integer T to ascii string.
-template <class T>
-inline int8_t itoa(char* buffer, T n, int8_t base) {
-    const int8_t l = _itoa(buffer, n, base);
-
-    reverse(buffer, buffer, l);
-
-    return l;
-}
-
-// TODO Make efficient float to ascii function with output like:
+// TODO Make efficient Float to ascii function with output like:
 // 1.0, 1.0004, 1000.002, 10000.01, 100000.0, 1.0e6, 0.001, -1.0e-50
 // i.e. If more than ~13 characters, use scientific notation.
-// int8_t ftoa(char* buffer, float n) {
+// int8_t ftoa(Char* buffer, Float n) {
 //     union {
-//         float f;
+//         Float f;
 //         int i;
 //     } u;
 //
@@ -98,11 +90,11 @@ inline int8_t itoa(char* buffer, T n, int8_t base) {
 //         buffer[k++] = '.';
 //         buffer[k++] = '0';
 //     } else {
-//         float e = floor(log10(n));
-//         float s = pow(10, -e) * n;
+//         Float e = floor(log10(n));
+//         Float s = pow(10, -e) * n;
 //
-//         float i;
-//         float f;
+//         Float i;
+//         Float f;
 //
 //         f = round(modff(s, &i) * 1e6);
 //
@@ -110,7 +102,7 @@ inline int8_t itoa(char* buffer, T n, int8_t base) {
 //
 //         buffer[k++] = '.';
 //
-//         char bf[6];
+//         Char bf[6];
 //
 //         // itoa(&buffer[k], int32_t(f), 10);
 //         int8_t l = _itoa(bf, int32_t(f), 10);
@@ -120,7 +112,7 @@ inline int8_t itoa(char* buffer, T n, int8_t base) {
 //         // }
 //
 //         for(int8_t j = 0; j < l; j++) {
-//             char c = bf[(l - 1) - j];
+//             Char c = bf[(l - 1) - j];
 //             if(c != '0') {
 //                 buffer[k++] = c; // XXX XXX XXX
 //             }
@@ -129,7 +121,7 @@ inline int8_t itoa(char* buffer, T n, int8_t base) {
 //         // k += 6;
 //         //
 //         // for(int8_t j = 0; j < 5; j++) {
-//         //     char c = buffer[k - 1];
+//         //     Char c = buffer[k - 1];
 //         //     if(('1' <= c) && (c <= '9')) {
 //         //         break;
 //         //     } else {
@@ -148,105 +140,110 @@ inline int8_t itoa(char* buffer, T n, int8_t base) {
 //     return k;
 // }
 
-template <int S, class T>
-inline bool printint(Queue<char, S>& queue, T n, int8_t base) {
-    char buffer[sizeof(T) * 8 + 1 + 1];
+template <class T, Int base = 10>
+inline Bool printInt(Queue<Char>& queue, T n) {
+    // FIXME This shouldn't compile so easily. (Cast from float to int.)
+    constexpr Int maxDigits = *(Float(1) + (floor(log(Float(Max<T>::value)) / log(Float(base)))));
 
-    itoa(buffer, n, base);
+    Char buffer[maxDigits + IsSigned<T>::value + 1];
 
-    return printstr(queue, buffer);
+    itoa<T, base>(buffer, n);
+
+    return printString(queue, (const Char*)buffer);
 }
 
-template<int S>
-inline bool printfloat(Queue<char, S>& queue, float n) {
-    char buffer[14];
+inline Bool printFloat(Queue<Char>& queue, Float n) {
+    String<14> buffer;
 
-    libc::dtostre(n, buffer, 6, 0);
+    libc::dtostre(primitive_double(Double(n)), (primitive_signed_char*)buffer.begin(), 6, 0);
 
-    return printstr(queue, buffer);
+    return printString(queue, buffer);
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, const char c) {
-    printchar(queue, c);
+inline Queue<Char>& operator<<(Queue<Char>& queue, const Char c) {
+    printChar(queue, c);
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, const char* str) {
-    printstr(queue, str);
+inline Queue<Char>& operator<<(Queue<Char>& queue, const primitive_signed_char* str) {
+    for(const primitive_signed_char* c = str; *c != '\0'; c++) {
+        printChar(queue, *c);
+    }
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, int8_t n) {
-    printint(queue, n, 10);
+inline Queue<Char>& operator<<(Queue<Char>& queue, Int8 n) {
+    printInt(queue, n);
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, int16_t n) {
-    printint(queue, n, 10);
+inline Queue<Char>& operator<<(Queue<Char>& queue, Int16 n) {
+    printInt(queue, n);
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, int32_t n) {
-    printint(queue, n, 10);
+inline Queue<Char>& operator<<(Queue<Char>& queue, Int32 n) {
+    printInt(queue, n);
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, int64_t n) {
-    printint(queue, n, 10);
+inline Queue<Char>& operator<<(Queue<Char>& queue, Int64 n) {
+    printInt(queue, n);
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, uint8_t n) {
-    printint(queue, n, 10);
+inline Queue<Char>& operator<<(Queue<Char>& queue, Word8 n) {
+    printInt(queue, n);
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, uint16_t n) {
-    printint(queue, n, 10);
+inline Queue<Char>& operator<<(Queue<Char>& queue, Word16 n) {
+    printInt(queue, n);
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, uint32_t n) {
-    printint(queue, n, 10);
+inline Queue<Char>& operator<<(Queue<Char>& queue, Word32 n) {
+    printInt(queue, n);
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, uint64_t n) {
-    printint(queue, n, 10);
+inline Queue<Char>& operator<<(Queue<Char>& queue, Word64 n) {
+    printInt(queue, n);
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, bool n) {
-    printstr(queue, n ? "true" : "false");
+inline Queue<Char>& operator<<(Queue<Char>& queue, Bool n) {
+    printString(queue, n ? "true" : "false");
+
     return queue;
 }
 
-template <int S, class T>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, T* p) {
-    printint(queue, uint16_t(p), 16);
+template <class T>
+inline Queue<Char>& operator<<(Queue<Char>& queue, T* p) {
+    printInt<Word16, 16>(queue, *p);
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, float n) {
-    printfloat(queue, n);
+inline Queue<Char>& operator<<(Queue<Char>& queue, Float n) {
+    printFloat(queue, *n);
+
     return queue;
 }
 
-template<int S>
-inline Queue<char, S>& operator<<(Queue<char, S>& queue, double n) {
-    printfloat(queue, float(n));
+inline Queue<Char>& operator<<(Queue<Char>& queue, Double n) {
+    printFloat(queue, *n);
+
     return queue;
 }
 

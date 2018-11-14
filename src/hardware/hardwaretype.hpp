@@ -5,8 +5,6 @@
 #ifndef NBOS_HARDWARE_TYPE_HPP
 #define NBOS_HARDWARE_TYPE_HPP
 
-#include <type.hpp>
-
 // TODO Move to system.hpp.
 namespace nbos::hw {
 
@@ -23,7 +21,7 @@ namespace nbos::hw {
 /// * usart
 /// * usi
 /// * wdt
-enum class HardwareType : uint8_t {
+enum class HardwareType {
     adc,
     exInt,
     eeprom,

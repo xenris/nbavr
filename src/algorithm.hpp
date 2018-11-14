@@ -5,24 +5,24 @@
 #ifndef NBOS_ALGORITHM_HPP
 #define NBOS_ALGORITHM_HPP
 
-#include "math.hpp"
+#include "safe.hpp"
 
 namespace nbos {
 
 template <class T>
-force_inline void reverse(const T* from, T* to, int length);
+inline void reverse(const T* from, T* to, Int length);
 
-/// #### void reverse<T\>(T\* array, int length)
+/// #### void reverse<T\>(T\* array, Int length)
 template <class T>
-force_inline void reverse(T* array, int length) {
+inline void reverse(T* array, Int length) {
     reverse(array, array, length);
 }
 
-/// #### void reverse<T\>(const T\* from, T\* to, int length)
+/// #### void reverse<T\>(const T\* from, T\* to, Int length)
 template <class T>
-force_inline void reverse(const T* from, T* to, int length) {
-    for(int i = 0; i < (length + 1) / 2; i++) {
-        const int j = (length - 1) - i;
+inline void reverse(const T* from, T* to, Int length) {
+    for(Int i = 0; i < (length + 1) / 2; i++) {
+        const Int j = (length - 1) - i;
 
         const T a = from[i];
         const T b = from[j];
@@ -32,29 +32,29 @@ force_inline void reverse(const T* from, T* to, int length) {
     }
 }
 
-/// #### void copy<T\>(const T\* from, T\* to, int length)
+/// #### void copy<T\>(const T\* from, T\* to, Int length)
 template <class T>
-force_inline void copy(const T* from, T* to, int length) {
-    for(int i = 0; i < length; i++) {
+inline void copy(const T* from, T* to, Int length) {
+    for(Int i = 0; i < length; i++) {
         to[i] = from[i];
     }
 }
 
-/// #### void swap<T\>(T& a, T& b)
+/// #### void swap<T\>(T\* a, T\* b)
 template <class T>
-force_inline void swap(T* a, T* b) {
+inline void swap(T* a, T* b) {
     T t = *a;
     *a = *b;
     *b = t;
 }
 
 template <class T>
-int partition(T* array, int low, int high) {
+inline Int partition(T* array, Int low, Int high) {
     const T& pivot = array[high];
 
-    int i = low - 1;
+    Int i = low - 1;
 
-    for(int j = low; j < high; j++) {
+    for(Int j = low; j < high; j++) {
         if(array[j] < pivot) {
             i += 1;
 
@@ -68,18 +68,18 @@ int partition(T* array, int low, int high) {
 }
 
 template <class T>
-void quicksort(T* array, int low, int high) {
+inline void quicksort(T* array, Int low, Int high) {
     if(low < high) {
-        const int p = partition(array, low, high);
+        const Int p = partition(array, low, high);
 
         quicksort(array, low, p - 1);
         quicksort(array, p + 1, high);
     }
 }
 
-/// #### void quicksort(T\* array, int size)
+/// #### void quicksort(T\* array, Int size)
 template <class T>
-void quicksort(T* array, int size) {
+inline void quicksort(T* array, Int size) {
     quicksort(array, 0, size - 1);
 }
 

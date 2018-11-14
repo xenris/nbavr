@@ -28,7 +28,7 @@
 #ifndef NBOS_CHIP_HPP
 #define NBOS_CHIP_HPP
 
-#include "type.hpp"
+#include "safe.hpp"
 
 #ifndef register_offset
     #define register_offset 0
@@ -36,7 +36,7 @@
 
 namespace nbos {
 
-template <class T, int addr>
+template <class T, Integer addr>
 struct _reg {
     T*const p = (T*)(addr + register_offset);
 };
@@ -44,7 +44,7 @@ struct _reg {
 } // nbos
 
 // Use of _reg makes the compiler throw a more meaningful message if _TYPE or _ADDR isn't defined.
-#define REG(R) _reg<volatile CAT(R, _TYPE), CAT(R, _ADDR)>().p
+#define REG(R) _reg<CAT(R, _TYPE), CAT(R, _ADDR)>().p
 #define REGL(R) _reg<CAT(R, _TYPE), CAT(R, _ADDR)>().p
 
 #define REGTYPE(R) CAT(R, _TYPE)

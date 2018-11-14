@@ -76,8 +76,8 @@ TEST(Adc0, trigger) {
     TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::timer1CaptureEvent));
 }
 
-TEST(Adc0, callback) {
-    TEST_REG_WRITE(Adc0::callback(func,data));
+TEST(Adc0, setCallback) {
+    TEST_REG_WRITE(Adc0::setCallback(func,data));
 }
 
 TEST(Adc0, intEnable) {
@@ -120,9 +120,9 @@ TEST(ExIntN, trigger) {
     TEST_REG_WRITE(ExInt1::trigger(ExInt1::Trigger::rising));
 }
 
-TEST(ExIntN, callback) {
-    TEST_REG_WRITE(ExInt0::callback(func,data));
-    TEST_REG_WRITE(ExInt1::callback(func,data));
+TEST(ExIntN, setCallback) {
+    TEST_REG_WRITE(ExInt0::setCallback(func,data));
+    TEST_REG_WRITE(ExInt1::setCallback(func,data));
 }
 
 TEST(ExIntN, intFlag) {
@@ -159,10 +159,10 @@ TEST(PcIntN, mask) {
     TEST_REG_WRITE(PcInt2::mask(0x16));
 }
 
-TEST(PcIntN, callback) {
-    TEST_REG_WRITE(PcInt0::callback(func,data));
-    TEST_REG_WRITE(PcInt1::callback(func,data));
-    TEST_REG_WRITE(PcInt2::callback(func,data));
+TEST(PcIntN, setCallback) {
+    TEST_REG_WRITE(PcInt0::setCallback(func,data));
+    TEST_REG_WRITE(PcInt1::setCallback(func,data));
+    TEST_REG_WRITE(PcInt2::setCallback(func,data));
 }
 
 TEST(PcIntN, intFlag) {
@@ -278,7 +278,7 @@ TEST(Timer0, getHardwareType) {
 }
 
 TEST(Timer0, type) {
-    ::testing::StaticAssertTypeEq<Timer0::type, uint8_t>();
+    ::testing::StaticAssertTypeEq<Timer0::Type, Word8>();
 }
 
 TEST(Timer0, counter) {
@@ -306,8 +306,8 @@ TEST(Timer0, waveform) {
     TEST_REG_WRITE(Timer0::waveform(Timer0::Waveform::fastPwmOcra));
 }
 
-TEST(Timer0, callback) {
-    TEST_REG_WRITE(Timer0::callback(func,data));
+TEST(Timer0, setCallback) {
+    TEST_REG_WRITE(Timer0::setCallback(func,data));
 }
 
 TEST(Timer0, intEnable) {
@@ -347,12 +347,12 @@ TEST(Timer0, outputBMode) {
     TEST_REG_WRITE(Timer0::OutputB::mode(Timer0::OutputB::Mode::set));
 }
 
-TEST(Timer0, outputACallback) {
-    TEST_REG_WRITE(Timer0::OutputA::callback(func,data));
+TEST(Timer0, outputAsetCallback) {
+    TEST_REG_WRITE(Timer0::OutputA::setCallback(func,data));
 }
 
-TEST(Timer0, outputBCallback) {
-    TEST_REG_WRITE(Timer0::OutputB::callback(func,data));
+TEST(Timer0, outputBsetCallback) {
+    TEST_REG_WRITE(Timer0::OutputB::setCallback(func,data));
 }
 
 TEST(Timer0, outputAIntEnable) {
@@ -386,7 +386,7 @@ TEST(Timer1, getHardwareType) {
 }
 
 TEST(Timer1, type) {
-    ::testing::StaticAssertTypeEq<Timer1::type, uint16_t>();
+    ::testing::StaticAssertTypeEq<Timer1::Type, Word16>();
 }
 
 TEST(Timer1, counter) {
@@ -414,8 +414,8 @@ TEST(Timer1, waveform) {
     TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::fastPwmOcra));
 }
 
-TEST(Timer1, callback) {
-    TEST_REG_WRITE(Timer1::callback(func,data));
+TEST(Timer1, setCallback) {
+    TEST_REG_WRITE(Timer1::setCallback(func,data));
 }
 
 TEST(Timer1, intEnable) {
@@ -455,12 +455,12 @@ TEST(Timer1, outputBMode) {
     TEST_REG_WRITE(Timer1::OutputB::mode(Timer1::OutputB::Mode::set));
 }
 
-TEST(Timer1, outputACallback) {
-    TEST_REG_WRITE(Timer1::OutputA::callback(func,data));
+TEST(Timer1, outputAsetCallback) {
+    TEST_REG_WRITE(Timer1::OutputA::setCallback(func,data));
 }
 
-TEST(Timer1, outputBCallback) {
-    TEST_REG_WRITE(Timer1::OutputB::callback(func,data));
+TEST(Timer1, outputBsetCallback) {
+    TEST_REG_WRITE(Timer1::OutputB::setCallback(func,data));
 }
 
 TEST(Timer1, outputAIntEnable) {
@@ -494,7 +494,7 @@ TEST(Timer2, getHardwareType) {
 }
 
 TEST(Timer2, type) {
-    ::testing::StaticAssertTypeEq<Timer2::type, uint8_t>();
+    ::testing::StaticAssertTypeEq<Timer2::Type, Word8>();
 }
 
 TEST(Timer2, counter) {
@@ -522,8 +522,8 @@ TEST(Timer2, waveform) {
     TEST_REG_WRITE(Timer2::waveform(Timer2::Waveform::fastPwmOcra));
 }
 
-TEST(Timer2, callback) {
-    TEST_REG_WRITE(Timer2::callback(func,data));
+TEST(Timer2, setCallback) {
+    TEST_REG_WRITE(Timer2::setCallback(func,data));
 }
 
 TEST(Timer2, intEnable) {
@@ -563,12 +563,12 @@ TEST(Timer2, outputBMode) {
     TEST_REG_WRITE(Timer2::OutputB::mode(Timer2::OutputB::Mode::set));
 }
 
-TEST(Timer2, outputACallback) {
-    TEST_REG_WRITE(Timer2::OutputA::callback(func,data));
+TEST(Timer2, outputAsetCallback) {
+    TEST_REG_WRITE(Timer2::OutputA::setCallback(func,data));
 }
 
-TEST(Timer2, outputBCallback) {
-    TEST_REG_WRITE(Timer2::OutputB::callback(func,data));
+TEST(Timer2, outputBsetCallback) {
+    TEST_REG_WRITE(Timer2::OutputB::setCallback(func,data));
 }
 
 TEST(Timer2, outputAIntEnable) {
@@ -673,16 +673,16 @@ TEST(Usart0, dataRegisterEmptyIntEnable) {
     TEST_REG_WRITE(Usart0::dataRegisterEmptyIntEnable(false));
 }
 
-TEST(Usart0, rxCompleteCallback) {
-    TEST_REG_WRITE(Usart0::rxCompleteCallback(func,data));
+TEST(Usart0, setRxCallback) {
+    TEST_REG_WRITE(Usart0::setRxCallback(func,data));
 }
 
-TEST(Usart0, txCompleteCallback) {
-    TEST_REG_WRITE(Usart0::txCompleteCallback(func,data));
+TEST(Usart0, setTxCallback) {
+    TEST_REG_WRITE(Usart0::setTxCallback(func,data));
 }
 
-TEST(Usart0, dataRegisterEmptyCallback) {
-    TEST_REG_WRITE(Usart0::dataRegisterEmptyCallback(func,data));
+TEST(Usart0, setDeCallback) {
+    TEST_REG_WRITE(Usart0::setDeCallback(func,data));
 }
 
 TEST(Usart0, push) {

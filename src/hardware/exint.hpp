@@ -21,6 +21,7 @@
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "system.hpp"
+#include "callback.hpp"
 
 #define N _I
 #define ExIntN CAT(ExInt, N)
@@ -47,7 +48,7 @@ struct ExIntN {
         /// * change
         /// * falling
         /// * rising
-        enum class Trigger : uint8_t {
+        enum class Trigger {
             low = EXINT_N(TRIGGER_LOW_ID),
             change = EXINT_N(TRIGGER_CHANGE_ID),
             falling = EXINT_N(TRIGGER_FALLING_ID),
@@ -61,8 +62,8 @@ struct ExIntN {
     }
 
     #if DEFINED(EXINT_N(ENABLE_BIT_0_BIT))
-        /// #### static void intEnable(bool e)
-        static force_inline void intEnable(bool e) {
+        /// #### static void intEnable(Bool e)
+        static force_inline void intEnable(Bool e) {
             setBit_(REG(EXINT_N(ENABLE_BIT_0_REG)), EXINT_N(ENABLE_BIT_0_BIT), e);
         }
     #endif
@@ -70,30 +71,26 @@ struct ExIntN {
     #if DEFINED(EXINT_N(TRIGGER_BIT_0_BIT))
         /// #### static void trigger([[ExIntN::Trigger]] t)
         static force_inline void trigger(Trigger t) {
-            setBit_(REG(EXINT_N(TRIGGER_BIT_0_REG)), EXINT_N(TRIGGER_BIT_0_BIT), uint8_t(t) & 0x01);
-            setBit_(REG(EXINT_N(TRIGGER_BIT_1_REG)), EXINT_N(TRIGGER_BIT_1_BIT), uint8_t(t) & 0x02);
+            setBit_(REG(EXINT_N(TRIGGER_BIT_0_REG)), EXINT_N(TRIGGER_BIT_0_BIT), Int(t) & 0x01);
+            setBit_(REG(EXINT_N(TRIGGER_BIT_1_REG)), EXINT_N(TRIGGER_BIT_1_BIT), Int(t) & 0x02);
         }
     #endif
 
-    /// #### static void callback([[callback_t]] callback, void\* data)
-    static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
-        static callback_t f = nullptr;
-        static void* d = nullptr;
+    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
+    template <class T>
+    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
+        callback((Callback<void>)function, data);
+    }
 
-        if(callback == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = callback;
-            d = data;
-        }
+    /// #### static void callCallback()
+    static force_inline void callCallback() {
+        callback();
     }
 
     #if DEFINED(EXINT_N(INT_FLAG_BIT_0_BIT))
-        /// #### static bool intFlag()
-        static force_inline bool intFlag() {
-            return *REG(EXINT_N(INT_FLAG_BIT_0_REG)) & bv(EXINT_N(INT_FLAG_BIT_0_BIT));
+        /// #### static Bool intFlag()
+        static force_inline Bool intFlag() {
+            return Bool(*REG(EXINT_N(INT_FLAG_BIT_0_REG)) & bv(EXINT_N(INT_FLAG_BIT_0_BIT)));
         }
     #endif
 
@@ -103,10 +100,26 @@ struct ExIntN {
             setBit_(REG(EXINT_N(INT_FLAG_BIT_0_REG)), EXINT_N(INT_FLAG_BIT_0_BIT), true);
         }
     #endif
+
+private:
+
+    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
+        static Callback<void> f = nullptr;
+        static void* d = nullptr;
+
+        if(function == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = function;
+            d = data;
+        }
+    }
 };
 
 ISR(EXINT_N(INT_VECTOR)) {
-    ExIntN::callback();
+    ExIntN::callCallback();
 }
 
 } // nbos::hw

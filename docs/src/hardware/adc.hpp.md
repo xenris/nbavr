@@ -15,7 +15,7 @@ Adc::start();
 
 while(!Adc::intFlag());
 
-const uint16_t value = Adc::value();
+const Word16 value = Adc::value();
 ```
 
 ## class AdcN
@@ -64,11 +64,11 @@ const uint16_t value = Adc::value();
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
-#### static void enable(bool e)
+#### static void enable(Bool e)
 
 #### static void start()
 
-#### static uint16_t value()
+#### static Word16 value()
 
 #### static void reference([AdcN::Reference](adc.hpp.md#enum-adcnreference) r)
 
@@ -76,14 +76,16 @@ const uint16_t value = Adc::value();
 
 #### static void prescaler([AdcN::Prescaler](adc.hpp.md#enum-adcnprescaler) p)
 
-#### static void leftAdjust(bool l)
+#### static void leftAdjust(Bool l)
 
 #### static void trigger([AdcN::Trigger](adc.hpp.md#enum-adcntrigger) t)
 
-#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
+#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 
-#### static void intEnable(bool e)
+#### static void callCallback()
 
-#### static bool intFlag()
+#### static void intEnable(Bool e)
+
+#### static Bool intFlag()
 
 #### static void intFlagClear()

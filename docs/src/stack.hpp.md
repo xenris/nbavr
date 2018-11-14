@@ -3,60 +3,60 @@
 # Stack
 
 ```c++
-nbos::Stack<int, 6> stack;
+nbos::Stack<Int, 6> stack;
 
 stack.push(3);
 stack.push(7);
 stack.push(1);
 stack.push(2);
 
-int s = stack.size(); // s = 4
+Int s = stack.size(); // s = 4
 
-int a = 0;
+Int a = 0;
 
 stack.pop(&a); // a = 2
 stack.pop(&a); // a = 1
 
 s = stack.size(); // s = 2
 
-nbos::Stack<int>* pointer = &stack;
+nbos::Stack<Int>* pointer = &stack;
 
 pointer->push(4);
 
 s = stack.size(); // s = 3
 ```
 
-## class Stack<class Type, int bufferSize\>
+## class Stack<class Type, Int bufferSize\>
 
 #### Stack()
 Construct a stack with space on the system stack for the contents.
 
 ## class Stack
 
-#### Stack(Type\* buffer, int bufferSize)
+#### Stack(Type\* buffer, Int bufferSize)
 Construct a stack with the given buffer.
 
-#### bool push(Type t)
+#### Bool push(Type t)
 Returns true on success.
 
-#### [Optional](type.hpp.md#class-optionalclass-t)<Type\> pop()
+#### [Optional](optional.hpp.md#class-optionalclass-t)<Type\> pop()
 
-#### [Optional](type.hpp.md#class-optionalclass-t)<Type\> peek()
+#### [Optional](optional.hpp.md#class-optionalclass-t)<Type\> peek()
 
 #### void clear()
 Remove all elements from the stack.
 
-#### int size()
+#### Int size()
 Get the number of elements currently in the stack.
 
-#### int free()
+#### Int free()
 Get the amount of free space in the stack.
 
-### int capacity()
+### Int capacity()
 Get the total capacity of the stack.
 
-#### bool empty()
+#### Bool empty()
 Returns true if the stack is empty.
 
-#### bool full()
+#### Bool full()
 Returns true if the stack is full.

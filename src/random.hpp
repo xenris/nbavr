@@ -14,13 +14,13 @@
 #ifndef NBOS_RANDOM_HPP
 #define NBOS_RANDOM_HPP
 
-#include "type.hpp"
+#include "safe.hpp"
 
 namespace nbos {
 
 /// ## class Random
 class Random {
-    uint32_t _next;
+    Word32 _next;
 
 public:
 
@@ -29,9 +29,9 @@ public:
     Random() : _next(0) {
     }
 
-    /// #### Random(uint32_t seed)
+    /// #### Random(Word32 seed)
     /// Constructor with user defined seed.
-    Random(uint32_t seed) : _next(seed) {
+    Random(Word32 seed) : _next(seed) {
     }
 
     /// #### T next<class T>()
@@ -43,9 +43,9 @@ public:
     T next() {
         _next = _next * 1103515245 + 12345;
 
-        uint32_t result = (_next / 65536) % 32768;
+        Word32 result = (_next / 65536) % 32768;
 
-        if constexpr (is_floating<T>::value) {
+        if constexpr (IsFloating<T>::value) {
             return T(result) / T(32768);
         } else {
             return T(result);

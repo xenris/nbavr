@@ -18,7 +18,6 @@
 ///     * [[Random]]
 ///     * [[Serial]]
 ///     * [[Stack]]
-///     * [[Types]]
 ///     * [[Vector]]
 /// * Hardware
 ///     * [[Analog to Digital Converters]]

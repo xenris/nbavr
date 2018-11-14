@@ -5,14 +5,12 @@
 #ifndef NBOS_MACROS_HPP
 #define NBOS_MACROS_HPP
 
-#include "type.hpp"
-
-/// #### macro force_inline
+/// #### force_inline
 /// Force a function to always be inlined. Use like "inline".
 #define force_inline inline __attribute__((always_inline))
 
-/// #### macro CAT(...)
-/// Concatinates a list of identifiers together.<br>
+/// #### CAT(...)
+/// Concatenates a list of identifiers together.<br>
 /// e.g. CAT(Foo, Bar) -> FooBar
 #define CAT(...) GET_CAT(__VA_ARGS__, CAT8, CAT7, CAT6, CAT5, CAT4, CAT3, CAT2, CAT1)(__VA_ARGS__)
 
@@ -27,6 +25,9 @@
 
 #define GET_CAT(_1, _2, _3, _4, _5, _6, _7, _8, NAME, ...) NAME
 
+/// #### UNDERLINE(...)
+/// Concatenates a list of identifiers together with underlines.<br>
+/// e.g. UNDERLINE(Foo, Bar) -> _Foo_Bar_
 #define UNDERLINE(...) GET_UNDERLINE(__VA_ARGS__, UNDERLINE8, UNDERLINE7, UNDERLINE6, UNDERLINE5, UNDERLINE4, UNDERLINE3, UNDERLINE2, UNDERLINE1)(__VA_ARGS__)
 
 #define UNDERLINE1(A) _ ## A ## _
@@ -40,6 +41,9 @@
 
 #define GET_UNDERLINE(_1, _2, _3, _4, _5, _6, _7, _8, NAME, ...) NAME
 
+/// #### TO_LETTER(N)
+/// Convert a number to its equivalent letter. Starts at 0.<br>
+/// e.g. TO_LETTER(4) -> E
 #define TO_LETTER(N) TO_LETTER_(N)
 #define TO_LETTER_(N) TO_LETTER_ ## N
 #define TO_LETTER_0 A
@@ -69,6 +73,9 @@
 #define TO_LETTER_24 Y
 #define TO_LETTER_25 Z
 
+/// #### TO_NUMBER(L)
+/// Convert a letter to its equivalent number.<br>
+/// e.g. TO_NUMBER(E) -> 4
 #define TO_NUMBER(L) TO_NUMBER_(L)
 #define TO_NUMBER_(L) TO_NUMBER_ ## L
 #define TO_NUMBER_A 0
@@ -98,6 +105,9 @@
 #define TO_NUMBER_Y 24
 #define TO_NUMBER_Z 25
 
+/// #### INC(N)
+/// Increment a number. Input ranges from 0 to 39.<br>
+/// e.g. INC(4) -> 5
 #define INC(N) INC_(N)
 #define INC_(N) INC_ ## N
 #define INC_0 1
@@ -141,6 +151,9 @@
 #define INC_38 39
 #define INC_39 40
 
+/// #### DEC(N)
+/// Decrement a number. Input ranges from 1 to 40.<br>
+/// e.g. DEC(4) -> 3
 #define DEC(N) DEC_(N)
 #define DEC_(N) DEC_ ## N
 #define DEC_1 0
@@ -184,12 +197,21 @@
 #define DEC_39 38
 #define DEC_40 39
 
-// If A evaluates to any number or nothing -> true
-// If A evaluates to something not defined -> false
+/// #### DEFINED(A)
+/// If A evaluates to any number or nothing -> true<br>
+/// If A evaluates to something which is not defined -> false<br>
+/// e.g. DEFINED(CAT(SOME_, MACRO_, THING)) -> false (unless "SOME_MACRO_THING" is #defined somewhere).<br>
+/// Only usable when the value evaluates to a number, nothing, or is not defined.<br>
+/// e.g. DEFINED(force_inline) -> error! Use "defined(force_inline)" instead<br>
+/// 0 is also true.<br>
+/// e.g. DEFINED(0) -> true
 #define DEFINED(A) DEFINED_(A)
 #define DEFINED_(A) A ## 1
 
+/// #### REG_DEFINED(A)
+/// If A evaluates to a register -> true<br>
+/// e.g. REG_DEFINED(CHIP_REG_ADC) -> true (On devices with that register.)
 #define REG_DEFINED(A) REG_DEFINED_(A)
-#define REG_DEFINED_(A) A ## _ADDR
+#define REG_DEFINED_(A) DEFINED(A ## _ADDR)
 
 #endif

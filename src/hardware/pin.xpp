@@ -19,7 +19,6 @@
 
 #include "hardware/chip.hpp"
 #include "macros.hpp"
-#include "type.hpp"
 
 #ifndef NBOS_BASE_PIN
 #define NBOS_BASE_PIN
@@ -53,7 +52,7 @@ struct Pin {
     /// * outputGeneralOpenDrain50MHz
     /// * outputAlternatePushPull50MHz
     /// * outputAlternateOpenDrain50MHz
-    enum class Mode : uint8_t {
+    enum class Mode {
         #if DEFINED(MODE(INPUT))
             input = MODE(INPUT),
         #endif
@@ -130,7 +129,7 @@ struct Pin {
     /// #### enum {{Pin::Value}}
     /// * low
     /// * high
-    enum class Value : uint8_t {
+    enum class Value {
         low = 0,
         high = 1,
     };
@@ -169,39 +168,39 @@ struct PinN : Pin {
 
     /// #### static void mode([[Pin::Mode]] m)
     static force_inline void mode(Mode m) {
-        setBit_(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT), uint8_t(m) & 0x01);
+        setBit_(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT), Int(m) & 0x01);
 
         #if DEFINED(PIN_N(MODE_BIT_1_BIT))
-            setBit_(REG(PIN_N(MODE_BIT_1_REG)), PIN_N(MODE_BIT_1_BIT), uint8_t(m) & 0x02);
+            setBit_(REG(PIN_N(MODE_BIT_1_REG)), PIN_N(MODE_BIT_1_BIT), Int(m) & 0x02);
         #endif
 
         #if DEFINED(PIN_N(MODE_BIT_2_BIT))
-            setBit_(REG(PIN_N(MODE_BIT_2_REG)), PIN_N(MODE_BIT_2_BIT), uint8_t(m) & 0x04);
+            setBit_(REG(PIN_N(MODE_BIT_2_REG)), PIN_N(MODE_BIT_2_BIT), Int(m) & 0x04);
         #endif
 
         #if DEFINED(PIN_N(MODE_BIT_3_BIT))
-            setBit_(REG(PIN_N(MODE_BIT_3_REG)), PIN_N(MODE_BIT_3_BIT), uint8_t(m) & 0x08);
+            setBit_(REG(PIN_N(MODE_BIT_3_REG)), PIN_N(MODE_BIT_3_BIT), Int(m) & 0x08);
         #endif
     }
 
     /// #### static [[Pin::Mode]] mode()
     static force_inline Mode mode() {
-        uint8_t m = 0;
+        Int m = 0;
 
         #if DEFINED(PIN_N(MODE_BIT_0_BIT))
-            m |= getBit(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT)) << 0;
+            m |= Int(getBit(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT))) << 0;
         #endif
 
         #if DEFINED(PIN_N(MODE_BIT_1_BIT))
-            m |= getBit(REG(PIN_N(MODE_BIT_1_REG)), PIN_N(MODE_BIT_1_BIT)) << 1;
+            m |= Int(getBit(REG(PIN_N(MODE_BIT_1_REG)), PIN_N(MODE_BIT_1_BIT))) << 1;
         #endif
 
         #if DEFINED(PIN_N(MODE_BIT_2_BIT))
-            m |= getBit(REG(PIN_N(MODE_BIT_2_REG)), PIN_N(MODE_BIT_2_BIT)) << 2;
+            m |= Int(getBit(REG(PIN_N(MODE_BIT_2_REG)), PIN_N(MODE_BIT_2_BIT))) << 2;
         #endif
 
         #if DEFINED(PIN_N(MODE_BIT_3_BIT))
-            m |= getBit(REG(PIN_N(MODE_BIT_3_REG)), PIN_N(MODE_BIT_3_BIT)) << 3;
+            m |= Int(getBit(REG(PIN_N(MODE_BIT_3_REG)), PIN_N(MODE_BIT_3_BIT))) << 3;
         #endif
 
         return Mode(m);
@@ -234,7 +233,7 @@ struct PinN : Pin {
 
     #endif
 
-    #include "pin.hpp"
+    #include "pin.xpp"
 #endif
 
 #undef N

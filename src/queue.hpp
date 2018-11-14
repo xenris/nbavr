@@ -3,23 +3,23 @@
 /// # {{Queue}}
 
 /// ```c++
-/// nbos::Queue<int, 6> queue;
+/// nbos::Queue<Int32, 6> queue;
 ///
 /// queue.push(3);
 /// queue.push(7);
 /// queue.push(1);
 /// queue.push(2);
 ///
-/// int s = queue.size(); // s = 4
+/// Int s = queue.size(); // s = 4
 ///
-/// int a = 0;
+/// Int32 a = 0;
 ///
 /// queue.pop(&a); // a = 3
 /// queue.pop(&a); // a = 7
 ///
 /// s = queue.size(); // s = 2
 ///
-/// nbos::Queue<int>* pointer = &queue;
+/// nbos::Queue<Int32>* pointer = &queue;
 ///
 /// pointer->push(4);
 ///
@@ -29,13 +29,13 @@
 #ifndef NBOS_QUEUE_HPP
 #define NBOS_QUEUE_HPP
 
-#include "math.hpp"
-#include "type.hpp"
+#include "optional.hpp"
+#include "callback.hpp"
 
 namespace nbos {
 
-/// ## class Queue<class Type, int bufferSize\>
-template <class Type, int bufferSize = -1>
+/// ## class Queue<class Type, Int bufferSize\>
+template <class Type, Int bufferSize = -1>
 class Queue : public Queue<Type> {
     Type _buffer[bufferSize];
 
@@ -51,24 +51,24 @@ public:
 template <class Type>
 class Queue<Type, -1> {
     Type*const _buffer;
-    int _bufferSize;
-    int _head = 0;
-    int _tail = 0;
-    bool _full = false;
-    callback_t notify_func = nullptr;
-    void* notify_data = nullptr;
+    Int _bufferSize;
+    Int _head = 0;
+    Int _tail = 0;
+    Bool _full = false;
+    Callback<void> _callback;
+    void* _callback_data;
 
 public:
 
-    /// #### Queue(Type\* buffer, int bufferSize)
+    /// #### Queue(Type\* buffer, Int bufferSize)
     /// Construct a queue with the given buffer.
-    Queue(Type* buffer, int bufferSize) : _buffer(buffer) {
+    Queue(Type* buffer, Int bufferSize) : _buffer(buffer) {
         _bufferSize = bufferSize;
     }
 
-    /// #### bool push(Type t)
+    /// #### Bool push(Type t)
     /// Returns true on success.
-    bool push(const Type& t) {
+    Bool push(const Type& t) {
         if(full()) {
             return false;
         }
@@ -115,14 +115,14 @@ public:
         _full = false;
     }
 
-    /// #### int size()
+    /// #### Int size()
     /// Get the number of elements currently in the queue.
-    int size() {
+    Int size() {
         if(full()) {
             return _bufferSize;
         }
 
-        int s = _head - _tail;
+        Int s = _head - _tail;
 
         if(s < 0) {
             s += _bufferSize;
@@ -131,44 +131,47 @@ public:
         return s;
     }
 
-    /// #### int free()
+    /// #### Int free()
     /// Get the amount of free space in the queue.
-    int free() {
+    Int free() {
         return _bufferSize - size();
     }
 
-    /// ### int capacity()
+    /// ### Int capacity()
     /// Get the total capacity of the queue.
-    int capacity() {
+    Int capacity() {
         return _bufferSize;
     }
 
-    /// #### bool empty()
+    /// #### Bool empty()
     /// Returns true if the queue is empty.
-    bool empty() {
+    Bool empty() {
         return (_head == _tail) && !full();
     }
 
-    /// #### bool full()
+    /// #### Bool full()
     /// Returns true if the queue is full.
-    bool full() {
+    Bool full() {
         return _full || (_bufferSize == 0);
     }
 
-    /// #### void notify(callback_t callback, void\* data)
-    /// Set the callback function and data for queue notifications.
+    // void setCallback(void (*callback)(void*), void* data = nullptr) {
+    //     callback_func = callback;
+    //     callback_data = data;
+    // }
 
-    /// #### void notify()
-    /// Call the callback function previously given.
-    void notify(callback_t callback = nullptr, void* data = nullptr) {
-        if(callback == nullptr) {
-            if(notify_func != nullptr) {
-                notify_func(notify_data);
-            }
-        } else {
-            notify_func = callback;
-            notify_data = data;
-        }
+    /// #### void setCallback(Callback callback, T\* data)
+    /// Set the callback function and data for queue notifications.
+    template<class T>
+    void setCallback(Callback<T> callback, T* data) {
+        _callback = (Callback<void>)callback;
+        _callback_data = data;
+    }
+
+    /// #### void callCallback()
+    /// Call the callback notification function.
+    void callCallback() {
+        _callback(_callback_data);
     }
 };
 

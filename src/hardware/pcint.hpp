@@ -21,6 +21,7 @@
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "system.hpp"
+#include "callback.hpp"
 
 #include "loopi"
 
@@ -45,39 +46,35 @@ struct PcIntN {
     }
 
     #if DEFINED(PCINT_N(ENABLE_BIT_0_BIT))
-        /// #### static void intEnable(bool e)
-        static force_inline void intEnable(bool e) {
+        /// #### static void intEnable(Bool e)
+        static force_inline void intEnable(Bool e) {
             setBit_(REG(PCINT_N(ENABLE_BIT_0_REG)), PCINT_N(ENABLE_BIT_0_BIT), e);
         }
     #endif
 
     #if REG_DEFINED(PCINT_N(MASK_REG))
-        /// #### static void mask(uint8_t m)
+        /// #### static void mask(Word8 m)
         /// Set which pins trigger this interrupt.
-        static force_inline void mask(uint8_t m) {
+        static force_inline void mask(Word8 m) {
             *REG(PCINT_N(MASK_REG)) = m;
         }
     #endif
 
-    /// #### static void callback([[callback_t]] callback, void\* data)
-    static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
-        static callback_t f = nullptr;
-        static void* d = nullptr;
+    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
+    template <class T>
+    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
+        callback((Callback<void>)function, data);
+    }
 
-        if(callback == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = callback;
-            d = data;
-        }
+    /// #### static void callCallback()
+    static force_inline void callCallback() {
+        callback();
     }
 
     #if DEFINED(PCINT_N(INT_FLAG_BIT_0_BIT))
-        /// #### static bool intFlag()
-        static force_inline bool intFlag() {
-            return *REG(PCINT_N(INT_FLAG_BIT_0_REG)) & bv(PCINT_N(INT_FLAG_BIT_0_BIT));
+        /// #### static Bool intFlag()
+        static force_inline Bool intFlag() {
+            return Bool(*REG(PCINT_N(INT_FLAG_BIT_0_REG)) & bv(PCINT_N(INT_FLAG_BIT_0_BIT)));
         }
     #endif
 
@@ -87,10 +84,26 @@ struct PcIntN {
             setBit_(REG(PCINT_N(INT_FLAG_BIT_0_REG)), PCINT_N(INT_FLAG_BIT_0_BIT), true);
         }
     #endif
+
+private:
+
+    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
+        static Callback<void> f = nullptr;
+        static void* d = nullptr;
+
+        if(function == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = function;
+            d = data;
+        }
+    }
 };
 
 ISR(PCINT_N(INT_VECTOR)) {
-    PcIntN::callback();
+    PcIntN::callCallback();
 }
 
 } // nbos::hw

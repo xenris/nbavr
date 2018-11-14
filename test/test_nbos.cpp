@@ -35,7 +35,7 @@ TEST(Clock, ticksToMillis) {
 TEST(Clock, delayedCall) {
     typedef Clock<Timer1, 16000000> Clock;
 
-    Clock::delayedCall(nullptr, nullptr, Clock::millisToTicks(3000));
+    Clock::delayedCall((Callback<void>)nullptr, (void*)nullptr, Clock::millisToTicks(3000));
 
     DelayedCall a(nullptr, nullptr, 1000);
     DelayedCall b(nullptr, nullptr, 1500);
@@ -59,74 +59,68 @@ TEST(Clock, delayedCall) {
 }
 
 TEST(Util, reverse) {
-    char str[8];
+    Char str[8];
 
-    strcpy(str, "");
+    strcpy((Char::T*)str, "");
     reverse(str, 0);
-    EXPECT_STREQ(str, "");
+    EXPECT_STREQ((Char::T*)str, "");
 
-    strcpy(str, "a");
+    strcpy((Char::T*)str, "a");
     reverse(str, 1);
-    EXPECT_STREQ(str, "a");
+    EXPECT_STREQ((Char::T*)str, "a");
 
-    strcpy(str, "ab");
+    strcpy((Char::T*)str, "ab");
     reverse(str, 2);
-    EXPECT_STREQ(str, "ba");
+    EXPECT_STREQ((Char::T*)str, "ba");
 
-    strcpy(str, "abc");
+    strcpy((Char::T*)str, "abc");
     reverse(str, 3);
-    EXPECT_STREQ(str, "cba");
+    EXPECT_STREQ((Char::T*)str, "cba");
 
-    strcpy(str, "abc");
+    strcpy((Char::T*)str, "abc");
     reverse(str, 2);
-    EXPECT_STREQ(str, "bac");
+    EXPECT_STREQ((Char::T*)str, "bac");
 }
 
 TEST(Print, itoa) {
-    char str[64];
+    Char str[64];
 
-    itoa(str, int8_t(0), 10);
-    EXPECT_STREQ(str, "0");
+    itoa(str, Int8(0));
+    EXPECT_STREQ((Char::T*)str, "0");
 
-    itoa(str, uint8_t(147), 10);
-    EXPECT_STREQ(str, "147");
+    itoa(str, Word8(147));
+    EXPECT_STREQ((Char::T*)str, "147");
 
-    itoa(str, int16_t(1476), 10);
-    EXPECT_STREQ(str, "1476");
+    itoa(str, Int16(1476));
+    EXPECT_STREQ((Char::T*)str, "1476");
 
-    itoa(str, int16_t(-1476), 10);
-    EXPECT_STREQ(str, "-1476");
+    itoa(str, Int16(-1476));
+    EXPECT_STREQ((Char::T*)str, "-1476");
 
-    itoa(str, int16_t(764), 2);
-    EXPECT_STREQ(str, "1011111100");
+    itoa<Int16, 2>(str, Int16(764));
+    EXPECT_STREQ((Char::T*)str, "1011111100");
 
-    itoa(str, int16_t(764), 1);
-    EXPECT_STREQ(str, "1011111100");
+    itoa<Int16, 16>(str, Int16(847));
+    EXPECT_STREQ((Char::T*)str, "34F");
 
-    itoa(str, int16_t(847), 16);
-    EXPECT_STREQ(str, "34f");
+    itoa<Int16, 16>(str, Int16(-847));
+    EXPECT_STREQ((Char::T*)str, "-34F");
 
-    itoa(str, int16_t(-847), 16);
-    EXPECT_STREQ(str, "-34f");
+    itoa<Int32, 36>(str, Int32(36));
+    EXPECT_STREQ((Char::T*)str, "10");
 
-    itoa(str, int32_t(36), 36);
-    EXPECT_STREQ(str, "10");
+    itoa(str, Int32(65535));
+    EXPECT_STREQ((Char::T*)str, "65535");
 
-    itoa(str, int32_t(36), 37);
-    EXPECT_STREQ(str, "10");
+    itoa(str, Word32(65535));
+    EXPECT_STREQ((Char::T*)str, "65535");
 
-    itoa(str, int32_t(65535), 10);
-    EXPECT_STREQ(str, "65535");
-
-    itoa(str, uint32_t(65535), 10);
-    EXPECT_STREQ(str, "65535");
-
-    itoa(str, int32_t(32768), 10);
-    EXPECT_STREQ(str, "32768");
+    itoa(str, Int32(32768));
+    EXPECT_STREQ((Char::T*)str, "32768");
 }
 
 TEST(Container, Queue) {
-    Queue<int16_t, 3> queue;
+    Queue<Int16, 3> queue;
 
     EXPECT_EQ(queue.size(), 0);
     EXPECT_EQ(queue.capacity(), 3);
@@ -144,7 +138,7 @@ TEST(Container, Queue) {
     EXPECT_EQ(queue.size(), 3);
     EXPECT_EQ(queue.capacity(), 3);
 
-    Optional<int16_t> n;
+    Optional<Int16> n;
     EXPECT_EQ(n = queue.pop(), true);
     EXPECT_EQ(queue.size(), 2);
     EXPECT_EQ(*n, 1);
@@ -178,35 +172,35 @@ TEST(Container, Queue) {
 
     // Make sure notify callbacks don't interfere.
 
-    Queue<int16_t, 3> queueF;
-    Queue<int16_t, 3> queueG;
+    Queue<Int16, 3> queueF;
+    Queue<Int16, 3> queueG;
 
-    auto f = [](void* c) {
-        *(char*)c = 'f';
+    Callback<Char> f = [](Char* c) {
+        *c = 'f';
     };
 
-    auto g = [](void* c) {
-        *(char*)c = 'g';
+    Callback<Char> g = [](Char* c) {
+        *c = 'g';
     };
 
-    char c = 'a';
+    Char c = 'a';
 
-    queueF.notify(f, &c);
-    queueG.notify(g, &c);
+    queueF.setCallback(f, &c);
+    queueG.setCallback(g, &c);
 
     EXPECT_EQ(c, 'a');
 
-    queueF.notify();
+    queueF.callCallback();
 
     EXPECT_EQ(c, 'f');
 
-    queueG.notify();
+    queueG.callCallback();
 
     EXPECT_EQ(c, 'g');
 }
 
 TEST(Container, Stack) {
-    Stack<int16_t, 3> stack;
+    Stack<Int16, 3> stack;
 
     EXPECT_EQ(stack.size(), 0);
     EXPECT_EQ(stack.capacity(), 3);
@@ -224,7 +218,7 @@ TEST(Container, Stack) {
     EXPECT_EQ(stack.size(), 3);
     EXPECT_EQ(stack.capacity(), 3);
 
-    Optional<int16_t> n;
+    Optional<Int16> n;
     EXPECT_EQ(n = stack.pop(), true);
     EXPECT_EQ(stack.size(), 2);
     EXPECT_EQ(*n, 3);
@@ -258,7 +252,7 @@ TEST(Container, Stack) {
 }
 
 TEST(Container, Array) {
-    Array<int16_t, 3> array;
+    Array<Int16, 3> array;
 
     EXPECT_EQ(array.size(), 3);
 
@@ -284,7 +278,7 @@ TEST(Container, Array) {
     EXPECT_EQ(array[1], 3);
     EXPECT_EQ(array[2], 3);
 
-    Array<int16_t, 3> array2 = array;
+    Array<Int16, 3> array2 = array;
 
     EXPECT_EQ(array2[0], 3);
     EXPECT_EQ(array2[1], 3);
@@ -292,7 +286,7 @@ TEST(Container, Array) {
 }
 
 TEST(Container, PriorityQueue) {
-    PriorityQueue<int8_t, 5> pq;
+    PriorityQueue<Int8, 5> pq;
 
     EXPECT_TRUE(pq.empty());
     EXPECT_FALSE(pq.full());
@@ -313,7 +307,7 @@ TEST(Container, PriorityQueue) {
     EXPECT_TRUE(pq.full());
     EXPECT_EQ(pq.size(), 5);
 
-    Optional<int8_t> n;
+    Optional<Int8> n;
 
     EXPECT_TRUE(n = pq.pop());
     EXPECT_EQ(*n, 1);
@@ -346,9 +340,9 @@ TEST(Container, PriorityQueue) {
 }
 
 TEST(Container, PriorityQueueMemoryUse) {
-    int a[5] = {};
+    Int a[5] = {};
 
-    PriorityQueue<int> pq(&a[1], 3);
+    PriorityQueue<Int> pq(&a[1], 3);
 
     pq.push(1);
     pq.push(2);
@@ -364,7 +358,7 @@ TEST(Container, PriorityQueueMemoryUse) {
 }
 
 TEST(Algorithm, quicksort) {
-    int array1[6];
+    Int array1[6];
 
     array1[0] = 6;
     array1[1] = 8;
@@ -386,18 +380,60 @@ TEST(Algorithm, quicksort) {
 TEST(Random, Limits) {
     Random r;
 
-    EXPECT_TRUE(r.next<float>() != r.next<float>());
+    EXPECT_TRUE(r.next<Float>() != r.next<Float>());
 
-    for(int i = 0; i < 1000; i++) {
-        const float n = r.next<float>();
+    for(Int i = 0; i < 1000; i++) {
+        const Float n = r.next<Float>();
 
         EXPECT_LE(n, 1);
         EXPECT_GE(n, 0);
     }
 }
 
+TEST(Type, SafeTypes) {
+    Int8 a;
+    Int8 b = 5;
+
+    EXPECT_EQ(a + b, 5);
+
+    Int16 c = Int16(b) + 4;
+
+    EXPECT_EQ(c, 9);
+
+    Int16 d = 5;
+
+    d = 1;
+
+    false && (d++ == 0);
+
+    EXPECT_EQ(d, 1);
+
+    Word8 e = 0x30;
+    Word16 f = 0x0010;
+
+    Word16 g = Word16(e) | f;
+
+    EXPECT_EQ(g, 0x0030);
+
+    EXPECT_FALSE(IsFloating<decltype(g)>::value);
+    EXPECT_TRUE(IsFloating<Float>::value);
+
+    EXPECT_TRUE((IsSame<Float, Float>::value));
+    EXPECT_TRUE((IsSame<Int, Int>::value));
+    EXPECT_TRUE((IsSame<decltype(g), decltype(f)>::value));
+    EXPECT_TRUE((IsSame<decltype(a), decltype(b)>::value));
+
+    EXPECT_FALSE((IsSame<decltype(a), decltype(d)>::value));
+
+    log(Float(5));
+
+    Int h = IsSigned<Int8>::value;
+
+    (void)h;
+}
+
 TEST(Type, Optional) {
-    Optional<int> a;
+    Optional<Int> a;
 
     EXPECT_FALSE(a);
 
@@ -421,8 +457,8 @@ struct Taskk : Task<Clock> {
 };
 
 TEST(A, A) {
-    typedef Queue<char, 10> cout_t;
-    typedef Queue<char, 10> cin_t;
+    typedef Queue<Char, 10> cout_t;
+    typedef Queue<Char, 10> cin_t;
     cout_t cout;
     cin_t cin;
 

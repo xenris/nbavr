@@ -60,12 +60,14 @@ while(!nbos::hw::Spi0::intFlag());
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
-#### static void enable(bool b)
+#### static void enable(Bool b)
 
-#### static void intEnable(bool b)
+#### static void intEnable(Bool b)
 
-#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
+#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 Set the callback for when the serial transfer is complete.
+
+#### static void callCallback()
 
 #### static void dataOrder([SpiN::DataOrder](spi.hpp.md#enum-spindataorder) d)
 
@@ -77,14 +79,14 @@ Set the callback for when the serial transfer is complete.
 
 #### static void clock([SpiN::Clock](spi.hpp.md#enum-spinclock) c)
 
-#### static bool intFlag()
+#### static Bool intFlag()
 
 #### static void intFlagClear()
 
-#### static bool collisionFlag()
+#### static Bool collisionFlag()
 
 #### static void collisionFlagClear()
 
-#### static void data(uint8_t d)
+#### static void data(Word8 d)
 
-#### static uint8_t data()
+#### static Word8 data()

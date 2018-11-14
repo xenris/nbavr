@@ -3,22 +3,22 @@
 /// # {{Vector}}
 
 /// ```c++
-/// nbos::Vector<int, 6> vector;
+/// nbos::Vector<Int, 6> vector;
 ///
 /// vector.add(3);
 /// vector.add(7);
 /// vector.add(1);
 /// vector.add(2);
 ///
-/// int s = vector.size(); // s = 4
+/// Int s = vector.size(); // s = 4
 ///
-/// const int a = vector[1]; // a = 7
+/// const Int a = vector[1]; // a = 7
 ///
-/// nbos::Vector<int>* pointer = &vector;
+/// nbos::Vector<Int>* pointer = &vector;
 ///
 /// pointer->add(4);
 ///
-/// const int b = pointer->get(2); // b = 1
+/// const Int b = pointer->get(2); // b = 1
 ///
 /// s = vector.size(); // s = 5
 /// ```
@@ -31,8 +31,8 @@
 
 namespace nbos {
 
-/// ## class Vector<class Type, int bufferSize\>
-template <class Type, int bufferSize = -1>
+/// ## class Vector<class Type, Int bufferSize\>
+template <class Type, Int bufferSize = -1>
 class Vector : public Vector<Type> {
     Type _buffer[bufferSize];
 
@@ -48,20 +48,20 @@ public:
 template <class Type>
 class Vector<Type, -1> {
     Type*const _buffer;
-    const int _bufferSize;
-    int _size;
+    const Int _bufferSize;
+    Int _size;
 
 public:
 
-    /// #### Vector(Type\* buffer, int bufferSize)
+    /// #### Vector(Type\* buffer, Int bufferSize)
     /// Construct a vector with the given buffer.
-    Vector(Type* buffer, int bufferSize) : _buffer(buffer), _bufferSize(bufferSize) {
+    Vector(Type* buffer, Int bufferSize) : _buffer(buffer), _bufferSize(bufferSize) {
         _size = 0;
     }
 
-    /// #### bool add(Type t)
+    /// #### Bool add(Type t)
     /// Returns true on success.
-    bool add(const Type& t) {
+    Bool add(const Type& t) {
         if(full()) {
             return false;
         }
@@ -76,7 +76,7 @@ public:
     /// #### void fill(const Type& t) {
     /// Fills the entire buffer with the given value.
     void fill(const Type& t) {
-        for(int i = 0; i < _bufferSize; i++) {
+        for(Int i = 0; i < _bufferSize; i++) {
             _buffer[i] = t;
         }
 
@@ -89,16 +89,16 @@ public:
         _size = 0;
     }
 
-    /// #### int size()
+    /// #### Int size()
     /// Get the number of elements currently in the vector.
-    int size() const {
+    Int size() const {
         return _size;
     }
 
-    /// #### bool resize(int size)
+    /// #### Bool resize(Int size)
     /// Set the size of the vector.<br>
     /// Returns false, and doesn't change the size if the given size is larger than the buffer.
-    bool resize(int size) const {
+    Bool resize(Int size) const {
         if(size > _bufferSize) {
             return false;
         } else {
@@ -108,36 +108,36 @@ public:
         }
     }
 
-    /// #### int free()
+    /// #### Int free()
     /// Get the amount of free space in the vector.
-    int free() const {
+    Int free() const {
         return _bufferSize - _size;
     }
 
-    /// ### int capacity()
+    /// ### Int capacity()
     /// Get the total capacity of the vector.
-    int capacity() const {
+    Int capacity() const {
         return _bufferSize;
     }
 
-    /// #### bool empty()
+    /// #### Bool empty()
     /// Returns true if the vector is empty.
-    bool empty() const {
+    Bool empty() const {
         return _size == 0;
     }
 
-    /// #### bool full()
+    /// #### Bool full()
     /// Returns true if the vector is full.
-    bool full() const {
+    Bool full() const {
         return _size == _bufferSize;
     }
 
-    /// #### Type& operator [](int n)
-    Type& operator [](int n) {
+    /// #### Type& operator [](Int n)
+    Type& operator [](Int n) {
         return _buffer[n];
     }
 
-    const Type& operator [](int n) const {
+    const Type& operator [](Int n) const {
         return _buffer[n];
     }
 
@@ -161,9 +161,9 @@ public:
 
     /// #### Vector<Type\>& operator =(Vector<Type\> other)
     Vector<Type>& operator =(const Vector<Type>& other) {
-        const int count = nbos::min(_bufferSize, other.size());
+        const Int count = nbos::min(_bufferSize, other.size());
 
-        for(int i = 0; i < count; i++) {
+        for(Int i = 0; i < count; i++) {
             _buffer[i] = other[i];
         }
 

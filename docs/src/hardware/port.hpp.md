@@ -23,7 +23,7 @@ while(true) {
 
 #### static void enableClock(bool e)
 
-#### static void mode([Pin::Mode](pin.hpp.md#enum-pinmode) m)
+#### static void mode([Pin::Mode](pin.xpp.md#enum-pinmode) m)
 
 #### static void output(T value)
 

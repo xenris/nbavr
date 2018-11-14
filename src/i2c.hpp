@@ -10,44 +10,44 @@
 namespace nbos {
 
 /// ## class I2c
-template <class Twi, uint32_t CpuFreq, uint32_t Baud>
+template <class Twi, Integer CpuFreq, Integer Baud>
 struct I2c {
     /// #### enum Mode
     /// * read
     /// * write
-    enum class Mode : int8_t {
+    enum class Mode {
         read = 1,
         write = 0,
     };
 
     /// ### class I2c::Action
     struct Action {
-        /// #### using I2c::Action::Callback = void (\*)(void\* data, bool success)
+        /// #### using I2c::Action::Callback = void (\*)(void\* data, Bool success)
         /// The callback type used when an action finishes.
-        using Callback = void (*)(void* data, bool success);
+        using Callback = void (*)(void* data, Bool success);
 
         Mode mode;
-        uint8_t address;
+        Word8 address;
 		Callback callback;
 		void* data;
-		uint8_t* buffer;
-		uint8_t length;
+		Word8* buffer;
+		Word8 length;
 
 		Action() {}
 
-        /// #### I2c::Action(Mode mode, uint8_t address, uint8_t\* buffer, uint8_t length, Callback callback, void\* data)
+        /// #### I2c::Action(Mode mode, Word8 address, Word8\* buffer, Word8 length, Callback callback, void\* data)
         /// Get the type of hardware that this class represents.
-        Action(Mode mode, uint8_t address, uint8_t* buffer, uint8_t length, Callback callback = nullptr, void* data = nullptr)
+        Action(Mode mode, Word8 address, Word8* buffer, Word8 length, Callback callback = nullptr, void* data = nullptr)
 		: mode(mode), address(address), callback(callback), data(data), buffer(buffer), length(length) {
 		}
     };
 
     /// #### static void init(Queue\<Action, S\>* queue)
     /// Initialise the I2c hardware.
-	template <int S>
+	template <Integer S>
 	static void init(Queue<Action, S>* queue) {
-		const uint32_t scaleFactor = 1;
-        const uint8_t bitRate = ((CpuFreq / Baud) - 16) / (2 * scaleFactor);
+		const Word32 scaleFactor = 1;
+        const Word8 bitRate = Word8(Word32((CpuFreq / Baud) - 16) / (scaleFactor * 2));
 
 		queue->setNotify(i2cQueueNotify<S>, queue);
 
@@ -55,23 +55,23 @@ struct I2c {
         Twi::bitRate(bitRate);
 	}
 
-	template <int S>
+	template <Integer S>
 	static void i2cQueueNotify(void* data) {
-        atomic([&]() {
+        atomic {
             auto queue = (Queue<Action, S>*)data;
 
             if(!Twi::active() && !queue->empty_()) {
                 Twi::sendStart();
             }
-        });
+        }
 	}
 
     // TODO Add slave code.
-	template <int S>
+	template <Integer S>
 	static void twiCallback(void* data) {
 		auto queue = (Queue<Action, S>*)data;
 
-		static int i;
+		static Integer i;
 
 		Action action;
 

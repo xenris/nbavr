@@ -32,14 +32,14 @@
 
 #### static HardwareType getHardwareType()
 
-#### static void data(uint8_t d)
+#### static void data(Word8 d)
 
-#### static uint8_t data()
+#### static Word8 data()
 
-#### static void startIntEnable(bool b)
+#### static void startIntEnable(Bool b)
 Enable the start condition interrupt.
 
-#### static void overflowIntEnable(bool b)
+#### static void overflowIntEnable(Bool b)
 Enable the counter overflow interrupt.
 
 #### static void wireMode(WireMode m)
@@ -64,21 +64,24 @@ Get the stop condition interrupt flag's state.
 #### static void stopIntFlagClear()
 Clear the stop condition interrupt flag.
 
-#### static bool overflowIntFlag()
+#### static Bool overflowIntFlag()
 Get the counter overflow interrupt flag's state.
 
 #### static void overflowIntFlagClear()
 Clear the counter overflow interrupt flag.
 
-#### static bool collisionFlag()
+#### static Bool collisionFlag()
 Get the data output collision flag's state.
 
-#### static void counter(uint8_t c)
+#### static void counter(Word8 c)
 
-#### static uint8_t counter()
+#### static Word8 counter()
 
-#### static void startCallback(callback_t callback, void\* data)
+#### static void setStartCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 Set callback for start condition interrupt.
 
-#### static void overflowCallback(callback_t callback, void\* data)
-Set callback for timer overflow interrupt.
+#### static void callStartCallback()
+
+#### static void setOverflowCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
+
+#### static void callOverflowCallback()

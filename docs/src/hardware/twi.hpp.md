@@ -42,41 +42,43 @@
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 Get the type of hardware that this class represents.
 
-#### static void enable(bool e)
+#### static void enable(Bool e)
 Enable/disable the Twi.
 
-#### static void sendStart(bool intEnable = true)
+#### static void sendStart(Bool intEnable = true)
 Send a start condition.
 
-#### static void sendStop(bool intEnable = true)
+#### static void sendStop(Bool intEnable = true)
 Send stop condition.
 
-#### static void sendAck(bool intEnable = true)
+#### static void sendAck(Bool intEnable = true)
 Send acknowledge condition.
 
-#### static void sendNack(bool intEnable = true)
+#### static void sendNack(Bool intEnable = true)
 Send not acknowledge condition.
 
-#### static void bitRate(uint8_t b)
+#### static void bitRate(Word8 b)
 Set Twi bitRate.
 
-#### static bool intFlag()
+#### static Bool intFlag()
 Returns true if the interrupt flag is set.
 
-#### static bool active()
+#### static Bool active()
 Returns true if the twi hardware is busy.
 
-#### static bool writeCollisionFlag()
+#### static Bool writeCollisionFlag()
 Returns true if the write collision flag is set.
 
 #### static void writeCollisionFlagClear()
 Clear the write collision flag.
 
-#### static void intEnable(bool e)
+#### static void intEnable(Bool e)
 Enable/disable the Twi interrupt.
 
-#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
-Set the callback and data for Twi interrupts.
+#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
+Set the callback for Twi interrupts.
+
+#### static void callCallback()
 
 #### static [TwiN::Status](twi.hpp.md#enum-twinstatus) status()
 Get the Twi status.
@@ -84,17 +86,17 @@ Get the Twi status.
 #### static void prescaler([TwiN::Prescaler](twi.hpp.md#enum-twinprescaler) p)
 Set the prescaler.
 
-#### static void push(uint8_t b)
+#### static void push(Word8 b)
 Put byte in data buffer.
 
-#### static uint8_t pop()
+#### static Word8 pop()
 Get byte from data buffer.
 
-#### static void slaveAddress(uint8_t b)
+#### static void slaveAddress(Word8 b)
 Set the address for transmitting and receiving as a slave.
 
-#### static void slaveAddressMask(uint8_t b)
+#### static void slaveAddressMask(Word8 b)
 Set the slave address mask.
 
-#### static void generalCallRecognitionEnable(bool e)
+#### static void generalCallRecognitionEnable(Bool e)
 Enable/disable the recognition of a Twi general call.

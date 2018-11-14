@@ -56,44 +56,50 @@ Usart::dataRegisterEmptyCallback((callback_t)f);
 
 #### static void polarity([UsartN::Polarity](usart.hpp.md#enum-usartnpolarity) p)
 
-#### static void baud(uint16_t b)
+#### static void baud(Word16 b)
 
-#### static void use2X(bool u)
+#### static void use2X(Bool u)
 
-#### static void receiverEnable(bool e)
+#### static void receiverEnable(Bool e)
 
-#### static void transmitterEnable(bool e)
+#### static void transmitterEnable(Bool e)
 
-#### static void multiprocessorCummunicationMode(bool e)
+#### static void multiprocessorCummunicationMode(Bool e)
 
-#### static void rxCompleteIntEnable(bool e)
+#### static void rxCompleteIntEnable(Bool e)
 
-#### static void txCompleteIntEnable(bool e)
+#### static void txCompleteIntEnable(Bool e)
 
-#### static void dataRegisterEmptyIntEnable(bool e)
+#### static void dataRegisterEmptyIntEnable(Bool e)
 
-#### static void rxCompleteCallback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
+#### static void setRxCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 
-#### static void txCompleteCallback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
+#### static void callRxCallback()
 
-#### static void dataRegisterEmptyCallback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
+#### static void setTxCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 
-#### static void push(uint8_t b)
+#### static void callTxCallback()
 
-#### static void push9(uint16_t b)
+#### static void setDeCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 
-#### static uint8_t pop()
+#### static void callDeCallback()
 
-#### static uint16_t pop9()
+#### static void push(Word8 b)
 
-#### static bool frameError()
+#### static void push9(Word16 b)
+
+#### static Word8 pop()
+
+#### static Word16 pop9()
+
+#### static Bool frameError()
 
 #### static void frameErrorClear()
 
-#### static bool dataOverRun()
+#### static Bool dataOverRun()
 
 #### static void dataOverRunClear()
 
-#### static bool parityError()
+#### static Bool parityError()
 
 #### static void parityErrorClear()

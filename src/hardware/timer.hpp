@@ -29,6 +29,7 @@
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "system.hpp"
+#include "callback.hpp"
 
 #include "loopi"
 
@@ -45,9 +46,9 @@ namespace nbos::hw {
 
 /// ## Class {{TimerN}}
 struct TimerN {
-    /// #### using type = T
-    /// The underlying type of this timer/counter. (uint8_t or uint16_t)
-    using type = REGTYPE(TIMER_N(COUNTER_REG));
+    /// #### Type
+    /// The underlying type of this timer/counter. (Word8 or Word16)
+    using Type = REGTYPE(TIMER_N(COUNTER_REG));
 
     TimerN() = delete;
 
@@ -70,7 +71,7 @@ struct TimerN {
     /// * div16384
     /// * extFalling
     /// * extRising
-    enum class Clock : uint8_t {
+    enum class Clock {
         #if DEFINED(TIMER_N(CLOCK_NONE_ID))
             none = TIMER_N(CLOCK_NONE_ID),
         #endif
@@ -151,7 +152,7 @@ struct TimerN {
     /// * fastPwm
     /// * pwmOcra
     /// * fastPwmOcra
-    enum class Waveform : uint8_t {
+    enum class Waveform {
         #if DEFINED(TIMER_N(WAVEFORM_NORMAL_ID))
             normal = TIMER_N(WAVEFORM_NORMAL_ID),
         #endif
@@ -203,12 +204,12 @@ struct TimerN {
     #if DEFINED(TIMER_N(CLOCK_BIT_0_BIT))
         /// #### static void clock([[TimerN::Clock]] c)
         static force_inline void clock(Clock c) {
-            setBit_(REG(TIMER_N(CLOCK_BIT_0_REG)), TIMER_N(CLOCK_BIT_0_BIT), uint8_t(c) & 0x01);
-            setBit_(REG(TIMER_N(CLOCK_BIT_1_REG)), TIMER_N(CLOCK_BIT_1_BIT), uint8_t(c) & 0x02);
-            setBit_(REG(TIMER_N(CLOCK_BIT_2_REG)), TIMER_N(CLOCK_BIT_2_BIT), uint8_t(c) & 0x04);
+            setBit_(REG(TIMER_N(CLOCK_BIT_0_REG)), TIMER_N(CLOCK_BIT_0_BIT), Int(c) & 0x01);
+            setBit_(REG(TIMER_N(CLOCK_BIT_1_REG)), TIMER_N(CLOCK_BIT_1_BIT), Int(c) & 0x02);
+            setBit_(REG(TIMER_N(CLOCK_BIT_2_REG)), TIMER_N(CLOCK_BIT_2_BIT), Int(c) & 0x04);
 
             #if DEFINED(TIMER_N(CLOCK_BIT_3_BIT))
-                setBit_(REG(TIMER_N(CLOCK_BIT_3_REG)), TIMER_N(CLOCK_BIT_3_BIT), uint8_t(c) & 0x08);
+                setBit_(REG(TIMER_N(CLOCK_BIT_3_REG)), TIMER_N(CLOCK_BIT_3_BIT), Int(c) & 0x08);
             #endif
         }
     #endif
@@ -216,41 +217,37 @@ struct TimerN {
     #if DEFINED(TIMER_N(WAVEFORM_BIT_0_BIT))
         /// #### static void waveform([[TimerN::Waveform]] w)
         static force_inline void waveform(Waveform w) {
-            setBit_(REG(TIMER_N(WAVEFORM_BIT_0_REG)), TIMER_N(WAVEFORM_BIT_0_BIT), uint8_t(w) & 0x01);
+            setBit_(REG(TIMER_N(WAVEFORM_BIT_0_REG)), TIMER_N(WAVEFORM_BIT_0_BIT), Int(w) & 0x01);
 
             #if DEFINED(TIMER_N(WAVEFORM_BIT_1_BIT))
-                setBit_(REG(TIMER_N(WAVEFORM_BIT_1_REG)), TIMER_N(WAVEFORM_BIT_1_BIT), uint8_t(w) & 0x02);
+                setBit_(REG(TIMER_N(WAVEFORM_BIT_1_REG)), TIMER_N(WAVEFORM_BIT_1_BIT), Int(w) & 0x02);
             #endif
 
             #if DEFINED(TIMER_N(WAVEFORM_BIT_2_BIT))
-                setBit_(REG(TIMER_N(WAVEFORM_BIT_2_REG)), TIMER_N(WAVEFORM_BIT_2_BIT), uint8_t(w) & 0x04);
+                setBit_(REG(TIMER_N(WAVEFORM_BIT_2_REG)), TIMER_N(WAVEFORM_BIT_2_BIT), Int(w) & 0x04);
             #endif
 
             #if DEFINED(TIMER_N(WAVEFORM_BIT_3_BIT))
-                setBit_(REG(TIMER_N(WAVEFORM_BIT_3_REG)), TIMER_N(WAVEFORM_BIT_3_BIT), uint8_t(w) & 0x08);
+                setBit_(REG(TIMER_N(WAVEFORM_BIT_3_REG)), TIMER_N(WAVEFORM_BIT_3_BIT), Int(w) & 0x08);
             #endif
         }
     #endif
 
-    /// #### static void callback([[callback_t]] callback, void\* data)
+    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
     /// Set the timer overflow callback.
-    static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
-        static callback_t f = nullptr;
-        static void* d = nullptr;
+    template <class T>
+    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
+        callback((Callback<void>)function, data);
+    }
 
-        if(callback == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = callback;
-            d = data;
-        }
+    /// #### static void callCallback()
+    static force_inline void callCallback() {
+        callback();
     }
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
-        /// #### static void intEnable(bool b)
-        static force_inline void intEnable(bool b) {
+        /// #### static void intEnable(Bool b)
+        static force_inline void intEnable(Bool b) {
             if(b) {
                 *REG(TIMER_N(OVERFLOW_INT_ENABLE_REG)) |= bv(TIMER_N(OVERFLOW_INT_ENABLE_BIT));
             } else {
@@ -260,9 +257,9 @@ struct TimerN {
     #endif
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
-        /// #### static bool intFlag()
-        static force_inline bool intFlag() {
-            return *REG(TIMER_N(OVERFLOW_INT_FLAG_REG)) & bv(TIMER_N(OVERFLOW_INT_FLAG_BIT));
+        /// #### static Bool intFlag()
+        static force_inline Bool intFlag() {
+            return Bool(*REG(TIMER_N(OVERFLOW_INT_FLAG_REG)) & bv(TIMER_N(OVERFLOW_INT_FLAG_BIT)));
         }
     #endif
 
@@ -278,19 +275,19 @@ struct TimerN {
 
     #if TIMER_N(OUTPUT_A)
         #define ID A
-        #include "output.hpp"
+        #include "output.xpp"
         #undef ID
     #endif
 
     #if TIMER_N(OUTPUT_B)
         #define ID B
-        #include "output.hpp"
+        #include "output.xpp"
         #undef ID
     #endif
 
     #if TIMER_N(OUTPUT_C)
         #define ID C
-        #include "output.hpp"
+        #include "output.xpp"
         #undef ID
     #endif
 
@@ -298,36 +295,52 @@ struct TimerN {
     /// See [[TimerN::Input]]
 
     #if TIMER_N(INPUT)
-        #include "input.hpp"
+        #include "input.xpp"
     #endif
+
+private:
+
+    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
+        static Callback<void> f = nullptr;
+        static void* d = nullptr;
+
+        if(function == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = function;
+            d = data;
+        }
+    }
 };
 
 #if TIMER_N(OUTPUT_A_MODE_BIT_1_BIT)
     ISR(TIMER_N(OUTPUT_A_INT_VECTOR)) {
-        TimerN::OutputA::callback();
+        TimerN::OutputA::callCallback();
     }
 #endif
 
 #if TIMER_N(OUTPUT_B_MODE_BIT_1_BIT)
     ISR(TIMER_N(OUTPUT_B_INT_VECTOR)) {
-        TimerN::OutputB::callback();
+        TimerN::OutputB::callCallback();
     }
 #endif
 
 #if TIMER_N(OUTPUT_C_MODE_BIT_1_BIT)
     ISR(TIMER_N(OUTPUT_C_INT_VECTOR)) {
-        TimerN::OutputC::callback();
+        TimerN::OutputC::callCallback();
     }
 #endif
 
 #if TIMER_N(INPUT)
     ISR(TIMER_N(INPUT_INT_VECTOR)) {
-        TimerN::Input::callback();
+        TimerN::Input::callCallback();
     }
 #endif
 
 ISR(TIMER_N(OVERFLOW_INT_VECTOR)) {
-    TimerN::callback();
+    TimerN::callCallback();
 }
 
 } // nbos::hw

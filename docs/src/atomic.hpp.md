@@ -5,22 +5,22 @@
 Used to access variables atomically.
 
 ```c++
-Atomic<int32_t> counter = 0;
+Atomic<Int32> counter = 0;
 
-int32_t c = counter;
+Int32 c = counter;
 counter += 2;
-bool b = (counter == 5);
+Bool b = (counter == 5);
 counter->nonatomic()++;
 
 struct S {
-    int f(int n)
+    Int32 f(Int32 n)
         return n + 1;
     }
 }
 
 Atomic<S> s;
 
-int i = s.call(&S::f, 100);
+Int32 i = s.call(&S::f, 100);
 ```
 
 ## class Atomic<class Type\>
@@ -54,5 +54,5 @@ Sets the value to t, and returns the previous value.
 #### auto call(F f, ...)
 Call member function f with arguments atomically.
 
-#### Type& nonatomic()
+#### Type& operator \*()
 Non-atomic access to the value.

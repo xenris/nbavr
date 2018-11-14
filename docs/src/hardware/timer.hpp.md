@@ -24,8 +24,8 @@ atomic([]() {
 
 ## Class TimerN
 
-#### using type = T
-The underlying type of this timer/counter. (uint8_t or uint16_t)
+#### Type
+The underlying type of this timer/counter. (Word8 or Word16)
 
 #### enum TimerN::Clock
 * none
@@ -65,17 +65,19 @@ The underlying type of this timer/counter. (uint8_t or uint16_t)
 
 #### static void waveform([TimerN::Waveform](timer.hpp.md#enum-timernwaveform) w)
 
-#### static void callback([callback_t](../type.hpp.md#callback_t--void-void) callback, void\* data)
+#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 Set the timer overflow callback.
 
-#### static void intEnable(bool b)
+#### static void callCallback()
 
-#### static bool intFlag()
+#### static void intEnable(Bool b)
+
+#### static Bool intFlag()
 
 #### static void intFlagClear()
 
 ## class OutputX
-See [TimerN::OutputX](output.hpp.md#class-timernoutputx)
+See [TimerN::OutputX](output.xpp.md#class-timernoutputx)
 
 ## class Input
-See [TimerN::Input](input.hpp.md#class-timerninput)
+See [TimerN::Input](input.xpp.md#class-timerninput)

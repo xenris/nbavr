@@ -12,6 +12,10 @@ static void* data = (void*)0x5678;
 //------------------------------------------------
 // Analog to Digital
 
+void ff() {
+    Usi0::overflowIntEnable(true);
+}
+
 TEST(Adc0, getHardwareType) {
     ASSERT_EQ(Adc0::getHardwareType(), HardwareType::adc);
 }
@@ -72,8 +76,8 @@ TEST(Adc0, trigger) {
     // TEST_REG_WRITE(Adc0::trigger(Adc0::Trigger::PinChangeInterrupt));
 }
 
-TEST(Adc0, callback) {
-    TEST_REG_WRITE(Adc0::callback(func,data));
+TEST(Adc0, setCallback) {
+    TEST_REG_WRITE(Adc0::setCallback(func,data));
 }
 
 TEST(Adc0, intEnable) {
@@ -108,8 +112,8 @@ TEST(ExIntN, trigger) {
     TEST_REG_WRITE(ExInt0::trigger(ExInt0::Trigger::rising));
 }
 
-TEST(ExIntN, callback) {
-    TEST_REG_WRITE(ExInt0::callback(func,data));
+TEST(ExIntN, setCallback) {
+    TEST_REG_WRITE(ExInt0::setCallback(func,data));
 }
 
 TEST(ExIntN, intFlag) {
@@ -136,8 +140,8 @@ TEST(PcIntN, mask) {
     TEST_REG_WRITE(PcInt0::mask(0x64));
 }
 
-TEST(PcIntN, callback) {
-    TEST_REG_WRITE(PcInt0::callback(func,data));
+TEST(PcIntN, setCallback) {
+    TEST_REG_WRITE(PcInt0::setCallback(func,data));
 }
 
 TEST(PcIntN, intFlag) {
@@ -208,7 +212,7 @@ TEST(Timer0, getHardwareType) {
 }
 
 TEST(Timer0, type) {
-    ::testing::StaticAssertTypeEq<Timer0::type, uint8_t>();
+    ::testing::StaticAssertTypeEq<Timer0::Type, Word8>();
 }
 
 TEST(Timer0, counter) {
@@ -236,8 +240,8 @@ TEST(Timer0, waveform) {
     TEST_REG_WRITE(Timer0::waveform(Timer0::Waveform::fastPwmOcra));
 }
 
-TEST(Timer0, callback) {
-    TEST_REG_WRITE(Timer0::callback(func,data));
+TEST(Timer0, setCallback) {
+    TEST_REG_WRITE(Timer0::setCallback(func,data));
 }
 
 TEST(Timer0, intEnable) {
@@ -278,11 +282,11 @@ TEST(Timer0, outputBMode) {
 }
 
 TEST(Timer0, outputACallback) {
-    TEST_REG_WRITE(Timer0::OutputA::callback(func,data));
+    TEST_REG_WRITE(Timer0::OutputA::setCallback(func,data));
 }
 
 TEST(Timer0, outputBCallback) {
-    TEST_REG_WRITE(Timer0::OutputB::callback(func,data));
+    TEST_REG_WRITE(Timer0::OutputB::setCallback(func,data));
 }
 
 TEST(Timer0, outputAIntEnable) {
@@ -316,7 +320,7 @@ TEST(Timer1, getHardwareType) {
 }
 
 TEST(Timer1, type) {
-    ::testing::StaticAssertTypeEq<Timer1::type, uint8_t>();
+    ::testing::StaticAssertTypeEq<Timer1::Type, Word8>();
 }
 
 TEST(Timer1, counter) {
@@ -349,8 +353,8 @@ TEST(Timer1, waveform) {
     TEST_REG_WRITE(Timer1::waveform(Timer1::Waveform::fastPwmOcrc));
 }
 
-TEST(Timer1, callback) {
-    TEST_REG_WRITE(Timer1::callback(func,data));
+TEST(Timer1, setCallback) {
+    TEST_REG_WRITE(Timer1::setCallback(func,data));
 }
 
 TEST(Timer1, intEnable) {
@@ -396,11 +400,11 @@ TEST(Timer1, outputBMode) {
 }
 
 TEST(Timer1, outputACallback) {
-    TEST_REG_WRITE(Timer1::OutputA::callback(func,data));
+    TEST_REG_WRITE(Timer1::OutputA::setCallback(func,data));
 }
 
 TEST(Timer1, outputBCallback) {
-    TEST_REG_WRITE(Timer1::OutputB::callback(func,data));
+    TEST_REG_WRITE(Timer1::OutputB::setCallback(func,data));
 }
 
 TEST(Timer1, outputAIntEnable) {

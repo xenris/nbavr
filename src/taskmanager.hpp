@@ -23,7 +23,7 @@
 #include "clock.hpp"
 #include "macros.hpp"
 #include "task.hpp"
-#include "type.hpp"
+#include "hardware/port.hpp"
 
 namespace nbos {
 
@@ -32,18 +32,18 @@ template <class Clock>
 class TaskManager {
     typedef Task<Clock> TaskT;
 
-    static constexpr typename Clock::Timer::type taskTimeout = Clock::millisToTicks(4);
-    static constexpr typename Clock::Timer::type taskTimeoutHalted = Clock::microsToTicks(100);
+    static constexpr auto taskTimeout = typename Clock::Timer::Type(Clock::millisToTicks(4));
+    static constexpr auto taskTimeoutHalted = typename Clock::Timer::Type(Clock::microsToTicks(100));
 
     TaskT** tasks;
-    const uint8_t numTasks;
-    uint8_t taskI = 0;
+    const Int numTasks;
+    Int taskI = 0;
 
 public:
 
     /// #### TaskManager(TaskT\* (&tasks)[])
     /// Runs the given array of tasks. Does not return.
-    template <uint8_t S>
+    template <Int S>
     TaskManager(TaskT* (&tasks)[S]) : tasks(tasks), numTasks(S) {
         Clock::haltCallback(haltCallback, this);
 
@@ -62,7 +62,7 @@ private:
 
     // Run each task once.
     void stepAll() {
-        for(uint8_t i = 0; i < numTasks; i++) {
+        for(Int i = 0; i < numTasks; i++) {
             stepOne();
         }
 
@@ -81,7 +81,7 @@ private:
 
         if(task.state == TaskT::State::delay) {
             // Check if it is time for this task to wake up.
-            if(int64_t(Clock::getTicks() - task.wakeTick) >= 0) {
+            if(Int64(Clock::getTicks() - task.wakeTick) >= 0) {
                 task.state = TaskT::State::awake;
             }
         }
@@ -110,9 +110,7 @@ private:
         Clock::haltStart(taskTimeoutHalted);
     }
 
-    static void haltCallback(void* data) {
-        TaskManager* self = static_cast<TaskManager*>(data);
-
+    static void haltCallback(TaskManager* self) {
         self->handleHalt();
     }
 };

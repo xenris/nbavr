@@ -47,14 +47,14 @@ while(true) {
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
-#### static void mode([Pin::Mode](pin.hpp.md#enum-pinmode) m)
+#### static void mode([Pin::Mode](pin.xpp.md#enum-pinmode) m)
 
-#### static [Pin::Mode](pin.hpp.md#enum-pinmode) mode()
+#### static [Pin::Mode](pin.xpp.md#enum-pinmode) mode()
 
-#### static void output([Pin::Value](pin.hpp.md#enum-pinvalue) v)
+#### static void output([Pin::Value](pin.xpp.md#enum-pinvalue) v)
 
-#### static [Pin::Value](pin.hpp.md#enum-pinvalue) output()
+#### static [Pin::Value](pin.xpp.md#enum-pinvalue) output()
 
-#### static [Pin::Value](pin.hpp.md#enum-pinvalue) input()
+#### static [Pin::Value](pin.xpp.md#enum-pinvalue) input()
 
 #### static void toggle()
