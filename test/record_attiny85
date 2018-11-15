@@ -12,20 +12,20 @@ r Timer0::OutputA::value() 597f969c92784f15cb72
 r Timer0::OutputB::intFlag() 0110011001
 r Timer0::OutputB::value() 8940a6bd84fb22f87fb6
 r Timer0::counter() be42f6daee32a6491d21
-r Timer0::overflowIntFlag() 0000111111
+r Timer0::intFlag() 0000111111
 r Timer1::OutputA::intFlag() 0000000011
 r Timer1::OutputA::value() 304081f292636394f485
 r Timer1::OutputB::intFlag() 0010010111
 r Timer1::OutputB::value() 3bddef7163c597d98bad
 r Timer1::OutputC::value() dd1a4765726f5c397c4
 r Timer1::counter() e1a5d87c901486c4084
-r Timer1::overflowIntFlag() 1010101010
+r Timer1::intFlag() 1010101010
 r Usi0::collisionFlag() 0111100110
 r Usi0::counter() 642fda8531
-r Usi0::counterOverflowIntFlag() 1100000000
 r Usi0::data() 88d6d583e2f0af1d3ca
-r Usi0::startConditionIntFlag() 0111101000
-r Usi0::stopConditionIntFlag() 1110100101
+r Usi0::overflowIntFlag() 1100000000
+r Usi0::startIntFlag() 0111101000
+r Usi0::stopIntFlag() 1110100101
 w Adc0::callback(func,data)
 w Adc0::channel(Adc0::Channel::adc0) 27:ff:f0:
 w Adc0::channel(Adc0::Channel::adc1) 27:00:01:27:ff:f1:
@@ -62,8 +62,8 @@ w Adc0::trigger(Adc0::Trigger::timer0CompareMatchA) 23:00:03:26:00:20:23:ff:fb:
 w Adc0::trigger(Adc0::Trigger::timer0Overflow) 23:00:04:26:00:20:23:ff:fc:
 w Adc0::value()
 w ExInt0::callback(func,data)
-w ExInt0::enable(false) 5b:ff:bf:
-w ExInt0::enable(true) 5b:00:40:
+w ExInt0::intEnable(false) 5b:ff:bf:
+w ExInt0::intEnable(true) 5b:00:40:
 w ExInt0::intFlag()
 w ExInt0::intFlagClear() 5a:00:40:
 w ExInt0::trigger(ExInt0::Trigger::change) 55:00:01:55:ff:fd:
@@ -71,8 +71,8 @@ w ExInt0::trigger(ExInt0::Trigger::falling) 55:00:02:55:ff:fe:
 w ExInt0::trigger(ExInt0::Trigger::low) 55:ff:fc:
 w ExInt0::trigger(ExInt0::Trigger::rising) 55:00:03:
 w PcInt0::callback(func,data)
-w PcInt0::enable(false) 5b:ff:df:
-w PcInt0::enable(true) 5b:00:20:
+w PcInt0::intEnable(false) 5b:ff:df:
+w PcInt0::intEnable(true) 5b:00:20:
 w PcInt0::intFlag()
 w PcInt0::intFlagClear() 5a:00:40:
 w PcInt0::mask(0x64) 35:00:64:35:ff:64:
@@ -111,6 +111,7 @@ w Timer0::OutputB::mode(Timer0::OutputB::Mode::set) 4a:00:30:
 w Timer0::OutputB::mode(Timer0::OutputB::Mode::toggle) 4a:00:10:4a:ff:df:
 w Timer0::OutputB::value()
 w Timer0::OutputB::value(0x7a) 48:00:7a:48:ff:7a:
+w Timer0::callback(func,data)
 w Timer0::clock(Timer0::Clock::div1) 53:00:01:53:ff:f9:
 w Timer0::clock(Timer0::Clock::div1024) 53:00:05:53:ff:fd:
 w Timer0::clock(Timer0::Clock::div256) 53:00:04:53:ff:fc:
@@ -121,11 +122,10 @@ w Timer0::clock(Timer0::Clock::extRising) 53:00:07:
 w Timer0::clock(Timer0::Clock::none) 53:ff:f8:
 w Timer0::counter()
 w Timer0::counter(0xc4) 52:00:c4:52:ff:c4:
-w Timer0::overflowCallback(func,data)
-w Timer0::overflowIntEnable(false) 59:ff:fd:
-w Timer0::overflowIntEnable(true) 59:00:02:
-w Timer0::overflowIntFlag()
-w Timer0::overflowIntFlagClear() 58:00:02:
+w Timer0::intEnable(false) 59:ff:fd:
+w Timer0::intEnable(true) 59:00:02:
+w Timer0::intFlag()
+w Timer0::intFlagClear() 58:00:02:
 w Timer0::waveform(Timer0::Waveform::ctcOcra) 4a:00:02:4a:ff:fe:53:ff:f7:
 w Timer0::waveform(Timer0::Waveform::fastPwm) 4a:00:03:53:ff:f7:
 w Timer0::waveform(Timer0::Waveform::fastPwmOcra) 4a:00:03:53:00:08:
@@ -156,6 +156,7 @@ w Timer1::OutputB::value()
 w Timer1::OutputB::value(0x8d) 4b:00:8d:4b:ff:8d:
 w Timer1::OutputC::value()
 w Timer1::OutputC::value(0x15) 4d:00:15:4d:ff:15:
+w Timer1::callback(func,data)
 w Timer1::clock(Timer1::Clock::div1) 50:00:01:50:ff:f1:
 w Timer1::clock(Timer1::Clock::div1024) 50:00:0b:50:ff:fb:
 w Timer1::clock(Timer1::Clock::div128) 50:00:08:50:ff:f8:
@@ -174,11 +175,10 @@ w Timer1::clock(Timer1::Clock::div8192) 50:00:0e:50:ff:fe:
 w Timer1::clock(Timer1::Clock::none) 50:ff:f0:
 w Timer1::counter()
 w Timer1::counter(0x8a) 4f:00:8a:4f:ff:8a:
-w Timer1::overflowCallback(func,data)
-w Timer1::overflowIntEnable(false) 59:ff:fb:
-w Timer1::overflowIntEnable(true) 59:00:04:
-w Timer1::overflowIntFlag()
-w Timer1::overflowIntFlagClear() 58:00:04:
+w Timer1::intEnable(false) 59:ff:fb:
+w Timer1::intEnable(true) 59:00:04:
+w Timer1::intFlag()
+w Timer1::intFlagClear() 58:00:04:
 w Timer1::waveform(Timer1::Waveform::ctcOcra) 50:00:80:50:ff:bf:
 w Timer1::waveform(Timer1::Waveform::fastPwmOcrc) 50:00:40:50:ff:7f:
 w Timer1::waveform(Timer1::Waveform::normal) 50:ff:3f:
@@ -192,18 +192,18 @@ w Usi0::counter()
 w Usi0::counter(0x0) 2e:ff:f0:
 w Usi0::counter(0x3) 2e:00:03:2e:ff:f3:
 w Usi0::counter(0xc3) 2e:00:03:2e:ff:f3:
-w Usi0::counterOverflowIntEnable(false) 2d:ff:bf:
-w Usi0::counterOverflowIntEnable(true) 2d:00:40:
-w Usi0::counterOverflowIntFlag()
-w Usi0::counterOverflowIntFlagClear() 2e:00:40:
 w Usi0::data()
 w Usi0::data(0x3b) 2f:00:3b:2f:ff:3b:
-w Usi0::startConditionIntEnable(false) 2d:ff:7f:
-w Usi0::startConditionIntEnable(true) 2d:00:80:
-w Usi0::startConditionIntFlag()
-w Usi0::startConditionIntFlagClear() 2e:00:80:
-w Usi0::stopConditionIntFlag()
-w Usi0::stopConditionIntFlagClear() 2e:00:20:
+w Usi0::overflowIntEnable(false) 2d:ff:bf:
+w Usi0::overflowIntEnable(true) 2d:00:40:
+w Usi0::overflowIntFlag()
+w Usi0::overflowIntFlagClear() 2e:00:40:
+w Usi0::startIntEnable(false) 2d:ff:7f:
+w Usi0::startIntEnable(true) 2d:00:80:
+w Usi0::startIntFlag()
+w Usi0::startIntFlagClear() 2e:00:80:
+w Usi0::stopIntFlag()
+w Usi0::stopIntFlagClear() 2e:00:20:
 w Usi0::toggleClockPin() 2d:00:01:
 w Usi0::wireMode(nbos::hw::Usi0::WireMode::disabled) 2d:ff:e7:
 w Usi0::wireMode(nbos::hw::Usi0::WireMode::threeWire) 2d:00:18:

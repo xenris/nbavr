@@ -1,3 +1,7 @@
+/// [[Index]]
+
+/// # {{Types}}
+
 #ifndef NBOS_TYPE_HPP
 #define NBOS_TYPE_HPP
 
@@ -25,9 +29,6 @@ using uint32_t = conditional<sizeof(unsigned int) == 4, unsigned int, unsigned l
 using int64_t = signed long long;
 using uint64_t = unsigned long long;
 
-using size_t = unsigned int;
-using ssize_t = signed int;
-
 #endif
 
 static_assert(sizeof(int8_t) == 1, "int8_t is not the right size");
@@ -39,6 +40,8 @@ static_assert(sizeof(uint32_t) == 4, "uint32_t is not the right size");
 static_assert(sizeof(int64_t) == 8, "int64_t is not the right size");
 static_assert(sizeof(uint64_t) == 8, "uint64_t is not the right size");
 
+/// #### {{callback_t}} = void (\*)(void\*)
+/// The basic callback function type commonly used.
 using callback_t = void (*)(void*);
 
 struct nulltype {
@@ -384,25 +387,58 @@ struct integer_min<int64_t> : integral_constant<int64_t, 0xFFFFFFFFFFFFFFFF> {};
 template<>
 struct integer_min<uint64_t> : integral_constant<uint64_t, 0x0000000000000000> {};
 
+/// ## class {{Optional}}<class T\>
+/// Class who's value can be either something or nothing.
+///
+/// ```c++
+/// Optional<int> o;
+///
+/// bool b = o; // b = false
+///
+/// o = 5;
+///
+/// b = o; // b = true
+///
+/// int a = *b; // a = 5
+/// int x = b; // x = 1 (a.k.a. true)
+///
+/// o = {};
+///
+/// b = o; // b = false
+/// ```
 template <class T>
-class optional {
+class Optional {
     bool hasValue;
     T value;
 
 public:
 
-    optional() : hasValue(false) {
+    /// #### Optional()
+    /// Constructor for "nothing"
+    Optional() : hasValue(false) {
     }
 
-    optional(T v) : hasValue(true), value(v) {
+    /// #### Optional(T value)
+    /// Constructor for "something"
+    Optional(const T& v) : hasValue(true), value(v) {
     }
 
+    /// #### operator bool()
+    /// True if "something", false if "nothing".
     operator bool() const {
         return hasValue;
     }
 
-    T& operator *() {
+    /// #### T operator *()
+    /// Returns the stored value.
+    const T& operator *() const {
         return value;
+    }
+
+    /// #### T\* operator ->()
+    /// Pointer access to the stored value.
+    const T* operator ->() const {
+        return &value;
     }
 };
 

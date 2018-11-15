@@ -1,7 +1,9 @@
+/// [[Index]]
+
+/// # {{I2c}}
+
 #ifndef NBOS_I2C_HPP
 #define NBOS_I2C_HPP
-
-/// # I2C
 
 #include <queue.hpp>
 
@@ -69,7 +71,7 @@ struct I2c {
 	static void twiCallback(void* data) {
 		auto queue = (Queue<Action, S>*)data;
 
-		static size_t i;
+		static int i;
 
 		Action action;
 

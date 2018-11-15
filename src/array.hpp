@@ -1,58 +1,120 @@
+/// [[Index]]
+
+/// # {{Array}}
+
+/// ```c++
+/// nbos::Array<int, 6> array;
+///
+/// array[0] = 6;
+/// array[1] = 8;
+/// array[2] = 4;
+/// array[3] = 5;
+/// array[4] = 1;
+/// array[5] = 2;
+///
+/// nbos::quicksort(array->begin(), array->size());
+///
+/// nbos::Array<int>* pointer = &array;
+///
+/// int n = pointer->get(0); // n = 1
+///
+/// pointer->fill(0);
+///
+/// for(auto n& : pointer) {
+///     n += 5;
+/// }
+/// ```
+
 #ifndef NBOS_ARRAY_HPP
 #define NBOS_ARRAY_HPP
 
-/// # Array
-
 #include "math.hpp"
+#include "algorithm.hpp"
 #include "type.hpp"
 
 namespace nbos {
 
-/// ## class Array<class Type, int Size>
-template <class T, int S>
-struct Array {
-    /// #### type size_t
-    /// The smallest signed integer type which can index the entire array.
-    using size_t = typename conditional<S <= 127, int8_t, int16_t>::type;
-    /// #### type type
-    /// The type that the array contains.
-    using type = T;
-
-private:
-
-    T _array[S];
+/// ## class Array<class Type, int size\>
+template <class Type, int size = -1>
+class Array : public Array<Type> {
+    Type _buffer[size];
 
 public:
 
-    /// #### T& operator[](size_t i)
-    /// Element access operator.<br>
-    /// i is clipped to array length.
-    T& operator[](size_t i) {
-        i = clip(i, size_t(0), size_t(S - 1));
+    /// #### Array()
+    explicit Array() : Array<Type>(_buffer, size) {
+    }
+};
 
-        return _array[i];
+/// ## class Array<class Type\>
+template <class Type>
+class Array<Type, -1> {
+    Type*const _buffer;
+    const int _size;
+
+public:
+
+    /// #### Array(Type\* buffer, int size)
+    Array(Type* buffer, int size) : _buffer(buffer), _size(size) {
     }
 
-    /// #### void fill(T t)
-    /// Fills the array with value t.
-    void fill(T t) {
-        for(T& n : this) {
+    /// #### void fill(Type t)
+    void fill(const Type& t) {
+        for(auto& n : this) {
             n = t;
         }
     }
 
-    /// #### size_t size()
-    /// Returns the length of the array.
-    size_t size() {
-        return S;
+    /// #### int size()
+    int size() const {
+        return _size;
     }
 
-    T* begin() {
-        return &_array[0];
+    /// #### Type& operator \[\](int i)
+    Type& operator [](int i) {
+        return _buffer[i];
     }
 
-    T* end() {
-        return &_array[S];
+    const Type& operator [](int i) const {
+        return _buffer[i];
+    }
+
+    /// #### Type& get(int i)
+    Type& get(int i) {
+        return _buffer[i];
+    }
+
+    const Type& get(int i) const {
+        return _buffer[i];
+    }
+
+    /// #### Array<Type\>& operator =(Array<Type\> other)
+    Array<Type>& operator =(const Array<Type>& other) {
+        const int count = nbos::min(size(), other.size());
+
+        for(int i = 0; i < count; i++) {
+            _buffer[i] = other[i];
+        }
+
+        return *this;
+    }
+
+    /// #### Type\* begin()
+    Type* begin() {
+        return &_buffer[0];
+    }
+
+    const Type* begin() const {
+        return &_buffer[0];
+    }
+
+    /// #### Type\* end()
+    Type* end() {
+        return &_buffer[_size];
+    }
+
+    const Type* end() const {
+        return &_buffer[_size];
     }
 };
 

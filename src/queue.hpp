@@ -1,56 +1,81 @@
+/// [[Index]]
+
+/// # {{Queue}}
+
+/// ```c++
+/// nbos::Queue<int, 6> queue;
+///
+/// queue.push(3);
+/// queue.push(7);
+/// queue.push(1);
+/// queue.push(2);
+///
+/// int s = queue.size(); // s = 4
+///
+/// int a = 0;
+///
+/// queue.pop(&a); // a = 3
+/// queue.pop(&a); // a = 7
+///
+/// s = queue.size(); // s = 2
+///
+/// nbos::Queue<int>* pointer = &queue;
+///
+/// pointer->push(4);
+///
+/// s = queue.size(); // s = 3
+/// ```
+
 #ifndef NBOS_QUEUE_HPP
 #define NBOS_QUEUE_HPP
 
 #include "math.hpp"
 #include "type.hpp"
 
-/// # Queue
-
-/// Queues are first in first out containers.
-
-/// All functions are atomic (i.e. interrupt safe). Equivalient non-atomic functions
-/// have \_ after the function name, e.g. queue.push\_(t).
-
 namespace nbos {
 
-/// ## class Queue\<class Type, int Size\>
-template <class T, int S>
-struct Queue {
-    /// #### size_t
-    /// The smallest signed integer type which can represent the queue's size.
-    using size_t = typename conditional<S <= 127, int8_t, int16_t>::type;
-    /// #### type
-    /// The type of the Queue.
-    using type = T;
+/// ## class Queue<class Type, int bufferSize\>
+template <class Type, int bufferSize = -1>
+class Queue : public Queue<Type> {
+    Type _buffer[bufferSize];
 
-private:
+public:
 
-    T _array[S];
-    size_t _head = 0;
-    size_t _tail = 0;
+    /// #### Queue()
+    /// Construct a queue with space on the stack for the contents.
+    explicit Queue() : Queue<Type>(_buffer, bufferSize) {
+    }
+};
+
+/// ## class Queue<class Type\>
+template <class Type>
+class Queue<Type, -1> {
+    Type*const _buffer;
+    int _bufferSize;
+    int _head = 0;
+    int _tail = 0;
     bool _full = false;
     callback_t notify_func = nullptr;
     void* notify_data = nullptr;
 
 public:
 
-    /// #### bool push(T t)
-    /// Add a value to the queue.<br>
-    /// Returns true on success.
-    bool push(const T& t) {
-        return atomic([&]() {
-            return push_(t);
-        });
+    /// #### Queue(Type\* buffer, int bufferSize)
+    /// Construct a queue with the given buffer.
+    Queue(Type* buffer, int bufferSize) : _buffer(buffer) {
+        _bufferSize = bufferSize;
     }
 
-    bool push_(const T& t) {
-        if(full_()) {
+    /// #### bool push(Type t)
+    /// Returns true on success.
+    bool push(const Type& t) {
+        if(full()) {
             return false;
         }
 
-        _array[_head] = t;
+        _buffer[_head] = t;
 
-        _head = (_head + 1) % S;
+        _head = (_head + 1) % _bufferSize;
 
         if(_head == _tail) {
             _full = true;
@@ -59,139 +84,90 @@ public:
         return true;
     }
 
-    /// #### bool pop(T\* t)
-    /// Get the next value from the queue.<br>
-    /// Returns true on success.
-    bool pop(T*const t = nullptr) {
-        return atomic([&]() {
-            return pop_(t);
-        });
-    }
-
-    bool pop_(T*const t = nullptr) {
-        if(empty_()) {
-            return false;
+    /// #### [[Optional]]<Type\> pop()
+    Optional<Type> pop() {
+        if(empty()) {
+            return {};
         }
 
-        if(t != nullptr) {
-            *t = _array[_tail];
-        }
+        const Optional<Type> result = _buffer[_tail];
 
-        _tail = (_tail + 1) % S;
+        _tail = (_tail + 1) % _bufferSize;
 
         _full = false;
 
-        return true;
+        return result;
     }
 
-    /// #### bool peek(T\* t)
-    /// Get the next value from the queue, but don't remove it.<br>
-    /// Returns true on success.
-    bool peek(T*const t) {
-        return atomic([&]() {
-            return peek_(t);
-        });
-    }
-
-    bool peek_(T* t) {
-        if(empty_()) {
-            return false;
+    /// #### [[Optional]]<Type\> peek()
+    Optional<Type> peek() const {
+        if(empty()) {
+            return {};
         }
 
-        *t = _array[_tail];
-
-        return true;
+        return _buffer[_tail];
     }
 
     /// #### void clear()
     /// Remove all elements from the queue.
     void clear() {
-        atomic([&]() {
-            clear_();
-        });
-    }
-
-    void clear_() {
         _head = _tail;
         _full = false;
     }
 
-    /// #### size_t size()
+    /// #### int size()
     /// Get the number of elements currently in the queue.
-    size_t size() {
-        return atomic([&]() {
-            return size_();
-        });
-    }
-
-    size_t size_() {
-        if(full_()) {
-            return S;
+    int size() {
+        if(full()) {
+            return _bufferSize;
         }
 
-        size_t s = _head - _tail;
+        int s = _head - _tail;
 
         if(s < 0) {
-            s += S;
+            s += _bufferSize;
         }
 
         return s;
     }
 
-    /// #### size_t free()
+    /// #### int free()
     /// Get the amount of free space in the queue.
-    size_t free() {
-        return atomic([&]() {
-            return free_();
-        });
+    int free() {
+        return _bufferSize - size();
     }
 
-    size_t free_() {
-        return S - size_();
-    }
-
-    /// ### static constexpr size_t capacity()
+    /// ### int capacity()
     /// Get the total capacity of the queue.
-    static constexpr size_t capacity() {
-        return S;
+    int capacity() {
+        return _bufferSize;
     }
 
     /// #### bool empty()
     /// Returns true if the queue is empty.
     bool empty() {
-        return atomic([&]() {
-            return empty_();
-        });
-    }
-
-    bool empty_() {
-        return (_head == _tail) && !full_();
+        return (_head == _tail) && !full();
     }
 
     /// #### bool full()
     /// Returns true if the queue is full.
     bool full() {
-        return full_();
+        return _full || (_bufferSize == 0);
     }
 
-    bool full_() {
-        return _full || (S == 0);
-    }
-
-    /// #### void setNotify(callback_t callback, void\* data)
+    /// #### void notify(callback_t callback, void\* data)
     /// Set the callback function and data for queue notifications.
-    void setNotify(callback_t callback, void* data) {
-        atomic([&]() {
-            notify_func = callback;
-            notify_data = data;
-        });
-    }
 
     /// #### void notify()
-    /// Call the notification callback.
-    void notify() {
-        if(notify_func != nullptr) {
-            notify_func(notify_data);
+    /// Call the callback function previously given.
+    void notify(callback_t callback = nullptr, void* data = nullptr) {
+        if(callback == nullptr) {
+            if(notify_func != nullptr) {
+                notify_func(notify_data);
+            }
+        } else {
+            notify_func = callback;
+            notify_data = data;
         }
     }
 };

@@ -1,9 +1,6 @@
-#ifndef NBOS_TASK_HPP
-#define NBOS_TASK_HPP
+/// [[Index]]
 
-/// # Tasks
-
-/// ## Example
+/// # {{Task}}
 
 /// ```c++
 /// template <class Clock, class ledPin>
@@ -19,6 +16,9 @@
 ///     }
 /// };
 /// ```
+
+#ifndef NBOS_TASK_HPP
+#define NBOS_TASK_HPP
 
 #include "type.hpp"
 #include "atomic.hpp"
@@ -36,11 +36,11 @@ struct Task {
     };
 
     State state = State::awake;
-    Atomic<uint32_t> wakeTick = 0;
+    Atomic<uint64_t> wakeTick = 0;
 
-    /// #### void sleep(uint32_t ticks)
+    /// #### void sleep(uint64_t ticks)
     /// Put this task to sleep until the given number of ticks have passed.
-    void sleep(uint32_t ticks) {
+    void sleep(uint64_t ticks) {
         wakeTick = Clock::getTicks() + ticks;
         state = State::delay;
     }

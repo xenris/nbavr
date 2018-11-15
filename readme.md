@@ -1,6 +1,6 @@
 # nbos
 
-Non-blocking AVR.
+Non-Blocking Operating System.
 
 Created by Henry Shepperd (hshepperd@gmail.com)
 
@@ -33,12 +33,15 @@ See [nbos-project-template](https://github.com/xenris/nbos-project-template).
 
 ## Documentation
 
-[Documentation](docs/index.md) is limited, but there should be enough to get started.
+[Documentation](docs/index.hpp.md) is limited, but there should be enough to get started.
 
 ## Devices included
 
+* atmega2560
 * atmega328p
+* atmega48
 * atmega8
+* attiny85
 
 ## License
 

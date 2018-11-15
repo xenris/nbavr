@@ -1,32 +1,34 @@
-/// # Timers
+/// [[Index]]
 
-/// ## Example
+/// # {{Timers}}
+
 /// ```c++
-/// // TODO
+/// // Constant interval.
+///
+/// using Timer = nbos::hw::Timer1;
+///
+/// nbos::hw::Pin::Value value = nbos::hw::Pin::Value::low;
+///
+/// const auto f = [](nbos::hw::Pin::Value* value) {
+///     *value = nbos::hw::PortB::Pin5::input();
+/// };
+///
+/// atomic([]() {
+///     Timer::waveform(Timer::Waveform::ctcOcra);
+///     Timer::OutputA::value(2036);
+///     Timer::clock(Timer::Clock::Div16);
+///     Timer::intEnable(true);
+///     Timer::callback((callback_t)f, &value);
+/// });
 /// ```
-
-/// N is the timer's id (1, 2, etc).<br>
-/// T is the type of the timer's counter, either uint8_t or uint16_t.<br>
 
 #ifndef NBOS_TIMER_HPP
 
-#include "callbacks.hpp"
+#include "isr.hpp"
 #include "chip.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "system.hpp"
-
-/// #### macro INCLUDE_TIMER_OUTPUT_CALLBACK(N, X)
-/// Include this to use Timer output callbacks.
-#define INCLUDE_TIMER_OUTPUT_CALLBACK(N, X) MAKE_CALLBACK(TIMER, N, OUTPUT, X)
-
-/// #### macro INCLUDE_TIMER_OVERFLOW_CALLBACK(N)
-/// Include this to use Timer overflow callbacks.
-#define INCLUDE_TIMER_OVERFLOW_CALLBACK(N) MAKE_CALLBACK(TIMER, N, OVERFLOW)
-
-/// #### macro INCLUDE_TIMER_INPUT_CALLBACK(N)
-/// Include this to use Timer input callbacks.
-#define INCLUDE_TIMER_INPUT_CALLBACK(N) MAKE_CALLBACK(TIMER, N, INPUT)
 
 #include "loopi"
 
@@ -34,7 +36,6 @@
     #define N _I
     #define TimerN CAT(Timer, N)
     #define TIMER_N(A) CAT(CHIP_TIMER_, N, _, A)
-    #define _TIMER_N(A) UNDERLINE(TIMER, N, A)
 
     #if CAT(CHIP_TIMER_, N)
 
@@ -42,25 +43,7 @@
 
 namespace nbos::hw {
 
-#if TIMER_N(OUTPUT_A)
-    MAKE_CALLBACK_HEADER(TIMER, N, OUTPUT_A);
-#endif
-
-#if TIMER_N(OUTPUT_B)
-    MAKE_CALLBACK_HEADER(TIMER, N, OUTPUT_B);
-#endif
-
-#if TIMER_N(OUTPUT_C)
-    MAKE_CALLBACK_HEADER(TIMER, N, OUTPUT_C);
-#endif
-
-MAKE_CALLBACK_HEADER(TIMER, N, OVERFLOW);
-
-#if TIMER_N(INPUT)
-    MAKE_CALLBACK_HEADER(TIMER, N, INPUT);
-#endif
-
-/// ## Class TimerN
+/// ## Class {{TimerN}}
 struct TimerN {
     /// #### using type = T
     /// The underlying type of this timer/counter. (uint8_t or uint16_t)
@@ -68,9 +51,9 @@ struct TimerN {
 
     TimerN() = delete;
 
-    /// #### enum Clock
-    /// * none (No clock)
-    /// * div1 (cpu frequency / 1)
+    /// #### enum {{TimerN::Clock}}
+    /// * none
+    /// * div1
     /// * div2
     /// * div4
     /// * div8
@@ -85,7 +68,7 @@ struct TimerN {
     /// * div4096
     /// * div8192
     /// * div16384
-    /// * extFalling (clock on external pin falling edge)
+    /// * extFalling
     /// * extRising
     enum class Clock : uint8_t {
         #if DEFINED(TIMER_N(CLOCK_NONE_ID))
@@ -161,7 +144,7 @@ struct TimerN {
         #endif
     };
 
-    /// #### enum Waveform
+    /// #### enum {{TimerN::Waveform}}
     /// * normal
     /// * pwm
     /// * ctcOcra
@@ -202,27 +185,23 @@ struct TimerN {
         #endif
     };
 
-    /// #### static constexpr HardwareType getHardwareType()
-    /// Get the type of hardware that this class represents.
+    /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::timer;
     }
 
     /// #### static void counter(T value)
-    /// Set the counter value.
     static force_inline void counter(REGTYPE(TIMER_N(COUNTER_REG)) value) {
         *REG(TIMER_N(COUNTER_REG)) = value;
     }
 
     /// #### static T counter()
-    /// Get the counter value.
     static force_inline REGTYPE(TIMER_N(COUNTER_REG)) counter() {
         return *REG(TIMER_N(COUNTER_REG));
     }
 
     #if DEFINED(TIMER_N(CLOCK_BIT_0_BIT))
-        /// #### static void clock(Clock c)
-        /// Set the clock source.
+        /// #### static void clock([[TimerN::Clock]] c)
         static force_inline void clock(Clock c) {
             setBit_(REG(TIMER_N(CLOCK_BIT_0_REG)), TIMER_N(CLOCK_BIT_0_BIT), uint8_t(c) & 0x01);
             setBit_(REG(TIMER_N(CLOCK_BIT_1_REG)), TIMER_N(CLOCK_BIT_1_BIT), uint8_t(c) & 0x02);
@@ -235,8 +214,7 @@ struct TimerN {
     #endif
 
     #if DEFINED(TIMER_N(WAVEFORM_BIT_0_BIT))
-        /// #### static void waveform(Waveform w)
-        /// Set the counting method.
+        /// #### static void waveform([[TimerN::Waveform]] w)
         static force_inline void waveform(Waveform w) {
             setBit_(REG(TIMER_N(WAVEFORM_BIT_0_REG)), TIMER_N(WAVEFORM_BIT_0_BIT), uint8_t(w) & 0x01);
 
@@ -254,17 +232,25 @@ struct TimerN {
         }
     #endif
 
-    /// #### static void overflowCallback(callback_t callback, void\* data)
-    /// Set the callback and data for the counter overflow interrupt.
-    static force_inline void overflowCallback(callback_t callback, void* data) {
-        _TIMER_N(OVERFLOW_Callback) = callback;
-        _TIMER_N(OVERFLOW_CallbackData) = data;
+    /// #### static void callback([[callback_t]] callback, void\* data)
+    /// Set the timer overflow callback.
+    static force_inline void callback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
-        /// #### static void overflowIntEnable(bool b)
-        /// Enable/disable the counter overflow interrupt.
-        static force_inline void overflowIntEnable(bool b) {
+        /// #### static void intEnable(bool b)
+        static force_inline void intEnable(bool b) {
             if(b) {
                 *REG(TIMER_N(OVERFLOW_INT_ENABLE_REG)) |= bv(TIMER_N(OVERFLOW_INT_ENABLE_BIT));
             } else {
@@ -274,23 +260,21 @@ struct TimerN {
     #endif
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
-        /// #### static bool overflowIntFlag()
-        /// Returns true if the counter overflow flag is set.
-        static force_inline bool overflowIntFlag() {
+        /// #### static bool intFlag()
+        static force_inline bool intFlag() {
             return *REG(TIMER_N(OVERFLOW_INT_FLAG_REG)) & bv(TIMER_N(OVERFLOW_INT_FLAG_BIT));
         }
     #endif
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_FLAG_BIT))
-        /// #### static void overflowIntFlagClear()
-        /// Clear the counter overflow interrupt flag.
-        static force_inline void overflowIntFlagClear() {
+        /// #### static void intFlagClear()
+        static force_inline void intFlagClear() {
             *REG(TIMER_N(OVERFLOW_INT_FLAG_REG)) |= bv(TIMER_N(OVERFLOW_INT_FLAG_BIT));
         }
     #endif
 
     /// ## class OutputX
-    /// See [OutputX](output.md)
+    /// See [[TimerN::OutputX]]
 
     #if TIMER_N(OUTPUT_A)
         #define ID A
@@ -311,12 +295,40 @@ struct TimerN {
     #endif
 
     /// ## class Input
-    /// See [Input](input.md)
+    /// See [[TimerN::Input]]
 
     #if TIMER_N(INPUT)
         #include "input.hpp"
     #endif
 };
+
+#if TIMER_N(OUTPUT_A_MODE_BIT_1_BIT)
+    ISR(TIMER_N(OUTPUT_A_INT_VECTOR)) {
+        TimerN::OutputA::callback();
+    }
+#endif
+
+#if TIMER_N(OUTPUT_B_MODE_BIT_1_BIT)
+    ISR(TIMER_N(OUTPUT_B_INT_VECTOR)) {
+        TimerN::OutputB::callback();
+    }
+#endif
+
+#if TIMER_N(OUTPUT_C_MODE_BIT_1_BIT)
+    ISR(TIMER_N(OUTPUT_C_INT_VECTOR)) {
+        TimerN::OutputC::callback();
+    }
+#endif
+
+#if TIMER_N(INPUT)
+    ISR(TIMER_N(INPUT_INT_VECTOR)) {
+        TimerN::Input::callback();
+    }
+#endif
+
+ISR(TIMER_N(OVERFLOW_INT_VECTOR)) {
+    TimerN::callback();
+}
 
 } // nbos::hw
 
@@ -327,7 +339,6 @@ struct TimerN {
     #undef N
     #undef TimerN
     #undef TIMER_N
-    #undef _TIMER_N
 
     #include "timer.hpp"
 #else

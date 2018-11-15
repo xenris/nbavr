@@ -1,11 +1,13 @@
+/// [[Index]]
+
+/// # System
+
 #ifndef NBOS_SYSTEM_HPP
 #define NBOS_SYSTEM_HPP
 
 #include "macros.hpp"
 #include "type.hpp"
 #include "chip.hpp"
-
-/// # System
 
 namespace nbos {
 
@@ -59,13 +61,17 @@ force_inline bool getBit(volatile T* reg, uint8_t bit) {
 force_inline void nop() {
     #if defined(__AVR__) || defined(__ARM__)
         asm volatile("nop" ::: "memory");
+    #elif defined(TEST)
+        // Ignore this function.
+    #else
+        #warning nop() not defined for this architecture.
     #endif
 }
 
 // TODO Check that these three functions work for arm.
 
-/// #### void interruptsEnable()
-/// Globally enable interrupts.
+/// #### void interruptsEnable(bool)
+/// Globally enable/disable interrupts.
 force_inline void interruptsEnable(bool enable) {
     #if defined(__AVR__)
         if(enable) {
@@ -79,6 +85,10 @@ force_inline void interruptsEnable(bool enable) {
         } else {
             asm volatile("cpsid i" ::: "memory");
         }
+    #elif defined(TEST)
+        // Ignore this function.
+    #else
+        #warning interruptsEnable(bool) not defined for this architecture.
     #endif
 }
 
@@ -95,11 +105,18 @@ force_inline bool interruptsEnabled() {
         #endif
     #elif defined(__ARM__)
         asm volatile("mrs %[t], PRIMASK" : [t] "=r" (t) :: "memory");
+    #elif defined(TEST)
+        // Ignore this function.
+    #else
+        #warning interruptsEnabled() not defined for this architecture.
     #endif
 
     return t;
 }
 
+/// #### auto atomic<F>(F f)
+/// Run function f atomically.<br>
+/// Returns the value returned by f.
 template <class F>
 force_inline auto atomic(F f) -> decltype(f()) {
     const bool i = interruptsEnabled();
@@ -114,28 +131,6 @@ force_inline auto atomic(F f) -> decltype(f()) {
         auto r = f();
 
         interruptsEnable(i);
-
-        return r;
-    }
-}
-
-/// #### macro block
-/// Make sure an expression or block of expressions is compiled in the order it is written in.
-/// i.e. Prevents the compiler from doing memory access optimisations which reorder code.
-force_inline void block() {
-    asm volatile("" ::: "memory");
-}
-
-template <class F>
-force_inline auto block(F f) -> decltype(f()) {
-    if constexpr(is_same<decltype(f()), void>::value) {
-        block();
-        f();
-        block();
-    } else {
-        block();
-        auto r = f();
-        block();
 
         return r;
     }
@@ -160,52 +155,76 @@ force_inline auto nonatomic(F f) -> decltype(f()) {
     }
 }
 
-    /// #### void delay<uint32_t ns>()
-    /// Delays the cpu for the given number of nanoseconds.<br>
-    /// Should only be used for very short delays.<br>
-    /// Limited to 2 milliseconds.<br>
-    /// Rounds to the nearest possible delay time. E.g. at 16MHz, delay<50>() will
-    /// delay for 62.5 nanoseconds (1 cpu clock cycle).
-    template <uint32_t cpuFreq, uint32_t ns>
-    force_inline void delay() {
-        static_assert(ns <= 2000000, "Cannot delay for more than 2 milliseconds");
+/// #### void block()
+/// Make sure an expression or block of expressions is compiled in the order it is written in.
+/// i.e. Prevents the compiler from doing memory access optimisations which reorder code.
+force_inline void block() {
+    asm volatile("" ::: "memory");
+}
 
-        // Ensure that this delay separates hardware actions, even when 0ns.
+/// #### auto block<F>(F f)
+template <class F>
+force_inline auto block(F f) -> decltype(f()) {
+    if constexpr(is_same<decltype(f()), void>::value) {
+        block();
+        f();
+        block();
+    } else {
+        block();
+        auto r = f();
         block();
 
-        const uint64_t clocks = (uint64_t(ns) * cpuFreq + 500000000) / 1000000000;
-        const uint64_t clocksPerLoop = 4;
-
-        // TODO Handle higher cpu frequencies.
-        static_assert(clocks / 4 <= integer_max<uint16_t>::value, "Cannot handle this length of delay at this cpu frequency");
-
-        const uint16_t loops = (clocks <= 0) ? (0) : ((clocks - 1) / clocksPerLoop);
-        const uint16_t nops = (clocks <= 4) ? (clocks) : ((clocks - 1) % clocksPerLoop);
-
-        if constexpr (loops != 0) {
-            const uint16_t c = loops;
-
-            asm volatile (
-                "ldi r30, %0\n"
-                "ldi r31, %1\n"
-                "1: sbiw r30, 1\n"
-                "brne 1b\n"
-                :
-                : "" (uint8_t(c)), "" (uint8_t(c >> 8))
-                : "r30", "r31"
-            );
-        }
-
-        if constexpr (nops == 1) {
-            nop();
-        } else if constexpr (nops == 2) {
-            nop(); nop();
-        } else if constexpr (nops == 3) {
-            nop(); nop(); nop();
-        } else if constexpr (nops == 4) {
-            nop(); nop(); nop(); nop();
-        }
+        return r;
     }
+}
+
+/// #### void delay<uint64_t cpuFreq, uint64_t ns>()
+/// Delays the cpu for the given number of nanoseconds.<br>
+/// Should only be used for very short delays.<br>
+/// Limited to 10 milliseconds.<br>
+/// Rounds to the nearest possible delay time. e.g. at 16MHz, delay<50>() will
+/// delay for 62.5 nanoseconds (1 cpu clock cycle).<br>
+/// Is limited further by faster clock speeds. e.g. at 100MHz it will be limited to 2621434ns.
+template <uint64_t cpuFreq, uint64_t ns>
+force_inline void delay() {
+    static_assert(ns <= 10000000, "Delay limited to 10 milliseconds (10000000 ns)");
+
+    // Ensure that this delay separates hardware actions, even when 0ns.
+    block();
+
+    const uint64_t clocks = (uint64_t(ns) * cpuFreq + 500000000) / 1000000000;
+    const uint64_t clocksPerLoop = 4;
+
+    // TODO Handle higher cpu frequencies.
+    static_assert(clocks / 4 <= integer_max<uint16_t>::value, "Cannot handle this length of delay at this cpu frequency");
+
+    const uint16_t loops = (clocks <= 0) ? (0) : ((clocks - 1) / clocksPerLoop);
+    const uint16_t nops = (clocks <= 4) ? (clocks) : ((clocks - 1) % clocksPerLoop);
+
+    if constexpr (loops != 0) {
+        const uint16_t c = loops;
+
+        asm volatile (
+            "ldi r30, %0\n"
+            "ldi r31, %1\n"
+            "1: sbiw r30, 1\n"
+            "brne 1b\n"
+            :
+            : "" (uint8_t(c)), "" (uint8_t(c >> 8))
+            : "r30", "r31"
+        );
+    }
+
+    if constexpr (nops == 1) {
+        nop();
+    } else if constexpr (nops == 2) {
+        nop(); nop();
+    } else if constexpr (nops == 3) {
+        nop(); nop(); nop();
+    } else if constexpr (nops == 4) {
+        nop(); nop(); nop(); nop();
+    }
+}
 
 } // nbos::hw
 

@@ -1,27 +1,30 @@
-/// # USARTs
+/// [[Index]]
 
-/// N is the usart id (1, 2, etc).
-
-/// ## Example
+/// # {{Universal Synchronous Asynchronous Receiver Transmitters}}
 
 /// ```c++
-/// // TODO
+/// using Usart = nbos::hw::Usart0;
+///
+/// const auto f = [](void*) {
+///     Usart::push('?')
+/// };
+///
+/// Usart::baud(103);
+/// Usart::use2X(false);
+///
+/// Usart::transmitterEnable(true);
+/// Usart::dataRegisterEmptyIntEnable(true);
+/// Usart::dataRegisterEmptyCallback((callback_t)f);
 /// ```
 
 #ifndef NBOS_USART_HPP
 
-#include "callbacks.hpp"
+#include "isr.hpp"
 #include "chip.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "type.hpp"
 #include "system.hpp"
-
-/// #### macro INCLUDE_USART_CALLBACK(N, X)
-/// Include this to use Usart callbacks.<br>
-/// N is the Usart id, and X is one of RX (receive complete), TX (transmit
-/// complete), or DE (data register empty).
-#define INCLUDE_USART_CALLBACK(N, X) MAKE_CALLBACK(USART, N, X)
 
 #include "loopi"
 
@@ -29,7 +32,6 @@
     #define N _I
     #define UsartN CAT(Usart,N)
     #define USART_N(A) CAT(CHIP_USART_, N, _, A)
-    #define _USART_N(A) UNDERLINE(USART, N, A)
 
     #if CAT(CHIP_USART_, N)
 
@@ -37,18 +39,14 @@
 
 namespace nbos::hw {
 
-MAKE_CALLBACK_HEADER(USART, N, RX);
-MAKE_CALLBACK_HEADER(USART, N, TX);
-MAKE_CALLBACK_HEADER(USART, N, DE);
-
-/// ## class UsartN
+/// ## class {{UsartN}}
 struct UsartN {
     UsartN() = delete;
     UsartN& operator=(const UsartN&) = delete;
     UsartN(const UsartN&) = delete;
 
     #if DEFINED(USART_N(MODE_BIT_0_BIT))
-        /// #### enum Mode
+        /// #### enum {{UsartN::Mode}}
         /// * asynchronous
         /// * synchronous
         /// * masterSpi
@@ -62,7 +60,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(PARITY_BIT_0_BIT))
-        /// #### enum Parity
+        /// #### enum {{UsartN::Parity}}
         /// * disabled
         /// * even
         /// * odd
@@ -74,7 +72,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(STOP_BITS_BIT_0_BIT))
-        /// #### enum StopBits
+        /// #### enum {{UsartN::StopBits}}
         /// * bits1
         /// * bits2
         enum class StopBits : uint8_t {
@@ -84,7 +82,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(CHARACTER_SIZE_BIT_0_BIT))
-        /// #### enum CharacterSize
+        /// #### enum {{UsartN::CharacterSize}}
         /// * size5
         /// * size6
         /// * size7
@@ -100,7 +98,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(POLARITY_BIT_0_BIT))
-        /// #### enum Polarity
+        /// #### enum {{UsartN::Polarity}}
         /// * txRisingRxFalling
         /// * txFallingRxRising
         enum class Polarity : uint8_t {
@@ -109,15 +107,13 @@ struct UsartN {
         };
     #endif
 
-    /// #### static constexpr HardwareType getHardwareType()
-    /// Get the type of hardware that this class represents.
+    /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::usart;
     }
 
     #if DEFINED(USART_N(MODE_BIT_0_BIT))
-        /// #### static void mode(Mode m)
-        /// Set USART mode.
+        /// #### static void mode([[UsartN::Mode]] m)
         static force_inline void mode(Mode m) {
             // #if DEFINED(USART_N(USART_REG_SELECT_BIT))
             //     setBit_(REG(USART_N(USART_REG_SELECT_REG)), USART_N(USART_REG_SELECT_BIT), true);
@@ -136,8 +132,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(PARITY_BIT_0_BIT))
-        /// #### static void parity(Parity p)
-        /// Set USART parity.
+        /// #### static void parity([[UsartN::Parity]] p)
         static force_inline void parity(Parity p) {
             setBit_(REG(USART_N(PARITY_BIT_0_REG)), USART_N(PARITY_BIT_0_BIT), uint8_t(p) & 0x01);
 
@@ -152,8 +147,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(STOP_BITS_BIT_0_BIT))
-        /// #### static void stopBits(StopBits b)
-        /// Set number of stop bits.
+        /// #### static void stopBits([[UsartN::StopBits]] b)
         static force_inline void stopBits(StopBits b) {
             // #if DEFINED(USART_N(USART_REG_SELECT_BIT))
             //     setBit_(REG(USART_N(USART_REG_SELECT_REG)), USART_N(USART_REG_SELECT_BIT), true);
@@ -168,8 +162,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(CHARACTER_SIZE_BIT_0_BIT))
-        /// #### static void characterSize(CharacterSize s)
-        /// Set USART character size.
+        /// #### static void characterSize([[UsartN::CharacterSize]] s)
         static force_inline void characterSize(CharacterSize s) {
             setBit_(REG(USART_N(CHARACTER_SIZE_BIT_0_REG)), USART_N(CHARACTER_SIZE_BIT_0_BIT), uint8_t(s) & 0x01);
 
@@ -188,8 +181,7 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(POLARITY_BIT_0_BIT))
-        /// #### static void polarity(Polarity p)
-        /// Set USART clock polarity.
+        /// #### static void polarity([[UsartN::Polarity]] p)
         static force_inline void polarity(Polarity p) {
             setBit_(REG(USART_N(POLARITY_BIT_0_REG)), USART_N(POLARITY_BIT_0_BIT), uint8_t(p) & 0x01);
 
@@ -200,7 +192,6 @@ struct UsartN {
     #endif
 
     /// #### static void baud(uint16_t b)
-    /// Set USART baud rate.
     static force_inline void baud(uint16_t b) {
         b &= 0x0fff;
 
@@ -214,7 +205,6 @@ struct UsartN {
 
     #if DEFINED(USART_N(DOUBLE_SPEED_BIT_0_BIT))
         /// #### static void use2X(bool u)
-        /// Enable/disable baud rate 2x speed.
         static force_inline void use2X(bool u) {
             setBit_(REG(USART_N(DOUBLE_SPEED_BIT_0_REG)), USART_N(DOUBLE_SPEED_BIT_0_BIT), u);
         }
@@ -222,7 +212,6 @@ struct UsartN {
 
     #if DEFINED(USART_N(RX_ENABLE_BIT_0_BIT))
         /// #### static void receiverEnable(bool e)
-        /// Enable/disable receiver.
         static force_inline void receiverEnable(bool e) {
             setBit_(REG(USART_N(RX_ENABLE_BIT_0_REG)), USART_N(RX_ENABLE_BIT_0_BIT), e);
         }
@@ -230,7 +219,6 @@ struct UsartN {
 
     #if DEFINED(USART_N(TX_ENABLE_BIT_0_BIT))
         /// #### static void transmitterEnable(bool e)
-        /// Enable/disable transmitter.
         static force_inline void transmitterEnable(bool e) {
             setBit_(REG(USART_N(TX_ENABLE_BIT_0_REG)), USART_N(TX_ENABLE_BIT_0_BIT), e);
         }
@@ -238,7 +226,6 @@ struct UsartN {
 
     #if DEFINED(USART_N(MULTI_PROCESSOR_COMMUNICATION_BIT_0_BIT))
         /// #### static void multiprocessorCummunicationMode(bool e)
-        /// Enable/disable multiprocessor cummunication mode.
         static force_inline void multiprocessorCummunicationMode(bool e) {
             setBit_(REG(USART_N(MULTI_PROCESSOR_COMMUNICATION_BIT_0_REG)), USART_N(MULTI_PROCESSOR_COMMUNICATION_BIT_0_BIT), e);
         }
@@ -246,7 +233,6 @@ struct UsartN {
 
     #if DEFINED(USART_N(RX_COMPLETE_INT_ENABLE_BIT_0_BIT))
         /// #### static void rxCompleteIntEnable(bool e)
-        /// Enable/disable receive complete interrupt.
         static force_inline void rxCompleteIntEnable(bool e) {
             setBit_(REG(USART_N(RX_COMPLETE_INT_ENABLE_BIT_0_REG)), USART_N(RX_COMPLETE_INT_ENABLE_BIT_0_BIT), e);
         }
@@ -254,7 +240,6 @@ struct UsartN {
 
     #if DEFINED(USART_N(TX_COMPLETE_INT_ENABLE_BIT_0_BIT))
         /// #### static void txCompleteIntEnable(bool e)
-        /// Enable/disable transmit complete interrupt.
         static force_inline void txCompleteIntEnable(bool e) {
             setBit_(REG(USART_N(TX_COMPLETE_INT_ENABLE_BIT_0_REG)), USART_N(TX_COMPLETE_INT_ENABLE_BIT_0_BIT), e);
         }
@@ -262,42 +247,63 @@ struct UsartN {
 
     #if DEFINED(USART_N(DATA_REG_EMPTY_INT_ENABLE_BIT_0_BIT))
         /// #### static void dataRegisterEmptyIntEnable(bool e)
-        /// Enable/disable data register empty interrupt.
         static force_inline void dataRegisterEmptyIntEnable(bool e) {
             setBit_(REG(USART_N(DATA_REG_EMPTY_INT_ENABLE_BIT_0_REG)), USART_N(DATA_REG_EMPTY_INT_ENABLE_BIT_0_BIT), e);
         }
     #endif
 
-    /// #### static void rxCompleteCallback(callback_t callback, void\* data)
-    /// Set callback for receive complete interrupt.
-    static force_inline void rxCompleteCallback(callback_t callback, void* data) {
-        _USART_N(RX_Callback) = callback;
-        _USART_N(RX_CallbackData) = data;
+    /// #### static void rxCompleteCallback([[callback_t]] callback, void\* data)
+    static force_inline void rxCompleteCallback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 
-    /// #### static void txCompleteCallback(callback_t callback, void\* data)
-    /// Set callback for transmit complete interrupt.
-    static force_inline void txCompleteCallback(callback_t callback, void* data) {
-        _USART_N(TX_Callback) = callback;
-        _USART_N(TX_CallbackData) = data;
+    /// #### static void txCompleteCallback([[callback_t]] callback, void\* data)
+    static force_inline void txCompleteCallback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 
-    /// #### static void dataRegisterEmptyCallback(callback_t callback, void\* data)
-    /// Set callback for data register empty interrupt.
-    static force_inline void dataRegisterEmptyCallback(callback_t callback, void* data) {
-        _USART_N(DE_Callback) = callback;
-        _USART_N(DE_CallbackData) = data;
+    /// #### static void dataRegisterEmptyCallback([[callback_t]] callback, void\* data)
+    static force_inline void dataRegisterEmptyCallback(callback_t callback = nullptr, void* data = nullptr) {
+        static callback_t f = nullptr;
+        static void* d = nullptr;
+
+        if(callback == nullptr) {
+            if(f != nullptr) {
+                f(d);
+            }
+        } else {
+            f = callback;
+            d = data;
+        }
     }
 
     /// #### static void push(uint8_t b)
-    /// Send a byte.
     static force_inline void push(uint8_t b) {
         *REG(USART_N(DATA_REG)) = b;
     }
 
     #if DEFINED(USART_N(TX_DATA_BIT_8_BIT))
         /// #### static void push9(uint16_t b)
-        /// Send a 9 bit byte.
         static force_inline void push9(uint16_t b) {
             setBit_(REG(USART_N(TX_DATA_BIT_8_REG)), USART_N(TX_DATA_BIT_8_BIT), b & 0x0100);
 
@@ -306,14 +312,12 @@ struct UsartN {
     #endif
 
     /// #### static uint8_t pop()
-    /// Get the last received byte.
     static force_inline uint8_t pop() {
         return *REG(USART_N(DATA_REG));
     }
 
     #if DEFINED(USART_N(RX_DATA_BIT_8_BIT))
         /// #### static uint16_t pop9()
-        /// Get the last received 9 bit byte.
         static force_inline uint16_t pop9() {
             uint16_t result = *REG(USART_N(DATA_REG));
 
@@ -327,7 +331,6 @@ struct UsartN {
 
     #if DEFINED(USART_N(FRAME_ERROR_BIT_0_BIT))
         /// #### static bool frameError()
-        /// Returns true if there was a frame error.
         static force_inline bool frameError() {
             return *REG(USART_N(FRAME_ERROR_BIT_0_REG)) & bv(USART_N(FRAME_ERROR_BIT_0_BIT));
         }
@@ -335,7 +338,6 @@ struct UsartN {
 
     #if DEFINED(USART_N(FRAME_ERROR_BIT_0_BIT))
         /// #### static void frameErrorClear()
-        /// Clear the frame error flag.
         static force_inline void frameErrorClear() {
             setBit_(REG(USART_N(FRAME_ERROR_BIT_0_REG)), USART_N(FRAME_ERROR_BIT_0_BIT), false);
         }
@@ -343,7 +345,6 @@ struct UsartN {
 
     #if DEFINED(USART_N(DATA_OVERRUN_BIT_0_BIT))
         /// #### static bool dataOverRun()
-        /// Returns true if there was a data over run.
         static force_inline bool dataOverRun() {
             return *REG(USART_N(DATA_OVERRUN_BIT_0_REG)) & bv(USART_N(DATA_OVERRUN_BIT_0_BIT));
         }
@@ -351,7 +352,6 @@ struct UsartN {
 
     #if DEFINED(USART_N(DATA_OVERRUN_BIT_0_BIT))
         /// #### static void dataOverRunClear()
-        /// Clear the data over run flag.
         static force_inline void dataOverRunClear() {
             setBit_(REG(USART_N(DATA_OVERRUN_BIT_0_REG)), USART_N(DATA_OVERRUN_BIT_0_BIT), false);
         }
@@ -359,7 +359,6 @@ struct UsartN {
 
     #if DEFINED(USART_N(PARITY_ERROR_BIT_0_BIT))
         /// #### static bool parityError()
-        /// Returns true if there was a parity error.
         static force_inline bool parityError() {
             return *REG(USART_N(PARITY_ERROR_BIT_0_REG)) & bv(USART_N(PARITY_ERROR_BIT_0_BIT));
         }
@@ -367,12 +366,23 @@ struct UsartN {
 
     #if DEFINED(USART_N(PARITY_ERROR_BIT_0_BIT))
         /// #### static void parityErrorClear()
-        /// Clear the parity error flag.
         static force_inline void parityErrorClear() {
             setBit_(REG(USART_N(PARITY_ERROR_BIT_0_REG)), USART_N(PARITY_ERROR_BIT_0_BIT), false);
         }
     #endif
 };
+
+ISR(USART_N(RX_INT_VECTOR)) {
+    UsartN::rxCompleteCallback();
+}
+
+ISR(USART_N(TX_INT_VECTOR)) {
+    UsartN::txCompleteCallback();
+}
+
+ISR(USART_N(DE_INT_VECTOR)) {
+    UsartN::dataRegisterEmptyCallback();
+}
 
 } // nbos::hw
 
@@ -383,7 +393,6 @@ struct UsartN {
     #undef N
     #undef UsartN
     #undef USART_N
-    #undef _USART_N
 
     #include "usart.hpp"
 #else
