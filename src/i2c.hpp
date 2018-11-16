@@ -77,8 +77,8 @@ struct I2c {
 
 		if(queue->peek(&action)) {
 			switch(Twi::status()) {
-			case Twi::Status::StartTransmitted:
-			case Twi::Status::RepeatedStartTransmitted:
+			case Twi::Status::startTransmitted:
+			case Twi::Status::repeatedStartTransmitted:
 				i = 0;
 
 				Twi::push((action.address << 1) | int8_t(action.mode));
@@ -86,8 +86,8 @@ struct I2c {
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::SLAWTransmittedAck:
-			case Twi::Status::DataTransmittedAck:
+			case Twi::Status::slawTransmittedAck:
+			case Twi::Status::dataTransmittedAck:
 				if(i < action.length) {
 					Twi::push(action.buffer[i++]);
 
@@ -107,8 +107,8 @@ struct I2c {
 				}
 
 				break;
-			case Twi::Status::SLAWTransmittedNack:
-			case Twi::Status::DataTransmittedNack:
+			case Twi::Status::slawTransmittedNack:
+			case Twi::Status::dataTransmittedNack:
                 Twi::sendStop();
 
                 while(queue->pop(&action)) {
@@ -118,7 +118,7 @@ struct I2c {
                 }
 
 				break;
-			case Twi::Status::ArbitrationLost:
+			case Twi::Status::arbitrationLost:
                 Twi::sendStop();
 
                 while(queue->pop(&action)) {
@@ -128,11 +128,11 @@ struct I2c {
                 }
 
 				break;
-			case Twi::Status::SLARTransmittedAck:
+			case Twi::Status::slarTransmittedAck:
 				Twi::sendAck();
 
 				break;
-			case Twi::Status::SLARTransmittedNack:
+			case Twi::Status::slarTransmittedNack:
                 Twi::sendStop();
 
                 while(queue->pop(&action)) {
@@ -142,7 +142,7 @@ struct I2c {
                 }
 
 				break;
-			case Twi::Status::DataReceivedAck:
+			case Twi::Status::dataReceivedAck:
 				if(i < action.length) {
 					action.buffer[i++] = Twi::pop();
 				}
@@ -154,7 +154,7 @@ struct I2c {
 				}
 
 				break;
-			case Twi::Status::DataReceivedNack:
+			case Twi::Status::dataReceivedNack:
 				queue->pop();
 
                 if(action.callback != nullptr) {
@@ -168,65 +168,65 @@ struct I2c {
                 }
 
 				break;
-			case Twi::Status::OwnSLAWReceivedAck:
+			case Twi::Status::ownSlawReceivedAck:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::ArbitrationLostOwnSLAWAck:
+			case Twi::Status::arbitrationLostOwnSlawAck:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::GeneralCallAddressReceivedAck:
+			case Twi::Status::generalCallAddressReceivedAck:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::ArbitrationLostGeneralCallAddressReceivedAck:
+			case Twi::Status::arbitrationLostGeneralCallAddressReceivedAck:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::PrevAddressedOwnSLAWDataReceivedAck:
+			case Twi::Status::prevAddressedOwnSlawDataReceivedAck:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::PrevAddressedOwnSLAWDataReceivedNack:
+			case Twi::Status::prevAddressedOwnSlawDataReceivedNack:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::PrevAddressedGeneralCallDataReceivedAck:
+			case Twi::Status::prevAddressedGeneralCallDataReceivedAck:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::PrevAddressedGeneralCallDataReceivedNack:
+			case Twi::Status::prevAddressedGeneralCallDataReceivedNack:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::StopOrRepeatedStartWhileAddressedAsSlave:
+			case Twi::Status::stopOrRepeatedStartWhileAddressedAsSlave:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::OwnSLARReceivedAck:
+			case Twi::Status::ownSlarReceivedAck:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::ArbitrationLostOwnSLARAck:
+			case Twi::Status::arbitrationLostOwnSLARAck:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::DataInTWDRTransmittedAck:
+			case Twi::Status::dataInTwdrTransmittedAck:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::DataInTWDRTransmittedNack:
+			case Twi::Status::dataInTwdrTransmittedNack:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::LastDataTransmittedAck:
+			case Twi::Status::lastDataTransmittedAck:
 				Twi::sendNack();
 
 				break;
-			case Twi::Status::NoState:
+			case Twi::Status::noState:
 				break;
-			case Twi::Status::BusError:
+			case Twi::Status::busError:
                 Twi::sendStop();
 				break;
 			}
