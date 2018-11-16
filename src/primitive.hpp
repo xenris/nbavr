@@ -54,25 +54,25 @@ using primitive_long_double = long double;
 using primitive_size_t = unsigned int;
 using primitive_ssize_t = int;
 
-#define bool do_not_use_primitive_types
-#define char do_not_use_primitive_types
-#define wchar_t do_not_use_primitive_types
-#define short do_not_use_primitive_types
-#define int do_not_use_primitive_types
-#define long do_not_use_primitive_types
-#define float do_not_use_primitive_types
-#define double do_not_use_primitive_types
-#define signed do_not_use_primitive_types
-#define unsigned do_not_use_primitive_types
-#define int8_t do_not_use_primitive_types
-#define uint8_t do_not_use_primitive_types
-#define int16_t do_not_use_primitive_types
-#define uint16_t do_not_use_primitive_types
-#define int32_t do_not_use_primitive_types
-#define uint32_t do_not_use_primitive_types
-#define int64_t do_not_use_primitive_types
-#define uint64_t do_not_use_primitive_types
-#define size_t do_not_use_primitive_types
-#define ssize_t do_not_use_primitive_types
+#define bool Do_not_use_primitive_types__Try_Bool_instead
+#define char Do_not_use_primitive_types__Try_Char_instead
+#define wchar_t Do_not_use_primitive_types__Try_Word16_or_Char_instead
+#define short Do_not_use_primitive_types__Try_Int16_instead
+#define int Do_not_use_primitive_types__Try_Int32_instead
+#define long Do_not_use_primitive_types__Try_Int64_instead
+#define float Do_not_use_primitive_types__Try_Float_instead
+#define double Do_not_use_primitive_types__Try_Double_instead
+#define signed Do_not_use_primitive_types__Try_Int32_instead
+#define unsigned Do_not_use_primitive_types__Try_Word32_instead
+#define int8_t Do_not_use_primitive_types__Try_Int8_instead
+#define uint8_t Do_not_use_primitive_types__Try_Word8_instead
+#define int16_t Do_not_use_primitive_types__Try_Int16_instead
+#define uint16_t Do_not_use_primitive_types__Try_Word16_instead
+#define int32_t Do_not_use_primitive_types__Try_Int32_instead
+#define uint32_t Do_not_use_primitive_types__Try_Word32_instead
+#define int64_t Do_not_use_primitive_types__Try_Int64_instead
+#define uint64_t Do_not_use_primitive_types__Try_Word64_instead
+#define size_t Do_not_use_primitive_types__Try_Int_instead
+#define ssize_t Do_not_use_primitive_types__Try_Int_instead
 
 #endif
