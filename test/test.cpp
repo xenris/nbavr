@@ -2,7 +2,9 @@
 #include <string>
 #include <fstream>
 
-#define CHIP_REGISTER_SIZE 0x200
+// Prime number near 10Kb
+// Prime because tests on chips with larger memory need to wrap addresses.
+#define CHIP_REGISTER_SIZE 10243
 
 unsigned char register_memory[CHIP_REGISTER_SIZE];
 
@@ -22,13 +24,43 @@ T* sanitiseRegisterForTest(T* reg) {
 // r/w [function] [[read code] | ([addr] [a] [b])*]
 std::map<std::string, std::string>* record = nullptr;
 std::map<std::string, std::string>* missing = nullptr;
+bool update = false;
+
+int main(int argc, char **argv) {
+    if(argc >= 2) {
+        update = (strcmp(argv[1], "-u") == 0);
+    }
+
+    ::testing::InitGoogleTest(&argc, argv);
+
+    const int result = RUN_ALL_TESTS();
+
+    return update ? 0 : result;
+}
 
 struct MyEnvironment : public ::testing::Environment {
+    std::fstream recordFile;
+
     ~MyEnvironment() override {
         if(missing->size() > 0) {
-            std::cout << "Missing records:" << std::endl;
-            for(auto it = missing->begin(); it != missing->end(); it++) {
-                std::cout << it->first << " " << it->second << std::endl;
+            if(update) {
+                for(auto it = missing->begin(); it != missing->end(); it++) {
+                    recordFile << it->first;
+
+                    if(it->second.size() > 0) {
+                        recordFile << " " << it->second;
+                    }
+
+                    recordFile << std::endl;
+                }
+
+                std::cout << "Record updated. Run test again to verify." << std::endl;
+            } else {
+                std::cout << "Missing records:" << std::endl;
+
+                for(auto it = missing->begin(); it != missing->end(); it++) {
+                    std::cout << it->first << " " << it->second << std::endl;
+                }
             }
         }
 
@@ -44,11 +76,15 @@ struct MyEnvironment : public ::testing::Environment {
 
         std::string recordPath = "record_" + std::string(RECORD_ID);
 
-        std::fstream recordFile(recordPath, std::fstream::out | std::fstream::in | std::fstream::app);
+        if(update) {
+            recordFile.open(recordPath, std::fstream::out | std::fstream::in | std::fstream::trunc);
+        } else {
+            recordFile.open(recordPath, std::fstream::in);
+        }
 
-        char buffer[256];
+        char buffer[1024];
 
-        while(recordFile.getline(buffer, 256)) {
+        while(recordFile.getline(buffer, 1024)) {
             int length = strlen(buffer);
             char type = buffer[0];
             std::string function;
@@ -76,7 +112,8 @@ struct MyEnvironment : public ::testing::Environment {
             }
         }
 
-        recordFile.close();
+        recordFile.clear();
+        recordFile.seekg(0, std::ios::beg);
     }
 
     void TearDown() override {
@@ -137,7 +174,7 @@ void test_reg_read_write(T (*f)(), const char* str) {
 
     std::stringstream ss;
 
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 32; i++) {
         for(int _r = 0; _r < CHIP_REGISTER_SIZE; _r++) {
             register_memory[_r] = uint8_t((seed / 65536) % 32768);
             seed = seed * 1103515245 + 12345;
