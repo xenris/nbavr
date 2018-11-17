@@ -23,6 +23,8 @@
 #define OutputX CAT(Output, ID)
 #define OUTPUT_X(X) CAT(TIMER_N(OUTPUT), _, ID, _, X)
 
+#ifndef OUTPUT_TESTS
+
 /// ## class {{TimerN::OutputX}}
 struct OutputX {
     /// #### type Pin
@@ -47,12 +49,12 @@ struct OutputX {
 
     /// #### static void value(T v)
     static force_inline void value(REGTYPE(OUTPUT_X(REG)) v) {
-        *REG(OUTPUT_X(REG)) = v;
+        setReg_(REG(OUTPUT_X(REG)), v);
     }
 
     /// #### static T value()
     static force_inline REGTYPE(OUTPUT_X(REG)) value() {
-        return *REG(OUTPUT_X(REG));
+        return getReg_(REG(OUTPUT_X(REG)));
     }
 
     /// #### static void mode([[TimerN::Mode]] m)
@@ -79,30 +81,26 @@ struct OutputX {
     /// #### static void intEnable(Bool b)
     #if OUTPUT_X(MODE_BIT_1_BIT)
         static force_inline void intEnable(Bool b) {
-            if(b) {
-                *REG(OUTPUT_X(INT_ENABLE_REG)) |= bv(OUTPUT_X(INT_ENABLE_BIT));
-            } else {
-                *REG(OUTPUT_X(INT_ENABLE_REG)) &= ~bv(OUTPUT_X(INT_ENABLE_BIT));
-            }
+            setBit_(REG(OUTPUT_X(INT_ENABLE_REG)), OUTPUT_X(INT_ENABLE_BIT), b);
         }
 
         /// #### static Bool intEnabled()
         static force_inline Bool intEnabled() {
-            return Bool(*REG(OUTPUT_X(INT_ENABLE_REG)) & bv(OUTPUT_X(INT_ENABLE_BIT)));
+            return getBit_(REG(OUTPUT_X(INT_ENABLE_REG)), OUTPUT_X(INT_ENABLE_BIT));
         }
     #endif
 
     /// #### static Bool intFlag()
     #if OUTPUT_X(MODE_BIT_1_BIT)
         static force_inline Bool intFlag() {
-            return Bool(*REG(OUTPUT_X(INT_FLAG_REG)) & bv(OUTPUT_X(INT_FLAG_BIT)));
+            return getBit_(REG(OUTPUT_X(INT_FLAG_REG)), OUTPUT_X(INT_FLAG_BIT));
         }
     #endif
 
     /// #### static void intFlagClear()
     #if OUTPUT_X(MODE_BIT_1_BIT)
         static force_inline void intFlagClear() {
-            *REG(OUTPUT_X(INT_FLAG_REG)) |= bv(OUTPUT_X(INT_FLAG_BIT));
+            setBit_(REG(OUTPUT_X(INT_FLAG_REG)), OUTPUT_X(INT_FLAG_BIT), true);
         }
     #endif
 
@@ -122,6 +120,47 @@ private:
         }
     }
 };
+
+#else // OUTPUT_TESTS
+
+TEST(CAT(TimerN, _, OutputX), value) {
+    TEST_REG_WRITE(TimerN::OutputX::value(0x12));
+    TEST_REG_READ_WRITE(TimerN::OutputX::value());
+}
+
+#if DEFINED(OUTPUT_X(MODE_TOGGLE_ID))
+    TEST(CAT(TimerN, _, OutputX), mode) {
+        TEST_REG_WRITE(TimerN::OutputX::mode(TimerN::OutputX::Mode::disconnected));
+        TEST_REG_WRITE(TimerN::OutputX::mode(TimerN::OutputX::Mode::toggle));
+        TEST_REG_WRITE(TimerN::OutputX::mode(TimerN::OutputX::Mode::clear));
+        TEST_REG_WRITE(TimerN::OutputX::mode(TimerN::OutputX::Mode::set));
+    }
+#endif
+
+#if OUTPUT_X(MODE_BIT_1_BIT)
+    TEST(CAT(TimerN, _, OutputX), intEnable) {
+        TEST_REG_WRITE(TimerN::OutputX::intEnable(true));
+        TEST_REG_WRITE(TimerN::OutputX::intEnable(false));
+    }
+
+    TEST(CAT(TimerN, _, OutputX), intEnabled) {
+        TEST_REG_READ_WRITE(TimerN::OutputX::intEnabled());
+    }
+#endif
+
+#if OUTPUT_X(MODE_BIT_1_BIT)
+    TEST(CAT(TimerN, _, OutputX), intFlag) {
+        TEST_REG_READ_WRITE(TimerN::OutputX::intFlag());
+    }
+#endif
+
+#if OUTPUT_X(MODE_BIT_1_BIT)
+    TEST(CAT(TimerN, _, OutputX), intFlagClear) {
+        TEST_REG_WRITE(TimerN::OutputX::intFlagClear());
+    }
+#endif
+
+#endif // OUTPUT_TESTS
 
 #undef OutputX
 #undef OUTPUT_X

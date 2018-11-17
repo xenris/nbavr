@@ -137,6 +137,62 @@ public:
     }
 };
 
+#ifdef TEST
+
+TEST(Container, Stack) {
+    Stack<Int16, 3> stack;
+
+    EXPECT_EQ(stack.size(), 0);
+    EXPECT_EQ(stack.capacity(), 3);
+
+    EXPECT_EQ(stack.full(), false);
+
+    EXPECT_EQ(stack.push(1), true);
+    EXPECT_EQ(stack.size(), 1);
+    EXPECT_EQ(stack.push(2), true);
+    EXPECT_EQ(stack.size(), 2);
+    EXPECT_EQ(stack.push(3), true);
+    EXPECT_EQ(stack.size(), 3);
+    EXPECT_EQ(stack.full(), true);
+    EXPECT_EQ(stack.push(4), false);
+    EXPECT_EQ(stack.size(), 3);
+    EXPECT_EQ(stack.capacity(), 3);
+
+    Optional<Int16> n;
+    EXPECT_EQ(n = stack.pop(), true);
+    EXPECT_EQ(stack.size(), 2);
+    EXPECT_EQ(*n, 3);
+    EXPECT_EQ(n = stack.pop(), true);
+    EXPECT_EQ(stack.size(), 1);
+    EXPECT_EQ(*n, 2);
+
+    EXPECT_EQ(stack.full(), false);
+
+    EXPECT_EQ(stack.push(5), true);
+    EXPECT_EQ(stack.size(), 2);
+
+    EXPECT_EQ(n = stack.pop(), true);
+    EXPECT_EQ(stack.size(), 1);
+    EXPECT_EQ(*n, 5);
+
+    EXPECT_EQ(n = stack.pop(), true);
+    EXPECT_EQ(stack.size(), 0);
+    EXPECT_EQ(*n, 1);
+
+    EXPECT_EQ(stack.empty(), true);
+
+    EXPECT_EQ(n = stack.pop(), false);
+    EXPECT_EQ(stack.size(), 0);
+
+    EXPECT_EQ(stack.push(6), true);
+    EXPECT_EQ(stack.size(), 1);
+    EXPECT_EQ(stack.empty(), false);
+    stack.clear();
+    EXPECT_EQ(stack.empty(), true);
+}
+
+#endif // TEST
+
 } // nbos
 
 #endif

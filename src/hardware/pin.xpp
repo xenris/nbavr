@@ -4,16 +4,15 @@
 
 /// N is the pin id (0, 1, 2, etc).
 
-/// ## Example
-
 /// ```c++
-/// PortB::Pin5::mode(Pin::Mode::output);
+/// nbos::hw::PortB::Pin5::mode(nbos::hw::Pin::Mode::output);
 ///
-/// PortB::Pin5::output(Pin::Value::high);
+/// nbos::hw::PortB::Pin5::output(nbos::hw::Pin::Value::high);
 ///
 /// while(true) {
-///     PortB::Pin5::toggle();
-///     nbos::block();
+///     block {
+///         nbos::hw::PortB::Pin5::toggle();
+///     }
 /// }
 /// ```
 
@@ -137,10 +136,9 @@ struct Pin {
 
 } // nbos::hw
 
-
 #undef MODE
 
-#endif
+#endif // NBOS_BASE_PIN
 
 #ifdef PortX
 
@@ -154,6 +152,8 @@ struct Pin {
     #if CAT(CHIP_PIN_, X, N)
 
 //------------------------------------------------------------------
+
+#ifndef PIN_TESTS
 
 /// ## Class {{PinN}} : Pin
 struct PinN : Pin {
@@ -229,15 +229,119 @@ struct PinN : Pin {
     #endif
 };
 
+#else // PIN_TESTS
+
+TEST(CAT(PortX, _, PinN), getHardwareType) {
+    ASSERT_EQ(PortX::PinN::getHardwareType(), HardwareType::pin);
+}
+
+TEST(CAT(PortX, _, PinN), mode) {
+    #define MODE(A) CAT(CHIP_PIN_MODE_, A, _ID)
+
+    #if DEFINED(MODE(INPUT))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::input));
+    #endif
+
+    #if DEFINED(MODE(INPUT_PULLUP))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::inputPullup));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::output));
+    #endif
+
+    #if DEFINED(MODE(INPUT_ANALOG))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::inputAnalog));
+    #endif
+
+    #if DEFINED(MODE(INPUT_FLOATING))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::inputFloating));
+    #endif
+
+    #if DEFINED(MODE(INPUT_PULLUPDOWN))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::inputPullUpDown));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_PUSH_PULL_10MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputGeneralPushPull10MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_OPEN_DRAIN_10MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputGeneralOpenDrain10MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_PUSH_PULL_10MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputAlternatePushPull10MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_10MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputAlternateOpenDrain10MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_PUSH_PULL_2MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputGeneralPushPull2MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_OPEN_DRAIN_2MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputGeneralOpenDrain2MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_PUSH_PULL_2MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputAlternatePushPull2MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_2MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputAlternateOpenDrain2MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_PUSH_PULL_50MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputGeneralPushPull50MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_OPEN_DRAIN_50MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputGeneralOpenDrain50MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_PUSH_PULL_50MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputAlternatePushPull50MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_50MHZ))
+        TEST_REG_WRITE(PortX::PinN::mode(Pin::Mode::outputAlternateOpenDrain50MHz));
+    #endif
+
+    #undef MODE
+
+    TEST_REG_READ_WRITE(PortX::PinN::mode());
+}
+
+TEST(CAT(PortX, _, PinN), output) {
+    TEST_REG_WRITE(PortX::PinN::output(Pin::Value::low));
+    TEST_REG_WRITE(PortX::PinN::output(Pin::Value::high));
+    TEST_REG_READ_WRITE(PortX::PinN::output());
+}
+
+TEST(CAT(PortX, _, PinN), input) {
+    TEST_REG_READ_WRITE(PortX::PinN::input());
+}
+
+#if DEFINED(PIN_N(TOGGLE_BIT_0_BIT))
+    TEST(CAT(PortX, _, PinN), toggle) {
+        TEST_REG_WRITE(PortX::PinN::toggle());
+    }
+#endif
+
+#endif // PIN_TESTS
+
 //------------------------------------------------------------------
 
     #endif
 
     #include "pin.xpp"
-#endif
+#endif // _J
 
 #undef N
 #undef PinN
 #undef PIN_N
 
-#endif
+#endif // PortX

@@ -1309,4 +1309,48 @@ static_assert(sizeof(Word16) == 2, "Word16 is not the right size");
 static_assert(sizeof(Word32) == 4, "Word32 is not the right size");
 static_assert(sizeof(Word64) == 8, "Word64 is not the right size");
 
+#ifdef TEST
+
+TEST(Safe, Types) {
+    Int8 a;
+    Int8 b = 5;
+
+    EXPECT_EQ(a + b, 5);
+
+    Int16 c = Int16(b) + 4;
+
+    EXPECT_EQ(c, 9);
+
+    Int16 d = 5;
+
+    d = 1;
+
+    false && (d++ == 0);
+
+    EXPECT_EQ(d, 1);
+
+    Word8 e = 0x30;
+    Word16 f = 0x0010;
+
+    Word16 g = Word16(e) | f;
+
+    EXPECT_EQ(g, 0x0030);
+
+    EXPECT_FALSE(IsFloating<decltype(g)>::value);
+    EXPECT_TRUE(IsFloating<Float>::value);
+
+    EXPECT_TRUE((IsSame<Float, Float>::value));
+    EXPECT_TRUE((IsSame<Int, Int>::value));
+    EXPECT_TRUE((IsSame<decltype(g), decltype(f)>::value));
+    EXPECT_TRUE((IsSame<decltype(a), decltype(b)>::value));
+
+    EXPECT_FALSE((IsSame<decltype(a), decltype(d)>::value));
+
+    Int h = IsSigned<Int8>::value;
+
+    (void)h;
+}
+
+#endif // TEST
+
 #endif

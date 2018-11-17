@@ -186,6 +186,82 @@ private:
     }
 };
 
+#ifdef TEST
+
+TEST(Container, PriorityQueue) {
+    PriorityQueue<Int8, 5> pq;
+
+    EXPECT_TRUE(pq.empty());
+    EXPECT_FALSE(pq.full());
+    EXPECT_EQ(pq.size(), 0);
+
+    pq.push(4);
+    pq.push(1);
+    pq.push(2);
+
+    EXPECT_FALSE(pq.empty());
+    EXPECT_FALSE(pq.full());
+    EXPECT_EQ(pq.size(), 3);
+
+    pq.push(6);
+    pq.push(3);
+
+    EXPECT_FALSE(pq.empty());
+    EXPECT_TRUE(pq.full());
+    EXPECT_EQ(pq.size(), 5);
+
+    Optional<Int8> n;
+
+    EXPECT_TRUE(n = pq.pop());
+    EXPECT_EQ(*n, 1);
+
+    EXPECT_TRUE(n = pq.pop());
+    EXPECT_EQ(*n, 2);
+
+    EXPECT_FALSE(pq.empty());
+    EXPECT_FALSE(pq.full());
+    EXPECT_EQ(pq.size(), 3);
+
+    EXPECT_TRUE(n = pq.pop());
+    EXPECT_EQ(*n, 3);
+
+    EXPECT_TRUE(n = pq.pop());
+    EXPECT_EQ(*n, 4);
+
+    EXPECT_TRUE(n = pq.pop());
+    EXPECT_EQ(*n, 6);
+
+    EXPECT_TRUE(pq.empty());
+    EXPECT_FALSE(pq.full());
+    EXPECT_EQ(pq.size(), 0);
+
+    pq.push(4);
+
+    EXPECT_FALSE(pq.empty());
+    EXPECT_FALSE(pq.full());
+    EXPECT_EQ(pq.size(), 1);
+}
+
+TEST(Container, PriorityQueueMemoryUse) {
+    Int a[5] = {};
+
+    PriorityQueue<Int> pq(&a[1], 3);
+
+    pq.push(1);
+    pq.push(2);
+    pq.push(3);
+    pq.push(4);
+    pq.push(5);
+
+    EXPECT_EQ(pq.size(), 3);
+    EXPECT_EQ(pq.capacity(), 3);
+
+    EXPECT_EQ(a[0], 0);
+    EXPECT_EQ(a[4], 0);
+}
+
+#endif // TEST
+
 } // nbos
 
 #endif

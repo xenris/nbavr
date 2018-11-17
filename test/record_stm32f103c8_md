@@ -1,0 +1,890 @@
+r PortA::Pin0::input() 0101001011
+r PortA::Pin0::mode() 9f5b17d39f
+r PortA::Pin0::output() 0101001010
+r PortA::Pin10::input() 0101001011
+r PortA::Pin10::mode() 5543322110
+r PortA::Pin10::output() 0101001010
+r PortA::Pin11::input() 0101010101
+r PortA::Pin11::mode() f92a17c035
+r PortA::Pin11::output() 0000111111
+r PortA::Pin12::input() 0000000000
+r PortA::Pin12::mode() 28e4a05b17
+r PortA::Pin12::output() 1100001100
+r PortA::Pin13::input() 1011101110
+r PortA::Pin13::mode() 281ed05d97
+r PortA::Pin13::output() 0100100001
+r PortA::Pin14::input() 1000001010
+r PortA::Pin14::mode() 2222222233
+r PortA::Pin14::output() 0110011110
+r PortA::Pin15::input() 1000001100
+r PortA::Pin15::mode() d66db0cf9a
+r PortA::Pin15::output() 1101111111
+r PortA::Pin1::input() 0011000111
+r PortA::Pin1::mode() 8042c0faff
+r PortA::Pin1::output() 0110001100
+r PortA::Pin2::input() 0000111111
+r PortA::Pin2::mode() d26bf49d26
+r PortA::Pin2::output() 0111110000
+r PortA::Pin3::input() 0000000000
+r PortA::Pin3::mode() feb72d6e6c
+r PortA::Pin3::output() 0010101010
+r PortA::Pin4::input() 1100110011
+r PortA::Pin4::mode() 9d26bf48d1
+r PortA::Pin4::output() 1101010101
+r PortA::Pin5::input() 1110000111
+r PortA::Pin5::mode() d632492dbd
+r PortA::Pin5::output() 1110111011
+r PortA::Pin6::input() 0011100011
+r PortA::Pin6::mode() 5fa4e82d71
+r PortA::Pin6::output() 0110110001
+r PortA::Pin7::input() 1000100111
+r PortA::Pin7::mode() e0ab217372
+r PortA::Pin7::output() 0101010011
+r PortA::Pin8::input() 1100011110
+r PortA::Pin8::mode() 788999aabb
+r PortA::Pin8::output() 0010101101
+r PortA::Pin9::input() 1100000001
+r PortA::Pin9::mode() db48716617
+r PortA::Pin9::output() 1100110001
+r PortA::input() e3b0b3124622c4324d4d14e505ada665f7ef7
+r PortA::output() 9230f2f7416e8095af6ccef4dd2bdd12cca9abf0
+r PortB::Pin0::input() 0101001011
+r PortB::Pin0::mode() 9f5b17d39f
+r PortB::Pin0::output() 0101001010
+r PortB::Pin10::input() 0101001011
+r PortB::Pin10::mode() 5543322110
+r PortB::Pin10::output() 0101001010
+r PortB::Pin11::input() 0101010101
+r PortB::Pin11::mode() f92a17c035
+r PortB::Pin11::output() 0000111111
+r PortB::Pin12::input() 0000000000
+r PortB::Pin12::mode() 28e4a05b17
+r PortB::Pin12::output() 1100001100
+r PortB::Pin13::input() 1011101110
+r PortB::Pin13::mode() 281ed05d97
+r PortB::Pin13::output() 0100100001
+r PortB::Pin14::input() 1000001010
+r PortB::Pin14::mode() 2222222233
+r PortB::Pin14::output() 0110011110
+r PortB::Pin15::input() 1000001100
+r PortB::Pin15::mode() d66db0cf9a
+r PortB::Pin15::output() 1101111111
+r PortB::Pin1::input() 0011000111
+r PortB::Pin1::mode() 8042c0faff
+r PortB::Pin1::output() 0110001100
+r PortB::Pin2::input() 0000111111
+r PortB::Pin2::mode() d26bf49d26
+r PortB::Pin2::output() 0111110000
+r PortB::Pin3::input() 0000000000
+r PortB::Pin3::mode() feb72d6e6c
+r PortB::Pin3::output() 0010101010
+r PortB::Pin4::input() 1100110011
+r PortB::Pin4::mode() 9d26bf48d1
+r PortB::Pin4::output() 1101010101
+r PortB::Pin5::input() 1110000111
+r PortB::Pin5::mode() d632492dbd
+r PortB::Pin5::output() 1110111011
+r PortB::Pin6::input() 0011100011
+r PortB::Pin6::mode() 5fa4e82d71
+r PortB::Pin6::output() 0110110001
+r PortB::Pin7::input() 1000100111
+r PortB::Pin7::mode() e0ab217372
+r PortB::Pin7::output() 0101010011
+r PortB::Pin8::input() 1100011110
+r PortB::Pin8::mode() 788999aabb
+r PortB::Pin8::output() 0010101101
+r PortB::Pin9::input() 1100000001
+r PortB::Pin9::mode() db48716617
+r PortB::Pin9::output() 1100110001
+r PortB::input() e3b0b3124622c4324d4d14e505ada665f7ef7
+r PortB::output() 9230f2f7416e8095af6ccef4dd2bdd12cca9abf0
+r PortC::Pin13::input() 1011101110
+r PortC::Pin13::mode() 281ed05d97
+r PortC::Pin13::output() 0100100001
+r PortC::Pin14::input() 1000001010
+r PortC::Pin14::mode() 2222222233
+r PortC::Pin14::output() 0110011110
+r PortC::Pin15::input() 1000001100
+r PortC::Pin15::mode() d66db0cf9a
+r PortC::Pin15::output() 1101111111
+r PortC::input() e3b0b3124622c4324d4d14e505ada665f7ef7
+r PortC::output() 9230f2f7416e8095af6ccef4dd2bdd12cca9abf0
+r Timer2::counter() 405280cf375b6fdb9f944d9676fd1b01bd96da1d745f88e89b5727643280b58f39d9346ab062a2f6
+r Usart1::pop() d7b8488979196a6a1b7b
+w PortA::Pin0::input()
+w PortA::Pin0::mode()
+w PortA::Pin0::mode(Pin::Mode::inputAnalog) 00:ff:f0:
+w PortA::Pin0::mode(Pin::Mode::inputFloating) 00:00:04:00:ff:f4:
+w PortA::Pin0::mode(Pin::Mode::inputPullUpDown) 00:00:08:00:ff:f8:
+w PortA::Pin0::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 00:00:0d:00:ff:fd:
+w PortA::Pin0::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 00:00:0e:00:ff:fe:
+w PortA::Pin0::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 00:00:0f:
+w PortA::Pin0::mode(Pin::Mode::outputAlternatePushPull10MHz) 00:00:09:00:ff:f9:
+w PortA::Pin0::mode(Pin::Mode::outputAlternatePushPull2MHz) 00:00:0a:00:ff:fa:
+w PortA::Pin0::mode(Pin::Mode::outputAlternatePushPull50MHz) 00:00:0b:00:ff:fb:
+w PortA::Pin0::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 00:00:05:00:ff:f5:
+w PortA::Pin0::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 00:00:06:00:ff:f6:
+w PortA::Pin0::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 00:00:07:00:ff:f7:
+w PortA::Pin0::mode(Pin::Mode::outputGeneralPushPull10MHz) 00:00:01:00:ff:f1:
+w PortA::Pin0::mode(Pin::Mode::outputGeneralPushPull2MHz) 00:00:02:00:ff:f2:
+w PortA::Pin0::mode(Pin::Mode::outputGeneralPushPull50MHz) 00:00:03:00:ff:f3:
+w PortA::Pin0::output()
+w PortA::Pin0::output(Pin::Value::high) 0c:00:01:
+w PortA::Pin0::output(Pin::Value::low) 0c:ff:fe:
+w PortA::Pin10::input()
+w PortA::Pin10::mode()
+w PortA::Pin10::mode(Pin::Mode::inputAnalog) 05:ff:f0:
+w PortA::Pin10::mode(Pin::Mode::inputFloating) 05:00:04:05:ff:f4:
+w PortA::Pin10::mode(Pin::Mode::inputPullUpDown) 05:00:08:05:ff:f8:
+w PortA::Pin10::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 05:00:0d:05:ff:fd:
+w PortA::Pin10::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 05:00:0e:05:ff:fe:
+w PortA::Pin10::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 05:00:0f:
+w PortA::Pin10::mode(Pin::Mode::outputAlternatePushPull10MHz) 05:00:09:05:ff:f9:
+w PortA::Pin10::mode(Pin::Mode::outputAlternatePushPull2MHz) 05:00:0a:05:ff:fa:
+w PortA::Pin10::mode(Pin::Mode::outputAlternatePushPull50MHz) 05:00:0b:05:ff:fb:
+w PortA::Pin10::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 05:00:05:05:ff:f5:
+w PortA::Pin10::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 05:00:06:05:ff:f6:
+w PortA::Pin10::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 05:00:07:05:ff:f7:
+w PortA::Pin10::mode(Pin::Mode::outputGeneralPushPull10MHz) 05:00:01:05:ff:f1:
+w PortA::Pin10::mode(Pin::Mode::outputGeneralPushPull2MHz) 05:00:02:05:ff:f2:
+w PortA::Pin10::mode(Pin::Mode::outputGeneralPushPull50MHz) 05:00:03:05:ff:f3:
+w PortA::Pin10::output()
+w PortA::Pin10::output(Pin::Value::high) 0c:00:01:
+w PortA::Pin10::output(Pin::Value::low) 0c:ff:fe:
+w PortA::Pin11::input()
+w PortA::Pin11::mode()
+w PortA::Pin11::mode(Pin::Mode::inputAnalog) 05:ff:0f:
+w PortA::Pin11::mode(Pin::Mode::inputFloating) 05:00:40:05:ff:4f:
+w PortA::Pin11::mode(Pin::Mode::inputPullUpDown) 05:00:80:05:ff:8f:
+w PortA::Pin11::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 05:00:d0:05:ff:df:
+w PortA::Pin11::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 05:00:e0:05:ff:ef:
+w PortA::Pin11::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 05:00:f0:
+w PortA::Pin11::mode(Pin::Mode::outputAlternatePushPull10MHz) 05:00:90:05:ff:9f:
+w PortA::Pin11::mode(Pin::Mode::outputAlternatePushPull2MHz) 05:00:a0:05:ff:af:
+w PortA::Pin11::mode(Pin::Mode::outputAlternatePushPull50MHz) 05:00:b0:05:ff:bf:
+w PortA::Pin11::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 05:00:50:05:ff:5f:
+w PortA::Pin11::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 05:00:60:05:ff:6f:
+w PortA::Pin11::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 05:00:70:05:ff:7f:
+w PortA::Pin11::mode(Pin::Mode::outputGeneralPushPull10MHz) 05:00:10:05:ff:1f:
+w PortA::Pin11::mode(Pin::Mode::outputGeneralPushPull2MHz) 05:00:20:05:ff:2f:
+w PortA::Pin11::mode(Pin::Mode::outputGeneralPushPull50MHz) 05:00:30:05:ff:3f:
+w PortA::Pin11::output()
+w PortA::Pin11::output(Pin::Value::high) 0d:00:08:
+w PortA::Pin11::output(Pin::Value::low) 0d:ff:f7:
+w PortA::Pin12::input()
+w PortA::Pin12::mode()
+w PortA::Pin12::mode(Pin::Mode::inputAnalog) 06:ff:f0:
+w PortA::Pin12::mode(Pin::Mode::inputFloating) 06:00:04:06:ff:f4:
+w PortA::Pin12::mode(Pin::Mode::inputPullUpDown) 06:00:08:06:ff:f8:
+w PortA::Pin12::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 06:00:0d:06:ff:fd:
+w PortA::Pin12::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 06:00:0e:06:ff:fe:
+w PortA::Pin12::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 06:00:0f:
+w PortA::Pin12::mode(Pin::Mode::outputAlternatePushPull10MHz) 06:00:09:06:ff:f9:
+w PortA::Pin12::mode(Pin::Mode::outputAlternatePushPull2MHz) 06:00:0a:06:ff:fa:
+w PortA::Pin12::mode(Pin::Mode::outputAlternatePushPull50MHz) 06:00:0b:06:ff:fb:
+w PortA::Pin12::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 06:00:05:06:ff:f5:
+w PortA::Pin12::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 06:00:06:06:ff:f6:
+w PortA::Pin12::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 06:00:07:06:ff:f7:
+w PortA::Pin12::mode(Pin::Mode::outputGeneralPushPull10MHz) 06:00:01:06:ff:f1:
+w PortA::Pin12::mode(Pin::Mode::outputGeneralPushPull2MHz) 06:00:02:06:ff:f2:
+w PortA::Pin12::mode(Pin::Mode::outputGeneralPushPull50MHz) 06:00:03:06:ff:f3:
+w PortA::Pin12::output()
+w PortA::Pin12::output(Pin::Value::high) 0d:00:10:
+w PortA::Pin12::output(Pin::Value::low) 0d:ff:ef:
+w PortA::Pin13::input()
+w PortA::Pin13::mode()
+w PortA::Pin13::mode(Pin::Mode::inputAnalog) 06:ff:0f:
+w PortA::Pin13::mode(Pin::Mode::inputFloating) 06:00:40:06:ff:4f:
+w PortA::Pin13::mode(Pin::Mode::inputPullUpDown) 06:00:80:06:ff:8f:
+w PortA::Pin13::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 06:00:d0:06:ff:df:
+w PortA::Pin13::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 06:00:e0:06:ff:ef:
+w PortA::Pin13::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 06:00:f0:
+w PortA::Pin13::mode(Pin::Mode::outputAlternatePushPull10MHz) 06:00:90:06:ff:9f:
+w PortA::Pin13::mode(Pin::Mode::outputAlternatePushPull2MHz) 06:00:a0:06:ff:af:
+w PortA::Pin13::mode(Pin::Mode::outputAlternatePushPull50MHz) 06:00:b0:06:ff:bf:
+w PortA::Pin13::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 06:00:50:06:ff:5f:
+w PortA::Pin13::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 06:00:60:06:ff:6f:
+w PortA::Pin13::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 06:00:70:06:ff:7f:
+w PortA::Pin13::mode(Pin::Mode::outputGeneralPushPull10MHz) 06:00:10:06:ff:1f:
+w PortA::Pin13::mode(Pin::Mode::outputGeneralPushPull2MHz) 06:00:20:06:ff:2f:
+w PortA::Pin13::mode(Pin::Mode::outputGeneralPushPull50MHz) 06:00:30:06:ff:3f:
+w PortA::Pin13::output()
+w PortA::Pin13::output(Pin::Value::high) 0d:00:20:
+w PortA::Pin13::output(Pin::Value::low) 0d:ff:df:
+w PortA::Pin14::input()
+w PortA::Pin14::mode()
+w PortA::Pin14::mode(Pin::Mode::inputAnalog) 07:ff:f0:
+w PortA::Pin14::mode(Pin::Mode::inputFloating) 07:00:04:07:ff:f4:
+w PortA::Pin14::mode(Pin::Mode::inputPullUpDown) 07:00:08:07:ff:f8:
+w PortA::Pin14::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 07:00:0d:07:ff:fd:
+w PortA::Pin14::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 07:00:0e:07:ff:fe:
+w PortA::Pin14::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 07:00:0f:
+w PortA::Pin14::mode(Pin::Mode::outputAlternatePushPull10MHz) 07:00:09:07:ff:f9:
+w PortA::Pin14::mode(Pin::Mode::outputAlternatePushPull2MHz) 07:00:0a:07:ff:fa:
+w PortA::Pin14::mode(Pin::Mode::outputAlternatePushPull50MHz) 07:00:0b:07:ff:fb:
+w PortA::Pin14::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 07:00:05:07:ff:f5:
+w PortA::Pin14::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 07:00:06:07:ff:f6:
+w PortA::Pin14::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 07:00:07:07:ff:f7:
+w PortA::Pin14::mode(Pin::Mode::outputGeneralPushPull10MHz) 07:00:01:07:ff:f1:
+w PortA::Pin14::mode(Pin::Mode::outputGeneralPushPull2MHz) 07:00:02:07:ff:f2:
+w PortA::Pin14::mode(Pin::Mode::outputGeneralPushPull50MHz) 07:00:03:07:ff:f3:
+w PortA::Pin14::output()
+w PortA::Pin14::output(Pin::Value::high) 0d:00:40:
+w PortA::Pin14::output(Pin::Value::low) 0d:ff:bf:
+w PortA::Pin15::input()
+w PortA::Pin15::mode()
+w PortA::Pin15::mode(Pin::Mode::inputAnalog) 07:ff:0f:
+w PortA::Pin15::mode(Pin::Mode::inputFloating) 07:00:40:07:ff:4f:
+w PortA::Pin15::mode(Pin::Mode::inputPullUpDown) 07:00:80:07:ff:8f:
+w PortA::Pin15::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 07:00:d0:07:ff:df:
+w PortA::Pin15::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 07:00:e0:07:ff:ef:
+w PortA::Pin15::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 07:00:f0:
+w PortA::Pin15::mode(Pin::Mode::outputAlternatePushPull10MHz) 07:00:90:07:ff:9f:
+w PortA::Pin15::mode(Pin::Mode::outputAlternatePushPull2MHz) 07:00:a0:07:ff:af:
+w PortA::Pin15::mode(Pin::Mode::outputAlternatePushPull50MHz) 07:00:b0:07:ff:bf:
+w PortA::Pin15::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 07:00:50:07:ff:5f:
+w PortA::Pin15::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 07:00:60:07:ff:6f:
+w PortA::Pin15::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 07:00:70:07:ff:7f:
+w PortA::Pin15::mode(Pin::Mode::outputGeneralPushPull10MHz) 07:00:10:07:ff:1f:
+w PortA::Pin15::mode(Pin::Mode::outputGeneralPushPull2MHz) 07:00:20:07:ff:2f:
+w PortA::Pin15::mode(Pin::Mode::outputGeneralPushPull50MHz) 07:00:30:07:ff:3f:
+w PortA::Pin15::output()
+w PortA::Pin15::output(Pin::Value::high) 0d:00:80:
+w PortA::Pin15::output(Pin::Value::low) 0d:ff:7f:
+w PortA::Pin1::input()
+w PortA::Pin1::mode()
+w PortA::Pin1::mode(Pin::Mode::inputAnalog) 00:ff:0f:
+w PortA::Pin1::mode(Pin::Mode::inputFloating) 00:00:40:00:ff:4f:
+w PortA::Pin1::mode(Pin::Mode::inputPullUpDown) 00:00:80:00:ff:8f:
+w PortA::Pin1::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 00:00:d0:00:ff:df:
+w PortA::Pin1::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 00:00:e0:00:ff:ef:
+w PortA::Pin1::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 00:00:f0:
+w PortA::Pin1::mode(Pin::Mode::outputAlternatePushPull10MHz) 00:00:90:00:ff:9f:
+w PortA::Pin1::mode(Pin::Mode::outputAlternatePushPull2MHz) 00:00:a0:00:ff:af:
+w PortA::Pin1::mode(Pin::Mode::outputAlternatePushPull50MHz) 00:00:b0:00:ff:bf:
+w PortA::Pin1::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 00:00:50:00:ff:5f:
+w PortA::Pin1::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 00:00:60:00:ff:6f:
+w PortA::Pin1::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 00:00:70:00:ff:7f:
+w PortA::Pin1::mode(Pin::Mode::outputGeneralPushPull10MHz) 00:00:10:00:ff:1f:
+w PortA::Pin1::mode(Pin::Mode::outputGeneralPushPull2MHz) 00:00:20:00:ff:2f:
+w PortA::Pin1::mode(Pin::Mode::outputGeneralPushPull50MHz) 00:00:30:00:ff:3f:
+w PortA::Pin1::output()
+w PortA::Pin1::output(Pin::Value::high) 0c:00:02:
+w PortA::Pin1::output(Pin::Value::low) 0c:ff:fd:
+w PortA::Pin2::input()
+w PortA::Pin2::mode()
+w PortA::Pin2::mode(Pin::Mode::inputAnalog) 01:ff:f0:
+w PortA::Pin2::mode(Pin::Mode::inputFloating) 01:00:04:01:ff:f4:
+w PortA::Pin2::mode(Pin::Mode::inputPullUpDown) 01:00:08:01:ff:f8:
+w PortA::Pin2::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 01:00:0d:01:ff:fd:
+w PortA::Pin2::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 01:00:0e:01:ff:fe:
+w PortA::Pin2::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 01:00:0f:
+w PortA::Pin2::mode(Pin::Mode::outputAlternatePushPull10MHz) 01:00:09:01:ff:f9:
+w PortA::Pin2::mode(Pin::Mode::outputAlternatePushPull2MHz) 01:00:0a:01:ff:fa:
+w PortA::Pin2::mode(Pin::Mode::outputAlternatePushPull50MHz) 01:00:0b:01:ff:fb:
+w PortA::Pin2::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 01:00:05:01:ff:f5:
+w PortA::Pin2::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 01:00:06:01:ff:f6:
+w PortA::Pin2::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 01:00:07:01:ff:f7:
+w PortA::Pin2::mode(Pin::Mode::outputGeneralPushPull10MHz) 01:00:01:01:ff:f1:
+w PortA::Pin2::mode(Pin::Mode::outputGeneralPushPull2MHz) 01:00:02:01:ff:f2:
+w PortA::Pin2::mode(Pin::Mode::outputGeneralPushPull50MHz) 01:00:03:01:ff:f3:
+w PortA::Pin2::output()
+w PortA::Pin2::output(Pin::Value::high) 0c:00:04:
+w PortA::Pin2::output(Pin::Value::low) 0c:ff:fb:
+w PortA::Pin3::input()
+w PortA::Pin3::mode()
+w PortA::Pin3::mode(Pin::Mode::inputAnalog) 01:ff:0f:
+w PortA::Pin3::mode(Pin::Mode::inputFloating) 01:00:40:01:ff:4f:
+w PortA::Pin3::mode(Pin::Mode::inputPullUpDown) 01:00:80:01:ff:8f:
+w PortA::Pin3::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 01:00:d0:01:ff:df:
+w PortA::Pin3::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 01:00:e0:01:ff:ef:
+w PortA::Pin3::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 01:00:f0:
+w PortA::Pin3::mode(Pin::Mode::outputAlternatePushPull10MHz) 01:00:90:01:ff:9f:
+w PortA::Pin3::mode(Pin::Mode::outputAlternatePushPull2MHz) 01:00:a0:01:ff:af:
+w PortA::Pin3::mode(Pin::Mode::outputAlternatePushPull50MHz) 01:00:b0:01:ff:bf:
+w PortA::Pin3::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 01:00:50:01:ff:5f:
+w PortA::Pin3::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 01:00:60:01:ff:6f:
+w PortA::Pin3::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 01:00:70:01:ff:7f:
+w PortA::Pin3::mode(Pin::Mode::outputGeneralPushPull10MHz) 01:00:10:01:ff:1f:
+w PortA::Pin3::mode(Pin::Mode::outputGeneralPushPull2MHz) 01:00:20:01:ff:2f:
+w PortA::Pin3::mode(Pin::Mode::outputGeneralPushPull50MHz) 01:00:30:01:ff:3f:
+w PortA::Pin3::output()
+w PortA::Pin3::output(Pin::Value::high) 0c:00:08:
+w PortA::Pin3::output(Pin::Value::low) 0c:ff:f7:
+w PortA::Pin4::input()
+w PortA::Pin4::mode()
+w PortA::Pin4::mode(Pin::Mode::inputAnalog) 02:ff:f0:
+w PortA::Pin4::mode(Pin::Mode::inputFloating) 02:00:04:02:ff:f4:
+w PortA::Pin4::mode(Pin::Mode::inputPullUpDown) 02:00:08:02:ff:f8:
+w PortA::Pin4::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 02:00:0d:02:ff:fd:
+w PortA::Pin4::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 02:00:0e:02:ff:fe:
+w PortA::Pin4::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 02:00:0f:
+w PortA::Pin4::mode(Pin::Mode::outputAlternatePushPull10MHz) 02:00:09:02:ff:f9:
+w PortA::Pin4::mode(Pin::Mode::outputAlternatePushPull2MHz) 02:00:0a:02:ff:fa:
+w PortA::Pin4::mode(Pin::Mode::outputAlternatePushPull50MHz) 02:00:0b:02:ff:fb:
+w PortA::Pin4::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 02:00:05:02:ff:f5:
+w PortA::Pin4::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 02:00:06:02:ff:f6:
+w PortA::Pin4::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 02:00:07:02:ff:f7:
+w PortA::Pin4::mode(Pin::Mode::outputGeneralPushPull10MHz) 02:00:01:02:ff:f1:
+w PortA::Pin4::mode(Pin::Mode::outputGeneralPushPull2MHz) 02:00:02:02:ff:f2:
+w PortA::Pin4::mode(Pin::Mode::outputGeneralPushPull50MHz) 02:00:03:02:ff:f3:
+w PortA::Pin4::output()
+w PortA::Pin4::output(Pin::Value::high) 0c:00:10:
+w PortA::Pin4::output(Pin::Value::low) 0c:ff:ef:
+w PortA::Pin5::input()
+w PortA::Pin5::mode()
+w PortA::Pin5::mode(Pin::Mode::inputAnalog) 02:ff:0f:
+w PortA::Pin5::mode(Pin::Mode::inputFloating) 02:00:40:02:ff:4f:
+w PortA::Pin5::mode(Pin::Mode::inputPullUpDown) 02:00:80:02:ff:8f:
+w PortA::Pin5::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 02:00:d0:02:ff:df:
+w PortA::Pin5::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 02:00:e0:02:ff:ef:
+w PortA::Pin5::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 02:00:f0:
+w PortA::Pin5::mode(Pin::Mode::outputAlternatePushPull10MHz) 02:00:90:02:ff:9f:
+w PortA::Pin5::mode(Pin::Mode::outputAlternatePushPull2MHz) 02:00:a0:02:ff:af:
+w PortA::Pin5::mode(Pin::Mode::outputAlternatePushPull50MHz) 02:00:b0:02:ff:bf:
+w PortA::Pin5::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 02:00:50:02:ff:5f:
+w PortA::Pin5::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 02:00:60:02:ff:6f:
+w PortA::Pin5::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 02:00:70:02:ff:7f:
+w PortA::Pin5::mode(Pin::Mode::outputGeneralPushPull10MHz) 02:00:10:02:ff:1f:
+w PortA::Pin5::mode(Pin::Mode::outputGeneralPushPull2MHz) 02:00:20:02:ff:2f:
+w PortA::Pin5::mode(Pin::Mode::outputGeneralPushPull50MHz) 02:00:30:02:ff:3f:
+w PortA::Pin5::output()
+w PortA::Pin5::output(Pin::Value::high) 0c:00:20:
+w PortA::Pin5::output(Pin::Value::low) 0c:ff:df:
+w PortA::Pin6::input()
+w PortA::Pin6::mode()
+w PortA::Pin6::mode(Pin::Mode::inputAnalog) 03:ff:f0:
+w PortA::Pin6::mode(Pin::Mode::inputFloating) 03:00:04:03:ff:f4:
+w PortA::Pin6::mode(Pin::Mode::inputPullUpDown) 03:00:08:03:ff:f8:
+w PortA::Pin6::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 03:00:0d:03:ff:fd:
+w PortA::Pin6::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 03:00:0e:03:ff:fe:
+w PortA::Pin6::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 03:00:0f:
+w PortA::Pin6::mode(Pin::Mode::outputAlternatePushPull10MHz) 03:00:09:03:ff:f9:
+w PortA::Pin6::mode(Pin::Mode::outputAlternatePushPull2MHz) 03:00:0a:03:ff:fa:
+w PortA::Pin6::mode(Pin::Mode::outputAlternatePushPull50MHz) 03:00:0b:03:ff:fb:
+w PortA::Pin6::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 03:00:05:03:ff:f5:
+w PortA::Pin6::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 03:00:06:03:ff:f6:
+w PortA::Pin6::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 03:00:07:03:ff:f7:
+w PortA::Pin6::mode(Pin::Mode::outputGeneralPushPull10MHz) 03:00:01:03:ff:f1:
+w PortA::Pin6::mode(Pin::Mode::outputGeneralPushPull2MHz) 03:00:02:03:ff:f2:
+w PortA::Pin6::mode(Pin::Mode::outputGeneralPushPull50MHz) 03:00:03:03:ff:f3:
+w PortA::Pin6::output()
+w PortA::Pin6::output(Pin::Value::high) 0c:00:40:
+w PortA::Pin6::output(Pin::Value::low) 0c:ff:bf:
+w PortA::Pin7::input()
+w PortA::Pin7::mode()
+w PortA::Pin7::mode(Pin::Mode::inputAnalog) 03:ff:0f:
+w PortA::Pin7::mode(Pin::Mode::inputFloating) 03:00:40:03:ff:4f:
+w PortA::Pin7::mode(Pin::Mode::inputPullUpDown) 03:00:80:03:ff:8f:
+w PortA::Pin7::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 03:00:d0:03:ff:df:
+w PortA::Pin7::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 03:00:e0:03:ff:ef:
+w PortA::Pin7::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 03:00:f0:
+w PortA::Pin7::mode(Pin::Mode::outputAlternatePushPull10MHz) 03:00:90:03:ff:9f:
+w PortA::Pin7::mode(Pin::Mode::outputAlternatePushPull2MHz) 03:00:a0:03:ff:af:
+w PortA::Pin7::mode(Pin::Mode::outputAlternatePushPull50MHz) 03:00:b0:03:ff:bf:
+w PortA::Pin7::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 03:00:50:03:ff:5f:
+w PortA::Pin7::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 03:00:60:03:ff:6f:
+w PortA::Pin7::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 03:00:70:03:ff:7f:
+w PortA::Pin7::mode(Pin::Mode::outputGeneralPushPull10MHz) 03:00:10:03:ff:1f:
+w PortA::Pin7::mode(Pin::Mode::outputGeneralPushPull2MHz) 03:00:20:03:ff:2f:
+w PortA::Pin7::mode(Pin::Mode::outputGeneralPushPull50MHz) 03:00:30:03:ff:3f:
+w PortA::Pin7::output()
+w PortA::Pin7::output(Pin::Value::high) 0c:00:80:
+w PortA::Pin7::output(Pin::Value::low) 0c:ff:7f:
+w PortA::Pin8::input()
+w PortA::Pin8::mode()
+w PortA::Pin8::mode(Pin::Mode::inputAnalog) 04:ff:f0:
+w PortA::Pin8::mode(Pin::Mode::inputFloating) 04:00:04:04:ff:f4:
+w PortA::Pin8::mode(Pin::Mode::inputPullUpDown) 04:00:08:04:ff:f8:
+w PortA::Pin8::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 04:00:0d:04:ff:fd:
+w PortA::Pin8::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 04:00:0e:04:ff:fe:
+w PortA::Pin8::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 04:00:0f:
+w PortA::Pin8::mode(Pin::Mode::outputAlternatePushPull10MHz) 04:00:09:04:ff:f9:
+w PortA::Pin8::mode(Pin::Mode::outputAlternatePushPull2MHz) 04:00:0a:04:ff:fa:
+w PortA::Pin8::mode(Pin::Mode::outputAlternatePushPull50MHz) 04:00:0b:04:ff:fb:
+w PortA::Pin8::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 04:00:05:04:ff:f5:
+w PortA::Pin8::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 04:00:06:04:ff:f6:
+w PortA::Pin8::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 04:00:07:04:ff:f7:
+w PortA::Pin8::mode(Pin::Mode::outputGeneralPushPull10MHz) 04:00:01:04:ff:f1:
+w PortA::Pin8::mode(Pin::Mode::outputGeneralPushPull2MHz) 04:00:02:04:ff:f2:
+w PortA::Pin8::mode(Pin::Mode::outputGeneralPushPull50MHz) 04:00:03:04:ff:f3:
+w PortA::Pin8::output()
+w PortA::Pin8::output(Pin::Value::high) 0d:00:01:
+w PortA::Pin8::output(Pin::Value::low) 0d:ff:fe:
+w PortA::Pin9::input()
+w PortA::Pin9::mode()
+w PortA::Pin9::mode(Pin::Mode::inputAnalog) 04:ff:0f:
+w PortA::Pin9::mode(Pin::Mode::inputFloating) 04:00:40:04:ff:4f:
+w PortA::Pin9::mode(Pin::Mode::inputPullUpDown) 04:00:80:04:ff:8f:
+w PortA::Pin9::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 04:00:d0:04:ff:df:
+w PortA::Pin9::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 04:00:e0:04:ff:ef:
+w PortA::Pin9::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 04:00:f0:
+w PortA::Pin9::mode(Pin::Mode::outputAlternatePushPull10MHz) 04:00:90:04:ff:9f:
+w PortA::Pin9::mode(Pin::Mode::outputAlternatePushPull2MHz) 04:00:a0:04:ff:af:
+w PortA::Pin9::mode(Pin::Mode::outputAlternatePushPull50MHz) 04:00:b0:04:ff:bf:
+w PortA::Pin9::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 04:00:50:04:ff:5f:
+w PortA::Pin9::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 04:00:60:04:ff:6f:
+w PortA::Pin9::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 04:00:70:04:ff:7f:
+w PortA::Pin9::mode(Pin::Mode::outputGeneralPushPull10MHz) 04:00:10:04:ff:1f:
+w PortA::Pin9::mode(Pin::Mode::outputGeneralPushPull2MHz) 04:00:20:04:ff:2f:
+w PortA::Pin9::mode(Pin::Mode::outputGeneralPushPull50MHz) 04:00:30:04:ff:3f:
+w PortA::Pin9::output()
+w PortA::Pin9::output(Pin::Value::high) 0d:00:02:
+w PortA::Pin9::output(Pin::Value::low) 0d:ff:fd:
+w PortA::clearOutputs(0x12) 12:00:12:12:ff:12:13:ff:00:
+w PortA::clearOutputs(0x34) 12:00:34:12:ff:34:13:ff:00:
+w PortA::enableClock(false) 18:ff:fb:
+w PortA::enableClock(true) 18:00:04:
+w PortA::input()
+w PortA::mode(Pin::Mode::inputAnalog) 00:ff:00:01:ff:00:02:ff:00:03:ff:00:04:ff:00:05:ff:00:06:ff:00:07:ff:00:
+w PortA::mode(Pin::Mode::inputFloating) 00:00:44:01:00:44:02:00:44:03:00:44:04:00:44:05:00:44:06:00:44:07:00:44:00:ff:44:01:ff:44:02:ff:44:03:ff:44:04:ff:44:05:ff:44:06:ff:44:07:ff:44:
+w PortA::mode(Pin::Mode::inputPullUpDown) 00:00:88:01:00:88:02:00:88:03:00:88:04:00:88:05:00:88:06:00:88:07:00:88:00:ff:88:01:ff:88:02:ff:88:03:ff:88:04:ff:88:05:ff:88:06:ff:88:07:ff:88:
+w PortA::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 00:00:dd:01:00:dd:02:00:dd:03:00:dd:04:00:dd:05:00:dd:06:00:dd:07:00:dd:00:ff:dd:01:ff:dd:02:ff:dd:03:ff:dd:04:ff:dd:05:ff:dd:06:ff:dd:07:ff:dd:
+w PortA::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 00:00:ee:01:00:ee:02:00:ee:03:00:ee:04:00:ee:05:00:ee:06:00:ee:07:00:ee:00:ff:ee:01:ff:ee:02:ff:ee:03:ff:ee:04:ff:ee:05:ff:ee:06:ff:ee:07:ff:ee:
+w PortA::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 00:00:ff:01:00:ff:02:00:ff:03:00:ff:04:00:ff:05:00:ff:06:00:ff:07:00:ff:
+w PortA::mode(Pin::Mode::outputAlternatePushPull10MHz) 00:00:99:01:00:99:02:00:99:03:00:99:04:00:99:05:00:99:06:00:99:07:00:99:00:ff:99:01:ff:99:02:ff:99:03:ff:99:04:ff:99:05:ff:99:06:ff:99:07:ff:99:
+w PortA::mode(Pin::Mode::outputAlternatePushPull2MHz) 00:00:aa:01:00:aa:02:00:aa:03:00:aa:04:00:aa:05:00:aa:06:00:aa:07:00:aa:00:ff:aa:01:ff:aa:02:ff:aa:03:ff:aa:04:ff:aa:05:ff:aa:06:ff:aa:07:ff:aa:
+w PortA::mode(Pin::Mode::outputAlternatePushPull50MHz) 00:00:bb:01:00:bb:02:00:bb:03:00:bb:04:00:bb:05:00:bb:06:00:bb:07:00:bb:00:ff:bb:01:ff:bb:02:ff:bb:03:ff:bb:04:ff:bb:05:ff:bb:06:ff:bb:07:ff:bb:
+w PortA::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 00:00:55:01:00:55:02:00:55:03:00:55:04:00:55:05:00:55:06:00:55:07:00:55:00:ff:55:01:ff:55:02:ff:55:03:ff:55:04:ff:55:05:ff:55:06:ff:55:07:ff:55:
+w PortA::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 00:00:66:01:00:66:02:00:66:03:00:66:04:00:66:05:00:66:06:00:66:07:00:66:00:ff:66:01:ff:66:02:ff:66:03:ff:66:04:ff:66:05:ff:66:06:ff:66:07:ff:66:
+w PortA::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 00:00:77:01:00:77:02:00:77:03:00:77:04:00:77:05:00:77:06:00:77:07:00:77:00:ff:77:01:ff:77:02:ff:77:03:ff:77:04:ff:77:05:ff:77:06:ff:77:07:ff:77:
+w PortA::mode(Pin::Mode::outputGeneralPushPull10MHz) 00:00:11:01:00:11:02:00:11:03:00:11:04:00:11:05:00:11:06:00:11:07:00:11:00:ff:11:01:ff:11:02:ff:11:03:ff:11:04:ff:11:05:ff:11:06:ff:11:07:ff:11:
+w PortA::mode(Pin::Mode::outputGeneralPushPull2MHz) 00:00:22:01:00:22:02:00:22:03:00:22:04:00:22:05:00:22:06:00:22:07:00:22:00:ff:22:01:ff:22:02:ff:22:03:ff:22:04:ff:22:05:ff:22:06:ff:22:07:ff:22:
+w PortA::mode(Pin::Mode::outputGeneralPushPull50MHz) 00:00:33:01:00:33:02:00:33:03:00:33:04:00:33:05:00:33:06:00:33:07:00:33:00:ff:33:01:ff:33:02:ff:33:03:ff:33:04:ff:33:05:ff:33:06:ff:33:07:ff:33:
+w PortA::output()
+w PortA::output(0x12) 0c:00:12:0c:ff:12:0d:ff:00:
+w PortA::setOutputs(0x12) 10:00:12:10:ff:12:11:ff:00:
+w PortA::setOutputs(0x34) 10:00:34:10:ff:34:11:ff:00:
+w PortB::Pin0::input()
+w PortB::Pin0::mode()
+w PortB::Pin0::mode(Pin::Mode::inputAnalog) 00:ff:f0:
+w PortB::Pin0::mode(Pin::Mode::inputFloating) 00:00:04:00:ff:f4:
+w PortB::Pin0::mode(Pin::Mode::inputPullUpDown) 00:00:08:00:ff:f8:
+w PortB::Pin0::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 00:00:0d:00:ff:fd:
+w PortB::Pin0::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 00:00:0e:00:ff:fe:
+w PortB::Pin0::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 00:00:0f:
+w PortB::Pin0::mode(Pin::Mode::outputAlternatePushPull10MHz) 00:00:09:00:ff:f9:
+w PortB::Pin0::mode(Pin::Mode::outputAlternatePushPull2MHz) 00:00:0a:00:ff:fa:
+w PortB::Pin0::mode(Pin::Mode::outputAlternatePushPull50MHz) 00:00:0b:00:ff:fb:
+w PortB::Pin0::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 00:00:05:00:ff:f5:
+w PortB::Pin0::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 00:00:06:00:ff:f6:
+w PortB::Pin0::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 00:00:07:00:ff:f7:
+w PortB::Pin0::mode(Pin::Mode::outputGeneralPushPull10MHz) 00:00:01:00:ff:f1:
+w PortB::Pin0::mode(Pin::Mode::outputGeneralPushPull2MHz) 00:00:02:00:ff:f2:
+w PortB::Pin0::mode(Pin::Mode::outputGeneralPushPull50MHz) 00:00:03:00:ff:f3:
+w PortB::Pin0::output()
+w PortB::Pin0::output(Pin::Value::high) 0c:00:01:
+w PortB::Pin0::output(Pin::Value::low) 0c:ff:fe:
+w PortB::Pin10::input()
+w PortB::Pin10::mode()
+w PortB::Pin10::mode(Pin::Mode::inputAnalog) 05:ff:f0:
+w PortB::Pin10::mode(Pin::Mode::inputFloating) 05:00:04:05:ff:f4:
+w PortB::Pin10::mode(Pin::Mode::inputPullUpDown) 05:00:08:05:ff:f8:
+w PortB::Pin10::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 05:00:0d:05:ff:fd:
+w PortB::Pin10::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 05:00:0e:05:ff:fe:
+w PortB::Pin10::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 05:00:0f:
+w PortB::Pin10::mode(Pin::Mode::outputAlternatePushPull10MHz) 05:00:09:05:ff:f9:
+w PortB::Pin10::mode(Pin::Mode::outputAlternatePushPull2MHz) 05:00:0a:05:ff:fa:
+w PortB::Pin10::mode(Pin::Mode::outputAlternatePushPull50MHz) 05:00:0b:05:ff:fb:
+w PortB::Pin10::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 05:00:05:05:ff:f5:
+w PortB::Pin10::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 05:00:06:05:ff:f6:
+w PortB::Pin10::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 05:00:07:05:ff:f7:
+w PortB::Pin10::mode(Pin::Mode::outputGeneralPushPull10MHz) 05:00:01:05:ff:f1:
+w PortB::Pin10::mode(Pin::Mode::outputGeneralPushPull2MHz) 05:00:02:05:ff:f2:
+w PortB::Pin10::mode(Pin::Mode::outputGeneralPushPull50MHz) 05:00:03:05:ff:f3:
+w PortB::Pin10::output()
+w PortB::Pin10::output(Pin::Value::high) 0c:00:01:
+w PortB::Pin10::output(Pin::Value::low) 0c:ff:fe:
+w PortB::Pin11::input()
+w PortB::Pin11::mode()
+w PortB::Pin11::mode(Pin::Mode::inputAnalog) 05:ff:0f:
+w PortB::Pin11::mode(Pin::Mode::inputFloating) 05:00:40:05:ff:4f:
+w PortB::Pin11::mode(Pin::Mode::inputPullUpDown) 05:00:80:05:ff:8f:
+w PortB::Pin11::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 05:00:d0:05:ff:df:
+w PortB::Pin11::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 05:00:e0:05:ff:ef:
+w PortB::Pin11::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 05:00:f0:
+w PortB::Pin11::mode(Pin::Mode::outputAlternatePushPull10MHz) 05:00:90:05:ff:9f:
+w PortB::Pin11::mode(Pin::Mode::outputAlternatePushPull2MHz) 05:00:a0:05:ff:af:
+w PortB::Pin11::mode(Pin::Mode::outputAlternatePushPull50MHz) 05:00:b0:05:ff:bf:
+w PortB::Pin11::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 05:00:50:05:ff:5f:
+w PortB::Pin11::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 05:00:60:05:ff:6f:
+w PortB::Pin11::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 05:00:70:05:ff:7f:
+w PortB::Pin11::mode(Pin::Mode::outputGeneralPushPull10MHz) 05:00:10:05:ff:1f:
+w PortB::Pin11::mode(Pin::Mode::outputGeneralPushPull2MHz) 05:00:20:05:ff:2f:
+w PortB::Pin11::mode(Pin::Mode::outputGeneralPushPull50MHz) 05:00:30:05:ff:3f:
+w PortB::Pin11::output()
+w PortB::Pin11::output(Pin::Value::high) 0d:00:08:
+w PortB::Pin11::output(Pin::Value::low) 0d:ff:f7:
+w PortB::Pin12::input()
+w PortB::Pin12::mode()
+w PortB::Pin12::mode(Pin::Mode::inputAnalog) 06:ff:f0:
+w PortB::Pin12::mode(Pin::Mode::inputFloating) 06:00:04:06:ff:f4:
+w PortB::Pin12::mode(Pin::Mode::inputPullUpDown) 06:00:08:06:ff:f8:
+w PortB::Pin12::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 06:00:0d:06:ff:fd:
+w PortB::Pin12::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 06:00:0e:06:ff:fe:
+w PortB::Pin12::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 06:00:0f:
+w PortB::Pin12::mode(Pin::Mode::outputAlternatePushPull10MHz) 06:00:09:06:ff:f9:
+w PortB::Pin12::mode(Pin::Mode::outputAlternatePushPull2MHz) 06:00:0a:06:ff:fa:
+w PortB::Pin12::mode(Pin::Mode::outputAlternatePushPull50MHz) 06:00:0b:06:ff:fb:
+w PortB::Pin12::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 06:00:05:06:ff:f5:
+w PortB::Pin12::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 06:00:06:06:ff:f6:
+w PortB::Pin12::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 06:00:07:06:ff:f7:
+w PortB::Pin12::mode(Pin::Mode::outputGeneralPushPull10MHz) 06:00:01:06:ff:f1:
+w PortB::Pin12::mode(Pin::Mode::outputGeneralPushPull2MHz) 06:00:02:06:ff:f2:
+w PortB::Pin12::mode(Pin::Mode::outputGeneralPushPull50MHz) 06:00:03:06:ff:f3:
+w PortB::Pin12::output()
+w PortB::Pin12::output(Pin::Value::high) 0d:00:10:
+w PortB::Pin12::output(Pin::Value::low) 0d:ff:ef:
+w PortB::Pin13::input()
+w PortB::Pin13::mode()
+w PortB::Pin13::mode(Pin::Mode::inputAnalog) 06:ff:0f:
+w PortB::Pin13::mode(Pin::Mode::inputFloating) 06:00:40:06:ff:4f:
+w PortB::Pin13::mode(Pin::Mode::inputPullUpDown) 06:00:80:06:ff:8f:
+w PortB::Pin13::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 06:00:d0:06:ff:df:
+w PortB::Pin13::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 06:00:e0:06:ff:ef:
+w PortB::Pin13::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 06:00:f0:
+w PortB::Pin13::mode(Pin::Mode::outputAlternatePushPull10MHz) 06:00:90:06:ff:9f:
+w PortB::Pin13::mode(Pin::Mode::outputAlternatePushPull2MHz) 06:00:a0:06:ff:af:
+w PortB::Pin13::mode(Pin::Mode::outputAlternatePushPull50MHz) 06:00:b0:06:ff:bf:
+w PortB::Pin13::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 06:00:50:06:ff:5f:
+w PortB::Pin13::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 06:00:60:06:ff:6f:
+w PortB::Pin13::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 06:00:70:06:ff:7f:
+w PortB::Pin13::mode(Pin::Mode::outputGeneralPushPull10MHz) 06:00:10:06:ff:1f:
+w PortB::Pin13::mode(Pin::Mode::outputGeneralPushPull2MHz) 06:00:20:06:ff:2f:
+w PortB::Pin13::mode(Pin::Mode::outputGeneralPushPull50MHz) 06:00:30:06:ff:3f:
+w PortB::Pin13::output()
+w PortB::Pin13::output(Pin::Value::high) 0d:00:20:
+w PortB::Pin13::output(Pin::Value::low) 0d:ff:df:
+w PortB::Pin14::input()
+w PortB::Pin14::mode()
+w PortB::Pin14::mode(Pin::Mode::inputAnalog) 07:ff:f0:
+w PortB::Pin14::mode(Pin::Mode::inputFloating) 07:00:04:07:ff:f4:
+w PortB::Pin14::mode(Pin::Mode::inputPullUpDown) 07:00:08:07:ff:f8:
+w PortB::Pin14::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 07:00:0d:07:ff:fd:
+w PortB::Pin14::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 07:00:0e:07:ff:fe:
+w PortB::Pin14::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 07:00:0f:
+w PortB::Pin14::mode(Pin::Mode::outputAlternatePushPull10MHz) 07:00:09:07:ff:f9:
+w PortB::Pin14::mode(Pin::Mode::outputAlternatePushPull2MHz) 07:00:0a:07:ff:fa:
+w PortB::Pin14::mode(Pin::Mode::outputAlternatePushPull50MHz) 07:00:0b:07:ff:fb:
+w PortB::Pin14::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 07:00:05:07:ff:f5:
+w PortB::Pin14::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 07:00:06:07:ff:f6:
+w PortB::Pin14::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 07:00:07:07:ff:f7:
+w PortB::Pin14::mode(Pin::Mode::outputGeneralPushPull10MHz) 07:00:01:07:ff:f1:
+w PortB::Pin14::mode(Pin::Mode::outputGeneralPushPull2MHz) 07:00:02:07:ff:f2:
+w PortB::Pin14::mode(Pin::Mode::outputGeneralPushPull50MHz) 07:00:03:07:ff:f3:
+w PortB::Pin14::output()
+w PortB::Pin14::output(Pin::Value::high) 0d:00:40:
+w PortB::Pin14::output(Pin::Value::low) 0d:ff:bf:
+w PortB::Pin15::input()
+w PortB::Pin15::mode()
+w PortB::Pin15::mode(Pin::Mode::inputAnalog) 07:ff:0f:
+w PortB::Pin15::mode(Pin::Mode::inputFloating) 07:00:40:07:ff:4f:
+w PortB::Pin15::mode(Pin::Mode::inputPullUpDown) 07:00:80:07:ff:8f:
+w PortB::Pin15::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 07:00:d0:07:ff:df:
+w PortB::Pin15::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 07:00:e0:07:ff:ef:
+w PortB::Pin15::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 07:00:f0:
+w PortB::Pin15::mode(Pin::Mode::outputAlternatePushPull10MHz) 07:00:90:07:ff:9f:
+w PortB::Pin15::mode(Pin::Mode::outputAlternatePushPull2MHz) 07:00:a0:07:ff:af:
+w PortB::Pin15::mode(Pin::Mode::outputAlternatePushPull50MHz) 07:00:b0:07:ff:bf:
+w PortB::Pin15::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 07:00:50:07:ff:5f:
+w PortB::Pin15::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 07:00:60:07:ff:6f:
+w PortB::Pin15::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 07:00:70:07:ff:7f:
+w PortB::Pin15::mode(Pin::Mode::outputGeneralPushPull10MHz) 07:00:10:07:ff:1f:
+w PortB::Pin15::mode(Pin::Mode::outputGeneralPushPull2MHz) 07:00:20:07:ff:2f:
+w PortB::Pin15::mode(Pin::Mode::outputGeneralPushPull50MHz) 07:00:30:07:ff:3f:
+w PortB::Pin15::output()
+w PortB::Pin15::output(Pin::Value::high) 0d:00:80:
+w PortB::Pin15::output(Pin::Value::low) 0d:ff:7f:
+w PortB::Pin1::input()
+w PortB::Pin1::mode()
+w PortB::Pin1::mode(Pin::Mode::inputAnalog) 00:ff:0f:
+w PortB::Pin1::mode(Pin::Mode::inputFloating) 00:00:40:00:ff:4f:
+w PortB::Pin1::mode(Pin::Mode::inputPullUpDown) 00:00:80:00:ff:8f:
+w PortB::Pin1::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 00:00:d0:00:ff:df:
+w PortB::Pin1::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 00:00:e0:00:ff:ef:
+w PortB::Pin1::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 00:00:f0:
+w PortB::Pin1::mode(Pin::Mode::outputAlternatePushPull10MHz) 00:00:90:00:ff:9f:
+w PortB::Pin1::mode(Pin::Mode::outputAlternatePushPull2MHz) 00:00:a0:00:ff:af:
+w PortB::Pin1::mode(Pin::Mode::outputAlternatePushPull50MHz) 00:00:b0:00:ff:bf:
+w PortB::Pin1::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 00:00:50:00:ff:5f:
+w PortB::Pin1::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 00:00:60:00:ff:6f:
+w PortB::Pin1::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 00:00:70:00:ff:7f:
+w PortB::Pin1::mode(Pin::Mode::outputGeneralPushPull10MHz) 00:00:10:00:ff:1f:
+w PortB::Pin1::mode(Pin::Mode::outputGeneralPushPull2MHz) 00:00:20:00:ff:2f:
+w PortB::Pin1::mode(Pin::Mode::outputGeneralPushPull50MHz) 00:00:30:00:ff:3f:
+w PortB::Pin1::output()
+w PortB::Pin1::output(Pin::Value::high) 0c:00:02:
+w PortB::Pin1::output(Pin::Value::low) 0c:ff:fd:
+w PortB::Pin2::input()
+w PortB::Pin2::mode()
+w PortB::Pin2::mode(Pin::Mode::inputAnalog) 01:ff:f0:
+w PortB::Pin2::mode(Pin::Mode::inputFloating) 01:00:04:01:ff:f4:
+w PortB::Pin2::mode(Pin::Mode::inputPullUpDown) 01:00:08:01:ff:f8:
+w PortB::Pin2::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 01:00:0d:01:ff:fd:
+w PortB::Pin2::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 01:00:0e:01:ff:fe:
+w PortB::Pin2::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 01:00:0f:
+w PortB::Pin2::mode(Pin::Mode::outputAlternatePushPull10MHz) 01:00:09:01:ff:f9:
+w PortB::Pin2::mode(Pin::Mode::outputAlternatePushPull2MHz) 01:00:0a:01:ff:fa:
+w PortB::Pin2::mode(Pin::Mode::outputAlternatePushPull50MHz) 01:00:0b:01:ff:fb:
+w PortB::Pin2::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 01:00:05:01:ff:f5:
+w PortB::Pin2::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 01:00:06:01:ff:f6:
+w PortB::Pin2::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 01:00:07:01:ff:f7:
+w PortB::Pin2::mode(Pin::Mode::outputGeneralPushPull10MHz) 01:00:01:01:ff:f1:
+w PortB::Pin2::mode(Pin::Mode::outputGeneralPushPull2MHz) 01:00:02:01:ff:f2:
+w PortB::Pin2::mode(Pin::Mode::outputGeneralPushPull50MHz) 01:00:03:01:ff:f3:
+w PortB::Pin2::output()
+w PortB::Pin2::output(Pin::Value::high) 0c:00:04:
+w PortB::Pin2::output(Pin::Value::low) 0c:ff:fb:
+w PortB::Pin3::input()
+w PortB::Pin3::mode()
+w PortB::Pin3::mode(Pin::Mode::inputAnalog) 01:ff:0f:
+w PortB::Pin3::mode(Pin::Mode::inputFloating) 01:00:40:01:ff:4f:
+w PortB::Pin3::mode(Pin::Mode::inputPullUpDown) 01:00:80:01:ff:8f:
+w PortB::Pin3::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 01:00:d0:01:ff:df:
+w PortB::Pin3::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 01:00:e0:01:ff:ef:
+w PortB::Pin3::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 01:00:f0:
+w PortB::Pin3::mode(Pin::Mode::outputAlternatePushPull10MHz) 01:00:90:01:ff:9f:
+w PortB::Pin3::mode(Pin::Mode::outputAlternatePushPull2MHz) 01:00:a0:01:ff:af:
+w PortB::Pin3::mode(Pin::Mode::outputAlternatePushPull50MHz) 01:00:b0:01:ff:bf:
+w PortB::Pin3::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 01:00:50:01:ff:5f:
+w PortB::Pin3::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 01:00:60:01:ff:6f:
+w PortB::Pin3::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 01:00:70:01:ff:7f:
+w PortB::Pin3::mode(Pin::Mode::outputGeneralPushPull10MHz) 01:00:10:01:ff:1f:
+w PortB::Pin3::mode(Pin::Mode::outputGeneralPushPull2MHz) 01:00:20:01:ff:2f:
+w PortB::Pin3::mode(Pin::Mode::outputGeneralPushPull50MHz) 01:00:30:01:ff:3f:
+w PortB::Pin3::output()
+w PortB::Pin3::output(Pin::Value::high) 0c:00:08:
+w PortB::Pin3::output(Pin::Value::low) 0c:ff:f7:
+w PortB::Pin4::input()
+w PortB::Pin4::mode()
+w PortB::Pin4::mode(Pin::Mode::inputAnalog) 02:ff:f0:
+w PortB::Pin4::mode(Pin::Mode::inputFloating) 02:00:04:02:ff:f4:
+w PortB::Pin4::mode(Pin::Mode::inputPullUpDown) 02:00:08:02:ff:f8:
+w PortB::Pin4::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 02:00:0d:02:ff:fd:
+w PortB::Pin4::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 02:00:0e:02:ff:fe:
+w PortB::Pin4::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 02:00:0f:
+w PortB::Pin4::mode(Pin::Mode::outputAlternatePushPull10MHz) 02:00:09:02:ff:f9:
+w PortB::Pin4::mode(Pin::Mode::outputAlternatePushPull2MHz) 02:00:0a:02:ff:fa:
+w PortB::Pin4::mode(Pin::Mode::outputAlternatePushPull50MHz) 02:00:0b:02:ff:fb:
+w PortB::Pin4::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 02:00:05:02:ff:f5:
+w PortB::Pin4::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 02:00:06:02:ff:f6:
+w PortB::Pin4::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 02:00:07:02:ff:f7:
+w PortB::Pin4::mode(Pin::Mode::outputGeneralPushPull10MHz) 02:00:01:02:ff:f1:
+w PortB::Pin4::mode(Pin::Mode::outputGeneralPushPull2MHz) 02:00:02:02:ff:f2:
+w PortB::Pin4::mode(Pin::Mode::outputGeneralPushPull50MHz) 02:00:03:02:ff:f3:
+w PortB::Pin4::output()
+w PortB::Pin4::output(Pin::Value::high) 0c:00:10:
+w PortB::Pin4::output(Pin::Value::low) 0c:ff:ef:
+w PortB::Pin5::input()
+w PortB::Pin5::mode()
+w PortB::Pin5::mode(Pin::Mode::inputAnalog) 02:ff:0f:
+w PortB::Pin5::mode(Pin::Mode::inputFloating) 02:00:40:02:ff:4f:
+w PortB::Pin5::mode(Pin::Mode::inputPullUpDown) 02:00:80:02:ff:8f:
+w PortB::Pin5::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 02:00:d0:02:ff:df:
+w PortB::Pin5::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 02:00:e0:02:ff:ef:
+w PortB::Pin5::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 02:00:f0:
+w PortB::Pin5::mode(Pin::Mode::outputAlternatePushPull10MHz) 02:00:90:02:ff:9f:
+w PortB::Pin5::mode(Pin::Mode::outputAlternatePushPull2MHz) 02:00:a0:02:ff:af:
+w PortB::Pin5::mode(Pin::Mode::outputAlternatePushPull50MHz) 02:00:b0:02:ff:bf:
+w PortB::Pin5::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 02:00:50:02:ff:5f:
+w PortB::Pin5::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 02:00:60:02:ff:6f:
+w PortB::Pin5::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 02:00:70:02:ff:7f:
+w PortB::Pin5::mode(Pin::Mode::outputGeneralPushPull10MHz) 02:00:10:02:ff:1f:
+w PortB::Pin5::mode(Pin::Mode::outputGeneralPushPull2MHz) 02:00:20:02:ff:2f:
+w PortB::Pin5::mode(Pin::Mode::outputGeneralPushPull50MHz) 02:00:30:02:ff:3f:
+w PortB::Pin5::output()
+w PortB::Pin5::output(Pin::Value::high) 0c:00:20:
+w PortB::Pin5::output(Pin::Value::low) 0c:ff:df:
+w PortB::Pin6::input()
+w PortB::Pin6::mode()
+w PortB::Pin6::mode(Pin::Mode::inputAnalog) 03:ff:f0:
+w PortB::Pin6::mode(Pin::Mode::inputFloating) 03:00:04:03:ff:f4:
+w PortB::Pin6::mode(Pin::Mode::inputPullUpDown) 03:00:08:03:ff:f8:
+w PortB::Pin6::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 03:00:0d:03:ff:fd:
+w PortB::Pin6::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 03:00:0e:03:ff:fe:
+w PortB::Pin6::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 03:00:0f:
+w PortB::Pin6::mode(Pin::Mode::outputAlternatePushPull10MHz) 03:00:09:03:ff:f9:
+w PortB::Pin6::mode(Pin::Mode::outputAlternatePushPull2MHz) 03:00:0a:03:ff:fa:
+w PortB::Pin6::mode(Pin::Mode::outputAlternatePushPull50MHz) 03:00:0b:03:ff:fb:
+w PortB::Pin6::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 03:00:05:03:ff:f5:
+w PortB::Pin6::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 03:00:06:03:ff:f6:
+w PortB::Pin6::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 03:00:07:03:ff:f7:
+w PortB::Pin6::mode(Pin::Mode::outputGeneralPushPull10MHz) 03:00:01:03:ff:f1:
+w PortB::Pin6::mode(Pin::Mode::outputGeneralPushPull2MHz) 03:00:02:03:ff:f2:
+w PortB::Pin6::mode(Pin::Mode::outputGeneralPushPull50MHz) 03:00:03:03:ff:f3:
+w PortB::Pin6::output()
+w PortB::Pin6::output(Pin::Value::high) 0c:00:40:
+w PortB::Pin6::output(Pin::Value::low) 0c:ff:bf:
+w PortB::Pin7::input()
+w PortB::Pin7::mode()
+w PortB::Pin7::mode(Pin::Mode::inputAnalog) 03:ff:0f:
+w PortB::Pin7::mode(Pin::Mode::inputFloating) 03:00:40:03:ff:4f:
+w PortB::Pin7::mode(Pin::Mode::inputPullUpDown) 03:00:80:03:ff:8f:
+w PortB::Pin7::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 03:00:d0:03:ff:df:
+w PortB::Pin7::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 03:00:e0:03:ff:ef:
+w PortB::Pin7::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 03:00:f0:
+w PortB::Pin7::mode(Pin::Mode::outputAlternatePushPull10MHz) 03:00:90:03:ff:9f:
+w PortB::Pin7::mode(Pin::Mode::outputAlternatePushPull2MHz) 03:00:a0:03:ff:af:
+w PortB::Pin7::mode(Pin::Mode::outputAlternatePushPull50MHz) 03:00:b0:03:ff:bf:
+w PortB::Pin7::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 03:00:50:03:ff:5f:
+w PortB::Pin7::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 03:00:60:03:ff:6f:
+w PortB::Pin7::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 03:00:70:03:ff:7f:
+w PortB::Pin7::mode(Pin::Mode::outputGeneralPushPull10MHz) 03:00:10:03:ff:1f:
+w PortB::Pin7::mode(Pin::Mode::outputGeneralPushPull2MHz) 03:00:20:03:ff:2f:
+w PortB::Pin7::mode(Pin::Mode::outputGeneralPushPull50MHz) 03:00:30:03:ff:3f:
+w PortB::Pin7::output()
+w PortB::Pin7::output(Pin::Value::high) 0c:00:80:
+w PortB::Pin7::output(Pin::Value::low) 0c:ff:7f:
+w PortB::Pin8::input()
+w PortB::Pin8::mode()
+w PortB::Pin8::mode(Pin::Mode::inputAnalog) 04:ff:f0:
+w PortB::Pin8::mode(Pin::Mode::inputFloating) 04:00:04:04:ff:f4:
+w PortB::Pin8::mode(Pin::Mode::inputPullUpDown) 04:00:08:04:ff:f8:
+w PortB::Pin8::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 04:00:0d:04:ff:fd:
+w PortB::Pin8::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 04:00:0e:04:ff:fe:
+w PortB::Pin8::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 04:00:0f:
+w PortB::Pin8::mode(Pin::Mode::outputAlternatePushPull10MHz) 04:00:09:04:ff:f9:
+w PortB::Pin8::mode(Pin::Mode::outputAlternatePushPull2MHz) 04:00:0a:04:ff:fa:
+w PortB::Pin8::mode(Pin::Mode::outputAlternatePushPull50MHz) 04:00:0b:04:ff:fb:
+w PortB::Pin8::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 04:00:05:04:ff:f5:
+w PortB::Pin8::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 04:00:06:04:ff:f6:
+w PortB::Pin8::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 04:00:07:04:ff:f7:
+w PortB::Pin8::mode(Pin::Mode::outputGeneralPushPull10MHz) 04:00:01:04:ff:f1:
+w PortB::Pin8::mode(Pin::Mode::outputGeneralPushPull2MHz) 04:00:02:04:ff:f2:
+w PortB::Pin8::mode(Pin::Mode::outputGeneralPushPull50MHz) 04:00:03:04:ff:f3:
+w PortB::Pin8::output()
+w PortB::Pin8::output(Pin::Value::high) 0d:00:01:
+w PortB::Pin8::output(Pin::Value::low) 0d:ff:fe:
+w PortB::Pin9::input()
+w PortB::Pin9::mode()
+w PortB::Pin9::mode(Pin::Mode::inputAnalog) 04:ff:0f:
+w PortB::Pin9::mode(Pin::Mode::inputFloating) 04:00:40:04:ff:4f:
+w PortB::Pin9::mode(Pin::Mode::inputPullUpDown) 04:00:80:04:ff:8f:
+w PortB::Pin9::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 04:00:d0:04:ff:df:
+w PortB::Pin9::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 04:00:e0:04:ff:ef:
+w PortB::Pin9::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 04:00:f0:
+w PortB::Pin9::mode(Pin::Mode::outputAlternatePushPull10MHz) 04:00:90:04:ff:9f:
+w PortB::Pin9::mode(Pin::Mode::outputAlternatePushPull2MHz) 04:00:a0:04:ff:af:
+w PortB::Pin9::mode(Pin::Mode::outputAlternatePushPull50MHz) 04:00:b0:04:ff:bf:
+w PortB::Pin9::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 04:00:50:04:ff:5f:
+w PortB::Pin9::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 04:00:60:04:ff:6f:
+w PortB::Pin9::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 04:00:70:04:ff:7f:
+w PortB::Pin9::mode(Pin::Mode::outputGeneralPushPull10MHz) 04:00:10:04:ff:1f:
+w PortB::Pin9::mode(Pin::Mode::outputGeneralPushPull2MHz) 04:00:20:04:ff:2f:
+w PortB::Pin9::mode(Pin::Mode::outputGeneralPushPull50MHz) 04:00:30:04:ff:3f:
+w PortB::Pin9::output()
+w PortB::Pin9::output(Pin::Value::high) 0d:00:02:
+w PortB::Pin9::output(Pin::Value::low) 0d:ff:fd:
+w PortB::clearOutputs(0x12) 12:00:12:12:ff:12:13:ff:00:
+w PortB::clearOutputs(0x34) 12:00:34:12:ff:34:13:ff:00:
+w PortB::enableClock(false) 18:ff:f7:
+w PortB::enableClock(true) 18:00:08:
+w PortB::input()
+w PortB::mode(Pin::Mode::inputAnalog) 00:ff:00:01:ff:00:02:ff:00:03:ff:00:04:ff:00:05:ff:00:06:ff:00:07:ff:00:
+w PortB::mode(Pin::Mode::inputFloating) 00:00:44:01:00:44:02:00:44:03:00:44:04:00:44:05:00:44:06:00:44:07:00:44:00:ff:44:01:ff:44:02:ff:44:03:ff:44:04:ff:44:05:ff:44:06:ff:44:07:ff:44:
+w PortB::mode(Pin::Mode::inputPullUpDown) 00:00:88:01:00:88:02:00:88:03:00:88:04:00:88:05:00:88:06:00:88:07:00:88:00:ff:88:01:ff:88:02:ff:88:03:ff:88:04:ff:88:05:ff:88:06:ff:88:07:ff:88:
+w PortB::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 00:00:dd:01:00:dd:02:00:dd:03:00:dd:04:00:dd:05:00:dd:06:00:dd:07:00:dd:00:ff:dd:01:ff:dd:02:ff:dd:03:ff:dd:04:ff:dd:05:ff:dd:06:ff:dd:07:ff:dd:
+w PortB::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 00:00:ee:01:00:ee:02:00:ee:03:00:ee:04:00:ee:05:00:ee:06:00:ee:07:00:ee:00:ff:ee:01:ff:ee:02:ff:ee:03:ff:ee:04:ff:ee:05:ff:ee:06:ff:ee:07:ff:ee:
+w PortB::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 00:00:ff:01:00:ff:02:00:ff:03:00:ff:04:00:ff:05:00:ff:06:00:ff:07:00:ff:
+w PortB::mode(Pin::Mode::outputAlternatePushPull10MHz) 00:00:99:01:00:99:02:00:99:03:00:99:04:00:99:05:00:99:06:00:99:07:00:99:00:ff:99:01:ff:99:02:ff:99:03:ff:99:04:ff:99:05:ff:99:06:ff:99:07:ff:99:
+w PortB::mode(Pin::Mode::outputAlternatePushPull2MHz) 00:00:aa:01:00:aa:02:00:aa:03:00:aa:04:00:aa:05:00:aa:06:00:aa:07:00:aa:00:ff:aa:01:ff:aa:02:ff:aa:03:ff:aa:04:ff:aa:05:ff:aa:06:ff:aa:07:ff:aa:
+w PortB::mode(Pin::Mode::outputAlternatePushPull50MHz) 00:00:bb:01:00:bb:02:00:bb:03:00:bb:04:00:bb:05:00:bb:06:00:bb:07:00:bb:00:ff:bb:01:ff:bb:02:ff:bb:03:ff:bb:04:ff:bb:05:ff:bb:06:ff:bb:07:ff:bb:
+w PortB::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 00:00:55:01:00:55:02:00:55:03:00:55:04:00:55:05:00:55:06:00:55:07:00:55:00:ff:55:01:ff:55:02:ff:55:03:ff:55:04:ff:55:05:ff:55:06:ff:55:07:ff:55:
+w PortB::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 00:00:66:01:00:66:02:00:66:03:00:66:04:00:66:05:00:66:06:00:66:07:00:66:00:ff:66:01:ff:66:02:ff:66:03:ff:66:04:ff:66:05:ff:66:06:ff:66:07:ff:66:
+w PortB::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 00:00:77:01:00:77:02:00:77:03:00:77:04:00:77:05:00:77:06:00:77:07:00:77:00:ff:77:01:ff:77:02:ff:77:03:ff:77:04:ff:77:05:ff:77:06:ff:77:07:ff:77:
+w PortB::mode(Pin::Mode::outputGeneralPushPull10MHz) 00:00:11:01:00:11:02:00:11:03:00:11:04:00:11:05:00:11:06:00:11:07:00:11:00:ff:11:01:ff:11:02:ff:11:03:ff:11:04:ff:11:05:ff:11:06:ff:11:07:ff:11:
+w PortB::mode(Pin::Mode::outputGeneralPushPull2MHz) 00:00:22:01:00:22:02:00:22:03:00:22:04:00:22:05:00:22:06:00:22:07:00:22:00:ff:22:01:ff:22:02:ff:22:03:ff:22:04:ff:22:05:ff:22:06:ff:22:07:ff:22:
+w PortB::mode(Pin::Mode::outputGeneralPushPull50MHz) 00:00:33:01:00:33:02:00:33:03:00:33:04:00:33:05:00:33:06:00:33:07:00:33:00:ff:33:01:ff:33:02:ff:33:03:ff:33:04:ff:33:05:ff:33:06:ff:33:07:ff:33:
+w PortB::output()
+w PortB::output(0x12) 0c:00:12:0c:ff:12:0d:ff:00:
+w PortB::setOutputs(0x12) 10:00:12:10:ff:12:11:ff:00:
+w PortB::setOutputs(0x34) 10:00:34:10:ff:34:11:ff:00:
+w PortC::Pin13::input()
+w PortC::Pin13::mode()
+w PortC::Pin13::mode(Pin::Mode::inputAnalog) 06:ff:0f:
+w PortC::Pin13::mode(Pin::Mode::inputFloating) 06:00:40:06:ff:4f:
+w PortC::Pin13::mode(Pin::Mode::inputPullUpDown) 06:00:80:06:ff:8f:
+w PortC::Pin13::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 06:00:d0:06:ff:df:
+w PortC::Pin13::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 06:00:e0:06:ff:ef:
+w PortC::Pin13::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 06:00:f0:
+w PortC::Pin13::mode(Pin::Mode::outputAlternatePushPull10MHz) 06:00:90:06:ff:9f:
+w PortC::Pin13::mode(Pin::Mode::outputAlternatePushPull2MHz) 06:00:a0:06:ff:af:
+w PortC::Pin13::mode(Pin::Mode::outputAlternatePushPull50MHz) 06:00:b0:06:ff:bf:
+w PortC::Pin13::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 06:00:50:06:ff:5f:
+w PortC::Pin13::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 06:00:60:06:ff:6f:
+w PortC::Pin13::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 06:00:70:06:ff:7f:
+w PortC::Pin13::mode(Pin::Mode::outputGeneralPushPull10MHz) 06:00:10:06:ff:1f:
+w PortC::Pin13::mode(Pin::Mode::outputGeneralPushPull2MHz) 06:00:20:06:ff:2f:
+w PortC::Pin13::mode(Pin::Mode::outputGeneralPushPull50MHz) 06:00:30:06:ff:3f:
+w PortC::Pin13::output()
+w PortC::Pin13::output(Pin::Value::high) 0d:00:20:
+w PortC::Pin13::output(Pin::Value::low) 0d:ff:df:
+w PortC::Pin14::input()
+w PortC::Pin14::mode()
+w PortC::Pin14::mode(Pin::Mode::inputAnalog) 07:ff:f0:
+w PortC::Pin14::mode(Pin::Mode::inputFloating) 07:00:04:07:ff:f4:
+w PortC::Pin14::mode(Pin::Mode::inputPullUpDown) 07:00:08:07:ff:f8:
+w PortC::Pin14::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 07:00:0d:07:ff:fd:
+w PortC::Pin14::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 07:00:0e:07:ff:fe:
+w PortC::Pin14::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 07:00:0f:
+w PortC::Pin14::mode(Pin::Mode::outputAlternatePushPull10MHz) 07:00:09:07:ff:f9:
+w PortC::Pin14::mode(Pin::Mode::outputAlternatePushPull2MHz) 07:00:0a:07:ff:fa:
+w PortC::Pin14::mode(Pin::Mode::outputAlternatePushPull50MHz) 07:00:0b:07:ff:fb:
+w PortC::Pin14::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 07:00:05:07:ff:f5:
+w PortC::Pin14::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 07:00:06:07:ff:f6:
+w PortC::Pin14::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 07:00:07:07:ff:f7:
+w PortC::Pin14::mode(Pin::Mode::outputGeneralPushPull10MHz) 07:00:01:07:ff:f1:
+w PortC::Pin14::mode(Pin::Mode::outputGeneralPushPull2MHz) 07:00:02:07:ff:f2:
+w PortC::Pin14::mode(Pin::Mode::outputGeneralPushPull50MHz) 07:00:03:07:ff:f3:
+w PortC::Pin14::output()
+w PortC::Pin14::output(Pin::Value::high) 0d:00:40:
+w PortC::Pin14::output(Pin::Value::low) 0d:ff:bf:
+w PortC::Pin15::input()
+w PortC::Pin15::mode()
+w PortC::Pin15::mode(Pin::Mode::inputAnalog) 07:ff:0f:
+w PortC::Pin15::mode(Pin::Mode::inputFloating) 07:00:40:07:ff:4f:
+w PortC::Pin15::mode(Pin::Mode::inputPullUpDown) 07:00:80:07:ff:8f:
+w PortC::Pin15::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 07:00:d0:07:ff:df:
+w PortC::Pin15::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 07:00:e0:07:ff:ef:
+w PortC::Pin15::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 07:00:f0:
+w PortC::Pin15::mode(Pin::Mode::outputAlternatePushPull10MHz) 07:00:90:07:ff:9f:
+w PortC::Pin15::mode(Pin::Mode::outputAlternatePushPull2MHz) 07:00:a0:07:ff:af:
+w PortC::Pin15::mode(Pin::Mode::outputAlternatePushPull50MHz) 07:00:b0:07:ff:bf:
+w PortC::Pin15::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 07:00:50:07:ff:5f:
+w PortC::Pin15::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 07:00:60:07:ff:6f:
+w PortC::Pin15::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 07:00:70:07:ff:7f:
+w PortC::Pin15::mode(Pin::Mode::outputGeneralPushPull10MHz) 07:00:10:07:ff:1f:
+w PortC::Pin15::mode(Pin::Mode::outputGeneralPushPull2MHz) 07:00:20:07:ff:2f:
+w PortC::Pin15::mode(Pin::Mode::outputGeneralPushPull50MHz) 07:00:30:07:ff:3f:
+w PortC::Pin15::output()
+w PortC::Pin15::output(Pin::Value::high) 0d:00:80:
+w PortC::Pin15::output(Pin::Value::low) 0d:ff:7f:
+w PortC::clearOutputs(0x12) 12:00:12:12:ff:12:13:ff:00:
+w PortC::clearOutputs(0x34) 12:00:34:12:ff:34:13:ff:00:
+w PortC::enableClock(false) 18:ff:ef:
+w PortC::enableClock(true) 18:00:10:
+w PortC::input()
+w PortC::mode(Pin::Mode::inputAnalog) 06:ff:0f:07:ff:00:
+w PortC::mode(Pin::Mode::inputFloating) 06:00:40:07:00:44:06:ff:4f:07:ff:44:
+w PortC::mode(Pin::Mode::inputPullUpDown) 06:00:80:07:00:88:06:ff:8f:07:ff:88:
+w PortC::mode(Pin::Mode::outputAlternateOpenDrain10MHz) 06:00:d0:07:00:dd:06:ff:df:07:ff:dd:
+w PortC::mode(Pin::Mode::outputAlternateOpenDrain2MHz) 06:00:e0:07:00:ee:06:ff:ef:07:ff:ee:
+w PortC::mode(Pin::Mode::outputAlternateOpenDrain50MHz) 06:00:f0:07:00:ff:
+w PortC::mode(Pin::Mode::outputAlternatePushPull10MHz) 06:00:90:07:00:99:06:ff:9f:07:ff:99:
+w PortC::mode(Pin::Mode::outputAlternatePushPull2MHz) 06:00:a0:07:00:aa:06:ff:af:07:ff:aa:
+w PortC::mode(Pin::Mode::outputAlternatePushPull50MHz) 06:00:b0:07:00:bb:06:ff:bf:07:ff:bb:
+w PortC::mode(Pin::Mode::outputGeneralOpenDrain10MHz) 06:00:50:07:00:55:06:ff:5f:07:ff:55:
+w PortC::mode(Pin::Mode::outputGeneralOpenDrain2MHz) 06:00:60:07:00:66:06:ff:6f:07:ff:66:
+w PortC::mode(Pin::Mode::outputGeneralOpenDrain50MHz) 06:00:70:07:00:77:06:ff:7f:07:ff:77:
+w PortC::mode(Pin::Mode::outputGeneralPushPull10MHz) 06:00:10:07:00:11:06:ff:1f:07:ff:11:
+w PortC::mode(Pin::Mode::outputGeneralPushPull2MHz) 06:00:20:07:00:22:06:ff:2f:07:ff:22:
+w PortC::mode(Pin::Mode::outputGeneralPushPull50MHz) 06:00:30:07:00:33:06:ff:3f:07:ff:33:
+w PortC::output()
+w PortC::output(0x12) 0c:00:12:0c:ff:12:0d:ff:00:
+w PortC::setOutputs(0x12) 10:00:12:10:ff:12:11:ff:00:
+w PortC::setOutputs(0x34) 10:00:34:10:ff:34:11:ff:00:
+w Timer2::counter()
+w Timer2::counter(0x12) 24:00:12:24:ff:12:25:ff:00:26:ff:00:27:ff:00:
+w Usart1::baud(0x1234) 08:00:34:09:00:02:08:ff:34:09:ff:02:
+w Usart1::pop()
+w Usart1::push(0x12) 04:00:12:04:ff:12:

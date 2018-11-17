@@ -121,7 +121,7 @@ struct TwiN {
         const Word8 flagClear = bv(TWI_N(INT_FLAG_BIT));
         const Word8 interrupt = intEnable ? bv(TWI_N(INT_ENABLE_BIT)) : 0;
 
-        *REG(TWI_N(CONTROL_REG)) = enable | start | flagClear | interrupt;
+        setReg_(REG(TWI_N(CONTROL_REG)), enable | start | flagClear | interrupt);
     }
 
     /// #### static void sendStop(Bool intEnable = true)
@@ -131,7 +131,7 @@ struct TwiN {
         const Word8 stop = bv(TWI_N(STOP_CONDITION_BIT));
         const Word8 flagClear = bv(TWI_N(INT_FLAG_BIT));
 
-        *REG(TWI_N(CONTROL_REG)) = enable | stop | flagClear;
+        setReg_(REG(TWI_N(CONTROL_REG)), enable | stop | flagClear);
     }
 
     /// #### static void sendAck(Bool intEnable = true)
@@ -142,7 +142,7 @@ struct TwiN {
         const Word8 flagClear = bv(TWI_N(INT_FLAG_BIT));
         const Word8 interrupt = intEnable ? bv(TWI_N(INT_ENABLE_BIT)) : 0;
 
-        *REG(TWI_N(CONTROL_REG)) = enable | ack | flagClear | interrupt;
+        setReg_(REG(TWI_N(CONTROL_REG)), enable | ack | flagClear | interrupt);
     }
 
     /// #### static void sendNack(Bool intEnable = true)
@@ -152,35 +152,33 @@ struct TwiN {
         const Word8 flagClear = bv(TWI_N(INT_FLAG_BIT));
         const Word8 interrupt = intEnable ? bv(TWI_N(INT_ENABLE_BIT)) : 0;
 
-        *REG(TWI_N(CONTROL_REG)) = enable | flagClear | interrupt;
+        setReg_(REG(TWI_N(CONTROL_REG)), enable | flagClear | interrupt);
     }
 
     /// #### static void bitRate(Word8 b)
     /// Set Twi bitRate.
     static force_inline void bitRate(Word8 b) {
-        *REG(TWI_N(BIT_RATE_REG)) = b;
+        setReg_(REG(TWI_N(BIT_RATE_REG)), b);
     }
 
     /// #### static Bool intFlag()
     /// Returns true if the interrupt flag is set.
     static force_inline Bool intFlag() {
-        return Bool(*REG(TWI_N(INT_FLAG_REG)) & bv(TWI_N(INT_FLAG_BIT)));
+        return getBit_(REG(TWI_N(INT_FLAG_REG)), TWI_N(INT_FLAG_BIT));
     }
 
     /// #### static Bool active()
     /// Returns true if the twi hardware is busy.
     static force_inline Bool active() {
-        if(Bool(*REG(TWI_N(CONTROL_REG)) | bv(TWI_N(ENABLE_BIT)))) {
-            return Bool(*REG(TWI_N(CONTROL_REG)) & (bv(TWI_N(START_CONDITION_BIT)) | bv(TWI_N(STOP_CONDITION_BIT))));
-        } else {
-            return false;
-        }
+        return getBit_(REG(TWI_N(CONTROL_REG)), TWI_N(ENABLE_BIT))
+            && (getBit_(REG(TWI_N(CONTROL_REG)), TWI_N(START_CONDITION_BIT))
+            || getBit_(REG(TWI_N(CONTROL_REG)), TWI_N(STOP_CONDITION_BIT)));
     }
 
     /// #### static Bool writeCollisionFlag()
     /// Returns true if the write collision flag is set.
     static force_inline Bool writeCollisionFlag() {
-        return Bool(*REG(TWI_N(WRITE_COLLISION_FLAG_REG)) & bv(TWI_N(WRITE_COLLISION_FLAG_BIT)));
+        return getBit_(REG(TWI_N(WRITE_COLLISION_FLAG_REG)), TWI_N(WRITE_COLLISION_FLAG_BIT));
     }
 
     /// #### static void writeCollisionFlagClear()
@@ -210,7 +208,7 @@ struct TwiN {
     /// #### static [[TwiN::Status]] status()
     /// Get the Twi status.
     static force_inline Status status() {
-        return Status(Int(*REG(TWI_N(STATUS_REG)) & 0xF8));
+        return Status(Int(getReg_(REG(TWI_N(STATUS_REG))) & 0xF8));
     }
 
     /// #### static void prescaler([[TwiN::Prescaler]] p)
@@ -223,25 +221,25 @@ struct TwiN {
     /// #### static void push(Word8 b)
     /// Put byte in data buffer.
     static force_inline void push(Word8 b) {
-        *REG(TWI_N(DATA_REG)) = b;
+        setReg_(REG(TWI_N(DATA_REG)), b);
     }
 
     /// #### static Word8 pop()
     /// Get byte from data buffer.
     static force_inline Word8 pop() {
-        return *REG(TWI_N(DATA_REG));
+        return getReg_(REG(TWI_N(DATA_REG)));
     }
 
     /// #### static void slaveAddress(Word8 b)
     /// Set the address for transmitting and receiving as a slave.
     static force_inline void slaveAddress(Word8 b) {
-        *REG(TWI_N(SLAVE_ADDRESS_REG)) = b & 0xfe;
+        setReg_(REG(TWI_N(SLAVE_ADDRESS_REG)), b & 0xfe);
     }
 
     /// #### static void slaveAddressMask(Word8 b)
     /// Set the slave address mask.
     static force_inline void slaveAddressMask(Word8 b) {
-        *REG(TWI_N(SLAVE_ADDRESS_MASK_REG)) = b & 0xfe;
+        setReg_(REG(TWI_N(SLAVE_ADDRESS_MASK_REG)), b & 0xfe);
     }
 
     /// #### static void generalCallRecognitionEnable(Bool e)
@@ -270,6 +268,95 @@ private:
 ISR(TWI_N(INT_VECTOR)) {
     TwiN::callCallback();
 }
+
+#ifdef TEST
+
+TEST(TwiN, getHardwareType) {
+    ASSERT_EQ(TwiN::getHardwareType(), HardwareType::twi);
+}
+
+TEST(TwiN, enable) {
+    TEST_REG_WRITE(TwiN::enable(true));
+    TEST_REG_WRITE(TwiN::enable(false));
+}
+
+TEST(TwiN, sendStart) {
+    TEST_REG_WRITE(TwiN::sendStart(true));
+    TEST_REG_WRITE(TwiN::sendStart(false));
+}
+
+TEST(TwiN, sendStop) {
+    TEST_REG_WRITE(TwiN::sendStop());
+}
+
+TEST(TwiN, sendAck) {
+    TEST_REG_WRITE(TwiN::sendAck(true));
+    TEST_REG_WRITE(TwiN::sendAck(false));
+}
+
+TEST(TwiN, sendNack) {
+    TEST_REG_WRITE(TwiN::sendNack(true));
+    TEST_REG_WRITE(TwiN::sendNack(false));
+}
+
+TEST(TwiN, bitRate) {
+    TEST_REG_WRITE(TwiN::bitRate(0x12));
+}
+
+TEST(TwiN, intFlag) {
+    TEST_REG_READ_WRITE(TwiN::intFlag());
+}
+
+TEST(TwiN, active) {
+    TEST_REG_READ_WRITE(TwiN::active());
+}
+
+TEST(TwiN, writeCollisionFlag) {
+    TEST_REG_READ_WRITE(TwiN::writeCollisionFlag());
+}
+
+TEST(TwiN, writeCollisionFlagClear) {
+    TEST_REG_WRITE(TwiN::writeCollisionFlagClear());
+}
+
+TEST(TwiN, intEnable) {
+    TEST_REG_WRITE(TwiN::intEnable(true));
+    TEST_REG_WRITE(TwiN::intEnable(false));
+}
+
+TEST(TwiN, status) {
+    TEST_REG_READ_WRITE(TwiN::status());
+}
+
+TEST(TwiN, prescaler) {
+    TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div1));
+    TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div4));
+    TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div16));
+    TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div64));
+}
+
+TEST(TwiN, push) {
+    TEST_REG_WRITE(TwiN::push(0x12));
+}
+
+TEST(TwiN, pop) {
+    TEST_REG_READ_WRITE(TwiN::pop());
+}
+
+TEST(TwiN, slaveAddress) {
+    TEST_REG_WRITE(TwiN::slaveAddress(0x12));
+}
+
+TEST(TwiN, slaveAddressMask) {
+    TEST_REG_WRITE(TwiN::slaveAddressMask(0x12));
+}
+
+TEST(TwiN, generalCallRecognitionEnable) {
+    TEST_REG_WRITE(TwiN::generalCallRecognitionEnable(true));
+    TEST_REG_WRITE(TwiN::generalCallRecognitionEnable(false));
+}
+
+#endif // TEST
 
 } // nbos::hw
 

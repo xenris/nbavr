@@ -1,6 +1,5 @@
-#ifndef NBOS_ARM_HPP
-#define NBOS_ARM_HPP
-
+#ifndef NBOS_STM32F103C8_MD_HPP
+#define NBOS_STM32F103C8_MD_HPP
 
 #define NBOS_CHIP_DEFINED
 
@@ -30,8 +29,8 @@
 #define CHIP_ADDR_USART_3                                           (CHIP_ADDR_PERIPHERALS + 0x0000'4800)
 #define CHIP_ADDR_USART_4                                           (CHIP_ADDR_PERIPHERALS + 0x0000'4C00)
 #define CHIP_ADDR_USART_5                                           (CHIP_ADDR_PERIPHERALS + 0x0000'5000)
-#define CHIP_ADDR_I2C_1                                              (CHIP_ADDR_PERIPHERALS + 0x0000'5400)
-#define CHIP_ADDR_I2C_2                                              (CHIP_ADDR_PERIPHERALS + 0x0000'5800)
+#define CHIP_ADDR_I2C_1                                             (CHIP_ADDR_PERIPHERALS + 0x0000'5400)
+#define CHIP_ADDR_I2C_2                                             (CHIP_ADDR_PERIPHERALS + 0x0000'5800)
 #define CHIP_ADDR_USB                                               (CHIP_ADDR_PERIPHERALS + 0x0000'5C00)
 #define CHIP_ADDR_USB_CAN_SRAM                                      (CHIP_ADDR_PERIPHERALS + 0x0000'6000)
 #define CHIP_ADDR_BX_CAN_1_SRAM                                     (CHIP_ADDR_PERIPHERALS + 0x0000'6400)
@@ -74,61 +73,61 @@
 // TODO ...
 
 #define CHIP_REG_PORT_A_CRL_ADDR                                    (CHIP_ADDR_PORT_A + CHIP_ADDR_OFFSET_CRL)
-#define CHIP_REG_PORT_A_CRL_TYPE                                    uint32_t
+#define CHIP_REG_PORT_A_CRL_TYPE                                    Word32
 #define CHIP_REG_PORT_A_CRH_ADDR                                    (CHIP_ADDR_PORT_A + CHIP_ADDR_OFFSET_CRH)
-#define CHIP_REG_PORT_A_CRH_TYPE                                    uint32_t
+#define CHIP_REG_PORT_A_CRH_TYPE                                    Word32
 #define CHIP_REG_PORT_A_IDR_ADDR                                    (CHIP_ADDR_PORT_A + CHIP_ADDR_OFFSET_IDR)
-#define CHIP_REG_PORT_A_IDR_TYPE                                    uint16_t // FIXME Should this be uint32_t?
+#define CHIP_REG_PORT_A_IDR_TYPE                                    Word16 // FIXME Should this be Word32?
 #define CHIP_REG_PORT_A_ODR_ADDR                                    (CHIP_ADDR_PORT_A + 0x0C)
-#define CHIP_REG_PORT_A_ODR_TYPE                                    uint16_t
+#define CHIP_REG_PORT_A_ODR_TYPE                                    Word16
 #define CHIP_REG_PORT_A_BSRR_ADDR                                   (CHIP_ADDR_PORT_A + 0x10)
-#define CHIP_REG_PORT_A_BSRR_TYPE                                   uint32_t
+#define CHIP_REG_PORT_A_BSRR_TYPE                                   Word32
 #define CHIP_REG_PORT_A_BSRR_SET_ADDR                               (CHIP_ADDR_PORT_A + 0x10)
-#define CHIP_REG_PORT_A_BSRR_SET_TYPE                               uint16_t
+#define CHIP_REG_PORT_A_BSRR_SET_TYPE                               Word16
 #define CHIP_REG_PORT_A_BSRR_CLEAR_ADDR                             (CHIP_ADDR_PORT_A + 0x12)
-#define CHIP_REG_PORT_A_BSRR_CLEAR_TYPE                             uint16_t
+#define CHIP_REG_PORT_A_BSRR_CLEAR_TYPE                             Word16
 #define CHIP_REG_PORT_A_BRR_ADDR                                    (CHIP_ADDR_PORT_A + 0x14)
-#define CHIP_REG_PORT_A_BRR_TYPE                                    uint16_t
+#define CHIP_REG_PORT_A_BRR_TYPE                                    Word16
 #define CHIP_REG_PORT_A_LCKR_ADDR                                   (CHIP_ADDR_PORT_A + 0x18)
-#define CHIP_REG_PORT_A_LCKR_TYPE                                   uint32_t
+#define CHIP_REG_PORT_A_LCKR_TYPE                                   Word32
 
 #define CHIP_REG_PORT_B_CRL_ADDR                                    (CHIP_ADDR_PORT_B + CHIP_ADDR_OFFSET_CRL)
-#define CHIP_REG_PORT_B_CRL_TYPE                                    uint32_t
+#define CHIP_REG_PORT_B_CRL_TYPE                                    Word32
 #define CHIP_REG_PORT_B_CRH_ADDR                                    (CHIP_ADDR_PORT_B + CHIP_ADDR_OFFSET_CRH)
-#define CHIP_REG_PORT_B_CRH_TYPE                                    uint32_t
+#define CHIP_REG_PORT_B_CRH_TYPE                                    Word32
 #define CHIP_REG_PORT_B_IDR_ADDR                                    (CHIP_ADDR_PORT_B + CHIP_ADDR_OFFSET_IDR)
-#define CHIP_REG_PORT_B_IDR_TYPE                                    uint16_t
+#define CHIP_REG_PORT_B_IDR_TYPE                                    Word16
 #define CHIP_REG_PORT_B_ODR_ADDR                                    (CHIP_ADDR_PORT_B + 0x0C)
-#define CHIP_REG_PORT_B_ODR_TYPE                                    uint16_t
+#define CHIP_REG_PORT_B_ODR_TYPE                                    Word16
 #define CHIP_REG_PORT_B_BSRR_ADDR                                   (CHIP_ADDR_PORT_B + 0x10)
-#define CHIP_REG_PORT_B_BSRR_TYPE                                   uint32_t
+#define CHIP_REG_PORT_B_BSRR_TYPE                                   Word32
 #define CHIP_REG_PORT_B_BSRR_SET_ADDR                               (CHIP_ADDR_PORT_B + 0x10)
-#define CHIP_REG_PORT_B_BSRR_SET_TYPE                               uint16_t
+#define CHIP_REG_PORT_B_BSRR_SET_TYPE                               Word16
 #define CHIP_REG_PORT_B_BSRR_CLEAR_ADDR                             (CHIP_ADDR_PORT_B + 0x12)
-#define CHIP_REG_PORT_B_BSRR_CLEAR_TYPE                             uint16_t
+#define CHIP_REG_PORT_B_BSRR_CLEAR_TYPE                             Word16
 #define CHIP_REG_PORT_B_BRR_ADDR                                    (CHIP_ADDR_PORT_B + 0x14)
-#define CHIP_REG_PORT_B_BRR_TYPE                                    uint16_t
+#define CHIP_REG_PORT_B_BRR_TYPE                                    Word16
 #define CHIP_REG_PORT_B_LCKR_ADDR                                   (CHIP_ADDR_PORT_B + 0x18)
-#define CHIP_REG_PORT_B_LCKR_TYPE                                   uint32_t
+#define CHIP_REG_PORT_B_LCKR_TYPE                                   Word32
 
 #define CHIP_REG_PORT_C_CRL_ADDR                                    (CHIP_ADDR_PORT_C + CHIP_ADDR_OFFSET_CRL)
-#define CHIP_REG_PORT_C_CRL_TYPE                                    uint32_t
+#define CHIP_REG_PORT_C_CRL_TYPE                                    Word32
 #define CHIP_REG_PORT_C_CRH_ADDR                                    (CHIP_ADDR_PORT_C + CHIP_ADDR_OFFSET_CRH)
-#define CHIP_REG_PORT_C_CRH_TYPE                                    uint32_t
+#define CHIP_REG_PORT_C_CRH_TYPE                                    Word32
 #define CHIP_REG_PORT_C_IDR_ADDR                                    (CHIP_ADDR_PORT_C + CHIP_ADDR_OFFSET_IDR)
-#define CHIP_REG_PORT_C_IDR_TYPE                                    uint16_t
+#define CHIP_REG_PORT_C_IDR_TYPE                                    Word16
 #define CHIP_REG_PORT_C_ODR_ADDR                                    (CHIP_ADDR_PORT_C + 0x0C)
-#define CHIP_REG_PORT_C_ODR_TYPE                                    uint16_t
+#define CHIP_REG_PORT_C_ODR_TYPE                                    Word16
 #define CHIP_REG_PORT_C_BSRR_ADDR                                   (CHIP_ADDR_PORT_C + 0x10)
-#define CHIP_REG_PORT_C_BSRR_TYPE                                   uint32_t
+#define CHIP_REG_PORT_C_BSRR_TYPE                                   Word32
 #define CHIP_REG_PORT_C_BSRR_SET_ADDR                               (CHIP_ADDR_PORT_C + 0x10)
-#define CHIP_REG_PORT_C_BSRR_SET_TYPE                               uint16_t
+#define CHIP_REG_PORT_C_BSRR_SET_TYPE                               Word16
 #define CHIP_REG_PORT_C_BSRR_CLEAR_ADDR                             (CHIP_ADDR_PORT_C + 0x12)
-#define CHIP_REG_PORT_C_BSRR_CLEAR_TYPE                             uint16_t
+#define CHIP_REG_PORT_C_BSRR_CLEAR_TYPE                             Word16
 #define CHIP_REG_PORT_C_BRR_ADDR                                    (CHIP_ADDR_PORT_C + 0x14)
-#define CHIP_REG_PORT_C_BRR_TYPE                                    uint16_t
+#define CHIP_REG_PORT_C_BRR_TYPE                                    Word16
 #define CHIP_REG_PORT_C_LCKR_ADDR                                   (CHIP_ADDR_PORT_C + 0x18)
-#define CHIP_REG_PORT_C_LCKR_TYPE                                   uint32_t
+#define CHIP_REG_PORT_C_LCKR_TYPE                                   Word32
 
 #define CHIP_ADDR_OFFSET_TIMX_CR1                                   0x00
 #define CHIP_ADDR_OFFSET_TIMX_CR2                                   0x04
@@ -155,87 +154,87 @@
 #define CHIP_ADDR_OFFSET_USART_BRR                                  0x08
 
 #define CHIP_REG_TIM1_CR1_ADDR                                      (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_CR1)
-#define CHIP_REG_TIM1_CR1_TYPE                                      uint32_t
+#define CHIP_REG_TIM1_CR1_TYPE                                      Word32
 #define CHIP_REG_TIM1_CR2_ADDR                                      (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_CR2)
-#define CHIP_REG_TIM1_CR2_TYPE                                      uint32_t
+#define CHIP_REG_TIM1_CR2_TYPE                                      Word32
 #define CHIP_REG_TIM1_SMCR_ADDR                                     (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_SMCR)
-#define CHIP_REG_TIM1_SMCR_TYPE                                     uint32_t
+#define CHIP_REG_TIM1_SMCR_TYPE                                     Word32
 #define CHIP_REG_TIM1_DIER_ADDR                                     (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_DIER)
-#define CHIP_REG_TIM1_DIER_TYPE                                     uint32_t
+#define CHIP_REG_TIM1_DIER_TYPE                                     Word32
 #define CHIP_REG_TIM1_SR_ADDR                                       (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_SR)
-#define CHIP_REG_TIM1_SR_TYPE                                       uint32_t
+#define CHIP_REG_TIM1_SR_TYPE                                       Word32
 #define CHIP_REG_TIM1_EGR_ADDR                                      (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_EGR)
-#define CHIP_REG_TIM1_EGR_TYPE                                      uint32_t
+#define CHIP_REG_TIM1_EGR_TYPE                                      Word32
 #define CHIP_REG_TIM1_CCMR1_ADDR                                    (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_CCMR1)
-#define CHIP_REG_TIM1_CCMR1_TYPE                                    uint32_t
+#define CHIP_REG_TIM1_CCMR1_TYPE                                    Word32
 #define CHIP_REG_TIM1_CCMR2_ADDR                                    (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_CCMR2)
-#define CHIP_REG_TIM1_CCMR2_TYPE                                    uint32_t
+#define CHIP_REG_TIM1_CCMR2_TYPE                                    Word32
 #define CHIP_REG_TIM1_CCER_ADDR                                     (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_CCER)
-#define CHIP_REG_TIM1_CCER_TYPE                                     uint32_t
+#define CHIP_REG_TIM1_CCER_TYPE                                     Word32
 #define CHIP_REG_TIM1_CNT_ADDR                                      (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_CNT)
-#define CHIP_REG_TIM1_CNT_TYPE                                      uint32_t
+#define CHIP_REG_TIM1_CNT_TYPE                                      Word32
 #define CHIP_REG_TIM1_PSC_ADDR                                      (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_PSC)
-#define CHIP_REG_TIM1_PSC_TYPE                                      uint32_t
+#define CHIP_REG_TIM1_PSC_TYPE                                      Word32
 #define CHIP_REG_TIM1_ARR_ADDR                                      (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_ARR)
-#define CHIP_REG_TIM1_ARR_TYPE                                      uint32_t
+#define CHIP_REG_TIM1_ARR_TYPE                                      Word32
 #define CHIP_REG_TIM1_RCR_ADDR                                      (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_RCR)
-#define CHIP_REG_TIM1_RCR_TYPE                                      uint32_t
+#define CHIP_REG_TIM1_RCR_TYPE                                      Word32
 #define CHIP_REG_TIM1_CCR1_ADDR                                     (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_CCR1)
-#define CHIP_REG_TIM1_CCR1_TYPE                                     uint32_t
+#define CHIP_REG_TIM1_CCR1_TYPE                                     Word32
 #define CHIP_REG_TIM1_CCR2_ADDR                                     (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_CCR2)
-#define CHIP_REG_TIM1_CCR2_TYPE                                     uint32_t
+#define CHIP_REG_TIM1_CCR2_TYPE                                     Word32
 #define CHIP_REG_TIM1_CCR3_ADDR                                     (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_CCR3)
-#define CHIP_REG_TIM1_CCR3_TYPE                                     uint32_t
+#define CHIP_REG_TIM1_CCR3_TYPE                                     Word32
 #define CHIP_REG_TIM1_CCR4_ADDR                                     (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_CCR4)
-#define CHIP_REG_TIM1_CCR4_TYPE                                     uint32_t
+#define CHIP_REG_TIM1_CCR4_TYPE                                     Word32
 #define CHIP_REG_TIM1_BDTR_ADDR                                     (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_BDTR)
-#define CHIP_REG_TIM1_BDTR_TYPE                                     uint32_t
+#define CHIP_REG_TIM1_BDTR_TYPE                                     Word32
 #define CHIP_REG_TIM1_DCR_ADDR                                      (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_DCR)
-#define CHIP_REG_TIM1_DCR_TYPE                                      uint32_t
+#define CHIP_REG_TIM1_DCR_TYPE                                      Word32
 #define CHIP_REG_TIM1_DMAR_ADDR                                     (CHIP_ADDR_TIMER_1 + CHIP_ADDR_OFFSET_TIMX_DMAR)
-#define CHIP_REG_TIM1_DMAR_TYPE                                     uint32_t
+#define CHIP_REG_TIM1_DMAR_TYPE                                     Word32
 
 #define CHIP_REG_TIM2_CR1_ADDR                                      (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_CR1)
-#define CHIP_REG_TIM2_CR1_TYPE                                      uint32_t
+#define CHIP_REG_TIM2_CR1_TYPE                                      Word32
 #define CHIP_REG_TIM2_CR2_ADDR                                      (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_CR2)
-#define CHIP_REG_TIM2_CR2_TYPE                                      uint32_t
+#define CHIP_REG_TIM2_CR2_TYPE                                      Word32
 #define CHIP_REG_TIM2_SMCR_ADDR                                     (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_SMCR)
-#define CHIP_REG_TIM2_SMCR_TYPE                                     uint32_t
+#define CHIP_REG_TIM2_SMCR_TYPE                                     Word32
 #define CHIP_REG_TIM2_DIER_ADDR                                     (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_DIER)
-#define CHIP_REG_TIM2_DIER_TYPE                                     uint32_t
+#define CHIP_REG_TIM2_DIER_TYPE                                     Word32
 #define CHIP_REG_TIM2_SR_ADDR                                       (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_SR)
-#define CHIP_REG_TIM2_SR_TYPE                                       uint32_t
+#define CHIP_REG_TIM2_SR_TYPE                                       Word32
 #define CHIP_REG_TIM2_EGR_ADDR                                      (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_EGR)
-#define CHIP_REG_TIM2_EGR_TYPE                                      uint32_t
+#define CHIP_REG_TIM2_EGR_TYPE                                      Word32
 #define CHIP_REG_TIM2_CCMR1_ADDR                                    (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_CCMR1)
-#define CHIP_REG_TIM2_CCMR1_TYPE                                    uint32_t
+#define CHIP_REG_TIM2_CCMR1_TYPE                                    Word32
 #define CHIP_REG_TIM2_CCMR2_ADDR                                    (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_CCMR2)
-#define CHIP_REG_TIM2_CCMR2_TYPE                                    uint32_t
+#define CHIP_REG_TIM2_CCMR2_TYPE                                    Word32
 #define CHIP_REG_TIM2_CCER_ADDR                                     (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_CCER)
-#define CHIP_REG_TIM2_CCER_TYPE                                     uint32_t
+#define CHIP_REG_TIM2_CCER_TYPE                                     Word32
 #define CHIP_REG_TIM2_CNT_ADDR                                      (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_CNT)
-#define CHIP_REG_TIM2_CNT_TYPE                                      uint32_t
+#define CHIP_REG_TIM2_CNT_TYPE                                      Word32
 #define CHIP_REG_TIM2_PSC_ADDR                                      (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_PSC)
-#define CHIP_REG_TIM2_PSC_TYPE                                      uint32_t
+#define CHIP_REG_TIM2_PSC_TYPE                                      Word32
 #define CHIP_REG_TIM2_ARR_ADDR                                      (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_ARR)
-#define CHIP_REG_TIM2_ARR_TYPE                                      uint32_t
+#define CHIP_REG_TIM2_ARR_TYPE                                      Word32
 #define CHIP_REG_TIM2_CCR1_ADDR                                     (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_CCR1)
-#define CHIP_REG_TIM2_CCR1_TYPE                                     uint32_t
+#define CHIP_REG_TIM2_CCR1_TYPE                                     Word32
 #define CHIP_REG_TIM2_CCR2_ADDR                                     (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_CCR2)
-#define CHIP_REG_TIM2_CCR2_TYPE                                     uint32_t
+#define CHIP_REG_TIM2_CCR2_TYPE                                     Word32
 #define CHIP_REG_TIM2_CCR3_ADDR                                     (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_CCR3)
-#define CHIP_REG_TIM2_CCR3_TYPE                                     uint32_t
+#define CHIP_REG_TIM2_CCR3_TYPE                                     Word32
 #define CHIP_REG_TIM2_CCR4_ADDR                                     (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_CCR4)
-#define CHIP_REG_TIM2_CCR4_TYPE                                     uint32_t
+#define CHIP_REG_TIM2_CCR4_TYPE                                     Word32
 #define CHIP_REG_TIM2_DCR_ADDR                                      (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_DCR)
-#define CHIP_REG_TIM2_DCR_TYPE                                      uint32_t
+#define CHIP_REG_TIM2_DCR_TYPE                                      Word32
 #define CHIP_REG_TIM2_DMAR_ADDR                                     (CHIP_ADDR_TIMER_2 + CHIP_ADDR_OFFSET_TIMX_DMAR)
-#define CHIP_REG_TIM2_DMAR_TYPE                                     uint32_t
+#define CHIP_REG_TIM2_DMAR_TYPE                                     Word32
 
 #define CHIP_REG_USART_1_BRR_ADDR                                   (CHIP_ADDR_USART_1 + CHIP_ADDR_OFFSET_USART_BRR)
-#define CHIP_REG_USART_1_BRR_TYPE                                   uint16_t
+#define CHIP_REG_USART_1_BRR_TYPE                                   Word16
 #define CHIP_REG_USART_1_DR_ADDR                                    (CHIP_ADDR_USART_1 + CHIP_ADDR_OFFSET_USART_DR)
-#define CHIP_REG_USART_1_DR_TYPE                                    uint8_t
+#define CHIP_REG_USART_1_DR_TYPE                                    Word8
 
 #define CHIP_VECT_RESET                                             1
 #define CHIP_VECT_NMI
@@ -279,7 +278,7 @@
 // RCC.
 
 #define CHIP_REG_APB2_ADDR                                          (CHIP_ADDR_RCC + 0x18)
-#define CHIP_REG_APB2_TYPE                                          uint32_t
+#define CHIP_REG_APB2_TYPE                                          Word32
 
 //------------------------------------------------
 // IO Ports.
@@ -980,7 +979,7 @@
 
 // #define CHIP_TIMER_0                                             true
 
-// #define CHIP_TIMER_0_TYPE                                        uint8_t
+// #define CHIP_TIMER_0_TYPE                                        Word8
 
 // #define CHIP_TIMER_0_WAVEFORM                                    true
 // #define CHIP_TIMER_0_WAVEFORM_NORMAL_ID                          0
@@ -1058,7 +1057,7 @@
 
 // #define CHIP_TIMER_1                                             true
 
-// #define CHIP_TIMER_1_TYPE                                        uint16_t
+// #define CHIP_TIMER_1_TYPE                                        Word16
 
 // #define CHIP_TIMER_1_WAVEFORM                                    true
 // #define CHIP_TIMER_1_WAVEFORM_NORMAL_ID                          0
@@ -1101,6 +1100,7 @@
 // #define CHIP_TIMER_1_CLOCK_BIT_2_BIT                             2
 
 // #define CHIP_TIMER_1_COUNTER_REG                                 REG16(CHIP_ADDR_TCNT1L)
+// #define CHIP_TIMER_1_COUNTER_REG                                    CHIP_REG_TIM1_CNT
 
 // #define CHIP_TIMER_1_OUTPUTCOMPARE_A                             true
 // #define CHIP_TIMER_1_OUTPUTCOMPARE_A_PIN                         PinB1
@@ -1162,7 +1162,7 @@
 
 #define CHIP_TIMER_2                                             true
 
-#define CHIP_TIMER_2_TYPE                                        uint16_t
+#define CHIP_TIMER_2_TYPE                                        Word16
 
 // #define CHIP_TIMER_2_WAVEFORM                                    true
 // #define CHIP_TIMER_2_WAVEFORM_NORMAL_ID                          0
@@ -1193,7 +1193,7 @@
 // #define CHIP_TIMER_2_CLOCK_BIT_1_BIT                             1
 // #define CHIP_TIMER_2_CLOCK_BIT_2_BIT                             2
 
-#define CHIP_TIMER_2_COUNTER_REG                                    CHIP_REG_TIM1_CNT
+#define CHIP_TIMER_2_COUNTER_REG                                    CHIP_REG_TIM2_CNT
 
 // #define CHIP_TIMER_2_OUTPUTCOMPARE_A                             true
 // #define CHIP_TIMER_2_OUTPUTCOMPARE_A_PIN                         PinB3

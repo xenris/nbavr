@@ -175,6 +175,90 @@ public:
     }
 };
 
+#ifdef TEST
+
+TEST(Container, Queue) {
+    Queue<Int16, 3> queue;
+
+    EXPECT_EQ(queue.size(), 0);
+    EXPECT_EQ(queue.capacity(), 3);
+
+    EXPECT_EQ(queue.full(), false);
+
+    EXPECT_EQ(queue.push(1), true);
+    EXPECT_EQ(queue.size(), 1);
+    EXPECT_EQ(queue.push(2), true);
+    EXPECT_EQ(queue.size(), 2);
+    EXPECT_EQ(queue.push(3), true);
+    EXPECT_EQ(queue.size(), 3);
+    EXPECT_EQ(queue.full(), true);
+    EXPECT_EQ(queue.push(4), false);
+    EXPECT_EQ(queue.size(), 3);
+    EXPECT_EQ(queue.capacity(), 3);
+
+    Optional<Int16> n;
+    EXPECT_EQ(n = queue.pop(), true);
+    EXPECT_EQ(queue.size(), 2);
+    EXPECT_EQ(*n, 1);
+    EXPECT_EQ(n = queue.pop(), true);
+    EXPECT_EQ(queue.size(), 1);
+    EXPECT_EQ(*n, 2);
+
+    EXPECT_EQ(queue.full(), false);
+
+    EXPECT_EQ(queue.push(5), true);
+    EXPECT_EQ(queue.size(), 2);
+
+    EXPECT_EQ(n = queue.pop(), true);
+    EXPECT_EQ(queue.size(), 1);
+    EXPECT_EQ(*n, 3);
+
+    EXPECT_EQ(n = queue.pop(), true);
+    EXPECT_EQ(queue.size(), 0);
+    EXPECT_EQ(*n, 5);
+
+    EXPECT_EQ(queue.empty(), true);
+
+    EXPECT_EQ(n = queue.pop(), false);
+    EXPECT_EQ(queue.size(), 0);
+
+    EXPECT_EQ(queue.push(6), true);
+    EXPECT_EQ(queue.size(), 1);
+    EXPECT_EQ(queue.empty(), false);
+    queue.clear();
+    EXPECT_EQ(queue.empty(), true);
+
+    // Make sure notify callbacks don't interfere.
+
+    Queue<Int16, 3> queueF;
+    Queue<Int16, 3> queueG;
+
+    Callback<Char> f = [](Char* c) {
+        *c = 'f';
+    };
+
+    Callback<Char> g = [](Char* c) {
+        *c = 'g';
+    };
+
+    Char c = 'a';
+
+    queueF.setCallback(f, &c);
+    queueG.setCallback(g, &c);
+
+    EXPECT_EQ(c, 'a');
+
+    queueF.callCallback();
+
+    EXPECT_EQ(c, 'f');
+
+    queueG.callCallback();
+
+    EXPECT_EQ(c, 'g');
+}
+
+#endif
+
 } // nbos
 
 #endif

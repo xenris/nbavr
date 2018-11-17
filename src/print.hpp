@@ -247,6 +247,47 @@ inline Queue<Char>& operator<<(Queue<Char>& queue, Double n) {
     return queue;
 }
 
+#ifdef TEST
+
+TEST(Print, itoa) {
+    Char str[64];
+
+    itoa(str, Int8(0));
+    EXPECT_STREQ((Char::T*)str, "0");
+
+    itoa(str, Word8(147));
+    EXPECT_STREQ((Char::T*)str, "147");
+
+    itoa(str, Int16(1476));
+    EXPECT_STREQ((Char::T*)str, "1476");
+
+    itoa(str, Int16(-1476));
+    EXPECT_STREQ((Char::T*)str, "-1476");
+
+    itoa<Int16, 2>(str, Int16(764));
+    EXPECT_STREQ((Char::T*)str, "1011111100");
+
+    itoa<Int16, 16>(str, Int16(847));
+    EXPECT_STREQ((Char::T*)str, "34F");
+
+    itoa<Int16, 16>(str, Int16(-847));
+    EXPECT_STREQ((Char::T*)str, "-34F");
+
+    itoa<Int32, 36>(str, Int32(36));
+    EXPECT_STREQ((Char::T*)str, "10");
+
+    itoa(str, Int32(65535));
+    EXPECT_STREQ((Char::T*)str, "65535");
+
+    itoa(str, Word32(65535));
+    EXPECT_STREQ((Char::T*)str, "65535");
+
+    itoa(str, Int32(32768));
+    EXPECT_STREQ((Char::T*)str, "32768");
+}
+
+#endif
+
 } // nbos
 
 #endif

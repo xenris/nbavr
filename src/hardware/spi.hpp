@@ -3,12 +3,12 @@
 /// # {{Serial Peripheral Interfaces}}
 
 /// ```c++
-/// atomic([]() {
+/// atomic {
 ///     nbos::hw::Spi0::PinMosi::mode(nbos::hw::Spi0::PinMosi::Mode::output);
 ///     nbos::hw::Spi0::PinSck::mode(nbos::hw::Spi0::PinSck::Mode::output);
 /// });
 ///
-/// atomic([]() {
+/// atomic {
 ///     nbos::hw::Spi0::clock(nbos::hw::Spi0::Clock::div16);
 ///     nbos::hw::Spi0::masterSlave(nbos::hw::Spi0::MasterSlave::master);
 ///     nbos::hw::Spi0::enable(true);
@@ -245,12 +245,12 @@ struct SpiN {
     #if REG_DEFINED(SPI_N(DATA_REG))
         /// #### static void data(Word8 d)
         static force_inline void data(Word8 d) {
-            *REG(SPI_N(DATA_REG)) = d;
+            setReg_(REG(SPI_N(DATA_REG)), d);
         }
 
         /// #### static Word8 data()
         static force_inline Word8 data() {
-            return *REG(SPI_N(DATA_REG));
+            return getReg_(REG(SPI_N(DATA_REG)));
         }
     #endif
 
@@ -274,6 +274,115 @@ private:
 ISR(SPI_N(INT_VECTOR)) {
     SpiN::callCallback();
 }
+
+#ifdef TEST
+
+TEST(SpiN, getHardwareType) {
+    ASSERT_EQ(SpiN::getHardwareType(), HardwareType::spi);
+}
+
+#if DEFINED(SPI_N(ENABLE_BIT_0_BIT))
+    TEST(SpiN, enable) {
+        TEST_REG_WRITE(SpiN::enable(true));
+        TEST_REG_WRITE(SpiN::enable(false));
+    }
+#endif
+
+#if DEFINED(SPI_N(INT_ENABLE_BIT_0_BIT))
+    TEST(SpiN, intEnable) {
+        TEST_REG_WRITE(SpiN::intEnable(true));
+        TEST_REG_WRITE(SpiN::intEnable(false));
+    }
+#endif
+
+#if DEFINED(SPI_N(DATA_ORDER_BIT_0_BIT))
+    TEST(SpiN, dataOrder) {
+        TEST_REG_WRITE(SpiN::dataOrder(SpiN::DataOrder::msbFirst));
+        TEST_REG_WRITE(SpiN::dataOrder(SpiN::DataOrder::lsbFirst));
+    }
+#endif
+
+#if DEFINED(SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT))
+    TEST(SpiN, masterSlave) {
+        TEST_REG_WRITE(SpiN::masterSlave(SpiN::MasterSlave::master));
+        TEST_REG_WRITE(SpiN::masterSlave(SpiN::MasterSlave::slave));
+    }
+#endif
+
+#if DEFINED(SPI_N(POLARITY_BIT_0_BIT))
+    TEST(SpiN, polarity) {
+        TEST_REG_WRITE(SpiN::polarity(SpiN::Polarity::leadingRisingTrailingFalling));
+        TEST_REG_WRITE(SpiN::polarity(SpiN::Polarity::leadingFallingTrailingRising));
+    }
+#endif
+
+#if DEFINED(SPI_N(PHASE_BIT_0_BIT))
+    TEST(SpiN, phase) {
+        TEST_REG_WRITE(SpiN::phase(SpiN::Phase::leadingSampleTrailingSetup));
+        TEST_REG_WRITE(SpiN::phase(SpiN::Phase::leadingSetupTrailingSample));
+    }
+#endif
+
+#if DEFINED(SPI_N(CLOCK_BIT_0_BIT))
+    TEST(SpiN, clock) { //(Clock c) {
+        #if DEFINED(SPI_N(CLOCK_DIV_2_ID))
+            TEST_REG_WRITE(SpiN::clock(SpiN::Clock::div2));
+        #endif
+
+        #if DEFINED(SPI_N(CLOCK_DIV_4_ID))
+            TEST_REG_WRITE(SpiN::clock(SpiN::Clock::div4));
+        #endif
+
+        #if DEFINED(SPI_N(CLOCK_DIV_8_ID))
+            TEST_REG_WRITE(SpiN::clock(SpiN::Clock::div8));
+        #endif
+
+        #if DEFINED(SPI_N(CLOCK_DIV_16_ID))
+            TEST_REG_WRITE(SpiN::clock(SpiN::Clock::div16));
+        #endif
+
+        #if DEFINED(SPI_N(CLOCK_DIV_32_ID))
+            TEST_REG_WRITE(SpiN::clock(SpiN::Clock::div32));
+        #endif
+
+        #if DEFINED(SPI_N(CLOCK_DIV_64_ID))
+            TEST_REG_WRITE(SpiN::clock(SpiN::Clock::div64));
+        #endif
+
+        #if DEFINED(SPI_N(CLOCK_DIV_128_ID))
+            TEST_REG_WRITE(SpiN::clock(SpiN::Clock::div128));
+        #endif
+    }
+#endif
+
+#if DEFINED(SPI_N(INT_FLAG_BIT_0_BIT))
+    TEST(SpiN, intFlag) {
+        TEST_REG_READ_WRITE(SpiN::intFlag());
+    }
+
+    TEST(SpiN, intFlagClear) {
+        TEST_REG_WRITE(SpiN::intFlagClear());
+    }
+#endif
+
+#if DEFINED(SPI_N(COLLISION_FLAG_BIT_0_BIT))
+    TEST(SpiN, collisionFlag) {
+        TEST_REG_READ_WRITE(SpiN::collisionFlag());
+    }
+
+    TEST(SpiN, collisionFlagClear) {
+        TEST_REG_WRITE(SpiN::collisionFlagClear());
+    }
+#endif
+
+#if REG_DEFINED(SPI_N(DATA_REG))
+    TEST(SpiN, data) {
+        TEST_REG_WRITE(SpiN::data(0x12));
+        TEST_REG_READ_WRITE(SpiN::data());
+    }
+#endif
+
+#endif // TEST
 
 } // nbos::hw
 

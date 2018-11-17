@@ -30,15 +30,11 @@
 
 #include "safe.hpp"
 
-#ifndef register_offset
-    #define register_offset 0
-#endif
-
 namespace nbos {
 
 template <class T, Integer addr>
 struct _reg {
-    T*const p = (T*)(addr + register_offset);
+    T*const p = (T*)(addr);
 };
 
 } // nbos

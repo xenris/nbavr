@@ -196,10 +196,10 @@ struct UsartN {
         b &= 0x0fff;
 
         #if CAT(USART_N(BAUD_RATE_REG), _ADDR)
-            *REG(USART_N(BAUD_RATE_REG)) = b;
+            setReg_(REG(USART_N(BAUD_RATE_REG)), b);
         #else
-            *REG(USART_N(BAUD_RATE_REG_HIGH)) = Word8(b >> 8);
-            *REG(USART_N(BAUD_RATE_REG_LOW)) = Word8(b);
+            setReg_(REG(USART_N(BAUD_RATE_REG_HIGH)), Word8(b >> 8));
+            setReg_(REG(USART_N(BAUD_RATE_REG_LOW)), Word8(b));
         #endif
     }
 
@@ -287,7 +287,7 @@ struct UsartN {
 
     /// #### static void push(Word8 b)
     static force_inline void push(Word8 b) {
-        *REG(USART_N(DATA_REG)) = b;
+        setReg_(REG(USART_N(DATA_REG)), b);
     }
 
     #if DEFINED(USART_N(TX_DATA_BIT_8_BIT))
@@ -295,21 +295,21 @@ struct UsartN {
         static force_inline void push9(Word16 b) {
             setBit_(REG(USART_N(TX_DATA_BIT_8_REG)), USART_N(TX_DATA_BIT_8_BIT), Bool(b & 0x0100));
 
-            *REG(USART_N(DATA_REG)) = Word8(b);
+            setReg_(REG(USART_N(DATA_REG)), Word8(b));
         }
     #endif
 
     /// #### static Word8 pop()
     static force_inline Word8 pop() {
-        return *REG(USART_N(DATA_REG));
+        return getReg_(REG(USART_N(DATA_REG)));
     }
 
     #if DEFINED(USART_N(RX_DATA_BIT_8_BIT))
         /// #### static Word16 pop9()
         static force_inline Word16 pop9() {
-            Word16 result = Word16(*REG(USART_N(DATA_REG)));
+            Word16 result = Word16(getReg_(REG(USART_N(DATA_REG))));
 
-            if(Bool(*REG(USART_N(RX_DATA_BIT_8_REG)) & bv(USART_N(RX_DATA_BIT_8_BIT)))) {
+            if(getBit_(REG(USART_N(RX_DATA_BIT_8_REG)), USART_N(RX_DATA_BIT_8_BIT))) {
                 result |= 0x0100;
             }
 
@@ -320,7 +320,7 @@ struct UsartN {
     #if DEFINED(USART_N(FRAME_ERROR_BIT_0_BIT))
         /// #### static Bool frameError()
         static force_inline Bool frameError() {
-            return Bool(*REG(USART_N(FRAME_ERROR_BIT_0_REG)) & bv(USART_N(FRAME_ERROR_BIT_0_BIT)));
+            return getBit_(REG(USART_N(FRAME_ERROR_BIT_0_REG)), USART_N(FRAME_ERROR_BIT_0_BIT));
         }
     #endif
 
@@ -334,7 +334,7 @@ struct UsartN {
     #if DEFINED(USART_N(DATA_OVERRUN_BIT_0_BIT))
         /// #### static Bool dataOverRun()
         static force_inline Bool dataOverRun() {
-            return Bool(*REG(USART_N(DATA_OVERRUN_BIT_0_REG)) & bv(USART_N(DATA_OVERRUN_BIT_0_BIT)));
+            return getBit_(REG(USART_N(DATA_OVERRUN_BIT_0_REG)), USART_N(DATA_OVERRUN_BIT_0_BIT));
         }
     #endif
 
@@ -348,7 +348,7 @@ struct UsartN {
     #if DEFINED(USART_N(PARITY_ERROR_BIT_0_BIT))
         /// #### static Bool parityError()
         static force_inline Bool parityError() {
-            return Bool(*REG(USART_N(PARITY_ERROR_BIT_0_REG)) & bv(USART_N(PARITY_ERROR_BIT_0_BIT)));
+            return getBit_(REG(USART_N(PARITY_ERROR_BIT_0_REG)), USART_N(PARITY_ERROR_BIT_0_BIT));
         }
     #endif
 
@@ -415,6 +415,166 @@ ISR(USART_N(TX_INT_VECTOR)) {
 ISR(USART_N(DE_INT_VECTOR)) {
     UsartN::callDeCallback();
 }
+
+#ifdef TEST
+
+TEST(UsartN, getHardwareType) {
+    ASSERT_EQ(UsartN::getHardwareType(), HardwareType::usart);
+}
+
+#if DEFINED(USART_N(MODE_BIT_0_BIT))
+    TEST(UsartN, mode) {
+        TEST_REG_WRITE(UsartN::mode(UsartN::Mode::asynchronous));
+        TEST_REG_WRITE(UsartN::mode(UsartN::Mode::synchronous));
+
+        #if USART_N(MODE_MASTER_SPI_ID)
+            TEST_REG_WRITE(UsartN::mode(UsartN::Mode::masterSpi));
+        #endif
+    }
+#endif
+
+#if DEFINED(USART_N(PARITY_BIT_0_BIT))
+    TEST(UsartN, parity) {
+        TEST_REG_WRITE(UsartN::parity(UsartN::Parity::disabled));
+        TEST_REG_WRITE(UsartN::parity(UsartN::Parity::even));
+        TEST_REG_WRITE(UsartN::parity(UsartN::Parity::odd));
+    }
+#endif
+
+#if DEFINED(USART_N(STOP_BITS_BIT_0_BIT))
+    TEST(UsartN, stopBits) {
+        TEST_REG_WRITE(UsartN::stopBits(UsartN::StopBits::bits1));
+        TEST_REG_WRITE(UsartN::stopBits(UsartN::StopBits::bits2));
+    }
+#endif
+
+#if DEFINED(USART_N(CHARACTER_SIZE_BIT_0_BIT))
+    TEST(UsartN, characterSize) {
+        TEST_REG_WRITE(UsartN::characterSize(UsartN::CharacterSize::size5));
+        TEST_REG_WRITE(UsartN::characterSize(UsartN::CharacterSize::size6));
+        TEST_REG_WRITE(UsartN::characterSize(UsartN::CharacterSize::size7));
+        TEST_REG_WRITE(UsartN::characterSize(UsartN::CharacterSize::size8));
+        TEST_REG_WRITE(UsartN::characterSize(UsartN::CharacterSize::size9));
+    }
+#endif
+
+#if DEFINED(USART_N(POLARITY_BIT_0_BIT))
+    TEST(UsartN, polarity) {
+        TEST_REG_WRITE(UsartN::polarity(UsartN::Polarity::txRisingRxFalling));
+        TEST_REG_WRITE(UsartN::polarity(UsartN::Polarity::txFallingRxRising));
+    }
+#endif
+
+TEST(UsartN, baud) {
+    TEST_REG_WRITE(UsartN::baud(0x1234));
+}
+
+#if DEFINED(USART_N(DOUBLE_SPEED_BIT_0_BIT))
+    TEST(UsartN, use2X) {
+        TEST_REG_WRITE(UsartN::use2X(true));
+        TEST_REG_WRITE(UsartN::use2X(false));
+    }
+#endif
+
+#if DEFINED(USART_N(RX_ENABLE_BIT_0_BIT))
+    TEST(UsartN, receiverEnable) {
+        TEST_REG_WRITE(UsartN::receiverEnable(true));
+        TEST_REG_WRITE(UsartN::receiverEnable(false));
+    }
+#endif
+
+#if DEFINED(USART_N(TX_ENABLE_BIT_0_BIT))
+    TEST(UsartN, transmitterEnable) {
+        TEST_REG_WRITE(UsartN::transmitterEnable(true));
+        TEST_REG_WRITE(UsartN::transmitterEnable(false));
+    }
+#endif
+
+#if DEFINED(USART_N(MULTI_PROCESSOR_COMMUNICATION_BIT_0_BIT))
+    TEST(UsartN, multiprocessorCummunicationMode) {
+        TEST_REG_WRITE(UsartN::multiprocessorCummunicationMode(true));
+        TEST_REG_WRITE(UsartN::multiprocessorCummunicationMode(false));
+    }
+#endif
+
+#if DEFINED(USART_N(RX_COMPLETE_INT_ENABLE_BIT_0_BIT))
+    TEST(UsartN, rxCompleteIntEnable) {
+        TEST_REG_WRITE(UsartN::rxCompleteIntEnable(true));
+        TEST_REG_WRITE(UsartN::rxCompleteIntEnable(false));
+    }
+#endif
+
+#if DEFINED(USART_N(TX_COMPLETE_INT_ENABLE_BIT_0_BIT))
+    TEST(UsartN, txCompleteIntEnable) {
+        TEST_REG_WRITE(UsartN::txCompleteIntEnable(true));
+        TEST_REG_WRITE(UsartN::txCompleteIntEnable(false));
+    }
+#endif
+
+#if DEFINED(USART_N(DATA_REG_EMPTY_INT_ENABLE_BIT_0_BIT))
+    TEST(UsartN, dataRegisterEmptyIntEnable) {
+        TEST_REG_WRITE(UsartN::dataRegisterEmptyIntEnable(true));
+        TEST_REG_WRITE(UsartN::dataRegisterEmptyIntEnable(false));
+    }
+#endif
+
+TEST(UsartN, push) {
+    TEST_REG_WRITE(UsartN::push(0x12));
+}
+
+#if DEFINED(USART_N(TX_DATA_BIT_8_BIT))
+    TEST(UsartN, push9) {
+        TEST_REG_WRITE(UsartN::push9(0x1234));
+    }
+#endif
+
+TEST(UsartN, pop) {
+    TEST_REG_READ_WRITE(UsartN::pop());
+}
+
+#if DEFINED(USART_N(RX_DATA_BIT_8_BIT))
+    TEST(UsartN, pop9) {
+        TEST_REG_READ_WRITE(UsartN::pop9());
+    }
+#endif
+
+#if DEFINED(USART_N(FRAME_ERROR_BIT_0_BIT))
+    TEST(UsartN, frameError) {
+        TEST_REG_READ_WRITE(UsartN::frameError());
+    }
+#endif
+
+#if DEFINED(USART_N(FRAME_ERROR_BIT_0_BIT))
+    TEST(UsartN, frameErrorClear) {
+        TEST_REG_WRITE(UsartN::frameErrorClear());
+    }
+#endif
+
+#if DEFINED(USART_N(DATA_OVERRUN_BIT_0_BIT))
+    TEST(UsartN, dataOverRun) {
+        TEST_REG_READ_WRITE(UsartN::dataOverRun());
+    }
+#endif
+
+#if DEFINED(USART_N(DATA_OVERRUN_BIT_0_BIT))
+    TEST(UsartN, dataOverRunClear) {
+        TEST_REG_WRITE(UsartN::dataOverRunClear());
+    }
+#endif
+
+#if DEFINED(USART_N(PARITY_ERROR_BIT_0_BIT))
+    TEST(UsartN, parityError) {
+        TEST_REG_READ_WRITE(UsartN::parityError());
+    }
+#endif
+
+#if DEFINED(USART_N(PARITY_ERROR_BIT_0_BIT))
+    TEST(UsartN, parityErrorClear) {
+        TEST_REG_WRITE(UsartN::parityErrorClear());
+    }
+#endif
+
+#endif // TEST
 
 } // nbos::hw
 

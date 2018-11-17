@@ -5,16 +5,11 @@
 #define CHIP_REGISTER_SIZE 0x200
 
 unsigned char register_memory[CHIP_REGISTER_SIZE];
-#define register_offset register_memory
 
-#include <nbos.hpp>
-
-#ifndef RECORD_ID
-    #error RECORD_ID not defined
-#endif
-
-using namespace nbos;
-using namespace hw;
+template <class T>
+T* sanitiseRegisterForTest(T* reg) {
+    return (T*)((long(reg) % CHIP_REGISTER_SIZE) + register_memory);
+}
 
 // TODO Ensure correct program flow. (Tasks take turns. Halted tasks don't
 //  prevent other tasks.) This may need to be done on a real chip.
@@ -51,26 +46,26 @@ struct MyEnvironment : public ::testing::Environment {
 
         std::fstream recordFile(recordPath, std::fstream::out | std::fstream::in | std::fstream::app);
 
-        Char buffer[256];
+        char buffer[256];
 
-        while(recordFile.getline((Char::T*)buffer, 256)) {
-            Int length = strlen((Char::T*)buffer);
-            Char type = buffer[0];
+        while(recordFile.getline(buffer, 256)) {
+            int length = strlen(buffer);
+            char type = buffer[0];
             std::string function;
             std::string value;
 
-            Int i;
+            int i;
 
-            for(i = 2 ; (i < length) && !isspace(((Char::T*)buffer)[i]); i++) {
-                function += *buffer[i];
+            for(i = 2 ; (i < length) && !isspace(buffer[i]); i++) {
+                function += buffer[i];
             }
 
             for(i++ ; (i < length); i++) {
-                value += *buffer[i];
+                value += buffer[i];
             }
 
             std::string key;
-            key += *type;
+            key += type;
             key += ' ';
             key += function;
 
@@ -97,19 +92,19 @@ struct MyEnvironment : public ::testing::Environment {
 
 // Macros and functions for testing function side effects and memory access.
 
-void test_reg_write(void (*f)(), const primitive_signed_char* str) {
+void test_reg_write(void (*f)(), const char* str) {
     std::stringstream ss;
 
-    for(Int c = 0x00; ; c = 0xff) {
+    for(int c = 0x00; ; c = 0xff) {
         memset(register_memory, c, CHIP_REGISTER_SIZE);
 
         f();
 
-        for(Int i = 0; i < CHIP_REGISTER_SIZE; i++) {
+        for(int i = 0; i < CHIP_REGISTER_SIZE; i++) {
             if(register_memory[i] != c) {
                 ss << std::setfill('0') << std::setw(2) << std::hex << i << ":";
                 ss << std::setfill('0') << std::setw(2) << c << ":";
-                ss << std::setfill('0') << std::setw(2) << (Int)register_memory[i] << ":";
+                ss << std::setfill('0') << std::setw(2) << (int)register_memory[i] << ":";
             }
         }
 
@@ -126,31 +121,31 @@ void test_reg_write(void (*f)(), const primitive_signed_char* str) {
     auto it = record->find(key);
 
     if(it == record->end()) {
-        ADD_FAILURE() << "Couldn't find record for w " << *str << " " << ss.str();
+        ADD_FAILURE() << "Couldn't find record for w " << str << " " << ss.str();
         missing->insert(std::pair<std::string, std::string>(key, ss.str()));
     } else {
         std::string current = ss.str();
         std::string previous = it->second;
-        EXPECT_EQ(current, previous) << "The side effect of " << *str << " has changed";
+        EXPECT_EQ(current, previous) << "The side effect of " << str << " has changed";
         record->erase(it);
     }
 }
 
 template <class T>
-void test_reg_read_write(T (*f)(), const primitive_signed_char* str) {
-    Word64 seed = 59329876;
+void test_reg_read_write(T (*f)(), const char* str) {
+    uint64_t seed = 59329876;
 
     std::stringstream ss;
 
-    for(Int i = 0; i < 10; i++) {
-        for(Int _r = 0; _r < CHIP_REGISTER_SIZE; _r++) {
-            register_memory[_r] = *(Word8((seed / 65536) % 32768));
+    for(int i = 0; i < 10; i++) {
+        for(int _r = 0; _r < CHIP_REGISTER_SIZE; _r++) {
+            register_memory[_r] = uint8_t((seed / 65536) % 32768);
             seed = seed * 1103515245 + 12345;
         }
 
-        auto t = f();
+        auto t = (int)f();
 
-        ss << std::hex << (Int64::T)t;
+        ss << std::hex << (int)t;
     }
 
     std::string key;
@@ -161,19 +156,23 @@ void test_reg_read_write(T (*f)(), const primitive_signed_char* str) {
     auto it = record->find(key);
 
     if(it == record->end()) {
-        ADD_FAILURE() << "Couldn't find record for r " << *str << " " << ss.str();
+        ADD_FAILURE() << "Couldn't find record for r " << str << " " << ss.str();
         missing->insert(std::pair<std::string, std::string>(key, ss.str()));
     } else {
         std::string current = ss.str();
         std::string previous = it->second;
-        EXPECT_EQ(current, previous) << "The return value of " << *str << " has changed";
+        EXPECT_EQ(current, previous) << "The return value of " << str << " has changed";
         record->erase(it);
     }
 }
 
-#define TEST_REG_WRITE(FUNC) \
+#define TEST_REG_WRITE(FUNC) TEST_REG_WRITE_(FUNC)
+#define TEST_REG_WRITE_(FUNC) \
     test_reg_write([]() { FUNC; }, #FUNC)
 
-#define TEST_REG_READ_WRITE(FUNC) \
+#define TEST_REG_READ_WRITE(FUNC) TEST_REG_READ_WRITE_(FUNC)
+#define TEST_REG_READ_WRITE_(FUNC) \
     TEST_REG_WRITE(FUNC); \
     test_reg_read_write<decltype(FUNC)>([]() { return FUNC; }, #FUNC)
+
+#include <nbos.hpp>

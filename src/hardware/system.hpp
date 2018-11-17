@@ -34,36 +34,106 @@ force_inline T bv(T n) {
 
 /// #### void setBit(T\* register, Word8 bit, Bool value)
 /// Set or clear a bit in a register immediately.
+
+/// #### void setBit_(T\* register, Word8 bit, Bool value)
+/// Set or clear a bit in a register lazily.
+/// (i.e. Allow compiler to rearrange and combine instructions for faster code.)
+
 template <class T>
-force_inline void setBit(T* reg, Word8 bit, Bool value) {
+force_inline void setBit_(T* reg, Word8 bit, Bool value) {
     static_assert(!IsSigned<T>::value, "setBit requires a pointer to an unsigned integer");
 
+    #ifdef TEST
+        reg = sanitiseRegisterForTest(reg); //(T*)(Integer(reg) % CHIP_REGISTER_SIZE);
+    #endif
+
+    if(value) {
+        *reg |= bv<T>(T(bit));
+    } else {
+        *reg &= ~bv<T>(T(bit));
+    }
+}
+
+template <class T>
+force_inline void setBit(T* reg, Word8 bit, Bool value) {
     block {
         setBit_(reg, bit, value);
     }
 }
 
-/// #### void setBit_(T\* register, Word8 bit, Bool value)
-/// Set or clear a bit in a register lazily.
-/// (i.e. Allow compiler to rearrange and combine instructions for faster code.)
-template <class T>
-force_inline void setBit_(T* reg, Word8 bit, Bool value) {
-    static_assert(!IsSigned<T>::value, "setBit_ requires a pointer to an unsigned integer");
+/// #### void getBit(T\* register, Word8 bit)
+/// Get a bit in a register immediately.
 
-    if(value) {
-        *reg |= bv<T>(bit);
-    } else {
-        *reg &= ~bv<T>(bit);
-    }
+/// #### void getBit_(T\* register, Word8 bit)
+/// Get a bit in a register lazily.
+/// (i.e. Allow compiler to rearrange and combine instructions for faster code.)
+
+template <class T>
+force_inline Bool getBit_(T* reg, Word8 bit) {
+    static_assert(!IsSigned<T>::value, "getBit requires a pointer to an unsigned integer");
+
+    #ifdef TEST
+        reg = sanitiseRegisterForTest(reg); //(T*)(Integer(reg) % CHIP_REGISTER_SIZE);
+    #endif
+
+    return Bool(*reg & bv<T>(T(bit)));
 }
 
 template <class T>
 force_inline Bool getBit(T* reg, Word8 bit) {
-    static_assert(!IsSigned<T>::value, "getBit requires a pointer to an unsigned integer");
-
     block {
-        return Bool(*reg & bv<T>(bit));
-    };
+        return getBit_(reg, bit);
+    }
+}
+
+/// #### void setReg(T\* register, T value)
+/// Set the value of a register immediately.
+
+/// #### void setReg_(T\* register, T value)
+/// Set the value of a register lazily.
+/// (i.e. Allow compiler to rearrange and combine instructions for faster code.)
+
+template <class T>
+force_inline void setReg_(T* reg, T value) {
+    static_assert(!IsSigned<T>::value, "setReg requires a pointer to an unsigned integer");
+
+    #ifdef TEST
+        reg = sanitiseRegisterForTest(reg); //(T*)(Integer(reg) % CHIP_REGISTER_SIZE);
+    #endif
+
+    *reg = value;
+}
+
+template <class T>
+force_inline void setReg(T* reg, T value) {
+    block {
+        setReg_(reg, value);
+    }
+}
+
+/// #### void getReg(T\* register)
+/// Get the value of a register immediately.
+
+/// #### void getReg_(T\* register)
+/// Get the value of a register lazily.
+/// (i.e. Allow compiler to rearrange and combine instructions for faster code.)
+
+template <class T>
+force_inline T getReg_(T* reg) {
+    static_assert(!IsSigned<T>::value, "getReg requires a pointer to an unsigned integer");
+
+    #ifdef TEST
+        reg = sanitiseRegisterForTest(reg); //(T*)(Integer(reg) % CHIP_REGISTER_SIZE);
+    #endif
+
+    return *reg;
+}
+
+template <class T>
+force_inline T getReg(T* reg) {
+    block {
+        return getReg_(reg);
+    }
 }
 
 force_inline void nop() {

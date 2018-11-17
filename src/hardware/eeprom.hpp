@@ -3,12 +3,12 @@
 /// # {{Eeprom}}
 
 /// ```c++
-/// atomic([]() {
+/// atomic {
 ///     nbos::hw::Eeprom0::address(0x00);
 ///     nbos::hw::Eeprom0::data(0x01);
 ///     nbos::hw::Eeprom0::masterWriteEnable();
 ///     nbos::hw::Eeprom0::writeEnable();
-/// });
+/// }
 ///
 /// while(nbos::hw::Eeprom0::writeEnabled());
 ///
@@ -67,17 +67,17 @@ struct EepromN {
 
     /// #### static void address(Word16 a)
     static force_inline void address(Word16 a) {
-        *REG(EEPROM_N(ADDRESS_REG)) = a;
+        setReg(REG(EEPROM_N(ADDRESS_REG)), a);
     }
 
     /// #### static void data(Word8 d)
     static force_inline void data(Word8 d) {
-        *REG(EEPROM_N(DATA_REG)) = d;
+        setReg_(REG(EEPROM_N(DATA_REG)), d);
     }
 
     /// #### static Word8 data()
     static force_inline Word8 data() {
-        return *REG(EEPROM_N(DATA_REG));
+        return getReg_(REG(EEPROM_N(DATA_REG)));
     }
 
     /// #### static void masterWriteEnable()
@@ -95,7 +95,7 @@ struct EepromN {
     /// #### static Bool writeEnabled()
     /// Returns true if Eeprom is currently writing.
     static force_inline Bool writeEnabled() {
-        return Bool(*REG(EEPROM_N(WRITE_ENABLE_REG)) & bv(EEPROM_N(WRITE_ENABLE_BIT)));
+        return getBit_(REG(EEPROM_N(WRITE_ENABLE_REG)), EEPROM_N(WRITE_ENABLE_BIT));
     }
 
     /// #### static void readEnable()
@@ -140,6 +140,50 @@ private:
 ISR(EEPROM_N(EE_READY_INT_VECTOR)) {
     EepromN::callCallback();
 }
+
+#ifdef TEST
+
+TEST(EepromN, getHardwareType) {
+    ASSERT_EQ(EepromN::getHardwareType(), HardwareType::eeprom);
+}
+
+TEST(EepromN, mode) {
+    TEST_REG_WRITE(EepromN::mode(EepromN::Mode::eraseWrite));
+    TEST_REG_WRITE(EepromN::mode(EepromN::Mode::eraseOnly));
+    TEST_REG_WRITE(EepromN::mode(EepromN::Mode::writeOnly));
+}
+
+TEST(EepromN, address) {
+    TEST_REG_WRITE(EepromN::address(0x1234));
+}
+
+TEST(EepromN, data) {
+    TEST_REG_WRITE(EepromN::data(0x12));
+    TEST_REG_READ_WRITE(EepromN::data());
+}
+
+TEST(EepromN, masterWriteEnable) {
+    TEST_REG_WRITE(EepromN::masterWriteEnable());
+}
+
+TEST(EepromN, writeEnable) {
+    TEST_REG_WRITE(EepromN::writeEnable());
+}
+
+TEST(EepromN, writeEnabled) {
+    TEST_REG_READ_WRITE(EepromN::writeEnabled());
+}
+
+TEST(EepromN, readEnable) {
+    TEST_REG_WRITE(EepromN::readEnable());
+}
+
+TEST(EepromN, intEnable) {
+    TEST_REG_WRITE(EepromN::intEnable(true));
+    TEST_REG_WRITE(EepromN::intEnable(false));
+}
+
+#endif
 
 } // nbos::hw
 

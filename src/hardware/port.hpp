@@ -50,9 +50,9 @@ struct PortX {
         return HardwareType::port;
     }
 
-    /// #### static void enableClock(bool e)
+    /// #### static void enableClock(Bool e)
     #if DEFINED(PORT_X(CLOCK_ENABLE_BIT))
-        static force_inline void enableClock(bool e) {
+        static force_inline void enableClock(Bool e) {
             setBit_(REG(PORT_X(CLOCK_ENABLE_REG)), PORT_X(CLOCK_ENABLE_BIT), e);
         }
     #endif
@@ -111,42 +111,168 @@ struct PortX {
 
     /// #### static void output(T value)
     static force_inline void output(CAT(PORT_X(OUTPUT_REG), _TYPE) value) {
-        *REG(PORT_X(OUTPUT_REG)) = value;
+        setReg_(REG(PORT_X(OUTPUT_REG)), value);
     }
 
     /// #### static void setOutputs(T bits)
     #if CAT(PORT_X(SET_OUTPUTS_REG),_ADDR)
         static force_inline void setOutputs(CAT(PORT_X(SET_OUTPUTS_REG), _TYPE) bits) {
-            *REG(PORT_X(SET_OUTPUTS_REG)) = bits;
+            setReg_(REG(PORT_X(SET_OUTPUTS_REG)), bits);
         }
     #endif
 
     /// #### static void clearOutputs(T bits)
     #if CAT(PORT_X(CLEAR_OUTPUTS_REG),_ADDR)
         static force_inline void clearOutputs(CAT(PORT_X(CLEAR_OUTPUTS_REG),_TYPE) bits) {
-            *REG(PORT_X(CLEAR_OUTPUTS_REG)) = bits;
+            setReg_(REG(PORT_X(CLEAR_OUTPUTS_REG)), bits);
         }
     #endif
 
     /// #### static T output()
     static force_inline CAT(PORT_X(OUTPUT_REG),_TYPE) output() {
-        return *REG(PORT_X(OUTPUT_REG));
+        return getReg_(REG(PORT_X(OUTPUT_REG)));
     }
 
     /// #### static T input()
     static force_inline CAT(PORT_X(INPUT_REG),_TYPE) input() {
-        return *REG(PORT_X(INPUT_REG));
+        return getReg_(REG(PORT_X(INPUT_REG)));
     }
 
     /// #### static void toggle(T bits)
     #if CAT(PORT_X(TOGGLE_OUTPUTS_REG),_ADDR)
         static force_inline void toggle(CAT(PORT_X(TOGGLE_OUTPUTS_REG),_TYPE) bits) {
-            *REG(PORT_X(TOGGLE_OUTPUTS_REG)) = bits;
+            setReg_(REG(PORT_X(TOGGLE_OUTPUTS_REG)), bits);
         }
     #endif
 
     #include "pin.xpp"
 };
+
+#ifdef TEST
+
+TEST(PortX, getHardwareType) {
+    ASSERT_EQ(PortX::getHardwareType(), HardwareType::port);
+}
+
+#if DEFINED(PORT_X(CLOCK_ENABLE_BIT))
+    TEST(PortX, enableClock) {
+        TEST_REG_WRITE(PortX::enableClock(true));
+        TEST_REG_WRITE(PortX::enableClock(false));
+    }
+#endif
+
+TEST(PortX, mode) {
+    #define MODE(A) CAT(CHIP_PIN_MODE_, A, _ID)
+
+    #if DEFINED(MODE(INPUT))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::input));
+    #endif
+
+    #if DEFINED(MODE(INPUT_PULLUP))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::inputPullup));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::output));
+    #endif
+
+    #if DEFINED(MODE(INPUT_ANALOG))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::inputAnalog));
+    #endif
+
+    #if DEFINED(MODE(INPUT_FLOATING))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::inputFloating));
+    #endif
+
+    #if DEFINED(MODE(INPUT_PULLUPDOWN))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::inputPullUpDown));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_PUSH_PULL_10MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputGeneralPushPull10MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_OPEN_DRAIN_10MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputGeneralOpenDrain10MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_PUSH_PULL_10MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputAlternatePushPull10MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_10MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputAlternateOpenDrain10MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_PUSH_PULL_2MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputGeneralPushPull2MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_OPEN_DRAIN_2MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputGeneralOpenDrain2MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_PUSH_PULL_2MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputAlternatePushPull2MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_2MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputAlternateOpenDrain2MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_PUSH_PULL_50MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputGeneralPushPull50MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_GENERAL_OPEN_DRAIN_50MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputGeneralOpenDrain50MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_PUSH_PULL_50MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputAlternatePushPull50MHz));
+    #endif
+
+    #if DEFINED(MODE(OUTPUT_ALTERNATE_OPEN_DRAIN_50MHZ))
+        TEST_REG_WRITE(PortX::mode(Pin::Mode::outputAlternateOpenDrain50MHz));
+    #endif
+
+    #undef MODE
+}
+
+TEST(PortX, output) {
+    TEST_REG_WRITE(PortX::output(0x12));
+    TEST_REG_READ_WRITE(PortX::output());
+}
+
+#if CAT(PORT_X(SET_OUTPUTS_REG),_ADDR)
+    TEST(PortX, setOutputs) {
+        TEST_REG_WRITE(PortX::setOutputs(0x12));
+        TEST_REG_WRITE(PortX::setOutputs(0x34));
+    }
+#endif
+
+#if CAT(PORT_X(CLEAR_OUTPUTS_REG),_ADDR)
+    TEST(PortX, clearOutputs) {
+        TEST_REG_WRITE(PortX::clearOutputs(0x12));
+        TEST_REG_WRITE(PortX::clearOutputs(0x34));
+    }
+#endif
+
+TEST(PortX, input) {
+    TEST_REG_READ_WRITE(PortX::input());
+}
+
+#if CAT(PORT_X(TOGGLE_OUTPUTS_REG),_ADDR)
+    TEST(PortX, toggle) {
+        TEST_REG_WRITE(PortX::toggle(0x12));
+    }
+#endif
+
+#define PIN_TESTS
+#include "pin.xpp"
+#undef PIN_TESTS
+
+#endif // TEST
 
 } // nbos::hw
 
@@ -162,6 +288,5 @@ struct PortX {
 #else
     #define NBOS_PORT_HPP
 #endif
-
 
 #endif

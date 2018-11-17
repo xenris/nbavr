@@ -53,6 +53,24 @@ public:
     }
 };
 
+#ifdef TEST
+
+TEST(Random, Limits) {
+    Random r;
+
+    // Technically not guaranteed to be true, just very likely.
+    EXPECT_TRUE(r.next<Float>() != r.next<Float>());
+
+    for(Int i = 0; i < 1000; i++) {
+        const Float n = r.next<Float>();
+
+        EXPECT_LE(n, 1);
+        EXPECT_GE(n, 0);
+    }
+}
+
+#endif // TEST
+
 } // nbos
 
 #endif

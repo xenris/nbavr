@@ -3,15 +3,15 @@
 /// # {{Pin Change Interrupts}}
 
 /// ```c++
-/// const auto f = [](void*) {
+/// Callback<void> f = [](void*) {
 ///     nbos::hw::PortB::Pin5::toggle();
 /// };
 ///
-/// atomic([]() {
-///     nbos::hw::PcInt1::mask(0x0F);
-///     nbos::hw::PcInt1::callback((callback_t)f);
-///     nbos::hw::PcInt1::intEnable(true);
-/// });
+/// atomic {
+///     nbos::hw::PcInt0::mask(0x0F);
+///     nbos::hw::PcInt0::setCallback(f);
+///     nbos::hw::PcInt0::intEnable(true);
+/// }
 /// ```
 
 #ifndef NBOS_PCINT_HPP
@@ -56,7 +56,7 @@ struct PcIntN {
         /// #### static void mask(Word8 m)
         /// Set which pins trigger this interrupt.
         static force_inline void mask(Word8 m) {
-            *REG(PCINT_N(MASK_REG)) = m;
+            setReg_(REG(PCINT_N(MASK_REG)), m);
         }
     #endif
 
@@ -74,7 +74,7 @@ struct PcIntN {
     #if DEFINED(PCINT_N(INT_FLAG_BIT_0_BIT))
         /// #### static Bool intFlag()
         static force_inline Bool intFlag() {
-            return Bool(*REG(PCINT_N(INT_FLAG_BIT_0_REG)) & bv(PCINT_N(INT_FLAG_BIT_0_BIT)));
+            return getBit_(REG(PCINT_N(INT_FLAG_BIT_0_REG)), PCINT_N(INT_FLAG_BIT_0_BIT));
         }
     #endif
 
@@ -105,6 +105,31 @@ private:
 ISR(PCINT_N(INT_VECTOR)) {
     PcIntN::callCallback();
 }
+
+#ifdef TEST
+
+TEST(PcIntN, getHardwareType) {
+    ASSERT_EQ(PcIntN::getHardwareType(), HardwareType::pcInt);
+}
+
+TEST(PcIntN, intEnable) {
+    TEST_REG_WRITE(PcIntN::intEnable(true));
+    TEST_REG_WRITE(PcIntN::intEnable(false));
+}
+
+TEST(PcIntN, mask) {
+    TEST_REG_WRITE(PcIntN::mask(0x12));
+}
+
+TEST(PcIntN, intFlag) {
+    TEST_REG_READ_WRITE(PcIntN::intFlag());
+}
+
+TEST(PcIntN, intFlagClear) {
+    TEST_REG_WRITE(PcIntN::intFlagClear());
+}
+
+#endif
 
 } // nbos::hw
 

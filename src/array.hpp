@@ -120,6 +120,44 @@ public:
     }
 };
 
+#ifdef TEST
+
+TEST(Container, Array) {
+    Array<Int16, 3> array;
+
+    EXPECT_EQ(array.size(), 3);
+
+    array[0] = 6;
+    array[1] = 7;
+    array[2] = 8;
+
+    EXPECT_EQ(array[0], 6);
+    EXPECT_EQ(array[1], 7);
+    EXPECT_EQ(array[2], 8);
+
+    for(auto& n : array) {
+        n = 0;
+    }
+
+    EXPECT_EQ(array[0], 0);
+    EXPECT_EQ(array[1], 0);
+    EXPECT_EQ(array[2], 0);
+
+    array.fill(3);
+
+    EXPECT_EQ(array[0], 3);
+    EXPECT_EQ(array[1], 3);
+    EXPECT_EQ(array[2], 3);
+
+    Array<Int16, 3> array2 = array;
+
+    EXPECT_EQ(array2[0], 3);
+    EXPECT_EQ(array2[1], 3);
+    EXPECT_EQ(array2[2], 3);
+}
+
+#endif // TEST
+
 } // nbos
 
 #endif

@@ -83,6 +83,54 @@ inline void quicksort(T* array, Int size) {
     quicksort(array, 0, size - 1);
 }
 
+#ifdef TEST
+
+TEST(Algorithm, reverse) {
+    Char str[8];
+
+    strcpy((Char::T*)str, "");
+    reverse(str, 0);
+    EXPECT_STREQ((Char::T*)str, "");
+
+    strcpy((Char::T*)str, "a");
+    reverse(str, 1);
+    EXPECT_STREQ((Char::T*)str, "a");
+
+    strcpy((Char::T*)str, "ab");
+    reverse(str, 2);
+    EXPECT_STREQ((Char::T*)str, "ba");
+
+    strcpy((Char::T*)str, "abc");
+    reverse(str, 3);
+    EXPECT_STREQ((Char::T*)str, "cba");
+
+    strcpy((Char::T*)str, "abc");
+    reverse(str, 2);
+    EXPECT_STREQ((Char::T*)str, "bac");
+}
+
+TEST(Algorithm, quicksort) {
+    Int array1[6];
+
+    array1[0] = 6;
+    array1[1] = 8;
+    array1[2] = 4;
+    array1[3] = 5;
+    array1[4] = 1;
+    array1[5] = 2;
+
+    quicksort(array1, 6);
+
+    EXPECT_EQ(array1[0], 1);
+    EXPECT_EQ(array1[1], 2);
+    EXPECT_EQ(array1[2], 4);
+    EXPECT_EQ(array1[3], 5);
+    EXPECT_EQ(array1[4], 6);
+    EXPECT_EQ(array1[5], 8);
+}
+
+#endif
+
 } // nbos
 
 #endif

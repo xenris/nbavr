@@ -5,20 +5,22 @@
 /// ```c++
 /// using Timer = nbos::hw::Timer1;
 ///
-/// uint16_t value = 0;
+/// nbos::hw::Pin::Value value = 0;
 ///
-/// const auto f = [](nbos::hw::Pin::Value* value) {
+/// Callback<nbos::hw::Pin::Value> f = [](nbos::hw::Pin::Value* value) {
 ///     *value = Timer::Input::value();
 /// };
 ///
-/// atomic([]() {
+/// atomic {
 ///     Timer::waveform(Timer::Waveform::normal);
-///     Timer::clock(Timer::Clock::Div1);
+///     Timer::clock(Timer::Clock::div1);
 ///     Timer::Input::edge(Timer::Edge::rising);
 ///     Timer::Input::intEnable(true);
-///     Timer::Input::callback((callback_t)f, &value);
-/// });
+///     Timer::Input::callback(f, &value);
+/// }
 /// ```
+
+#ifndef INPUT_TESTS
 
 /// ## class {{TimerN::Input}}
 struct Input {
@@ -36,12 +38,12 @@ struct Input {
 
     /// #### static void value(T v)
     static force_inline void value(REGTYPE(TIMER_N(INPUT_REG)) v) {
-        *REG(TIMER_N(INPUT_REG)) = v;
+        setReg_(REG(TIMER_N(INPUT_REG)), v);
     }
 
     /// #### static T value()
     static force_inline REGTYPE(TIMER_N(INPUT_REG)) value() {
-        return *REG(TIMER_N(INPUT_REG));
+        return getReg_(REG(TIMER_N(INPUT_REG)));
     }
 
     /// #### static void edge([[TimerN::Edge]] e)
@@ -62,25 +64,21 @@ struct Input {
 
     /// #### static void intEnable(Bool b)
     static force_inline void intEnable(Bool b) {
-        if(b) {
-            *REG(TIMER_N(INPUT_INT_ENABLE_REG)) |= bv(TIMER_N(INPUT_INT_ENABLE_BIT));
-        } else {
-            *REG(TIMER_N(INPUT_INT_ENABLE_REG)) &= ~bv(TIMER_N(INPUT_INT_ENABLE_BIT));
-        }
+        setBit_(REG(TIMER_N(INPUT_INT_ENABLE_REG)), TIMER_N(INPUT_INT_ENABLE_BIT), b);
     }
 
     static force_inline Bool intEnabled() {
-        return Bool(*REG(TIMER_N(INPUT_INT_ENABLE_REG)) & bv(TIMER_N(INPUT_INT_ENABLE_BIT)));
+        return getBit_(REG(TIMER_N(INPUT_INT_ENABLE_REG)), TIMER_N(INPUT_INT_ENABLE_BIT));
     }
 
     /// #### static Bool intFlag()
     static force_inline Bool intFlag() {
-        return Bool(*REG(TIMER_N(INPUT_INT_FLAG_REG)) & bv(TIMER_N(INPUT_INT_FLAG_BIT)));
+        return getBit(REG(TIMER_N(INPUT_INT_FLAG_REG)), TIMER_N(INPUT_INT_FLAG_BIT));
     }
 
     /// #### static void intFlagClear()
     static force_inline void intFlagClear() {
-        *REG(TIMER_N(INPUT_INT_FLAG_REG)) |= bv(TIMER_N(INPUT_INT_FLAG_BIT));
+        setBit_(REG(TIMER_N(INPUT_INT_FLAG_REG)), TIMER_N(INPUT_INT_FLAG_BIT), true);
     }
 
 private:
@@ -99,3 +97,34 @@ private:
         }
     }
 };
+
+#else // INPUT_TESTS
+
+TEST(CAT(TimerN, _, Input), value) {
+    TEST_REG_WRITE(TimerN::Input::value(0x12));
+    TEST_REG_READ_WRITE(TimerN::Input::value());
+}
+
+TEST(CAT(TimerN, _, Input), edge) {
+    TEST_REG_WRITE(TimerN::Input::edge(TimerN::Input::Edge::rising));
+    TEST_REG_WRITE(TimerN::Input::edge(TimerN::Input::Edge::falling));
+}
+
+TEST(CAT(TimerN, _, Input), intEnable) {
+    TEST_REG_WRITE(TimerN::Input::intEnable(true));
+    TEST_REG_WRITE(TimerN::Input::intEnable(false));
+}
+
+TEST(CAT(TimerN, _, Input), intEnabled) {
+    TEST_REG_READ_WRITE(TimerN::Input::intEnabled());
+}
+
+TEST(CAT(TimerN, _, Input), intFlag) {
+    TEST_REG_READ_WRITE(TimerN::Input::intFlag());
+}
+
+TEST(CAT(TimerN, _, Input), intFlagClear) {
+    TEST_REG_WRITE(TimerN::Input::intFlagClear());
+}
+
+#endif // INPUT_TESTS

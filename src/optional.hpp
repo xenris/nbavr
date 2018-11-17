@@ -67,4 +67,23 @@ public:
     }
 };
 
+#ifdef TEST
+
+TEST(Optional, General) {
+    Optional<Int> a;
+
+    EXPECT_FALSE(a);
+
+    a = 5;
+
+    EXPECT_TRUE(a);
+    EXPECT_EQ(*a, 5);
+
+    a = {};
+
+    EXPECT_FALSE(a);
+}
+
+#endif
+
 #endif

@@ -64,6 +64,30 @@ struct Task {
     virtual void loop() {};
 };
 
+#ifdef TEST
+
+#ifdef CHIP_TIMER_1
+    template <typename Clock>
+    struct Taskk : Task<Clock> {
+        Queue<Char>& cout;
+        Queue<Char>& cin;
+
+        Taskk(Queue<Char>& cout, Queue<Char>& cin) : cout(cout), cin(cin) {
+        }
+    };
+
+    TEST(Task, General) {
+        Queue<Char, 10> cout;
+        Queue<Char, 10> cin;
+
+        typedef Clock<hw::Timer1, 16000000> Clock;
+
+        Taskk<Clock> t(cout, cin);
+    }
+#endif // CHIP_TIMER_1
+
+#endif // TEST
+
 } // nbos
 
 #endif

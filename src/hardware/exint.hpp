@@ -3,15 +3,15 @@
 /// # {{External Interrupts}}
 
 /// ```c++
-/// const auto f = [](void*) {
+/// Callback<void> f = [](void*) {
 ///     nbos::hw::PortB::Pin5::toggle();
 /// };
 ///
-/// atomic([]() {
+/// atomic {
 ///     nbos::hw::ExInt0::trigger(nbos::hw::ExInt0::Trigger::rising);
-///     nbos::hw::ExInt0::callback((callback_t)f);
+///     nbos::hw::ExInt0::setCallback(f);
 ///     nbos::hw::ExInt0::intEnable(true);
-/// });
+/// }
 /// ```
 
 #ifndef NBOS_EXINT_HPP
@@ -90,7 +90,7 @@ struct ExIntN {
     #if DEFINED(EXINT_N(INT_FLAG_BIT_0_BIT))
         /// #### static Bool intFlag()
         static force_inline Bool intFlag() {
-            return Bool(*REG(EXINT_N(INT_FLAG_BIT_0_REG)) & bv(EXINT_N(INT_FLAG_BIT_0_BIT)));
+            return getBit_(REG(EXINT_N(INT_FLAG_BIT_0_REG)), EXINT_N(INT_FLAG_BIT_0_BIT));
         }
     #endif
 
@@ -121,6 +121,34 @@ private:
 ISR(EXINT_N(INT_VECTOR)) {
     ExIntN::callCallback();
 }
+
+#ifdef TEST
+
+TEST(ExIntN, getHardwareType) {
+    ASSERT_EQ(ExIntN::getHardwareType(), HardwareType::exInt);
+}
+
+TEST(ExIntN, intEnable) {
+    TEST_REG_WRITE(ExIntN::intEnable(true));
+    TEST_REG_WRITE(ExIntN::intEnable(false));
+}
+
+TEST(ExIntN, trigger) {
+    TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::low));
+    TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::change));
+    TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::falling));
+    TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::rising));
+}
+
+TEST(ExIntN, intFlag) {
+    TEST_REG_READ_WRITE(ExIntN::intFlag());
+}
+
+TEST(ExIntN, intFlagClear) {
+    TEST_REG_WRITE(ExIntN::intFlagClear());
+}
+
+#endif
 
 } // nbos::hw
 

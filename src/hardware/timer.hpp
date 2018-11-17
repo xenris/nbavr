@@ -27,6 +27,7 @@
 #include "isr.hpp"
 #include "chip.hpp"
 #include "hardwaretype.hpp"
+#include "port.hpp"
 #include "macros.hpp"
 #include "system.hpp"
 #include "callback.hpp"
@@ -193,12 +194,12 @@ struct TimerN {
 
     /// #### static void counter(T value)
     static force_inline void counter(REGTYPE(TIMER_N(COUNTER_REG)) value) {
-        *REG(TIMER_N(COUNTER_REG)) = value;
+        setReg_(REG(TIMER_N(COUNTER_REG)), value);
     }
 
     /// #### static T counter()
     static force_inline REGTYPE(TIMER_N(COUNTER_REG)) counter() {
-        return *REG(TIMER_N(COUNTER_REG));
+        return getReg_(REG(TIMER_N(COUNTER_REG)));
     }
 
     #if DEFINED(TIMER_N(CLOCK_BIT_0_BIT))
@@ -248,25 +249,21 @@ struct TimerN {
     #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
         /// #### static void intEnable(Bool b)
         static force_inline void intEnable(Bool b) {
-            if(b) {
-                *REG(TIMER_N(OVERFLOW_INT_ENABLE_REG)) |= bv(TIMER_N(OVERFLOW_INT_ENABLE_BIT));
-            } else {
-                *REG(TIMER_N(OVERFLOW_INT_ENABLE_REG)) &= ~bv(TIMER_N(OVERFLOW_INT_ENABLE_BIT));
-            }
+            setBit_(REG(TIMER_N(OVERFLOW_INT_ENABLE_REG)), TIMER_N(OVERFLOW_INT_ENABLE_BIT), b);
         }
     #endif
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
         /// #### static Bool intFlag()
         static force_inline Bool intFlag() {
-            return Bool(*REG(TIMER_N(OVERFLOW_INT_FLAG_REG)) & bv(TIMER_N(OVERFLOW_INT_FLAG_BIT)));
+            return getBit_(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT));
         }
     #endif
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_FLAG_BIT))
         /// #### static void intFlagClear()
         static force_inline void intFlagClear() {
-            *REG(TIMER_N(OVERFLOW_INT_FLAG_REG)) |= bv(TIMER_N(OVERFLOW_INT_FLAG_BIT));
+            setBit_(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT), true);
         }
     #endif
 
@@ -342,6 +339,180 @@ private:
 ISR(TIMER_N(OVERFLOW_INT_VECTOR)) {
     TimerN::callCallback();
 }
+
+#ifdef TEST
+
+TEST(TimerN, getHardwareType) {
+    ASSERT_EQ(TimerN::getHardwareType(), HardwareType::timer);
+}
+
+TEST(TimerN, counter) {
+    TEST_REG_WRITE(TimerN::counter(0x12));
+    TEST_REG_READ_WRITE(TimerN::counter());
+}
+
+#if DEFINED(TIMER_N(CLOCK_BIT_0_BIT))
+    TEST(TimerN, clock) {
+        #if DEFINED(TIMER_N(CLOCK_NONE_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::none));
+        #endif
+
+        #if DEFINED(TIMER_N(CLOCK_1_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div1));
+        #endif
+
+        #if DEFINED(TIMER_N(CLOCK_2_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div2));
+        #endif
+
+        #if DEFINED(TIMER_N(CLOCK_4_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div4));
+        #endif
+
+        #if DEFINED(TIMER_N(CLOCK_8_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div8));
+        #endif
+
+        #if DEFINED(TIMER_N(CLOCK_16_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div16));
+        #endif
+
+        #if TIMER_N(CLOCK_32_ID)
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div32));
+        #endif
+
+        #if TIMER_N(CLOCK_64_ID)
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div64));
+        #endif
+
+        #if TIMER_N(CLOCK_128_ID)
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div128));
+        #endif
+
+        #if TIMER_N(CLOCK_256_ID)
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div256));
+        #endif
+
+        #if DEFINED(TIMER_N(CLOCK_512_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div512));
+        #endif
+
+        #if DEFINED(TIMER_N(CLOCK_1024_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div1024));
+        #endif
+
+        #if DEFINED(TIMER_N(CLOCK_2048_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div2048));
+        #endif
+
+        #if DEFINED(TIMER_N(CLOCK_4096_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div4096));
+        #endif
+
+        #if DEFINED(TIMER_N(CLOCK_8192_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div8192));
+        #endif
+
+        #if DEFINED(TIMER_N(CLOCK_16384_ID))
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::div16384));
+        #endif
+
+        #if TIMER_N(CLOCK_EXT_FALLING_ID)
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::extFalling));
+        #endif
+
+        #if TIMER_N(CLOCK_EXT_RISING_ID)
+            TEST_REG_WRITE(TimerN::clock(TimerN::Clock::extRising));
+        #endif
+    }
+#endif
+
+#if DEFINED(TIMER_N(WAVEFORM_BIT_0_BIT))
+    TEST(TimerN, waveform) {
+        #if DEFINED(TIMER_N(WAVEFORM_NORMAL_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::normal));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::pwm));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_CTC_OCRA_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::ctcOcra));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_CTC_OCRC_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::ctcOcrc));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::fastPwm));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::pwmOcra));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_OCRA_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::fastPwmOcra));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_OCRC_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::fastPwmOcrc));
+        #endif
+    }
+#endif
+
+#if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
+    TEST(TimerN, intEnable) {
+        TEST_REG_WRITE(TimerN::intEnable(true));
+        TEST_REG_WRITE(TimerN::intEnable(false));
+    }
+#endif
+
+#if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
+    TEST(TimerN, intFlag) {
+        TEST_REG_READ_WRITE(TimerN::intFlag());
+    }
+#endif
+
+#if DEFINED(TIMER_N(OVERFLOW_INT_FLAG_BIT))
+    TEST(TimerN, intFlagClear) {
+        TEST_REG_WRITE(TimerN::intFlagClear());
+    }
+#endif
+
+#define OUTPUT_TESTS
+
+#if TIMER_N(OUTPUT_A)
+    #define ID A
+    #include "output.xpp"
+    #undef ID
+#endif
+
+#if TIMER_N(OUTPUT_B)
+    #define ID B
+    #include "output.xpp"
+    #undef ID
+#endif
+
+#if TIMER_N(OUTPUT_C)
+    #define ID C
+    #include "output.xpp"
+    #undef ID
+#endif
+
+#undef OUTPUT_TESTS
+
+#define INPUT_TESTS
+
+#if TIMER_N(INPUT)
+    #include "input.xpp"
+#endif
+
+#undef INPUT_TESTS
+
+#endif // TEST
 
 } // nbos::hw
 

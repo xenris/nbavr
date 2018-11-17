@@ -86,14 +86,14 @@ struct UsiN {
     #if REG_DEFINED(USI_N(DATA_REG))
         /// #### static void data(Word8 d)
         static force_inline void data(Word8 d) {
-            *REG(USI_N(DATA_REG)) = d;
+            setReg_(REG(USI_N(DATA_REG)), d);
         }
     #endif
 
     #if REG_DEFINED(USI_N(BUFFER_REG))
         /// #### static Word8 data()
         static force_inline Word8 data() {
-            return *REG(USI_N(BUFFER_REG));
+            return getReg_(REG(USI_N(BUFFER_REG)));
         }
     #endif
 
@@ -284,6 +284,111 @@ ISR(USI_N(START_INT_VECTOR)) {
 ISR(USI_N(OVERFLOW_INT_VECTOR)) {
     UsiN::callOverflowCallback();
 }
+
+#ifdef TEST
+
+TEST(UsiN, getHardwareType) {
+    ASSERT_EQ(UsiN::getHardwareType(), HardwareType::usi);
+}
+
+TEST(UsiN, data) {
+    #if REG_DEFINED(USI_N(DATA_REG))
+        TEST_REG_WRITE(UsiN::data(0x12));
+    #endif
+
+    #if REG_DEFINED(USI_N(BUFFER_REG))
+        TEST_REG_READ_WRITE(UsiN::data());
+    #endif
+}
+
+#if DEFINED(USI_N(START_CONDITION_INT_ENABLE_BIT_0_BIT))
+    TEST(UsiN, startIntEnable) {
+        TEST_REG_WRITE(UsiN::startIntEnable(true));
+        TEST_REG_WRITE(UsiN::startIntEnable(false));
+    }
+#endif
+
+#if DEFINED(USI_N(COUNTER_OVERFLOW_INT_ENABLE_BIT_0_BIT))
+    TEST(UsiN, overflowIntEnable) {
+        TEST_REG_WRITE(UsiN::overflowIntEnable(true));
+        TEST_REG_WRITE(UsiN::overflowIntEnable(false));
+    }
+#endif
+
+#if DEFINED(USI_N(WIRE_MODE_BIT_0_BIT))
+    TEST(UsiN, wireMode) {
+        TEST_REG_WRITE(UsiN::wireMode(UsiN::WireMode::disabled));
+        TEST_REG_WRITE(UsiN::wireMode(UsiN::WireMode::threeWire));
+        TEST_REG_WRITE(UsiN::wireMode(UsiN::WireMode::twoWire));
+        TEST_REG_WRITE(UsiN::wireMode(UsiN::WireMode::twoWireOverflow));
+    }
+#endif
+
+#if DEFINED(USI_N(CLOCK_SELECT_BIT_0_BIT))
+    TEST(UsiN, clock) {
+        TEST_REG_WRITE(UsiN::clock(UsiN::Clock::none));
+        TEST_REG_WRITE(UsiN::clock(UsiN::Clock::timer0CompareMatch));
+        TEST_REG_WRITE(UsiN::clock(UsiN::Clock::externalPositiveEdge));
+        TEST_REG_WRITE(UsiN::clock(UsiN::Clock::externalNegativeEdge));
+    }
+#endif
+
+#if DEFINED(USI_N(CLOCK_STROBE_BIT_0_BIT))
+    TEST(UsiN, clockStrobe) {
+        TEST_REG_WRITE(UsiN::clockStrobe());
+    }
+#endif
+
+#if DEFINED(USI_N(TOGGLE_CLOCK_PIN_BIT_0_BIT))
+    TEST(UsiN, toggleClockPin) {
+        TEST_REG_WRITE(UsiN::toggleClockPin());
+    }
+#endif
+
+#if DEFINED(USI_N(START_CONDITION_INT_FLAG_BIT_0_BIT))
+    TEST(UsiN, startIntFlag) {
+        TEST_REG_READ_WRITE(UsiN::startIntFlag());
+    }
+
+    TEST(UsiN, startIntFlagClear) {
+        TEST_REG_WRITE(UsiN::startIntFlagClear());
+    }
+#endif
+
+#if DEFINED(USI_N(STOP_CONDITION_INT_FLAG_BIT_0_BIT))
+    TEST(UsiN, stopIntFlag) {
+        TEST_REG_READ_WRITE(UsiN::stopIntFlag());
+    }
+
+    TEST(UsiN, stopIntFlagClear) {
+        TEST_REG_WRITE(UsiN::stopIntFlagClear());
+    }
+#endif
+
+#if DEFINED(USI_N(COUNTER_OVERFLOW_INT_FLAG_BIT_0_BIT))
+    TEST(UsiN, overflowIntFlag) {
+        TEST_REG_READ_WRITE(UsiN::overflowIntFlag());
+    }
+
+    TEST(UsiN, overflowIntFlagClear) {
+        TEST_REG_WRITE(UsiN::overflowIntFlagClear());
+    }
+#endif
+
+#if DEFINED(USI_N(COLLISION_FLAG_BIT_0_BIT))
+    TEST(UsiN, collisionFlag) {
+        TEST_REG_READ_WRITE(UsiN::collisionFlag());
+    }
+#endif
+
+#if DEFINED(USI_N(COUNTER_BIT_0_BIT))
+    TEST(UsiN, counter) {
+        TEST_REG_WRITE(UsiN::counter(0x12));
+        TEST_REG_READ_WRITE(UsiN::counter());
+    }
+#endif
+
+#endif
 
 } // nbos::hw
 
