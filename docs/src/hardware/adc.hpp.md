@@ -3,19 +3,19 @@
 # Analog to Digital Converters
 
 ```c++
-atomic([]() {
-    Adc::reference(Adc::Reference::AVCC);
-    Adc::channel(Adc::Channel::ADC1);
-    Adc::prescaler(Adc::Prescaler::Div128);
-    Adc::trigger(Adc::Trigger::SingleConversion);
-    Adc::intFlagClear();
-});
+atomic {
+    nbos::hw::Adc0::reference(nbos::hw::Adc0::Reference::avcc);
+    nbos::hw::Adc0::channel(nbos::hw::Adc0::Channel::adc1);
+    nbos::hw::Adc0::prescaler(nbos::hw::Adc0::Prescaler::div128);
+    nbos::hw::Adc0::trigger(nbos::hw::Adc0::Trigger::singleConversion);
+    nbos::hw::Adc0::intFlagClear();
+}
 
-Adc::start();
+nbos::hw::Adc0::start();
 
-while(!Adc::intFlag());
+while(!nbos::hw::Adc0::intFlag());
 
-const Word16 value = Adc::value();
+const Word16 value = nbos::hw::Adc0::value();
 ```
 
 ## class AdcN

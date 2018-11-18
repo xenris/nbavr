@@ -3,15 +3,15 @@
 # External Interrupts
 
 ```c++
-const auto f = [](void*) {
+Callback<void> f = [](void*) {
     nbos::hw::PortB::Pin5::toggle();
 };
 
-atomic([]() {
+atomic {
     nbos::hw::ExInt0::trigger(nbos::hw::ExInt0::Trigger::rising);
-    nbos::hw::ExInt0::callback((callback_t)f);
+    nbos::hw::ExInt0::setCallback(f);
     nbos::hw::ExInt0::intEnable(true);
-});
+}
 ```
 
 ## class ExIntN

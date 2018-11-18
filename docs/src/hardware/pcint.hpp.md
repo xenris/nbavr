@@ -3,15 +3,15 @@
 # Pin Change Interrupts
 
 ```c++
-const auto f = [](void*) {
+Callback<void> f = [](void*) {
     nbos::hw::PortB::Pin5::toggle();
 };
 
-atomic([]() {
-    nbos::hw::PcInt1::mask(0x0F);
-    nbos::hw::PcInt1::callback((callback_t)f);
-    nbos::hw::PcInt1::intEnable(true);
-});
+atomic {
+    nbos::hw::PcInt0::mask(0x0F);
+    nbos::hw::PcInt0::setCallback(f);
+    nbos::hw::PcInt0::intEnable(true);
+}
 ```
 
 ## Class PcIntN

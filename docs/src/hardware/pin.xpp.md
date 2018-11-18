@@ -4,16 +4,15 @@
 
 N is the pin id (0, 1, 2, etc).
 
-## Example
-
 ```c++
-PortB::Pin5::mode(Pin::Mode::output);
+nbos::hw::PortB::Pin5::mode(nbos::hw::Pin::Mode::output);
 
-PortB::Pin5::output(Pin::Value::high);
+nbos::hw::PortB::Pin5::output(nbos::hw::Pin::Value::high);
 
 while(true) {
-    PortB::Pin5::toggle();
-    nbos::block();
+    block {
+        nbos::hw::PortB::Pin5::toggle();
+    }
 }
 ```
 
