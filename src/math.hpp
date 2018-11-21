@@ -41,7 +41,7 @@ constexpr force_inline T abs(T a) {
 
 /// #### Float sin(Float n)
 constexpr force_inline Float sin(Float n) {
-    return BUILTIN(sinf(*n));
+    return BUILTIN(sin(*n));
 }
 
 /// #### Double sin(Double n)
@@ -51,7 +51,7 @@ constexpr force_inline Double sin(Double n) {
 
 /// #### Float cos(Float n)
 constexpr force_inline Float cos(Float n) {
-        return BUILTIN(cosf(*n));
+        return BUILTIN(cos(*n));
 }
 
 /// #### Double cos(Double n)
