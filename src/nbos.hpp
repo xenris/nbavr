@@ -10,6 +10,7 @@
 #include "iterator.hpp"
 #include "macros.hpp"
 #include "math.hpp"
+#include "optional.hpp"
 #include "print.hpp"
 #include "priorityqueue.hpp"
 #include "queue.hpp"
@@ -21,6 +22,7 @@
 #include "task.hpp"
 #include "taskmanager.hpp"
 #include "tasks.hpp"
+#include "tuple.hpp"
 
 #include "hardware/adc.hpp"
 #include "hardware/eeprom.hpp"
