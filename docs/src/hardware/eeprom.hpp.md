@@ -3,12 +3,12 @@
 # Eeprom
 
 ```c++
-atomic([]() {
+atomic {
     nbos::hw::Eeprom0::address(0x00);
     nbos::hw::Eeprom0::data(0x01);
     nbos::hw::Eeprom0::masterWriteEnable();
     nbos::hw::Eeprom0::writeEnable();
-});
+}
 
 while(nbos::hw::Eeprom0::writeEnabled());
 

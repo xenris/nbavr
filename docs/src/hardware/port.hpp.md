@@ -21,7 +21,7 @@ while(true) {
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
-#### static void enableClock(bool e)
+#### static void enableClock(Bool e)
 
 #### static void mode([Pin::Mode](pin.xpp.md#enum-pinmode) m)
 

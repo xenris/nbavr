@@ -3,12 +3,12 @@
 # Serial Peripheral Interfaces
 
 ```c++
-atomic([]() {
+atomic {
     nbos::hw::Spi0::PinMosi::mode(nbos::hw::Spi0::PinMosi::Mode::output);
     nbos::hw::Spi0::PinSck::mode(nbos::hw::Spi0::PinSck::Mode::output);
 });
 
-atomic([]() {
+atomic {
     nbos::hw::Spi0::clock(nbos::hw::Spi0::Clock::div16);
     nbos::hw::Spi0::masterSlave(nbos::hw::Spi0::MasterSlave::master);
     nbos::hw::Spi0::enable(true);

@@ -5,19 +5,19 @@
 ```c++
 using Timer = nbos::hw::Timer1;
 
-uint16_t value = 0;
+nbos::hw::Pin::Value value = 0;
 
-const auto f = [](nbos::hw::Pin::Value* value) {
+Callback<nbos::hw::Pin::Value> f = [](nbos::hw::Pin::Value* value) {
     *value = Timer::Input::value();
 };
 
-atomic([]() {
+atomic {
     Timer::waveform(Timer::Waveform::normal);
-    Timer::clock(Timer::Clock::Div1);
+    Timer::clock(Timer::Clock::div1);
     Timer::Input::edge(Timer::Edge::rising);
     Timer::Input::intEnable(true);
-    Timer::Input::callback((callback_t)f, &value);
-});
+    Timer::Input::callback(f, &value);
+}
 ```
 
 ## class TimerN::Input

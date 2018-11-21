@@ -12,6 +12,27 @@ Set or clear a bit in a register immediately.
 Set or clear a bit in a register lazily.
 (i.e. Allow compiler to rearrange and combine instructions for faster code.)
 
+#### void getBit(T\* register, Word8 bit)
+Get a bit in a register immediately.
+
+#### void getBit_(T\* register, Word8 bit)
+Get a bit in a register lazily.
+(i.e. Allow compiler to rearrange and combine instructions for faster code.)
+
+#### void setReg(T\* register, T value)
+Set the value of a register immediately.
+
+#### void setReg_(T\* register, T value)
+Set the value of a register lazily.
+(i.e. Allow compiler to rearrange and combine instructions for faster code.)
+
+#### void getReg(T\* register)
+Get the value of a register immediately.
+
+#### void getReg_(T\* register)
+Get the value of a register lazily.
+(i.e. Allow compiler to rearrange and combine instructions for faster code.)
+
 #### void delay<Word64 cpuFreq, Word64 ns>()
 Delays the cpu for the given number of nanoseconds.<br>
 Should only be used for very short delays.<br>
