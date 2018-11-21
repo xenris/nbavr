@@ -56,12 +56,20 @@ public:
 
     /// #### T operator *()
     /// Returns the stored value.
+    T& operator *() {
+        return value;
+    }
+
     const T& operator *() const {
         return value;
     }
 
     /// #### T\* operator ->()
     /// Pointer access to the stored value.
+    T* operator ->() {
+        return &value;
+    }
+
     const T* operator ->() const {
         return &value;
     }
