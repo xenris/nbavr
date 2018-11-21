@@ -209,4 +209,6 @@ constexpr force_inline Double sqrt(Double n) {
         return BUILTIN(sqrt(*n));
 }
 
+constexpr Float pi = atan(1_f) * 4;
+
 #endif
