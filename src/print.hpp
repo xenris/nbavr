@@ -153,9 +153,9 @@ inline Bool printInt(Queue<Char>& queue, T n) {
 }
 
 inline Bool printFloat(Queue<Char>& queue, Float n) {
-    String<14> buffer;
+    Char buffer[14];
 
-    libc::dtostre(primitive_double(Double(n)), (primitive_signed_char*)buffer.begin(), 6, 0);
+    libc::dtostre(primitive_double(Double(n)), (primitive_signed_char*)buffer, 6, 0);
 
     return printString(queue, buffer);
 }
