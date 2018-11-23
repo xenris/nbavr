@@ -171,7 +171,9 @@ public:
     /// #### void callCallback()
     /// Call the callback notification function.
     void callCallback() {
-        _callback(_callback_data);
+        if(_callback != nullptr) {
+            _callback(_callback_data);
+        }
     }
 };
 
