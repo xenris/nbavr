@@ -27,7 +27,6 @@
 #define NBOS_VECTOR_HPP
 
 #include "math.hpp"
-#include "type.hpp"
 
 namespace nbos {
 
@@ -161,7 +160,7 @@ public:
 
     /// #### Vector<Type\>& operator =(Vector<Type\> other)
     Vector<Type>& operator =(const Vector<Type>& other) {
-        const Int count = nbos::min(_bufferSize, other.size());
+        const Int count = min(_bufferSize, other.size());
 
         for(Int i = 0; i < count; i++) {
             _buffer[i] = other[i];

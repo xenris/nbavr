@@ -23,6 +23,7 @@
 #include "taskmanager.hpp"
 #include "tasks.hpp"
 #include "tuple.hpp"
+#include "vector.hpp"
 
 #include "hardware/adc.hpp"
 #include "hardware/eeprom.hpp"
