@@ -174,6 +174,12 @@ inline Queue<Char>& operator<<(Queue<Char>& queue, const primitive_signed_char* 
     return queue;
 }
 
+inline Queue<Char>& operator<<(Queue<Char>& queue, const String<>& s) {
+    printString(queue, s);
+
+    return queue;
+}
+
 inline Queue<Char>& operator<<(Queue<Char>& queue, Int8 n) {
     printInt(queue, n);
 
