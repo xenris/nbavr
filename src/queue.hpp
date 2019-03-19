@@ -175,6 +175,14 @@ public:
             _callback(_callback_data);
         }
     }
+
+    Queue<Type>* p() {
+        return this;
+    }
+
+    const Queue<Type>* p() const {
+        return this;
+    }
 };
 
 #ifdef TEST
