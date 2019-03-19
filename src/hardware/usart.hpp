@@ -210,6 +210,31 @@ struct UsartN {
         }
     #endif
 
+    /// #### static void setBaudRate<cpuFreq, baudRate>()
+    /// Set the baud and 2x registers from the given CPU frequency and baud rate.
+    template <Integer cpuFreq, Integer baudRate>
+    static force_inline void setBaudRate() {
+        const Word16 ubrr1x = Word16(Float(cpuFreq) / (Float(baudRate) * 16) - 1 + 0.5);
+        const Word16 ubrr2x = Word16(Float(cpuFreq) / (Float(baudRate) * 8) - 1 + 0.5);
+
+        const Word32 baudTrue1x = cpuFreq / Integer((ubrr1x + 1) * 16);
+        const Word32 baudTrue2x = cpuFreq / Integer((ubrr1x + 1) * 8);
+
+        const Float ubrr1xError = (Float(baudTrue1x) / Float(baudRate)) - 1;
+        const Float ubrr2xError = (Float(baudTrue2x) / Float(baudRate)) - 1;
+
+        const Bool use2x = ubrr2xError < ubrr1xError;
+
+        #if DEFINED(USART_N(DOUBLE_SPEED_BIT_0_BIT))
+            use2X(use2x);
+            baud(use2x ? ubrr2x : ubrr1x);
+        #else
+            baud(ubrr1x);
+            (void)use2x;
+            (void)ubrr2x;
+        #endif
+    }
+
     #if DEFINED(USART_N(RX_ENABLE_BIT_0_BIT))
         /// #### static void receiverEnable(Bool e)
         static force_inline void receiverEnable(Bool e) {
