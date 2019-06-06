@@ -6,11 +6,12 @@
 #include "libc.hpp"
 #include "queue.hpp"
 #include "string.hpp"
+#include "hardware/system.hpp"
 
 namespace nbos {
 
 inline bool printChar(Queue<char>& queue, char c) {
-    const bool result = queue.push(c);
+    const bool result = atomic(queue.push(c));
 
     if(c == '\n') {
         queue.callCallback();
