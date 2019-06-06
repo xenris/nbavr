@@ -1,3 +1,3 @@
-#### Char\* begin()
+#### char\* begin()
 
-#### const Char\* end()
+#### const char\* end()

@@ -42,37 +42,34 @@
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 Get the type of hardware that this class represents.
 
-#### static void enable(Bool e)
+#### static void enable(bool e)
 Enable/disable the Twi.
 
-#### static void sendStart(Bool intEnable = true)
+#### static void sendStart(bool intEnable = true)
 Send a start condition.
 
-#### static void sendStop(Bool intEnable = true)
+#### static void sendStop(bool intEnable = true)
 Send stop condition.
 
-#### static void sendAck(Bool intEnable = true)
+#### static void sendAck(bool intEnable = true)
 Send acknowledge condition.
 
-#### static void sendNack(Bool intEnable = true)
+#### static void sendNack(bool intEnable = true)
 Send not acknowledge condition.
 
-#### static void bitRate(Word8 b)
+#### static void bitRate(uint8_t b)
 Set Twi bitRate.
 
-#### static Bool intFlag()
+#### static bool intFlag()
 Returns true if the interrupt flag is set.
 
-#### static Bool active()
+#### static bool active()
 Returns true if the twi hardware is busy.
 
-#### static Bool writeCollisionFlag()
+#### static bool writeCollisionFlag()
 Returns true if the write collision flag is set.
 
-#### static void writeCollisionFlagClear()
-Clear the write collision flag.
-
-#### static void intEnable(Bool e)
+#### static void intEnable(bool e)
 Enable/disable the Twi interrupt.
 
 #### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
@@ -86,17 +83,17 @@ Get the Twi status.
 #### static void prescaler([TwiN::Prescaler](twi.hpp.md#enum-twinprescaler) p)
 Set the prescaler.
 
-#### static void push(Word8 b)
+#### static void push(uint8_t b)
 Put byte in data buffer.
 
-#### static Word8 pop()
+#### static uint8_t pop()
 Get byte from data buffer.
 
-#### static void slaveAddress(Word8 b)
+#### static void slaveAddress(uint8_t b)
 Set the address for transmitting and receiving as a slave.
 
-#### static void slaveAddressMask(Word8 b)
+#### static void slaveAddressMask(uint8_t b)
 Set the slave address mask.
 
-#### static void generalCallRecognitionEnable(Bool e)
+#### static void generalCallRecognitionEnable(bool e)
 Enable/disable the recognition of a Twi general call.

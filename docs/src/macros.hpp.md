@@ -5,6 +5,9 @@
 #### force_inline
 Force a function to always be inlined. Use like "inline".
 
+#### ssize_t ssizeof(T)
+Signed version of sizeof.
+
 #### CAT(...)
 Concatenates a list of identifiers together.<br>
 e.g. CAT(Foo, Bar) -> FooBar

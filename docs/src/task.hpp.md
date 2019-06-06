@@ -19,7 +19,7 @@ struct Flash : Task<Clock> {
 
 ## Class Task\<class Clock\>
 
-#### void sleep(Word64 ticks)
+#### void sleep(uint64_t ticks)
 Put this task to sleep until the given number of ticks have passed.
 
 #### void sleep()

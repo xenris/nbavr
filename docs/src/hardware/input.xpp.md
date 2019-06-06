@@ -39,8 +39,8 @@ The IO pin which relates to this input.
 
 #### static void callCallback()
 
-#### static void intEnable(Bool b)
+#### static void intEnable(bool b)
 
-#### static Bool intFlag()
+#### static bool intFlag()
 
 #### static void intFlagClear()

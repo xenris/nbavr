@@ -9,7 +9,6 @@
 /// * Utilities
 ///     * [[Algorithms]]
 ///     * [[Array]]
-///     * [[Atomic]]
 ///     * [[I2c]]
 ///     * [[Macros]]
 ///     * [[Maths]]

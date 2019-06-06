@@ -18,15 +18,15 @@ atomic {
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
-#### static void intEnable(Bool e)
+#### static void intEnable(bool e)
 
-#### static void mask(Word8 m)
+#### static void mask(uint8_t m)
 Set which pins trigger this interrupt.
 
 #### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 
 #### static void callCallback()
 
-#### static Bool intFlag()
+#### static bool intFlag()
 
 #### static void intFlagClear()

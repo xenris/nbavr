@@ -25,7 +25,7 @@ atomic([]() {
 ## Class TimerN
 
 #### Type
-The underlying type of this timer/counter. (Word8 or Word16)
+The underlying type of this timer/counter. (uint8_t or uint16_t)
 
 #### enum TimerN::Clock
 * none
@@ -70,9 +70,9 @@ Set the timer overflow callback.
 
 #### static void callCallback()
 
-#### static void intEnable(Bool b)
+#### static void intEnable(bool b)
 
-#### static Bool intFlag()
+#### static bool intFlag()
 
 #### static void intFlagClear()
 

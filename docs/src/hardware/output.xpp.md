@@ -41,10 +41,10 @@ The IO pin which relates to this output.
 
 #### static void callCallback()
 
-#### static void intEnable(Bool b)
+#### static void intEnable(bool b)
 
-#### static Bool intEnabled()
+#### static bool intEnabled()
 
-#### static Bool intFlag()
+#### static bool intFlag()
 
 #### static void intFlagClear()

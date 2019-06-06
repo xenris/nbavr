@@ -15,7 +15,7 @@ nbos::hw::Adc0::start();
 
 while(!nbos::hw::Adc0::intFlag());
 
-const Word16 value = nbos::hw::Adc0::value();
+const uint16_t value = nbos::hw::Adc0::value();
 ```
 
 ## class AdcN
@@ -64,11 +64,11 @@ const Word16 value = nbos::hw::Adc0::value();
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
-#### static void enable(Bool e)
+#### static void enable(bool e)
 
 #### static void start()
 
-#### static Word16 value()
+#### static uint16_t value()
 
 #### static void reference([AdcN::Reference](adc.hpp.md#enum-adcnreference) r)
 
@@ -76,7 +76,7 @@ const Word16 value = nbos::hw::Adc0::value();
 
 #### static void prescaler([AdcN::Prescaler](adc.hpp.md#enum-adcnprescaler) p)
 
-#### static void leftAdjust(Bool l)
+#### static void leftAdjust(bool l)
 
 #### static void trigger([AdcN::Trigger](adc.hpp.md#enum-adcntrigger) t)
 
@@ -84,8 +84,8 @@ const Word16 value = nbos::hw::Adc0::value();
 
 #### static void callCallback()
 
-#### static void intEnable(Bool e)
+#### static void intEnable(bool e)
 
-#### static Bool intFlag()
+#### static bool intFlag()
 
 #### static void intFlagClear()

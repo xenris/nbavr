@@ -16,7 +16,7 @@ float f = random.next<float>();
 #### Random()
 Constructor with seed defaulting to 0.
 
-#### Random(Word32 seed)
+#### Random(uint32_t seed)
 Constructor with user defined seed.
 
 #### T next<class T>()

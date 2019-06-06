@@ -3,37 +3,37 @@
 # Vector
 
 ```c++
-nbos::Vector<Int, 6> vector;
+nbos::Vector<int, 6> vector;
 
 vector.add(3);
 vector.add(7);
 vector.add(1);
 vector.add(2);
 
-Int s = vector.size(); // s = 4
+int s = vector.size(); // s = 4
 
-const Int a = vector[1]; // a = 7
+const int a = vector[1]; // a = 7
 
-nbos::Vector<Int>* pointer = &vector;
+nbos::Vector<int>* pointer = &vector;
 
 pointer->add(4);
 
-const Int b = pointer->get(2); // b = 1
+const int b = pointer->get(2); // b = 1
 
 s = vector.size(); // s = 5
 ```
 
-## class Vector<class Type, Int bufferSize\>
+## class Vector<class Type, int bufferSize\>
 
 #### Vector()
 Construct a vector with space on the stack for the contents.
 
 ## class Vector<class Type\>
 
-#### Vector(Type\* buffer, Int bufferSize)
+#### Vector(Type\* buffer, int bufferSize)
 Construct a vector with the given buffer.
 
-#### Bool add(Type t)
+#### bool add(Type t)
 Returns true on success.
 
 #### void fill(const Type& t) {
@@ -42,26 +42,26 @@ Fills the entire buffer with the given value.
 #### void clear() {
 Remove all elements from the vector.
 
-#### Int size()
+#### int size()
 Get the number of elements currently in the vector.
 
-#### Bool resize(Int size)
+#### bool resize(int size)
 Set the size of the vector.<br>
 Returns false, and doesn't change the size if the given size is larger than the buffer.
 
-#### Int free()
+#### int free()
 Get the amount of free space in the vector.
 
-### Int capacity()
+### int capacity()
 Get the total capacity of the vector.
 
-#### Bool empty()
+#### bool empty()
 Returns true if the vector is empty.
 
-#### Bool full()
+#### bool full()
 Returns true if the vector is full.
 
-#### Type& operator [](Int n)
+#### Type& operator [](int n)
 
 #### Type\* begin()
 

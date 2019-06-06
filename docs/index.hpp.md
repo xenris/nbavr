@@ -9,7 +9,6 @@
 * Utilities
     * [Algorithms](src/algorithm.hpp.md#algorithms)
     * [Array](src/array.hpp.md#array)
-    * [Atomic](src/atomic.hpp.md#atomic)
     * [I2c](src/i2c.hpp.md#i2c)
     * [Macros](src/macros.hpp.md#macros)
     * [Maths](src/math.hpp.md#maths)

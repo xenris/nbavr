@@ -10,70 +10,70 @@
 
 #### T abs(T a)
 
-#### Float sin(Float n)
+#### float sin(float n)
 
-#### Double sin(Double n)
+#### double sin(double n)
 
-#### Float cos(Float n)
+#### float cos(float n)
 
-#### Double cos(Double n)
+#### double cos(double n)
 
-#### Float tan(Float n)
+#### float tan(float n)
 
-#### Double tan(Double n)
+#### double tan(double n)
 
-#### Float asin(Float n)
+#### float asin(float n)
 
-#### Double asin(Double n)
+#### double asin(double n)
 
-#### Float acos(Float n)
+#### float acos(float n)
 
-#### Double acos(Double n)
+#### double acos(double n)
 
-#### Float atan(Float n)
+#### float atan(float n)
 
-#### Double atan(Double n)
+#### double atan(double n)
 
-#### Float sinh(Float n)
+#### float sinh(float n)
 
-#### Double sinh(Double n)
+#### double sinh(double n)
 
-#### Float cosh(Float n)
+#### float cosh(float n)
 
-#### Double cosh(Double n)
+#### double cosh(double n)
 
-#### Float tanh(Float n)
+#### float tanh(float n)
 
-#### Double tanh(Double n)
+#### double tanh(double n)
 
-#### Float floor(Float n)
+#### float floor(float n)
 
-#### Double floor(Double n)
+#### double floor(double n)
 
-#### Float fmod(Float n, Float p)
+#### float fmod(float n, float p)
 
-#### Double fmod(Double n, Double p)
+#### double fmod(double n, double p)
 
-#### Float log(Float n)
+#### float log(float n)
 
-#### Double log(Double n)
+#### double log(double n)
 
-#### Float log10(Float n)
+#### float log10(float n)
 
-#### Double log10(Double n)
+#### double log10(double n)
 
-#### Float modf(Float n, Float* i)
+#### float modf(float n, float* i)
 
-#### Double modf(Double n, Double* i)
+#### double modf(double n, double* i)
 
-#### Float pow(Float n, Float p)
+#### float pow(float n, float p)
 
-#### Double pow(Double n, Double p)
+#### double pow(double n, double p)
 
-#### Float round(Float n)
+#### float round(float n)
 
-#### Double round(Double n)
+#### double round(double n)
 
-#### Float sqrt(Float n)
+#### float sqrt(float n)
 
-#### Double sqrt(Double n)
+#### double sqrt(double n)

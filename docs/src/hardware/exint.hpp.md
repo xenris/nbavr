@@ -24,7 +24,7 @@ atomic {
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
-#### static void intEnable(Bool e)
+#### static void intEnable(bool e)
 
 #### static void trigger([ExIntN::Trigger](exint.hpp.md#enum-exintntrigger) t)
 
@@ -32,6 +32,6 @@ atomic {
 
 #### static void callCallback()
 
-#### static Bool intFlag()
+#### static bool intFlag()
 
 #### static void intFlagClear()

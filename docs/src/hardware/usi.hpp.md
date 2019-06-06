@@ -32,14 +32,14 @@
 
 #### static HardwareType getHardwareType()
 
-#### static void data(Word8 d)
+#### static void data(uint8_t d)
 
-#### static Word8 data()
+#### static uint8_t data()
 
-#### static void startIntEnable(Bool b)
+#### static void startIntEnable(bool b)
 Enable the start condition interrupt.
 
-#### static void overflowIntEnable(Bool b)
+#### static void overflowIntEnable(bool b)
 Enable the counter overflow interrupt.
 
 #### static void wireMode(WireMode m)
@@ -64,18 +64,18 @@ Get the stop condition interrupt flag's state.
 #### static void stopIntFlagClear()
 Clear the stop condition interrupt flag.
 
-#### static Bool overflowIntFlag()
+#### static bool overflowIntFlag()
 Get the counter overflow interrupt flag's state.
 
 #### static void overflowIntFlagClear()
 Clear the counter overflow interrupt flag.
 
-#### static Bool collisionFlag()
+#### static bool collisionFlag()
 Get the data output collision flag's state.
 
-#### static void counter(Word8 c)
+#### static void counter(uint8_t c)
 
-#### static Word8 counter()
+#### static uint8_t counter()
 
 #### static void setStartCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 Set callback for start condition interrupt.

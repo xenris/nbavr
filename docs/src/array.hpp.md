@@ -3,7 +3,7 @@
 # Array
 
 ```c++
-nbos::Array<Int32, 6> array;
+nbos::Array<int32_t, 6> array;
 
 array[0] = 6;
 array[1] = 8;
@@ -14,9 +14,9 @@ array[5] = 2;
 
 nbos::quicksort(array->begin(), array->size());
 
-nbos::Array<Int32>* pointer = &array;
+nbos::Array<int32_t>* pointer = &array;
 
-Int32 n = pointer->get(0); // n = 1
+int32_t n = pointer->get(0); // n = 1
 
 pointer->fill(0);
 
@@ -35,11 +35,11 @@ for(auto n& : pointer) {
 
 #### void fill(Type t)
 
-#### Int size()
+#### int size()
 
-#### Type& operator \[\](Int i)
+#### Type& operator \[\](int i)
 
-#### Type& get(Int i)
+#### Type& get(int i)
 
 #### Array<Type\>& operator =(Array<Type\> other)
 

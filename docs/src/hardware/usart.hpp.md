@@ -56,21 +56,24 @@ Usart::dataRegisterEmptyCallback((callback_t)f);
 
 #### static void polarity([UsartN::Polarity](usart.hpp.md#enum-usartnpolarity) p)
 
-#### static void baud(Word16 b)
+#### static void baud(uint16_t b)
 
-#### static void use2X(Bool u)
+#### static void use2X(bool u)
 
-#### static void receiverEnable(Bool e)
+#### static void setBaudRate<cpuFreq, baudRate>()
+Set the baud and 2x registers from the given CPU frequency and baud rate.
 
-#### static void transmitterEnable(Bool e)
+#### static void receiverEnable(bool e)
 
-#### static void multiprocessorCummunicationMode(Bool e)
+#### static void transmitterEnable(bool e)
 
-#### static void rxCompleteIntEnable(Bool e)
+#### static void multiprocessorCummunicationMode(bool e)
 
-#### static void txCompleteIntEnable(Bool e)
+#### static void rxCompleteIntEnable(bool e)
 
-#### static void dataRegisterEmptyIntEnable(Bool e)
+#### static void txCompleteIntEnable(bool e)
+
+#### static void dataRegisterEmptyIntEnable(bool e)
 
 #### static void setRxCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 
@@ -84,22 +87,16 @@ Usart::dataRegisterEmptyCallback((callback_t)f);
 
 #### static void callDeCallback()
 
-#### static void push(Word8 b)
+#### static void push(uint8_t b)
 
-#### static void push9(Word16 b)
+#### static void push9(uint16_t b)
 
-#### static Word8 pop()
+#### static uint8_t pop()
 
-#### static Word16 pop9()
+#### static uint16_t pop9()
 
-#### static Bool frameError()
+#### static bool frameError()
 
-#### static void frameErrorClear()
+#### static bool dataOverRun()
 
-#### static Bool dataOverRun()
-
-#### static void dataOverRunClear()
-
-#### static Bool parityError()
-
-#### static void parityErrorClear()
+#### static bool parityError()

@@ -2,16 +2,16 @@
 Class who's value can be either something or nothing.
 
 ```c++
-Optional<Int32> o;
+Optional<int> o;
 
-Bool b = o; // b = false
+bool b = o; // b = false
 
 o = 5;
 
 b = o; // b = true
 
-Int32 a = *b; // a = 5
-Int32 x = b; // x = 1 (a.k.a. true)
+int a = *b; // a = 5
+int x = b; // x = 1 (a.k.a. true)
 
 o = {};
 
@@ -24,11 +24,20 @@ Constructor for "nothing"
 #### Optional(T value)
 Constructor for "something"
 
-#### operator primitive_bool()
+#### operator bool()
+True if "something", false if "nothing".
+
+#### bool hasValue()
 True if "something", false if "nothing".
 
 #### T operator *()
 Returns the stored value.
 
-#### T\* operator ->()
+#### T\* operator -\>()
 Pointer access to the stored value.
+
+#### T value()
+Returns the stored value.
+
+#### T valueOr(T t)
+Returns the stored value if there is one, otherwise returns t.
