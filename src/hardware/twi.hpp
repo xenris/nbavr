@@ -71,7 +71,7 @@ struct TwiN {
     /// * lastDataTransmittedAck
     /// * noState
     /// * busError
-    enum class Status {
+    enum class Status : uint8_t {
         busError = 0x00,
         startTransmitted = 0x08,
         repeatedStartTransmitted = 0x10,
@@ -107,89 +107,91 @@ struct TwiN {
         return HardwareType::twi;
     }
 
-    /// #### static void enable(Bool e)
+    /// #### static void enable(bool e)
     /// Enable/disable the Twi.
-    static force_inline void enable(Bool e) {
+    static force_inline void enable(bool e) {
         setBit_(REG(TWI_N(ENABLE_REG)), TWI_N(ENABLE_BIT), e);
     }
 
-    /// #### static void sendStart(Bool intEnable = true)
+    /// #### static void sendStart(bool intEnable = true)
     /// Send a start condition.
-    static force_inline void sendStart(Bool intEnable = true) {
-        const Word8 enable = bv(TWI_N(ENABLE_BIT));
-        const Word8 start = bv(TWI_N(START_CONDITION_BIT));
-        const Word8 flagClear = bv(TWI_N(INT_FLAG_BIT));
-        const Word8 interrupt = intEnable ? bv(TWI_N(INT_ENABLE_BIT)) : 0;
+    static force_inline void sendStart(bool intEnable = true) {
+        using T = REGTYPE(TWI_N(CONTROL_REG));
 
-        setReg_(REG(TWI_N(CONTROL_REG)), enable | start | flagClear | interrupt);
+        const T enable = bv<T>(TWI_N(ENABLE_BIT));
+        const T start = bv<T>(TWI_N(START_CONDITION_BIT));
+        const T flagClear = bv<T>(TWI_N(INT_FLAG_BIT));
+        const T interrupt = intEnable ? bv<T>(TWI_N(INT_ENABLE_BIT)) : 0;
+
+        setReg_(REG(TWI_N(CONTROL_REG)), T(enable | start | flagClear | interrupt));
     }
 
-    /// #### static void sendStop(Bool intEnable = true)
+    /// #### static void sendStop(bool intEnable = true)
     /// Send stop condition.
     static force_inline void sendStop() {
-        const Word8 enable = bv(TWI_N(ENABLE_BIT));
-        const Word8 stop = bv(TWI_N(STOP_CONDITION_BIT));
-        const Word8 flagClear = bv(TWI_N(INT_FLAG_BIT));
+        using T = REGTYPE(TWI_N(CONTROL_REG));
 
-        setReg_(REG(TWI_N(CONTROL_REG)), enable | stop | flagClear);
+        const T enable = bv<T>(TWI_N(ENABLE_BIT));
+        const T stop = bv<T>(TWI_N(STOP_CONDITION_BIT));
+        const T flagClear = bv<T>(TWI_N(INT_FLAG_BIT));
+
+        setReg_(REG(TWI_N(CONTROL_REG)), T(enable | stop | flagClear));
     }
 
-    /// #### static void sendAck(Bool intEnable = true)
+    /// #### static void sendAck(bool intEnable = true)
     /// Send acknowledge condition.
-    static force_inline void sendAck(Bool intEnable = true) {
-        const Word8 enable = bv(TWI_N(ENABLE_BIT));
-        const Word8 ack = bv(TWI_N(ENABLE_ACK_BIT));
-        const Word8 flagClear = bv(TWI_N(INT_FLAG_BIT));
-        const Word8 interrupt = intEnable ? bv(TWI_N(INT_ENABLE_BIT)) : 0;
+    static force_inline void sendAck(bool intEnable = true) {
+        using T = REGTYPE(TWI_N(CONTROL_REG));
 
-        setReg_(REG(TWI_N(CONTROL_REG)), enable | ack | flagClear | interrupt);
+        const T enable = bv<T>(TWI_N(ENABLE_BIT));
+        const T ack = bv<T>(TWI_N(ENABLE_ACK_BIT));
+        const T flagClear = bv<T>(TWI_N(INT_FLAG_BIT));
+        const T interrupt = intEnable ? bv<T>(TWI_N(INT_ENABLE_BIT)) : 0;
+
+        setReg_(REG(TWI_N(CONTROL_REG)), T(enable | ack | flagClear | interrupt));
     }
 
-    /// #### static void sendNack(Bool intEnable = true)
+    /// #### static void sendNack(bool intEnable = true)
     /// Send not acknowledge condition.
-    static force_inline void sendNack(Bool intEnable = true) {
-        const Word8 enable = bv(TWI_N(ENABLE_BIT));
-        const Word8 flagClear = bv(TWI_N(INT_FLAG_BIT));
-        const Word8 interrupt = intEnable ? bv(TWI_N(INT_ENABLE_BIT)) : 0;
+    static force_inline void sendNack(bool intEnable = true) {
+        using T = REGTYPE(TWI_N(CONTROL_REG));
 
-        setReg_(REG(TWI_N(CONTROL_REG)), enable | flagClear | interrupt);
+        const T enable = bv<T>(TWI_N(ENABLE_BIT));
+        const T flagClear = bv<T>(TWI_N(INT_FLAG_BIT));
+        const T interrupt = intEnable ? bv<T>(TWI_N(INT_ENABLE_BIT)) : 0;
+
+        setReg_(REG(TWI_N(CONTROL_REG)), T(enable | flagClear | interrupt));
     }
 
-    /// #### static void bitRate(Word8 b)
+    /// #### static void bitRate(uint8_t b)
     /// Set Twi bitRate.
-    static force_inline void bitRate(Word8 b) {
+    static force_inline void bitRate(uint8_t b) {
         setReg_(REG(TWI_N(BIT_RATE_REG)), b);
     }
 
-    /// #### static Bool intFlag()
+    /// #### static bool intFlag()
     /// Returns true if the interrupt flag is set.
-    static force_inline Bool intFlag() {
+    static force_inline bool intFlag() {
         return getBit_(REG(TWI_N(INT_FLAG_REG)), TWI_N(INT_FLAG_BIT));
     }
 
-    /// #### static Bool active()
+    /// #### static bool active()
     /// Returns true if the twi hardware is busy.
-    static force_inline Bool active() {
+    static force_inline bool active() {
         return getBit_(REG(TWI_N(CONTROL_REG)), TWI_N(ENABLE_BIT))
             && (getBit_(REG(TWI_N(CONTROL_REG)), TWI_N(START_CONDITION_BIT))
             || getBit_(REG(TWI_N(CONTROL_REG)), TWI_N(STOP_CONDITION_BIT)));
     }
 
-    /// #### static Bool writeCollisionFlag()
+    /// #### static bool writeCollisionFlag()
     /// Returns true if the write collision flag is set.
-    static force_inline Bool writeCollisionFlag() {
+    static force_inline bool writeCollisionFlag() {
         return getBit_(REG(TWI_N(WRITE_COLLISION_FLAG_REG)), TWI_N(WRITE_COLLISION_FLAG_BIT));
     }
 
-    /// #### static void writeCollisionFlagClear()
-    /// Clear the write collision flag.
-    static force_inline void writeCollisionFlagClear() {
-        setBit_(REG(TWI_N(WRITE_COLLISION_FLAG_REG)), TWI_N(WRITE_COLLISION_FLAG_BIT), true);
-    }
-
-    /// #### static void intEnable(Bool e)
+    /// #### static void intEnable(bool e)
     /// Enable/disable the Twi interrupt.
-    static force_inline void intEnable(Bool e) {
+    static force_inline void intEnable(bool e) {
         setBit_(REG(TWI_N(INT_ENABLE_REG)), TWI_N(INT_ENABLE_BIT), e);
     }
 
@@ -208,43 +210,43 @@ struct TwiN {
     /// #### static [[TwiN::Status]] status()
     /// Get the Twi status.
     static force_inline Status status() {
-        return Status(Int(getReg_(REG(TWI_N(STATUS_REG))) & 0xF8));
+        return Status(int(getReg_(REG(TWI_N(STATUS_REG))) & 0xF8));
     }
 
     /// #### static void prescaler([[TwiN::Prescaler]] p)
     /// Set the prescaler.
     static force_inline void prescaler(Prescaler p) {
-        setBit_(REG(TWI_N(PRESCALER_BIT_0_REG)), TWI_N(PRESCALER_BIT_0_BIT), Int(p) & 0x01);
-        setBit_(REG(TWI_N(PRESCALER_BIT_1_REG)), TWI_N(PRESCALER_BIT_1_BIT), Int(p) & 0x02);
+        setBit_(REG(TWI_N(PRESCALER_BIT_0_REG)), TWI_N(PRESCALER_BIT_0_BIT), int(p) & 0x01);
+        setBit_(REG(TWI_N(PRESCALER_BIT_1_REG)), TWI_N(PRESCALER_BIT_1_BIT), int(p) & 0x02);
     }
 
-    /// #### static void push(Word8 b)
+    /// #### static void push(uint8_t b)
     /// Put byte in data buffer.
-    static force_inline void push(Word8 b) {
+    static force_inline void push(uint8_t b) {
         setReg_(REG(TWI_N(DATA_REG)), b);
     }
 
-    /// #### static Word8 pop()
+    /// #### static uint8_t pop()
     /// Get byte from data buffer.
-    static force_inline Word8 pop() {
+    static force_inline uint8_t pop() {
         return getReg_(REG(TWI_N(DATA_REG)));
     }
 
-    /// #### static void slaveAddress(Word8 b)
+    /// #### static void slaveAddress(uint8_t b)
     /// Set the address for transmitting and receiving as a slave.
-    static force_inline void slaveAddress(Word8 b) {
-        setReg_(REG(TWI_N(SLAVE_ADDRESS_REG)), b & 0xfe);
+    static force_inline void slaveAddress(uint8_t b) {
+        setReg_(REG(TWI_N(SLAVE_ADDRESS_REG)), uint8_t(b & 0xfe));
     }
 
-    /// #### static void slaveAddressMask(Word8 b)
+    /// #### static void slaveAddressMask(uint8_t b)
     /// Set the slave address mask.
-    static force_inline void slaveAddressMask(Word8 b) {
-        setReg_(REG(TWI_N(SLAVE_ADDRESS_MASK_REG)), b & 0xfe);
+    static force_inline void slaveAddressMask(uint8_t b) {
+        setReg_(REG(TWI_N(SLAVE_ADDRESS_MASK_REG)), uint8_t(b & 0xfe));
     }
 
-    /// #### static void generalCallRecognitionEnable(Bool e)
+    /// #### static void generalCallRecognitionEnable(bool e)
     /// Enable/disable the recognition of a Twi general call.
-    static force_inline void generalCallRecognitionEnable(Bool e) {
+    static force_inline void generalCallRecognitionEnable(bool e) {
         setBit_(REG(TWI_N(GEN_CALL_REC_ENABLE_REG)), TWI_N(GEN_CALL_REC_ENABLE_BIT), e);
     }
 
@@ -313,10 +315,6 @@ TEST(TwiN, active) {
 
 TEST(TwiN, writeCollisionFlag) {
     TEST_REG_READ_WRITE(TwiN::writeCollisionFlag());
-}
-
-TEST(TwiN, writeCollisionFlagClear) {
-    TEST_REG_WRITE(TwiN::writeCollisionFlagClear());
 }
 
 TEST(TwiN, intEnable) {

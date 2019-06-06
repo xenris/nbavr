@@ -1,78 +1,347 @@
-#ifndef NBOS_PRIMITIVE_HPP
-#define NBOS_PRIMITIVE_HPP
+/// [[Index]]
 
 /// # Primitive types
 
-/// All the standard c/c++ primitive types (e.g. int, char, bool, float, etc) have been disabled.
-/// Use [[Safe]] types instead.
+#ifndef NBOS_PRIMITIVE_HPP
+#define NBOS_PRIMITIVE_HPP
 
-/// If access to primitive types is required they are available through the following aliases:
+#include "basic.hpp"
 
-/// * primitive_bool
-/// * primitive_signed_char
-/// * primitive_unsigned_char
-/// * primitive_signed_short
-/// * primitive_unsigned_short
-/// * primitive_signed_int
-/// * primitive_unsigned_int
-/// * primitive_signed_long
-/// * primitive_unsigned_long
-/// * primitive_signed_long_long
-/// * primitive_unsigned_long_long
-/// * primitive_float
-/// * primitive_double
-/// * primitive_long_double
-/// * primitive_size_t
-/// * primitive_ssize_t
+using uint = unsigned int;
 
-/// The following primitive types are also available for particular use cases, such as for fast code or
-/// for large numbers. These can be used as template parameters, where as the [[Safe]] types can not.
+using int8_t = signed char;
+using int16_t = If<sizeof(int) == 2, int, short>::Value;
+using int32_t = If<sizeof(int) == 4, int, long>::Value;
+using int64_t = If<sizeof(long) == 8, long, long long>::Value;
 
-/// * Int
-///     Fastest integer type. "signed int". Only guaranteed to be at least 8 bits (-128 to +127). Generally should be 8, 16, 32, 64 bits on 8, 16, 32, 64 bit processors respectively.
-///     Useful when speed is priority.
-/// * Integer
-///     Largest integer type. "signed long long". 64 bits (probably).
+using uint8_t = unsigned char;
+using uint16_t = If<sizeof(unsigned int) == 2, unsigned int, unsigned short>::Value;
+using uint32_t = If<sizeof(unsigned int) == 4, unsigned int, unsigned long>::Value;
+using uint64_t = If<sizeof(unsigned long) == 8, unsigned long, unsigned long long>::Value;
 
-using Int = int;
-using Integer = long long;
+using size_t = If<sizeof(unsigned int) == 2, unsigned int, unsigned long>::Value;
+using ssize_t = If<sizeof(int) == 2, int, long>::Value;
 
-using primitive_bool = bool;
-using primitive_signed_char = char;
-using primitive_unsigned_char = unsigned char;
-using primitive_signed_short = short;
-using primitive_unsigned_short = unsigned short;
-using primitive_signed_int = int;
-using primitive_unsigned_int = unsigned int;
-using primitive_signed_long = long;
-using primitive_unsigned_long = unsigned long;
-using primitive_signed_long_long = long long;
-using primitive_unsigned_long_long = unsigned long long;
-using primitive_float = float;
-using primitive_double = double;
-using primitive_long_double = long double;
-using primitive_size_t = unsigned int;
-using primitive_ssize_t = int;
+static_assert(sizeof(int8_t) == 1, "int8 is not the right size");
+static_assert(sizeof(int16_t) == 2, "int16 is not the right size");
+static_assert(sizeof(int32_t) == 4, "int32 is not the right size");
+static_assert(sizeof(int64_t) == 8, "int64 is not the right size");
+static_assert(sizeof(uint8_t) == 1, "word8 is not the right size");
+static_assert(sizeof(uint16_t) == 2, "word16 is not the right size");
+static_assert(sizeof(uint32_t) == 4, "word32 is not the right size");
+static_assert(sizeof(uint64_t) == 8, "word64 is not the right size");
 
-#define bool Do_not_use_primitive_types__Try_Bool_instead
-#define char Do_not_use_primitive_types__Try_Char_instead
-#define wchar_t Do_not_use_primitive_types__Try_Word16_or_Char_instead
-#define short Do_not_use_primitive_types__Try_Int16_instead
-#define int Do_not_use_primitive_types__Try_Int32_instead
-#define long Do_not_use_primitive_types__Try_Int64_instead
-#define float Do_not_use_primitive_types__Try_Float_instead
-#define double Do_not_use_primitive_types__Try_Double_instead
-#define signed Do_not_use_primitive_types__Try_Int32_instead
-#define unsigned Do_not_use_primitive_types__Try_Word32_instead
-#define int8_t Do_not_use_primitive_types__Try_Int8_instead
-#define uint8_t Do_not_use_primitive_types__Try_Word8_instead
-#define int16_t Do_not_use_primitive_types__Try_Int16_instead
-#define uint16_t Do_not_use_primitive_types__Try_Word16_instead
-#define int32_t Do_not_use_primitive_types__Try_Int32_instead
-#define uint32_t Do_not_use_primitive_types__Try_Word32_instead
-#define int64_t Do_not_use_primitive_types__Try_Int64_instead
-#define uint64_t Do_not_use_primitive_types__Try_Word64_instead
-#define size_t Do_not_use_primitive_types__Try_Int_instead
-#define ssize_t Do_not_use_primitive_types__Try_Int_instead
+template <>
+constexpr bool isInteger<char>() {
+    return true;
+}
+
+template <>
+constexpr bool isInteger<short>() {
+    return true;
+}
+
+template <>
+constexpr bool isInteger<int>() {
+    return true;
+}
+
+template <>
+constexpr bool isInteger<long>() {
+    return true;
+}
+
+template <>
+constexpr bool isInteger<long long>() {
+    return true;
+}
+
+template <>
+constexpr bool isInteger<unsigned char>() {
+    return true;
+}
+
+template <>
+constexpr bool isInteger<unsigned short>() {
+    return true;
+}
+
+template <>
+constexpr bool isInteger<unsigned int>() {
+    return true;
+}
+
+template <>
+constexpr bool isInteger<unsigned long>() {
+    return true;
+}
+
+template <>
+constexpr bool isInteger<unsigned long long>() {
+    return true;
+}
+
+template <>
+constexpr bool isFloating<float>() {
+    return true;
+}
+
+template <>
+constexpr bool isFloating<double>() {
+    return true;
+}
+
+template <>
+constexpr bool isFloating<long double>() {
+    return true;
+}
+
+template <>
+constexpr bool isBoolean<bool>() {
+    return true;
+}
+
+template <>
+constexpr bool isSigned<char>() {
+    return true;
+}
+
+template <>
+constexpr bool isSigned<short>() {
+    return true;
+}
+
+template <>
+constexpr bool isSigned<int>() {
+    return true;
+}
+
+template <>
+constexpr bool isSigned<long>() {
+    return true;
+}
+
+template <>
+constexpr bool isSigned<long long>() {
+    return true;
+}
+
+template <>
+constexpr bool isSigned<float>() {
+    return true;
+}
+
+template <>
+constexpr bool isSigned<double>() {
+    return true;
+}
+
+template <>
+constexpr bool isSigned<long double>() {
+    return true;
+}
+
+template <>
+constexpr bool isUnsigned<unsigned char>() {
+    return true;
+}
+
+template <>
+constexpr bool isUnsigned<unsigned short>() {
+    return true;
+}
+
+template <>
+constexpr bool isUnsigned<unsigned int>() {
+    return true;
+}
+
+template <>
+constexpr bool isUnsigned<unsigned long>() {
+    return true;
+}
+
+template <>
+constexpr bool isUnsigned<unsigned long long>() {
+    return true;
+}
+
+template <>
+struct AsSigned<char> : ConstantType<char> {};
+
+template <>
+struct AsSigned<short> : ConstantType<short> {};
+
+template <>
+struct AsSigned<int> : ConstantType<int> {};
+
+template <>
+struct AsSigned<long> : ConstantType<long> {};
+
+template <>
+struct AsSigned<long long> : ConstantType<long long> {};
+
+template <>
+struct AsSigned<unsigned char> : ConstantType<char> {};
+
+template <>
+struct AsSigned<unsigned short> : ConstantType<short> {};
+
+template <>
+struct AsSigned<unsigned int> : ConstantType<int> {};
+
+template <>
+struct AsSigned<unsigned long> : ConstantType<long> {};
+
+template <>
+struct AsSigned<unsigned long long> : ConstantType<long long> {};
+
+template <>
+struct AsUnsigned<char> : ConstantType<unsigned char> {};
+
+template <>
+struct AsUnsigned<short> : ConstantType<unsigned short> {};
+
+template <>
+struct AsUnsigned<int> : ConstantType<unsigned int> {};
+
+template <>
+struct AsUnsigned<long> : ConstantType<unsigned long> {};
+
+template <>
+struct AsUnsigned<long long> : ConstantType<unsigned long long> {};
+
+template <>
+struct AsUnsigned<unsigned char> : ConstantType<unsigned char> {};
+
+template <>
+struct AsUnsigned<unsigned short> : ConstantType<unsigned short> {};
+
+template <>
+struct AsUnsigned<unsigned int> : ConstantType<unsigned int> {};
+
+template <>
+struct AsUnsigned<unsigned long> : ConstantType<unsigned long> {};
+
+template <>
+struct AsUnsigned<unsigned long long> : ConstantType<unsigned long long> {};
+
+template <>
+constexpr unsigned char max<unsigned char>() {
+    return (unsigned char)(~0ull);
+}
+
+template <>
+constexpr signed char max<signed char>() {
+    return max<unsigned char>() >> 1;
+}
+
+template <>
+constexpr unsigned short max<unsigned short>() {
+    return (unsigned short)(~0ull);
+}
+
+template <>
+constexpr short max<short>() {
+    return max<unsigned short>() >> 1;
+}
+
+template <>
+constexpr unsigned int max<unsigned int>() {
+    return (unsigned int)(~0ull);
+}
+
+template <>
+constexpr int max<int>() {
+    return max<unsigned int>() >> 1;
+}
+
+template <>
+constexpr unsigned long max<unsigned long>() {
+    return (unsigned long)(~0ull);
+}
+
+template <>
+constexpr long max<long>() {
+    return max<unsigned long>() >> 1;
+}
+
+template <>
+constexpr unsigned long long max<unsigned long long>() {
+    return (unsigned long long)(~0ull);
+}
+
+template <>
+constexpr long long max<long long>() {
+    return max<unsigned long long>() >> 1;
+}
+
+template <>
+constexpr unsigned char min<unsigned char>() {
+    return 0;
+}
+
+template <>
+constexpr signed char min<signed char>() {
+    return (signed char)(1ll << (sizeof(signed char) * 8 - 1));
+}
+
+template <>
+constexpr unsigned short min<unsigned short>() {
+    return 0;
+}
+
+template <>
+constexpr short min<short>() {
+    return short(1ll << (sizeof(short) * 8 - 1));
+}
+
+template <>
+constexpr unsigned int min<unsigned int>() {
+    return 0;
+}
+
+template <>
+constexpr int min<int>() {
+    return int(1ll << (sizeof(int) * 8 - 1));
+}
+
+template <>
+constexpr unsigned long min<unsigned long>() {
+    return 0;
+}
+
+template <>
+constexpr long min<long>() {
+    return long(1ll << (sizeof(long) * 8 - 1));
+}
+
+template <>
+constexpr unsigned long long min<unsigned long long>() {
+    return 0;
+}
+
+template <>
+constexpr long long min<long long>() {
+    return (long long)(1ll << (sizeof(long long) * 8 - 1));
+}
+
+static_assert(max<int8_t>() == 0x7F, "");
+static_assert(max<int16_t>() == 0x7FFF, "");
+static_assert(max<int32_t>() == 0x7FFFFFFF, "");
+static_assert(max<int64_t>() == 0x7FFFFFFFFFFFFFFF, "");
+static_assert(max<uint8_t>() == 0xFF, "");
+static_assert(max<uint16_t>() == 0xFFFF, "");
+static_assert(max<uint32_t>() == 0xFFFFFFFF, "");
+static_assert(max<uint64_t>() == 0xFFFFFFFFFFFFFFFF, "");
+
+static_assert(min<int8_t>() == int8_t(0x80), "");
+static_assert(min<int16_t>() == int16_t(0x8000), "");
+static_assert(min<int32_t>() == int32_t(0x80000000), "");
+static_assert(min<int64_t>() == int64_t(0x8000000000000000), "");
+static_assert(min<uint8_t>() == 0, "");
+static_assert(min<uint16_t>() == 0, "");
+static_assert(min<uint32_t>() == 0, "");
+static_assert(min<uint64_t>() == 0, "");
 
 #endif

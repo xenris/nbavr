@@ -28,11 +28,11 @@
 #ifndef NBOS_CHIP_HPP
 #define NBOS_CHIP_HPP
 
-#include "safe.hpp"
+#include "../primitive.hpp"
 
 namespace nbos {
 
-template <class T, Integer addr>
+template <class T, size_t addr>
 struct _reg {
     T*const p = (T*)(addr);
 };

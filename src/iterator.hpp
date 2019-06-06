@@ -1,8 +1,6 @@
 #ifndef NBOS_ITERATOR_HPP
 #define NBOS_ITERATOR_HPP
 
-#include "safe.hpp"
-
 template<class T>
 auto begin(T& t) -> decltype(t.begin()) {
     return t.begin();

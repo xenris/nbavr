@@ -3,7 +3,7 @@
 /// # {{Priority Queue}}
 
 /// ```c++
-/// nbos::PriorityQueue<Int32, 6> priorityQueue;
+/// nbos::PriorityQueue<int, 6> priorityQueue;
 ///
 /// priorityQueue.push(6);
 /// priorityQueue.push(8);
@@ -12,9 +12,9 @@
 /// priorityQueue.push(1);
 /// priorityQueue.push(2);
 ///
-/// nbos::PriorityQueue<Int32>* pointer = &priorityQueue;
+/// nbos::PriorityQueue<int>* pointer = &priorityQueue;
 ///
-/// Int32 n;
+/// int n;
 ///
 /// while(pointer->pop(&n)) {
 ///     // 1, 2, 4, 5, 6, 8
@@ -25,13 +25,14 @@
 #define NBOS_PRIORITYQUEUE_HPP
 
 #include "optional.hpp"
+#include "primitive.hpp"
 
 namespace nbos {
 
-/// ## class PriorityQueue<class Type, Int size\>
-template <class Type, Int size = -1>
+/// ## class PriorityQueue<class Type, int size\>
+template <class Type, int size = -1>
 class PriorityQueue : public PriorityQueue<Type> {
-    Type _buffer[size];
+    Type _buffer[uint(size)];
 
 public:
 
@@ -49,30 +50,30 @@ struct PriorityQueue<T, -1> {
 private:
 
     T*const _buffer;
-    const Int _size;
-    Int _head;
-    Bool (*_compare)(const T& a, const T& b);
+    const int _size;
+    int _head;
+    bool (*_compare)(const T& a, const T& b);
 
 public:
 
-    /// #### PriorityQueue(T\* buffer, Int size)
+    /// #### PriorityQueue(T\* buffer, int size)
     /// Construct a priority queue with the given buffer.
-    PriorityQueue(T* buffer, Int size) : _buffer(buffer - 1), _size(size) {
+    PriorityQueue(T* buffer, int size) : _buffer(buffer - 1), _size(size) {
         _head = 1;
         _compare = defaultCompare;
     }
 
-    /// #### Bool push(T t)
+    /// #### bool push(T t)
     /// Returns true on success.
-    Bool push(const T& t) {
+    bool push(const T& t) {
         if(full()) {
             return false;
         }
 
         _buffer[_head] = t;
 
-        Int c = _head;
-        Int p = c / 2;
+        int c = _head;
+        int p = c / 2;
 
         _head++;
 
@@ -102,13 +103,13 @@ public:
 
         _buffer[1] = _buffer[_head];
 
-        Int p = 1;
+        int p = 1;
 
         while((p * 2) <= _head) {
-            Int c1 = p * 2;
-            Int c2 = p * 2 + 1;
+            int c1 = p * 2;
+            int c2 = p * 2 + 1;
 
-            Int c = (c2 > _head) ? (c1) : (_compare(_buffer[c1], _buffer[c2]) ? c1 : c2);
+            int c = (c2 > _head) ? (c1) : (_compare(_buffer[c1], _buffer[c2]) ? c1 : c2);
 
             if(_compare(_buffer[c], _buffer[p])) {
                 swap(&_buffer[c], &_buffer[p]);
@@ -137,51 +138,51 @@ public:
         _head = 1;
     }
 
-    /// #### Int size()
+    /// #### int size()
     /// Get the number of elements currently in the priority queue.
-    Int size() const {
+    int size() const {
         return (_head - 1);
     }
 
-    /// #### Int free()
+    /// #### int free()
     /// Get the amount of free space in the priority queue.
-    Int free() const {
+    int free() const {
         return _size - (_head - 1);
     }
 
-    /// #### Int capacity()
+    /// #### int capacity()
     /// Get the total capacity of the priority queue.
-    Int capacity() const {
+    int capacity() const {
         return _size;
     }
 
-    /// #### Bool empty()
+    /// #### bool empty()
     /// Returns true if the priority queue is empty.
-    Bool empty() const {
+    bool empty() const {
         return (_head - 1) == 0;
     }
 
-    /// #### Bool full()
+    /// #### bool full()
     /// Returns true if the priority queue is full.
-    Bool full() const {
+    bool full() const {
         return (_head - 1) == _size;
     }
 
-    /// #### void compare(Bool (*f)(const T& a, const T& b))
+    /// #### void compare(bool (*f)(const T& a, const T& b))
     /// Set the function used to compare elements.
-    void compare(Bool (*f)(const T& a, const T& b)) {
+    void compare(bool (*f)(const T& a, const T& b)) {
         _compare = f;
     }
 
-    /// #### Bool compare(T a, T b)
+    /// #### bool compare(T a, T b)
     /// Returns true if a comes before b.
-    Bool compare(const T& a, const T& b) const {
+    bool compare(const T& a, const T& b) const {
         return _compare(a, b);
     }
 
 private:
 
-    static Bool defaultCompare(const T& a, const T& b) {
+    static bool defaultCompare(const T& a, const T& b) {
         return a < b;
     }
 };
@@ -189,7 +190,7 @@ private:
 #ifdef TEST
 
 TEST(Container, PriorityQueue) {
-    PriorityQueue<Int8, 5> pq;
+    PriorityQueue<int8_t, 5> pq;
 
     EXPECT_TRUE(pq.empty());
     EXPECT_FALSE(pq.full());
@@ -210,7 +211,7 @@ TEST(Container, PriorityQueue) {
     EXPECT_TRUE(pq.full());
     EXPECT_EQ(pq.size(), 5);
 
-    Optional<Int8> n;
+    Optional<int8_t> n;
 
     EXPECT_TRUE(n = pq.pop());
     EXPECT_EQ(*n, 1);
@@ -243,9 +244,9 @@ TEST(Container, PriorityQueue) {
 }
 
 TEST(Container, PriorityQueueMemoryUse) {
-    Int a[5] = {};
+    int a[5] = {};
 
-    PriorityQueue<Int> pq(&a[1], 3);
+    PriorityQueue<int> pq(&a[1], 3);
 
     pq.push(1);
     pq.push(2);

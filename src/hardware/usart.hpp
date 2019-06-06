@@ -25,6 +25,8 @@
 #include "macros.hpp"
 #include "system.hpp"
 #include "callback.hpp"
+#include "math.hpp"
+#include "primitive.hpp"
 
 #include "loopi"
 
@@ -119,14 +121,14 @@ struct UsartN {
             //     setBit_(REG(USART_N(USART_REG_SELECT_REG)), USART_N(USART_REG_SELECT_BIT), true);
             // #endif
 
-            setBit_(REG(USART_N(MODE_BIT_0_REG)), USART_N(MODE_BIT_0_BIT), Int(m) & 0x01);
+            setBit_(REG(USART_N(MODE_BIT_0_REG)), USART_N(MODE_BIT_0_BIT), int(m) & 0x01);
 
             #if DEFINED(USART_N(MODE_BIT_1_BIT))
-                setBit_(REG(USART_N(MODE_BIT_1_REG)), USART_N(MODE_BIT_1_BIT), Int(m) & 0x02);
+                setBit_(REG(USART_N(MODE_BIT_1_REG)), USART_N(MODE_BIT_1_BIT), int(m) & 0x02);
             #endif
 
             #if DEFINED(USART_N(MODE_BIT_2_BIT))
-                setBit_(REG(USART_N(MODE_BIT_2_REG)), USART_N(MODE_BIT_2_BIT), Int(m) & 0x04);
+                setBit_(REG(USART_N(MODE_BIT_2_REG)), USART_N(MODE_BIT_2_BIT), int(m) & 0x04);
             #endif
         }
     #endif
@@ -134,14 +136,14 @@ struct UsartN {
     #if DEFINED(USART_N(PARITY_BIT_0_BIT))
         /// #### static void parity([[UsartN::Parity]] p)
         static force_inline void parity(Parity p) {
-            setBit_(REG(USART_N(PARITY_BIT_0_REG)), USART_N(PARITY_BIT_0_BIT), Int(p) & 0x01);
+            setBit_(REG(USART_N(PARITY_BIT_0_REG)), USART_N(PARITY_BIT_0_BIT), int(p) & 0x01);
 
             #if DEFINED(USART_N(PARITY_BIT_1_BIT))
-                setBit_(REG(USART_N(PARITY_BIT_1_REG)), USART_N(PARITY_BIT_1_BIT), Int(p) & 0x02);
+                setBit_(REG(USART_N(PARITY_BIT_1_REG)), USART_N(PARITY_BIT_1_BIT), int(p) & 0x02);
             #endif
 
             #if DEFINED(USART_N(PARITY_BIT_2_BIT))
-                setBit_(REG(USART_N(PARITY_BIT_2_REG)), USART_N(PARITY_BIT_2_BIT), Int(p) & 0x04);
+                setBit_(REG(USART_N(PARITY_BIT_2_REG)), USART_N(PARITY_BIT_2_BIT), int(p) & 0x04);
             #endif
         }
     #endif
@@ -153,10 +155,10 @@ struct UsartN {
             //     setBit_(REG(USART_N(USART_REG_SELECT_REG)), USART_N(USART_REG_SELECT_BIT), true);
             // #endif
 
-            setBit_(REG(USART_N(STOP_BITS_BIT_0_REG)), USART_N(STOP_BITS_BIT_0_BIT), Int(b) & 0x01);
+            setBit_(REG(USART_N(STOP_BITS_BIT_0_REG)), USART_N(STOP_BITS_BIT_0_BIT), int(b) & 0x01);
 
             #if DEFINED(USART_N(STOP_BITS_BIT_1_BIT))
-                setBit_(REG(USART_N(STOP_BITS_BIT_1_REG)), USART_N(STOP_BITS_BIT_1_BIT), Int(b) & 0x02);
+                setBit_(REG(USART_N(STOP_BITS_BIT_1_REG)), USART_N(STOP_BITS_BIT_1_BIT), int(b) & 0x02);
             #endif
         }
     #endif
@@ -164,18 +166,18 @@ struct UsartN {
     #if DEFINED(USART_N(CHARACTER_SIZE_BIT_0_BIT))
         /// #### static void characterSize([[UsartN::CharacterSize]] s)
         static force_inline void characterSize(CharacterSize s) {
-            setBit_(REG(USART_N(CHARACTER_SIZE_BIT_0_REG)), USART_N(CHARACTER_SIZE_BIT_0_BIT), Int(s) & 0x01);
+            setBit_(REG(USART_N(CHARACTER_SIZE_BIT_0_REG)), USART_N(CHARACTER_SIZE_BIT_0_BIT), int(s) & 0x01);
 
             #if DEFINED(USART_N(CHARACTER_SIZE_BIT_1_BIT))
-                setBit_(REG(USART_N(CHARACTER_SIZE_BIT_1_REG)), USART_N(CHARACTER_SIZE_BIT_1_BIT), Int(s) & 0x02);
+                setBit_(REG(USART_N(CHARACTER_SIZE_BIT_1_REG)), USART_N(CHARACTER_SIZE_BIT_1_BIT), int(s) & 0x02);
             #endif
 
             #if DEFINED(USART_N(CHARACTER_SIZE_BIT_2_BIT))
-                setBit_(REG(USART_N(CHARACTER_SIZE_BIT_2_REG)), USART_N(CHARACTER_SIZE_BIT_2_BIT), Int(s) & 0x04);
+                setBit_(REG(USART_N(CHARACTER_SIZE_BIT_2_REG)), USART_N(CHARACTER_SIZE_BIT_2_BIT), int(s) & 0x04);
             #endif
 
             #if DEFINED(USART_N(CHARACTER_SIZE_BIT_3_BIT))
-                setBit_(REG(USART_N(CHARACTER_SIZE_BIT_3_REG)), USART_N(CHARACTER_SIZE_BIT_3_BIT), Int(s) & 0x08);
+                setBit_(REG(USART_N(CHARACTER_SIZE_BIT_3_REG)), USART_N(CHARACTER_SIZE_BIT_3_BIT), int(s) & 0x08);
             #endif
         }
     #endif
@@ -183,47 +185,48 @@ struct UsartN {
     #if DEFINED(USART_N(POLARITY_BIT_0_BIT))
         /// #### static void polarity([[UsartN::Polarity]] p)
         static force_inline void polarity(Polarity p) {
-            setBit_(REG(USART_N(POLARITY_BIT_0_REG)), USART_N(POLARITY_BIT_0_BIT), Int(p) & 0x01);
+            setBit_(REG(USART_N(POLARITY_BIT_0_REG)), USART_N(POLARITY_BIT_0_BIT), int(p) & 0x01);
 
             #if DEFINED(USART_N(POLARITY_BIT_1_BIT))
-                setBit_(REG(USART_N(POLARITY_BIT_1_REG)), USART_N(POLARITY_BIT_1_BIT), Int(p) & 0x02);
+                setBit_(REG(USART_N(POLARITY_BIT_1_REG)), USART_N(POLARITY_BIT_1_BIT), int(p) & 0x02);
             #endif
         }
     #endif
 
-    /// #### static void baud(Word16 b)
-    static force_inline void baud(Word16 b) {
+    /// #### static void baud(uint16_t b)
+    static force_inline void baud(uint16_t b) {
         b &= 0x0fff;
 
         #if CAT(USART_N(BAUD_RATE_REG), _ADDR)
             setReg_(REG(USART_N(BAUD_RATE_REG)), b);
         #else
-            setReg_(REG(USART_N(BAUD_RATE_REG_HIGH)), Word8(b >> 8));
-            setReg_(REG(USART_N(BAUD_RATE_REG_LOW)), Word8(b));
+            setReg_(REG(USART_N(BAUD_RATE_REG_HIGH)), uint8_t(b >> 8));
+            setReg_(REG(USART_N(BAUD_RATE_REG_LOW)), uint8_t(b));
         #endif
     }
 
     #if DEFINED(USART_N(DOUBLE_SPEED_BIT_0_BIT))
-        /// #### static void use2X(Bool u)
-        static force_inline void use2X(Bool u) {
-            setBit_(REG(USART_N(DOUBLE_SPEED_BIT_0_REG)), USART_N(DOUBLE_SPEED_BIT_0_BIT), u);
+        /// #### static void use2X(bool u)
+        static force_inline void use2X(bool u) {
+            // FIXME Other bits in this register need to always be written as zero.
+            setBit_(REG(USART_N(DOUBLE_SPEED_BIT_0_REG)), uint8_t(0x03), USART_N(DOUBLE_SPEED_BIT_0_BIT), u);
         }
     #endif
 
     /// #### static void setBaudRate<cpuFreq, baudRate>()
     /// Set the baud and 2x registers from the given CPU frequency and baud rate.
-    template <Integer cpuFreq, Integer baudRate>
+    template <uint64_t cpuFreq, uint64_t baudRate>
     static force_inline void setBaudRate() {
-        const Word16 ubrr1x = Word16(Float(cpuFreq) / (Float(baudRate) * 16) - 1 + 0.5);
-        const Word16 ubrr2x = Word16(Float(cpuFreq) / (Float(baudRate) * 8) - 1 + 0.5);
+        const uint16_t ubrr1x = uint16_t(float(cpuFreq) / (float(baudRate) * 16) - 1 + 0.5);
+        const uint16_t ubrr2x = uint16_t(float(cpuFreq) / (float(baudRate) * 8) - 1 + 0.5);
 
-        const Word32 baudTrue1x = cpuFreq / Integer((ubrr1x + 1) * 16);
-        const Word32 baudTrue2x = cpuFreq / Integer((ubrr1x + 1) * 8);
+        const uint64_t baudTrue1x = cpuFreq / uint64_t((ubrr1x + 1) * 16);
+        const uint64_t baudTrue2x = cpuFreq / uint64_t((ubrr2x + 1) * 8);
 
-        const Float ubrr1xError = (Float(baudTrue1x) / Float(baudRate)) - 1;
-        const Float ubrr2xError = (Float(baudTrue2x) / Float(baudRate)) - 1;
+        const float ubrr1xError = (float(baudTrue1x) / float(baudRate)) - 1;
+        const float ubrr2xError = (float(baudTrue2x) / float(baudRate)) - 1;
 
-        const Bool use2x = ubrr2xError < ubrr1xError;
+        const bool use2x = abs(ubrr2xError) < abs(ubrr1xError);
 
         #if DEFINED(USART_N(DOUBLE_SPEED_BIT_0_BIT))
             use2X(use2x);
@@ -236,43 +239,45 @@ struct UsartN {
     }
 
     #if DEFINED(USART_N(RX_ENABLE_BIT_0_BIT))
-        /// #### static void receiverEnable(Bool e)
-        static force_inline void receiverEnable(Bool e) {
+        /// #### static void receiverEnable(bool e)
+        static force_inline void receiverEnable(bool e) {
             setBit_(REG(USART_N(RX_ENABLE_BIT_0_REG)), USART_N(RX_ENABLE_BIT_0_BIT), e);
         }
     #endif
 
     #if DEFINED(USART_N(TX_ENABLE_BIT_0_BIT))
-        /// #### static void transmitterEnable(Bool e)
-        static force_inline void transmitterEnable(Bool e) {
+        /// #### static void transmitterEnable(bool e)
+        static force_inline void transmitterEnable(bool e) {
             setBit_(REG(USART_N(TX_ENABLE_BIT_0_REG)), USART_N(TX_ENABLE_BIT_0_BIT), e);
         }
     #endif
 
     #if DEFINED(USART_N(MULTI_PROCESSOR_COMMUNICATION_BIT_0_BIT))
-        /// #### static void multiprocessorCummunicationMode(Bool e)
-        static force_inline void multiprocessorCummunicationMode(Bool e) {
-            setBit_(REG(USART_N(MULTI_PROCESSOR_COMMUNICATION_BIT_0_REG)), USART_N(MULTI_PROCESSOR_COMMUNICATION_BIT_0_BIT), e);
+        /// #### static void multiprocessorCummunicationMode(bool e)
+        static force_inline void multiprocessorCummunicationMode(bool e) {
+            // FIXME Other bits in this register need to always be written as zero.
+            // TODO Create an access mask value which is applied when setting registers.
+            setBit_(REG(USART_N(MULTI_PROCESSOR_COMMUNICATION_BIT_0_REG)), uint8_t(0x03), USART_N(MULTI_PROCESSOR_COMMUNICATION_BIT_0_BIT), e);
         }
     #endif
 
     #if DEFINED(USART_N(RX_COMPLETE_INT_ENABLE_BIT_0_BIT))
-        /// #### static void rxCompleteIntEnable(Bool e)
-        static force_inline void rxCompleteIntEnable(Bool e) {
+        /// #### static void rxCompleteIntEnable(bool e)
+        static force_inline void rxCompleteIntEnable(bool e) {
             setBit_(REG(USART_N(RX_COMPLETE_INT_ENABLE_BIT_0_REG)), USART_N(RX_COMPLETE_INT_ENABLE_BIT_0_BIT), e);
         }
     #endif
 
     #if DEFINED(USART_N(TX_COMPLETE_INT_ENABLE_BIT_0_BIT))
-        /// #### static void txCompleteIntEnable(Bool e)
-        static force_inline void txCompleteIntEnable(Bool e) {
+        /// #### static void txCompleteIntEnable(bool e)
+        static force_inline void txCompleteIntEnable(bool e) {
             setBit_(REG(USART_N(TX_COMPLETE_INT_ENABLE_BIT_0_REG)), USART_N(TX_COMPLETE_INT_ENABLE_BIT_0_BIT), e);
         }
     #endif
 
     #if DEFINED(USART_N(DATA_REG_EMPTY_INT_ENABLE_BIT_0_BIT))
-        /// #### static void dataRegisterEmptyIntEnable(Bool e)
-        static force_inline void dataRegisterEmptyIntEnable(Bool e) {
+        /// #### static void dataRegisterEmptyIntEnable(bool e)
+        static force_inline void dataRegisterEmptyIntEnable(bool e) {
             setBit_(REG(USART_N(DATA_REG_EMPTY_INT_ENABLE_BIT_0_REG)), USART_N(DATA_REG_EMPTY_INT_ENABLE_BIT_0_BIT), e);
         }
     #endif
@@ -310,29 +315,29 @@ struct UsartN {
         deCallback();
     }
 
-    /// #### static void push(Word8 b)
-    static force_inline void push(Word8 b) {
+    /// #### static void push(uint8_t b)
+    static force_inline void push(uint8_t b) {
         setReg_(REG(USART_N(DATA_REG)), b);
     }
 
     #if DEFINED(USART_N(TX_DATA_BIT_8_BIT))
-        /// #### static void push9(Word16 b)
-        static force_inline void push9(Word16 b) {
-            setBit_(REG(USART_N(TX_DATA_BIT_8_REG)), USART_N(TX_DATA_BIT_8_BIT), Bool(b & 0x0100));
+        /// #### static void push9(uint16_t b)
+        static force_inline void push9(uint16_t b) {
+            setBit_(REG(USART_N(TX_DATA_BIT_8_REG)), USART_N(TX_DATA_BIT_8_BIT), bool(b & 0x0100));
 
-            setReg_(REG(USART_N(DATA_REG)), Word8(b));
+            setReg_(REG(USART_N(DATA_REG)), uint8_t(b));
         }
     #endif
 
-    /// #### static Word8 pop()
-    static force_inline Word8 pop() {
+    /// #### static uint8_t pop()
+    static force_inline uint8_t pop() {
         return getReg_(REG(USART_N(DATA_REG)));
     }
 
     #if DEFINED(USART_N(RX_DATA_BIT_8_BIT))
-        /// #### static Word16 pop9()
-        static force_inline Word16 pop9() {
-            Word16 result = Word16(getReg_(REG(USART_N(DATA_REG))));
+        /// #### static uint16_t pop9()
+        static force_inline uint16_t pop9() {
+            uint16_t result = uint16_t(getReg_(REG(USART_N(DATA_REG))));
 
             if(getBit_(REG(USART_N(RX_DATA_BIT_8_REG)), USART_N(RX_DATA_BIT_8_BIT))) {
                 result |= 0x0100;
@@ -343,44 +348,23 @@ struct UsartN {
     #endif
 
     #if DEFINED(USART_N(FRAME_ERROR_BIT_0_BIT))
-        /// #### static Bool frameError()
-        static force_inline Bool frameError() {
+        /// #### static bool frameError()
+        static force_inline bool frameError() {
             return getBit_(REG(USART_N(FRAME_ERROR_BIT_0_REG)), USART_N(FRAME_ERROR_BIT_0_BIT));
         }
     #endif
 
-    #if DEFINED(USART_N(FRAME_ERROR_BIT_0_BIT))
-        /// #### static void frameErrorClear()
-        static force_inline void frameErrorClear() {
-            setBit_(REG(USART_N(FRAME_ERROR_BIT_0_REG)), USART_N(FRAME_ERROR_BIT_0_BIT), false);
-        }
-    #endif
-
     #if DEFINED(USART_N(DATA_OVERRUN_BIT_0_BIT))
-        /// #### static Bool dataOverRun()
-        static force_inline Bool dataOverRun() {
+        /// #### static bool dataOverRun()
+        static force_inline bool dataOverRun() {
             return getBit_(REG(USART_N(DATA_OVERRUN_BIT_0_REG)), USART_N(DATA_OVERRUN_BIT_0_BIT));
         }
     #endif
 
-    #if DEFINED(USART_N(DATA_OVERRUN_BIT_0_BIT))
-        /// #### static void dataOverRunClear()
-        static force_inline void dataOverRunClear() {
-            setBit_(REG(USART_N(DATA_OVERRUN_BIT_0_REG)), USART_N(DATA_OVERRUN_BIT_0_BIT), false);
-        }
-    #endif
-
     #if DEFINED(USART_N(PARITY_ERROR_BIT_0_BIT))
-        /// #### static Bool parityError()
-        static force_inline Bool parityError() {
+        /// #### static bool parityError()
+        static force_inline bool parityError() {
             return getBit_(REG(USART_N(PARITY_ERROR_BIT_0_REG)), USART_N(PARITY_ERROR_BIT_0_BIT));
-        }
-    #endif
-
-    #if DEFINED(USART_N(PARITY_ERROR_BIT_0_BIT))
-        /// #### static void parityErrorClear()
-        static force_inline void parityErrorClear() {
-            setBit_(REG(USART_N(PARITY_ERROR_BIT_0_REG)), USART_N(PARITY_ERROR_BIT_0_BIT), false);
         }
     #endif
 
@@ -569,33 +553,15 @@ TEST(UsartN, pop) {
     }
 #endif
 
-#if DEFINED(USART_N(FRAME_ERROR_BIT_0_BIT))
-    TEST(UsartN, frameErrorClear) {
-        TEST_REG_WRITE(UsartN::frameErrorClear());
-    }
-#endif
-
 #if DEFINED(USART_N(DATA_OVERRUN_BIT_0_BIT))
     TEST(UsartN, dataOverRun) {
         TEST_REG_READ_WRITE(UsartN::dataOverRun());
     }
 #endif
 
-#if DEFINED(USART_N(DATA_OVERRUN_BIT_0_BIT))
-    TEST(UsartN, dataOverRunClear) {
-        TEST_REG_WRITE(UsartN::dataOverRunClear());
-    }
-#endif
-
 #if DEFINED(USART_N(PARITY_ERROR_BIT_0_BIT))
     TEST(UsartN, parityError) {
         TEST_REG_READ_WRITE(UsartN::parityError());
-    }
-#endif
-
-#if DEFINED(USART_N(PARITY_ERROR_BIT_0_BIT))
-    TEST(UsartN, parityErrorClear) {
-        TEST_REG_WRITE(UsartN::parityErrorClear());
     }
 #endif
 

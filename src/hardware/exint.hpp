@@ -62,8 +62,8 @@ struct ExIntN {
     }
 
     #if DEFINED(EXINT_N(ENABLE_BIT_0_BIT))
-        /// #### static void intEnable(Bool e)
-        static force_inline void intEnable(Bool e) {
+        /// #### static void intEnable(bool e)
+        static force_inline void intEnable(bool e) {
             setBit_(REG(EXINT_N(ENABLE_BIT_0_REG)), EXINT_N(ENABLE_BIT_0_BIT), e);
         }
     #endif
@@ -71,8 +71,8 @@ struct ExIntN {
     #if DEFINED(EXINT_N(TRIGGER_BIT_0_BIT))
         /// #### static void trigger([[ExIntN::Trigger]] t)
         static force_inline void trigger(Trigger t) {
-            setBit_(REG(EXINT_N(TRIGGER_BIT_0_REG)), EXINT_N(TRIGGER_BIT_0_BIT), Int(t) & 0x01);
-            setBit_(REG(EXINT_N(TRIGGER_BIT_1_REG)), EXINT_N(TRIGGER_BIT_1_BIT), Int(t) & 0x02);
+            setBit_(REG(EXINT_N(TRIGGER_BIT_0_REG)), EXINT_N(TRIGGER_BIT_0_BIT), int(t) & 0x01);
+            setBit_(REG(EXINT_N(TRIGGER_BIT_1_REG)), EXINT_N(TRIGGER_BIT_1_BIT), int(t) & 0x02);
         }
     #endif
 
@@ -88,8 +88,8 @@ struct ExIntN {
     }
 
     #if DEFINED(EXINT_N(INT_FLAG_BIT_0_BIT))
-        /// #### static Bool intFlag()
-        static force_inline Bool intFlag() {
+        /// #### static bool intFlag()
+        static force_inline bool intFlag() {
             return getBit_(REG(EXINT_N(INT_FLAG_BIT_0_REG)), EXINT_N(INT_FLAG_BIT_0_BIT));
         }
     #endif
@@ -97,7 +97,7 @@ struct ExIntN {
     #if DEFINED(EXINT_N(INT_FLAG_BIT_0_BIT))
         /// #### static void intFlagClear()
         static force_inline void intFlagClear() {
-            setBit_(REG(EXINT_N(INT_FLAG_BIT_0_REG)), EXINT_N(INT_FLAG_BIT_0_BIT), true);
+            clearFlagBit(REG(EXINT_N(INT_FLAG_BIT_0_REG)), EXINT_N(INT_FLAG_BIT_0_BIT));
         }
     #endif
 

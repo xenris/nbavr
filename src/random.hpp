@@ -14,13 +14,13 @@
 #ifndef NBOS_RANDOM_HPP
 #define NBOS_RANDOM_HPP
 
-#include "safe.hpp"
+#include "primitive.hpp"
 
 namespace nbos {
 
 /// ## class Random
 class Random {
-    Word32 _next;
+    uint32_t _next;
 
 public:
 
@@ -29,9 +29,9 @@ public:
     Random() : _next(0) {
     }
 
-    /// #### Random(Word32 seed)
+    /// #### Random(uint32_t seed)
     /// Constructor with user defined seed.
-    Random(Word32 seed) : _next(seed) {
+    Random(uint32_t seed) : _next(seed) {
     }
 
     /// #### T next<class T>()
@@ -43,9 +43,9 @@ public:
     T next() {
         _next = _next * 1103515245 + 12345;
 
-        Word32 result = (_next / 65536) % 32768;
+        uint32_t result = (_next / 65536) % 32768;
 
-        if constexpr (IsFloating<T>::value) {
+        if constexpr (isFloating<T>()) {
             return T(result) / T(32768);
         } else {
             return T(result);
@@ -59,10 +59,10 @@ TEST(Random, Limits) {
     Random r;
 
     // Technically not guaranteed to be true, just very likely.
-    EXPECT_TRUE(r.next<Float>() != r.next<Float>());
+    EXPECT_TRUE(r.next<float>() != r.next<float>());
 
-    for(Int i = 0; i < 1000; i++) {
-        const Float n = r.next<Float>();
+    for(int i = 0; i < 1000; i++) {
+        const float n = r.next<float>();
 
         EXPECT_LE(n, 1);
         EXPECT_GE(n, 0);

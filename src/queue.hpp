@@ -3,23 +3,23 @@
 /// # {{Queue}}
 
 /// ```c++
-/// nbos::Queue<Int32, 6> queue;
+/// nbos::Queue<int, 6> queue;
 ///
 /// queue.push(3);
 /// queue.push(7);
 /// queue.push(1);
 /// queue.push(2);
 ///
-/// Int s = queue.size(); // s = 4
+/// int s = queue.size(); // s = 4
 ///
-/// Int32 a = 0;
+/// int a = 0;
 ///
 /// queue.pop(&a); // a = 3
 /// queue.pop(&a); // a = 7
 ///
 /// s = queue.size(); // s = 2
 ///
-/// nbos::Queue<Int32>* pointer = &queue;
+/// nbos::Queue<int>* pointer = &queue;
 ///
 /// pointer->push(4);
 ///
@@ -29,13 +29,16 @@
 #ifndef NBOS_QUEUE_HPP
 #define NBOS_QUEUE_HPP
 
-#include "optional.hpp"
 #include "callback.hpp"
+#include "optional.hpp"
+#include "primitive.hpp"
 
 namespace nbos {
 
-/// ## class Queue<class Type, Int bufferSize\>
-template <class Type, Int bufferSize = -1>
+// XXX FIXME Should it be ssize_t instead?
+
+/// ## class Queue<class Type, size_t bufferSize\>
+template <class Type, size_t bufferSize = 0>
 class Queue : public Queue<Type> {
     Type _buffer[bufferSize];
 
@@ -49,26 +52,26 @@ public:
 
 /// ## class Queue<class Type\>
 template <class Type>
-class Queue<Type, -1> {
+class Queue<Type, 0> {
     Type*const _buffer;
-    Int _bufferSize;
-    Int _head = 0;
-    Int _tail = 0;
-    Bool _full = false;
+    size_t _bufferSize;
+    size_t _head = 0;
+    size_t _tail = 0;
+    bool _full = false;
     Callback<void> _callback;
     void* _callback_data;
 
 public:
 
-    /// #### Queue(Type\* buffer, Int bufferSize)
+    /// #### Queue(Type\* buffer, size_t bufferSize)
     /// Construct a queue with the given buffer.
-    Queue(Type* buffer, Int bufferSize) : _buffer(buffer) {
+    Queue(Type* buffer, size_t bufferSize) : _buffer(buffer) {
         _bufferSize = bufferSize;
     }
 
-    /// #### Bool push(Type t)
+    /// #### bool push(Type t)
     /// Returns true on success.
-    Bool push(const Type& t) {
+    bool push(const Type& t) {
         if(full()) {
             return false;
         }
@@ -82,6 +85,26 @@ public:
         }
 
         return true;
+    }
+
+    /// #### T\* push()
+    /// Pushes an uninitialised element to the queue and returns a pointer to it.<br>
+    /// Useful to avoid copying large blocks of memory if the elements are large.<br>
+    /// Returns nullptr if the queue is full.
+    Type* push() {
+        if(full()) {
+            return nullptr;
+        }
+
+        Type*const t = &_buffer[_head];
+
+        _head = (_head + 1) % _bufferSize;
+
+        if(_head == _tail) {
+            _full = true;
+        }
+
+        return t;
     }
 
     /// #### [[Optional]]<Type\> pop()
@@ -108,6 +131,15 @@ public:
         return _buffer[_tail];
     }
 
+    /// #### Type\* peek()
+    Type* peek(int) const {
+        if(empty()) {
+            return nullptr;
+        }
+
+        return &_buffer[_tail];
+    }
+
     /// #### void clear()
     /// Remove all elements from the queue.
     void clear() {
@@ -115,43 +147,43 @@ public:
         _full = false;
     }
 
-    /// #### Int size()
+    /// #### size_t size()
     /// Get the number of elements currently in the queue.
-    Int size() {
+    size_t size() const {
         if(full()) {
             return _bufferSize;
         }
 
-        Int s = _head - _tail;
+        ssize_t s = ssize_t(_head - _tail);
 
         if(s < 0) {
-            s += _bufferSize;
+            s += ssize_t(_bufferSize);
         }
 
-        return s;
+        return size_t(s);
     }
 
-    /// #### Int free()
+    /// #### size_t free()
     /// Get the amount of free space in the queue.
-    Int free() {
+    size_t free() const {
         return _bufferSize - size();
     }
 
-    /// ### Int capacity()
+    /// ### size_t capacity()
     /// Get the total capacity of the queue.
-    Int capacity() {
+    size_t capacity() const {
         return _bufferSize;
     }
 
-    /// #### Bool empty()
+    /// #### bool empty()
     /// Returns true if the queue is empty.
-    Bool empty() {
+    bool empty() const {
         return (_head == _tail) && !full();
     }
 
-    /// #### Bool full()
+    /// #### bool full()
     /// Returns true if the queue is full.
-    Bool full() {
+    bool full() const {
         return _full || (_bufferSize == 0);
     }
 
@@ -176,11 +208,11 @@ public:
         }
     }
 
-    Queue<Type>* p() {
+    Queue<Type>* ptr() {
         return this;
     }
 
-    const Queue<Type>* p() const {
+    const Queue<Type>* ptr() const {
         return this;
     }
 };
@@ -188,7 +220,7 @@ public:
 #ifdef TEST
 
 TEST(Container, Queue) {
-    Queue<Int16, 3> queue;
+    Queue<int16_t, 3> queue;
 
     EXPECT_EQ(queue.size(), 0);
     EXPECT_EQ(queue.capacity(), 3);
@@ -206,11 +238,11 @@ TEST(Container, Queue) {
     EXPECT_EQ(queue.size(), 3);
     EXPECT_EQ(queue.capacity(), 3);
 
-    Optional<Int16> n;
-    EXPECT_EQ(n = queue.pop(), true);
+    Optional<int16_t> n;
+    EXPECT_EQ(bool(n = queue.pop()), true);
     EXPECT_EQ(queue.size(), 2);
     EXPECT_EQ(*n, 1);
-    EXPECT_EQ(n = queue.pop(), true);
+    EXPECT_EQ(bool(n = queue.pop()), true);
     EXPECT_EQ(queue.size(), 1);
     EXPECT_EQ(*n, 2);
 
@@ -219,17 +251,17 @@ TEST(Container, Queue) {
     EXPECT_EQ(queue.push(5), true);
     EXPECT_EQ(queue.size(), 2);
 
-    EXPECT_EQ(n = queue.pop(), true);
+    EXPECT_EQ(bool(n = queue.pop()), true);
     EXPECT_EQ(queue.size(), 1);
     EXPECT_EQ(*n, 3);
 
-    EXPECT_EQ(n = queue.pop(), true);
+    EXPECT_EQ(bool(n = queue.pop()), true);
     EXPECT_EQ(queue.size(), 0);
     EXPECT_EQ(*n, 5);
 
     EXPECT_EQ(queue.empty(), true);
 
-    EXPECT_EQ(n = queue.pop(), false);
+    EXPECT_EQ(bool(n = queue.pop()), false);
     EXPECT_EQ(queue.size(), 0);
 
     EXPECT_EQ(queue.push(6), true);
@@ -240,18 +272,18 @@ TEST(Container, Queue) {
 
     // Make sure notify callbacks don't interfere.
 
-    Queue<Int16, 3> queueF;
-    Queue<Int16, 3> queueG;
+    Queue<int16_t, 3> queueF;
+    Queue<int16_t, 3> queueG;
 
-    Callback<Char> f = [](Char* c) {
+    Callback<char> f = [](char* c) {
         *c = 'f';
     };
 
-    Callback<Char> g = [](Char* c) {
+    Callback<char> g = [](char* c) {
         *c = 'g';
     };
 
-    Char c = 'a';
+    char c = 'a';
 
     queueF.setCallback(f, &c);
     queueG.setCallback(g, &c);

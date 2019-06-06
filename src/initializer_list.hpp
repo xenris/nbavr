@@ -51,7 +51,7 @@ namespace std
       typedef _E 		value_type;
       typedef const _E& 	reference;
       typedef const _E& 	const_reference;
-      typedef primitive_size_t 		size_type;
+      typedef size_t 		size_type;
       typedef const _E* 	iterator;
       typedef const _E* 	const_iterator;
 

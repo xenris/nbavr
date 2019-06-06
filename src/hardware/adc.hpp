@@ -15,7 +15,7 @@
 ///
 /// while(!nbos::hw::Adc0::intFlag());
 ///
-/// const Word16 value = nbos::hw::Adc0::value();
+/// const uint16_t value = nbos::hw::Adc0::value();
 /// ```
 
 #ifndef NBOS_ADC_HPP
@@ -234,8 +234,8 @@ struct AdcN {
     }
 
     #if DEFINED(ADC_N(ENABLE_BIT_0_BIT))
-        /// #### static void enable(Bool e)
-        static force_inline void enable(Bool e) {
+        /// #### static void enable(bool e)
+        static force_inline void enable(bool e) {
             setBit_(REG(ADC_N(ENABLE_BIT_0_REG)), ADC_N(ENABLE_BIT_0_BIT), e);
         }
     #endif
@@ -248,8 +248,8 @@ struct AdcN {
     #endif
 
     #if REG_DEFINED(ADC_N(DATA_REG))
-        /// #### static Word16 value()
-        static force_inline Word16 value() {
+        /// #### static uint16_t value()
+        static force_inline uint16_t value() {
             return getReg_(REG(ADC_N(DATA_REG)));
         }
     #endif
@@ -257,33 +257,33 @@ struct AdcN {
     #if DEFINED(ADC_N(REFERENCE_BIT_0_BIT))
         /// #### static void reference([[AdcN::Reference]] r)
         static force_inline void reference(Reference r) {
-            setBit_(REG(ADC_N(REFERENCE_BIT_0_REG)), ADC_N(REFERENCE_BIT_0_BIT), Int(r) & 0x01);
-            setBit_(REG(ADC_N(REFERENCE_BIT_1_REG)), ADC_N(REFERENCE_BIT_1_BIT), Int(r) & 0x02);
+            setBit_(REG(ADC_N(REFERENCE_BIT_0_REG)), ADC_N(REFERENCE_BIT_0_BIT), int(r) & 0x01);
+            setBit_(REG(ADC_N(REFERENCE_BIT_1_REG)), ADC_N(REFERENCE_BIT_1_BIT), int(r) & 0x02);
         }
     #endif
 
     #if DEFINED(ADC_N(CHANNEL_BIT_0_BIT))
         /// #### static void channel([[AdcN::Channel]] c)
         static force_inline void channel(Channel c) {
-            setBit_(REG(ADC_N(CHANNEL_BIT_0_REG)), ADC_N(CHANNEL_BIT_0_BIT), Int(c) & 0x01);
-            setBit_(REG(ADC_N(CHANNEL_BIT_1_REG)), ADC_N(CHANNEL_BIT_1_BIT), Int(c) & 0x02);
-            setBit_(REG(ADC_N(CHANNEL_BIT_2_REG)), ADC_N(CHANNEL_BIT_2_BIT), Int(c) & 0x04);
-            setBit_(REG(ADC_N(CHANNEL_BIT_3_REG)), ADC_N(CHANNEL_BIT_3_BIT), Int(c) & 0x08);
+            setBit_(REG(ADC_N(CHANNEL_BIT_0_REG)), ADC_N(CHANNEL_BIT_0_BIT), int(c) & 0x01);
+            setBit_(REG(ADC_N(CHANNEL_BIT_1_REG)), ADC_N(CHANNEL_BIT_1_BIT), int(c) & 0x02);
+            setBit_(REG(ADC_N(CHANNEL_BIT_2_REG)), ADC_N(CHANNEL_BIT_2_BIT), int(c) & 0x04);
+            setBit_(REG(ADC_N(CHANNEL_BIT_3_REG)), ADC_N(CHANNEL_BIT_3_BIT), int(c) & 0x08);
         }
     #endif
 
     #if DEFINED(ADC_N(PRESCALER_BIT_0_BIT))
         /// #### static void prescaler([[AdcN::Prescaler]] p)
         static force_inline void prescaler(Prescaler p) {
-            setBit_(REG(ADC_N(PRESCALER_BIT_0_REG)), ADC_N(PRESCALER_BIT_0_BIT), Int(p) & 0x01);
-            setBit_(REG(ADC_N(PRESCALER_BIT_1_REG)), ADC_N(PRESCALER_BIT_1_BIT), Int(p) & 0x02);
-            setBit_(REG(ADC_N(PRESCALER_BIT_2_REG)), ADC_N(PRESCALER_BIT_2_BIT), Int(p) & 0x04);
+            setBit_(REG(ADC_N(PRESCALER_BIT_0_REG)), ADC_N(PRESCALER_BIT_0_BIT), int(p) & 0x01);
+            setBit_(REG(ADC_N(PRESCALER_BIT_1_REG)), ADC_N(PRESCALER_BIT_1_BIT), int(p) & 0x02);
+            setBit_(REG(ADC_N(PRESCALER_BIT_2_REG)), ADC_N(PRESCALER_BIT_2_BIT), int(p) & 0x04);
         }
     #endif
 
     #if DEFINED(ADC_N(LEFT_ADJUST_BIT_0_BIT))
-        /// #### static void leftAdjust(Bool l)
-        static force_inline void leftAdjust(Bool l) {
+        /// #### static void leftAdjust(bool l)
+        static force_inline void leftAdjust(bool l) {
             setBit_(REG(ADC_N(LEFT_ADJUST_BIT_0_REG)), ADC_N(LEFT_ADJUST_BIT_0_BIT), l);
         }
     #endif
@@ -291,18 +291,18 @@ struct AdcN {
     #if DEFINED(ADC_N(TRIGGER_BIT_0_BIT))
         /// #### static void trigger([[AdcN::Trigger]] t)
         static force_inline void trigger(Trigger t) {
-            setBit_(REG(ADC_N(TRIGGER_BIT_0_REG)), ADC_N(TRIGGER_BIT_0_BIT), Int(t) & 0x01);
+            setBit_(REG(ADC_N(TRIGGER_BIT_0_REG)), ADC_N(TRIGGER_BIT_0_BIT), int(t) & 0x01);
 
             #if DEFINED(ADC_N(TRIGGER_BIT_1_BIT))
-                setBit_(REG(ADC_N(TRIGGER_BIT_1_REG)), ADC_N(TRIGGER_BIT_1_BIT), Int(t) & 0x02);
+                setBit_(REG(ADC_N(TRIGGER_BIT_1_REG)), ADC_N(TRIGGER_BIT_1_BIT), int(t) & 0x02);
             #endif
 
             #if DEFINED(ADC_N(TRIGGER_BIT_2_BIT))
-                setBit_(REG(ADC_N(TRIGGER_BIT_2_REG)), ADC_N(TRIGGER_BIT_2_BIT), Int(t) & 0x04);
+                setBit_(REG(ADC_N(TRIGGER_BIT_2_REG)), ADC_N(TRIGGER_BIT_2_BIT), int(t) & 0x04);
             #endif
 
             #if DEFINED(ADC_N(TRIGGER_BIT_3_BIT))
-                setBit_(REG(ADC_N(TRIGGER_BIT_3_REG)), ADC_N(TRIGGER_BIT_3_BIT), Int(t) & 0x08);
+                setBit_(REG(ADC_N(TRIGGER_BIT_3_REG)), ADC_N(TRIGGER_BIT_3_BIT), int(t) & 0x08);
             #endif
         }
     #endif
@@ -319,15 +319,15 @@ struct AdcN {
     }
 
     #if DEFINED(ADC_N(INT_ENABLE_BIT_0_BIT))
-        /// #### static void intEnable(Bool e)
-        static force_inline void intEnable(Bool e) {
+        /// #### static void intEnable(bool e)
+        static force_inline void intEnable(bool e) {
             setBit_(REG(ADC_N(INT_ENABLE_BIT_0_REG)), ADC_N(INT_ENABLE_BIT_0_BIT), e);
         }
     #endif
 
     #if DEFINED(ADC_N(INT_FLAG_BIT_0_BIT))
-        /// #### static Bool intFlag()
-        static force_inline Bool intFlag() {
+        /// #### static bool intFlag()
+        static force_inline bool intFlag() {
             return getBit_(REG(ADC_N(INT_FLAG_BIT_0_REG)), ADC_N(INT_FLAG_BIT_0_BIT));
         }
     #endif
@@ -335,7 +335,7 @@ struct AdcN {
     #if DEFINED(ADC_N(INT_FLAG_BIT_0_BIT))
         /// #### static void intFlagClear()
         static force_inline void intFlagClear() {
-            setBit_(REG(ADC_N(INT_FLAG_BIT_0_REG)), ADC_N(INT_FLAG_BIT_0_BIT), true);
+            clearFlagBit(REG(ADC_N(INT_FLAG_BIT_0_REG)), ADC_N(INT_FLAG_BIT_0_BIT));
         }
     #endif
 

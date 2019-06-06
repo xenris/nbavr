@@ -1,35 +1,35 @@
 #ifndef NBOS_STRING_HPP
 #define NBOS_STRING_HPP
 
-#include "safe.hpp"
+#include "primitive.hpp"
 
-template <Int maxLength = -1>
+template <int maxLength = -1>
 class String;
 
 template <>
 class String<-1> {
-    Char* _buffer;
-    Int _maxLength;
-    Int _length;
+    char* _buffer;
+    int _maxLength;
+    int _length;
 
 public:
 
-    constexpr String(Char* buffer, Int maxLength) : _buffer(buffer), _maxLength(maxLength), _length(0) {
+    constexpr String(char* buffer, int maxLength) : _buffer(buffer), _maxLength(maxLength), _length(0) {
     }
 
     // FIXME Casting a constant string to a variable string.
-    constexpr String(const primitive_signed_char* buffer) : _buffer((Char*)buffer), _maxLength(length(buffer)), _length(_maxLength) {
+    constexpr String(const char* buffer) : _buffer((char*)buffer), _maxLength(length(buffer)), _length(_maxLength) {
     }
 
-    constexpr String(const Char* buffer) : _buffer((Char*)buffer), _maxLength(length((const primitive_signed_char*)buffer)), _length(_maxLength) {
-    }
+    // constexpr String(const char* buffer) : _buffer((char*)buffer), _maxLength(length((const char*)buffer)), _length(_maxLength) {
+    // }
 
-    constexpr Bool operator ==(const String<>& other) {
+    constexpr bool operator ==(const String<>& other) {
         if(_length != other._length) {
             return false;
         }
 
-        for(Int i = 0; i < _length; i++) {
+        for(int i = 0; i < _length; i++) {
             if(_buffer[i] != other[i]) {
                 return false;
             }
@@ -38,12 +38,12 @@ public:
         return true;
     }
 
-    constexpr Bool operator !=(const String<>& other) {
+    constexpr bool operator !=(const String<>& other) {
         if(_length != other._length) {
             return true;
         }
 
-        for(Int i = 0; i < _length; i++) {
+        for(int i = 0; i < _length; i++) {
             if(_buffer[i] != other[i]) {
                 return true;
             }
@@ -52,24 +52,24 @@ public:
         return false;
     }
 
-    constexpr Char& operator [](Int i) {
+    constexpr char& operator [](int i) {
         return _buffer[i];
     }
 
-    constexpr const Char& operator [](Int i) const {
+    constexpr const char& operator [](int i) const {
         return _buffer[i];
     }
 
-    constexpr Char& get(Int i) {
+    constexpr char& get(int i) {
         return _buffer[i];
     }
 
-    constexpr const Char& get(Int i) const {
+    constexpr const char& get(int i) const {
         return _buffer[i];
     }
 
-    constexpr Bool operator <(const String& other) const {
-        for(Int i = 0; i < _length; i++) {
+    constexpr bool operator <(const String& other) const {
+        for(int i = 0; i < _length; i++) {
             if(_buffer[i] < other[i]) {
                 return true;
             }
@@ -82,8 +82,8 @@ public:
         return false;
     }
 
-    constexpr Bool operator <=(const String<>& other) const {
-        for(Int i = 0; i < _length; i++) {
+    constexpr bool operator <=(const String<>& other) const {
+        for(int i = 0; i < _length; i++) {
             if(_buffer[i] < other[i]) {
                 return true;
             }
@@ -96,8 +96,8 @@ public:
         return true;
     }
 
-    constexpr Bool operator >(const String<>& other) const {
-        for(Int i = 0; i < _length; i++) {
+    constexpr bool operator >(const String<>& other) const {
+        for(int i = 0; i < _length; i++) {
             if(_buffer[i] < other[i]) {
                 return false;
             }
@@ -110,8 +110,8 @@ public:
         return false;
     }
 
-    constexpr Bool operator >=(const String<>& other) const {
-        for(Int i = 0; i < _length; i++) {
+    constexpr bool operator >=(const String<>& other) const {
+        for(int i = 0; i < _length; i++) {
             if(_buffer[i] < other[i]) {
                 return false;
             }
@@ -124,30 +124,30 @@ public:
         return true;
     }
 
-    /// #### Char\* begin()
-    constexpr Char* begin() {
+    /// #### char\* begin()
+    constexpr char* begin() {
         return &_buffer[0];
     }
 
-    constexpr const Char* begin() const {
+    constexpr const char* begin() const {
         return &_buffer[0];
     }
 
-    /// #### const Char\* end()
-    constexpr const Char* end() const {
+    /// #### const char\* end()
+    constexpr const char* end() const {
         return &_buffer[_length];
     }
 
-    constexpr Char* operator *() {
+    constexpr char* operator *() {
         return _buffer;
     }
 
-    constexpr const Char* operator *() const {
+    constexpr const char* operator *() const {
         return _buffer;
     }
 
-    static constexpr Int length(const primitive_signed_char* s) {
-        Int i = 0;
+    static constexpr int length(const char* s) {
+        int i = 0;
 
         while(s[i] != '\0') {
             i++;
@@ -161,17 +161,17 @@ public:
     }
 };
 
-template <Int maxLength>
+template <int maxLength>
 class String : public String<> {
-    Char _buffer[maxLength];
+    char _buffer[uint(maxLength)];
 
 public:
 
     explicit String() : String<>(_buffer, maxLength) {
     }
 
-    explicit String(const primitive_signed_char* s) : String<>(_buffer, maxLength) {
-        Int i = 0;
+    explicit String(const char* s) : String<>(_buffer, maxLength) {
+        int i = 0;
 
         while(s[i] != '\0') {
             _buffer[i] = s[i];

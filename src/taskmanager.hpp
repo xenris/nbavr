@@ -36,14 +36,14 @@ class TaskManager {
     static constexpr auto taskTimeoutHalted = typename Clock::Timer::Type(Clock::microsToTicks(100));
 
     TaskT** tasks;
-    const Int numTasks;
-    Int taskI = 0;
+    const int numTasks;
+    int taskI = 0;
 
 public:
 
     /// #### TaskManager(TaskT\* (&tasks)[])
     /// Runs the given array of tasks. Does not return.
-    template <Int S>
+    template <uint S>
     TaskManager(TaskT* (&tasks)[S]) : tasks(tasks), numTasks(S) {
         Clock::haltCallback(haltCallback, this);
 
@@ -62,7 +62,7 @@ private:
 
     // Run each task once.
     void stepAll() {
-        for(Int i = 0; i < numTasks; i++) {
+        for(int i = 0; i < numTasks; i++) {
             stepOne();
         }
 
@@ -81,7 +81,7 @@ private:
 
         if(task.state == TaskT::State::delay) {
             // Check if it is time for this task to wake up.
-            if(Int64(Clock::getTicks() - task.wakeTick) >= 0) {
+            if(int64_t(Clock::getTicks() - task.wakeTick) >= 0) {
                 task.state = TaskT::State::awake;
             }
         }

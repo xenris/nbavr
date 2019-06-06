@@ -6,14 +6,14 @@
 /// Required by TaskManager.
 
 /// ```c++
-/// const Word64 cpuFreq = 16000000;
+/// const uint64_t cpuFreq = 16000000;
 
 /// using SystemTimer = nbos::hw::Timer1;
 
 /// using Clock = nbos::Clock<SystemTimer, cpuFreq>;
 
-/// Word64 ticks = Clock::getTicks();
-/// Word64 millis = Clock::ticksToMillis(ticks);
+/// uint64_t ticks = Clock::getTicks();
+/// uint64_t millis = Clock::ticksToMillis(ticks);
 /// ```
 
 /// Every cpu clock cycle is 1 / freq seconds. (62.5ns at 16MHz)<br>
@@ -37,33 +37,33 @@ namespace nbos {
 struct DelayedCall {
     Callback<void> callback;
     void* data;
-    Word64 tick;
+    uint64_t tick;
 
     DelayedCall() {
     }
 
-    DelayedCall(Callback<void> callback, void* data, Word64 tick)
+    DelayedCall(Callback<void> callback, void* data, uint64_t tick)
     : callback(callback), data(data), tick(tick) {
     }
 
-    Bool operator<(const DelayedCall& other) const {
-        return Int64(other.tick - tick) > 0;
+    bool operator<(const DelayedCall& other) const {
+        return int64_t(other.tick - tick) > 0;
     }
 };
 
-/// ## class Clock<class Timer, Integer cpuFreq, Integer maxCalls = 8\>
-template<class TimerT, Integer cpuFreq, Integer maxCalls = 8>
+/// ## class Clock<class Timer, uint64_t cpuFreq, uint64_t maxCalls = 8\>
+template<class TimerT, uint64_t cpuFreq, uint64_t maxCalls = 8>
 class Clock {
     static_assert(TimerT::getHardwareType() == hw::HardwareType::timer, "Clock requires a Timer");
 
-    static constexpr Bool isEightBitCounter = sizeof(typename TimerT::Type) == 1;
-    static constexpr Int32 divisor = 64;
+    static constexpr bool isEightBitCounter = sizeof(typename TimerT::Type) == 1;
+    static constexpr int32_t divisor = 64;
 
-    Word64 _ticks = 0;
-    PriorityQueue<DelayedCall, maxCalls> _calls;
+    uint64_t _ticks = 0;
+    PriorityQueue<DelayedCall, int(maxCalls)> _calls;
 
     Clock() {
-        atomic {
+        atomic() {
             TimerT::OutputA::setCallback(handleDelayedCall);
             TimerT::setCallback(handleTimerOverflow);
             TimerT::intEnable(true);
@@ -81,76 +81,72 @@ class Clock {
 
 public:
 
-    static constexpr Word64 freq = cpuFreq;
+    static constexpr uint64_t freq = cpuFreq;
     using Timer = TimerT;
 
     static void init() {
         getInstance();
     }
 
-    /// #### static constexpr Word64 millisToTicks(Word64 ms)
+    /// #### static constexpr uint64_t millisToTicks(uint64_t ms)
     /// Convert milliseconds to ticks.
-    static constexpr Word64 millisToTicks(Word64 ms) {
-        return Word64((Float(ms) * (cpuFreq / 1000) / Float(divisor)) + 0.5);
+    static constexpr uint64_t millisToTicks(uint64_t ms) {
+        return uint64_t((float(ms) * (cpuFreq / 1000) / float(divisor)) + 0.5);
     }
 
-    /// #### static constexpr Word64 microsToTicks(Word64 us)
+    /// #### static constexpr uint64_t microsToTicks(uint64_t us)
     /// Convert microseconds to ticks.
-    static constexpr Word64 microsToTicks(Word64 us) {
-        return Word64(((Float(us) / 1000) * (cpuFreq / 1000) / Float(divisor)) + 0.5);
+    static constexpr uint64_t microsToTicks(uint64_t us) {
+        return uint64_t(((float(us) / 1000) * (cpuFreq / 1000) / float(divisor)) + 0.5);
     }
 
-    /// #### static constexpr Word64 ticksToMillis(Word64 ticks)
+    /// #### static constexpr uint64_t ticksToMillis(uint64_t ticks)
     /// Convert ticks to milliseconds.
-    static constexpr Word64 ticksToMillis(Word64 ticks) {
-        return Word64((Float(ticks) * 1000 * Float(divisor) / cpuFreq) + 0.5);
+    static constexpr uint64_t ticksToMillis(uint64_t ticks) {
+        return uint64_t((float(ticks) * 1000 * float(divisor) / cpuFreq) + 0.5);
     }
 
-    /// #### static constexpr Word64 ticksToMicros(Word64 ticks)
+    /// #### static constexpr uint64_t ticksToMicros(uint64_t ticks)
     /// Convert ticks to microseconds.
-    static constexpr Word64 ticksToMicros(Word64 ticks) {
-        return Word64((Float(ticks) * 1000 * Float(divisor) / (cpuFreq / 1000)) + 0.5);
+    static constexpr uint64_t ticksToMicros(uint64_t ticks) {
+        return uint64_t((float(ticks) * 1000 * float(divisor) / (cpuFreq / 1000)) + 0.5);
     }
 
-    /// #### static Word64 getTicks()
+    /// #### static uint64_t getTicks()
     /// Get the current value of the 64 bit tick counter.
-    static Word64 getTicks() {
-        atomic {
-            return getTicks_();
-        }
+    static uint64_t getTicks() {
+        return atomic(getTicks_());
     }
 
-    /// #### static Word64 getTicks_()
+    /// #### static uint64_t getTicks_()
     /// Non-atomic version of getTicks().
-    static Word64 getTicks_() {
+    static uint64_t getTicks_() {
         const auto& self = getInstance();
 
-        Word64 ticks = self._ticks;
+        uint64_t ticks = self._ticks;
         auto counter = TimerT::counter();
 
         if(TimerT::intFlag()) {
-            ticks += bv<Word64>(sizeof(typename TimerT::Type) * 8);
+            ticks += bv<uint64_t>(sizeof(typename TimerT::Type) * 8);
             counter = TimerT::counter();
         }
 
-        return ticks | Word64(counter);
+        return ticks | uint64_t(counter);
     }
 
-    /// #### static Bool delayedCall(Callback callback, void\* data, Word64 delay)
+    /// #### static bool delayedCall(Callback callback, void\* data, uint64_t delay)
     /// Add a callback to call after delay ticks.<br>
     /// Returns true if successfully added.
     template<class T>
-    static Bool delayedCall(Callback<T> callback, T* data, Word64 delay) {
-        atomic {
-            return delayedCall_(callback, data, delay);
-        }
+    static bool delayedCall(Callback<T> callback, T* data, uint64_t delay) {
+        return atomic(delayedCall_(callback, data, delay));
     }
 
-    /// #### static Bool delayedCall_(Callback callback, void\* data, Word64 delay)
+    /// #### static bool delayedCall_(Callback callback, void\* data, uint64_t delay)
     /// Non-atomic version of delayedCall().
     // TODO This function is quite time consuming, ~5 ticks. Need to make it faster.
     template<class T>
-    static Bool delayedCall_(Callback<T> callback, T* data, Word64 delay) {
+    static bool delayedCall_(Callback<T> callback, T* data, uint64_t delay) {
         if(callback == nullptr) {
             return false;
         }
@@ -158,16 +154,16 @@ public:
         auto& self = getInstance();
         auto& calls = self._calls;
 
-        Word64 now = getTicks_();
+        uint64_t now = getTicks_();
 
-        DelayedCall dc(callback, data, now + Word64(delay));
+        DelayedCall dc(callback, data, now + uint64_t(delay));
 
-        const Bool success = calls.push(dc);
+        const bool success = calls.push(dc);
 
         if(success) {
             dc = *calls.peek();
 
-            Int64 delta = Int64(dc.tick - now);
+            int64_t delta = int64_t(dc.tick - now);
 
             // FIXME This could cancel potential calls.
             TimerT::OutputA::intFlagClear();
@@ -188,13 +184,13 @@ public:
         return success;
     }
 
-    /// #### static void delay<Word64 ns\>()
+    /// #### static void delay<uint64_t ns\>()
     /// Delays the cpu for the given number of nanoseconds.<br>
     /// Should only be used for very short delays.<br>
     /// Limited to 2 milliseconds.<br>
     /// Rounds to the nearest possible delay. E.g. at 16MHz, delay<50\>() will
     /// delay for 62.5 nanoseconds (1 cpu clock cycle).
-    template <Integer ns>
+    template <uint64_t ns>
     static force_inline void delay() {
         nbos::delay<cpuFreq, ns>();
     }
@@ -205,19 +201,13 @@ public:
     }
 
     static void haltStart(typename TimerT::Type ticks) {
-        block {
-            TimerT::OutputB::value(TimerT::counter() + ticks);
-            block {};
-            TimerT::OutputB::intFlagClear();
-            block {};
-            TimerT::OutputB::intEnable(true);
-        }
+        block(TimerT::OutputB::value(TimerT::counter() + ticks));
+        block(TimerT::OutputB::intFlagClear());
+        block(TimerT::OutputB::intEnable(true));
     }
 
     static void haltEnd() {
-        block {
-            TimerT::OutputB::intEnable(false);
-        }
+        block(TimerT::OutputB::intEnable(false));
     }
 
 private:
@@ -237,7 +227,7 @@ private:
             calls.pop();
 
             if((delayedCall = calls.peek())) {
-                Int64 delta = Int64(delayedCall->tick - getTicks());
+                int64_t delta = int64_t(delayedCall->tick - getTicks());
 
                 // FIXME This could cancel potential calls.
                 TimerT::OutputA::intFlagClear();
@@ -262,13 +252,13 @@ private:
         auto& self = getInstance();
         auto& calls = self._calls;
 
-        self._ticks += bv<Word64>(sizeof(typename TimerT::Type) * 8);
+        self._ticks += bv<uint64_t>(sizeof(typename TimerT::Type) * 8);
 
         if(!TimerT::OutputA::intEnabled()) {
             Optional<DelayedCall> delayedCall;
 
             if((delayedCall = calls.peek())) {
-                Int64 delta = Int64(delayedCall->tick - getTicks());
+                int64_t delta = int64_t(delayedCall->tick - getTicks());
 
                 // FIXME This could cancel potential calls.
                 TimerT::OutputA::intFlagClear();

@@ -168,39 +168,39 @@ struct PinN : Pin {
 
     /// #### static void mode([[Pin::Mode]] m)
     static force_inline void mode(Mode m) {
-        setBit_(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT), Int(m) & 0x01);
+        setBit_(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT), int(m) & 0x01);
 
         #if DEFINED(PIN_N(MODE_BIT_1_BIT))
-            setBit_(REG(PIN_N(MODE_BIT_1_REG)), PIN_N(MODE_BIT_1_BIT), Int(m) & 0x02);
+            setBit_(REG(PIN_N(MODE_BIT_1_REG)), PIN_N(MODE_BIT_1_BIT), int(m) & 0x02);
         #endif
 
         #if DEFINED(PIN_N(MODE_BIT_2_BIT))
-            setBit_(REG(PIN_N(MODE_BIT_2_REG)), PIN_N(MODE_BIT_2_BIT), Int(m) & 0x04);
+            setBit_(REG(PIN_N(MODE_BIT_2_REG)), PIN_N(MODE_BIT_2_BIT), int(m) & 0x04);
         #endif
 
         #if DEFINED(PIN_N(MODE_BIT_3_BIT))
-            setBit_(REG(PIN_N(MODE_BIT_3_REG)), PIN_N(MODE_BIT_3_BIT), Int(m) & 0x08);
+            setBit_(REG(PIN_N(MODE_BIT_3_REG)), PIN_N(MODE_BIT_3_BIT), int(m) & 0x08);
         #endif
     }
 
     /// #### static [[Pin::Mode]] mode()
     static force_inline Mode mode() {
-        Int m = 0;
+        int m = 0;
 
         #if DEFINED(PIN_N(MODE_BIT_0_BIT))
-            m |= Int(getBit(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT))) << 0;
+            m |= int(getBit(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT))) << 0;
         #endif
 
         #if DEFINED(PIN_N(MODE_BIT_1_BIT))
-            m |= Int(getBit(REG(PIN_N(MODE_BIT_1_REG)), PIN_N(MODE_BIT_1_BIT))) << 1;
+            m |= int(getBit(REG(PIN_N(MODE_BIT_1_REG)), PIN_N(MODE_BIT_1_BIT))) << 1;
         #endif
 
         #if DEFINED(PIN_N(MODE_BIT_2_BIT))
-            m |= Int(getBit(REG(PIN_N(MODE_BIT_2_REG)), PIN_N(MODE_BIT_2_BIT))) << 2;
+            m |= int(getBit(REG(PIN_N(MODE_BIT_2_REG)), PIN_N(MODE_BIT_2_BIT))) << 2;
         #endif
 
         #if DEFINED(PIN_N(MODE_BIT_3_BIT))
-            m |= Int(getBit(REG(PIN_N(MODE_BIT_3_REG)), PIN_N(MODE_BIT_3_BIT))) << 3;
+            m |= int(getBit(REG(PIN_N(MODE_BIT_3_REG)), PIN_N(MODE_BIT_3_BIT))) << 3;
         #endif
 
         return Mode(m);

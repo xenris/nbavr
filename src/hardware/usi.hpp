@@ -84,31 +84,31 @@ struct UsiN {
     }
 
     #if REG_DEFINED(USI_N(DATA_REG))
-        /// #### static void data(Word8 d)
-        static force_inline void data(Word8 d) {
+        /// #### static void data(uint8_t d)
+        static force_inline void data(uint8_t d) {
             setReg_(REG(USI_N(DATA_REG)), d);
         }
     #endif
 
     #if REG_DEFINED(USI_N(BUFFER_REG))
-        /// #### static Word8 data()
-        static force_inline Word8 data() {
+        /// #### static uint8_t data()
+        static force_inline uint8_t data() {
             return getReg_(REG(USI_N(BUFFER_REG)));
         }
     #endif
 
     #if DEFINED(USI_N(START_CONDITION_INT_ENABLE_BIT_0_BIT))
-        /// #### static void startIntEnable(Bool b)
+        /// #### static void startIntEnable(bool b)
         /// Enable the start condition interrupt.
-        static force_inline void startIntEnable(Bool b) {
+        static force_inline void startIntEnable(bool b) {
             setBit_(REG(USI_N(START_CONDITION_INT_ENABLE_BIT_0_REG)), USI_N(START_CONDITION_INT_ENABLE_BIT_0_BIT), b);
         }
     #endif
 
     #if DEFINED(USI_N(COUNTER_OVERFLOW_INT_ENABLE_BIT_0_BIT))
-        /// #### static void overflowIntEnable(Bool b)
+        /// #### static void overflowIntEnable(bool b)
         /// Enable the counter overflow interrupt.
-        static force_inline void overflowIntEnable(Bool b) {
+        static force_inline void overflowIntEnable(bool b) {
             setBit_(REG(USI_N(COUNTER_OVERFLOW_INT_ENABLE_BIT_0_REG)), USI_N(COUNTER_OVERFLOW_INT_ENABLE_BIT_0_BIT), b);
         }
     #endif
@@ -116,10 +116,10 @@ struct UsiN {
     #if DEFINED(USI_N(WIRE_MODE_BIT_0_BIT))
         /// #### static void wireMode(WireMode m)
         static force_inline void wireMode(WireMode m) {
-            setBit_(REG(USI_N(WIRE_MODE_BIT_0_REG)), USI_N(WIRE_MODE_BIT_0_BIT), Int(m) & 0x01);
+            setBit_(REG(USI_N(WIRE_MODE_BIT_0_REG)), USI_N(WIRE_MODE_BIT_0_BIT), int(m) & 0x01);
 
             #if DEFINED(USI_N(CLOCK_SELECT_BIT_1_BIT))
-                setBit_(REG(USI_N(CLOCK_SELECT_BIT_1_REG)), USI_N(CLOCK_SELECT_BIT_1_BIT), Int(m) & 0x01);
+                setBit_(REG(USI_N(CLOCK_SELECT_BIT_1_REG)), USI_N(CLOCK_SELECT_BIT_1_BIT), int(m) & 0x01);
             #endif
         }
     #endif
@@ -127,10 +127,10 @@ struct UsiN {
     #if DEFINED(USI_N(CLOCK_SELECT_BIT_0_BIT))
         /// #### static void clock(Clock c)
         static force_inline void clock(Clock c) {
-            setBit_(REG(USI_N(CLOCK_SELECT_BIT_0_REG)), USI_N(CLOCK_SELECT_BIT_0_BIT), Int(c) & 0x01);
+            setBit_(REG(USI_N(CLOCK_SELECT_BIT_0_REG)), USI_N(CLOCK_SELECT_BIT_0_BIT), int(c) & 0x01);
 
             #if DEFINED(USI_N(CLOCK_SELECT_BIT_1_BIT))
-                setBit_(REG(USI_N(CLOCK_SELECT_BIT_1_REG)), USI_N(CLOCK_SELECT_BIT_1_BIT), Int(c) & 0x02);
+                setBit_(REG(USI_N(CLOCK_SELECT_BIT_1_REG)), USI_N(CLOCK_SELECT_BIT_1_BIT), int(c) & 0x02);
             #endif
         }
     #endif
@@ -154,7 +154,7 @@ struct UsiN {
     #if DEFINED(USI_N(START_CONDITION_INT_FLAG_BIT_0_BIT))
         /// #### static void startIntFlag()
         /// Get the start condition interrupt flag's state.
-        static force_inline Bool startIntFlag() {
+        static force_inline bool startIntFlag() {
             return getBit(REG(USI_N(START_CONDITION_INT_FLAG_BIT_0_REG)), USI_N(START_CONDITION_INT_FLAG_BIT_0_BIT));
         }
 
@@ -168,7 +168,7 @@ struct UsiN {
     #if DEFINED(USI_N(STOP_CONDITION_INT_FLAG_BIT_0_BIT))
         /// #### static void stopIntFlag()
         /// Get the stop condition interrupt flag's state.
-        static force_inline Bool stopIntFlag() {
+        static force_inline bool stopIntFlag() {
             return getBit(REG(USI_N(STOP_CONDITION_INT_FLAG_BIT_0_REG)), USI_N(STOP_CONDITION_INT_FLAG_BIT_0_BIT));
         }
 
@@ -180,9 +180,9 @@ struct UsiN {
     #endif
 
     #if DEFINED(USI_N(COUNTER_OVERFLOW_INT_FLAG_BIT_0_BIT))
-        /// #### static Bool overflowIntFlag()
+        /// #### static bool overflowIntFlag()
         /// Get the counter overflow interrupt flag's state.
-        static force_inline Bool overflowIntFlag() {
+        static force_inline bool overflowIntFlag() {
             return getBit(REG(USI_N(COUNTER_OVERFLOW_INT_FLAG_BIT_0_REG)), USI_N(COUNTER_OVERFLOW_INT_FLAG_BIT_0_BIT));
         }
 
@@ -194,30 +194,30 @@ struct UsiN {
     #endif
 
     #if DEFINED(USI_N(COLLISION_FLAG_BIT_0_BIT))
-        /// #### static Bool collisionFlag()
+        /// #### static bool collisionFlag()
         /// Get the data output collision flag's state.
-        static force_inline Bool collisionFlag() {
+        static force_inline bool collisionFlag() {
             return getBit(REG(USI_N(COLLISION_FLAG_BIT_0_REG)), USI_N(COLLISION_FLAG_BIT_0_BIT));
         }
     #endif
 
     #if DEFINED(USI_N(COUNTER_BIT_0_BIT))
-        /// #### static void counter(Word8 c)
-        static force_inline void counter(Word8 c) {
-            setBit_(REG(USI_N(COUNTER_BIT_0_REG)), USI_N(COUNTER_BIT_0_BIT), Bool(c & 0x01));
-            setBit_(REG(USI_N(COUNTER_BIT_1_REG)), USI_N(COUNTER_BIT_1_BIT), Bool(c & 0x02));
-            setBit_(REG(USI_N(COUNTER_BIT_2_REG)), USI_N(COUNTER_BIT_2_BIT), Bool(c & 0x04));
-            setBit_(REG(USI_N(COUNTER_BIT_3_REG)), USI_N(COUNTER_BIT_3_BIT), Bool(c & 0x08));
+        /// #### static void counter(uint8_t c)
+        static force_inline void counter(uint8_t c) {
+            setBit_(REG(USI_N(COUNTER_BIT_0_REG)), USI_N(COUNTER_BIT_0_BIT), bool(c & 0x01));
+            setBit_(REG(USI_N(COUNTER_BIT_1_REG)), USI_N(COUNTER_BIT_1_BIT), bool(c & 0x02));
+            setBit_(REG(USI_N(COUNTER_BIT_2_REG)), USI_N(COUNTER_BIT_2_BIT), bool(c & 0x04));
+            setBit_(REG(USI_N(COUNTER_BIT_3_REG)), USI_N(COUNTER_BIT_3_BIT), bool(c & 0x08));
         }
 
-        /// #### static Word8 counter()
-        static force_inline Word8 counter() {
-            Word8 c = 0;
+        /// #### static uint8_t counter()
+        static force_inline uint8_t counter() {
+            uint8_t c = 0;
 
-            c |= Word8(getBit(REG(USI_N(COUNTER_BIT_0_REG)), USI_N(COUNTER_BIT_0_BIT))) << 0;
-            c |= Word8(getBit(REG(USI_N(COUNTER_BIT_1_REG)), USI_N(COUNTER_BIT_1_BIT))) << 1;
-            c |= Word8(getBit(REG(USI_N(COUNTER_BIT_2_REG)), USI_N(COUNTER_BIT_2_BIT))) << 2;
-            c |= Word8(getBit(REG(USI_N(COUNTER_BIT_3_REG)), USI_N(COUNTER_BIT_3_BIT))) << 3;
+            c |= uint8_t(getBit(REG(USI_N(COUNTER_BIT_0_REG)), USI_N(COUNTER_BIT_0_BIT))) << 0;
+            c |= uint8_t(getBit(REG(USI_N(COUNTER_BIT_1_REG)), USI_N(COUNTER_BIT_1_BIT))) << 1;
+            c |= uint8_t(getBit(REG(USI_N(COUNTER_BIT_2_REG)), USI_N(COUNTER_BIT_2_BIT))) << 2;
+            c |= uint8_t(getBit(REG(USI_N(COUNTER_BIT_3_REG)), USI_N(COUNTER_BIT_3_BIT))) << 3;
 
             return c;
         }

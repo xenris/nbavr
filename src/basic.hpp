@@ -5,56 +5,68 @@
 #ifndef NBOS_BASIC_HPP
 #define NBOS_BASIC_HPP
 
-#include "primitive.hpp"
-
-template <class T, Integer v>
-struct ConstantIntegral {
-    static constexpr T value = v;
-};
-
-template <class T>
+template <class _T>
 struct ConstantType {
-    using Value = T;
+    using Value = _T;
+    using T = _T;
 };
 
-struct ConstantTrue : ConstantIntegral<primitive_bool, true> {};
-
-struct ConstantFalse : ConstantIntegral<primitive_bool, false> {};
-
-template <primitive_bool B, class T, class F>
+template <bool B, class T, class F>
 struct If : ConstantType<T> {};
 
 template <class T, class F>
 struct If<false, T, F> : ConstantType<F> {};
 
 template <class T, class U>
-struct IsSame : ConstantFalse {};
+struct IsSame {
+    static constexpr bool t = false;
+};
 
 template <class T>
-struct IsSame<T, T> : ConstantTrue {};
+struct IsSame<T, T> {
+    static constexpr bool t = true;
+};
+
+template <class T, class U>
+constexpr bool isSame() {
+    return IsSame<T, U>::t;
+}
 
 template <class T>
-struct IsInteger {};
+constexpr bool isInteger() {
+    return false;
+}
 
 template <class T>
-struct IsFloating {};
+constexpr bool isFloating() {
+    return false;
+}
 
 template <class T>
-struct IsBool {};
+constexpr bool isBoolean() {
+    return false;
+}
 
 template <class T>
-struct IsSigned {};
+constexpr bool isSigned() {
+    return false;
+}
 
 template <class T>
-struct IsUnsigned {};
+constexpr bool isUnsigned() {
+    return false;
+}
 
 template <class T>
-struct Max {};
+struct AsSigned {};
 
 template <class T>
-struct Min {};
+struct AsUnsigned {};
 
 template <class T>
-struct TypeName {};
+constexpr T max();
+
+template <class T>
+constexpr T min();
 
 #endif

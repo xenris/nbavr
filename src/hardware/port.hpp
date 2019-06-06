@@ -50,9 +50,9 @@ struct PortX {
         return HardwareType::port;
     }
 
-    /// #### static void enableClock(Bool e)
+    /// #### static void enableClock(bool e)
     #if DEFINED(PORT_X(CLOCK_ENABLE_BIT))
-        static force_inline void enableClock(Bool e) {
+        static force_inline void enableClock(bool e) {
             setBit_(REG(PORT_X(CLOCK_ENABLE_REG)), PORT_X(CLOCK_ENABLE_BIT), e);
         }
     #endif

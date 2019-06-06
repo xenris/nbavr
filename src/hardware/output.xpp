@@ -53,15 +53,15 @@ struct OutputX {
     }
 
     /// #### static T value()
-    static force_inline REGTYPE(OUTPUT_X(REG)) value() {
+    static force_inline REGTYPE(OUTPUT_X(REG))& value() {
         return getReg_(REG(OUTPUT_X(REG)));
     }
 
     /// #### static void mode([[TimerN::Mode]] m)
     #if DEFINED(OUTPUT_X(MODE_TOGGLE_ID))
         static force_inline void mode(Mode m) {
-            setBit_(REG(OUTPUT_X(MODE_BIT_0_REG)), OUTPUT_X(MODE_BIT_0_BIT), Int(m) & 0x01);
-            setBit_(REG(OUTPUT_X(MODE_BIT_1_REG)), OUTPUT_X(MODE_BIT_1_BIT), Int(m) & 0x02);
+            setBit_(REG(OUTPUT_X(MODE_BIT_0_REG)), OUTPUT_X(MODE_BIT_0_BIT), int(m) & 0x01);
+            setBit_(REG(OUTPUT_X(MODE_BIT_1_REG)), OUTPUT_X(MODE_BIT_1_BIT), int(m) & 0x02);
         }
     #endif
 
@@ -78,21 +78,21 @@ struct OutputX {
         }
     #endif
 
-    /// #### static void intEnable(Bool b)
+    /// #### static void intEnable(bool b)
     #if OUTPUT_X(MODE_BIT_1_BIT)
-        static force_inline void intEnable(Bool b) {
+        static force_inline void intEnable(bool b) {
             setBit_(REG(OUTPUT_X(INT_ENABLE_REG)), OUTPUT_X(INT_ENABLE_BIT), b);
         }
 
-        /// #### static Bool intEnabled()
-        static force_inline Bool intEnabled() {
+        /// #### static bool intEnabled()
+        static force_inline bool intEnabled() {
             return getBit_(REG(OUTPUT_X(INT_ENABLE_REG)), OUTPUT_X(INT_ENABLE_BIT));
         }
     #endif
 
-    /// #### static Bool intFlag()
+    /// #### static bool intFlag()
     #if OUTPUT_X(MODE_BIT_1_BIT)
-        static force_inline Bool intFlag() {
+        static force_inline bool intFlag() {
             return getBit_(REG(OUTPUT_X(INT_FLAG_REG)), OUTPUT_X(INT_FLAG_BIT));
         }
     #endif
@@ -100,7 +100,7 @@ struct OutputX {
     /// #### static void intFlagClear()
     #if OUTPUT_X(MODE_BIT_1_BIT)
         static force_inline void intFlagClear() {
-            setBit_(REG(OUTPUT_X(INT_FLAG_REG)), OUTPUT_X(INT_FLAG_BIT), true);
+            clearFlagBit(REG(OUTPUT_X(INT_FLAG_REG)), OUTPUT_X(INT_FLAG_BIT));
         }
     #endif
 

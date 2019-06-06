@@ -129,7 +129,8 @@ struct MyEnvironment : public ::testing::Environment {
 
 // Macros and functions for testing function side effects and memory access.
 
-void test_reg_write(void (*f)(), const char* str) {
+template <class F>
+void test_reg_write(F f, const char* str) {
     std::stringstream ss;
 
     for(int c = 0x00; ; c = 0xff) {
@@ -168,8 +169,8 @@ void test_reg_write(void (*f)(), const char* str) {
     }
 }
 
-template <class T>
-void test_reg_read_write(T (*f)(), const char* str) {
+template <class T, class F>
+void test_reg_read_write(F f, const char* str) {
     uint64_t seed = 59329876;
 
     std::stringstream ss;

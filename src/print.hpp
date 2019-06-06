@@ -9,8 +9,8 @@
 
 namespace nbos {
 
-inline Bool printChar(Queue<Char>& queue, Char c) {
-    const Bool result = queue.push(c);
+inline bool printChar(Queue<char>& queue, char c) {
+    const bool result = queue.push(c);
 
     if(c == '\n') {
         queue.callCallback();
@@ -19,9 +19,9 @@ inline Bool printChar(Queue<Char>& queue, Char c) {
     return result;
 }
 
-// inline Bool printString(Queue<Char>& queue, const Array<Char> str) {
-inline Bool printString(Queue<Char>& queue, const String<>& str) {
-    for(const Char p : str) {
+// inline bool printString(Queue<char>& queue, const Array<char> str) {
+inline bool printString(Queue<char>& queue, const String<>& str) {
+    for(const char p : str) {
         if(!printChar(queue, p)) {
             return false;
         }
@@ -30,28 +30,28 @@ inline Bool printString(Queue<Char>& queue, const String<>& str) {
     return true;
 }
 
-template <class Type, Int base = 10>
-inline constexpr Int itoa(Char* buffer, Type n) {
+template <class Type, int base = 10>
+inline constexpr int itoa(char* buffer, Type n) {
     static_assert((base >= 2) && (base <= 36), "Base must be between 2 and 36 inclusive");
 
-    Int i = 0;
+    int i = 0;
 
     if(n == 0) {
         buffer[i++] = '0';
     } else {
-        const Bool negative = n < 0;
+        const bool negative = n < 0;
 
         n = abs(n);
 
         while(n != 0) {
-            const Int d = Int(n % base);
+            const int d = int(n % base);
 
             n /= base;
 
             if(d < 10) {
-                buffer[i++] = '0' + d;
+                buffer[i++] = char('0' + d);
             } else {
-                buffer[i++] = 'A' + (d - 10);
+                buffer[i++] = char('A' + (d - 10));
             }
         }
 
@@ -67,12 +67,12 @@ inline constexpr Int itoa(Char* buffer, Type n) {
     return i;
 }
 
-// TODO Make efficient Float to ascii function with output like:
+// TODO Make efficient float to ascii function with output like:
 // 1.0, 1.0004, 1000.002, 10000.01, 100000.0, 1.0e6, 0.001, -1.0e-50
 // i.e. If more than ~13 characters, use scientific notation.
-// int8_t ftoa(Char* buffer, Float n) {
+// int8_t ftoa(char* buffer, float n) {
 //     union {
-//         Float f;
+//         float f;
 //         int i;
 //     } u;
 //
@@ -90,11 +90,11 @@ inline constexpr Int itoa(Char* buffer, Type n) {
 //         buffer[k++] = '.';
 //         buffer[k++] = '0';
 //     } else {
-//         Float e = floor(log10(n));
-//         Float s = pow(10, -e) * n;
+//         float e = floor(log10(n));
+//         float s = pow(10, -e) * n;
 //
-//         Float i;
-//         Float f;
+//         float i;
+//         float f;
 //
 //         f = round(modff(s, &i) * 1e6);
 //
@@ -102,7 +102,7 @@ inline constexpr Int itoa(Char* buffer, Type n) {
 //
 //         buffer[k++] = '.';
 //
-//         Char bf[6];
+//         char bf[6];
 //
 //         // itoa(&buffer[k], int32_t(f), 10);
 //         int8_t l = _itoa(bf, int32_t(f), 10);
@@ -112,7 +112,7 @@ inline constexpr Int itoa(Char* buffer, Type n) {
 //         // }
 //
 //         for(int8_t j = 0; j < l; j++) {
-//             Char c = bf[(l - 1) - j];
+//             char c = bf[(l - 1) - j];
 //             if(c != '0') {
 //                 buffer[k++] = c; // XXX XXX XXX
 //             }
@@ -121,7 +121,7 @@ inline constexpr Int itoa(Char* buffer, Type n) {
 //         // k += 6;
 //         //
 //         // for(int8_t j = 0; j < 5; j++) {
-//         //     Char c = buffer[k - 1];
+//         //     char c = buffer[k - 1];
 //         //     if(('1' <= c) && (c <= '9')) {
 //         //         break;
 //         //     } else {
@@ -140,156 +140,157 @@ inline constexpr Int itoa(Char* buffer, Type n) {
 //     return k;
 // }
 
-template <class T, Int base = 10>
-inline Bool printInt(Queue<Char>& queue, T n) {
+template <class T, int base = 10>
+inline bool printInt(Queue<char>& queue, T n) {
     // FIXME This shouldn't compile so easily. (Cast from float to int.)
-    constexpr Int maxDigits = *(Float(1) + (floor(log(Float(Max<T>::value)) / log(Float(base)))));
+    constexpr int maxDigits = int(float(1) + (floor(log(float(max<T>())) / log(float(base)))));
+    // constexpr int maxDigits = int(float(1) + (floor(log(float(Max<T>::value)) / log(float(base)))));
 
-    Char buffer[maxDigits + IsSigned<T>::value + 1];
+    char buffer[maxDigits + isSigned<T>() + 1];
 
     itoa<T, base>(buffer, n);
-
-    return printString(queue, (const Char*)buffer);
-}
-
-inline Bool printFloat(Queue<Char>& queue, Float n) {
-    Char buffer[14];
-
-    libc::dtostre(primitive_double(Double(n)), (primitive_signed_char*)buffer, 6, 0);
 
     return printString(queue, buffer);
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, const Char c) {
+inline bool printFloat(Queue<char>& queue, float n) {
+    char buffer[14];
+
+    libc::dtostre(double(double(n)), buffer, 6, 0);
+
+    return printString(queue, buffer);
+}
+
+inline Queue<char>& operator<<(Queue<char>& queue, const char c) {
     printChar(queue, c);
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, const primitive_signed_char* str) {
-    for(const primitive_signed_char* c = str; *c != '\0'; c++) {
+inline Queue<char>& operator<<(Queue<char>& queue, const char* str) {
+    for(const char* c = str; *c != '\0'; c++) {
         printChar(queue, *c);
     }
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, const String<>& s) {
+inline Queue<char>& operator<<(Queue<char>& queue, const String<>& s) {
     printString(queue, s);
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, Int8 n) {
+// inline Queue<char>& operator<<(Queue<char>& queue, int8_t n) {
+//     printInt(queue, n);
+
+//     return queue;
+// }
+
+inline Queue<char>& operator<<(Queue<char>& queue, int16_t n) {
     printInt(queue, n);
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, Int16 n) {
+inline Queue<char>& operator<<(Queue<char>& queue, int32_t n) {
     printInt(queue, n);
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, Int32 n) {
+inline Queue<char>& operator<<(Queue<char>& queue, int64_t n) {
     printInt(queue, n);
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, Int64 n) {
+inline Queue<char>& operator<<(Queue<char>& queue, uint8_t n) {
     printInt(queue, n);
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, Word8 n) {
+inline Queue<char>& operator<<(Queue<char>& queue, uint16_t n) {
     printInt(queue, n);
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, Word16 n) {
+inline Queue<char>& operator<<(Queue<char>& queue, uint32_t n) {
     printInt(queue, n);
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, Word32 n) {
+inline Queue<char>& operator<<(Queue<char>& queue, uint64_t n) {
     printInt(queue, n);
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, Word64 n) {
-    printInt(queue, n);
-
-    return queue;
-}
-
-inline Queue<Char>& operator<<(Queue<Char>& queue, Bool n) {
+inline Queue<char>& operator<<(Queue<char>& queue, bool n) {
     printString(queue, n ? "true" : "false");
 
     return queue;
 }
 
 template <class T>
-inline Queue<Char>& operator<<(Queue<Char>& queue, T* p) {
-    printInt<Word16, 16>(queue, *p);
+inline Queue<char>& operator<<(Queue<char>& queue, T* p) {
+    printInt<uint16_t, 16>(queue, p);
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, Float n) {
-    printFloat(queue, *n);
+inline Queue<char>& operator<<(Queue<char>& queue, float n) {
+    printFloat(queue, n);
 
     return queue;
 }
 
-inline Queue<Char>& operator<<(Queue<Char>& queue, Double n) {
-    printFloat(queue, *n);
+// inline Queue<char>& operator<<(Queue<char>& queue, double n) {
+//     printFloat(queue, n);
 
-    return queue;
-}
+//     return queue;
+// }
 
 #ifdef TEST
 
 TEST(Print, itoa) {
-    Char str[64];
+    char str[64];
 
-    itoa(str, Int8(0));
-    EXPECT_STREQ((Char::T*)str, "0");
+    itoa(str, uint8_t(0));
+    EXPECT_STREQ(str, "0");
 
-    itoa(str, Word8(147));
-    EXPECT_STREQ((Char::T*)str, "147");
+    itoa(str, uint8_t(147));
+    EXPECT_STREQ(str, "147");
 
-    itoa(str, Int16(1476));
-    EXPECT_STREQ((Char::T*)str, "1476");
+    itoa(str, int16_t(1476));
+    EXPECT_STREQ(str, "1476");
 
-    itoa(str, Int16(-1476));
-    EXPECT_STREQ((Char::T*)str, "-1476");
+    itoa(str, int16_t(-1476));
+    EXPECT_STREQ(str, "-1476");
 
-    itoa<Int16, 2>(str, Int16(764));
-    EXPECT_STREQ((Char::T*)str, "1011111100");
+    itoa<int16_t, 2>(str, int16_t(764));
+    EXPECT_STREQ(str, "1011111100");
 
-    itoa<Int16, 16>(str, Int16(847));
-    EXPECT_STREQ((Char::T*)str, "34F");
+    itoa<int16_t, 16>(str, int16_t(847));
+    EXPECT_STREQ(str, "34F");
 
-    itoa<Int16, 16>(str, Int16(-847));
-    EXPECT_STREQ((Char::T*)str, "-34F");
+    itoa<int16_t, 16>(str, int16_t(-847));
+    EXPECT_STREQ(str, "-34F");
 
-    itoa<Int32, 36>(str, Int32(36));
-    EXPECT_STREQ((Char::T*)str, "10");
+    itoa<int32_t, 36>(str, int32_t(36));
+    EXPECT_STREQ(str, "10");
 
-    itoa(str, Int32(65535));
-    EXPECT_STREQ((Char::T*)str, "65535");
+    itoa(str, int32_t(65535));
+    EXPECT_STREQ(str, "65535");
 
-    itoa(str, Word32(65535));
-    EXPECT_STREQ((Char::T*)str, "65535");
+    itoa(str, uint32_t(65535));
+    EXPECT_STREQ(str, "65535");
 
-    itoa(str, Int32(32768));
-    EXPECT_STREQ((Char::T*)str, "32768");
+    itoa(str, int32_t(32768));
+    EXPECT_STREQ(str, "32768");
 }
 
 #endif

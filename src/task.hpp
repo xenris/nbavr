@@ -20,7 +20,7 @@
 #ifndef NBOS_TASK_HPP
 #define NBOS_TASK_HPP
 
-#include "atomic.hpp"
+#include "hardware/system.hpp"
 
 namespace nbos {
 
@@ -35,12 +35,12 @@ struct Task {
     };
 
     State state = State::awake;
-    Atomic<Word64> wakeTick;
+    uint64_t wakeTick;
 
-    /// #### void sleep(Word64 ticks)
+    /// #### void sleep(uint64_t ticks)
     /// Put this task to sleep until the given number of ticks have passed.
-    void sleep(Word64 ticks) {
-        wakeTick = Clock::getTicks() + ticks;
+    void sleep(uint64_t ticks) {
+        wakeTick = atomic(Clock::getTicks() + ticks);
         state = State::delay;
     }
 
@@ -61,7 +61,7 @@ struct Task {
     /// #### virtual void loop()
     /// The main loop of the task.<br>
     /// Override this and fill with your own code.
-    virtual void loop() {};
+    virtual void loop() {}
 };
 
 #ifdef TEST
@@ -69,16 +69,16 @@ struct Task {
 #ifdef CHIP_TIMER_1
     template <typename Clock>
     struct Taskk : Task<Clock> {
-        Queue<Char>& cout;
-        Queue<Char>& cin;
+        Queue<char>& cout;
+        Queue<char>& cin;
 
-        Taskk(Queue<Char>& cout, Queue<Char>& cin) : cout(cout), cin(cin) {
+        Taskk(Queue<char>& cout, Queue<char>& cin) : cout(cout), cin(cin) {
         }
     };
 
     TEST(Task, General) {
-        Queue<Char, 10> cout;
-        Queue<Char, 10> cin;
+        Queue<char, 10> cout;
+        Queue<char, 10> cin;
 
         typedef Clock<hw::Timer1, 16000000> Clock;
 

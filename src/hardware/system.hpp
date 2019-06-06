@@ -6,10 +6,20 @@
 #define NBOS_SYSTEM_HPP
 
 #include "chip.hpp"
-#include "macros.hpp"
-#include "safe.hpp"
+#include "../macros.hpp"
+#include "../primitive.hpp"
 
-#define block if(__Block(); true)
+#define atomic(...) CAT(atomic_, HAS_ARGS(__VA_ARGS__))(__VA_ARGS__)
+#define atomic_0(...) if(__Atomic __a; true)
+#define atomic_1(...) (__Atomic(), __VA_ARGS__)
+
+#define non_atomic(...) CAT(non_atomic_, HAS_ARGS(__VA_ARGS__))(__VA_ARGS__)
+#define non_atomic_0(...) if(__NonAtomic __n; true)
+#define non_atomic_1(...) (__NonAtomic(), __VA_ARGS__)
+
+#define block(...) CAT(block_, HAS_ARGS(__VA_ARGS__))(__VA_ARGS__)
+#define block_0(...) if(__Block __a; true)
+#define block_1(...) (__Block(), __VA_ARGS__)
 
 struct __Block {
     __Block() {
@@ -23,67 +33,95 @@ struct __Block {
 
 namespace nbos {
 
-/// #### T bv(T n)
+/// #### T bv(int n)
 /// Equivalent to "1 << n".
 template <class T>
-force_inline T bv(T n) {
-    static_assert(IsInteger<T>::value, "bv requires an integer");
+force_inline T bv(int n) {
+    static_assert(isInteger<T>(), "bv requires an integer");
 
-    return T(1) << n;
+    return T(T(1) << T(n));
 }
 
-/// #### void setBit(T\* register, Word8 bit, Bool value)
+/// #### void setBit(T\* register, uint8_t bit, bool value)
 /// Set or clear a bit in a register immediately.
 
-/// #### void setBit_(T\* register, Word8 bit, Bool value)
+/// #### void setBit_(T\* register, uint8_t bit, bool value)
 /// Set or clear a bit in a register lazily.
 /// (i.e. Allow compiler to rearrange and combine instructions for faster code.)
 
 template <class T>
-force_inline void setBit_(T* reg, Word8 bit, Bool value) {
-    static_assert(!IsSigned<T>::value, "setBit requires a pointer to an unsigned integer");
+force_inline void setBit_(T* reg, uint8_t bit, bool value) {
+    static_assert(!isSigned<T>(), "setBit requires a pointer to an unsigned integer");
 
     #ifdef TEST
-        reg = sanitiseRegisterForTest(reg); //(T*)(Integer(reg) % CHIP_REGISTER_SIZE);
+        reg = sanitiseRegisterForTest(reg);
     #endif
 
     if(value) {
-        *reg |= bv<T>(T(bit));
+        *reg = T(*reg | bv<T>(T(bit)));
     } else {
-        *reg &= ~bv<T>(T(bit));
+        *reg = T(*reg & ~bv<T>(T(bit)));
     }
 }
 
 template <class T>
-force_inline void setBit(T* reg, Word8 bit, Bool value) {
-    block {
+force_inline void setBit_(T* reg, T mask, uint8_t bit, bool value) {
+    static_assert(!isSigned<T>(), "setBit requires a pointer to an unsigned integer");
+
+    #ifdef TEST
+        reg = sanitiseRegisterForTest(reg);
+    #endif
+
+    if(value) {
+        *reg = T(mask & (*reg | bv<T>(T(bit))));
+    } else {
+        *reg = T(mask & (*reg & ~bv<T>(T(bit))));
+    }
+}
+
+template <class T>
+force_inline void setBit(T* reg, uint8_t bit, bool value) {
+    block() {
         setBit_(reg, bit, value);
     }
 }
 
-/// #### void getBit(T\* register, Word8 bit)
+/// #### void getBit(T\* register, uint8_t bit)
 /// Get a bit in a register immediately.
 
-/// #### void getBit_(T\* register, Word8 bit)
+/// #### void getBit_(T\* register, uint8_t bit)
 /// Get a bit in a register lazily.
 /// (i.e. Allow compiler to rearrange and combine instructions for faster code.)
 
 template <class T>
-force_inline Bool getBit_(T* reg, Word8 bit) {
-    static_assert(!IsSigned<T>::value, "getBit requires a pointer to an unsigned integer");
+force_inline bool getBit_(T* reg, uint8_t bit) {
+    static_assert(!isSigned<T>(), "getBit requires a pointer to an unsigned integer");
 
     #ifdef TEST
-        reg = sanitiseRegisterForTest(reg); //(T*)(Integer(reg) % CHIP_REGISTER_SIZE);
+        reg = sanitiseRegisterForTest(reg);
     #endif
 
-    return Bool(*reg & bv<T>(T(bit)));
+    return bool(*reg & bv<T>(T(bit)));
 }
 
 template <class T>
-force_inline Bool getBit(T* reg, Word8 bit) {
-    block {
+force_inline bool getBit(T* reg, uint8_t bit) {
+    block() {
         return getBit_(reg, bit);
     }
+}
+
+/// #### void clearFlagBit(T\* register, uint8_t bit)
+/// Clear a flag bit in a flag register.
+template <class T>
+force_inline void clearFlagBit(T* reg, uint8_t bit) {
+    static_assert(!isSigned<T>(), "clearFlagBit requires a pointer to an unsigned integer");
+
+    #ifdef TEST
+        reg = sanitiseRegisterForTest(reg);
+    #endif
+
+    *reg = bv<T>(T(bit));
 }
 
 /// #### void setReg(T\* register, T value)
@@ -95,10 +133,10 @@ force_inline Bool getBit(T* reg, Word8 bit) {
 
 template <class T>
 force_inline void setReg_(T* reg, T value) {
-    static_assert(!IsSigned<T>::value, "setReg requires a pointer to an unsigned integer");
+    static_assert(!isSigned<T>(), "setReg requires a pointer to an unsigned integer");
 
     #ifdef TEST
-        reg = sanitiseRegisterForTest(reg); //(T*)(Integer(reg) % CHIP_REGISTER_SIZE);
+        reg = sanitiseRegisterForTest(reg);
     #endif
 
     *reg = value;
@@ -106,7 +144,7 @@ force_inline void setReg_(T* reg, T value) {
 
 template <class T>
 force_inline void setReg(T* reg, T value) {
-    block {
+    block() {
         setReg_(reg, value);
     }
 }
@@ -119,19 +157,19 @@ force_inline void setReg(T* reg, T value) {
 /// (i.e. Allow compiler to rearrange and combine instructions for faster code.)
 
 template <class T>
-force_inline T getReg_(T* reg) {
-    static_assert(!IsSigned<T>::value, "getReg requires a pointer to an unsigned integer");
+force_inline T& getReg_(T* reg) {
+    static_assert(!isSigned<T>(), "getReg requires a pointer to an unsigned integer");
 
     #ifdef TEST
-        reg = sanitiseRegisterForTest(reg); //(T*)(Integer(reg) % CHIP_REGISTER_SIZE);
+        reg = sanitiseRegisterForTest(reg);
     #endif
 
     return *reg;
 }
 
 template <class T>
-force_inline T getReg(T* reg) {
-    block {
+force_inline T& getReg(T* reg) {
+    block() {
         return getReg_(reg);
     }
 }
@@ -146,31 +184,31 @@ force_inline void nop() {
     #endif
 }
 
-/// #### void delay<Word64 cpuFreq, Word64 ns>()
+/// #### void delay<uint64_t cpuFreq, uint64_t ns>()
 /// Delays the cpu for the given number of nanoseconds.<br>
 /// Should only be used for very short delays.<br>
 /// Limited to 10 milliseconds.<br>
 /// Rounds to the nearest possible delay time. e.g. at 16MHz, delay<50>() will
 /// delay for 62.5 nanoseconds (1 cpu clock cycle).<br>
 /// Is limited further by faster clock speeds. e.g. at 100MHz it will be limited to 2621434ns.
-template <Integer cpuFreq, Integer ns>
+template <uint64_t cpuFreq, uint64_t ns>
 force_inline void delay() {
     static_assert(ns <= 10000000, "Delay limited to 10 milliseconds (10000000 ns)");
 
     // Ensure that this delay separates hardware actions, even when 0ns.
-    block {};
+    block() {}
 
-    constexpr Word64 clocks = (Word64(ns) * cpuFreq + 500000000) / 1000000000;
-    constexpr Word64 clocksPerLoop = 4;
+    constexpr uint64_t clocks = (uint64_t(ns) * cpuFreq + 500000000) / 1000000000;
+    constexpr uint64_t clocksPerLoop = 4;
 
     // TODO Handle higher cpu frequencies.
-    static_assert(clocks / 4 <= Word64(Max<Word16>::value), "Cannot handle this length of delay at this cpu frequency");
+    static_assert(clocks / 4 <= uint64_t(max<uint16_t>()), "Cannot handle this length of delay at this cpu frequency");
 
-    constexpr Word16 loops = Word16((clocks <= 0) ? (0) : ((clocks - 1) / clocksPerLoop));
-    constexpr Word16 nops = Word16((clocks <= 4) ? (clocks) : ((clocks - 1) % clocksPerLoop));
+    constexpr uint16_t loops = uint16_t((clocks <= 0) ? (0) : ((clocks - 1) / clocksPerLoop));
+    constexpr uint16_t nops = uint16_t((clocks <= 4) ? (clocks) : ((clocks - 1) % clocksPerLoop));
 
     if constexpr (loops != 0) {
-        const Word16 c = loops;
+        const uint16_t c = loops;
 
         asm volatile (
             "ldi r30, %0\n"
@@ -178,7 +216,7 @@ force_inline void delay() {
             "1: sbiw r30, 1\n"
             "brne 1b\n"
             :
-            : "" (Word8(c)), "" (Word8(c >> 8))
+            : "" (uint8_t(c)), "" (uint8_t(c >> 8))
             : "r30", "r31"
         );
     }
@@ -196,9 +234,9 @@ force_inline void delay() {
 
 // TODO Check that these functions work for arm.
 
-/// #### void interruptsEnable(Bool)
+/// #### void interruptsEnable(bool)
 /// Enable/disable interrupts.
-force_inline void interruptsEnable(Bool enable) {
+force_inline void interruptsEnable(bool enable) {
     #if defined(__AVR__)
         if(enable) {
             asm volatile("sei" ::: "memory");
@@ -214,14 +252,14 @@ force_inline void interruptsEnable(Bool enable) {
     #elif defined(TEST)
         // Ignore this function.
     #else
-        #warning interruptsEnable(Bool) not defined for this architecture.
+        #warning interruptsEnable(bool) not defined for this architecture.
     #endif
 }
 
-/// #### Bool interruptsEnabled()
+/// #### bool interruptsEnabled()
 /// Returns true if interrupts are enabled.
-force_inline Bool interruptsEnabled() {
-    Bool t = false;
+force_inline bool interruptsEnabled() {
+    bool t = false;
 
     #if defined(__AVR__)
         #if REG_DEFINED(CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_REG)
@@ -242,43 +280,43 @@ force_inline Bool interruptsEnabled() {
 
 }
 
-#define atomic if(__Atomic(); true)
-
-#define nonatomic if(__NonAtomic(); true)
-
 struct __Atomic {
-    Bool _i;
+    bool _i;
 
-    __Atomic() {
-        _i = nbos::interruptsEnabled();
+    force_inline __Atomic() {
+        block() {
+            _i = nbos::interruptsEnabled();
 
-        nbos::interruptsEnable(false);
-
-        block {};
+            nbos::interruptsEnable(false);
+        }
     }
 
-    ~__Atomic() {
-        nbos::interruptsEnable(_i);
-
-        block {};
+    force_inline ~__Atomic() {
+        block() {
+            if(_i) {
+                nbos::interruptsEnable(true);
+            }
+        }
     }
 };
 
 struct __NonAtomic {
-    Bool _i;
+    bool _i;
 
     __NonAtomic() {
-        _i = nbos::interruptsEnabled();
+        block() {
+            _i = nbos::interruptsEnabled();
 
-        nbos::interruptsEnable(true);
-
-        block {};
+            nbos::interruptsEnable(true);
+        };
     }
 
     ~__NonAtomic() {
-        nbos::interruptsEnable(_i);
-
-        block {};
+        block() {
+            if(!_i) {
+                nbos::interruptsEnable(false);
+            }
+        }
     }
 };
 

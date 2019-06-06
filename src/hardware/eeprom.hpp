@@ -15,7 +15,7 @@
 /// nbos::hw::Eeprom0::address(0x00);
 /// nbos::hw::Eeprom0::readEnable();
 ///
-/// Word8 n = nbos::hw::Eeprom0::data();
+/// uint8_t n = nbos::hw::Eeprom0::data();
 /// ```
 
 #ifndef NBOS_EEPROM_HPP
@@ -61,22 +61,22 @@ struct EepromN {
 
     /// #### static void mode([[AdcN::Mode]] m)
     static force_inline void mode(Mode m) {
-        setBit_(REG(EEPROM_N(PROGRAMMING_MODE_BIT_0_REG)), EEPROM_N(PROGRAMMING_MODE_BIT_0_BIT), Int(m) & 0x01);
-        setBit_(REG(EEPROM_N(PROGRAMMING_MODE_BIT_1_REG)), EEPROM_N(PROGRAMMING_MODE_BIT_1_BIT), Int(m) & 0x02);
+        setBit_(REG(EEPROM_N(PROGRAMMING_MODE_BIT_0_REG)), EEPROM_N(PROGRAMMING_MODE_BIT_0_BIT), int(m) & 0x01);
+        setBit_(REG(EEPROM_N(PROGRAMMING_MODE_BIT_1_REG)), EEPROM_N(PROGRAMMING_MODE_BIT_1_BIT), int(m) & 0x02);
     }
 
-    /// #### static void address(Word16 a)
-    static force_inline void address(Word16 a) {
+    /// #### static void address(uint16_t a)
+    static force_inline void address(uint16_t a) {
         setReg(REG(EEPROM_N(ADDRESS_REG)), a);
     }
 
-    /// #### static void data(Word8 d)
-    static force_inline void data(Word8 d) {
+    /// #### static void data(uint8_t d)
+    static force_inline void data(uint8_t d) {
         setReg_(REG(EEPROM_N(DATA_REG)), d);
     }
 
-    /// #### static Word8 data()
-    static force_inline Word8 data() {
+    /// #### static uint8_t data()
+    static force_inline uint8_t data() {
         return getReg_(REG(EEPROM_N(DATA_REG)));
     }
 
@@ -92,9 +92,9 @@ struct EepromN {
         setBit_(REG(EEPROM_N(WRITE_ENABLE_REG)), EEPROM_N(WRITE_ENABLE_BIT), true);
     }
 
-    /// #### static Bool writeEnabled()
+    /// #### static bool writeEnabled()
     /// Returns true if Eeprom is currently writing.
-    static force_inline Bool writeEnabled() {
+    static force_inline bool writeEnabled() {
         return getBit_(REG(EEPROM_N(WRITE_ENABLE_REG)), EEPROM_N(WRITE_ENABLE_BIT));
     }
 
@@ -115,8 +115,8 @@ struct EepromN {
         callback();
     }
 
-    /// #### static void intEnable(Bool e)
-    static force_inline void intEnable(Bool e) {
+    /// #### static void intEnable(bool e)
+    static force_inline void intEnable(bool e) {
         setBit_(REG(EEPROM_N(READY_INT_ENABLE_REG)), EEPROM_N(READY_INT_ENABLE_BIT), e);
     }
 

@@ -150,15 +150,15 @@ struct SpiN {
     }
 
     #if DEFINED(SPI_N(ENABLE_BIT_0_BIT))
-        /// #### static void enable(Bool b)
-        static force_inline void enable(Bool b) {
+        /// #### static void enable(bool b)
+        static force_inline void enable(bool b) {
             setBit_(REG(SPI_N(ENABLE_BIT_0_REG)), SPI_N(ENABLE_BIT_0_BIT), b);
         }
     #endif
 
     #if DEFINED(SPI_N(INT_ENABLE_BIT_0_BIT))
-        /// #### static void intEnable(Bool b)
-        static force_inline void intEnable(Bool b) {
+        /// #### static void intEnable(bool b)
+        static force_inline void intEnable(bool b) {
             setBit_(REG(SPI_N(INT_ENABLE_BIT_0_REG)), SPI_N(INT_ENABLE_BIT_0_BIT), b);
         }
     #endif
@@ -178,78 +178,68 @@ struct SpiN {
     #if DEFINED(SPI_N(DATA_ORDER_BIT_0_BIT))
         /// #### static void dataOrder([[SpiN::DataOrder]] d)
         static force_inline void dataOrder(DataOrder d) {
-            setBit_(REG(SPI_N(DATA_ORDER_BIT_0_REG)), SPI_N(DATA_ORDER_BIT_0_BIT), Int(d) & 0x01);
+            setBit_(REG(SPI_N(DATA_ORDER_BIT_0_REG)), SPI_N(DATA_ORDER_BIT_0_BIT), int(d) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT))
         /// #### static void masterSlave([[SpiN::MasterSlave]] m)
         static force_inline void masterSlave(MasterSlave m) {
-            setBit_(REG(SPI_N(MASTER_SLAVE_SELECT_BIT_0_REG)), SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT), Int(m) & 0x01);
+            setBit_(REG(SPI_N(MASTER_SLAVE_SELECT_BIT_0_REG)), SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT), int(m) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(POLARITY_BIT_0_BIT))
         /// #### static void polarity([[SpiN::Polarity]] p)
         static force_inline void polarity(Polarity p) {
-            setBit_(REG(SPI_N(POLARITY_BIT_0_REG)), SPI_N(POLARITY_BIT_0_BIT), Int(p) & 0x01);
+            setBit_(REG(SPI_N(POLARITY_BIT_0_REG)), SPI_N(POLARITY_BIT_0_BIT), int(p) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(PHASE_BIT_0_BIT))
         /// #### static void phase([[SpiN::Phase]] p)
         static force_inline void phase(Phase p) {
-            setBit_(REG(SPI_N(PHASE_BIT_0_REG)), SPI_N(PHASE_BIT_0_BIT), Int(p) & 0x01);
+            setBit_(REG(SPI_N(PHASE_BIT_0_REG)), SPI_N(PHASE_BIT_0_BIT), int(p) & 0x01);
         }
     #endif
 
     #if DEFINED(SPI_N(CLOCK_BIT_0_BIT))
         /// #### static void clock([[SpiN::Clock]] c)
         static force_inline void clock(Clock c) {
-            setBit_(REG(SPI_N(CLOCK_BIT_0_REG)), SPI_N(CLOCK_BIT_0_BIT), Int(c) & 0x01);
+            setBit_(REG(SPI_N(CLOCK_BIT_0_REG)), SPI_N(CLOCK_BIT_0_BIT), int(c) & 0x01);
 
             #if DEFINED(SPI_N(CLOCK_BIT_1_BIT))
-                setBit_(REG(SPI_N(CLOCK_BIT_1_REG)), SPI_N(CLOCK_BIT_1_BIT), Int(c) & 0x02);
+                setBit_(REG(SPI_N(CLOCK_BIT_1_REG)), SPI_N(CLOCK_BIT_1_BIT), int(c) & 0x02);
             #endif
 
             #if DEFINED(SPI_N(CLOCK_BIT_2_BIT))
-                setBit_(REG(SPI_N(CLOCK_BIT_2_REG)), SPI_N(CLOCK_BIT_2_BIT), Int(c) & 0x04);
+                setBit_(REG(SPI_N(CLOCK_BIT_2_REG)), SPI_N(CLOCK_BIT_2_BIT), int(c) & 0x04);
             #endif
         }
     #endif
 
     #if DEFINED(SPI_N(INT_FLAG_BIT_0_BIT))
-        /// #### static Bool intFlag()
-        static force_inline Bool intFlag() {
+        /// #### static bool intFlag()
+        static force_inline bool intFlag() {
             return getBit(REG(SPI_N(INT_FLAG_BIT_0_REG)), SPI_N(INT_FLAG_BIT_0_BIT));
-        }
-
-        /// #### static void intFlagClear()
-        static force_inline void intFlagClear() {
-            setBit_(REG(SPI_N(INT_FLAG_BIT_0_REG)), SPI_N(INT_FLAG_BIT_0_BIT), true);
         }
     #endif
 
     #if DEFINED(SPI_N(COLLISION_FLAG_BIT_0_BIT))
-        /// #### static Bool collisionFlag()
-        static force_inline Bool collisionFlag() {
+        /// #### static bool collisionFlag()
+        static force_inline bool collisionFlag() {
             return getBit(REG(SPI_N(COLLISION_FLAG_BIT_0_REG)), SPI_N(COLLISION_FLAG_BIT_0_BIT));
-        }
-
-        /// #### static void collisionFlagClear()
-        static force_inline void collisionFlagClear() {
-            setBit_(REG(SPI_N(COLLISION_FLAG_BIT_0_REG)), SPI_N(COLLISION_FLAG_BIT_0_BIT), true);
         }
     #endif
 
     #if REG_DEFINED(SPI_N(DATA_REG))
-        /// #### static void data(Word8 d)
-        static force_inline void data(Word8 d) {
+        /// #### static void data(uint8_t d)
+        static force_inline void data(uint8_t d) {
             setReg_(REG(SPI_N(DATA_REG)), d);
         }
 
-        /// #### static Word8 data()
-        static force_inline Word8 data() {
+        /// #### static uint8_t data()
+        static force_inline uint8_t data() {
             return getReg_(REG(SPI_N(DATA_REG)));
         }
     #endif
@@ -359,19 +349,11 @@ TEST(SpiN, getHardwareType) {
     TEST(SpiN, intFlag) {
         TEST_REG_READ_WRITE(SpiN::intFlag());
     }
-
-    TEST(SpiN, intFlagClear) {
-        TEST_REG_WRITE(SpiN::intFlagClear());
-    }
 #endif
 
 #if DEFINED(SPI_N(COLLISION_FLAG_BIT_0_BIT))
     TEST(SpiN, collisionFlag) {
         TEST_REG_READ_WRITE(SpiN::collisionFlag());
-    }
-
-    TEST(SpiN, collisionFlagClear) {
-        TEST_REG_WRITE(SpiN::collisionFlagClear());
     }
 #endif
 

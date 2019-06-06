@@ -57,7 +57,7 @@ w Adc0::enable(true) 26:00:80:
 w Adc0::intEnable(false) 26:ff:f7:
 w Adc0::intEnable(true) 26:00:08:
 w Adc0::intFlag()
-w Adc0::intFlagClear() 26:00:10:
+w Adc0::intFlagClear() 26:00:10:26:ff:10:
 w Adc0::leftAdjust(false) 27:ff:df:
 w Adc0::leftAdjust(true) 27:00:20:
 w Adc0::prescaler(Adc0::Prescaler::div128) 26:00:07:
@@ -83,7 +83,7 @@ w Adc0::value()
 w ExInt0::intEnable(false) 5b:ff:bf:
 w ExInt0::intEnable(true) 5b:00:40:
 w ExInt0::intFlag()
-w ExInt0::intFlagClear() 5a:00:40:
+w ExInt0::intFlagClear() 5a:00:40:5a:ff:40:
 w ExInt0::trigger(ExInt0::Trigger::change) 55:00:01:55:ff:fd:
 w ExInt0::trigger(ExInt0::Trigger::falling) 55:00:02:55:ff:fe:
 w ExInt0::trigger(ExInt0::Trigger::low) 55:ff:fc:
@@ -91,7 +91,7 @@ w ExInt0::trigger(ExInt0::Trigger::rising) 55:00:03:
 w PcInt0::intEnable(false) 5b:ff:df:
 w PcInt0::intEnable(true) 5b:00:20:
 w PcInt0::intFlag()
-w PcInt0::intFlagClear() 5a:00:40:
+w PcInt0::intFlagClear() 5a:00:40:5a:ff:40:
 w PcInt0::mask(0x12) 35:00:12:35:ff:12:
 w PortB::Pin0::input()
 w PortB::Pin0::mode()
@@ -158,7 +158,7 @@ w Timer0::OutputA::intEnable(false) 59:ff:fb:
 w Timer0::OutputA::intEnable(true) 59:00:04:
 w Timer0::OutputA::intEnabled()
 w Timer0::OutputA::intFlag()
-w Timer0::OutputA::intFlagClear() 58:00:10:
+w Timer0::OutputA::intFlagClear() 58:00:10:58:ff:10:
 w Timer0::OutputA::mode(Timer0::OutputA::Mode::clear) 4a:00:80:4a:ff:bf:
 w Timer0::OutputA::mode(Timer0::OutputA::Mode::disconnected) 4a:ff:3f:
 w Timer0::OutputA::mode(Timer0::OutputA::Mode::set) 4a:00:c0:
@@ -169,7 +169,7 @@ w Timer0::OutputB::intEnable(false) 59:ff:f7:
 w Timer0::OutputB::intEnable(true) 59:00:08:
 w Timer0::OutputB::intEnabled()
 w Timer0::OutputB::intFlag()
-w Timer0::OutputB::intFlagClear() 58:00:08:
+w Timer0::OutputB::intFlagClear() 58:00:08:58:ff:08:
 w Timer0::OutputB::mode(Timer0::OutputB::Mode::clear) 4a:00:20:4a:ff:ef:
 w Timer0::OutputB::mode(Timer0::OutputB::Mode::disconnected) 4a:ff:cf:
 w Timer0::OutputB::mode(Timer0::OutputB::Mode::set) 4a:00:30:
@@ -189,7 +189,7 @@ w Timer0::counter(0x12) 52:00:12:52:ff:12:
 w Timer0::intEnable(false) 59:ff:fd:
 w Timer0::intEnable(true) 59:00:02:
 w Timer0::intFlag()
-w Timer0::intFlagClear() 58:00:02:
+w Timer0::intFlagClear() 58:00:02:58:ff:02:
 w Timer0::waveform(Timer0::Waveform::ctcOcra) 4a:00:02:4a:ff:fe:53:ff:f7:
 w Timer0::waveform(Timer0::Waveform::fastPwm) 4a:00:03:53:ff:f7:
 w Timer0::waveform(Timer0::Waveform::fastPwmOcra) 4a:00:03:53:00:08:
@@ -200,7 +200,7 @@ w Timer1::OutputA::intEnable(false) 59:ff:bf:
 w Timer1::OutputA::intEnable(true) 59:00:40:
 w Timer1::OutputA::intEnabled()
 w Timer1::OutputA::intFlag()
-w Timer1::OutputA::intFlagClear() 58:00:40:
+w Timer1::OutputA::intFlagClear() 58:00:40:58:ff:40:
 w Timer1::OutputA::mode(Timer1::OutputA::Mode::clear) 50:00:20:50:ff:ef:
 w Timer1::OutputA::mode(Timer1::OutputA::Mode::disconnected) 50:ff:cf:
 w Timer1::OutputA::mode(Timer1::OutputA::Mode::set) 50:00:30:
@@ -211,7 +211,7 @@ w Timer1::OutputB::intEnable(false) 59:ff:df:
 w Timer1::OutputB::intEnable(true) 59:00:20:
 w Timer1::OutputB::intEnabled()
 w Timer1::OutputB::intFlag()
-w Timer1::OutputB::intFlagClear() 58:00:20:
+w Timer1::OutputB::intFlagClear() 58:00:20:58:ff:20:
 w Timer1::OutputB::mode(Timer1::OutputB::Mode::clear) 4c:00:20:4c:ff:ef:
 w Timer1::OutputB::mode(Timer1::OutputB::Mode::disconnected) 4c:ff:cf:
 w Timer1::OutputB::mode(Timer1::OutputB::Mode::set) 4c:00:30:
@@ -241,7 +241,7 @@ w Timer1::counter(0x12) 4f:00:12:4f:ff:12:
 w Timer1::intEnable(false) 59:ff:fb:
 w Timer1::intEnable(true) 59:00:04:
 w Timer1::intFlag()
-w Timer1::intFlagClear() 58:00:04:
+w Timer1::intFlagClear() 58:00:04:58:ff:04:
 w Timer1::waveform(Timer1::Waveform::ctcOcra) 50:00:80:50:ff:bf:
 w Timer1::waveform(Timer1::Waveform::fastPwmOcrc) 50:00:40:50:ff:7f:
 w Timer1::waveform(Timer1::Waveform::normal) 50:ff:3f:

@@ -1,17 +1,19 @@
 #!/bin/sh
 
-# To run all tests:
+# Run all tests:
 # ./runtests.sh
-# To run some tests:
+# Run some tests:
 # ./runtests.sh attiny85 atmega2560
-# To update all tests:
-# ./runtests.sh -u
-# To update some tests:
+# Run all but some tests: TODO
+# ./runtests.sh -n attiny85 atmega2560
+# Debug tests: TODO
+# ./runtests.sh -d attiny85 atmega2560
+# Update test records:
 # ./runtests.sh -u attiny85 atmega2560
 
 cd test/
 
-cflags="-Werror -Wall -fmax-errors=3 -std=c++17"
+cflags="-Werror -Wall -fmax-errors=3 -std=c++17 -g"
 includes="-I ../src/"
 libs="-lgtest"
 

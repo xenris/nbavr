@@ -3,8 +3,8 @@
 
 #include "algorithm.hpp"
 #include "array.hpp"
-#include "atomic.hpp"
 #include "clock.hpp"
+#include "heap.hpp"
 #include "i2c.hpp"
 #include "initializer_list.hpp"
 #include "iterator.hpp"
@@ -15,7 +15,6 @@
 #include "priorityqueue.hpp"
 #include "queue.hpp"
 #include "random.hpp"
-#include "safe.hpp"
 #include "serial.hpp"
 #include "stack.hpp"
 #include "string.hpp"

@@ -3,23 +3,23 @@
 /// # {{Stack}}
 
 /// ```c++
-/// nbos::Stack<Int, 6> stack;
+/// nbos::Stack<int, 6> stack;
 ///
 /// stack.push(3);
 /// stack.push(7);
 /// stack.push(1);
 /// stack.push(2);
 ///
-/// Int s = stack.size(); // s = 4
+/// int s = stack.size(); // s = 4
 ///
-/// Int a = 0;
+/// int a = 0;
 ///
 /// stack.pop(&a); // a = 2
 /// stack.pop(&a); // a = 1
 ///
 /// s = stack.size(); // s = 2
 ///
-/// nbos::Stack<Int>* pointer = &stack;
+/// nbos::Stack<int>* pointer = &stack;
 ///
 /// pointer->push(4);
 ///
@@ -29,15 +29,15 @@
 #ifndef NBOS_STACK_HPP
 #define NBOS_STACK_HPP
 
-#include "safe.hpp"
+#include "primitive.hpp"
 #include "optional.hpp"
 
 namespace nbos {
 
-/// ## class Stack<class Type, Int bufferSize\>
-template <class Type, Int bufferSize = -1>
+/// ## class Stack<class Type, int bufferSize\>
+template <class Type, int bufferSize = -1>
 class Stack : public Stack<Type> {
-    Type _buffer[bufferSize];
+    Type _buffer[uint(bufferSize)];
 
 public:
 
@@ -55,20 +55,20 @@ struct Stack<T, -1> {
 private:
 
     T*const _buffer;
-    const Int _bufferSize;
-    Int _head;
+    const int _bufferSize;
+    int _head;
 
 public:
 
-    /// #### Stack(Type\* buffer, Int bufferSize)
+    /// #### Stack(Type\* buffer, int bufferSize)
     /// Construct a stack with the given buffer.
-    Stack(Type* buffer, Int bufferSize) : _buffer(buffer), _bufferSize(bufferSize) {
+    Stack(Type* buffer, int bufferSize) : _buffer(buffer), _bufferSize(bufferSize) {
         _head = 0;;
     }
 
-    /// #### Bool push(Type t)
+    /// #### bool push(Type t)
     /// Returns true on success.
-    Bool push(T t) {
+    bool push(T t) {
         if(full()) {
             return false;
         }
@@ -106,33 +106,33 @@ public:
         _head = 0;
     }
 
-    /// #### Int size()
+    /// #### int size()
     /// Get the number of elements currently in the stack.
-    Int size() const {
+    int size() const {
         return _head;
     }
 
-    /// #### Int free()
+    /// #### int free()
     /// Get the amount of free space in the stack.
-    Int free() const {
+    int free() const {
         return _bufferSize - _head;
     }
 
-    /// ### Int capacity()
+    /// ### int capacity()
     /// Get the total capacity of the stack.
-    Int capacity() const {
+    int capacity() const {
         return _bufferSize;
     }
 
-    /// #### Bool empty()
+    /// #### bool empty()
     /// Returns true if the stack is empty.
-    Bool empty() const {
+    bool empty() const {
         return _head == 0;
     }
 
-    /// #### Bool full()
+    /// #### bool full()
     /// Returns true if the stack is full.
-    Bool full() const {
+    bool full() const {
         return _head == _bufferSize;
     }
 };
@@ -140,7 +140,7 @@ public:
 #ifdef TEST
 
 TEST(Container, Stack) {
-    Stack<Int16, 3> stack;
+    Stack<int16_t, 3> stack;
 
     EXPECT_EQ(stack.size(), 0);
     EXPECT_EQ(stack.capacity(), 3);
@@ -158,11 +158,11 @@ TEST(Container, Stack) {
     EXPECT_EQ(stack.size(), 3);
     EXPECT_EQ(stack.capacity(), 3);
 
-    Optional<Int16> n;
-    EXPECT_EQ(n = stack.pop(), true);
+    Optional<int16_t> n;
+    EXPECT_EQ(bool(n = stack.pop()), true);
     EXPECT_EQ(stack.size(), 2);
     EXPECT_EQ(*n, 3);
-    EXPECT_EQ(n = stack.pop(), true);
+    EXPECT_EQ(bool(n = stack.pop()), true);
     EXPECT_EQ(stack.size(), 1);
     EXPECT_EQ(*n, 2);
 
@@ -171,17 +171,17 @@ TEST(Container, Stack) {
     EXPECT_EQ(stack.push(5), true);
     EXPECT_EQ(stack.size(), 2);
 
-    EXPECT_EQ(n = stack.pop(), true);
+    EXPECT_EQ(bool(n = stack.pop()), true);
     EXPECT_EQ(stack.size(), 1);
     EXPECT_EQ(*n, 5);
 
-    EXPECT_EQ(n = stack.pop(), true);
+    EXPECT_EQ(bool(n = stack.pop()), true);
     EXPECT_EQ(stack.size(), 0);
     EXPECT_EQ(*n, 1);
 
     EXPECT_EQ(stack.empty(), true);
 
-    EXPECT_EQ(n = stack.pop(), false);
+    EXPECT_EQ(bool(n = stack.pop()), false);
     EXPECT_EQ(stack.size(), 0);
 
     EXPECT_EQ(stack.push(6), true);

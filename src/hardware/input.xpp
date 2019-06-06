@@ -48,7 +48,7 @@ struct Input {
 
     /// #### static void edge([[TimerN::Edge]] e)
     static force_inline void edge(Edge e) {
-        setBit_(REG(TIMER_N(INPUT_EDGE_SELECT_REG)), TIMER_N(INPUT_EDGE_SELECT_BIT), Int(e) & 0x01);
+        setBit_(REG(TIMER_N(INPUT_EDGE_SELECT_REG)), TIMER_N(INPUT_EDGE_SELECT_BIT), int(e) & 0x01);
     }
 
     /// #### static void setCallback([[Callback]]<T\> function, T\* data)
@@ -62,23 +62,23 @@ struct Input {
         callback();
     }
 
-    /// #### static void intEnable(Bool b)
-    static force_inline void intEnable(Bool b) {
+    /// #### static void intEnable(bool b)
+    static force_inline void intEnable(bool b) {
         setBit_(REG(TIMER_N(INPUT_INT_ENABLE_REG)), TIMER_N(INPUT_INT_ENABLE_BIT), b);
     }
 
-    static force_inline Bool intEnabled() {
+    static force_inline bool intEnabled() {
         return getBit_(REG(TIMER_N(INPUT_INT_ENABLE_REG)), TIMER_N(INPUT_INT_ENABLE_BIT));
     }
 
-    /// #### static Bool intFlag()
-    static force_inline Bool intFlag() {
+    /// #### static bool intFlag()
+    static force_inline bool intFlag() {
         return getBit(REG(TIMER_N(INPUT_INT_FLAG_REG)), TIMER_N(INPUT_INT_FLAG_BIT));
     }
 
     /// #### static void intFlagClear()
     static force_inline void intFlagClear() {
-        setBit_(REG(TIMER_N(INPUT_INT_FLAG_REG)), TIMER_N(INPUT_INT_FLAG_BIT), true);
+        clearFlagBit(REG(TIMER_N(INPUT_INT_FLAG_REG)), TIMER_N(INPUT_INT_FLAG_BIT));
     }
 
 private:

@@ -9,6 +9,10 @@
 /// Force a function to always be inlined. Use like "inline".
 #define force_inline inline __attribute__((always_inline))
 
+/// #### ssize_t ssizeof(T)
+/// Signed version of sizeof.
+#define ssizeof(T) (ssize_t(sizeof(T)))
+
 /// #### CAT(...)
 /// Concatenates a list of identifiers together.<br>
 /// e.g. CAT(Foo, Bar) -> FooBar
@@ -213,5 +217,20 @@
 /// e.g. REG_DEFINED(CHIP_REG_ADC) -> true (On devices with that register.)
 #define REG_DEFINED(A) REG_DEFINED_(A)
 #define REG_DEFINED_(A) DEFINED(A ## _ADDR)
+
+#define FIRST(A, ...) A
+#define SECOND(A, B, ...) B
+
+#define IS_PROBE(...) SECOND(__VA_ARGS__, 0)
+#define PROBE() ~, 1
+
+#define NOT(A) NOT_(A)
+#define NOT_(A) IS_PROBE(_NOT_ ## A)
+#define _NOT_0 PROBE()
+
+#define BOOL(A) NOT(NOT(A))
+
+#define HAS_ARGS(...) BOOL(FIRST(_END_OF_ARGS_ __VA_ARGS__)())
+#define _END_OF_ARGS_() 0
 
 #endif

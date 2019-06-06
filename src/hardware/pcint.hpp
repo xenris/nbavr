@@ -46,16 +46,16 @@ struct PcIntN {
     }
 
     #if DEFINED(PCINT_N(ENABLE_BIT_0_BIT))
-        /// #### static void intEnable(Bool e)
-        static force_inline void intEnable(Bool e) {
+        /// #### static void intEnable(bool e)
+        static force_inline void intEnable(bool e) {
             setBit_(REG(PCINT_N(ENABLE_BIT_0_REG)), PCINT_N(ENABLE_BIT_0_BIT), e);
         }
     #endif
 
     #if REG_DEFINED(PCINT_N(MASK_REG))
-        /// #### static void mask(Word8 m)
+        /// #### static void mask(uint8_t m)
         /// Set which pins trigger this interrupt.
-        static force_inline void mask(Word8 m) {
+        static force_inline void mask(uint8_t m) {
             setReg_(REG(PCINT_N(MASK_REG)), m);
         }
     #endif
@@ -72,8 +72,8 @@ struct PcIntN {
     }
 
     #if DEFINED(PCINT_N(INT_FLAG_BIT_0_BIT))
-        /// #### static Bool intFlag()
-        static force_inline Bool intFlag() {
+        /// #### static bool intFlag()
+        static force_inline bool intFlag() {
             return getBit_(REG(PCINT_N(INT_FLAG_BIT_0_REG)), PCINT_N(INT_FLAG_BIT_0_BIT));
         }
     #endif
@@ -81,7 +81,7 @@ struct PcIntN {
     #if DEFINED(PCINT_N(INT_FLAG_BIT_0_BIT))
         /// #### static void intFlagClear()
         static force_inline void intFlagClear() {
-            setBit_(REG(PCINT_N(INT_FLAG_BIT_0_REG)), PCINT_N(INT_FLAG_BIT_0_BIT), true);
+            clearFlagBit(REG(PCINT_N(INT_FLAG_BIT_0_REG)), PCINT_N(INT_FLAG_BIT_0_BIT));
         }
     #endif
 

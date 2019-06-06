@@ -48,7 +48,7 @@ namespace nbos::hw {
 /// ## Class {{TimerN}}
 struct TimerN {
     /// #### Type
-    /// The underlying type of this timer/counter. (Word8 or Word16)
+    /// The underlying type of this timer/counter. (uint8_t or uint16_t)
     using Type = REGTYPE(TIMER_N(COUNTER_REG));
 
     TimerN() = delete;
@@ -205,12 +205,12 @@ struct TimerN {
     #if DEFINED(TIMER_N(CLOCK_BIT_0_BIT))
         /// #### static void clock([[TimerN::Clock]] c)
         static force_inline void clock(Clock c) {
-            setBit_(REG(TIMER_N(CLOCK_BIT_0_REG)), TIMER_N(CLOCK_BIT_0_BIT), Int(c) & 0x01);
-            setBit_(REG(TIMER_N(CLOCK_BIT_1_REG)), TIMER_N(CLOCK_BIT_1_BIT), Int(c) & 0x02);
-            setBit_(REG(TIMER_N(CLOCK_BIT_2_REG)), TIMER_N(CLOCK_BIT_2_BIT), Int(c) & 0x04);
+            setBit_(REG(TIMER_N(CLOCK_BIT_0_REG)), TIMER_N(CLOCK_BIT_0_BIT), int(c) & 0x01);
+            setBit_(REG(TIMER_N(CLOCK_BIT_1_REG)), TIMER_N(CLOCK_BIT_1_BIT), int(c) & 0x02);
+            setBit_(REG(TIMER_N(CLOCK_BIT_2_REG)), TIMER_N(CLOCK_BIT_2_BIT), int(c) & 0x04);
 
             #if DEFINED(TIMER_N(CLOCK_BIT_3_BIT))
-                setBit_(REG(TIMER_N(CLOCK_BIT_3_REG)), TIMER_N(CLOCK_BIT_3_BIT), Int(c) & 0x08);
+                setBit_(REG(TIMER_N(CLOCK_BIT_3_REG)), TIMER_N(CLOCK_BIT_3_BIT), int(c) & 0x08);
             #endif
         }
     #endif
@@ -218,18 +218,18 @@ struct TimerN {
     #if DEFINED(TIMER_N(WAVEFORM_BIT_0_BIT))
         /// #### static void waveform([[TimerN::Waveform]] w)
         static force_inline void waveform(Waveform w) {
-            setBit_(REG(TIMER_N(WAVEFORM_BIT_0_REG)), TIMER_N(WAVEFORM_BIT_0_BIT), Int(w) & 0x01);
+            setBit_(REG(TIMER_N(WAVEFORM_BIT_0_REG)), TIMER_N(WAVEFORM_BIT_0_BIT), int(w) & 0x01);
 
             #if DEFINED(TIMER_N(WAVEFORM_BIT_1_BIT))
-                setBit_(REG(TIMER_N(WAVEFORM_BIT_1_REG)), TIMER_N(WAVEFORM_BIT_1_BIT), Int(w) & 0x02);
+                setBit_(REG(TIMER_N(WAVEFORM_BIT_1_REG)), TIMER_N(WAVEFORM_BIT_1_BIT), int(w) & 0x02);
             #endif
 
             #if DEFINED(TIMER_N(WAVEFORM_BIT_2_BIT))
-                setBit_(REG(TIMER_N(WAVEFORM_BIT_2_REG)), TIMER_N(WAVEFORM_BIT_2_BIT), Int(w) & 0x04);
+                setBit_(REG(TIMER_N(WAVEFORM_BIT_2_REG)), TIMER_N(WAVEFORM_BIT_2_BIT), int(w) & 0x04);
             #endif
 
             #if DEFINED(TIMER_N(WAVEFORM_BIT_3_BIT))
-                setBit_(REG(TIMER_N(WAVEFORM_BIT_3_REG)), TIMER_N(WAVEFORM_BIT_3_BIT), Int(w) & 0x08);
+                setBit_(REG(TIMER_N(WAVEFORM_BIT_3_REG)), TIMER_N(WAVEFORM_BIT_3_BIT), int(w) & 0x08);
             #endif
         }
     #endif
@@ -247,15 +247,15 @@ struct TimerN {
     }
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
-        /// #### static void intEnable(Bool b)
-        static force_inline void intEnable(Bool b) {
+        /// #### static void intEnable(bool b)
+        static force_inline void intEnable(bool b) {
             setBit_(REG(TIMER_N(OVERFLOW_INT_ENABLE_REG)), TIMER_N(OVERFLOW_INT_ENABLE_BIT), b);
         }
     #endif
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
-        /// #### static Bool intFlag()
-        static force_inline Bool intFlag() {
+        /// #### static bool intFlag()
+        static force_inline bool intFlag() {
             return getBit_(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT));
         }
     #endif
@@ -263,7 +263,7 @@ struct TimerN {
     #if DEFINED(TIMER_N(OVERFLOW_INT_FLAG_BIT))
         /// #### static void intFlagClear()
         static force_inline void intFlagClear() {
-            setBit_(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT), true);
+            clearFlagBit(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT));
         }
     #endif
 
