@@ -282,6 +282,48 @@ struct UsartN {
         }
     #endif
 
+    #if DEFINED(USART_N(RX_COMPLETE_INT_FLAG_BIT_0_BIT))
+        /// #### static bool rxCompleteIntFlag()
+        static force_inline bool rxCompleteIntFlag() {
+            return getBit(REG(USART_N(RX_COMPLETE_INT_FLAG_BIT_0_REG)), USART_N(RX_COMPLETE_INT_FLAG_BIT_0_BIT));
+        }
+    #endif
+
+    #if DEFINED(USART_N(TX_COMPLETE_INT_FLAG_BIT_0_BIT))
+        /// #### static bool txCompleteIntFlag()
+        static force_inline bool txCompleteIntFlag() {
+            return getBit(REG(USART_N(TX_COMPLETE_INT_FLAG_BIT_0_REG)), USART_N(TX_COMPLETE_INT_FLAG_BIT_0_BIT));
+        }
+    #endif
+
+    #if DEFINED(USART_N(DATA_REG_EMPTY_INT_FLAG_BIT_0_BIT))
+        /// #### static bool dataRegisterEmptyIntFlag()
+        static force_inline bool dataRegisterEmptyIntFlag() {
+            return getBit(REG(USART_N(DATA_REG_EMPTY_INT_FLAG_BIT_0_REG)), USART_N(DATA_REG_EMPTY_INT_FLAG_BIT_0_BIT));
+        }
+    #endif
+
+    #if DEFINED(USART_N(RX_COMPLETE_INT_FLAG_BIT_0_BIT))
+        /// #### static void rxCompleteIntFlagClear()
+        static force_inline void rxCompleteIntFlagClear() {
+            clearFlagBit(REG(USART_N(RX_COMPLETE_INT_FLAG_BIT_0_REG)), USART_N(RX_COMPLETE_INT_FLAG_BIT_0_BIT));
+        }
+    #endif
+
+    #if DEFINED(USART_N(TX_COMPLETE_INT_FLAG_BIT_0_BIT))
+        /// #### static void txCompleteIntFlagClear()
+        static force_inline void txCompleteIntFlagClear() {
+            clearFlagBit(REG(USART_N(TX_COMPLETE_INT_FLAG_BIT_0_REG)), USART_N(TX_COMPLETE_INT_FLAG_BIT_0_BIT));
+        }
+    #endif
+
+    #if DEFINED(USART_N(DATA_REG_EMPTY_INT_FLAG_BIT_0_BIT))
+        /// #### static void dataRegisterEmptyIntFlagClear()
+        static force_inline void dataRegisterEmptyIntFlagClear() {
+            clearFlagBit(REG(USART_N(DATA_REG_EMPTY_INT_FLAG_BIT_0_REG)), USART_N(DATA_REG_EMPTY_INT_FLAG_BIT_0_BIT));
+        }
+    #endif
+
     /// #### static void setRxCallback([[Callback]]<T\> function, T\* data)
     template <class T>
     static force_inline void setRxCallback(Callback<T> function, T* data = nullptr) {
