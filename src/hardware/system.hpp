@@ -207,19 +207,28 @@ force_inline void delay() {
     constexpr uint16_t loops = uint16_t((clocks <= 0) ? (0) : ((clocks - 1) / clocksPerLoop));
     constexpr uint16_t nops = uint16_t((clocks <= 4) ? (clocks) : ((clocks - 1) % clocksPerLoop));
 
-    if constexpr (loops != 0) {
-        const uint16_t c = loops;
+    #if defined(__AVR__)
+        if constexpr (loops != 0) {
+            const uint16_t c = loops;
 
-        asm volatile (
-            "ldi r30, %0\n"
-            "ldi r31, %1\n"
-            "1: sbiw r30, 1\n"
-            "brne 1b\n"
-            :
-            : "" (uint8_t(c)), "" (uint8_t(c >> 8))
-            : "r30", "r31"
-        );
-    }
+            asm volatile (
+                "ldi r30, %0\n"
+                "ldi r31, %1\n"
+                "1: sbiw r30, 1\n"
+                "brne 1b\n"
+                :
+                : "" (uint8_t(c)), "" (uint8_t(c >> 8))
+                : "r30", "r31"
+            );
+        }
+    #elif defined(__ARM__)
+
+    #elif defined(TEST)
+
+    #else
+
+    #endif
+
 
     if constexpr (nops == 1) {
         nop();
