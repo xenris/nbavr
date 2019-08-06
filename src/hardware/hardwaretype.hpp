@@ -28,6 +28,7 @@ enum class HardwareType {
     pcInt,
     pin,
     port,
+    sleep,
     spi,
     timer,
     twi,

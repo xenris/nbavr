@@ -75,6 +75,18 @@ Set the baud and 2x registers from the given CPU frequency and baud rate.
 
 #### static void dataRegisterEmptyIntEnable(bool e)
 
+#### static bool rxCompleteIntFlag()
+
+#### static bool txCompleteIntFlag()
+
+#### static bool dataRegisterEmptyIntFlag()
+
+#### static void rxCompleteIntFlagClear()
+
+#### static void txCompleteIntFlagClear()
+
+#### static void dataRegisterEmptyIntFlagClear()
+
 #### static void setRxCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
 
 #### static void callRxCallback()

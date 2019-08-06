@@ -215,6 +215,27 @@
 #define CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_REG                      CHIP_REG_SREG
 #define CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_BIT                      7
 
+//------------------------------------------------
+// Sleep
+
+#define CHIP_SLEEP_MODE_IDLE_ID                                     0
+#define CHIP_SLEEP_MODE_ADC_NOISE_REDUCTION_ID                      1
+#define CHIP_SLEEP_MODE_POWER_DOWN_ID                               2
+#define CHIP_SLEEP_MODE_POWER_SAVE_ID                               3
+#define CHIP_SLEEP_MODE_STANDBY_ID                                  6
+#define CHIP_SLEEP_MODE_EXTERNAL_STANDBY_ID                         7
+
+#define CHIP_SLEEP_MODE_BIT_0_BIT                                   1
+#define CHIP_SLEEP_MODE_BIT_0_REG                                   CHIP_REG_SMCR
+#define CHIP_SLEEP_MODE_BIT_1_BIT                                   2
+#define CHIP_SLEEP_MODE_BIT_1_REG                                   CHIP_REG_SMCR
+#define CHIP_SLEEP_MODE_BIT_2_BIT                                   3
+#define CHIP_SLEEP_MODE_BIT_2_REG                                   CHIP_REG_SMCR
+
+#define CHIP_SLEEP_ENABLE_BIT_0_BIT                                 0
+#define CHIP_SLEEP_ENABLE_BIT_0_REG                                 CHIP_REG_SMCR
+
+
 // //------------------------------------------------
 // // Reset Status Register
 

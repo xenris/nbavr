@@ -26,6 +26,7 @@
     * [Digital IO Pins](src/hardware/pin.xpp.md#digital-io-pins)
     * [Digital IO Ports](src/hardware/port.hpp.md#digital-io-ports)
     * [Serial Peripheral Interfaces](src/hardware/spi.hpp.md#serial-peripheral-interfaces)
+    * [System Sleep](src/hardware/sleep.hpp.md#system-sleep)
     * [Timers](src/hardware/timer.hpp.md#timers)
     * [Two Wire Serial Interfaces](src/hardware/twi.hpp.md#two-wire-serial-interfaces)
     * [Universal Synchronous Asynchronous Receiver Transmitters](src/hardware/usart.hpp.md#universal-synchronous-asynchronous-receiver-transmitters)

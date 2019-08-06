@@ -26,6 +26,7 @@
 ///     * [[Digital IO Pins]]
 ///     * [[Digital IO Ports]]
 ///     * [[Serial Peripheral Interfaces]]
+///     * [[System Sleep]]
 ///     * [[Timers]]
 ///     * [[Two Wire Serial Interfaces]]
 ///     * [[Universal Synchronous Asynchronous Receiver Transmitters]]

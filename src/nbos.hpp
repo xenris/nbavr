@@ -29,6 +29,7 @@
 #include "hardware/exint.hpp"
 #include "hardware/pcint.hpp"
 #include "hardware/port.hpp"
+#include "hardware/sleep.hpp"
 #include "hardware/spi.hpp"
 #include "hardware/timer.hpp"
 #include "hardware/twi.hpp"

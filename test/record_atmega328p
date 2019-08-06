@@ -82,6 +82,7 @@ r PortD::Pin7::mode() 20220002313303300033211110122103
 r PortD::Pin7::output() 10110001101101100011100000011001
 r PortD::input() dec413b8f9a5c7767369939b8e7a646292efbd2dd5eb5f6c3123e7fc477eba
 r PortD::output() 9116c6cd5f4f63a9815b86e41e4d4373d349af6fc5b401745127eeeee5d50b8
+r Sleep::isEnabled() 00000100110101111000010111011111
 r Spi0::collisionFlag() 11010000011010000100111101111100
 r Spi0::data() 3065a6ee3795c3679f208b1426b423e41e186c7b7fbc12aaffc26a669e51
 r Spi0::intFlag() 10100011111110110101110001111110
@@ -433,6 +434,15 @@ w PortD::mode(Pin::Mode::output) 2a:00:ff:2b:ff:00:
 w PortD::output()
 w PortD::output(0x12) 2b:00:12:2b:ff:12:
 w PortD::toggle(0x12) 29:00:12:29:ff:12:
+w Sleep::enable(false) 53:ff:fe:
+w Sleep::enable(true) 53:00:01:
+w Sleep::isEnabled()
+w Sleep::mode(Sleep::Mode::adcNoiseReduction) 53:00:02:53:ff:f3:
+w Sleep::mode(Sleep::Mode::externalStandby) 53:00:0e:
+w Sleep::mode(Sleep::Mode::idle) 53:ff:f1:
+w Sleep::mode(Sleep::Mode::powerDown) 53:00:04:53:ff:f5:
+w Sleep::mode(Sleep::Mode::powerSave) 53:00:06:53:ff:f7:
+w Sleep::mode(Sleep::Mode::standby) 53:00:0c:53:ff:fd:
 w Spi0::clock(Spi0::Clock::div128) 4c:00:03:4d:ff:fe:
 w Spi0::clock(Spi0::Clock::div16) 4c:00:01:4c:ff:fd:4d:ff:fe:
 w Spi0::clock(Spi0::Clock::div2) 4d:00:01:4c:ff:fc:
