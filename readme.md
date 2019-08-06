@@ -1,24 +1,23 @@
 # nblib
 
-Non-Blocking Operating System.
+Non-Blocking Library.
 
 Created by Henry Shepperd (hshepperd@gmail.com)
 
 ## About
 
-A C++ library and real time operating system for 8-bit AVR microcontrollers (such as those found on Arduinos).
+A C++ library and real time operating system for microcontrollers.
 
-## Aims
+## Features
 
 * Reliable.
 * Efficient.
 * Simple.
-* Light weight.
 * No blocking functions.
-* Non-preemptive multitasking.
-* Mitigate software lockups.
-* Compatible with as many AVR chips as possible.
-* High level hardware abstraction with low overhead.
+* Optional non-preemptive multitasking.
+* Helps mitigate software lockups.
+* Easily extendable to other microcontrollers.
+* High level hardware abstraction with no or low overhead.
 * Entirely made up of header files.
 
 ## Status
