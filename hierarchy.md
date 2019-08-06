@@ -60,6 +60,7 @@ Levels can include lower levels (smaller number), but *not* higher or equal leve
 
 * adc.hpp
 * exint.hpp
+* sleep.hpp
 * spi.hpp
 * timer.hpp
 * usart.hpp
@@ -71,10 +72,6 @@ Levels can include lower levels (smaller number), but *not* higher or equal leve
 * port.hpp
 * twi.hpp
 * usi.hpp
-
-### Level 4.3
-
-* hardware.hpp
 
 ## Level 5 - High level
 
