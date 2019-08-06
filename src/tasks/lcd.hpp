@@ -1,7 +1,7 @@
-#ifndef NBOS_LCD_HPP
-#define NBOS_LCD_HPP
+#ifndef NBLIB_LCD_HPP
+#define NBLIB_LCD_HPP
 
-#include <nbos.hpp>
+#include <nblib.hpp>
 
 // \r = clear display and return curser to home position.
 // \n = move to start of next line, wrapping to first line.

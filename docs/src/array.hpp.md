@@ -3,7 +3,7 @@
 # Array
 
 ```c++
-nbos::Array<int32_t, 6> array;
+nblib::Array<int32_t, 6> array;
 
 array[0] = 6;
 array[1] = 8;
@@ -12,9 +12,9 @@ array[3] = 5;
 array[4] = 1;
 array[5] = 2;
 
-nbos::quicksort(array->begin(), array->size());
+nblib::quicksort(array->begin(), array->size());
 
-nbos::Array<int32_t>* pointer = &array;
+nblib::Array<int32_t>* pointer = &array;
 
 int32_t n = pointer->get(0); // n = 1
 

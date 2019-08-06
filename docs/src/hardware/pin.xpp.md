@@ -5,13 +5,13 @@
 N is the pin id (0, 1, 2, etc).
 
 ```c++
-nbos::hw::PortB::Pin5::mode(nbos::hw::Pin::Mode::output);
+nblib::hw::PortB::Pin5::mode(nblib::hw::Pin::Mode::output);
 
-nbos::hw::PortB::Pin5::output(nbos::hw::Pin::Value::high);
+nblib::hw::PortB::Pin5::output(nblib::hw::Pin::Value::high);
 
 while(true) {
     block {
-        nbos::hw::PortB::Pin5::toggle();
+        nblib::hw::PortB::Pin5::toggle();
     }
 }
 ```

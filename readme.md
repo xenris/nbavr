@@ -1,4 +1,4 @@
-# nbos
+# nblib
 
 Non-Blocking Operating System.
 
@@ -29,7 +29,7 @@ The code is mostly stable, some things may not work, things will change, and mor
 
 ## Using this library
 
-See [nbos-project-template](https://github.com/xenris/nbos-project-template).
+See [nblib-project-template](https://github.com/xenris/nblib-project-template).
 
 ## Documentation
 

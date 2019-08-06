@@ -1,5 +1,5 @@
-#ifndef NBOS_STRING_HPP
-#define NBOS_STRING_HPP
+#ifndef NBLIB_STRING_HPP
+#define NBLIB_STRING_HPP
 
 #include "primitive.hpp"
 

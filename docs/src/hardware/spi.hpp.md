@@ -4,23 +4,23 @@
 
 ```c++
 atomic {
-    nbos::hw::Spi0::PinMosi::mode(nbos::hw::Spi0::PinMosi::Mode::output);
-    nbos::hw::Spi0::PinSck::mode(nbos::hw::Spi0::PinSck::Mode::output);
+    nblib::hw::Spi0::PinMosi::mode(nblib::hw::Spi0::PinMosi::Mode::output);
+    nblib::hw::Spi0::PinSck::mode(nblib::hw::Spi0::PinSck::Mode::output);
 });
 
 atomic {
-    nbos::hw::Spi0::clock(nbos::hw::Spi0::Clock::div16);
-    nbos::hw::Spi0::masterSlave(nbos::hw::Spi0::MasterSlave::master);
-    nbos::hw::Spi0::enable(true);
+    nblib::hw::Spi0::clock(nblib::hw::Spi0::Clock::div16);
+    nblib::hw::Spi0::masterSlave(nblib::hw::Spi0::MasterSlave::master);
+    nblib::hw::Spi0::enable(true);
 });
 
-nbos::hw::Spi0::data(0x31);
+nblib::hw::Spi0::data(0x31);
 
-while(!nbos::hw::Spi0::intFlag());
+while(!nblib::hw::Spi0::intFlag());
 
-nbos::hw::Spi0::data(0x44);
+nblib::hw::Spi0::data(0x44);
 
-while(!nbos::hw::Spi0::intFlag());
+while(!nblib::hw::Spi0::intFlag());
 ```
 
 ## class SpiN

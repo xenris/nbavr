@@ -17,12 +17,12 @@
 /// };
 /// ```
 
-#ifndef NBOS_TASK_HPP
-#define NBOS_TASK_HPP
+#ifndef NBLIB_TASK_HPP
+#define NBLIB_TASK_HPP
 
 #include "hardware/system.hpp"
 
-namespace nbos {
+namespace nblib {
 
 /// ## Class Task\<class Clock\>
 template <class Clock>
@@ -88,6 +88,6 @@ struct Task {
 
 #endif // TEST
 
-} // nbos
+} // nblib
 
 #endif

@@ -2,7 +2,7 @@
 
 /// # {{Two Wire Serial Interfaces}}
 
-#ifndef NBOS_TWI_HPP
+#ifndef NBLIB_TWI_HPP
 
 #include "isr.hpp"
 #include "chip.hpp"
@@ -23,7 +23,7 @@
 
 //------------------------------------------------------------------
 
-namespace nbos::hw {
+namespace nblib::hw {
 
 /// ## class {{TwiN}}
 struct TwiN {
@@ -356,7 +356,7 @@ TEST(TwiN, generalCallRecognitionEnable) {
 
 #endif // TEST
 
-} // nbos::hw
+} // nblib::hw
 
 //--------------------------------------------------------
 
@@ -369,7 +369,7 @@ TEST(TwiN, generalCallRecognitionEnable) {
 
     #include "twi.hpp"
 #else
-    #define NBOS_TWI_HPP
+    #define NBLIB_TWI_HPP
 #endif
 
 #endif

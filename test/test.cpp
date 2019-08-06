@@ -213,4 +213,4 @@ void test_reg_read_write(F f, const char* str) {
     TEST_REG_WRITE(FUNC); \
     test_reg_read_write<decltype(FUNC)>([]() { return FUNC; }, #FUNC)
 
-#include <nbos.hpp>
+#include <nblib.hpp>

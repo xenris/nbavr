@@ -1,4 +1,4 @@
-/// # nbos Documentation
+/// # nblib Documentation
 
 /// ## {{Index}}
 
@@ -32,7 +32,7 @@
 ///     * [[Universal Synchronous Asynchronous Receiver Transmitters]]
 ///     * [[Universal Serial Interfaces]]
 /// * Examples
-///     * [nbos-project-template](https://github.com/xenris/nbos-project-template)
+///     * [nblib-project-template](https://github.com/xenris/nblib-project-template)
 ///     * [8x8 LED Matrix Display](https://github.com/xenris/led-matrix-display)
 ///     * [Optima Hitec Receiver PWM/PPM](https://github.com/xenris/hitec-receiver)
 /// * [[Adding Chips]]

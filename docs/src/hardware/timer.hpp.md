@@ -5,12 +5,12 @@
 ```c++
 // Constant interval.
 
-using Timer = nbos::hw::Timer1;
+using Timer = nblib::hw::Timer1;
 
-nbos::hw::Pin::Value value = nbos::hw::Pin::Value::low;
+nblib::hw::Pin::Value value = nblib::hw::Pin::Value::low;
 
-const auto f = [](nbos::hw::Pin::Value* value) {
-    *value = nbos::hw::PortB::Pin5::input();
+const auto f = [](nblib::hw::Pin::Value* value) {
+    *value = nblib::hw::PortB::Pin5::input();
 };
 
 atomic([]() {

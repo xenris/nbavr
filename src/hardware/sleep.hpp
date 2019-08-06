@@ -3,7 +3,7 @@
 /// # {{System Sleep}}
 
 /// ```c++
-/// using Sleep = nbos::hw::Sleep;
+/// using Sleep = nblib::hw::Sleep;
 ///
 /// Sleep::mode(Sleep::Mode::idle);
 /// Sleep::enable(true);
@@ -11,15 +11,15 @@
 /// Sleep::sleep();
 /// ```
 
-#ifndef NBOS_SLEEP_HPP
-#define NBOS_SLEEP_HPP
+#ifndef NBLIB_SLEEP_HPP
+#define NBLIB_SLEEP_HPP
 
 #include "chip.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "system.hpp"
 
-namespace nbos::hw {
+namespace nblib::hw {
 
 /// ## class {{Sleep}}
 struct Sleep {
@@ -141,6 +141,6 @@ TEST(Sleep, getHardwareType) {
 
 #endif // TEST
 
-} // nbos::hw
+} // nblib::hw
 
 #endif

@@ -2,12 +2,12 @@
 
 /// # {{Algorithms}}
 
-#ifndef NBOS_ALGORITHM_HPP
-#define NBOS_ALGORITHM_HPP
+#ifndef NBLIB_ALGORITHM_HPP
+#define NBLIB_ALGORITHM_HPP
 
 #include "math.hpp"
 
-namespace nbos {
+namespace nblib {
 
 template <class T>
 inline void reverse(const T* from, T* to, int length);
@@ -131,6 +131,6 @@ TEST(Algorithm, quicksort) {
 
 #endif
 
-} // nbos
+} // nblib
 
 #endif

@@ -2,8 +2,8 @@
 
 /// # {{Macros}}
 
-#ifndef NBOS_MACROS_HPP
-#define NBOS_MACROS_HPP
+#ifndef NBLIB_MACROS_HPP
+#define NBLIB_MACROS_HPP
 
 /// #### force_inline
 /// Force a function to always be inlined. Use like "inline".

@@ -1,5 +1,5 @@
-#ifndef NBOS_CALLBACK_HPP
-#define NBOS_CALLBACK_HPP
+#ifndef NBLIB_CALLBACK_HPP
+#define NBLIB_CALLBACK_HPP
 
 /// #### {{Callback}}<T\> = void (\*)(T\*)
 /// General purpose callback function type.

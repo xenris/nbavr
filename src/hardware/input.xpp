@@ -3,11 +3,11 @@
 /// # {{Timer Input}}
 
 /// ```c++
-/// using Timer = nbos::hw::Timer1;
+/// using Timer = nblib::hw::Timer1;
 ///
-/// nbos::hw::Pin::Value value = 0;
+/// nblib::hw::Pin::Value value = 0;
 ///
-/// Callback<nbos::hw::Pin::Value> f = [](nbos::hw::Pin::Value* value) {
+/// Callback<nblib::hw::Pin::Value> f = [](nblib::hw::Pin::Value* value) {
 ///     *value = Timer::Input::value();
 /// };
 ///

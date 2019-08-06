@@ -6,7 +6,7 @@
 /// // TODO
 /// ```
 
-#ifndef NBOS_USI_HPP
+#ifndef NBLIB_USI_HPP
 
 #include "isr.hpp"
 #include "chip.hpp"
@@ -27,7 +27,7 @@
 
 //------------------------------------------------------------------
 
-namespace nbos::hw {
+namespace nblib::hw {
 
 /// ## class UsiN
 struct UsiN {
@@ -390,7 +390,7 @@ TEST(UsiN, data) {
 
 #endif
 
-} // nbos::hw
+} // nblib::hw
 
 //------------------------------------------------------------------
 
@@ -402,7 +402,7 @@ TEST(UsiN, data) {
 
     #include "usi.hpp"
 #else
-    #define NBOS_USI_HPP
+    #define NBLIB_USI_HPP
 #endif
 
 #endif

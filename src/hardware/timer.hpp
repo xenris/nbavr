@@ -5,12 +5,12 @@
 /// ```c++
 /// // Constant interval.
 ///
-/// using Timer = nbos::hw::Timer1;
+/// using Timer = nblib::hw::Timer1;
 ///
-/// nbos::hw::Pin::Value value = nbos::hw::Pin::Value::low;
+/// nblib::hw::Pin::Value value = nblib::hw::Pin::Value::low;
 ///
-/// const auto f = [](nbos::hw::Pin::Value* value) {
-///     *value = nbos::hw::PortB::Pin5::input();
+/// const auto f = [](nblib::hw::Pin::Value* value) {
+///     *value = nblib::hw::PortB::Pin5::input();
 /// };
 ///
 /// atomic([]() {
@@ -22,7 +22,7 @@
 /// });
 /// ```
 
-#ifndef NBOS_TIMER_HPP
+#ifndef NBLIB_TIMER_HPP
 
 #include "isr.hpp"
 #include "chip.hpp"
@@ -43,7 +43,7 @@
 
 //--------------------------------------------------------
 
-namespace nbos::hw {
+namespace nblib::hw {
 
 /// ## Class {{TimerN}}
 struct TimerN {
@@ -514,7 +514,7 @@ TEST(TimerN, counter) {
 
 #endif // TEST
 
-} // nbos::hw
+} // nblib::hw
 
 //--------------------------------------------------------
 
@@ -526,7 +526,7 @@ TEST(TimerN, counter) {
 
     #include "timer.hpp"
 #else
-    #define NBOS_TIMER_HPP
+    #define NBLIB_TIMER_HPP
 #endif
 
 

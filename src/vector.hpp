@@ -3,7 +3,7 @@
 /// # {{Vector}}
 
 /// ```c++
-/// nbos::Vector<int, 6> vector;
+/// nblib::Vector<int, 6> vector;
 ///
 /// vector.add(3);
 /// vector.add(7);
@@ -14,7 +14,7 @@
 ///
 /// const int a = vector[1]; // a = 7
 ///
-/// nbos::Vector<int>* pointer = &vector;
+/// nblib::Vector<int>* pointer = &vector;
 ///
 /// pointer->add(4);
 ///
@@ -23,13 +23,13 @@
 /// s = vector.size(); // s = 5
 /// ```
 
-#ifndef NBOS_VECTOR_HPP
-#define NBOS_VECTOR_HPP
+#ifndef NBLIB_VECTOR_HPP
+#define NBLIB_VECTOR_HPP
 
 #include "math.hpp"
 #include "primitive.hpp"
 
-namespace nbos {
+namespace nblib {
 
 /// ## class Vector<class Type, int bufferSize\>
 template <class Type, int bufferSize = -1>
@@ -173,6 +173,6 @@ public:
     }
 };
 
-} // nbos
+} // nblib
 
 #endif

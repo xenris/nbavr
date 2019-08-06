@@ -2,8 +2,8 @@
 
 /// # {{Maths}}
 
-#ifndef NBOS_MATH_HPP
-#define NBOS_MATH_HPP
+#ifndef NBLIB_MATH_HPP
+#define NBLIB_MATH_HPP
 
 #include "primitive.hpp"
 #include "macros.hpp"

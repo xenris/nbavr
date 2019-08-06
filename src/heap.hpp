@@ -1,11 +1,11 @@
-#ifndef NBOS_HEAP_HPP
-#define NBOS_HEAP_HPP
+#ifndef NBLIB_HEAP_HPP
+#define NBLIB_HEAP_HPP
 
 #include <primitive.hpp>
 #include <macros.hpp>
 #include <math.hpp>
 
-namespace nbos {
+namespace nblib {
 
 // Allows dynamic object allocation.
 // Create with Type* t = heap.create<Type>(...)
@@ -155,7 +155,7 @@ public:
 
 #ifndef TEST
 
-extern nbos::Heap* _globalHeap;
+extern nblib::Heap* _globalHeap;
 
 void* operator new (size_t s) {
     // TODO check s.
@@ -195,7 +195,7 @@ void operator delete [] (void* p, size_t s) noexcept {
 
 #ifdef TEST
 
-namespace nbos {
+namespace nblib {
 
 TEST(Container, Heap) {
     srand(0);

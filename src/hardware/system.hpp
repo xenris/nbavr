@@ -2,8 +2,8 @@
 
 /// # System
 
-#ifndef NBOS_SYSTEM_HPP
-#define NBOS_SYSTEM_HPP
+#ifndef NBLIB_SYSTEM_HPP
+#define NBLIB_SYSTEM_HPP
 
 #include "chip.hpp"
 #include "../macros.hpp"
@@ -31,7 +31,7 @@ struct __Block {
     }
 };
 
-namespace nbos {
+namespace nblib {
 
 /// #### T bv(int n)
 /// Equivalent to "1 << n".
@@ -294,16 +294,16 @@ struct __Atomic {
 
     force_inline __Atomic() {
         block() {
-            _i = nbos::interruptsEnabled();
+            _i = nblib::interruptsEnabled();
 
-            nbos::interruptsEnable(false);
+            nblib::interruptsEnable(false);
         }
     }
 
     force_inline ~__Atomic() {
         block() {
             if(_i) {
-                nbos::interruptsEnable(true);
+                nblib::interruptsEnable(true);
             }
         }
     }
@@ -314,16 +314,16 @@ struct __NonAtomic {
 
     __NonAtomic() {
         block() {
-            _i = nbos::interruptsEnabled();
+            _i = nblib::interruptsEnabled();
 
-            nbos::interruptsEnable(true);
+            nblib::interruptsEnable(true);
         };
     }
 
     ~__NonAtomic() {
         block() {
             if(!_i) {
-                nbos::interruptsEnable(false);
+                nblib::interruptsEnable(false);
             }
         }
     }

@@ -1,5 +1,5 @@
-#ifndef NBOS_HPP
-#define NBOS_HPP
+#ifndef NBLIB_HPP
+#define NBLIB_HPP
 
 #include "algorithm.hpp"
 #include "array.hpp"

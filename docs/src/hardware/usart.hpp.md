@@ -3,7 +3,7 @@
 # Universal Synchronous Asynchronous Receiver Transmitters
 
 ```c++
-using Usart = nbos::hw::Usart0;
+using Usart = nblib::hw::Usart0;
 
 const auto f = [](void*) {
     Usart::push('?')

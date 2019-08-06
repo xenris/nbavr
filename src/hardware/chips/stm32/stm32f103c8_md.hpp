@@ -1,7 +1,7 @@
-#ifndef NBOS_STM32F103C8_MD_HPP
-#define NBOS_STM32F103C8_MD_HPP
+#ifndef NBLIB_STM32F103C8_MD_HPP
+#define NBLIB_STM32F103C8_MD_HPP
 
-#define NBOS_CHIP_DEFINED
+#define NBLIB_CHIP_DEFINED
 
 //------------------------------------------------
 // Peripherals base address. (All peripherals.)

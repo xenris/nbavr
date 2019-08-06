@@ -2,11 +2,11 @@
 
 /// # {{Hardware Types}}
 
-#ifndef NBOS_HARDWARE_TYPE_HPP
-#define NBOS_HARDWARE_TYPE_HPP
+#ifndef NBLIB_HARDWARE_TYPE_HPP
+#define NBLIB_HARDWARE_TYPE_HPP
 
 // TODO Move to system.hpp.
-namespace nbos::hw {
+namespace nblib::hw {
 
 /// #### enum {{HardwareType}}
 /// * adc
@@ -37,6 +37,6 @@ enum class HardwareType {
     wdt
 };
 
-} // nbos::hw
+} // nblib::hw
 
 #endif

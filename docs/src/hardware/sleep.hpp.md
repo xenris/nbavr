@@ -3,7 +3,7 @@
 # System Sleep
 
 ```c++
-using Sleep = nbos::hw::Sleep;
+using Sleep = nblib::hw::Sleep;
 
 Sleep::mode(Sleep::Mode::idle);
 Sleep::enable(true);

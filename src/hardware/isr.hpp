@@ -1,5 +1,5 @@
-#ifndef NBOS_ISR_HPP
-#define NBOS_ISR_HPP
+#ifndef NBLIB_ISR_HPP
+#define NBLIB_ISR_HPP
 
 #ifndef TEST
     #define ISR(vector, ...) \

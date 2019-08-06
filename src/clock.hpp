@@ -8,9 +8,9 @@
 /// ```c++
 /// const uint64_t cpuFreq = 16000000;
 
-/// using SystemTimer = nbos::hw::Timer1;
+/// using SystemTimer = nblib::hw::Timer1;
 
-/// using Clock = nbos::Clock<SystemTimer, cpuFreq>;
+/// using Clock = nblib::Clock<SystemTimer, cpuFreq>;
 
 /// uint64_t ticks = Clock::getTicks();
 /// uint64_t millis = Clock::ticksToMillis(ticks);
@@ -23,8 +23,8 @@
 /// If Clock is given an 8 bit timer (rather than 16 bit) each tick will be
 /// 4x longer.
 
-#ifndef NBOS_CLOCK_HPP
-#define NBOS_CLOCK_HPP
+#ifndef NBLIB_CLOCK_HPP
+#define NBLIB_CLOCK_HPP
 
 #include "hardware/system.hpp"
 #include "hardware/timer.hpp"
@@ -32,7 +32,7 @@
 #include "priorityqueue.hpp"
 #include "callback.hpp"
 
-namespace nbos {
+namespace nblib {
 
 struct DelayedCall {
     Callback<void> callback;
@@ -192,7 +192,7 @@ public:
     /// delay for 62.5 nanoseconds (1 cpu clock cycle).
     template <uint64_t ns>
     static force_inline void delay() {
-        nbos::delay<cpuFreq, ns>();
+        nblib::delay<cpuFreq, ns>();
     }
 
     template<class T>
@@ -340,6 +340,6 @@ TEST(Clock, delayedCall) {
 
 #endif
 
-} // nbos
+} // nblib
 
 #endif

@@ -3,21 +3,21 @@
 /// # {{Digital IO Ports}}
 
 /// ```c++
-/// using PortC = nbos::hw::PortC;
+/// using PortC = nblib::hw::PortC;
 ///
-/// nbos::hw::PortC::mode(nbos::hw::Pin::Mode::output);
+/// nblib::hw::PortC::mode(nblib::hw::Pin::Mode::output);
 ///
-/// nbos::hw::PortC::output(0x03);
+/// nblib::hw::PortC::output(0x03);
 ///
-/// nbos::hw::PortC::Pin15::output(nbos::hw::Pin::Value::low);
+/// nblib::hw::PortC::Pin15::output(nblib::hw::Pin::Value::low);
 ///
 /// while(true) {
-///     nbos::hw::PortC::toggle(0x0C);
-///     nbos::block();
+///     nblib::hw::PortC::toggle(0x0C);
+///     nblib::block();
 /// }
 /// ```
 
-#ifndef NBOS_PORT_HPP
+#ifndef NBLIB_PORT_HPP
 
 #include "isr.hpp"
 #include "chip.hpp"
@@ -37,7 +37,7 @@
 
 //------------------------------------------------------------------
 
-namespace nbos::hw {
+namespace nblib::hw {
 
 /// ## Class {{PortX}}
 struct PortX {
@@ -274,7 +274,7 @@ TEST(PortX, input) {
 
 #endif // TEST
 
-} // nbos::hw
+} // nblib::hw
 
 //--------------------------------------------------------
 
@@ -286,7 +286,7 @@ TEST(PortX, input) {
 
     #include "port.hpp"
 #else
-    #define NBOS_PORT_HPP
+    #define NBLIB_PORT_HPP
 #endif
 
 #endif

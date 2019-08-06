@@ -4,18 +4,18 @@
 
 ```c++
 atomic {
-    nbos::hw::Adc0::reference(nbos::hw::Adc0::Reference::avcc);
-    nbos::hw::Adc0::channel(nbos::hw::Adc0::Channel::adc1);
-    nbos::hw::Adc0::prescaler(nbos::hw::Adc0::Prescaler::div128);
-    nbos::hw::Adc0::trigger(nbos::hw::Adc0::Trigger::singleConversion);
-    nbos::hw::Adc0::intFlagClear();
+    nblib::hw::Adc0::reference(nblib::hw::Adc0::Reference::avcc);
+    nblib::hw::Adc0::channel(nblib::hw::Adc0::Channel::adc1);
+    nblib::hw::Adc0::prescaler(nblib::hw::Adc0::Prescaler::div128);
+    nblib::hw::Adc0::trigger(nblib::hw::Adc0::Trigger::singleConversion);
+    nblib::hw::Adc0::intFlagClear();
 }
 
-nbos::hw::Adc0::start();
+nblib::hw::Adc0::start();
 
-while(!nbos::hw::Adc0::intFlag());
+while(!nblib::hw::Adc0::intFlag());
 
-const uint16_t value = nbos::hw::Adc0::value();
+const uint16_t value = nblib::hw::Adc0::value();
 ```
 
 ## class AdcN

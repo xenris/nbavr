@@ -3,7 +3,7 @@
 # Priority Queue
 
 ```c++
-nbos::PriorityQueue<int, 6> priorityQueue;
+nblib::PriorityQueue<int, 6> priorityQueue;
 
 priorityQueue.push(6);
 priorityQueue.push(8);
@@ -12,7 +12,7 @@ priorityQueue.push(5);
 priorityQueue.push(1);
 priorityQueue.push(2);
 
-nbos::PriorityQueue<int>* pointer = &priorityQueue;
+nblib::PriorityQueue<int>* pointer = &priorityQueue;
 
 int n;
 

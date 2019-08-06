@@ -4,18 +4,18 @@
 
 ```c++
 atomic {
-    nbos::hw::Eeprom0::address(0x00);
-    nbos::hw::Eeprom0::data(0x01);
-    nbos::hw::Eeprom0::masterWriteEnable();
-    nbos::hw::Eeprom0::writeEnable();
+    nblib::hw::Eeprom0::address(0x00);
+    nblib::hw::Eeprom0::data(0x01);
+    nblib::hw::Eeprom0::masterWriteEnable();
+    nblib::hw::Eeprom0::writeEnable();
 }
 
-while(nbos::hw::Eeprom0::writeEnabled());
+while(nblib::hw::Eeprom0::writeEnabled());
 
-nbos::hw::Eeprom0::address(0x00);
-nbos::hw::Eeprom0::readEnable();
+nblib::hw::Eeprom0::address(0x00);
+nblib::hw::Eeprom0::readEnable();
 
-uint8_t n = nbos::hw::Eeprom0::data();
+uint8_t n = nblib::hw::Eeprom0::data();
 ```
 
 ## class EepromN

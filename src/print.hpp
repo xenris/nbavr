@@ -1,5 +1,5 @@
-#ifndef NBOS_PRINT_HPP
-#define NBOS_PRINT_HPP
+#ifndef NBLIB_PRINT_HPP
+#define NBLIB_PRINT_HPP
 
 #include "algorithm.hpp"
 #include "array.hpp"
@@ -8,7 +8,7 @@
 #include "string.hpp"
 #include "hardware/system.hpp"
 
-namespace nbos {
+namespace nblib {
 
 inline bool printChar(Queue<char>& queue, char c) {
     const bool result = atomic(queue.push(c));
@@ -296,6 +296,6 @@ TEST(Print, itoa) {
 
 #endif
 
-} // nbos
+} // nblib
 
 #endif

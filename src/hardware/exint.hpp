@@ -4,17 +4,17 @@
 
 /// ```c++
 /// Callback<void> f = [](void*) {
-///     nbos::hw::PortB::Pin5::toggle();
+///     nblib::hw::PortB::Pin5::toggle();
 /// };
 ///
 /// atomic {
-///     nbos::hw::ExInt0::trigger(nbos::hw::ExInt0::Trigger::rising);
-///     nbos::hw::ExInt0::setCallback(f);
-///     nbos::hw::ExInt0::intEnable(true);
+///     nblib::hw::ExInt0::trigger(nblib::hw::ExInt0::Trigger::rising);
+///     nblib::hw::ExInt0::setCallback(f);
+///     nblib::hw::ExInt0::intEnable(true);
 /// }
 /// ```
 
-#ifndef NBOS_EXINT_HPP
+#ifndef NBLIB_EXINT_HPP
 
 #include "isr.hpp"
 #include "chip.hpp"
@@ -34,7 +34,7 @@
 
 //--------------------------------------------------------
 
-namespace nbos::hw {
+namespace nblib::hw {
 
 /// ## class {{ExIntN}}
 struct ExIntN {
@@ -150,7 +150,7 @@ TEST(ExIntN, intFlagClear) {
 
 #endif
 
-} // nbos::hw
+} // nblib::hw
 
 //--------------------------------------------------------
 
@@ -158,7 +158,7 @@ TEST(ExIntN, intFlagClear) {
 
     #include "exint.hpp"
 #else
-    #define NBOS_EXINT_HPP
+    #define NBLIB_EXINT_HPP
 #endif
 
 #undef N

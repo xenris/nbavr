@@ -1,5 +1,5 @@
-#ifndef NBOS_OPTIONAL_HPP
-#define NBOS_OPTIONAL_HPP
+#ifndef NBLIB_OPTIONAL_HPP
+#define NBLIB_OPTIONAL_HPP
 
 /// ## class {{Optional}}<class T\>
 /// Class who's value can be either something or nothing.

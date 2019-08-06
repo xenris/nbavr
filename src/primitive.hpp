@@ -2,8 +2,8 @@
 
 /// # Primitive types
 
-#ifndef NBOS_PRIMITIVE_HPP
-#define NBOS_PRIMITIVE_HPP
+#ifndef NBLIB_PRIMITIVE_HPP
+#define NBLIB_PRIMITIVE_HPP
 
 #include "basic.hpp"
 

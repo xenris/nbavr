@@ -4,17 +4,17 @@
 
 /// ```c++
 /// Callback<void> f = [](void*) {
-///     nbos::hw::PortB::Pin5::toggle();
+///     nblib::hw::PortB::Pin5::toggle();
 /// };
 ///
 /// atomic {
-///     nbos::hw::PcInt0::mask(0x0F);
-///     nbos::hw::PcInt0::setCallback(f);
-///     nbos::hw::PcInt0::intEnable(true);
+///     nblib::hw::PcInt0::mask(0x0F);
+///     nblib::hw::PcInt0::setCallback(f);
+///     nblib::hw::PcInt0::intEnable(true);
 /// }
 /// ```
 
-#ifndef NBOS_PCINT_HPP
+#ifndef NBLIB_PCINT_HPP
 
 #include "isr.hpp"
 #include "chip.hpp"
@@ -34,7 +34,7 @@
 
 //--------------------------------------------------------
 
-namespace nbos::hw {
+namespace nblib::hw {
 
 /// ## Class {{PcIntN}}
 struct PcIntN {
@@ -131,7 +131,7 @@ TEST(PcIntN, intFlagClear) {
 
 #endif
 
-} // nbos::hw
+} // nblib::hw
 
 //--------------------------------------------------------
 
@@ -143,7 +143,7 @@ TEST(PcIntN, intFlagClear) {
 
     #include "pcint.hpp"
 #else
-    #define NBOS_PCINT_HPP
+    #define NBLIB_PCINT_HPP
 #endif
 
 #endif

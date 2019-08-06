@@ -6,10 +6,10 @@
 const uint64_t cpuFreq = 16000000;
 const uint32_t baud = 115200;
 
-nbos::Queue<char, 40> coutQueue;
-nbos::Atomic<nbos::Queue<char>> cout(coutQueue);
+nblib::Queue<char, 40> coutQueue;
+nblib::Atomic<nblib::Queue<char>> cout(coutQueue);
 
-nbos::Serial<nbos::hw::Usart0>::init(cpuFreq, baud, &cout.nonatomic());
+nblib::Serial<nblib::hw::Usart0>::init(cpuFreq, baud, &cout.nonatomic());
 
 cout << "5 * 3 = " << (5 * 3) << '\n';
 ```

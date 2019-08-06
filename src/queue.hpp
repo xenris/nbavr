@@ -3,7 +3,7 @@
 /// # {{Queue}}
 
 /// ```c++
-/// nbos::Queue<int, 6> queue;
+/// nblib::Queue<int, 6> queue;
 ///
 /// queue.push(3);
 /// queue.push(7);
@@ -19,21 +19,21 @@
 ///
 /// s = queue.size(); // s = 2
 ///
-/// nbos::Queue<int>* pointer = &queue;
+/// nblib::Queue<int>* pointer = &queue;
 ///
 /// pointer->push(4);
 ///
 /// s = queue.size(); // s = 3
 /// ```
 
-#ifndef NBOS_QUEUE_HPP
-#define NBOS_QUEUE_HPP
+#ifndef NBLIB_QUEUE_HPP
+#define NBLIB_QUEUE_HPP
 
 #include "callback.hpp"
 #include "optional.hpp"
 #include "primitive.hpp"
 
-namespace nbos {
+namespace nblib {
 
 // XXX FIXME Should it be ssize_t instead?
 
@@ -301,6 +301,6 @@ TEST(Container, Queue) {
 
 #endif
 
-} // nbos
+} // nblib
 
 #endif

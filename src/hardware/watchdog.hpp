@@ -1,11 +1,11 @@
-#ifndef NBOS_WATCHDOG_HPP
-#define NBOS_WATCHDOG_HPP
+#ifndef NBLIB_WATCHDOG_HPP
+#define NBLIB_WATCHDOG_HPP
 
 // TODO Add enum class to indicate what sort of reset occured.
 // TODO Some things have been excluded from testing. Need to work out how to
 //  include them.
 
-namespace nbos::hw {
+namespace nblib::hw {
 
 #ifdef CHIP_WATCHDOG_TIMER_CONTROL_REG
 
@@ -53,6 +53,6 @@ void _getResetStatus() {
 
 #endif
 
-} // nbos::hw
+} // nblib::hw
 
 #endif

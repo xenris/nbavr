@@ -5,10 +5,10 @@
 /// ```c++
 /// // PWM.
 ///
-/// using Timer = nbos::hw::Timer0;
+/// using Timer = nblib::hw::Timer0;
 ///
-/// Timer::OutputA::Pin::mode(nbos::hw::Pin::Mode::output);
-/// Timer::OutputB::Pin::mode(nbos::hw::Pin::Mode::output);
+/// Timer::OutputA::Pin::mode(nblib::hw::Pin::Mode::output);
+/// Timer::OutputB::Pin::mode(nblib::hw::Pin::Mode::output);
 ///
 /// atomic([]() {
 ///     Timer::waveform(Timer::Waveform::fastPWM);

@@ -2,8 +2,8 @@
 
 /// # {{Basic}}
 
-#ifndef NBOS_BASIC_HPP
-#define NBOS_BASIC_HPP
+#ifndef NBLIB_BASIC_HPP
+#define NBLIB_BASIC_HPP
 
 template <class _T>
 struct ConstantType {

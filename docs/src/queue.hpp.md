@@ -3,7 +3,7 @@
 # Queue
 
 ```c++
-nbos::Queue<int, 6> queue;
+nblib::Queue<int, 6> queue;
 
 queue.push(3);
 queue.push(7);
@@ -19,7 +19,7 @@ queue.pop(&a); // a = 7
 
 s = queue.size(); // s = 2
 
-nbos::Queue<int>* pointer = &queue;
+nblib::Queue<int>* pointer = &queue;
 
 pointer->push(4);
 

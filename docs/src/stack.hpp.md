@@ -3,7 +3,7 @@
 # Stack
 
 ```c++
-nbos::Stack<int, 6> stack;
+nblib::Stack<int, 6> stack;
 
 stack.push(3);
 stack.push(7);
@@ -19,7 +19,7 @@ stack.pop(&a); // a = 1
 
 s = stack.size(); // s = 2
 
-nbos::Stack<int>* pointer = &stack;
+nblib::Stack<int>* pointer = &stack;
 
 pointer->push(4);
 

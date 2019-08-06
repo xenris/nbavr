@@ -1,5 +1,5 @@
-#ifndef NBOS_ITERATOR_HPP
-#define NBOS_ITERATOR_HPP
+#ifndef NBLIB_ITERATOR_HPP
+#define NBLIB_ITERATOR_HPP
 
 template<class T>
 auto begin(T& t) -> decltype(t.begin()) {

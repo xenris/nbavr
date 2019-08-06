@@ -2,8 +2,8 @@
 
 /// # {{Tuple}}
 
-#ifndef NBOS_TUPLE_HPP
-#define NBOS_TUPLE_HPP
+#ifndef NBLIB_TUPLE_HPP
+#define NBLIB_TUPLE_HPP
 
 /// struct Tuple<class A, class B\>
 template <class A, class B>

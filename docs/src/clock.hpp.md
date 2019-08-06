@@ -8,9 +8,9 @@ Required by TaskManager.
 ```c++
 const uint64_t cpuFreq = 16000000;
 
-using SystemTimer = nbos::hw::Timer1;
+using SystemTimer = nblib::hw::Timer1;
 
-using Clock = nbos::Clock<SystemTimer, cpuFreq>;
+using Clock = nblib::Clock<SystemTimer, cpuFreq>;
 
 uint64_t ticks = Clock::getTicks();
 uint64_t millis = Clock::ticksToMillis(ticks);

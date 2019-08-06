@@ -3,7 +3,7 @@
 /// # {{Priority Queue}}
 
 /// ```c++
-/// nbos::PriorityQueue<int, 6> priorityQueue;
+/// nblib::PriorityQueue<int, 6> priorityQueue;
 ///
 /// priorityQueue.push(6);
 /// priorityQueue.push(8);
@@ -12,7 +12,7 @@
 /// priorityQueue.push(1);
 /// priorityQueue.push(2);
 ///
-/// nbos::PriorityQueue<int>* pointer = &priorityQueue;
+/// nblib::PriorityQueue<int>* pointer = &priorityQueue;
 ///
 /// int n;
 ///
@@ -21,13 +21,13 @@
 /// }
 /// ```
 
-#ifndef NBOS_PRIORITYQUEUE_HPP
-#define NBOS_PRIORITYQUEUE_HPP
+#ifndef NBLIB_PRIORITYQUEUE_HPP
+#define NBLIB_PRIORITYQUEUE_HPP
 
 #include "optional.hpp"
 #include "primitive.hpp"
 
-namespace nbos {
+namespace nblib {
 
 /// ## class PriorityQueue<class Type, int size\>
 template <class Type, int size = -1>
@@ -263,6 +263,6 @@ TEST(Container, PriorityQueueMemoryUse) {
 
 #endif // TEST
 
-} // nbos
+} // nblib
 
 #endif

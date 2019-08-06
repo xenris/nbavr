@@ -5,18 +5,18 @@
 /// ## Example
 
 /// ```c++
-/// nbos::Random random;
+/// nblib::Random random;
 
 /// int i = random.next<int>();
 /// float f = random.next<float>();
 /// ```
 
-#ifndef NBOS_RANDOM_HPP
-#define NBOS_RANDOM_HPP
+#ifndef NBLIB_RANDOM_HPP
+#define NBLIB_RANDOM_HPP
 
 #include "primitive.hpp"
 
-namespace nbos {
+namespace nblib {
 
 /// ## class Random
 class Random {
@@ -71,6 +71,6 @@ TEST(Random, Limits) {
 
 #endif // TEST
 
-} // nbos
+} // nblib
 
 #endif

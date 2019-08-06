@@ -3,7 +3,7 @@
 # Vector
 
 ```c++
-nbos::Vector<int, 6> vector;
+nblib::Vector<int, 6> vector;
 
 vector.add(3);
 vector.add(7);
@@ -14,7 +14,7 @@ int s = vector.size(); // s = 4
 
 const int a = vector[1]; // a = 7
 
-nbos::Vector<int>* pointer = &vector;
+nblib::Vector<int>* pointer = &vector;
 
 pointer->add(4);
 

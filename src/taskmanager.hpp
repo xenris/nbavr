@@ -5,27 +5,27 @@
 /// ```c++
 /// const uint64_t cpuFreq = 16000000;
 
-/// using LedPin = nbos::hw::PortB::Pin5;
-/// using SystemTimer = nbos::hw::Timer1;
+/// using LedPin = nblib::hw::PortB::Pin5;
+/// using SystemTimer = nblib::hw::Timer1;
 
-/// using Clock = nbos::Clock<SystemTimer, cpuFreq>;
+/// using Clock = nblib::Clock<SystemTimer, cpuFreq>;
 
 /// Flash<Clock, LedPin> flash;
 
-/// nbos::Task<Clock>* tasks[] = {&flash};
+/// nblib::Task<Clock>* tasks[] = {&flash};
 
-/// nbos::TaskManager<Clock> tm(tasks);
+/// nblib::TaskManager<Clock> tm(tasks);
 /// ```
 
-#ifndef NBOS_TASKMANAGER_HPP
-#define NBOS_TASKMANAGER_HPP
+#ifndef NBLIB_TASKMANAGER_HPP
+#define NBLIB_TASKMANAGER_HPP
 
 #include "clock.hpp"
 #include "macros.hpp"
 #include "task.hpp"
 #include "hardware/port.hpp"
 
-namespace nbos {
+namespace nblib {
 
 /// ## class TaskManager\<class Clock\>
 template <class Clock>
@@ -115,6 +115,6 @@ private:
     }
 };
 
-} // nbos
+} // nblib
 
 #endif

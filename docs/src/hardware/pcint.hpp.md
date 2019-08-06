@@ -4,13 +4,13 @@
 
 ```c++
 Callback<void> f = [](void*) {
-    nbos::hw::PortB::Pin5::toggle();
+    nblib::hw::PortB::Pin5::toggle();
 };
 
 atomic {
-    nbos::hw::PcInt0::mask(0x0F);
-    nbos::hw::PcInt0::setCallback(f);
-    nbos::hw::PcInt0::intEnable(true);
+    nblib::hw::PcInt0::mask(0x0F);
+    nblib::hw::PcInt0::setCallback(f);
+    nblib::hw::PcInt0::intEnable(true);
 }
 ```
 

@@ -3,7 +3,7 @@
 /// # {{Stack}}
 
 /// ```c++
-/// nbos::Stack<int, 6> stack;
+/// nblib::Stack<int, 6> stack;
 ///
 /// stack.push(3);
 /// stack.push(7);
@@ -19,20 +19,20 @@
 ///
 /// s = stack.size(); // s = 2
 ///
-/// nbos::Stack<int>* pointer = &stack;
+/// nblib::Stack<int>* pointer = &stack;
 ///
 /// pointer->push(4);
 ///
 /// s = stack.size(); // s = 3
 /// ```
 
-#ifndef NBOS_STACK_HPP
-#define NBOS_STACK_HPP
+#ifndef NBLIB_STACK_HPP
+#define NBLIB_STACK_HPP
 
 #include "primitive.hpp"
 #include "optional.hpp"
 
-namespace nbos {
+namespace nblib {
 
 /// ## class Stack<class Type, int bufferSize\>
 template <class Type, int bufferSize = -1>
@@ -193,6 +193,6 @@ TEST(Container, Stack) {
 
 #endif // TEST
 
-} // nbos
+} // nblib
 
 #endif

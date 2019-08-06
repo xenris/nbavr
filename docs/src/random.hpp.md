@@ -5,7 +5,7 @@
 ## Example
 
 ```c++
-nbos::Random random;
+nblib::Random random;
 
 int i = random.next<int>();
 float f = random.next<float>();

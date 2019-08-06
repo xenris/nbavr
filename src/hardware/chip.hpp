@@ -25,19 +25,19 @@
 
 ///   e.g. "w Adc::channel(Adc::Channel::ADC4) 7c:00:04:7c:ff:f4:"
 
-#ifndef NBOS_CHIP_HPP
-#define NBOS_CHIP_HPP
+#ifndef NBLIB_CHIP_HPP
+#define NBLIB_CHIP_HPP
 
 #include "../primitive.hpp"
 
-namespace nbos {
+namespace nblib {
 
 template <class T, size_t addr>
 struct _reg {
     T*const p = (T*)(addr);
 };
 
-} // nbos
+} // nblib
 
 // Use of _reg makes the compiler throw a more meaningful message if _TYPE or _ADDR isn't defined.
 #define REG(R) _reg<CAT(R, _TYPE), CAT(R, _ADDR)>().p

@@ -1,5 +1,5 @@
-#ifndef NBOS_POINTER_HPP
-#define NBOS_POINTER_HPP
+#ifndef NBLIB_POINTER_HPP
+#define NBLIB_POINTER_HPP
 
 // TODO
 // Non-null pointer

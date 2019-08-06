@@ -110,11 +110,11 @@ namespace std
 #endif // _INITIALIZER_LIST
 
 // Make initializer_list available without std namespace.
-#ifndef NBOS_INITIALIZER_LIST
-#define NBOS_INITIALIZER_LIST
+#ifndef NBLIB_INITIALIZER_LIST
+#define NBLIB_INITIALIZER_LIST
 
 template <class T>
 using initializer_list = std::initializer_list<T>;
 
-#endif // NBOS_INITIALIZER_LIST
+#endif // NBLIB_INITIALIZER_LIST
 

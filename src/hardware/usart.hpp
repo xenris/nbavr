@@ -3,7 +3,7 @@
 /// # {{Universal Synchronous Asynchronous Receiver Transmitters}}
 
 /// ```c++
-/// using Usart = nbos::hw::Usart0;
+/// using Usart = nblib::hw::Usart0;
 ///
 /// const auto f = [](void*) {
 ///     Usart::push('?')
@@ -17,7 +17,7 @@
 /// Usart::dataRegisterEmptyCallback((callback_t)f);
 /// ```
 
-#ifndef NBOS_USART_HPP
+#ifndef NBLIB_USART_HPP
 
 #include "isr.hpp"
 #include "chip.hpp"
@@ -39,7 +39,7 @@
 
 //------------------------------------------------------------------
 
-namespace nbos::hw {
+namespace nblib::hw {
 
 /// ## class {{UsartN}}
 struct UsartN {
@@ -609,7 +609,7 @@ TEST(UsartN, pop) {
 
 #endif // TEST
 
-} // nbos::hw
+} // nblib::hw
 
 //------------------------------------------------------------------
 
@@ -621,7 +621,7 @@ TEST(UsartN, pop) {
 
     #include "usart.hpp"
 #else
-    #define NBOS_USART_HPP
+    #define NBLIB_USART_HPP
 #endif
 
 #endif
