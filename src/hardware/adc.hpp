@@ -335,7 +335,9 @@ struct AdcN {
     #if DEFINED(ADC_N(INT_FLAG_BIT_0_BIT))
         /// #### static void intFlagClear()
         static force_inline void intFlagClear() {
-            clearFlagBit(REG(ADC_N(INT_FLAG_BIT_0_REG)), ADC_N(INT_FLAG_BIT_0_BIT));
+            // Can't use clearFlagBit() as this bit is not in a pure flag register.
+            // TODO work out how to define this in the chip definition files.
+            setBit_(REG(ADC_N(INT_FLAG_BIT_0_REG)), ADC_N(INT_FLAG_BIT_0_BIT), true);
         }
     #endif
 
