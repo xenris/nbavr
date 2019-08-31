@@ -57,7 +57,7 @@ w Adc0::enable(true) 26:00:80:
 w Adc0::intEnable(false) 26:ff:f7:
 w Adc0::intEnable(true) 26:00:08:
 w Adc0::intFlag()
-w Adc0::intFlagClear() 26:00:10:26:ff:10:
+w Adc0::intFlagClear() 26:00:10:
 w Adc0::leftAdjust(false) 27:ff:df:
 w Adc0::leftAdjust(true) 27:00:20:
 w Adc0::prescaler(Adc0::Prescaler::div128) 26:00:07:

@@ -139,7 +139,7 @@ w Adc0::enable(true) 7a:00:80:
 w Adc0::intEnable(false) 7a:ff:f7:
 w Adc0::intEnable(true) 7a:00:08:
 w Adc0::intFlag()
-w Adc0::intFlagClear() 7a:00:10:7a:ff:10:
+w Adc0::intFlagClear() 7a:00:10:
 w Adc0::leftAdjust(false) 7c:ff:df:
 w Adc0::leftAdjust(true) 7c:00:20:
 w Adc0::prescaler(Adc0::Prescaler::div128) 7a:00:07:
@@ -555,6 +555,9 @@ w Timer1::intFlag()
 w Timer1::intFlagClear() 36:00:01:36:ff:01:
 w Timer1::waveform(Timer1::Waveform::ctcOcra) 81:00:08:80:ff:fc:81:ff:ef:
 w Timer1::waveform(Timer1::Waveform::fastPwm) 80:00:02:81:00:18:80:ff:fe:
+w Timer1::waveform(Timer1::Waveform::fastPwm10Bit) 80:00:03:81:00:08:81:ff:ef:
+w Timer1::waveform(Timer1::Waveform::fastPwm8Bit) 80:00:01:81:00:08:80:ff:fd:81:ff:ef:
+w Timer1::waveform(Timer1::Waveform::fastPwm9Bit) 80:00:02:81:00:08:80:ff:fe:81:ff:ef:
 w Timer1::waveform(Timer1::Waveform::fastPwmOcra) 80:00:03:81:00:18:
 w Timer1::waveform(Timer1::Waveform::normal) 80:ff:fc:81:ff:e7:
 w Timer1::waveform(Timer1::Waveform::pwm) 80:00:02:81:00:10:80:ff:fe:81:ff:f7:

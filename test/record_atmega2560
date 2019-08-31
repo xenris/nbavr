@@ -387,7 +387,7 @@ w Adc0::enable(true) 7a:00:80:
 w Adc0::intEnable(false) 7a:ff:f7:
 w Adc0::intEnable(true) 7a:00:08:
 w Adc0::intFlag()
-w Adc0::intFlagClear() 7a:00:10:7a:ff:10:
+w Adc0::intFlagClear() 7a:00:10:
 w Adc0::leftAdjust(false) 7c:ff:df:
 w Adc0::leftAdjust(true) 7c:00:20:
 w Adc0::prescaler(Adc0::Prescaler::div128) 7a:00:07:
@@ -1441,6 +1441,9 @@ w Timer1::intFlag()
 w Timer1::intFlagClear() 36:00:01:36:ff:01:
 w Timer1::waveform(Timer1::Waveform::ctcOcra) 81:00:08:80:ff:fc:81:ff:ef:
 w Timer1::waveform(Timer1::Waveform::fastPwm) 80:00:02:81:00:18:80:ff:fe:
+w Timer1::waveform(Timer1::Waveform::fastPwm10Bit) 80:00:03:81:00:08:81:ff:ef:
+w Timer1::waveform(Timer1::Waveform::fastPwm8Bit) 80:00:01:81:00:08:80:ff:fd:81:ff:ef:
+w Timer1::waveform(Timer1::Waveform::fastPwm9Bit) 80:00:02:81:00:08:80:ff:fe:81:ff:ef:
 w Timer1::waveform(Timer1::Waveform::fastPwmOcra) 80:00:03:81:00:18:
 w Timer1::waveform(Timer1::Waveform::normal) 80:ff:fc:81:ff:e7:
 w Timer1::waveform(Timer1::Waveform::pwm) 80:00:02:81:00:10:80:ff:fe:81:ff:f7:
@@ -1536,6 +1539,9 @@ w Timer3::intFlag()
 w Timer3::intFlagClear() 38:00:01:38:ff:01:
 w Timer3::waveform(Timer3::Waveform::ctcOcra) 91:00:08:90:ff:fc:91:ff:ef:
 w Timer3::waveform(Timer3::Waveform::fastPwm) 90:00:02:91:00:18:90:ff:fe:
+w Timer3::waveform(Timer3::Waveform::fastPwm10Bit) 90:00:03:91:00:08:91:ff:ef:
+w Timer3::waveform(Timer3::Waveform::fastPwm8Bit) 90:00:01:91:00:08:90:ff:fd:91:ff:ef:
+w Timer3::waveform(Timer3::Waveform::fastPwm9Bit) 90:00:02:91:00:08:90:ff:fe:91:ff:ef:
 w Timer3::waveform(Timer3::Waveform::fastPwmOcra) 90:00:03:91:00:18:
 w Timer3::waveform(Timer3::Waveform::normal) 90:ff:fc:91:ff:e7:
 w Timer3::waveform(Timer3::Waveform::pwm) 90:00:02:91:00:10:90:ff:fe:91:ff:f7:
@@ -1589,6 +1595,9 @@ w Timer4::intFlag()
 w Timer4::intFlagClear() 39:00:01:39:ff:01:
 w Timer4::waveform(Timer4::Waveform::ctcOcra) a1:00:08:a0:ff:fc:a1:ff:ef:
 w Timer4::waveform(Timer4::Waveform::fastPwm) a0:00:02:a1:00:18:a0:ff:fe:
+w Timer4::waveform(Timer4::Waveform::fastPwm10Bit) a0:00:03:a1:00:08:a1:ff:ef:
+w Timer4::waveform(Timer4::Waveform::fastPwm8Bit) a0:00:01:a1:00:08:a0:ff:fd:a1:ff:ef:
+w Timer4::waveform(Timer4::Waveform::fastPwm9Bit) a0:00:02:a1:00:08:a0:ff:fe:a1:ff:ef:
 w Timer4::waveform(Timer4::Waveform::fastPwmOcra) a0:00:03:a1:00:18:
 w Timer4::waveform(Timer4::Waveform::normal) a0:ff:fc:a1:ff:e7:
 w Timer4::waveform(Timer4::Waveform::pwm) a0:00:02:a1:00:10:a0:ff:fe:a1:ff:f7:
@@ -1642,6 +1651,9 @@ w Timer5::intFlag()
 w Timer5::intFlagClear() 3a:00:01:3a:ff:01:
 w Timer5::waveform(Timer5::Waveform::ctcOcra) 121:00:08:120:ff:fc:121:ff:ef:
 w Timer5::waveform(Timer5::Waveform::fastPwm) 120:00:02:121:00:18:120:ff:fe:
+w Timer5::waveform(Timer5::Waveform::fastPwm10Bit) 120:00:03:121:00:08:121:ff:ef:
+w Timer5::waveform(Timer5::Waveform::fastPwm8Bit) 120:00:01:121:00:08:120:ff:fd:121:ff:ef:
+w Timer5::waveform(Timer5::Waveform::fastPwm9Bit) 120:00:02:121:00:08:120:ff:fe:121:ff:ef:
 w Timer5::waveform(Timer5::Waveform::fastPwmOcra) 120:00:03:121:00:18:
 w Timer5::waveform(Timer5::Waveform::normal) 120:ff:fc:121:ff:e7:
 w Timer5::waveform(Timer5::Waveform::pwm) 120:00:02:121:00:10:120:ff:fe:121:ff:f7:
