@@ -170,6 +170,10 @@ struct TimerN {
             ctcOcrc = TIMER_N(WAVEFORM_CTC_OCRC_ID),
         #endif
 
+        #if DEFINED(TIMER_N(WAVEFORM_CTC_ICR_ID))
+            ctcIcr = TIMER_N(WAVEFORM_CTC_ICR_ID),
+        #endif
+
         #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_8_ID))
             fastPwm8Bit = TIMER_N(WAVEFORM_FAST_PWM_8_ID),
         #endif

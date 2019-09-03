@@ -793,7 +793,7 @@
 #define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_FREQ_CORRECT_OCRA_ID        9
 #define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_CORRECT_ID                  10
 #define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID             11
-#define CHIP_TIMER_1_WAVEFORM_CTC_ID                                12
+#define CHIP_TIMER_1_WAVEFORM_CTC_ICR_ID                            12
 #define CHIP_TIMER_1_WAVEFORM_FAST_PWM_ID                           14
 #define CHIP_TIMER_1_WAVEFORM_FAST_PWM_OCRA_ID                      15
 #define CHIP_TIMER_1_WAVEFORM_BIT_0_REG                             CHIP_REG_TCCR1A
