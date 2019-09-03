@@ -40,8 +40,8 @@ struct _reg {
 } // nblib
 
 // Use of _reg makes the compiler throw a more meaningful message if _TYPE or _ADDR isn't defined.
-#define REG(R) _reg<CAT(R, _TYPE), CAT(R, _ADDR)>().p
-#define REGL(R) _reg<CAT(R, _TYPE), CAT(R, _ADDR)>().p
+#define REG(R) nblib::_reg<CAT(R, _TYPE), CAT(R, _ADDR)>().p
+#define REGL(R) nblib::_reg<CAT(R, _TYPE), CAT(R, _ADDR)>().p
 
 #define REGTYPE(R) CAT(R, _TYPE)
 
