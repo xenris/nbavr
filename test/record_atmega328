@@ -553,6 +553,7 @@ w Timer1::intEnable(false) 6f:ff:fe:
 w Timer1::intEnable(true) 6f:00:01:
 w Timer1::intFlag()
 w Timer1::intFlagClear() 36:00:01:36:ff:01:
+w Timer1::waveform(Timer1::Waveform::ctcIcr) 81:00:18:80:ff:fc:
 w Timer1::waveform(Timer1::Waveform::ctcOcra) 81:00:08:80:ff:fc:81:ff:ef:
 w Timer1::waveform(Timer1::Waveform::fastPwm) 80:00:02:81:00:18:80:ff:fe:
 w Timer1::waveform(Timer1::Waveform::fastPwm10Bit) 80:00:03:81:00:08:81:ff:ef:
@@ -561,6 +562,9 @@ w Timer1::waveform(Timer1::Waveform::fastPwm9Bit) 80:00:02:81:00:08:80:ff:fe:81:
 w Timer1::waveform(Timer1::Waveform::fastPwmOcra) 80:00:03:81:00:18:
 w Timer1::waveform(Timer1::Waveform::normal) 80:ff:fc:81:ff:e7:
 w Timer1::waveform(Timer1::Waveform::pwm) 80:00:02:81:00:10:80:ff:fe:81:ff:f7:
+w Timer1::waveform(Timer1::Waveform::pwm10Bit) 80:00:03:81:ff:e7:
+w Timer1::waveform(Timer1::Waveform::pwm8Bit) 80:00:01:80:ff:fd:81:ff:e7:
+w Timer1::waveform(Timer1::Waveform::pwm9Bit) 80:00:02:80:ff:fe:81:ff:e7:
 w Timer1::waveform(Timer1::Waveform::pwmOcra) 80:00:03:81:00:10:81:ff:f7:
 w Timer2::OutputA::intEnable(false) 70:ff:fd:
 w Timer2::OutputA::intEnable(true) 70:00:02:

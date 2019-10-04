@@ -443,6 +443,9 @@ w Timer1::waveform(Timer1::Waveform::fastPwm9Bit) 4e:00:08:4f:00:02:4e:ff:ef:4f:
 w Timer1::waveform(Timer1::Waveform::fastPwmOcra) 4e:00:18:4f:00:03:
 w Timer1::waveform(Timer1::Waveform::normal) 4e:ff:e7:4f:ff:fc:
 w Timer1::waveform(Timer1::Waveform::pwm) 4e:00:10:4f:00:02:4e:ff:f7:4f:ff:fe:
+w Timer1::waveform(Timer1::Waveform::pwm10Bit) 4f:00:03:4e:ff:e7:
+w Timer1::waveform(Timer1::Waveform::pwm8Bit) 4f:00:01:4e:ff:e7:4f:ff:fd:
+w Timer1::waveform(Timer1::Waveform::pwm9Bit) 4f:00:02:4e:ff:e7:4f:ff:fe:
 w Timer1::waveform(Timer1::Waveform::pwmOcra) 4e:00:10:4f:00:03:4e:ff:f7:
 w Timer2::OutputA::intEnable(false) 59:ff:7f:
 w Timer2::OutputA::intEnable(true) 59:00:80:

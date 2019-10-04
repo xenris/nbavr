@@ -162,6 +162,18 @@ struct TimerN {
             pwm = TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_ID),
         #endif
 
+        #if DEFINED(TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_8_ID))
+            pwm8Bit = TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_8_ID),
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_9_ID))
+            pwm9Bit = TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_9_ID),
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_10_ID))
+            pwm10Bit = TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_10_ID),
+        #endif
+
         #if DEFINED(TIMER_N(WAVEFORM_CTC_OCRA_ID))
             ctcOcra = TIMER_N(WAVEFORM_CTC_OCRA_ID),
         #endif
@@ -453,12 +465,28 @@ TEST(TimerN, counter) {
             TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::pwm));
         #endif
 
+        #if DEFINED(TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_8_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::pwm8Bit));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_9_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::pwm9Bit));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_PWM_PHASE_CORRECT_10_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::pwm10Bit));
+        #endif
+
         #if DEFINED(TIMER_N(WAVEFORM_CTC_OCRA_ID))
             TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::ctcOcra));
         #endif
 
         #if DEFINED(TIMER_N(WAVEFORM_CTC_OCRC_ID))
             TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::ctcOcrc));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_CTC_ICR_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::ctcIcr));
         #endif
 
         #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_8_ID))
