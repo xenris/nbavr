@@ -191,7 +191,11 @@ constexpr force_inline double pow(double n, double p) {
 
 /// #### float round(float n)
 constexpr force_inline float round(float n) {
+    #ifdef __AVR__
+        return BUILTIN(round(n));
+    #else
         return BUILTIN(roundf(n));
+    #endif
 }
 
 /// #### double round(double n)
