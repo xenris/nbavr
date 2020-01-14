@@ -52,6 +52,8 @@ struct _reg {
     #include "chips/avr/atmega328.hpp"
 #elif defined(__atmega328p__)
     #include "chips/avr/atmega328p.hpp"
+#elif defined(__atmega328pb__)
+    #include "chips/avr/atmega328pb.hpp"
 #elif defined(__atmega48__)
     #include "chips/avr/atmega48.hpp"
 #elif defined(__atmega8__)
