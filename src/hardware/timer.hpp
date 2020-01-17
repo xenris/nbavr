@@ -295,6 +295,22 @@ struct TimerN {
         }
     #endif
 
+    #if DEFINED(TIMER_N(PRESCALER_RESET_BIT))
+        /// #### static void prescalerReset()
+        static force_inline void prescalerReset() {
+            setBit_(REG(TIMER_N(PRESCALER_RESET_REG)), TIMER_N(PRESCALER_RESET_BIT), true);
+        }
+    #endif
+
+    #if DEFINED(TIMER_N(SYNCHRONIZE_BIT))
+        /// #### static void synchronizeTimers(bool b)
+        /// While true, all timers' prescalers will be held at zero, effectively pausing the timers.
+        /// Set back to false to start all timers at exactly the same time.
+        static force_inline void synchronizeTimers(bool b) {
+            setBit_(REG(TIMER_N(SYNCHRONIZE_REG)), TIMER_N(SYNCHRONIZE_BIT), b);
+        }
+    #endif
+
     /// ## class OutputX
     /// See [[TimerN::OutputX]]
 

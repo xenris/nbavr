@@ -734,6 +734,11 @@
 
 #define CHIP_TIMER_0_COUNTER_REG                                    CHIP_REG_TCNT0
 
+#define CHIP_TIMER_0_PRESCALER_RESET_REG                            CHIP_REG_GTCCR
+#define CHIP_TIMER_0_PRESCALER_RESET_BIT                            0
+#define CHIP_TIMER_0_SYNCHRONIZE_REG                                CHIP_REG_GTCCR
+#define CHIP_TIMER_0_SYNCHRONIZE_BIT                                7
+
 #define CHIP_TIMER_0_OUTPUT_A                                       true
 #define CHIP_TIMER_0_OUTPUT_A_PIN                                   PortD::Pin6
 #define CHIP_TIMER_0_OUTPUT_A_MODE_BIT_0_REG                        CHIP_REG_TCCR0A
@@ -821,6 +826,11 @@
 #define CHIP_TIMER_1_CLOCK_BIT_2_BIT                                2
 
 #define CHIP_TIMER_1_COUNTER_REG                                    CHIP_REG_TCNT1L
+
+#define CHIP_TIMER_1_PRESCALER_RESET_REG                            CHIP_REG_GTCCR
+#define CHIP_TIMER_1_PRESCALER_RESET_BIT                            0
+#define CHIP_TIMER_1_SYNCHRONIZE_REG                                CHIP_REG_GTCCR
+#define CHIP_TIMER_1_SYNCHRONIZE_BIT                                7
 
 // TODO Remove CHIP_TIMER_1_OUTPUT_X
 #define CHIP_TIMER_1_OUTPUT_A                                       true
@@ -916,6 +926,11 @@
 #define CHIP_TIMER_2_CLOCK_BIT_2_BIT                                2
 
 #define CHIP_TIMER_2_COUNTER_REG                                    CHIP_REG_TCNT2
+
+#define CHIP_TIMER_2_PRESCALER_RESET_REG                            CHIP_REG_GTCCR
+#define CHIP_TIMER_2_PRESCALER_RESET_BIT                            1
+#define CHIP_TIMER_2_SYNCHRONIZE_REG                                CHIP_REG_GTCCR
+#define CHIP_TIMER_2_SYNCHRONIZE_BIT                                7
 
 #define CHIP_TIMER_2_OUTPUT_A                                       true
 #define CHIP_TIMER_2_OUTPUT_A_PIN                                   PortB::Pin3

@@ -76,6 +76,12 @@ Set the timer overflow callback.
 
 #### static void intFlagClear()
 
+#### static void prescalerReset()
+
+#### static void synchronizeTimers(bool b)
+While true, all timers' prescalers will be held at zero, effectively pausing the timers.
+Set back to false to start all timers at exactly the same time.
+
 ## class OutputX
 See [TimerN::OutputX](output.xpp.md#class-timernoutputx)
 
