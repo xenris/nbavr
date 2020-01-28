@@ -18,6 +18,7 @@
 #include "serial.hpp"
 #include "stack.hpp"
 #include "string.hpp"
+#include "strong_typedef.hpp"
 #include "task.hpp"
 #include "taskmanager.hpp"
 #include "tasks.hpp"
