@@ -33,7 +33,7 @@ struct Sleep {
     /// * powerDown
     /// * powerSave
     /// * standby
-    /// * externalStandby
+    /// * extendedStandby
     #if DEFINED(CHIP_SLEEP_MODE_BIT_0_BIT)
         enum class Mode {
             #if DEFINED(CHIP_SLEEP_MODE_IDLE_ID)
@@ -56,8 +56,8 @@ struct Sleep {
                 standby = CHIP_SLEEP_MODE_STANDBY_ID,
             #endif
 
-            #if DEFINED(CHIP_SLEEP_MODE_EXTERNAL_STANDBY_ID)
-                externalStandby = CHIP_SLEEP_MODE_EXTERNAL_STANDBY_ID,
+            #if DEFINED(CHIP_SLEEP_MODE_EXTENDED_STANDBY_ID)
+                extendedStandby = CHIP_SLEEP_MODE_EXTENDED_STANDBY_ID,
             #endif
         };
     #endif
@@ -135,7 +135,7 @@ TEST(Sleep, getHardwareType) {
         TEST_REG_WRITE(Sleep::mode(Sleep::Mode::powerDown));
         TEST_REG_WRITE(Sleep::mode(Sleep::Mode::powerSave));
         TEST_REG_WRITE(Sleep::mode(Sleep::Mode::standby));
-        TEST_REG_WRITE(Sleep::mode(Sleep::Mode::externalStandby));
+        TEST_REG_WRITE(Sleep::mode(Sleep::Mode::extendedStandby));
     }
 #endif
 

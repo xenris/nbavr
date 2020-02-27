@@ -223,7 +223,7 @@
 #define CHIP_SLEEP_MODE_POWER_DOWN_ID                               2
 #define CHIP_SLEEP_MODE_POWER_SAVE_ID                               3
 #define CHIP_SLEEP_MODE_STANDBY_ID                                  6
-#define CHIP_SLEEP_MODE_EXTERNAL_STANDBY_ID                         7
+#define CHIP_SLEEP_MODE_EXTENDED_STANDBY_ID                         7
 
 #define CHIP_SLEEP_MODE_BIT_0_BIT                                   1
 #define CHIP_SLEEP_MODE_BIT_0_REG                                   CHIP_REG_SMCR
