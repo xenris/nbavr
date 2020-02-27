@@ -135,14 +135,10 @@
 #define CHIP_REG_TCNT1H_TYPE                                        uint8_t
 #define CHIP_REG_ICR1_ADDR                                          0x86
 #define CHIP_REG_ICR1_TYPE                                          uint16_t
-#define CHIP_REG_OCR1AL_ADDR                                        0x88
-#define CHIP_REG_OCR1AL_TYPE                                        uint16_t
-#define CHIP_REG_OCR1AH_ADDR                                        0x89
-#define CHIP_REG_OCR1AH_TYPE                                        uint8_t
-#define CHIP_REG_OCR1BL_ADDR                                        0x8A
-#define CHIP_REG_OCR1BL_TYPE                                        uint16_t
-#define CHIP_REG_OCR1BH_ADDR                                        0x8B
-#define CHIP_REG_OCR1BH_TYPE                                        uint8_t
+#define CHIP_REG_OCR1A_ADDR                                         0x88
+#define CHIP_REG_OCR1A_TYPE                                         uint16_t
+#define CHIP_REG_OCR1B_ADDR                                         0x8A
+#define CHIP_REG_OCR1B_TYPE                                         uint16_t
 #define CHIP_REG_TCCR2A_ADDR                                        0xB0
 #define CHIP_REG_TCCR2A_TYPE                                        uint8_t
 #define CHIP_REG_TCCR2B_ADDR                                        0xB1
@@ -832,7 +828,6 @@
 #define CHIP_TIMER_1_SYNCHRONIZE_REG                                CHIP_REG_GTCCR
 #define CHIP_TIMER_1_SYNCHRONIZE_BIT                                7
 
-// TODO Remove CHIP_TIMER_1_OUTPUT_X
 #define CHIP_TIMER_1_OUTPUT_A                                       true
 #define CHIP_TIMER_1_OUTPUT_A_PIN                                   PortB::Pin1
 #define CHIP_TIMER_1_OUTPUT_A_MODE_BIT_0_REG                        CHIP_REG_TCCR1A
@@ -843,7 +838,7 @@
 #define CHIP_TIMER_1_OUTPUT_A_MODE_TOGGLE_ID                        1
 #define CHIP_TIMER_1_OUTPUT_A_MODE_CLEAR_ID                         2
 #define CHIP_TIMER_1_OUTPUT_A_MODE_SET_ID                           3
-#define CHIP_TIMER_1_OUTPUT_A_REG                                   CHIP_REG_OCR1AL
+#define CHIP_TIMER_1_OUTPUT_A_REG                                   CHIP_REG_OCR1A
 #define CHIP_TIMER_1_OUTPUT_A_INT_ENABLE_REG                        CHIP_REG_TIMSK1
 #define CHIP_TIMER_1_OUTPUT_A_INT_ENABLE_BIT                        1
 #define CHIP_TIMER_1_OUTPUT_A_INT_FLAG_REG                          CHIP_REG_TIFR1
@@ -860,7 +855,7 @@
 #define CHIP_TIMER_1_OUTPUT_B_MODE_TOGGLE_ID                        1
 #define CHIP_TIMER_1_OUTPUT_B_MODE_CLEAR_ID                         2
 #define CHIP_TIMER_1_OUTPUT_B_MODE_SET_ID                           3
-#define CHIP_TIMER_1_OUTPUT_B_REG                                   CHIP_REG_OCR1BL
+#define CHIP_TIMER_1_OUTPUT_B_REG                                   CHIP_REG_OCR1B
 #define CHIP_TIMER_1_OUTPUT_B_INT_ENABLE_REG                        CHIP_REG_TIMSK1
 #define CHIP_TIMER_1_OUTPUT_B_INT_ENABLE_BIT                        2
 #define CHIP_TIMER_1_OUTPUT_B_INT_FLAG_REG                          CHIP_REG_TIFR1
@@ -873,7 +868,6 @@
 #define CHIP_TIMER_1_OVERFLOW_INT_FLAG_BIT                          0
 #define CHIP_TIMER_1_OVERFLOW_INT_VECTOR                            VECT(CHIP_VECT_TIMER1_OVF)
 
-//XXX
 #define CHIP_TIMER_1_INPUT                                          true
 #define CHIP_TIMER_1_INPUT_REG                                      CHIP_REG_ICR1
 #define CHIP_TIMER_1_INPUT_PIN                                      PortB::Pin0
@@ -891,7 +885,6 @@
 
 //------------------------------------------------
 
-//XXX
 #define CHIP_TIMER_2                                                true
 
 #define CHIP_TIMER_2_TYPE                                           uint8_t
