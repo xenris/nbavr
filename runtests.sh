@@ -13,6 +13,8 @@
 
 cd test/
 
+source ./ignore
+
 cflags="-Werror -Wall -fmax-errors=3 -std=c++17 -g"
 includes="-I ../src/"
 libs="-lgtest"
@@ -32,6 +34,10 @@ else
 fi
 
 for chip in "${chips[@]}" ; do
+    if [[ "${ignoreList[@]}" =~ "$chip" ]]; then
+        continue
+    fi
+
     echo "############ $chip ############"
 
     g++ $includes $cflags $libs "-D__${chip}__" "-DRECORD_ID=\"${chip}\"" "test.cpp" -o test_exe

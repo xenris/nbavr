@@ -1,0 +1,2 @@
+ignoreList+=(atmega328)
+ignoreList+=(atmega48)
