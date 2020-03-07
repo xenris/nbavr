@@ -1,8 +1,6 @@
 #ifndef NBLIB_ATMEGA328PB_HPP
 #define NBLIB_ATMEGA328PB_HPP
 
-// #include "atmega328p.hpp"
-
 #define NBLIB_CHIP_DEFINED
 
 //------------------------------------------------
