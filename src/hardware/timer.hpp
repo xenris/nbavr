@@ -297,16 +297,17 @@ struct TimerN {
 
     #if DEFINED(TIMER_N(PRESCALER_RESET_BIT))
         /// #### static void prescalerReset()
+        /// Resets the *shared* timer prescaler to zero.
         static force_inline void prescalerReset() {
             setBit_(REG(TIMER_N(PRESCALER_RESET_REG)), TIMER_N(PRESCALER_RESET_BIT), true);
         }
     #endif
 
     #if DEFINED(TIMER_N(SYNCHRONIZE_BIT))
-        /// #### static void synchronizeTimers(bool b)
-        /// While true, all timers' prescalers will be held at zero, effectively pausing the timers.
+        /// #### static void synchronizeMode(bool b)
+        /// Set to true then call prescalerReset() to hold the timers' prescalers at zero, effectively pausing the timers.
         /// Set back to false to start all timers at exactly the same time.
-        static force_inline void synchronizeTimers(bool b) {
+        static force_inline void synchronizeMode(bool b) {
             setBit_(REG(TIMER_N(SYNCHRONIZE_REG)), TIMER_N(SYNCHRONIZE_BIT), b);
         }
     #endif
