@@ -19,7 +19,7 @@ Sleep::sleep();
 * powerDown
 * powerSave
 * standby
-* externalStandby
+* extendedStandby
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 

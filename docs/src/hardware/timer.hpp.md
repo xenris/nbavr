@@ -77,9 +77,10 @@ Set the timer overflow callback.
 #### static void intFlagClear()
 
 #### static void prescalerReset()
+Resets the *shared* timer prescaler to zero.
 
-#### static void synchronizeTimers(bool b)
-While true, all timers' prescalers will be held at zero, effectively pausing the timers.
+#### static void synchronizeMode(bool b)
+Set to true then call prescalerReset() to hold the timers' prescalers at zero, effectively pausing the timers.
 Set back to false to start all timers at exactly the same time.
 
 ## class OutputX
