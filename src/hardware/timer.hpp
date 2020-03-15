@@ -555,6 +555,19 @@ TEST(TimerN, counter) {
     }
 #endif
 
+#if DEFINED(TIMER_N(PRESCALER_RESET_BIT))
+    TEST(TimerN, prescalerReset) {
+        TEST_REG_WRITE(TimerN::prescalerReset());
+    }
+#endif
+
+#if DEFINED(TIMER_N(SYNCHRONIZE_BIT))
+    TEST(TimerN, synchronizeMode) {
+        TEST_REG_WRITE(TimerN::synchronizeMode(true));
+        TEST_REG_WRITE(TimerN::synchronizeMode(false));
+    }
+#endif
+
 #define OUTPUT_TESTS
 
 #if TIMER_N(OUTPUT_A)

@@ -623,6 +623,9 @@ w Timer0::intEnable(false) 6e:ff:fe:
 w Timer0::intEnable(true) 6e:00:01:
 w Timer0::intFlag()
 w Timer0::intFlagClear() 35:00:01:35:ff:01:
+w Timer0::prescalerReset() 43:00:01:
+w Timer0::synchronizeMode(false) 43:ff:7f:
+w Timer0::synchronizeMode(true) 43:00:80:
 w Timer0::waveform(Timer0::Waveform::ctcOcra) 44:00:02:44:ff:fe:45:ff:f7:
 w Timer0::waveform(Timer0::Waveform::fastPwm) 44:00:03:45:ff:f7:
 w Timer0::waveform(Timer0::Waveform::fastPwmOcra) 44:00:03:45:00:08:
@@ -674,6 +677,9 @@ w Timer1::intEnable(false) 6f:ff:fe:
 w Timer1::intEnable(true) 6f:00:01:
 w Timer1::intFlag()
 w Timer1::intFlagClear() 36:00:01:36:ff:01:
+w Timer1::prescalerReset() 43:00:01:
+w Timer1::synchronizeMode(false) 43:ff:7f:
+w Timer1::synchronizeMode(true) 43:00:80:
 w Timer1::waveform(Timer1::Waveform::ctcIcr) 81:00:18:80:ff:fc:
 w Timer1::waveform(Timer1::Waveform::ctcOcra) 81:00:08:80:ff:fc:81:ff:ef:
 w Timer1::waveform(Timer1::Waveform::fastPwm) 80:00:02:81:00:18:80:ff:fe:
@@ -723,6 +729,9 @@ w Timer2::intEnable(false) 70:ff:fe:
 w Timer2::intEnable(true) 70:00:01:
 w Timer2::intFlag()
 w Timer2::intFlagClear() 37:00:01:37:ff:01:
+w Timer2::prescalerReset() 43:00:02:
+w Timer2::synchronizeMode(false) 43:ff:7f:
+w Timer2::synchronizeMode(true) 43:00:80:
 w Timer2::waveform(Timer2::Waveform::ctcOcra) b0:00:02:b0:ff:fe:b1:ff:f7:
 w Timer2::waveform(Timer2::Waveform::fastPwm) b0:00:03:b1:ff:f7:
 w Timer2::waveform(Timer2::Waveform::fastPwmOcra) b0:00:03:b1:00:08:
@@ -774,6 +783,9 @@ w Timer3::intEnable(false) 71:ff:fe:
 w Timer3::intEnable(true) 71:00:01:
 w Timer3::intFlag()
 w Timer3::intFlagClear() 38:00:01:38:ff:01:
+w Timer3::prescalerReset() 43:00:01:
+w Timer3::synchronizeMode(false) 43:ff:7f:
+w Timer3::synchronizeMode(true) 43:00:80:
 w Timer3::waveform(Timer3::Waveform::ctcIcr) 91:00:18:90:ff:fc:
 w Timer3::waveform(Timer3::Waveform::ctcOcra) 91:00:08:90:ff:fc:91:ff:ef:
 w Timer3::waveform(Timer3::Waveform::fastPwm) 90:00:02:91:00:18:90:ff:fe:
@@ -832,6 +844,9 @@ w Timer4::intEnable(false) 72:ff:fe:
 w Timer4::intEnable(true) 72:00:01:
 w Timer4::intFlag()
 w Timer4::intFlagClear() 39:00:01:39:ff:01:
+w Timer4::prescalerReset() 43:00:01:
+w Timer4::synchronizeMode(false) 43:ff:7f:
+w Timer4::synchronizeMode(true) 43:00:80:
 w Timer4::waveform(Timer4::Waveform::ctcIcr) a1:00:18:a0:ff:fc:
 w Timer4::waveform(Timer4::Waveform::ctcOcra) a1:00:08:a0:ff:fc:a1:ff:ef:
 w Timer4::waveform(Timer4::Waveform::fastPwm) a0:00:02:a1:00:18:a0:ff:fe:
