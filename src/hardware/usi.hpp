@@ -212,14 +212,12 @@ struct UsiN {
 
         /// #### static uint8_t counter()
         static force_inline uint8_t counter() {
-            uint8_t c = 0;
+            const uint8_t a = uint8_t(getBit(REG(USI_N(COUNTER_BIT_0_REG)), USI_N(COUNTER_BIT_0_BIT)) << 0);
+            const uint8_t b = uint8_t(getBit(REG(USI_N(COUNTER_BIT_1_REG)), USI_N(COUNTER_BIT_1_BIT)) << 1);
+            const uint8_t c = uint8_t(getBit(REG(USI_N(COUNTER_BIT_2_REG)), USI_N(COUNTER_BIT_2_BIT)) << 2);
+            const uint8_t d = uint8_t(getBit(REG(USI_N(COUNTER_BIT_3_REG)), USI_N(COUNTER_BIT_3_BIT)) << 3);
 
-            c |= uint8_t(getBit(REG(USI_N(COUNTER_BIT_0_REG)), USI_N(COUNTER_BIT_0_BIT))) << 0;
-            c |= uint8_t(getBit(REG(USI_N(COUNTER_BIT_1_REG)), USI_N(COUNTER_BIT_1_BIT))) << 1;
-            c |= uint8_t(getBit(REG(USI_N(COUNTER_BIT_2_REG)), USI_N(COUNTER_BIT_2_BIT))) << 2;
-            c |= uint8_t(getBit(REG(USI_N(COUNTER_BIT_3_REG)), USI_N(COUNTER_BIT_3_BIT))) << 3;
-
-            return c;
+            return a | b | c | d;
         }
     #endif
 
