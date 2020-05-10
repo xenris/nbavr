@@ -422,7 +422,7 @@
 #define CHIP_TIMER_0_OUTPUT_A_INT_VECTOR                            VECT(CHIP_VECT_TIMER0_COMPA)
 
 #define CHIP_TIMER_0_OUTPUT_B                                       true
-#define CHIP_TIMER_0_OUTPUT_B_PIN                                   PortB::Pin3
+#define CHIP_TIMER_0_OUTPUT_B_PIN                                   PortB::Pin1
 #define CHIP_TIMER_0_OUTPUT_B_MODE_BIT_0_REG                        CHIP_REG_TCCR0A
 #define CHIP_TIMER_0_OUTPUT_B_MODE_BIT_1_REG                        CHIP_REG_TCCR0A
 #define CHIP_TIMER_0_OUTPUT_B_MODE_BIT_0_BIT                        4
