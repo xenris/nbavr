@@ -9,17 +9,29 @@
 #include "../macros.hpp"
 #include "../primitive.hpp"
 
-#define atomic(...) CAT(atomic_, HAS_ARGS(__VA_ARGS__))(__VA_ARGS__)
-#define atomic_0(...) if(__Atomic __a; true)
-#define atomic_1(...) (__Atomic(), __VA_ARGS__)
+#define atomic(...) CAT(atomic_, LENGTH(__VA_ARGS__))(__VA_ARGS__)
+#define atomic_0() if(nblib::__Atomic __a; true)
+#define atomic_1(A) (nblib::__Atomic(), A)
+#define atomic_2(A, B) (nblib::__Atomic(), nblib::__getThenSet(A, B))
 
-#define non_atomic(...) CAT(non_atomic_, HAS_ARGS(__VA_ARGS__))(__VA_ARGS__)
-#define non_atomic_0(...) if(__NonAtomic __n; true)
-#define non_atomic_1(...) (__NonAtomic(), __VA_ARGS__)
+#define non_atomic(...) CAT(non_atomic_, LENGTH(__VA_ARGS__))(__VA_ARGS__)
+#define non_atomic_0() if(nblib::__NonAtomic __n; true)
+#define non_atomic_1(A) (nblib::__NonAtomic(), A)
+#define non_atomic_2(A, B) (nblib::__NonAtomic(), nblib::__getThenSet(A, B))
 
-#define block(...) CAT(block_, HAS_ARGS(__VA_ARGS__))(__VA_ARGS__)
-#define block_0(...) if(__Block __a; true)
-#define block_1(...) (__Block(), __VA_ARGS__)
+#define block(...) CAT(block_, LENGTH(__VA_ARGS__))(__VA_ARGS__)
+#define block_0() if(nblib::__Block __b; true)
+#define block_1(A) (nblib::__Block(), A)
+#define block_2(A, B) (nblib::__Block(), nblib::__getThenSet(A, B))
+
+namespace nblib {
+
+template <class T>
+T __getThenSet(T& a, const T& b) {
+    const T t = a;
+    a = b;
+    return t;
+}
 
 struct __Block {
     __Block() {
@@ -30,8 +42,6 @@ struct __Block {
         asm volatile("" ::: "memory");
     }
 };
-
-namespace nblib {
 
 /// #### T bv(int n)
 /// Equivalent to "1 << n".
@@ -287,8 +297,6 @@ force_inline bool interruptsEnabled() {
     return t;
 }
 
-}
-
 struct __Atomic {
     bool _i;
 
@@ -328,5 +336,7 @@ struct __NonAtomic {
         }
     }
 };
+
+}
 
 #endif

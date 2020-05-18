@@ -13,6 +13,12 @@
 /// Signed version of sizeof.
 #define ssizeof(T) (ssize_t(sizeof(T)))
 
+#define LENGTH(...) LENGTH_(__VA_ARGS__ __VA_OPT__(,) 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+
+#define LENGTH_(...) LENGTH_N(__VA_ARGS__)
+
+#define LENGTH_N(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, N, ...) N
+
 /// #### CAT(...)
 /// Concatenates a list of identifiers together.<br>
 /// e.g. CAT(Foo, Bar) -> FooBar
