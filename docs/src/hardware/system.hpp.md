@@ -2,6 +2,41 @@
 
 # System
 
+### atomic\(expr\)
+Disables interrupts while accessing/evaluating "expr".<br>
+Required when accessing variables which are shared with interrupt callbacks. e.g.
+```c++
+int localVariable = atomic(globalVariable);
+// Or
+int localVariable = atomic(globalVariable, 0);
+// to get and set the value atomically.
+```
+
+### atomic\(\) \{expr1; expr2; expr3; etc...\}
+Disables interrupts while running a block of code.
+
+### non_atomic\(expr\)
+Inverse of atomic.
+
+### non_atomic\(\) \{expr1; expr2; expr3; etc...\}
+Inverse of atomic.
+
+### block\(expr\)
+Prevents the expression from being optimised into the code around it. e.g.
+```c++
+LedPin::output(LedPin::Value::high);
+LedPin::output(LedPin::Value::low);
+```
+will only set the pin low, because the compiler saw that this was the overall effect of the expressions. Whereas:
+```c++
+block(LedPin::output(LedPin::Value::high));
+block(LedPin::output(LedPin::Value::low));
+```
+will set the pin high, then low:
+
+### block\(\) \{expr1; expr2; expr3; etc...\}
+Same as block(expr), but allows several expressions to be optimised together, separate to any code around it.
+
 #### T bv(int n)
 Equivalent to "1 << n".
 

@@ -1,6 +1,6 @@
 /// [[Index]]
 
-/// # System
+/// # {{System}}
 
 #ifndef NBLIB_SYSTEM_HPP
 #define NBLIB_SYSTEM_HPP
@@ -9,15 +9,50 @@
 #include "../macros.hpp"
 #include "../primitive.hpp"
 
+/// ### atomic\(expr\)
+/// Disables interrupts while accessing/evaluating "expr".<br>
+/// Required when accessing variables which are shared with interrupt callbacks. e.g.
+/// ```c++
+/// int localVariable = atomic(globalVariable);
+/// // Or
+/// int localVariable = atomic(globalVariable, 0);
+/// // to get and set the value atomically.
+/// ```
+
+/// ### atomic\(\) \{expr1; expr2; expr3; etc...\}
+/// Disables interrupts while running a block of code.
+
 #define atomic(...) CAT(atomic_, LENGTH(__VA_ARGS__))(__VA_ARGS__)
 #define atomic_0() if(nblib::__Atomic __a; true)
 #define atomic_1(A) (nblib::__Atomic(), A)
 #define atomic_2(A, B) (nblib::__Atomic(), nblib::__getThenSet(A, B))
 
+/// ### non_atomic\(expr\)
+/// Inverse of atomic.
+
+/// ### non_atomic\(\) \{expr1; expr2; expr3; etc...\}
+/// Inverse of atomic.
+
 #define non_atomic(...) CAT(non_atomic_, LENGTH(__VA_ARGS__))(__VA_ARGS__)
 #define non_atomic_0() if(nblib::__NonAtomic __n; true)
 #define non_atomic_1(A) (nblib::__NonAtomic(), A)
 #define non_atomic_2(A, B) (nblib::__NonAtomic(), nblib::__getThenSet(A, B))
+
+/// ### block\(expr\)
+/// Prevents the expression from being optimised into the code around it. e.g.
+/// ```c++
+/// LedPin::output(LedPin::Value::high);
+/// LedPin::output(LedPin::Value::low);
+/// ```
+/// will only set the pin low, because the compiler saw that this was the overall effect of the expressions. Whereas:
+/// ```c++
+/// block(LedPin::output(LedPin::Value::high));
+/// block(LedPin::output(LedPin::Value::low));
+/// ```
+/// will set the pin high, then low:
+
+/// ### block\(\) \{expr1; expr2; expr3; etc...\}
+/// Same as block(expr), but allows several expressions to be optimised together, separate to any code around it.
 
 #define block(...) CAT(block_, LENGTH(__VA_ARGS__))(__VA_ARGS__)
 #define block_0() if(nblib::__Block __b; true)
