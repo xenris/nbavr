@@ -143,9 +143,7 @@ inline constexpr int itoa(char* buffer, Type n) {
 
 template <class T, int base = 10>
 inline bool printInt(Queue<char>& queue, T n) {
-    // FIXME This shouldn't compile so easily. (Cast from float to int.)
-    constexpr int maxDigits = int(float(1) + (floor(log(float(max<T>())) / log(float(base)))));
-    // constexpr int maxDigits = int(float(1) + (floor(log(float(Max<T>::value)) / log(float(base)))));
+    const int maxDigits = 1 + floor(log(float(max<T>())) / log(float(base)));
 
     char buffer[maxDigits + isSigned<T>() + 1];
 
