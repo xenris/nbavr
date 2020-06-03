@@ -467,11 +467,15 @@
 
 #define CHIP_TIMER_1_WAVEFORM_BIT_0_REG                             CHIP_REG_TCCR1
 #define CHIP_TIMER_1_WAVEFORM_BIT_1_REG                             CHIP_REG_TCCR1
+#define CHIP_TIMER_1_WAVEFORM_BIT_2_REG                             CHIP_REG_GTCCR
 #define CHIP_TIMER_1_WAVEFORM_BIT_0_BIT                             6
 #define CHIP_TIMER_1_WAVEFORM_BIT_1_BIT                             7
+#define CHIP_TIMER_1_WAVEFORM_BIT_2_BIT                             6
 #define CHIP_TIMER_1_WAVEFORM_NORMAL_ID                             0
-#define CHIP_TIMER_1_WAVEFORM_FAST_PWM_OCRC_ID                      1
-#define CHIP_TIMER_1_WAVEFORM_CTC_OCRA_ID                           2
+#define CHIP_TIMER_1_WAVEFORM_FAST_PWM_A_OCRC_ID                    1
+#define CHIP_TIMER_1_WAVEFORM_CTC_OCRC_ID                           2
+#define CHIP_TIMER_1_WAVEFORM_FAST_PWM_B_OCRC_ID                    4
+#define CHIP_TIMER_1_WAVEFORM_FAST_PWM_A_B_OCRC_ID                  5
 
 #define CHIP_TIMER_1_CLOCK_BIT_0_REG                                CHIP_REG_TCCR1
 #define CHIP_TIMER_1_CLOCK_BIT_1_REG                                CHIP_REG_TCCR1

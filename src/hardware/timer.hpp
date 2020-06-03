@@ -213,6 +213,18 @@ struct TimerN {
         #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_OCRC_ID))
             fastPwmOcrc = TIMER_N(WAVEFORM_FAST_PWM_OCRC_ID),
         #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_A_OCRC_ID))
+            fastPwmAOcrc = TIMER_N(WAVEFORM_FAST_PWM_A_OCRC_ID),
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_B_OCRC_ID))
+            fastPwmBOcrc = TIMER_N(WAVEFORM_FAST_PWM_B_OCRC_ID),
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_A_B_OCRC_ID))
+            fastPwmABOcrc = TIMER_N(WAVEFORM_FAST_PWM_A_B_OCRC_ID),
+        #endif
     };
 
     /// #### static [[HardwareType]] getHardwareType()
