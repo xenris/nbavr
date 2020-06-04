@@ -130,12 +130,29 @@ TEST(Sleep, getHardwareType) {
 
 #if DEFINED(CHIP_SLEEP_MODE_BIT_0_BIT)
     TEST(Sleep, mode) {
-        TEST_REG_WRITE(Sleep::mode(Sleep::Mode::idle));
-        TEST_REG_WRITE(Sleep::mode(Sleep::Mode::adcNoiseReduction));
-        TEST_REG_WRITE(Sleep::mode(Sleep::Mode::powerDown));
-        TEST_REG_WRITE(Sleep::mode(Sleep::Mode::powerSave));
-        TEST_REG_WRITE(Sleep::mode(Sleep::Mode::standby));
-        TEST_REG_WRITE(Sleep::mode(Sleep::Mode::extendedStandby));
+        #if DEFINED(CHIP_SLEEP_MODE_IDLE_ID)
+            TEST_REG_WRITE(Sleep::mode(Sleep::Mode::idle));
+        #endif
+
+        #if DEFINED(CHIP_SLEEP_MODE_ADC_NOISE_REDUCTION_ID)
+            TEST_REG_WRITE(Sleep::mode(Sleep::Mode::adcNoiseReduction));
+        #endif
+
+        #if DEFINED(CHIP_SLEEP_MODE_POWER_DOWN_ID)
+            TEST_REG_WRITE(Sleep::mode(Sleep::Mode::powerDown));
+        #endif
+
+        #if DEFINED(CHIP_SLEEP_MODE_POWER_SAVE_ID)
+            TEST_REG_WRITE(Sleep::mode(Sleep::Mode::powerSave));
+        #endif
+
+        #if DEFINED(CHIP_SLEEP_MODE_STANDBY_ID)
+            TEST_REG_WRITE(Sleep::mode(Sleep::Mode::standby));
+        #endif
+
+        #if DEFINED(CHIP_SLEEP_MODE_EXTENDED_STANDBY_ID)
+            TEST_REG_WRITE(Sleep::mode(Sleep::Mode::extendedStandby));
+        #endif
     }
 #endif
 
