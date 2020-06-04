@@ -9,6 +9,4 @@
     #define ISR(vector, ...) void vector(void)
 #endif
 
-ISR(__vector_default) {}
-
 #endif
