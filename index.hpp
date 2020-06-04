@@ -29,7 +29,5 @@
 ///     * [[Universal Serial Interfaces]]
 /// * Examples
 ///     * [nblib-project-template](https://github.com/xenris/nblib-project-template)
-///     * [8x8 LED Matrix Display](https://github.com/xenris/led-matrix-display)
-///     * [Optima Hitec Receiver PWM/PPM](https://github.com/xenris/hitec-receiver)
 /// * [[Adding Chips]]
 /// * [[Editing documentation]]
