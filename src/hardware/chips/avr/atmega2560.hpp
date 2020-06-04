@@ -1,7 +1,7 @@
-#ifndef NBLIB_ATMEGA328P_HPP
-#define NBLIB_ATMEGA328P_HPP
+#ifndef NBLIB_ATMEGA2560_HPP
+#define NBLIB_ATMEGA2560_HPP
 
-#define NBLIB_CHIP_DEFINED
+#define CHIP atmega2560
 
 //------------------------------------------------
 // Memory

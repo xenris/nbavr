@@ -1,7 +1,7 @@
 #ifndef NBLIB_ATMEGA328PB_HPP
 #define NBLIB_ATMEGA328PB_HPP
 
-#define NBLIB_CHIP_DEFINED
+#define CHIP atmega328pb
 
 //------------------------------------------------
 // Memory

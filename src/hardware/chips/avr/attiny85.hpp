@@ -1,7 +1,7 @@
 #ifndef NBLIB_ATTINY85_HPP
 #define NBLIB_ATTINY85_HPP
 
-#define NBLIB_CHIP_DEFINED
+#define CHIP attiny85
 
 //------------------------------------------------
 // Memory

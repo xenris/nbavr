@@ -1,7 +1,7 @@
 #ifndef NBLIB_ATMEGA8_HPP
 #define NBLIB_ATMEGA8_HPP
 
-#define NBLIB_CHIP_DEFINED
+#define CHIP atmega8
 
 //------------------------------------------------
 // Memory

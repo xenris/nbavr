@@ -3,4 +3,7 @@
 
 #include "atmega328.hpp"
 
+#undef CHIP
+#define CHIP atmega48
+
 #endif

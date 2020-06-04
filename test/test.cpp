@@ -2,9 +2,14 @@
 #include <string>
 #include <fstream>
 
+#include <hardware/chip.hpp>
+
 // Prime number near 10Kb
 // Prime because tests on chips with larger memory need to wrap addresses.
 #define CHIP_REGISTER_SIZE 10243
+
+#define STR(S) STR_(S)
+#define STR_(S) #S
 
 unsigned char register_memory[CHIP_REGISTER_SIZE];
 
@@ -74,7 +79,7 @@ struct MyEnvironment : public ::testing::Environment {
         record = new std::map<std::string, std::string>();
         missing = new std::map<std::string, std::string>();
 
-        std::string recordPath = "record_" + std::string(RECORD_ID);
+        std::string recordPath = "record_" + std::string(STR(CHIP));
 
         if(update) {
             recordFile.open(recordPath, std::fstream::out | std::fstream::in | std::fstream::trunc);
