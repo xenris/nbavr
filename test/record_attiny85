@@ -22,6 +22,7 @@ r PortB::Pin5::mode() 20231302012102223113133313331332
 r PortB::Pin5::output() 10110101001001111001011101110111
 r PortB::input() abd05a6714bf6b28eae7a70ff23f99348b7b7ebe488b283513ddeaa2e7833d3
 r PortB::output() a69d31e8d6359832f10f1545baf062f3898625f2663ac9d6e22a354fea262
+r Sleep::isEnabled() 10111110110110100111001111001001
 r Timer0::OutputA::intEnabled() 01110110001000010000111001000000
 r Timer0::OutputA::intFlag() 10001111000101100111000010111100
 r Timer0::OutputA::value() 59debb8b3a20f253239fbd417c4e20ffd84f5c1a27d38d5fa1207e9387f156
@@ -154,6 +155,12 @@ w PortB::mode(Pin::Mode::output) 37:00:3f:38:ff:c0:
 w PortB::output()
 w PortB::output(0x12) 38:00:12:38:ff:12:
 w PortB::toggle(0x12) 36:00:12:36:ff:12:
+w Sleep::enable(false) 55:ff:df:
+w Sleep::enable(true) 55:00:20:
+w Sleep::isEnabled()
+w Sleep::mode(Sleep::Mode::adcNoiseReduction) 55:00:08:55:ff:ef:
+w Sleep::mode(Sleep::Mode::idle) 55:ff:e7:
+w Sleep::mode(Sleep::Mode::powerDown) 55:00:10:55:ff:f7:
 w Timer0::OutputA::intEnable(false) 59:ff:fb:
 w Timer0::OutputA::intEnable(true) 59:00:04:
 w Timer0::OutputA::intEnabled()
@@ -242,9 +249,11 @@ w Timer1::intEnable(false) 59:ff:fb:
 w Timer1::intEnable(true) 59:00:04:
 w Timer1::intFlag()
 w Timer1::intFlagClear() 58:00:04:58:ff:04:
-w Timer1::waveform(Timer1::Waveform::ctcOcra) 50:00:80:50:ff:bf:
-w Timer1::waveform(Timer1::Waveform::fastPwmOcrc) 50:00:40:50:ff:7f:
-w Timer1::waveform(Timer1::Waveform::normal) 50:ff:3f:
+w Timer1::waveform(Timer1::Waveform::ctcOcrc) 50:00:80:4c:ff:bf:50:ff:bf:
+w Timer1::waveform(Timer1::Waveform::fastPwmABOcrc) 4c:00:40:50:00:40:50:ff:7f:
+w Timer1::waveform(Timer1::Waveform::fastPwmAOcrc) 50:00:40:4c:ff:bf:50:ff:7f:
+w Timer1::waveform(Timer1::Waveform::fastPwmBOcrc) 4c:00:40:50:ff:3f:
+w Timer1::waveform(Timer1::Waveform::normal) 4c:ff:bf:50:ff:3f:
 w Usi0::clock(Usi0::Clock::externalNegativeEdge) 2d:00:0c:
 w Usi0::clock(Usi0::Clock::externalPositiveEdge) 2d:00:08:2d:ff:fb:
 w Usi0::clock(Usi0::Clock::none) 2d:ff:f3:
