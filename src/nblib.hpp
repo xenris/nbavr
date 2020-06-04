@@ -3,7 +3,6 @@
 
 #include "algorithm.hpp"
 #include "array.hpp"
-#include "clock.hpp"
 #include "heap.hpp"
 #include "i2c.hpp"
 #include "initializer_list.hpp"
@@ -19,9 +18,6 @@
 #include "stack.hpp"
 #include "string.hpp"
 #include "strong_typedef.hpp"
-#include "task.hpp"
-#include "taskmanager.hpp"
-#include "tasks.hpp"
 #include "tuple.hpp"
 #include "vector.hpp"
 

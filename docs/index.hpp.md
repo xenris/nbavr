@@ -2,10 +2,6 @@
 
 ## Index
 
-* Multi-Tasking
-    * [Task](src/task.hpp.md#task)
-    * [Task Manager](src/taskmanager.hpp.md#task-manager)
-    * [Clock](src/clock.hpp.md#clock)
 * Utilities
     * [Algorithms](src/algorithm.hpp.md#algorithms)
     * [Array](src/array.hpp.md#array)

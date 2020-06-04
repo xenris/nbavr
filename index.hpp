@@ -2,10 +2,6 @@
 
 /// ## {{Index}}
 
-/// * Multi-Tasking
-///     * [[Task]]
-///     * [[Task Manager]]
-///     * [[Clock]]
 /// * Utilities
 ///     * [[Algorithms]]
 ///     * [[Array]]
