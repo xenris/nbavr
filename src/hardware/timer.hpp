@@ -545,6 +545,18 @@ TEST(TimerN, counter) {
         #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_OCRC_ID))
             TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::fastPwmOcrc));
         #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_A_OCRC_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::fastPwmAOcrc));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_B_OCRC_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::fastPwmBOcrc));
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_A_B_OCRC_ID))
+            TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::fastPwmABOcrc));
+        #endif
     }
 #endif
 
