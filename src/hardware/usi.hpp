@@ -220,68 +220,7 @@ struct UsiN {
             return a | b | c | d;
         }
     #endif
-
-    /// #### static void setStartCallback([[Callback]]<T\> function, T\* data)
-    /// Set callback for start condition interrupt.
-    template <class T>
-    static force_inline void setStartCallback(Callback<T> function, T* data = nullptr) {
-        startCallback((Callback<void>)function, data);
-    }
-
-    /// #### static void callStartCallback()
-    static force_inline void callStartCallback() {
-        startCallback();
-    }
-
-    /// #### static void setOverflowCallback([[Callback]]<T\> function, T\* data)
-    template <class T>
-    static force_inline void setOverflowCallback(Callback<T> function, T* data = nullptr) {
-        overflowCallback((Callback<void>)function, data);
-    }
-
-    /// #### static void callOverflowCallback()
-    static force_inline void callOverflowCallback() {
-        overflowCallback();
-    }
-
-private:
-
-    static force_inline void startCallback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
-
-    static force_inline void overflowCallback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
 };
-
-ISR(USI_N(START_INT_VECTOR)) {
-    UsiN::callStartCallback();
-}
-
-ISR(USI_N(OVERFLOW_INT_VECTOR)) {
-    UsiN::callOverflowCallback();
-}
 
 #ifdef TEST
 

@@ -87,18 +87,6 @@ Set the baud and 2x registers from the given CPU frequency and baud rate.
 
 #### static void dataRegisterEmptyIntFlagClear()
 
-#### static void setRxCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
-
-#### static void callRxCallback()
-
-#### static void setTxCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
-
-#### static void callTxCallback()
-
-#### static void setDeCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
-
-#### static void callDeCallback()
-
 #### static void push(uint8_t b)
 
 #### static void push9(uint16_t b)

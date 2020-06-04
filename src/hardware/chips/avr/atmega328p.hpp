@@ -177,32 +177,31 @@
 //------------------------------------------------
 // Vectors
 
-#define CHIP_VECT_RESET                                             1
-#define CHIP_VECT_INT0                                              2
-#define CHIP_VECT_INT1                                              3
-#define CHIP_VECT_PCINT0                                            4
-#define CHIP_VECT_PCINT1                                            5
-#define CHIP_VECT_PCINT2                                            6
-#define CHIP_VECT_WDT                                               7
-#define CHIP_VECT_TIMER2_COMPA                                      8
-#define CHIP_VECT_TIMER2_COMPB                                      9
-#define CHIP_VECT_TIMER2_OVF                                        10
-#define CHIP_VECT_TIMER1_CAPT                                       11
-#define CHIP_VECT_TIMER1_COMPA                                      12
-#define CHIP_VECT_TIMER1_COMPB                                      13
-#define CHIP_VECT_TIMER1_OVF                                        14
-#define CHIP_VECT_TIMER0_COMPA                                      15
-#define CHIP_VECT_TIMER0_COMPB                                      16
-#define CHIP_VECT_TIMER0_OVF                                        17
-#define CHIP_VECT_SPI_STC                                           18
-#define CHIP_VECT_USART_RX                                          19
-#define CHIP_VECT_USART_UDRE                                        20
-#define CHIP_VECT_USART_TX                                          21
-#define CHIP_VECT_ADC                                               22
-#define CHIP_VECT_EE_READY                                          23
-#define CHIP_VECT_ANALOG_COMP                                       24
-#define CHIP_VECT_TWI                                               25
-#define CHIP_VECT_SPM_READY                                         26
+#define vectorInt0                                                  ISR(__vector_1)
+#define vectorInt1                                                  ISR(__vector_2)
+#define vectorPcInt0                                                ISR(__vector_3)
+#define vectorPcInt1                                                ISR(__vector_4)
+#define vectorPcInt2                                                ISR(__vector_5)
+#define vectorWatchdogTimeout                                       ISR(__vector_6)
+#define vectorTimer2CompareA                                        ISR(__vector_7)
+#define vectorTimer2CompareB                                        ISR(__vector_8)
+#define vectorTimer2Overflow                                        ISR(__vector_9)
+#define vectorTimer1InputCapture                                    ISR(__vector_10)
+#define vectorTimer1CompareA                                        ISR(__vector_11)
+#define vectorTimer1CompareB                                        ISR(__vector_12)
+#define vectorTimer1Overflow                                        ISR(__vector_13)
+#define vectorTimer0CompareA                                        ISR(__vector_14)
+#define vectorTimer0CompareB                                        ISR(__vector_15)
+#define vectorTimer0Overflow                                        ISR(__vector_16)
+#define vectorSpi0                                                  ISR(__vector_17)
+#define vectorUsart0RxComplete                                      ISR(__vector_18)
+#define vectorUsart0DataRegEmpty                                    ISR(__vector_19)
+#define vectorUsart0TxComplete                                      ISR(__vector_20)
+#define vectorAdc0                                                  ISR(__vector_21)
+#define vectorEepromReady                                           ISR(__vector_22)
+#define vectorAnalogComparator0                                     ISR(__vector_23)
+#define vectorTwi0                                                  ISR(__vector_24)
+#define vectorSpmReady                                              ISR(__vector_25)
 
 //------------------------------------------------
 // System

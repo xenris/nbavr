@@ -195,18 +195,6 @@ struct TwiN {
         setBit_(REG(TWI_N(INT_ENABLE_REG)), TWI_N(INT_ENABLE_BIT), e);
     }
 
-    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
-    /// Set the callback for Twi interrupts.
-    template <class T>
-    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
-        callback((Callback<void>)function, data);
-    }
-
-    /// #### static void callCallback()
-    static force_inline void callCallback() {
-        callback();
-    }
-
     /// #### static [[TwiN::Status]] status()
     /// Get the Twi status.
     static force_inline Status status() {
@@ -249,27 +237,7 @@ struct TwiN {
     static force_inline void generalCallRecognitionEnable(bool e) {
         setBit_(REG(TWI_N(GEN_CALL_REC_ENABLE_REG)), TWI_N(GEN_CALL_REC_ENABLE_BIT), e);
     }
-
-private:
-
-    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
 };
-
-ISR(TWI_N(INT_VECTOR)) {
-    TwiN::callCallback();
-}
 
 #ifdef TEST
 

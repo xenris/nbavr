@@ -47,8 +47,4 @@ Returns true if Eeprom is currently writing.
 #### static void readEnable()
 Start an Eeprom read.
 
-#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
-
-#### static void callCallback()
-
 #### static void intEnable(bool e)

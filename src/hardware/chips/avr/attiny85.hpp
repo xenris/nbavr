@@ -115,21 +115,23 @@
 #define CHIP_REG_SREG_ADDR                                          0x5F
 #define CHIP_REG_SREG_TYPE                                          uint8_t
 
-#define CHIP_VECT_RESET                                             1
-#define CHIP_VECT_INT0                                              2
-#define CHIP_VECT_PCINT0                                            3
-#define CHIP_VECT_TIMER1_COMPA                                      4
-#define CHIP_VECT_TIMER1_OVF                                        5
-#define CHIP_VECT_TIMER0_OVF                                        6
-#define CHIP_VECT_EE_READY                                          7
-#define CHIP_VECT_ANALOG_COMP                                       8
-#define CHIP_VECT_ADC                                               9
-#define CHIP_VECT_TIMER1_COMPB                                      10
-#define CHIP_VECT_TIMER0_COMPA                                      11
-#define CHIP_VECT_TIMER0_COMPB                                      12
-#define CHIP_VECT_WDT                                               13
-#define CHIP_VECT_USI_START                                         14
-#define CHIP_VECT_USI_OVF                                           15
+//------------------------------------------------
+// Vectors
+
+#define vectorInt0                                                  ISR(__vector_1)
+#define vectorPcInt0                                                ISR(__vector_2)
+#define vectorTimer1CompareA                                        ISR(__vector_3)
+#define vectorTimer1Overflow                                        ISR(__vector_4)
+#define vectorTimer0Overflow                                        ISR(__vector_5)
+#define vectorEepromReady                                           ISR(__vector_6)
+#define vectorAnalogComparator0                                     ISR(__vector_7)
+#define vectorAdc0                                                  ISR(__vector_8)
+#define vectorTimer1CompareB                                        ISR(__vector_9)
+#define vectorTimer0CompareA                                        ISR(__vector_10)
+#define vectorTimer0CompareB                                        ISR(__vector_11)
+#define vectorWatchdogTimeout                                       ISR(__vector_12)
+#define vectorUsi0Start                                             ISR(__vector_13)
+#define vectorUsi0Overflow                                          ISR(__vector_14)
 
 //------------------------------------------------
 // System

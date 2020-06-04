@@ -44,10 +44,6 @@ struct _reg {
 
 #define REGTYPE(R) CAT(R, _TYPE)
 
-#define VECT(N) VECT_(DEC(N))
-#define VECT_(N) VECT__(N)
-#define VECT__(N) __vector_ ## N
-
 #if defined(__atmega328__)
     #include "chips/avr/atmega328.hpp"
 #elif defined(__atmega328p__)

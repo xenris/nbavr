@@ -64,11 +64,6 @@ while(!nblib::hw::Spi0::intFlag());
 
 #### static void intEnable(bool b)
 
-#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
-Set the callback for when the serial transfer is complete.
-
-#### static void callCallback()
-
 #### static void dataOrder([SpiN::DataOrder](spi.hpp.md#enum-spindataorder) d)
 
 #### static void masterSlave([SpiN::MasterSlave](spi.hpp.md#enum-spinmasterslave) m)

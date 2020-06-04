@@ -76,17 +76,6 @@ struct ExIntN {
         }
     #endif
 
-    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
-    template <class T>
-    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
-        callback((Callback<void>)function, data);
-    }
-
-    /// #### static void callCallback()
-    static force_inline void callCallback() {
-        callback();
-    }
-
     #if DEFINED(EXINT_N(INT_FLAG_BIT_0_BIT))
         /// #### static bool intFlag()
         static force_inline bool intFlag() {
@@ -100,27 +89,7 @@ struct ExIntN {
             clearFlagBit(REG(EXINT_N(INT_FLAG_BIT_0_REG)), EXINT_N(INT_FLAG_BIT_0_BIT));
         }
     #endif
-
-private:
-
-    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
 };
-
-ISR(EXINT_N(INT_VECTOR)) {
-    ExIntN::callCallback();
-}
 
 #ifdef TEST
 

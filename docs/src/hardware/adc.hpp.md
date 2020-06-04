@@ -80,10 +80,6 @@ const uint16_t value = nblib::hw::Adc0::value();
 
 #### static void trigger([AdcN::Trigger](adc.hpp.md#enum-adcntrigger) t)
 
-#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
-
-#### static void callCallback()
-
 #### static void intEnable(bool e)
 
 #### static bool intFlag()

@@ -72,11 +72,6 @@ Returns true if the write collision flag is set.
 #### static void intEnable(bool e)
 Enable/disable the Twi interrupt.
 
-#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
-Set the callback for Twi interrupts.
-
-#### static void callCallback()
-
 #### static [TwiN::Status](twi.hpp.md#enum-twinstatus) status()
 Get the Twi status.
 

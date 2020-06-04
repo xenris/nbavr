@@ -65,19 +65,6 @@ struct OutputX {
         }
     #endif
 
-    #if OUTPUT_X(MODE_BIT_1_BIT)
-        /// #### static void setCallback([[Callback]]<T\> function, T\* data)
-        template <class T>
-        static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
-            callback((Callback<void>)function, data);
-        }
-
-        /// #### static void callCallback()
-        static force_inline void callCallback() {
-            callback();
-        }
-    #endif
-
     /// #### static void intEnable(bool b)
     #if OUTPUT_X(MODE_BIT_1_BIT)
         static force_inline void intEnable(bool b) {
@@ -103,22 +90,6 @@ struct OutputX {
             clearFlagBit(REG(OUTPUT_X(INT_FLAG_REG)), OUTPUT_X(INT_FLAG_BIT));
         }
     #endif
-
-private:
-
-    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
 };
 
 #else // OUTPUT_TESTS

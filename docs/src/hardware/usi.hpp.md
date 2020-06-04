@@ -76,12 +76,3 @@ Get the data output collision flag's state.
 #### static void counter(uint8_t c)
 
 #### static uint8_t counter()
-
-#### static void setStartCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
-Set callback for start condition interrupt.
-
-#### static void callStartCallback()
-
-#### static void setOverflowCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
-
-#### static void callOverflowCallback()

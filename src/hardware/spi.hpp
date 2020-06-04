@@ -163,18 +163,6 @@ struct SpiN {
         }
     #endif
 
-    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
-    /// Set the callback for when the serial transfer is complete.
-    template <class T>
-    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
-        callback((Callback<void>)function, data);
-    }
-
-    /// #### static void callCallback()
-    static force_inline void callCallback() {
-        callback();
-    }
-
     #if DEFINED(SPI_N(DATA_ORDER_BIT_0_BIT))
         /// #### static void dataOrder([[SpiN::DataOrder]] d)
         static force_inline void dataOrder(DataOrder d) {
@@ -243,27 +231,7 @@ struct SpiN {
             return getReg_(REG(SPI_N(DATA_REG)));
         }
     #endif
-
-private:
-
-    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
 };
-
-ISR(SPI_N(INT_VECTOR)) {
-    SpiN::callCallback();
-}
 
 #ifdef TEST
 

@@ -60,17 +60,6 @@ struct PcIntN {
         }
     #endif
 
-    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
-    template <class T>
-    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
-        callback((Callback<void>)function, data);
-    }
-
-    /// #### static void callCallback()
-    static force_inline void callCallback() {
-        callback();
-    }
-
     #if DEFINED(PCINT_N(INT_FLAG_BIT_0_BIT))
         /// #### static bool intFlag()
         static force_inline bool intFlag() {
@@ -84,27 +73,7 @@ struct PcIntN {
             clearFlagBit(REG(PCINT_N(INT_FLAG_BIT_0_REG)), PCINT_N(INT_FLAG_BIT_0_BIT));
         }
     #endif
-
-private:
-
-    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
 };
-
-ISR(PCINT_N(INT_VECTOR)) {
-    PcIntN::callCallback();
-}
 
 #ifdef TEST
 

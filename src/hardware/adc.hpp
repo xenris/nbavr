@@ -307,17 +307,6 @@ struct AdcN {
         }
     #endif
 
-    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
-    template <class T>
-    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
-        callback((Callback<void>)function, data);
-    }
-
-    /// #### static void callCallback()
-    static force_inline void callCallback() {
-        callback();
-    }
-
     #if DEFINED(ADC_N(INT_ENABLE_BIT_0_BIT))
         /// #### static void intEnable(bool e)
         static force_inline void intEnable(bool e) {
@@ -340,27 +329,7 @@ struct AdcN {
             setBit_(REG(ADC_N(INT_FLAG_BIT_0_REG)), ADC_N(INT_FLAG_BIT_0_BIT), true);
         }
     #endif
-
-private:
-
-    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
 };
-
-ISR(ADC_N(INT_VECTOR)) {
-    AdcN::callCallback();
-}
 
 #ifdef TEST
 

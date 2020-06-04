@@ -23,10 +23,6 @@ atomic {
 #### static void mask(uint8_t m)
 Set which pins trigger this interrupt.
 
-#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
-
-#### static void callCallback()
-
 #### static bool intFlag()
 
 #### static void intFlagClear()

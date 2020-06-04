@@ -127,25 +127,24 @@
 //------------------------------------------------
 // Vectors
 
-#define CHIP_VECT_RESET                                             1
-#define CHIP_VECT_INT0                                              2
-#define CHIP_VECT_INT1                                              3
-#define CHIP_VECT_TIMER2_COMP                                       4
-#define CHIP_VECT_TIMER2_OVF                                        5
-#define CHIP_VECT_TIMER1_CAPT                                       6
-#define CHIP_VECT_TIMER1_COMPA                                      7
-#define CHIP_VECT_TIMER1_COMPB                                      8
-#define CHIP_VECT_TIMER1_OVF                                        9
-#define CHIP_VECT_TIMER0_OVF                                        10
-#define CHIP_VECT_SPI_STC                                           11
-#define CHIP_VECT_USART_RX                                          12
-#define CHIP_VECT_USART_UDRE                                        13
-#define CHIP_VECT_USART_TX                                          14
-#define CHIP_VECT_ADC                                               15
-#define CHIP_VECT_EE_READY                                          16
-#define CHIP_VECT_ANALOG_COMP                                       17
-#define CHIP_VECT_TWI                                               18
-#define CHIP_VECT_SPM_READY                                         19
+#define vectorInt0                                                  ISR(__vector_1)
+#define vectorInt1                                                  ISR(__vector_2)
+#define vectorTimer2CompareA                                        ISR(__vector_3)
+#define vectorTimer2Overflow                                        ISR(__vector_4)
+#define vectorTimer1InputCapture                                    ISR(__vector_5)
+#define vectorTimer1CompareA                                        ISR(__vector_6)
+#define vectorTimer1CompareB                                        ISR(__vector_7)
+#define vectorTimer1Overflow                                        ISR(__vector_8)
+#define vectorTimer0Overflow                                        ISR(__vector_9)
+#define vectorSpi0                                                  ISR(__vector_10)
+#define vectorUsart0RxComplete                                      ISR(__vector_11)
+#define vectorUsart0DataRegEmpty                                    ISR(__vector_12)
+#define vectorUsart0TxComplete                                      ISR(__vector_13)
+#define vectorAdc0                                                  ISR(__vector_14)
+#define vectorEepromReady                                           ISR(__vector_15)
+#define vectorAnalogComparator0                                     ISR(__vector_16)
+#define vectorTwi0                                                  ISR(__vector_17)
+#define vectorSpmReady                                              ISR(__vector_18)
 
 //------------------------------------------------
 // System

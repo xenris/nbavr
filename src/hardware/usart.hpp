@@ -324,39 +324,6 @@ struct UsartN {
         }
     #endif
 
-    /// #### static void setRxCallback([[Callback]]<T\> function, T\* data)
-    template <class T>
-    static force_inline void setRxCallback(Callback<T> function, T* data = nullptr) {
-        rxCallback((Callback<void>)function, data);
-    }
-
-    /// #### static void callRxCallback()
-    static force_inline void callRxCallback() {
-        rxCallback();
-    }
-
-    /// #### static void setTxCallback([[Callback]]<T\> function, T\* data)
-    template <class T>
-    static force_inline void setTxCallback(Callback<T> function, T* data = nullptr) {
-        txCallback((Callback<void>)function, data);
-    }
-
-    /// #### static void callTxCallback()
-    static force_inline void callTxCallback() {
-        txCallback();
-    }
-
-    /// #### static void setDeCallback([[Callback]]<T\> function, T\* data)
-    template <class T>
-    static force_inline void setDeCallback(Callback<T> function, T* data = nullptr) {
-        deCallback((Callback<void>)function, data);
-    }
-
-    /// #### static void callDeCallback()
-    static force_inline void callDeCallback() {
-        deCallback();
-    }
-
     /// #### static void push(uint8_t b)
     static force_inline void push(uint8_t b) {
         setReg_(REG(USART_N(DATA_REG)), b);
@@ -409,63 +376,7 @@ struct UsartN {
             return getBit_(REG(USART_N(PARITY_ERROR_BIT_0_REG)), USART_N(PARITY_ERROR_BIT_0_BIT));
         }
     #endif
-
-private:
-
-    static force_inline void rxCallback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
-
-    static force_inline void txCallback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
-
-    static force_inline void deCallback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
 };
-
-ISR(USART_N(RX_INT_VECTOR)) {
-    UsartN::callRxCallback();
-}
-
-ISR(USART_N(TX_INT_VECTOR)) {
-    UsartN::callTxCallback();
-}
-
-ISR(USART_N(DE_INT_VECTOR)) {
-    UsartN::callDeCallback();
-}
 
 #ifdef TEST
 

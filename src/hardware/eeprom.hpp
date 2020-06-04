@@ -104,42 +104,11 @@ struct EepromN {
         setBit_(REG(EEPROM_N(READ_ENABLE_REG)), EEPROM_N(READ_ENABLE_BIT), true);
     }
 
-    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
-    template <class T>
-    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
-        callback((Callback<void>)function, data);
-    }
-
-    /// #### static void callCallback()
-    static force_inline void callCallback() {
-        callback();
-    }
-
     /// #### static void intEnable(bool e)
     static force_inline void intEnable(bool e) {
         setBit_(REG(EEPROM_N(READY_INT_ENABLE_REG)), EEPROM_N(READY_INT_ENABLE_BIT), e);
     }
-
-private:
-
-    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
 };
-
-ISR(EEPROM_N(EE_READY_INT_VECTOR)) {
-    EepromN::callCallback();
-}
 
 #ifdef TEST
 

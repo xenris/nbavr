@@ -28,10 +28,6 @@ atomic {
 
 #### static void trigger([ExIntN::Trigger](exint.hpp.md#enum-exintntrigger) t)
 
-#### static void setCallback([Callback](../callback.hpp.md#callbackt--void-t)<T\> function, T\* data)
-
-#### static void callCallback()
-
 #### static bool intFlag()
 
 #### static void intFlagClear()

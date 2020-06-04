@@ -274,18 +274,6 @@ struct TimerN {
         }
     #endif
 
-    /// #### static void setCallback([[Callback]]<T\> function, T\* data)
-    /// Set the timer overflow callback.
-    template <class T>
-    static force_inline void setCallback(Callback<T> function, T* data = nullptr) {
-        callback((Callback<void>)function, data);
-    }
-
-    /// #### static void callCallback()
-    static force_inline void callCallback() {
-        callback();
-    }
-
     #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
         /// #### static void intEnable(bool b)
         static force_inline void intEnable(bool b) {
@@ -351,51 +339,7 @@ struct TimerN {
     #if TIMER_N(INPUT)
         #include "input.xpp"
     #endif
-
-private:
-
-    static force_inline void callback(Callback<void> function = nullptr, void* data = nullptr) {
-        static Callback<void> f = nullptr;
-        static void* d = nullptr;
-
-        if(function == nullptr) {
-            if(f != nullptr) {
-                f(d);
-            }
-        } else {
-            f = function;
-            d = data;
-        }
-    }
 };
-
-#if TIMER_N(OUTPUT_A_MODE_BIT_1_BIT)
-    ISR(TIMER_N(OUTPUT_A_INT_VECTOR)) {
-        TimerN::OutputA::callCallback();
-    }
-#endif
-
-#if TIMER_N(OUTPUT_B_MODE_BIT_1_BIT)
-    ISR(TIMER_N(OUTPUT_B_INT_VECTOR)) {
-        TimerN::OutputB::callCallback();
-    }
-#endif
-
-#if TIMER_N(OUTPUT_C_MODE_BIT_1_BIT)
-    ISR(TIMER_N(OUTPUT_C_INT_VECTOR)) {
-        TimerN::OutputC::callCallback();
-    }
-#endif
-
-#if TIMER_N(INPUT)
-    ISR(TIMER_N(INPUT_INT_VECTOR)) {
-        TimerN::Input::callCallback();
-    }
-#endif
-
-ISR(TIMER_N(OVERFLOW_INT_VECTOR)) {
-    TimerN::callCallback();
-}
 
 #ifdef TEST
 
