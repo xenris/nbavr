@@ -7,14 +7,10 @@ CFLAGS += -fmax-errors=3
 CFLAGS += -fdiagnostics-color=always
 CFLAGS += -lgtest
 
-: test.cpp |> g++ -I../src/ $(CFLAGS) -D__atmega2560__ %f -o %o |> test_atmega2560
-
-: test.cpp |> g++ -I../src/ $(CFLAGS) -D__atmega328p__ %f -o %o |> test_atmega328p
-
-: test.cpp |> g++ -I../src/ $(CFLAGS) -D__atmega328pb__ %f -o %o |> test_atmega328pb
-
-: test.cpp |> g++ -I../src/ $(CFLAGS) -D__atmega8__ %f -o %o |> test_atmega8
-
-: test.cpp |> g++ -I../src/ $(CFLAGS) -D__attiny85__ %f -o %o |> test_attiny85
-
-: test.cpp |> g++ -I../src/ $(CFLAGS) -D__stm32f103c8_md__ %f -o %o |> test_stm32f103c8_md
+#: test.cpp |> g++ -I../src/ $(CFLAGS) -D__atmega2560__ %f -o %o |> test_atmega2560
+#: test.cpp |> g++ -I../src/ $(CFLAGS) -D__atmega328p__ %f -o %o |> test_atmega328p
+#: test.cpp |> g++ -I../src/ $(CFLAGS) -D__atmega328pb__ %f -o %o |> test_atmega328pb
+#: test.cpp |> g++ -I../src/ $(CFLAGS) -D__atmega8__ %f -o %o |> test_atmega8
+#: test.cpp |> g++ -I../src/ $(CFLAGS) -D__attiny85__ %f -o %o |> test_attiny85
+#: test.cpp |> g++ -I../src/ $(CFLAGS) -D__attiny402__ %f -o %o |> test_attiny402
+#: test.cpp |> g++ -I../src/ $(CFLAGS) -D__stm32f103c8_md__ %f -o %o |> test_stm32f103c8_md

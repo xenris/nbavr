@@ -40,9 +40,9 @@ struct _reg {
 } // nblib
 
 // Use of _reg makes the compiler throw a more meaningful message if _TYPE or _ADDR isn't defined.
-#define REG(R) nblib::_reg<CAT(R, _TYPE), CAT(R, _ADDR)>().p
-
-#define REGTYPE(R) CAT(R, _TYPE)
+#define REG(R) nblib::_reg<REG_TYPE(R), REG_ADDR(R)>().p
+#define REG_TYPE(R) CAT(R, _TYPE)
+#define REG_ADDR(R) CAT(R, _ADDR)
 
 #if defined(__atmega328__)
     #include "chips/avr/atmega328.hpp"
@@ -58,6 +58,8 @@ struct _reg {
     #include "chips/avr/attiny85.hpp"
 #elif defined(__atmega2560__)
     #include "chips/avr/atmega2560.hpp"
+#elif defined(__attiny402__)
+    #include "chips/avr/attiny402.hpp"
 #elif defined(__stm32f103c8_md__)
     #include "chips/stm32/stm32f103c8_md.hpp"
 #else

@@ -116,7 +116,7 @@ struct TwiN {
     /// #### static void sendStart(bool intEnable = true)
     /// Send a start condition.
     static force_inline void sendStart(bool intEnable = true) {
-        using T = REGTYPE(TWI_N(CONTROL_REG));
+        using T = REG_TYPE(TWI_N(CONTROL_REG));
 
         const T enable = bv<T>(TWI_N(ENABLE_BIT));
         const T start = bv<T>(TWI_N(START_CONDITION_BIT));
@@ -129,7 +129,7 @@ struct TwiN {
     /// #### static void sendStop(bool intEnable = true)
     /// Send stop condition.
     static force_inline void sendStop() {
-        using T = REGTYPE(TWI_N(CONTROL_REG));
+        using T = REG_TYPE(TWI_N(CONTROL_REG));
 
         const T enable = bv<T>(TWI_N(ENABLE_BIT));
         const T stop = bv<T>(TWI_N(STOP_CONDITION_BIT));
@@ -141,7 +141,7 @@ struct TwiN {
     /// #### static void sendAck(bool intEnable = true)
     /// Send acknowledge condition.
     static force_inline void sendAck(bool intEnable = true) {
-        using T = REGTYPE(TWI_N(CONTROL_REG));
+        using T = REG_TYPE(TWI_N(CONTROL_REG));
 
         const T enable = bv<T>(TWI_N(ENABLE_BIT));
         const T ack = bv<T>(TWI_N(ENABLE_ACK_BIT));
@@ -154,7 +154,7 @@ struct TwiN {
     /// #### static void sendNack(bool intEnable = true)
     /// Send not acknowledge condition.
     static force_inline void sendNack(bool intEnable = true) {
-        using T = REGTYPE(TWI_N(CONTROL_REG));
+        using T = REG_TYPE(TWI_N(CONTROL_REG));
 
         const T enable = bv<T>(TWI_N(ENABLE_BIT));
         const T flagClear = bv<T>(TWI_N(INT_FLAG_BIT));

@@ -1,5 +1,7 @@
 # Hierarchy of components
 
+FIXME Outdated.
+
 Levels can include lower levels (smaller number), but *not* higher or equal levels.
 
 ## Level 1 - Primitive types and functions

@@ -1,0 +1,42 @@
+r Adc0::intFlag() 11110010011011000100100001010001
+r Timer0::counter() 4f632cb1d180e1196607dc7c407e6dabb90cfed4c9b70cd96457c7f33597341f7124739bba9f2f3ea8a63ca75ddf00559c83523d3986b02b1d8937ef4d2bb
+r Timer0::intFlag() 10100100111111001111110110111110
+w Adc0::channel(Adc0::Channel::adc0) 606:ff:e0:
+w Adc0::channel(Adc0::Channel::adc1) 606:00:01:606:ff:e1:
+w Adc0::channel(Adc0::Channel::adc2) 606:00:02:606:ff:e2:
+w Adc0::channel(Adc0::Channel::adc3) 606:00:03:606:ff:e3:
+w Adc0::channel(Adc0::Channel::adc6) 606:00:06:606:ff:e6:
+w Adc0::channel(Adc0::Channel::adc7) 606:00:07:606:ff:e7:
+w Adc0::channel(Adc0::Channel::gnd) 606:00:1f:
+w Adc0::enable(false) 600:ff:fe:
+w Adc0::enable(true) 600:00:01:
+w Adc0::intEnable(false) 60a:ff:fe:
+w Adc0::intEnable(true) 60a:00:01:
+w Adc0::intFlag()
+w Adc0::intFlagClear() 60b:00:01:60b:ff:01:
+w Adc0::prescaler(Adc0::Prescaler::div128) 602:00:06:602:ff:fe:
+w Adc0::prescaler(Adc0::Prescaler::div16) 602:00:03:602:ff:fb:
+w Adc0::prescaler(Adc0::Prescaler::div2) 602:ff:f8:
+w Adc0::prescaler(Adc0::Prescaler::div32) 602:00:04:602:ff:fc:
+w Adc0::prescaler(Adc0::Prescaler::div4) 602:00:01:602:ff:f9:
+w Adc0::prescaler(Adc0::Prescaler::div64) 602:00:05:602:ff:fd:
+w Adc0::prescaler(Adc0::Prescaler::div8) 602:00:02:602:ff:fa:
+w Adc0::reference(Adc0::Reference::internal) 602:ff:cf:
+w Adc0::start() 608:00:01:
+w Adc0::trigger(Adc0::Trigger::freeRunning) 600:00:02:609:ff:fe:
+w Adc0::trigger(Adc0::Trigger::singleConversion) 600:ff:fd:609:ff:fe:
+w Timer0::clock(Timer0::Clock::div1) a00:ff:f1:
+w Timer0::clock(Timer0::Clock::div1024) a00:00:0e:
+w Timer0::clock(Timer0::Clock::div16) a00:00:08:a00:ff:f9:
+w Timer0::clock(Timer0::Clock::div2) a00:00:02:a00:ff:f3:
+w Timer0::clock(Timer0::Clock::div256) a00:00:0c:a00:ff:fd:
+w Timer0::clock(Timer0::Clock::div4) a00:00:04:a00:ff:f5:
+w Timer0::clock(Timer0::Clock::div64) a00:00:0a:a00:ff:fb:
+w Timer0::clock(Timer0::Clock::div8) a00:00:06:a00:ff:f7:
+w Timer0::counter()
+w Timer0::counter(0x12) a20:00:12:a20:ff:12:a21:ff:00:
+w Timer0::intEnable(false) a0a:ff:fe:
+w Timer0::intEnable(true) a0a:00:01:
+w Timer0::intFlag()
+w Timer0::intFlagClear() a0b:00:01:a0b:ff:01:
+w Timer0::waveform(Timer0::Waveform::normal) a01:ff:f8:

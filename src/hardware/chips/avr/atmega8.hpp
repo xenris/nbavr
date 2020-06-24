@@ -514,6 +514,7 @@
 #define CHIP_ADC_0_TRIGGER_SINGLE_CONVERSION_ID                     0
 #define CHIP_ADC_0_TRIGGER_FREE_RUNNING_ID                          1
 
+#define CHIP_ADC_0_INT_FLAG_IMPURE                                  true
 #define CHIP_ADC_0_INT_FLAG_BIT_0_REG                               CHIP_REG_ADCSRA
 #define CHIP_ADC_0_INT_FLAG_BIT_0_BIT                               4
 #define CHIP_ADC_0_INT_ENABLE_BIT_0_REG                             CHIP_REG_ADCSRA

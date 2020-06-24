@@ -48,12 +48,12 @@ struct OutputX {
     #endif
 
     /// #### static void value(T v)
-    static force_inline void value(REGTYPE(OUTPUT_X(REG)) v) {
+    static force_inline void value(REG_TYPE(OUTPUT_X(REG)) v) {
         setReg_(REG(OUTPUT_X(REG)), v);
     }
 
     /// #### static T value()
-    static force_inline REGTYPE(OUTPUT_X(REG))& value() {
+    static force_inline REG_TYPE(OUTPUT_X(REG))& value() {
         return getReg_(REG(OUTPUT_X(REG)));
     }
 

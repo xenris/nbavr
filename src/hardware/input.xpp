@@ -37,12 +37,12 @@ struct Input {
     };
 
     /// #### static void value(T v)
-    static force_inline void value(REGTYPE(TIMER_N(INPUT_REG)) v) {
+    static force_inline void value(REG_TYPE(TIMER_N(INPUT_REG)) v) {
         setReg_(REG(TIMER_N(INPUT_REG)), v);
     }
 
     /// #### static T value()
-    static force_inline REGTYPE(TIMER_N(INPUT_REG)) value() {
+    static force_inline REG_TYPE(TIMER_N(INPUT_REG)) value() {
         return getReg_(REG(TIMER_N(INPUT_REG)));
     }
 

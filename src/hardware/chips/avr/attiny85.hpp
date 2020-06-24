@@ -332,6 +332,7 @@
 #define CHIP_ADC_0_TRIGGER_TIMER0_COMPARE_MATCH_B_ID                13
 #define CHIP_ADC_0_TRIGGER_PIN_CHANGE_INT_0_ID                      14
 
+#define CHIP_ADC_0_INT_FLAG_IMPURE                                  true
 #define CHIP_ADC_0_INT_FLAG_BIT_0_REG                               CHIP_REG_ADCSRA
 #define CHIP_ADC_0_INT_FLAG_BIT_0_BIT                               4
 #define CHIP_ADC_0_INT_ENABLE_BIT_0_REG                             CHIP_REG_ADCSRA

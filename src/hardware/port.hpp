@@ -59,60 +59,62 @@ struct PortX {
 
     /// #### static void mode([[Pin::Mode]] m)
     static force_inline void mode(Pin::Mode m) {
-        #if DEFINED(CAT(CHIP_PIN_, X, 0, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 0, _MODE_BIT_0_BIT))
             Pin0::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 1, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 1, _MODE_BIT_0_BIT))
             Pin1::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 2, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 2, _MODE_BIT_0_BIT))
             Pin2::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 3, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 3, _MODE_BIT_0_BIT))
             Pin3::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 4, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 4, _MODE_BIT_0_BIT))
             Pin4::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 5, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 5, _MODE_BIT_0_BIT))
             Pin5::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 6, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 6, _MODE_BIT_0_BIT))
             Pin6::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 7, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 7, _MODE_BIT_0_BIT))
             Pin7::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 8, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 8, _MODE_BIT_0_BIT))
             Pin8::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 9, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 9, _MODE_BIT_0_BIT))
             Pin9::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 10, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 10, _MODE_BIT_0_BIT))
             Pin10::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 11, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 11, _MODE_BIT_0_BIT))
             Pin11::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 12, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 12, _MODE_BIT_0_BIT))
             Pin12::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 13, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 13, _MODE_BIT_0_BIT))
             Pin13::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 14, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 14, _MODE_BIT_0_BIT))
             Pin14::mode(m);
         #endif
-        #if DEFINED(CAT(CHIP_PIN_, X, 15, _INPUT_BIT_0_BIT))
+        #if DEFINED(CAT(CHIP_PIN_, X, 15, _MODE_BIT_0_BIT))
             Pin15::mode(m);
         #endif
     }
 
-    /// #### static void output(T value)
-    static force_inline void output(CAT(PORT_X(OUTPUT_REG), _TYPE) value) {
-        setReg_(REG(PORT_X(OUTPUT_REG)), value);
-    }
+    #if REG_ADDR(PORT_X(OUTPUT_REG))
+        /// #### static void output(T value)
+        static force_inline void output(CAT(PORT_X(OUTPUT_REG), _TYPE) value) {
+            setReg_(REG(PORT_X(OUTPUT_REG)), value);
+        }
+    #endif
 
     /// #### static void setOutputs(T bits)
     #if CAT(PORT_X(SET_OUTPUTS_REG),_ADDR)
@@ -128,15 +130,19 @@ struct PortX {
         }
     #endif
 
-    /// #### static T output()
-    static force_inline CAT(PORT_X(OUTPUT_REG),_TYPE) output() {
-        return getReg_(REG(PORT_X(OUTPUT_REG)));
-    }
+    #if REG_ADDR(PORT_X(OUTPUT_REG))
+        /// #### static T output()
+        static force_inline CAT(PORT_X(OUTPUT_REG),_TYPE) output() {
+            return getReg_(REG(PORT_X(OUTPUT_REG)));
+        }
+    #endif
 
-    /// #### static T input()
-    static force_inline CAT(PORT_X(INPUT_REG),_TYPE) input() {
-        return getReg_(REG(PORT_X(INPUT_REG)));
-    }
+    #if REG_ADDR(PORT_X(INPUT_REG))
+        /// #### static T input()
+        static force_inline CAT(PORT_X(INPUT_REG),_TYPE) input() {
+            return getReg_(REG(PORT_X(INPUT_REG)));
+        }
+    #endif
 
     /// #### static void toggle(T bits)
     #if CAT(PORT_X(TOGGLE_OUTPUTS_REG),_ADDR)
@@ -239,10 +245,12 @@ TEST(PortX, mode) {
     #undef MODE
 }
 
-TEST(PortX, output) {
-    TEST_REG_WRITE(PortX::output(0x12));
-    TEST_REG_READ_WRITE(PortX::output());
-}
+#if REG_ADDR(PORT_X(OUTPUT_REG))
+    TEST(PortX, output) {
+        TEST_REG_WRITE(PortX::output(0x12));
+        TEST_REG_READ_WRITE(PortX::output());
+    }
+#endif
 
 #if CAT(PORT_X(SET_OUTPUTS_REG),_ADDR)
     TEST(PortX, setOutputs) {
@@ -258,9 +266,11 @@ TEST(PortX, output) {
     }
 #endif
 
-TEST(PortX, input) {
-    TEST_REG_READ_WRITE(PortX::input());
-}
+#if REG_ADDR(PORT_X(INPUT_REG))
+    TEST(PortX, input) {
+        TEST_REG_READ_WRITE(PortX::input());
+    }
+#endif
 
 #if CAT(PORT_X(TOGGLE_OUTPUTS_REG),_ADDR)
     TEST(PortX, toggle) {

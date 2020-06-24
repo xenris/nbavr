@@ -316,11 +316,7 @@ force_inline bool interruptsEnabled() {
     bool t = false;
 
     #if defined(__AVR__)
-        #if REG_DEFINED(CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_REG)
-            t = getBit(REG(CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_REG), CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_BIT);
-        #else
-            #error CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_REG/BIT not defined.
-        #endif
+        t = getBit(REG(CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_REG), CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_BIT);
     #elif defined(__ARM__)
         asm volatile("mrs %[t], PRIMASK" : [t] "=r" (t) :: "memory");
     #elif defined(TEST)

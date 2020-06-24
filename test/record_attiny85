@@ -68,11 +68,11 @@ w Adc0::prescaler(Adc0::Prescaler::div32) 26:00:05:26:ff:fd:
 w Adc0::prescaler(Adc0::Prescaler::div4) 26:00:02:26:ff:fa:
 w Adc0::prescaler(Adc0::Prescaler::div64) 26:00:06:26:ff:fe:
 w Adc0::prescaler(Adc0::Prescaler::div8) 26:00:03:26:ff:fb:
-w Adc0::reference(Adc0::Reference::aref) 27:00:40:27:ff:7f:
-w Adc0::reference(Adc0::Reference::avcc) 27:ff:3f:
-w Adc0::reference(Adc0::Reference::internal_1_1) 27:00:80:27:ff:bf:
-w Adc0::reference(Adc0::Reference::internal_2_56) 27:00:80:27:ff:bf:
-w Adc0::reference(Adc0::Reference::internal_2_56_cap) 27:00:c0:
+w Adc0::reference(Adc0::Reference::aref) 27:00:40:27:ff:6f:
+w Adc0::reference(Adc0::Reference::avcc) 27:ff:2f:
+w Adc0::reference(Adc0::Reference::internal_1_1) 27:00:80:27:ff:af:
+w Adc0::reference(Adc0::Reference::internal_2_56) 27:00:90:27:ff:bf:
+w Adc0::reference(Adc0::Reference::internal_2_56_cap) 27:00:d0:
 w Adc0::start() 26:00:40:
 w Adc0::trigger(Adc0::Trigger::analogComparator) 23:00:01:26:00:20:23:ff:f9:
 w Adc0::trigger(Adc0::Trigger::externalInt0) 23:00:02:26:00:20:23:ff:fa:

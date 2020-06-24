@@ -47,11 +47,9 @@ namespace nblib::hw {
 
 /// ## Class {{TimerN}}
 struct TimerN {
-    /// #### Type
-    /// The underlying type of this timer/counter. (uint8_t or uint16_t)
-    using Type = REGTYPE(TIMER_N(COUNTER_REG));
-
     TimerN() = delete;
+    TimerN& operator=(const TimerN&) = delete;
+    TimerN(const TimerN&) = delete;
 
     /// #### enum {{TimerN::Clock}}
     /// * none
@@ -153,6 +151,11 @@ struct TimerN {
     /// * fastPwm
     /// * pwmOcra
     /// * fastPwmOcra
+    /// * frequency
+    /// * singleSlopePwm
+    /// * dualSlopePwmOverflowTop
+    /// * dualSlopePwmOverflowBottom
+    /// * dualSlopePwmOverflowBoth
     enum class Waveform {
         #if DEFINED(TIMER_N(WAVEFORM_NORMAL_ID))
             normal = TIMER_N(WAVEFORM_NORMAL_ID),
@@ -225,6 +228,26 @@ struct TimerN {
         #if DEFINED(TIMER_N(WAVEFORM_FAST_PWM_A_B_OCRC_ID))
             fastPwmABOcrc = TIMER_N(WAVEFORM_FAST_PWM_A_B_OCRC_ID),
         #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_FREQUENCY_ID))
+            frequency = TIMER_N(WAVEFORM_FREQUENCY_ID),
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_SINGLE_SLOPE_PWM_ID))
+            singleSlopePwm = TIMER_N(WAVEFORM_SINGLE_SLOPE_PWM_ID),
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_TOP_ID))
+            dualSlopePwmOverflowTop = TIMER_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_TOP_ID),
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTTOM_ID))
+            dualSlopePwmOverflowBottom = TIMER_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTTOM_ID),
+        #endif
+
+        #if DEFINED(TIMER_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTH_ID))
+            dualSlopePwmOverflowBoth = TIMER_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTH_ID),
+        #endif
     };
 
     /// #### static [[HardwareType]] getHardwareType()
@@ -232,15 +255,40 @@ struct TimerN {
         return HardwareType::timer;
     }
 
-    /// #### static void counter(T value)
-    static force_inline void counter(REGTYPE(TIMER_N(COUNTER_REG)) value) {
-        setReg_(REG(TIMER_N(COUNTER_REG)), value);
-    }
+    #if REG_ADDR(TIMER_N(COUNTER_REG))
+        /// #### static void counter(T value)
+        static force_inline void counter(REG_TYPE(TIMER_N(COUNTER_REG)) value) {
+            setReg_(REG(TIMER_N(COUNTER_REG)), value);
+        }
+    #endif
 
-    /// #### static T counter()
-    static force_inline REGTYPE(TIMER_N(COUNTER_REG)) counter() {
-        return getReg_(REG(TIMER_N(COUNTER_REG)));
-    }
+    #if REG_ADDR(TIMER_N(COUNTER_REG))
+        /// #### static T counter()
+        static force_inline REG_TYPE(TIMER_N(COUNTER_REG)) counter() {
+            return getReg_(REG(TIMER_N(COUNTER_REG)));
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(ENABLE_REG))
+        /// #### static void enable(bool)
+        static force_inline void enable(bool b) {
+            setBit_(REG(TIMER_N(ENABLE_REG)), TIMER_N(ENABLE_BIT), b);
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(TOP_REG))
+        /// #### static void top(T value)
+        static force_inline void top(REG_TYPE(TIMER_N(TOP_REG)) value) {
+            setReg_(REG(TIMER_N(TOP_REG)), value);
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(TOP_REG))
+        /// #### static T top()
+        static force_inline REG_TYPE(TIMER_N(TOP_REG)) top() {
+            return getReg_(REG(TIMER_N(TOP_REG)));
+        }
+    #endif
 
     #if DEFINED(TIMER_N(CLOCK_BIT_0_BIT))
         /// #### static void clock([[TimerN::Clock]] c)
@@ -275,6 +323,11 @@ struct TimerN {
     #endif
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
+        /// #### static void overflowIntEnable(bool)
+        static force_inline void overflowIntEnable(bool b) {
+            setBit_(REG(TIMER_N(OVERFLOW_INT_ENABLE_REG)), TIMER_N(OVERFLOW_INT_ENABLE_BIT), b);
+        }
+
         /// #### static void intEnable(bool b)
         static force_inline void intEnable(bool b) {
             setBit_(REG(TIMER_N(OVERFLOW_INT_ENABLE_REG)), TIMER_N(OVERFLOW_INT_ENABLE_BIT), b);
@@ -282,6 +335,11 @@ struct TimerN {
     #endif
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
+        /// #### static bool overflowIntFlag()
+        static force_inline bool overflowIntFlag() {
+            return getBit_(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT));
+        }
+
         /// #### static bool intFlag()
         static force_inline bool intFlag() {
             return getBit_(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT));
@@ -289,6 +347,11 @@ struct TimerN {
     #endif
 
     #if DEFINED(TIMER_N(OVERFLOW_INT_FLAG_BIT))
+        /// #### static void overflowIntFlagClear()
+        static force_inline void overflowIntFlagClear() {
+            clearFlagBit(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT));
+        }
+
         /// #### static void intFlagClear()
         static force_inline void intFlagClear() {
             clearFlagBit(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT));
@@ -309,6 +372,90 @@ struct TimerN {
         /// Set back to false to start all timers at exactly the same time.
         static force_inline void synchronizeMode(bool b) {
             setBit_(REG(TIMER_N(SYNCHRONIZE_REG)), TIMER_N(SYNCHRONIZE_BIT), b);
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_A_REG))
+        /// #### static void compareA(T value)
+        static force_inline void compareA(REG_TYPE(TIMER_N(COMPARE_A_REG)) value) {
+            setReg_(REG(TIMER_N(COMPARE_A_REG)), value);
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_A_REG))
+        /// #### static T compareA()
+        static force_inline REG_TYPE(TIMER_N(COMPARE_A_REG)) compareA() {
+            return getReg_(REG(TIMER_N(COMPARE_A_REG)));
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_B_REG))
+        /// #### static void compareB(T value)
+        static force_inline void compareB(REG_TYPE(TIMER_N(COMPARE_B_REG)) value) {
+            setReg_(REG(TIMER_N(COMPARE_B_REG)), value);
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_B_REG))
+        /// #### static T compareB()
+        static force_inline REG_TYPE(TIMER_N(COMPARE_B_REG)) compareB() {
+            return getReg_(REG(TIMER_N(COMPARE_B_REG)));
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_C_REG))
+        /// #### static void compareC(T value)
+        static force_inline void compareC(REG_TYPE(TIMER_N(COMPARE_C_REG)) value) {
+            setReg_(REG(TIMER_N(COMPARE_C_REG)), value);
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_C_REG))
+        /// #### static T compareC()
+        static force_inline REG_TYPE(TIMER_N(COMPARE_C_REG)) compareC() {
+            return getReg_(REG(TIMER_N(COMPARE_C_REG)));
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_A_OUTPUT_ENABLE_REG))
+        /// #### static void compareAOutputEnable(bool)
+        static force_inline void compareAOutputEnable(bool b) {
+            setBit_(REG(TIMER_N(COMPARE_A_OUTPUT_ENABLE_REG)), TIMER_N(COMPARE_A_OUTPUT_ENABLE_BIT), b);
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_B_OUTPUT_ENABLE_REG))
+        /// #### static void compareBOutputEnable(bool)
+        static force_inline void compareBOutputEnable(bool b) {
+            setBit_(REG(TIMER_N(COMPARE_B_OUTPUT_ENABLE_REG)), TIMER_N(COMPARE_B_OUTPUT_ENABLE_BIT), b);
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_C_OUTPUT_ENABLE_REG))
+        /// #### static void compareCOutputEnable(bool)
+        static force_inline void compareCOutputEnable(bool b) {
+            setBit_(REG(TIMER_N(COMPARE_C_OUTPUT_ENABLE_REG)), TIMER_N(COMPARE_C_OUTPUT_ENABLE_BIT), b);
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_A_INT_ENABLE_REG))
+        /// #### static void compareAIntEnable(bool)
+        static force_inline void compareAIntEnable(bool b) {
+            setBit_(REG(TIMER_N(COMPARE_A_INT_ENABLE_REG)), TIMER_N(COMPARE_A_INT_ENABLE_BIT), b);
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_B_INT_ENABLE_REG))
+        /// #### static void compareBIntEnable(bool)
+        static force_inline void compareBIntEnable(bool b) {
+            setBit_(REG(TIMER_N(COMPARE_B_INT_ENABLE_REG)), TIMER_N(COMPARE_B_INT_ENABLE_BIT), b);
+        }
+    #endif
+
+    #if REG_ADDR(TIMER_N(COMPARE_C_INT_ENABLE_REG))
+        /// #### static void compareCIntEnable(bool)
+        static force_inline void compareCIntEnable(bool b) {
+            setBit_(REG(TIMER_N(COMPARE_C_INT_ENABLE_REG)), TIMER_N(COMPARE_C_INT_ENABLE_BIT), b);
         }
     #endif
 
