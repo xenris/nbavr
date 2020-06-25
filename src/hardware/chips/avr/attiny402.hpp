@@ -9,6 +9,8 @@
 // Then all the hardware descriptions should be very similar for these
 // chips, allowing for reuse of hardware descriptions.
 
+// TODO Voltage Reference, Usart, Port Multiplexer
+
 //------------------------------------------------
 // Memory
 
@@ -617,5 +619,132 @@
 // #define CHIP_TIMER_1_OVERFLOW_INT_FLAG_REG                          CHIP_REG_TIFR
 // #define CHIP_TIMER_1_OVERFLOW_INT_FLAG_BIT                          2
 // #define CHIP_TIMER_1_OVERFLOW_INT_VECTOR                            VECT(CHIP_VECT_TIMER1_OVF)
+
+//------------------------------------------------
+// Usarts
+
+#define CHIP_REG_USART_0_RXDATA_ADDR                                (CHIP_MODULE_USART0_ADDR + 0x00)
+#define CHIP_REG_USART_0_RXDATA_TYPE                                uint16_t
+#define CHIP_REG_USART_0_RXDATAL_ADDR                               (CHIP_MODULE_USART0_ADDR + 0x00)
+#define CHIP_REG_USART_0_RXDATAL_TYPE                               uint8_t
+#define CHIP_REG_USART_0_RXDATAH_ADDR                               (CHIP_MODULE_USART0_ADDR + 0x01)
+#define CHIP_REG_USART_0_RXDATAH_TYPE                               uint8_t
+#define CHIP_REG_USART_0_TXDATA_ADDR                                (CHIP_MODULE_USART0_ADDR + 0x02)
+#define CHIP_REG_USART_0_TXDATA_TYPE                                uint16_t
+#define CHIP_REG_USART_0_TXDATAL_ADDR                               (CHIP_MODULE_USART0_ADDR + 0x02)
+#define CHIP_REG_USART_0_TXDATAL_TYPE                               uint8_t
+#define CHIP_REG_USART_0_TXDATAH_ADDR                               (CHIP_MODULE_USART0_ADDR + 0x03)
+#define CHIP_REG_USART_0_TXDATAH_TYPE                               uint8_t
+#define CHIP_REG_USART_0_STATUS_ADDR                                (CHIP_MODULE_USART0_ADDR + 0x04)
+#define CHIP_REG_USART_0_STATUS_TYPE                                uint8_t
+#define CHIP_REG_USART_0_CTRLA_ADDR                                 (CHIP_MODULE_USART0_ADDR + 0x05)
+#define CHIP_REG_USART_0_CTRLA_TYPE                                 uint8_t
+#define CHIP_REG_USART_0_CTRLB_ADDR                                 (CHIP_MODULE_USART0_ADDR + 0x06)
+#define CHIP_REG_USART_0_CTRLB_TYPE                                 uint8_t
+#define CHIP_REG_USART_0_CTRLC_ADDR                                 (CHIP_MODULE_USART0_ADDR + 0x07)
+#define CHIP_REG_USART_0_CTRLC_TYPE                                 uint8_t
+#define CHIP_REG_USART_0_CTRLC_ADDR                                 (CHIP_MODULE_USART0_ADDR + 0x07)
+#define CHIP_REG_USART_0_CTRLC_TYPE                                 uint8_t
+#define CHIP_REG_USART_0_BAUD_ADDR                                  (CHIP_MODULE_USART0_ADDR + 0x08)
+#define CHIP_REG_USART_0_BAUD_TYPE                                  uint16_t
+#define CHIP_REG_USART_0_DBGCTRL_ADDR                               (CHIP_MODULE_USART0_ADDR + 0x0B)
+#define CHIP_REG_USART_0_DBGCTRL_TYPE                               uint8_t
+#define CHIP_REG_USART_0_EVCTRL_ADDR                                (CHIP_MODULE_USART0_ADDR + 0x0C)
+#define CHIP_REG_USART_0_EVCTRL_TYPE                                uint8_t
+#define CHIP_REG_USART_0_TXPLCTRL_ADDR                              (CHIP_MODULE_USART0_ADDR + 0x0D)
+#define CHIP_REG_USART_0_TXPLCTRL_TYPE                              uint8_t
+#define CHIP_REG_USART_0_RXPLCTRL_ADDR                              (CHIP_MODULE_USART0_ADDR + 0x0E)
+#define CHIP_REG_USART_0_RXPLCTRL_TYPE                              uint8_t
+
+#define CHIP_USART_0                                                true
+
+#define CHIP_USART_0_RX_DATA_REG                                    CHIP_REG_USART_0_RXDATAL
+#define CHIP_USART_0_RX_DATA9_REG                                   CHIP_REG_USART_0_RXDATA
+
+#define CHIP_USART_0_TX_DATA_REG                                    CHIP_REG_USART_0_TXDATAL
+#define CHIP_USART_0_TX_DATA9_REG                                   CHIP_REG_USART_0_TXDATA
+
+// TODO rename to just "baud" (not "baud rate").
+#define CHIP_USART_0_BAUD_RATE_REG                                  CHIP_REG_USART_0_BAUD
+
+// #define CHIP_USART_0_FRAME_ERROR_BIT_0_REG                          CHIP_REG_UCSR0A
+// #define CHIP_USART_0_FRAME_ERROR_BIT_0_BIT                          4
+// #define CHIP_USART_0_DATA_OVERRUN_BIT_0_REG                         CHIP_REG_UCSR0A
+// #define CHIP_USART_0_DATA_OVERRUN_BIT_0_BIT                         3
+#define CHIP_USART_0_PARITY_ERROR_BIT_0_REG                         CHIP_REG_USART_0_RXDATAH
+#define CHIP_USART_0_PARITY_ERROR_BIT_0_BIT                         2
+
+// #define CHIP_USART_0_DOUBLE_SPEED_BIT_0_REG                         CHIP_REG_UCSR0A
+// #define CHIP_USART_0_DOUBLE_SPEED_BIT_0_BIT                         1
+
+// #define CHIP_USART_0_MULTI_PROCESSOR_COMMUNICATION_BIT_0_REG        CHIP_REG_UCSR0A
+// #define CHIP_USART_0_MULTI_PROCESSOR_COMMUNICATION_BIT_0_BIT        0
+
+#define CHIP_USART_0_RX_COMPLETE_INT_ENABLE_BIT_0_REG               CHIP_REG_USART_0_CTRLA
+#define CHIP_USART_0_RX_COMPLETE_INT_ENABLE_BIT_0_BIT               7
+#define CHIP_USART_0_TX_COMPLETE_INT_ENABLE_BIT_0_REG               CHIP_REG_USART_0_CTRLA
+#define CHIP_USART_0_TX_COMPLETE_INT_ENABLE_BIT_0_BIT               6
+#define CHIP_USART_0_DATA_REG_EMPTY_INT_ENABLE_BIT_0_REG            CHIP_REG_USART_0_CTRLA
+#define CHIP_USART_0_DATA_REG_EMPTY_INT_ENABLE_BIT_0_BIT            5
+
+// #define CHIP_USART_0_RX_COMPLETE_INT_FLAG_IMPURE                    TRUE
+#define CHIP_USART_0_RX_COMPLETE_INT_FLAG_BIT_0_REG                 CHIP_REG_USART_0_STATUS
+#define CHIP_USART_0_RX_COMPLETE_INT_FLAG_BIT_0_BIT                 7
+#define CHIP_USART_0_TX_COMPLETE_INT_FLAG_BIT_0_REG                 CHIP_REG_USART_0_STATUS
+#define CHIP_USART_0_TX_COMPLETE_INT_FLAG_BIT_0_BIT                 6
+#define CHIP_USART_0_DATA_REG_EMPTY_INT_FLAG_BIT_0_REG              CHIP_REG_USART_0_STATUS
+#define CHIP_USART_0_DATA_REG_EMPTY_INT_FLAG_BIT_0_BIT              5
+
+#define CHIP_USART_0_RX_ENABLE_BIT_0_REG                            CHIP_REG_USART_0_CTRLB
+#define CHIP_USART_0_RX_ENABLE_BIT_0_BIT                            7
+#define CHIP_USART_0_TX_ENABLE_BIT_0_REG                            CHIP_REG_USART_0_CTRLB
+#define CHIP_USART_0_TX_ENABLE_BIT_0_BIT                            6
+
+// #define CHIP_USART_0_RX_DATA_BIT_8_REG                              CHIP_REG_UCSR0B
+// #define CHIP_USART_0_RX_DATA_BIT_8_BIT                              1
+// #define CHIP_USART_0_TX_DATA_BIT_8_REG                              CHIP_REG_UCSR0B
+// #define CHIP_USART_0_TX_DATA_BIT_8_BIT                              0
+
+// #define CHIP_USART_0_MODE_ASYNCHRONOUS_ID                           0
+// #define CHIP_USART_0_MODE_SYNCHRONOUS_ID                            1
+// #define CHIP_USART_0_MODE_MASTER_SPI_ID                             3
+// #define CHIP_USART_0_MODE_BIT_0_REG                                 CHIP_REG_UCSR0C
+// #define CHIP_USART_0_MODE_BIT_1_REG                                 CHIP_REG_UCSR0C
+// #define CHIP_USART_0_MODE_BIT_0_BIT                                 6
+// #define CHIP_USART_0_MODE_BIT_1_BIT                                 7
+
+#define CHIP_USART_0_PARITY_DISABLE_ID                              0
+#define CHIP_USART_0_PARITY_EVEN_ID                                 2
+#define CHIP_USART_0_PARITY_ODD_ID                                  3
+#define CHIP_USART_0_PARITY_BIT_0_REG                               CHIP_REG_USART_0_CTRLC
+#define CHIP_USART_0_PARITY_BIT_1_REG                               CHIP_REG_USART_0_CTRLC
+#define CHIP_USART_0_PARITY_BIT_0_BIT                               4
+#define CHIP_USART_0_PARITY_BIT_1_BIT                               5
+
+#define CHIP_USART_0_STOP_BITS_1_ID                                 0
+#define CHIP_USART_0_STOP_BITS_2_ID                                 1
+#define CHIP_USART_0_STOP_BITS_BIT_0_REG                            CHIP_REG_USART_0_CTRLC
+#define CHIP_USART_0_STOP_BITS_BIT_0_BIT                            3
+
+#define CHIP_USART_0_CHARACTER_SIZE_5_ID                            0
+#define CHIP_USART_0_CHARACTER_SIZE_6_ID                            1
+#define CHIP_USART_0_CHARACTER_SIZE_7_ID                            2
+#define CHIP_USART_0_CHARACTER_SIZE_8_ID                            3
+// #define CHIP_USART_0_CHARACTER_SIZE_9_ID                            7
+#define CHIP_USART_0_CHARACTER_SIZE_BIT_0_REG                       CHIP_REG_USART_0_CTRLC
+#define CHIP_USART_0_CHARACTER_SIZE_BIT_1_REG                       CHIP_REG_USART_0_CTRLC
+#define CHIP_USART_0_CHARACTER_SIZE_BIT_2_REG                       CHIP_REG_USART_0_CTRLC
+#define CHIP_USART_0_CHARACTER_SIZE_BIT_0_BIT                       0
+#define CHIP_USART_0_CHARACTER_SIZE_BIT_1_BIT                       1
+#define CHIP_USART_0_CHARACTER_SIZE_BIT_2_BIT                       2
+
+// #define CHIP_USART_0_POLARITY_TX_RISING_RX_FALLING_ID               0
+// #define CHIP_USART_0_POLARITY_TX_FALLING_RX_RISING_ID               1
+// #define CHIP_USART_0_POLARITY_BIT_0_REG                             CHIP_REG_UCSR0C
+// #define CHIP_USART_0_POLARITY_BIT_0_BIT                             0
+
+// #define CHIP_USART_0_RX_INT_VECTOR                                  VECT(CHIP_VECT_USART0_RX)
+// #define CHIP_USART_0_DE_INT_VECTOR                                  VECT(CHIP_VECT_USART0_UDRE)
+// #define CHIP_USART_0_TX_INT_VECTOR                                  VECT(CHIP_VECT_USART0_TX)
 
 #endif

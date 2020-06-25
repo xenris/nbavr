@@ -1,6 +1,7 @@
 r Adc0::intFlag() 11110010011011000100100001010001
 r Timer0::counter() 4f632cb1d180e1196607dc7c407e6dabb90cfed4c9b70cd96457c7f33597341f7124739bba9f2f3ea8a63ca75ddf00559c83523d3986b02b1d8937ef4d2bb
 r Timer0::intFlag() 10100100111111001111110110111110
+r Usart0::parityError() 10111000111001000111001110001111
 w Adc0::channel(Adc0::Channel::adc0) 606:ff:e0:
 w Adc0::channel(Adc0::Channel::adc1) 606:00:01:606:ff:e1:
 w Adc0::channel(Adc0::Channel::adc2) 606:00:02:606:ff:e2:
@@ -40,3 +41,24 @@ w Timer0::intEnable(true) a0a:00:01:
 w Timer0::intFlag()
 w Timer0::intFlagClear() a0b:00:01:a0b:ff:01:
 w Timer0::waveform(Timer0::Waveform::normal) a01:ff:f8:
+w Usart0::baud(0x1234) 808:00:34:809:00:02:808:ff:34:809:ff:02:
+w Usart0::characterSize(Usart0::CharacterSize::size5) 807:ff:f8:
+w Usart0::characterSize(Usart0::CharacterSize::size6) 807:00:01:807:ff:f9:
+w Usart0::characterSize(Usart0::CharacterSize::size7) 807:00:02:807:ff:fa:
+w Usart0::characterSize(Usart0::CharacterSize::size8) 807:00:03:807:ff:fb:
+w Usart0::dataRegisterEmptyIntEnable(false) 805:ff:df:
+w Usart0::dataRegisterEmptyIntEnable(true) 805:00:20:
+w Usart0::parity(Usart0::Parity::disabled) 807:ff:cf:
+w Usart0::parity(Usart0::Parity::even) 807:00:20:807:ff:ef:
+w Usart0::parity(Usart0::Parity::odd) 807:00:30:
+w Usart0::parityError()
+w Usart0::receiverEnable(false) 806:ff:7f:
+w Usart0::receiverEnable(true) 806:00:80:
+w Usart0::rxCompleteIntEnable(false) 805:ff:7f:
+w Usart0::rxCompleteIntEnable(true) 805:00:80:
+w Usart0::stopBits(Usart0::StopBits::bits1) 807:ff:f7:
+w Usart0::stopBits(Usart0::StopBits::bits2) 807:00:08:
+w Usart0::transmitterEnable(false) 806:ff:bf:
+w Usart0::transmitterEnable(true) 806:00:40:
+w Usart0::txCompleteIntEnable(false) 805:ff:bf:
+w Usart0::txCompleteIntEnable(true) 805:00:40:

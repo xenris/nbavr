@@ -53,10 +53,16 @@ struct UsartN {
         /// * synchronous
         /// * masterSpi
         enum class Mode {
-            asynchronous = USART_N(MODE_ASYNCHRONOUS_ID),
-            synchronous = USART_N(MODE_SYNCHRONOUS_ID),
+            #if DEFINED(USART_N(MODE_ASYNCHRONOUS_ID))
+                asynchronous = USART_N(MODE_ASYNCHRONOUS_ID),
+            #endif
+
+            #if DEFINED(USART_N(MODE_SYNCHRONOUS_ID))
+                synchronous = USART_N(MODE_SYNCHRONOUS_ID),
+            #endif
+
             #if USART_N(MODE_MASTER_SPI_ID)
-            masterSpi = USART_N(MODE_MASTER_SPI_ID),
+                masterSpi = USART_N(MODE_MASTER_SPI_ID),
             #endif
         };
     #endif
@@ -67,9 +73,17 @@ struct UsartN {
         /// * even
         /// * odd
         enum class Parity {
-            disabled = USART_N(PARITY_DISABLE_ID),
-            even = USART_N(PARITY_EVEN_ID),
-            odd = USART_N(PARITY_ODD_ID),
+            #if DEFINED(USART_N(PARITY_DISABLE_ID))
+                disabled = USART_N(PARITY_DISABLE_ID),
+            #endif
+
+            #if DEFINED(USART_N(PARITY_EVEN_ID))
+                even = USART_N(PARITY_EVEN_ID),
+            #endif
+
+            #if DEFINED(USART_N(PARITY_ODD_ID))
+                odd = USART_N(PARITY_ODD_ID),
+            #endif
         };
     #endif
 
@@ -78,8 +92,13 @@ struct UsartN {
         /// * bits1
         /// * bits2
         enum class StopBits {
-            bits1 = USART_N(STOP_BITS_1_ID),
-            bits2 = USART_N(STOP_BITS_2_ID),
+            #if DEFINED(USART_N(STOP_BITS_1_ID))
+                bits1 = USART_N(STOP_BITS_1_ID),
+            #endif
+
+            #if DEFINED(USART_N(STOP_BITS_2_ID))
+                bits2 = USART_N(STOP_BITS_2_ID),
+            #endif
         };
     #endif
 
@@ -91,11 +110,25 @@ struct UsartN {
         /// * size8
         /// * size9
         enum class CharacterSize {
-            size5 = USART_N(CHARACTER_SIZE_5_ID),
-            size6 = USART_N(CHARACTER_SIZE_6_ID),
-            size7 = USART_N(CHARACTER_SIZE_7_ID),
-            size8 = USART_N(CHARACTER_SIZE_8_ID),
-            size9 = USART_N(CHARACTER_SIZE_9_ID),
+            #if DEFINED(USART_N(CHARACTER_SIZE_5_ID))
+                size5 = USART_N(CHARACTER_SIZE_5_ID),
+            #endif
+
+            #if DEFINED(USART_N(CHARACTER_SIZE_6_ID))
+                size6 = USART_N(CHARACTER_SIZE_6_ID),
+            #endif
+
+            #if DEFINED(USART_N(CHARACTER_SIZE_7_ID))
+                size7 = USART_N(CHARACTER_SIZE_7_ID),
+            #endif
+
+            #if DEFINED(USART_N(CHARACTER_SIZE_8_ID))
+                size8 = USART_N(CHARACTER_SIZE_8_ID),
+            #endif
+
+            #if DEFINED(USART_N(CHARACTER_SIZE_9_ID))
+                size9 = USART_N(CHARACTER_SIZE_9_ID),
+            #endif
         };
     #endif
 
@@ -104,8 +137,13 @@ struct UsartN {
         /// * txRisingRxFalling
         /// * txFallingRxRising
         enum class Polarity {
-            txRisingRxFalling = USART_N(POLARITY_TX_RISING_RX_FALLING_ID),
-            txFallingRxRising = USART_N(POLARITY_TX_FALLING_RX_RISING_ID),
+            #if DEFINED(USART_N(POLARITY_TX_RISING_RX_FALLING_ID))
+                txRisingRxFalling = USART_N(POLARITY_TX_RISING_RX_FALLING_ID),
+            #endif
+
+            #if DEFINED(USART_N(POLARITY_TX_FALLING_RX_RISING_ID))
+                txFallingRxRising = USART_N(POLARITY_TX_FALLING_RX_RISING_ID),
+            #endif
         };
     #endif
 
@@ -193,17 +231,19 @@ struct UsartN {
         }
     #endif
 
-    /// #### static void baud(uint16_t b)
-    static force_inline void baud(uint16_t b) {
-        b &= 0x0fff;
+    #if REG_ADDR(USART_N(BAUD_RATE_REG))
+        /// #### static void baud(uint16_t b)
+        static force_inline void baud(uint16_t b) {
+            b &= 0x0fff;
 
-        #if CAT(USART_N(BAUD_RATE_REG), _ADDR)
-            setReg_(REG(USART_N(BAUD_RATE_REG)), b);
-        #else
-            setReg_(REG(USART_N(BAUD_RATE_REG_HIGH)), uint8_t(b >> 8));
-            setReg_(REG(USART_N(BAUD_RATE_REG_LOW)), uint8_t(b));
-        #endif
-    }
+            #if CAT(USART_N(BAUD_RATE_REG), _ADDR)
+                setReg_(REG(USART_N(BAUD_RATE_REG)), b);
+            #else
+                setReg_(REG(USART_N(BAUD_RATE_REG_HIGH)), uint8_t(b >> 8));
+                setReg_(REG(USART_N(BAUD_RATE_REG_LOW)), uint8_t(b));
+            #endif
+        }
+    #endif
 
     #if DEFINED(USART_N(DOUBLE_SPEED_BIT_0_BIT))
         /// #### static void use2X(bool u)
@@ -324,10 +364,12 @@ struct UsartN {
         }
     #endif
 
-    /// #### static void push(uint8_t b)
-    static force_inline void push(uint8_t b) {
-        setReg_(REG(USART_N(DATA_REG)), b);
-    }
+    #if REG_ADDR(USART_N(DATA_REG))
+        /// #### static void push(uint8_t b)
+        static force_inline void push(uint8_t b) {
+            setReg_(REG(USART_N(DATA_REG)), b);
+        }
+    #endif
 
     #if DEFINED(USART_N(TX_DATA_BIT_8_BIT))
         /// #### static void push9(uint16_t b)
@@ -338,10 +380,12 @@ struct UsartN {
         }
     #endif
 
-    /// #### static uint8_t pop()
-    static force_inline uint8_t pop() {
-        return getReg_(REG(USART_N(DATA_REG)));
-    }
+    #if REG_ADDR(USART_N(DATA_REG))
+        /// #### static uint8_t pop()
+        static force_inline uint8_t pop() {
+            return getReg_(REG(USART_N(DATA_REG)));
+        }
+    #endif
 
     #if DEFINED(USART_N(RX_DATA_BIT_8_BIT))
         /// #### static uint16_t pop9()
@@ -353,6 +397,34 @@ struct UsartN {
             }
 
             return result;
+        }
+    #endif
+
+    #if REG_ADDR(USART_N(RX_DATA_REG))
+        /// #### static uint8_t rxData()
+        static force_inline uint8_t rxData() {
+            return getReg_(REG(USART_N(RX_DATA_REG)));
+        }
+    #endif
+
+    #if REG_ADDR(USART_N(RX_DATA9_REG))
+        /// #### static uint16_t rxData9()
+        static force_inline uint16_t rxData9() {
+            return getReg_(REG(USART_N(RX_DATA9_REG))) & 0x01FF;
+        }
+    #endif
+
+    #if REG_ADDR(USART_N(TX_DATA_REG))
+        /// #### static void txData(uint8_t)
+        static force_inline void txData(uint8_t b) {
+            setReg_(REG(USART_N(TX_DATA_REG)), b);
+        }
+    #endif
+
+    #if REG_ADDR(USART_N(TX_DATA9_REG))
+        /// #### static void txData9(uint16_t)
+        static force_inline void txData9(uint16_t w) {
+            setReg_(REG(USART_N(TX_DATA9_REG)), w);
         }
     #endif
 
@@ -416,7 +488,9 @@ TEST(UsartN, getHardwareType) {
         TEST_REG_WRITE(UsartN::characterSize(UsartN::CharacterSize::size6));
         TEST_REG_WRITE(UsartN::characterSize(UsartN::CharacterSize::size7));
         TEST_REG_WRITE(UsartN::characterSize(UsartN::CharacterSize::size8));
-        TEST_REG_WRITE(UsartN::characterSize(UsartN::CharacterSize::size9));
+        #if DEFINED(USART_N(CHARACTER_SIZE_9_ID))
+            TEST_REG_WRITE(UsartN::characterSize(UsartN::CharacterSize::size9));
+        #endif
     }
 #endif
 
@@ -427,9 +501,11 @@ TEST(UsartN, getHardwareType) {
     }
 #endif
 
-TEST(UsartN, baud) {
-    TEST_REG_WRITE(UsartN::baud(0x1234));
-}
+#if REG_ADDR(USART_N(BAUD_RATE_REG))
+    TEST(UsartN, baud) {
+        TEST_REG_WRITE(UsartN::baud(0x1234));
+    }
+#endif
 
 #if DEFINED(USART_N(DOUBLE_SPEED_BIT_0_BIT))
     TEST(UsartN, use2X) {
@@ -480,9 +556,11 @@ TEST(UsartN, baud) {
     }
 #endif
 
-TEST(UsartN, push) {
-    TEST_REG_WRITE(UsartN::push(0x12));
-}
+#if REG_ADDR(USART_N(DATA_REG))
+    TEST(UsartN, push) {
+        TEST_REG_WRITE(UsartN::push(0x12));
+    }
+#endif
 
 #if DEFINED(USART_N(TX_DATA_BIT_8_BIT))
     TEST(UsartN, push9) {
@@ -490,9 +568,11 @@ TEST(UsartN, push) {
     }
 #endif
 
-TEST(UsartN, pop) {
-    TEST_REG_READ_WRITE(UsartN::pop());
-}
+#if REG_ADDR(USART_N(DATA_REG))
+    TEST(UsartN, pop) {
+        TEST_REG_READ_WRITE(UsartN::pop());
+    }
+#endif
 
 #if DEFINED(USART_N(RX_DATA_BIT_8_BIT))
     TEST(UsartN, pop9) {
