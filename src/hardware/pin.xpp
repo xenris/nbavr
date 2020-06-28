@@ -142,6 +142,10 @@ struct Pin {
     };
 };
 
+force_inline Pin::Value operator !(Pin::Value value) {
+    return (value == Pin::Value::high) ? Pin::Value::low : Pin::Value::high;
+}
+
 } // nblib::hw
 
 #undef MODE
