@@ -147,6 +147,31 @@ struct UsartN {
         };
     #endif
 
+    #if DEFINED(USART_N(BAUD_MODE_BIT_0_BIT))
+        /// #### enum {{UsartN::BaudMode}}
+        /// * normal
+        /// * doubleSpeed
+        /// * genericAuto
+        /// * linAuto
+        enum class BaudMode {
+            #if DEFINED(USART_N(BAUD_MODE_NORMAL_ID))
+                normal = USART_N(BAUD_MODE_NORMAL_ID),
+            #endif
+
+            #if DEFINED(USART_N(BAUD_MODE_NORMAL_ID))
+                doubleSpeed = USART_N(BAUD_MODE_DOUBLE_ID),
+            #endif
+
+            #if DEFINED(USART_N(BAUD_MODE_NORMAL_ID))
+                genericAuto = USART_N(BAUD_MODE_GENAUTO_ID),
+            #endif
+
+            #if DEFINED(USART_N(BAUD_MODE_NORMAL_ID))
+                linAuto = USART_N(BAUD_MODE_LINAUTO_ID),
+            #endif
+        };
+    #endif
+
     /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::usart;
@@ -250,6 +275,17 @@ struct UsartN {
         static force_inline void use2X(bool u) {
             // FIXME Other bits in this register need to always be written as zero.
             setBit_(REG(USART_N(DOUBLE_SPEED_BIT_0_REG)), uint8_t(0x03), USART_N(DOUBLE_SPEED_BIT_0_BIT), u);
+        }
+    #endif
+
+    #if REG_ADDR(USART_N(BAUD_MODE_BIT_0_REG))
+        /// #### static void baudMode(bool u)
+        static force_inline void baudMode(BaudMode m) {
+            setBit_(REG(USART_N(BAUD_MODE_BIT_0_REG)), USART_N(BAUD_MODE_BIT_0_BIT), int(m) & 0x01);
+
+            #if REG_ADDR(USART_N(BAUD_MODE_BIT_1_REG))
+                setBit_(REG(USART_N(BAUD_MODE_BIT_1_REG)), USART_N(BAUD_MODE_BIT_1_BIT), int(m) & 0x02);
+            #endif
         }
     #endif
 

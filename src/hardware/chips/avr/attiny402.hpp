@@ -674,8 +674,14 @@
 #define CHIP_USART_0_PARITY_ERROR_BIT_0_REG                         CHIP_REG_USART_0_RXDATAH
 #define CHIP_USART_0_PARITY_ERROR_BIT_0_BIT                         2
 
-// #define CHIP_USART_0_DOUBLE_SPEED_BIT_0_REG                         CHIP_REG_UCSR0A
-// #define CHIP_USART_0_DOUBLE_SPEED_BIT_0_BIT                         1
+#define CHIP_USART_0_BAUD_MODE_NORMAL_ID                            0
+#define CHIP_USART_0_BAUD_MODE_DOUBLE_ID                            1
+#define CHIP_USART_0_BAUD_MODE_GENAUTO_ID                           2
+#define CHIP_USART_0_BAUD_MODE_LINAUTO_ID                           3
+#define CHIP_USART_0_BAUD_MODE_BIT_0_REG                            CHIP_REG_USART_0_CTRLB
+#define CHIP_USART_0_BAUD_MODE_BIT_1_REG                            CHIP_REG_USART_0_CTRLB
+#define CHIP_USART_0_BAUD_MODE_BIT_0_BIT                            1
+#define CHIP_USART_0_BAUD_MODE_BIT_1_BIT                            2
 
 // #define CHIP_USART_0_MULTI_PROCESSOR_COMMUNICATION_BIT_0_REG        CHIP_REG_UCSR0A
 // #define CHIP_USART_0_MULTI_PROCESSOR_COMMUNICATION_BIT_0_BIT        0
