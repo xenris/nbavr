@@ -9,6 +9,10 @@
 #include "../macros.hpp"
 #include "../primitive.hpp"
 
+#ifndef SANITISE_REG_FOR_TEST
+    #define SANITISE_REG_FOR_TEST(REG)
+#endif
+
 /// ### atomic\(expr\)
 /// Disables interrupts while accessing/evaluating "expr".<br>
 /// Required when accessing variables which are shared with interrupt callbacks. e.g.
@@ -108,9 +112,7 @@ template <class T>
 force_inline void setBit_(T* reg, uint8_t bit, bool value) {
     static_assert(!isSigned<T>(), "setBit requires a pointer to an unsigned integer");
 
-    #ifdef TEST
-        reg = sanitiseRegisterForTest(reg);
-    #endif
+    SANITISE_REG_FOR_TEST(reg);
 
     if(value) {
         *reg = T(*reg | bv<T>(T(bit)));
@@ -123,9 +125,7 @@ template <class T>
 force_inline void setBit_(T* reg, T mask, uint8_t bit, bool value) {
     static_assert(!isSigned<T>(), "setBit requires a pointer to an unsigned integer");
 
-    #ifdef TEST
-        reg = sanitiseRegisterForTest(reg);
-    #endif
+    SANITISE_REG_FOR_TEST(reg);
 
     if(value) {
         *reg = T(mask & (*reg | bv<T>(T(bit))));
@@ -152,9 +152,7 @@ template <class T>
 force_inline bool getBit_(T* reg, uint8_t bit) {
     static_assert(!isSigned<T>(), "getBit requires a pointer to an unsigned integer");
 
-    #ifdef TEST
-        reg = sanitiseRegisterForTest(reg);
-    #endif
+    SANITISE_REG_FOR_TEST(reg);
 
     return bool(*reg & bv<T>(T(bit)));
 }
@@ -172,9 +170,7 @@ template <class T>
 force_inline void clearFlagBit(T* reg, uint8_t bit) {
     static_assert(!isSigned<T>(), "clearFlagBit requires a pointer to an unsigned integer");
 
-    #ifdef TEST
-        reg = sanitiseRegisterForTest(reg);
-    #endif
+    SANITISE_REG_FOR_TEST(reg);
 
     *reg = bv<T>(T(bit));
 }
@@ -190,9 +186,7 @@ template <class T>
 force_inline void setReg_(T* reg, T value) {
     static_assert(!isSigned<T>(), "setReg requires a pointer to an unsigned integer");
 
-    #ifdef TEST
-        reg = sanitiseRegisterForTest(reg);
-    #endif
+    SANITISE_REG_FOR_TEST(reg);
 
     *reg = value;
 }
@@ -215,9 +209,7 @@ template <class T>
 force_inline T& getReg_(T* reg) {
     static_assert(!isSigned<T>(), "getReg requires a pointer to an unsigned integer");
 
-    #ifdef TEST
-        reg = sanitiseRegisterForTest(reg);
-    #endif
+    SANITISE_REG_FOR_TEST(reg);
 
     return *reg;
 }
@@ -414,9 +406,7 @@ struct System {
         static force_inline void setBit(T* reg, uint8_t bit, bool value, ConfigChangeProtection c) {
             static_assert(!isSigned<T>(), "setBit requires a pointer to an unsigned integer");
 
-            #ifdef TEST
-                reg = sanitiseRegisterForTest(reg);
-            #endif
+            SANITISE_REG_FOR_TEST(reg);
 
             block() {
                 T r = value ? T(*reg | bv<T>(T(bit))) : T(*reg & ~bv<T>(T(bit)));
@@ -432,9 +422,7 @@ struct System {
     static force_inline void setBit(T* reg, uint8_t bit, bool value) {
         static_assert(!isSigned<T>(), "setBit requires a pointer to an unsigned integer");
 
-        #ifdef TEST
-            reg = sanitiseRegisterForTest(reg);
-        #endif
+        SANITISE_REG_FOR_TEST(reg);
 
         *reg = value ? T(*reg | bv<T>(T(bit))) : T(*reg & ~bv<T>(T(bit)));
     }
@@ -444,9 +432,7 @@ struct System {
         static force_inline void setBits(T* reg, T mask, T bits, ConfigChangeProtection c) {
             static_assert(!isSigned<T>(), "setBits requires a pointer to an unsigned integer");
 
-            #ifdef TEST
-                reg = sanitiseRegisterForTest(reg);
-            #endif
+            SANITISE_REG_FOR_TEST(reg);
 
             block() {
                 T r = T((*reg & ~mask) | bits);
@@ -462,9 +448,7 @@ struct System {
     static force_inline void setBits(T* reg, T mask, T bits) {
         static_assert(!isSigned<T>(), "setBits requires a pointer to an unsigned integer");
 
-        #ifdef TEST
-            reg = sanitiseRegisterForTest(reg);
-        #endif
+        SANITISE_REG_FOR_TEST(reg);
 
         *reg = T((*reg & ~mask) | bits);
     }
@@ -474,9 +458,7 @@ struct System {
         static force_inline void setReg(T* reg, T value, ConfigChangeProtection c) {
             static_assert(!isSigned<T>(), "setReg requires a pointer to an unsigned integer");
 
-            #ifdef TEST
-                reg = sanitiseRegisterForTest(reg);
-            #endif
+            SANITISE_REG_FOR_TEST(reg);
 
             block() {
                 System::allowConfigChange(c);
@@ -490,9 +472,7 @@ struct System {
     static force_inline void setReg(T* reg, T value) {
         static_assert(!isSigned<T>(), "setReg requires a pointer to an unsigned integer");
 
-        #ifdef TEST
-            reg = sanitiseRegisterForTest(reg);
-        #endif
+        SANITISE_REG_FOR_TEST(reg);
 
         *reg = value;
     }
