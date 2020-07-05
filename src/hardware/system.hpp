@@ -378,6 +378,128 @@ struct __NonAtomic {
     }
 };
 
+#define SYSTEM(A) CAT(CHIP_SYSTEM_, A)
+
+struct System {
+    System() = delete;
+    System& operator=(const System&) = delete;
+    System(const System&) = delete;
+
+    #if REG_ADDR(SYSTEM(ALLOW_CONFIG_CHANGE_REG))
+        /// #### enum {{System::ConfigChangeProtection}}
+        /// * selfProgram
+        /// * ioReg
+        enum class ConfigChangeProtection {
+            #if DEFINED(SYSTEM(ALLOW_CONFIG_CHANGE_SELF_PROGRAM_ID))
+                selfProgram = SYSTEM(ALLOW_CONFIG_CHANGE_SELF_PROGRAM_ID),
+            #endif
+
+            #if DEFINED(SYSTEM(ALLOW_CONFIG_CHANGE_IO_REG_ID))
+                ioReg = SYSTEM(ALLOW_CONFIG_CHANGE_IO_REG_ID),
+            #endif
+        };
+    #endif
+
+    #if REG_ADDR(SYSTEM(ALLOW_CONFIG_CHANGE_REG))
+        /// #### static void allowConfigChange([[System::ConfigChangeProtection]])
+        static force_inline void allowConfigChange(ConfigChangeProtection c) {
+            using T = REG_TYPE(SYSTEM(ALLOW_CONFIG_CHANGE_REG));
+
+            setBits(REG(SYSTEM(ALLOW_CONFIG_CHANGE_REG)), T(SYSTEM(ALLOW_CONFIG_CHANGE_MASK)), T(c));
+        }
+    #endif
+
+    #if REG_ADDR(SYSTEM(ALLOW_CONFIG_CHANGE_REG))
+        template <class T>
+        static force_inline void setBit(T* reg, uint8_t bit, bool value, ConfigChangeProtection c) {
+            static_assert(!isSigned<T>(), "setBit requires a pointer to an unsigned integer");
+
+            #ifdef TEST
+                reg = sanitiseRegisterForTest(reg);
+            #endif
+
+            block() {
+                T r = value ? T(*reg | bv<T>(T(bit))) : T(*reg & ~bv<T>(T(bit)));
+
+                System::allowConfigChange(c);
+
+                *reg = r;
+            }
+        }
+    #endif
+
+    template <class T>
+    static force_inline void setBit(T* reg, uint8_t bit, bool value) {
+        static_assert(!isSigned<T>(), "setBit requires a pointer to an unsigned integer");
+
+        #ifdef TEST
+            reg = sanitiseRegisterForTest(reg);
+        #endif
+
+        *reg = value ? T(*reg | bv<T>(T(bit))) : T(*reg & ~bv<T>(T(bit)));
+    }
+
+    #if REG_ADDR(SYSTEM(ALLOW_CONFIG_CHANGE_REG))
+        template <class T>
+        static force_inline void setBits(T* reg, T mask, T bits, ConfigChangeProtection c) {
+            static_assert(!isSigned<T>(), "setBits requires a pointer to an unsigned integer");
+
+            #ifdef TEST
+                reg = sanitiseRegisterForTest(reg);
+            #endif
+
+            block() {
+                T r = T((*reg & ~mask) | bits);
+
+                System::allowConfigChange(c);
+
+                *reg = r;
+            }
+        }
+    #endif
+
+    template <class T>
+    static force_inline void setBits(T* reg, T mask, T bits) {
+        static_assert(!isSigned<T>(), "setBits requires a pointer to an unsigned integer");
+
+        #ifdef TEST
+            reg = sanitiseRegisterForTest(reg);
+        #endif
+
+        *reg = T((*reg & ~mask) | bits);
+    }
+
+    #if REG_ADDR(SYSTEM(ALLOW_CONFIG_CHANGE_REG))
+        template <class T>
+        static force_inline void setReg(T* reg, T value, ConfigChangeProtection c) {
+            static_assert(!isSigned<T>(), "setReg requires a pointer to an unsigned integer");
+
+            #ifdef TEST
+                reg = sanitiseRegisterForTest(reg);
+            #endif
+
+            block() {
+                System::allowConfigChange(c);
+
+                *reg = value;
+            }
+        }
+    #endif
+
+    template <class T>
+    static force_inline void setReg(T* reg, T value) {
+        static_assert(!isSigned<T>(), "setReg requires a pointer to an unsigned integer");
+
+        #ifdef TEST
+            reg = sanitiseRegisterForTest(reg);
+        #endif
+
+        *reg = value;
+    }
+};
+
+#undef SYSTEM
+
 }
 
 #endif
