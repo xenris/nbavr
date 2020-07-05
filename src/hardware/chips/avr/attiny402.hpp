@@ -228,6 +228,8 @@
 #define CHIP_PIN_A0_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
 #define CHIP_PIN_A0_PULLUP_BIT_0_BIT                                3
 #define CHIP_PIN_A0_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN0CTRL
+#define CHIP_PIN_A0_OUTPUT_TOGGLE_BIT                               0
+#define CHIP_PIN_A0_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 
 #define CHIP_PIN_A1                                                 true
 #define CHIP_PIN_A1_DIRECTION_BIT_0_BIT                             1
@@ -238,6 +240,8 @@
 #define CHIP_PIN_A1_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
 #define CHIP_PIN_A1_PULLUP_BIT_0_BIT                                3
 #define CHIP_PIN_A1_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN1CTRL
+#define CHIP_PIN_A1_OUTPUT_TOGGLE_BIT                               1
+#define CHIP_PIN_A1_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 
 #define CHIP_PIN_A2                                                 true
 #define CHIP_PIN_A2_DIRECTION_BIT_0_BIT                             2
@@ -248,6 +252,8 @@
 #define CHIP_PIN_A2_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
 #define CHIP_PIN_A2_PULLUP_BIT_0_BIT                                3
 #define CHIP_PIN_A2_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN2CTRL
+#define CHIP_PIN_A2_OUTPUT_TOGGLE_BIT                               2
+#define CHIP_PIN_A2_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 
 #define CHIP_PIN_A3                                                 true
 #define CHIP_PIN_A3_DIRECTION_BIT_0_BIT                             3
@@ -258,6 +264,8 @@
 #define CHIP_PIN_A3_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
 #define CHIP_PIN_A3_PULLUP_BIT_0_BIT                                3
 #define CHIP_PIN_A3_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN3CTRL
+#define CHIP_PIN_A3_OUTPUT_TOGGLE_BIT                               3
+#define CHIP_PIN_A3_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 
 #define CHIP_PIN_A6                                                 true
 #define CHIP_PIN_A6_DIRECTION_BIT_0_BIT                             6
@@ -268,6 +276,8 @@
 #define CHIP_PIN_A6_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
 #define CHIP_PIN_A6_PULLUP_BIT_0_BIT                                3
 #define CHIP_PIN_A6_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN6CTRL
+#define CHIP_PIN_A6_OUTPUT_TOGGLE_BIT                               6
+#define CHIP_PIN_A6_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 
 #define CHIP_PIN_A7                                                 true
 #define CHIP_PIN_A7_DIRECTION_BIT_0_BIT                             7
@@ -278,6 +288,8 @@
 #define CHIP_PIN_A7_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
 #define CHIP_PIN_A7_PULLUP_BIT_0_BIT                                3
 #define CHIP_PIN_A7_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN7CTRL
+#define CHIP_PIN_A7_OUTPUT_TOGGLE_BIT                               7
+#define CHIP_PIN_A7_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 
 //------------------------------------------------
 // Analog to digital converters

@@ -257,10 +257,14 @@ struct PinN : Pin {
         }
     #endif
 
-    #if DEFINED(PIN_N(TOGGLE_OUTPUT_BIT_0_BIT))
-        /// #### static void toggleOutput()
-        static force_inline void toggleOutput() {
-            setBit_(REG(PIN_N(TOGGLE_OUTPUT_BIT_0_REG)), PIN_N(TOGGLE_OUTPUT_BIT_0_BIT), true);
+    #if DEFINED(PIN_N(OUTPUT_TOGGLE_BIT))
+        /// #### static void outputToggle()
+        static force_inline void outputToggle() {
+            // FIXME This function is unable to optimise multiple pins toggling at the same time due to read-modify-write
+            // complications.
+            block() {
+                System::setReg(REG(PIN_N(OUTPUT_TOGGLE_REG)), bv<REG_TYPE(PIN_N(OUTPUT_TOGGLE_REG))>(PIN_N(OUTPUT_TOGGLE_BIT)));
+            }
         }
     #endif
 
