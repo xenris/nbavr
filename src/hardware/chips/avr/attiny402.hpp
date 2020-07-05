@@ -78,12 +78,73 @@
 //------------------------------------------------
 // System
 
+#define CHIP_REG_ALLOW_CONFIG_CHANGE_ADDR                           (CHIP_MODULE_CPU_ADDR + 0x04)
+#define CHIP_REG_ALLOW_CONFIG_CHANGE_TYPE                           uint8_t
 #define CHIP_REG_SREG_ADDR                                          (CHIP_MODULE_CPU_ADDR + 0x0F)
 #define CHIP_REG_SREG_TYPE                                          uint8_t
+
+#define CHIP_SYSTEM_STATUS                                          CHIP_REG_SREG
+
+#define CHIP_SYSTEM_ALLOW_CONFIG_CHANGE_REG                         CHIP_REG_ALLOW_CONFIG_CHANGE
+#define CHIP_SYSTEM_ALLOW_CONFIG_CHANGE_SELF_PROGRAM_ID             0x9D
+#define CHIP_SYSTEM_ALLOW_CONFIG_CHANGE_IO_REG_ID                   0xD8
+#define CHIP_SYSTEM_ALLOW_CONFIG_CHANGE_MASK                        0xFF
 
 // Possibly need IDs for chips which have inhibit instead of enable.
 #define CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_REG                      CHIP_REG_SREG
 #define CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_BIT                      7
+
+//------------------------------------------------
+// Clock
+
+#define CHIP_CLOCK_MCLKCTRLA_ADDR                                   (CHIP_MODULE_CLKCTRL_ADDR + 0x00)
+#define CHIP_CLOCK_MCLKCTRLA_TYPE                                   uint8_t
+#define CHIP_CLOCK_MCLKCTRLB_ADDR                                   (CHIP_MODULE_CLKCTRL_ADDR + 0x01)
+#define CHIP_CLOCK_MCLKCTRLB_TYPE                                   uint8_t
+#define CHIP_CLOCK_MCLKLOCK_ADDR                                    (CHIP_MODULE_CLKCTRL_ADDR + 0x02)
+#define CHIP_CLOCK_MCLKLOCK_TYPE                                    uint8_t
+#define CHIP_CLOCK_MCLKSTATUS_ADDR                                  (CHIP_MODULE_CLKCTRL_ADDR + 0x03)
+#define CHIP_CLOCK_MCLKSTATUS_TYPE                                  uint8_t
+#define CHIP_CLOCK_OSC20MCTRLA_ADDR                                 (CHIP_MODULE_CLKCTRL_ADDR + 0x10)
+#define CHIP_CLOCK_OSC20MCTRLA_TYPE                                 uint8_t
+#define CHIP_CLOCK_OSC20MCALIBA_ADDR                                (CHIP_MODULE_CLKCTRL_ADDR + 0x11)
+#define CHIP_CLOCK_OSC20MCALIBA_TYPE                                uint8_t
+#define CHIP_CLOCK_OSC20MCALIBB_ADDR                                (CHIP_MODULE_CLKCTRL_ADDR + 0x12)
+#define CHIP_CLOCK_OSC20MCALIBB_TYPE                                uint8_t
+#define CHIP_CLOCK_OSC32KCTRLA_ADDR                                 (CHIP_MODULE_CLKCTRL_ADDR + 0x18)
+#define CHIP_CLOCK_OSC32KCTRLA_TYPE                                 uint8_t
+
+#define CHIP_CLOCK_SOURCE_REG                                       CHIP_CLOCK_MCLKCTRLA
+#define CHIP_CLOCK_SOURCE_MASK                                      0x03
+#define CHIP_CLOCK_SOURCE_16M20M_ID                                 0
+#define CHIP_CLOCK_SOURCE_32K_ID                                    1
+#define CHIP_CLOCK_SOURCE_EXTERNAL_ID                               3
+#define CHIP_CLOCK_SOURCE_CONFIG_CHANGE_PROTECTION
+
+#define CHIP_CLOCK_PRESCALER_REG                                    CHIP_CLOCK_MCLKCTRLB
+#define CHIP_CLOCK_PRESCALER_MASK                                   0x1E
+#define CHIP_CLOCK_PRESCALER_2_ID                                   0
+#define CHIP_CLOCK_PRESCALER_4_ID                                   2
+#define CHIP_CLOCK_PRESCALER_8_ID                                   4
+#define CHIP_CLOCK_PRESCALER_16_ID                                  6
+#define CHIP_CLOCK_PRESCALER_32_ID                                  8
+#define CHIP_CLOCK_PRESCALER_64_ID                                  10
+#define CHIP_CLOCK_PRESCALER_6_ID                                   16
+#define CHIP_CLOCK_PRESCALER_10_ID                                  18
+#define CHIP_CLOCK_PRESCALER_12_ID                                  20
+#define CHIP_CLOCK_PRESCALER_24_ID                                  22
+#define CHIP_CLOCK_PRESCALER_48_ID                                  24
+#define CHIP_CLOCK_PRESCALER_CONFIG_CHANGE_PROTECTION
+
+#define CHIP_CLOCK_PRESCALER_ENABLE_REG                             CHIP_CLOCK_MCLKCTRLB
+#define CHIP_CLOCK_PRESCALER_ENABLE_BIT                             0
+#define CHIP_CLOCK_PRESCALER_ENABLE_CONFIG_CHANGE_PROTECTION
+
+#define CHIP_CLOCK_LOCK_REG                                         CHIP_CLOCK_MCLKLOCK
+#define CHIP_CLOCK_LOCK_BIT                                         0
+#define CHIP_CLOCK_LOCK_CONFIG_CHANGE_PROTECTION
+
+// ...
 
 // //------------------------------------------------
 // // Sleep
