@@ -459,6 +459,27 @@ struct TimerN {
         }
     #endif
 
+    #if REG_DEFINED(TIMER_N(COMPARE_A_INT_FLAG_REG))
+        /// #### static void compareAIntFlagClear\(\)
+        static force_inline void compareAIntFlagClear() {
+            clearFlagBit(REG(TIMER_N(COMPARE_A_INT_FLAG_REG)), TIMER_N(COMPARE_A_INT_FLAG_BIT));
+        }
+    #endif
+
+    #if REG_DEFINED(TIMER_N(COMPARE_B_INT_FLAG_REG))
+        /// #### static void compareBIntFlagClear\(\)
+        static force_inline void compareBIntFlagClear() {
+            clearFlagBit(REG(TIMER_N(COMPARE_B_INT_FLAG_REG)), TIMER_N(COMPARE_B_INT_FLAG_BIT));
+        }
+    #endif
+
+    #if REG_DEFINED(TIMER_N(COMPARE_C_INT_FLAG_REG))
+        /// #### static void compareCIntFlagClear\(\)
+        static force_inline void compareCIntFlagClear() {
+            clearFlagBit(REG(TIMER_N(COMPARE_C_INT_FLAG_REG)), TIMER_N(COMPARE_C_INT_FLAG_BIT));
+        }
+    #endif
+
     /// ## class OutputX
     /// See [[TimerN::OutputX]]
 
