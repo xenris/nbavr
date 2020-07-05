@@ -256,7 +256,7 @@ struct UsartN {
         }
     #endif
 
-    #if REG_ADDR(USART_N(BAUD_RATE_REG))
+    #if REG_ADDR(USART_N(BAUD_RATE_REG)) || REG_ADDR(USART_N(BAUD_RATE_REG_HIGH))
         /// #### static void baud(uint16_t b)
         static force_inline void baud(uint16_t b) {
             b &= 0x0fff;
@@ -537,7 +537,7 @@ TEST(UsartN, getHardwareType) {
     }
 #endif
 
-#if REG_ADDR(USART_N(BAUD_RATE_REG))
+#if REG_ADDR(USART_N(BAUD_RATE_REG)) || REG_ADDR(USART_N(BAUD_RATE_REG_HIGH))
     TEST(UsartN, baud) {
         TEST_REG_WRITE(UsartN::baud(0x1234));
     }
