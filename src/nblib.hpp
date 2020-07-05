@@ -22,6 +22,7 @@
 #include "vector.hpp"
 
 #include "hardware/adc.hpp"
+#include "hardware/clock.hpp"
 #include "hardware/eeprom.hpp"
 #include "hardware/exint.hpp"
 #include "hardware/pcint.hpp"

@@ -23,6 +23,7 @@ namespace nblib::hw {
 /// * wdt
 enum class HardwareType {
     adc,
+    clock,
     exInt,
     eeprom,
     pcInt,
