@@ -404,7 +404,7 @@ TEST(CAT(PortX, _, PinN), getHardwareType) {
     }
 #endif
 
-#if REG_ADDR(PORT_X(OUTPUT_REG))
+#if REG_DEFINED(PORT_X(OUTPUT_REG))
     TEST(CAT(PortX, _, PinN), output) {
         TEST_REG_WRITE(PortX::PinN::output(Pin::Value::low));
         TEST_REG_WRITE(PortX::PinN::output(Pin::Value::high));
@@ -412,19 +412,19 @@ TEST(CAT(PortX, _, PinN), getHardwareType) {
     }
 #endif
 
-#if REG_ADDR(PORT_X(INPUT_REG))
+#if REG_DEFINED(PORT_X(INPUT_REG))
     TEST(CAT(PortX, _, PinN), input) {
         TEST_REG_READ_WRITE(PortX::PinN::input());
     }
 #endif
 
-#if DEFINED(PIN_N(TOGGLE_BIT_0_BIT))
+#if REG_DEFINED(PIN_N(TOGGLE_BIT_0_REG))
     TEST(CAT(PortX, _, PinN), toggle) {
         TEST_REG_WRITE(PortX::PinN::toggle());
     }
 #endif
 
-#if DEFINED(PIN_N(OUTPUT_TOGGLE_BIT))
+#if REG_DEFINED(PIN_N(OUTPUT_TOGGLE_REG))
     TEST(CAT(PortX, _, PinN), outputToggle) {
         TEST_REG_WRITE(PortX::PinN::outputToggle());
     }
