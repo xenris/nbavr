@@ -98,7 +98,7 @@ public:
     /// #### bool resize(int size)
     /// Set the size of the vector.<br>
     /// Returns false, and doesn't change the size if the given size is larger than the buffer.
-    bool resize(int size) const {
+    bool resize(int size) {
         if(size > _bufferSize) {
             return false;
         } else {

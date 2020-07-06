@@ -271,7 +271,7 @@ force_inline void delay() {
     #elif defined(__ARM__)
 
     #elif defined(TEST)
-
+        (void)loops;
     #else
 
     #endif
