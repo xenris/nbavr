@@ -178,19 +178,20 @@ struct PinN : Pin {
         return HardwareType::pin;
     }
 
-    /// #### static void direction([[Pin::Direction]])
     #if DEFINED(PIN_N(DIRECTION_BIT_0_BIT))
+        /// #### static void direction([[Pin::Direction]])
         static force_inline void direction(Direction d) {
             setBit_(REG(PIN_N(DIRECTION_BIT_0_REG)), PIN_N(DIRECTION_BIT_0_BIT), int(d) & 0x01);
         }
 
+        /// #### static [[Pin::Direction]] direction()
         static force_inline Direction direction() {
             return Direction(getBit(REG(PIN_N(DIRECTION_BIT_0_REG)), PIN_N(DIRECTION_BIT_0_BIT)));
         }
     #endif
 
     #if DEFINED(PIN_N(MODE_BIT_0_BIT))
-        /// #### static void mode([[Pin::Mode]] m)
+        /// #### static void mode([[Pin::Mode]])
         static force_inline void mode(Mode m) {
             setBit_(REG(PIN_N(MODE_BIT_0_REG)), PIN_N(MODE_BIT_0_BIT), int(m) & 0x01);
 
@@ -232,12 +233,12 @@ struct PinN : Pin {
     #endif
 
     #if DEFINED(PIN_N(OUTPUT_BIT_0_BIT))
-        /// #### static void output([[Value]] v)
+        /// #### static void output([[Pin::Value]])
         static force_inline void output(Value v) {
             setBit_(REG(PIN_N(OUTPUT_BIT_0_REG)), PIN_N(OUTPUT_BIT_0_BIT), bool(v));
         }
 
-        /// #### static [[Value]] output()
+        /// #### static [[Pin::Value]] output()
         static force_inline Value output() {
             return Value(getBit(REG(PIN_N(OUTPUT_BIT_0_REG)), PIN_N(OUTPUT_BIT_0_BIT)));
         }
@@ -269,7 +270,7 @@ struct PinN : Pin {
     #endif
 
     #if DEFINED(PIN_N(PULLUP_BIT_0_BIT))
-        /// #### static void pullup(bool)
+        /// #### static void pullup(bool enable)
         static force_inline void pullup(bool b) {
             setBit_(REG(PIN_N(PULLUP_BIT_0_REG)), PIN_N(PULLUP_BIT_0_BIT), b);
         }
@@ -281,7 +282,7 @@ struct PinN : Pin {
     #endif
 
     #if DEFINED(PIN_N(PULLDOWN_BIT_0_BIT))
-        /// #### static void pulldown(bool)
+        /// #### static void pulldown(bool enable)
         static force_inline void pulldown(bool b) {
             setBit_(REG(PIN_N(PULLDOWN_BIT_0_REG)), PIN_N(PULLDOWN_BIT_0_BIT), b);
         }
