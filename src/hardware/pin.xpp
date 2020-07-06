@@ -381,6 +381,28 @@ TEST(CAT(PortX, _, PinN), getHardwareType) {
     }
 #endif
 
+#if REG_DEFINED(PIN_N(DIRECTION_BIT_0_REG))
+    TEST(CAT(PortX, _, PinN), direction) {
+        TEST_REG_WRITE(PortX::PinN::direction(Pin::Direction::input));
+        TEST_REG_WRITE(PortX::PinN::direction(Pin::Direction::output));
+        TEST_REG_READ_WRITE(PortX::PinN::direction());
+    }
+#endif
+
+#if REG_DEFINED(PIN_N(PULLUP_BIT_0_REG))
+    TEST(CAT(PortX, _, PinN), pullup) {
+        TEST_REG_WRITE(PortX::PinN::pullup(true));
+        TEST_REG_WRITE(PortX::PinN::pullup(false));
+    }
+#endif
+
+#if REG_DEFINED(PIN_N(PULLDOWN_BIT_0_REG))
+    TEST(CAT(PortX, _, PinN), pulldown) {
+        TEST_REG_WRITE(PortX::PinN::pulldown(true));
+        TEST_REG_WRITE(PortX::PinN::pulldown(false));
+    }
+#endif
+
 #if REG_ADDR(PORT_X(OUTPUT_REG))
     TEST(CAT(PortX, _, PinN), output) {
         TEST_REG_WRITE(PortX::PinN::output(Pin::Value::low));
@@ -398,6 +420,12 @@ TEST(CAT(PortX, _, PinN), getHardwareType) {
 #if DEFINED(PIN_N(TOGGLE_BIT_0_BIT))
     TEST(CAT(PortX, _, PinN), toggle) {
         TEST_REG_WRITE(PortX::PinN::toggle());
+    }
+#endif
+
+#if DEFINED(PIN_N(OUTPUT_TOGGLE_BIT))
+    TEST(CAT(PortX, _, PinN), outputToggle) {
+        TEST_REG_WRITE(PortX::PinN::outputToggle());
     }
 #endif
 
