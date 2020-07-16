@@ -1,4 +1,5 @@
 r Adc0::intFlag() 11110010011011000100100001010001
+r Sleep::isEnabled() 11101101111111011100010111111011
 r Timer0::counter() 4f632cb1d180e1196607dc7c407e6dabb90cfed4c9b70cd96457c7f33597341f7124739bba9f2f3ea8a63ca75ddf00559c83523d3986b02b1d8937ef4d2bb
 r Timer0::intFlag() 10100100111111001111110110111110
 r Usart0::parityError() 10111000111001000111001110001111
@@ -44,6 +45,12 @@ w PortA::Pin6::pullup(true) 416:00:08:
 w PortA::Pin7::outputToggle() 407:00:80:407:ff:80:
 w PortA::Pin7::pullup(false) 417:ff:f7:
 w PortA::Pin7::pullup(true) 417:00:08:
+w Sleep::enable(false) 50:ff:fe:
+w Sleep::enable(true) 50:00:01:
+w Sleep::isEnabled()
+w Sleep::mode(Sleep::Mode::idle) 50:ff:f9:
+w Sleep::mode(Sleep::Mode::powerDown) 50:00:04:50:ff:fd:
+w Sleep::mode(Sleep::Mode::standby) 50:00:02:50:ff:fb:
 w Timer0::clock(Timer0::Clock::div1) a00:ff:f1:
 w Timer0::clock(Timer0::Clock::div1024) a00:00:0e:
 w Timer0::clock(Timer0::Clock::div16) a00:00:08:a00:ff:f9:
@@ -66,6 +73,8 @@ w Usart0::characterSize(Usart0::CharacterSize::size7) 807:00:02:807:ff:fa:
 w Usart0::characterSize(Usart0::CharacterSize::size8) 807:00:03:807:ff:fb:
 w Usart0::dataRegisterEmptyIntEnable(false) 805:ff:df:
 w Usart0::dataRegisterEmptyIntEnable(true) 805:00:20:
+w Usart0::enableAlternatePins(false) 201:ff:fe:
+w Usart0::enableAlternatePins(true) 201:00:01:
 w Usart0::parity(Usart0::Parity::disabled) 807:ff:cf:
 w Usart0::parity(Usart0::Parity::even) 807:00:20:807:ff:ef:
 w Usart0::parity(Usart0::Parity::odd) 807:00:30:
@@ -80,3 +89,13 @@ w Usart0::transmitterEnable(false) 806:ff:bf:
 w Usart0::transmitterEnable(true) 806:00:40:
 w Usart0::txCompleteIntEnable(false) 805:ff:bf:
 w Usart0::txCompleteIntEnable(true) 805:00:40:
+w Vref0::voltage(Vref0::Voltage::v0_55) a0:ff:8f:
+w Vref0::voltage(Vref0::Voltage::v1_1) a0:00:10:a0:ff:9f:
+w Vref0::voltage(Vref0::Voltage::v1_5) a0:00:40:a0:ff:cf:
+w Vref0::voltage(Vref0::Voltage::v2_5) a0:00:20:a0:ff:af:
+w Vref0::voltage(Vref0::Voltage::v4_3) a0:00:30:a0:ff:bf:
+w Vref1::voltage(Vref1::Voltage::v0_55) a0:ff:f8:
+w Vref1::voltage(Vref1::Voltage::v1_1) a0:00:01:a0:ff:f9:
+w Vref1::voltage(Vref1::Voltage::v1_5) a0:00:04:a0:ff:fc:
+w Vref1::voltage(Vref1::Voltage::v2_5) a0:00:02:a0:ff:fa:
+w Vref1::voltage(Vref1::Voltage::v4_3) a0:00:03:a0:ff:fb:
