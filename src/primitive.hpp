@@ -22,6 +22,16 @@ using uint64_t = If<sizeof(unsigned long) == 8, unsigned long, unsigned long lon
 using size_t = If<sizeof(unsigned int) == 2, unsigned int, unsigned long>::Value;
 using ssize_t = If<sizeof(int) == 2, int, long>::Value;
 
+#ifdef __avr__
+    using int24_t = __int24;
+    using uint24_t = __uint24;
+#endif
+
+#ifdef __clang__
+    using int24_t = int;
+    using uint24_t = uint;
+#endif
+
 static_assert(sizeof(int8_t) == 1, "int8_t is not the right size");
 static_assert(sizeof(int16_t) == 2, "int16_t is not the right size");
 static_assert(sizeof(int32_t) == 4, "int32_t is not the right size");
