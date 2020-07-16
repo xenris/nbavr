@@ -757,6 +757,9 @@
 #define CHIP_REG_USART_0_RXPLCTRL_ADDR                              (CHIP_MODULE_USART0_ADDR + 0x0E)
 #define CHIP_REG_USART_0_RXPLCTRL_TYPE                              uint8_t
 
+#define CHIP_REG_MULTIPLEXER_CTRLB_ADDR                             (CHIP_MODULE_PORTMUX_ADDR + 0x01)
+#define CHIP_REG_MULTIPLEXER_CTRLB_TYPE                             uint8_t
+
 #define CHIP_USART_0                                                true
 
 #define CHIP_USART_0_RX_DATA_REG                                    CHIP_REG_USART_0_RXDATAL
@@ -806,6 +809,9 @@
 #define CHIP_USART_0_RX_ENABLE_BIT_0_BIT                            7
 #define CHIP_USART_0_TX_ENABLE_BIT_0_REG                            CHIP_REG_USART_0_CTRLB
 #define CHIP_USART_0_TX_ENABLE_BIT_0_BIT                            6
+
+#define CHIP_USART_0_ENABLE_ALTERNATE_PINS_BIT_0_REG                CHIP_REG_MULTIPLEXER_CTRLB
+#define CHIP_USART_0_ENABLE_ALTERNATE_PINS_BIT_0_BIT                0
 
 // #define CHIP_USART_0_RX_DATA_BIT_8_REG                              CHIP_REG_UCSR0B
 // #define CHIP_USART_0_RX_DATA_BIT_8_BIT                              1
