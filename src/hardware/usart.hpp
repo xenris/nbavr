@@ -314,6 +314,13 @@ struct UsartN {
         #endif
     }
 
+    #if DEFINED(USART_N(ENABLE_ALTERNATE_PINS_BIT_0_BIT))
+        /// #### static void enableAlternatePins(bool)
+        static force_inline void enableAlternatePins(bool e) {
+            setBit_(REG(USART_N(ENABLE_ALTERNATE_PINS_BIT_0_REG)), USART_N(ENABLE_ALTERNATE_PINS_BIT_0_BIT), e);
+        }
+    #endif
+
     #if DEFINED(USART_N(RX_ENABLE_BIT_0_BIT))
         /// #### static void receiverEnable(bool e)
         static force_inline void receiverEnable(bool e) {
@@ -547,6 +554,13 @@ TEST(UsartN, getHardwareType) {
     TEST(UsartN, use2X) {
         TEST_REG_WRITE(UsartN::use2X(true));
         TEST_REG_WRITE(UsartN::use2X(false));
+    }
+#endif
+
+#if DEFINED(USART_N(ENABLE_ALTERNATE_PINS_BIT_0_BIT))
+    TEST(UsartN, enableAlternatePins) {
+        TEST_REG_WRITE(UsartN::enableAlternatePins(true));
+        TEST_REG_WRITE(UsartN::enableAlternatePins(false));
     }
 #endif
 
