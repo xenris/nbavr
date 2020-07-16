@@ -35,6 +35,7 @@ enum class HardwareType {
     twi,
     usart,
     usi,
+    vref,
     wdt
 };
 

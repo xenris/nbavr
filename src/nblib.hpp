@@ -33,6 +33,7 @@
 #include "hardware/twi.hpp"
 #include "hardware/usart.hpp"
 #include "hardware/usi.hpp"
+#include "hardware/vref.hpp"
 #include "hardware/watchdog.hpp"
 
 #endif

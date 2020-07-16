@@ -353,10 +353,35 @@
 #define CHIP_PIN_A7_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 
 //------------------------------------------------
-// Analog to digital converters
+// Voltage References
 
-// TODO
-// #define CHIP_REG_ADC_0_CTRLA_ADDR                                       (CHIP_MODULE_ADC0_ADDR + 0x00)
+#define CHIP_REG_VREF_CTRLA_ADDR                                    (CHIP_MODULE_VREF_ADDR + 0x00)
+#define CHIP_REG_VREF_CTRLA_TYPE                                    uint8_t
+#define CHIP_REG_VREF_CTRLB_ADDR                                    (CHIP_MODULE_VREF_ADDR + 0x01)
+#define CHIP_REG_VREF_CTRLB_TYPE                                    uint8_t
+
+#define CHIP_VREF_0
+
+#define CHIP_VREF_0_VOLTAGE_REG                                     CHIP_REG_VREF_CTRLA
+#define CHIP_VREF_0_VOLTAGE_MASK                                    0x70
+#define CHIP_VREF_0_VOLTAGE_0_55_V_ID                               0x00
+#define CHIP_VREF_0_VOLTAGE_1_1_V_ID                                0x10
+#define CHIP_VREF_0_VOLTAGE_2_5_V_ID                                0x20
+#define CHIP_VREF_0_VOLTAGE_4_3_V_ID                                0x30
+#define CHIP_VREF_0_VOLTAGE_1_5_V_ID                                0x40
+
+#define CHIP_VREF_1
+
+#define CHIP_VREF_1_VOLTAGE_REG                                     CHIP_REG_VREF_CTRLA
+#define CHIP_VREF_1_VOLTAGE_MASK                                    0x07
+#define CHIP_VREF_1_VOLTAGE_0_55_V_ID                               0x00
+#define CHIP_VREF_1_VOLTAGE_1_1_V_ID                                0x01
+#define CHIP_VREF_1_VOLTAGE_2_5_V_ID                                0x02
+#define CHIP_VREF_1_VOLTAGE_4_3_V_ID                                0x03
+#define CHIP_VREF_1_VOLTAGE_1_5_V_ID                                0x04
+
+//------------------------------------------------
+// Analog to digital converters
 
 #define CHIP_ADC_0_CTRLA_ADDR                                       (CHIP_MODULE_ADC0_ADDR + 0x00)
 #define CHIP_ADC_0_CTRLA_TYPE                                       uint8_t
