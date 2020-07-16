@@ -146,20 +146,23 @@
 
 // ...
 
-// //------------------------------------------------
-// // Sleep
+//------------------------------------------------
+// Sleep
 
-// #define CHIP_SLEEP_MODE_IDLE_ID                                     0
-// #define CHIP_SLEEP_MODE_ADC_NOISE_REDUCTION_ID                      1
-// #define CHIP_SLEEP_MODE_POWER_DOWN_ID                               2
+#define CHIP_REG_SLEEP_CTRLA_ADDR                                   (CHIP_MODULE_SLPCTRL_ADDR + 0)
+#define CHIP_REG_SLEEP_CTRLA_TYPE                                   uint8_t
 
-// #define CHIP_SLEEP_MODE_BIT_0_REG                                   CHIP_REG_MCUCR
-// #define CHIP_SLEEP_MODE_BIT_0_BIT                                   3
-// #define CHIP_SLEEP_MODE_BIT_1_REG                                   CHIP_REG_MCUCR
-// #define CHIP_SLEEP_MODE_BIT_1_BIT                                   4
+#define CHIP_SLEEP_MODE_IDLE_ID                                     0
+#define CHIP_SLEEP_MODE_STANDBY_ID                                  1
+#define CHIP_SLEEP_MODE_POWER_DOWN_ID                               2
 
-// #define CHIP_SLEEP_ENABLE_BIT_0_REG                                 CHIP_REG_MCUCR
-// #define CHIP_SLEEP_ENABLE_BIT_0_BIT                                 5
+#define CHIP_SLEEP_MODE_BIT_0_REG                                   CHIP_REG_SLEEP_CTRLA
+#define CHIP_SLEEP_MODE_BIT_0_BIT                                   1
+#define CHIP_SLEEP_MODE_BIT_1_REG                                   CHIP_REG_SLEEP_CTRLA
+#define CHIP_SLEEP_MODE_BIT_1_BIT                                   2
+
+#define CHIP_SLEEP_ENABLE_BIT_0_REG                                 CHIP_REG_SLEEP_CTRLA
+#define CHIP_SLEEP_ENABLE_BIT_0_BIT                                 0
 
 // // //------------------------------------------------
 // // // Status Register
