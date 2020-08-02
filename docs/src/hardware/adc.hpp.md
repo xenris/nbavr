@@ -23,6 +23,7 @@ const uint16_t value = nblib::hw::Adc0::value();
 #### enum AdcN::Reference
 * aref
 * avcc
+* vdd
 * internal
 * internal_1_1
 * internal_2_56
@@ -39,6 +40,8 @@ const uint16_t value = nblib::hw::Adc0::value();
 * adc7
 * adc8
 * vbg
+* internal
+* temperature
 * gnd
 
 #### enum AdcN::Prescaler
@@ -49,10 +52,12 @@ const uint16_t value = nblib::hw::Adc0::value();
 * div32
 * div64
 * div128
+* div256
 
 #### enum AdcN::Trigger
 * singleConversion
 * freeRunning
+* event
 * analogComparator
 * externalInt0
 * timer0CompareMatchA
@@ -60,7 +65,6 @@ const uint16_t value = nblib::hw::Adc0::value();
 * timer1CompareMatchB
 * timer1Overflow
 * timer1CaptureEvent
-* freeRunning
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
@@ -69,6 +73,8 @@ const uint16_t value = nblib::hw::Adc0::value();
 #### static void start()
 
 #### static uint16_t value()
+
+#### static uint8/16_t result()
 
 #### static void reference([AdcN::Reference](adc.hpp.md#enum-adcnreference) r)
 

@@ -17,7 +17,7 @@
 
 namespace nblib::hw {
 
-/// ## class {{Clock}}
+/// ## class Clock
 struct Clock {
     Clock() = delete;
     Clock& operator=(const Clock&) = delete;
@@ -126,7 +126,7 @@ struct Clock {
     #endif
 
     #if REG_DEFINED(CLOCK(PRESCALER_REG))
-        /// #### static void prescaler([[Clock::prescaler]])
+        /// #### static void prescaler([[Clock::Prescaler]])
         static force_inline void prescaler(Prescaler p) {
             using T = REG_TYPE(CLOCK(PRESCALER_REG));
 

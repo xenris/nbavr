@@ -43,4 +43,5 @@ e.g. DEFINED(0) -> true
 
 #### REG_DEFINED(A)
 If A evaluates to a register -> true<br>
-e.g. REG_DEFINED(CHIP_REG_ADC) -> true (On devices with that register.)
+e.g. REG_DEFINED(CHIP_REG_ADC) -> true (On devices with that register.)<br>
+Note: Register at address 0x00 will always return false.

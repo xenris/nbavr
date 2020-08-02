@@ -38,6 +38,10 @@ while(true) {
 * outputAlternatePushPull50MHz
 * outputAlternateOpenDrain50MHz
 
+#### enum Pin::Direction
+* input
+* output
+
 #### enum Pin::Value
 * low
 * high
@@ -46,14 +50,28 @@ while(true) {
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
-#### static void mode([Pin::Mode](pin.xpp.md#enum-pinmode) m)
+#### static void direction([Pin::Direction](pin.xpp.md#enum-pindirection))
+
+#### static [Pin::Direction](pin.xpp.md#enum-pindirection) direction()
+
+#### static void mode([Pin::Mode](pin.xpp.md#enum-pinmode))
 
 #### static [Pin::Mode](pin.xpp.md#enum-pinmode) mode()
 
-#### static void output([Pin::Value](pin.xpp.md#enum-pinvalue) v)
+#### static void output([Pin::Value](pin.xpp.md#enum-pinvalue))
 
 #### static [Pin::Value](pin.xpp.md#enum-pinvalue) output()
 
 #### static [Pin::Value](pin.xpp.md#enum-pinvalue) input()
 
 #### static void toggle()
+
+#### static void outputToggle()
+
+#### static void pullup(bool enable)
+
+#### static bool pullup()
+
+#### static void pulldown(bool enable)
+
+#### static bool pulldown()

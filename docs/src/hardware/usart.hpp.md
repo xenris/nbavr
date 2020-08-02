@@ -44,6 +44,12 @@ Usart::dataRegisterEmptyCallback((callback_t)f);
 * txRisingRxFalling
 * txFallingRxRising
 
+#### enum UsartN::BaudMode
+* normal
+* doubleSpeed
+* genericAuto
+* linAuto
+
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
 #### static void mode([UsartN::Mode](usart.hpp.md#enum-usartnmode) m)
@@ -60,8 +66,12 @@ Usart::dataRegisterEmptyCallback((callback_t)f);
 
 #### static void use2X(bool u)
 
+#### static void baudMode(bool u)
+
 #### static void setBaudRate<cpuFreq, baudRate>()
 Set the baud and 2x registers from the given CPU frequency and baud rate.
+
+#### static void enableAlternatePins(bool)
 
 #### static void receiverEnable(bool e)
 
@@ -94,6 +104,14 @@ Set the baud and 2x registers from the given CPU frequency and baud rate.
 #### static uint8_t pop()
 
 #### static uint16_t pop9()
+
+#### static uint8_t rxData()
+
+#### static uint16_t rxData9()
+
+#### static void txData(uint8_t)
+
+#### static void txData9(uint16_t)
 
 #### static bool frameError()
 

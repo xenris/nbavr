@@ -84,3 +84,9 @@ Enable/disable interrupts.
 
 #### bool interruptsEnabled()
 Returns true if interrupts are enabled.
+
+#### enum System::ConfigChangeProtection
+* selfProgram
+* ioReg
+
+#### static void allowConfigChange([System::ConfigChangeProtection](system.hpp.md#enum-systemconfigchangeprotection))

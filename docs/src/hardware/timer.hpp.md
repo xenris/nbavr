@@ -24,9 +24,6 @@ atomic([]() {
 
 ## Class TimerN
 
-#### Type
-The underlying type of this timer/counter. (uint8_t or uint16_t)
-
 #### enum TimerN::Clock
 * none
 * div1
@@ -54,6 +51,11 @@ The underlying type of this timer/counter. (uint8_t or uint16_t)
 * fastPwm
 * pwmOcra
 * fastPwmOcra
+* frequency
+* singleSlopePwm
+* dualSlopePwmOverflowTop
+* dualSlopePwmOverflowBottom
+* dualSlopePwmOverflowBoth
 
 #### static [HardwareType](hardwaretype.hpp.md#enum-hardwaretype) getHardwareType()
 
@@ -61,13 +63,25 @@ The underlying type of this timer/counter. (uint8_t or uint16_t)
 
 #### static T counter()
 
+#### static void enable(bool)
+
+#### static void top(T value)
+
+#### static T top()
+
 #### static void clock([TimerN::Clock](timer.hpp.md#enum-timernclock) c)
 
 #### static void waveform([TimerN::Waveform](timer.hpp.md#enum-timernwaveform) w)
 
+#### static void overflowIntEnable(bool)
+
 #### static void intEnable(bool b)
 
+#### static bool overflowIntFlag()
+
 #### static bool intFlag()
+
+#### static void overflowIntFlagClear()
 
 #### static void intFlagClear()
 
@@ -77,6 +91,36 @@ Resets the *shared* timer prescaler to zero.
 #### static void synchronizeMode(bool b)
 Set to true then call prescalerReset() to hold the timers' prescalers at zero, effectively pausing the timers.
 Set back to false to start all timers at exactly the same time.
+
+#### static void compareA(T value)
+
+#### static T compareA()
+
+#### static void compareB(T value)
+
+#### static T compareB()
+
+#### static void compareC(T value)
+
+#### static T compareC()
+
+#### static void compareAOutputEnable(bool)
+
+#### static void compareBOutputEnable(bool)
+
+#### static void compareCOutputEnable(bool)
+
+#### static void compareAIntEnable(bool)
+
+#### static void compareBIntEnable(bool)
+
+#### static void compareCIntEnable(bool)
+
+#### static void compareAIntFlagClear\(\)
+
+#### static void compareBIntFlagClear\(\)
+
+#### static void compareCIntFlagClear\(\)
 
 ## class OutputX
 See [TimerN::OutputX](output.xpp.md#class-timernoutputx)
