@@ -25,6 +25,13 @@
 
 ///   e.g. "w Adc::channel(Adc::Channel::ADC4) 7c:00:04:7c:ff:f4:"
 
+// TODO Elaborate.
+// What to define in chip definitions:
+// REG, memory ADDR and TYPE
+// MASK, the bits of the register to include
+// ID, the value and meaning of the bits
+// PURE, if this register is write only or a flag register
+
 #ifndef NBLIB_CHIP_HPP
 #define NBLIB_CHIP_HPP
 

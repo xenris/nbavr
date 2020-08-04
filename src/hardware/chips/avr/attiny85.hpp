@@ -196,8 +196,8 @@
 #define CHIP_PIN_B0_INPUT_BIT_0_REG                                 CHIP_REG_PINB
 #define CHIP_PIN_B0_OUTPUT_BIT_0_BIT                                0
 #define CHIP_PIN_B0_OUTPUT_BIT_0_REG                                CHIP_REG_PORTB
-#define CHIP_PIN_B0_TOGGLE_BIT_0_BIT                                0
-#define CHIP_PIN_B0_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
+#define CHIP_PIN_B0_OUTPUT_TOGGLE_BIT                               0
+#define CHIP_PIN_B0_OUTPUT_TOGGLE_REG                               CHIP_REG_PINB
 #define CHIP_PIN_B0_PULLUP_BIT_0_BIT                                0
 #define CHIP_PIN_B0_PULLUP_BIT_0_REG                                CHIP_REG_PORTB
 
@@ -208,8 +208,8 @@
 #define CHIP_PIN_B1_INPUT_BIT_0_REG                                 CHIP_REG_PINB
 #define CHIP_PIN_B1_OUTPUT_BIT_0_BIT                                1
 #define CHIP_PIN_B1_OUTPUT_BIT_0_REG                                CHIP_REG_PORTB
-#define CHIP_PIN_B1_TOGGLE_BIT_0_BIT                                1
-#define CHIP_PIN_B1_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
+#define CHIP_PIN_B1_OUTPUT_TOGGLE_BIT                               1
+#define CHIP_PIN_B1_OUTPUT_TOGGLE_REG                               CHIP_REG_PINB
 #define CHIP_PIN_B1_PULLUP_BIT_0_BIT                                1
 #define CHIP_PIN_B1_PULLUP_BIT_0_REG                                CHIP_REG_PORTB
 
@@ -220,8 +220,8 @@
 #define CHIP_PIN_B2_INPUT_BIT_0_REG                                 CHIP_REG_PINB
 #define CHIP_PIN_B2_OUTPUT_BIT_0_BIT                                2
 #define CHIP_PIN_B2_OUTPUT_BIT_0_REG                                CHIP_REG_PORTB
-#define CHIP_PIN_B2_TOGGLE_BIT_0_BIT                                2
-#define CHIP_PIN_B2_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
+#define CHIP_PIN_B2_OUTPUT_TOGGLE_BIT                               2
+#define CHIP_PIN_B2_OUTPUT_TOGGLE_REG                               CHIP_REG_PINB
 #define CHIP_PIN_B2_PULLUP_BIT_0_BIT                                2
 #define CHIP_PIN_B2_PULLUP_BIT_0_REG                                CHIP_REG_PORTB
 
@@ -232,8 +232,8 @@
 #define CHIP_PIN_B3_INPUT_BIT_0_REG                                 CHIP_REG_PINB
 #define CHIP_PIN_B3_OUTPUT_BIT_0_BIT                                3
 #define CHIP_PIN_B3_OUTPUT_BIT_0_REG                                CHIP_REG_PORTB
-#define CHIP_PIN_B3_TOGGLE_BIT_0_BIT                                3
-#define CHIP_PIN_B3_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
+#define CHIP_PIN_B3_OUTPUT_TOGGLE_BIT                               3
+#define CHIP_PIN_B3_OUTPUT_TOGGLE_REG                               CHIP_REG_PINB
 #define CHIP_PIN_B3_PULLUP_BIT_0_BIT                                3
 #define CHIP_PIN_B3_PULLUP_BIT_0_REG                                CHIP_REG_PORTB
 
@@ -244,8 +244,8 @@
 #define CHIP_PIN_B4_INPUT_BIT_0_REG                                 CHIP_REG_PINB
 #define CHIP_PIN_B4_OUTPUT_BIT_0_BIT                                4
 #define CHIP_PIN_B4_OUTPUT_BIT_0_REG                                CHIP_REG_PORTB
-#define CHIP_PIN_B4_TOGGLE_BIT_0_BIT                                4
-#define CHIP_PIN_B4_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
+#define CHIP_PIN_B4_OUTPUT_TOGGLE_BIT                               4
+#define CHIP_PIN_B4_OUTPUT_TOGGLE_REG                               CHIP_REG_PINB
 #define CHIP_PIN_B4_PULLUP_BIT_0_BIT                                4
 #define CHIP_PIN_B4_PULLUP_BIT_0_REG                                CHIP_REG_PORTB
 
@@ -256,8 +256,8 @@
 #define CHIP_PIN_B5_INPUT_BIT_0_REG                                 CHIP_REG_PINB
 #define CHIP_PIN_B5_OUTPUT_BIT_0_BIT                                5
 #define CHIP_PIN_B5_OUTPUT_BIT_0_REG                                CHIP_REG_PORTB
-#define CHIP_PIN_B5_TOGGLE_BIT_0_BIT                                5
-#define CHIP_PIN_B5_TOGGLE_BIT_0_REG                                CHIP_REG_PINB
+#define CHIP_PIN_B5_OUTPUT_TOGGLE_BIT                               5
+#define CHIP_PIN_B5_OUTPUT_TOGGLE_REG                               CHIP_REG_PINB
 #define CHIP_PIN_B5_PULLUP_BIT_0_BIT                                5
 #define CHIP_PIN_B5_PULLUP_BIT_0_REG                                CHIP_REG_PORTB
 
