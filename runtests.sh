@@ -1,12 +1,30 @@
-#!/bin/sh
+#!/bin/bash
 
-tup
+microcontrollers="
+    atmega2560
+    atmega328p
+    atmega328pb
+    atmega8
+    attiny85
+    attiny402
+    stm32f103c8_md
+"
 
-if [ "$?" -ne 0 ] ; then
-    exit -1
-fi
+CFLAGS="-std=c++17 -Werror -Wall -ferror-limit=3 -fdiagnostics-color=always -lgtest"
+
+set -e
 
 cd test/
+
+rm -f test_*
+
+if [[ $# -eq 0 ]]; then
+    list=$microcontrollers
+else
+    list=$*
+fi
+
+parallel --tag clang++ -I../src/ $CFLAGS -D__{}__ test.cpp -o test_{} ::: $list
 
 declare -a tests=($(find -name 'test_*'))
 
