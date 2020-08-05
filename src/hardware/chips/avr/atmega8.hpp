@@ -4,11 +4,6 @@
 #define CHIP atmega8
 
 //------------------------------------------------
-// Memory
-
-#define CHIP_RAM_SIZE                                               1024
-
-//------------------------------------------------
 // Registers
 
 #define CHIP_REG_TWBR_ADDR                                          0x20

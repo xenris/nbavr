@@ -271,10 +271,6 @@
 #define CHIP_VECT_
 
 //------------------------------------------------
-
-#define CHIP_RAM_SIZE                                               2048
-
-//------------------------------------------------
 // RCC.
 
 #define CHIP_REG_APB2_ADDR                                          (CHIP_ADDR_RCC + 0x18)

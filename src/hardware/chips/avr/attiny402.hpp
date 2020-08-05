@@ -12,11 +12,6 @@
 // TODO Voltage Reference, Usart, Port Multiplexer
 
 //------------------------------------------------
-// Memory
-
-#define CHIP_RAM_SIZE                                               256
-
-//------------------------------------------------
 // Modules
 
 #define CHIP_MODULE_VPORT_A_ADDR                                    0x0000

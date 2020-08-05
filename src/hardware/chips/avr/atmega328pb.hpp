@@ -4,11 +4,6 @@
 #define CHIP atmega328pb
 
 //------------------------------------------------
-// Memory
-
-#define CHIP_RAM_SIZE                                               (1024 * 2)
-
-//------------------------------------------------
 // Registers
 
 #define CHIP_REG_PINB_ADDR                                          0x23

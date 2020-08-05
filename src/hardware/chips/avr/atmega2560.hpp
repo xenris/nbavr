@@ -4,11 +4,6 @@
 #define CHIP atmega2560
 
 //------------------------------------------------
-// Memory
-
-#define CHIP_RAM_SIZE                                               (1024 * 8)
-
-//------------------------------------------------
 // Registers
 
 #define CHIP_REG_PINA_ADDR                                          0x20
