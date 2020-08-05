@@ -28,6 +28,8 @@ parallel --tag clang++ -I../src/ $CFLAGS -D__{}__ test.cpp -o test_{} ::: $list
 
 declare -a tests=($(find -name 'test_*'))
 
+set +e
+
 for test in "${tests[@]}" ; do
     chip=$test
 
