@@ -10,7 +10,7 @@ microcontrollers="
 "
     # stm32f103c8_md
 
-CFLAGS="-std=c++17 -Werror -Wall -ferror-limit=3 -fdiagnostics-color=always -lgtest"
+CFLAGS="-std=c++20 -Werror -Wall -ferror-limit=3 -fdiagnostics-color=always -lgtest"
 
 set -e
 
