@@ -7,8 +7,8 @@ microcontrollers="
     atmega8
     attiny85
     attiny402
-    stm32f103c8_md
 "
+    # stm32f103c8_md
 
 CFLAGS="-std=c++17 -Werror -Wall -ferror-limit=3 -fdiagnostics-color=always -lgtest"
 
