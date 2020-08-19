@@ -19,7 +19,7 @@
     #define TWI_N(A) CAT(CHIP_TWI_, N, _, A)
     #define _TWI_N(A) UNDERLINE(TWI, N, A)
 
-    #if CAT(CHIP_TWI_, N)
+    #if DEFINED(CAT(CHIP_TWI_, N))
 
 //------------------------------------------------------------------
 
@@ -31,17 +31,30 @@ struct TwiN {
     TwiN& operator=(const TwiN&) = delete;
     TwiN(const TwiN&) = delete;
 
-    /// #### enum {{TwiN::Prescaler}}
-    /// * div1
-    /// * div4
-    /// * div16
-    /// * div64
-    enum class Prescaler {
-        div1 = TWI_N(PRESCALER_1_ID),
-        div4 = TWI_N(PRESCALER_4_ID),
-        div16 = TWI_N(PRESCALER_16_ID),
-        div64 = TWI_N(PRESCALER_64_ID),
-    };
+    #if REG_DEFINED(TWI_N(PRESCALER_REG))
+        /// #### enum {{TwiN::Prescaler}}
+        /// * div1
+        /// * div4
+        /// * div16
+        /// * div64
+        enum class Prescaler {
+            #if DEFINED(TWI_N(PRESCALER_1_ID))
+                div1 = TWI_N(PRESCALER_1_ID),
+            #endif
+
+            #if DEFINED(TWI_N(PRESCALER_4_ID))
+                div4 = TWI_N(PRESCALER_4_ID),
+            #endif
+
+            #if DEFINED(TWI_N(PRESCALER_16_ID))
+                div16 = TWI_N(PRESCALER_16_ID),
+            #endif
+
+            #if DEFINED(TWI_N(PRESCALER_64_ID))
+                div64 = TWI_N(PRESCALER_64_ID),
+            #endif
+        };
+    #endif
 
     /// #### enum {{TwiN::Status}}
     /// * startTransmitted
@@ -71,35 +84,38 @@ struct TwiN {
     /// * lastDataTransmittedAck
     /// * noState
     /// * busError
-    enum class Status : uint8_t {
-        busError = 0x00,
-        startTransmitted = 0x08,
-        repeatedStartTransmitted = 0x10,
-        slawTransmittedAck = 0x18,
-        slawTransmittedNack = 0x20,
-        dataTransmittedAck = 0x28,
-        dataTransmittedNack = 0x30,
-        arbitrationLost = 0x38,
-        slarTransmittedAck = 0x40,
-        slarTransmittedNack = 0x48,
-        dataReceivedAck = 0x50,
-        dataReceivedNack = 0x58,
-        ownSlawReceivedAck = 0x60,
-        arbitrationLostOwnSlawAck = 0x68,
-        generalCallAddressReceivedAck = 0x70,
-        arbitrationLostGeneralCallAddressReceivedAck = 0x78,
-        prevAddressedOwnSlawDataReceivedAck = 0x80,
-        prevAddressedOwnSlawDataReceivedNack = 0x88,
-        prevAddressedGeneralCallDataReceivedAck = 0x90,
-        prevAddressedGeneralCallDataReceivedNack = 0x98,
-        stopOrRepeatedStartWhileAddressedAsSlave = 0xA0,
-        ownSlarReceivedAck = 0xA8,
-        arbitrationLostOwnSLARAck = 0xB0,
-        dataInTwdrTransmittedAck = 0xB8,
-        dataInTwdrTransmittedNack = 0xC0,
-        lastDataTransmittedAck = 0xC8,
-        noState = 0xF8,
-    };
+    // TODO Look at status bits in other microcontrollers to see if they are all
+    //  the same or if they need to be defined in the chip description.
+    // TODO Split into master/slave receive/transmit.
+    // enum class Status : uint8_t {
+    //     busError = 0x00,
+    //     startTransmitted = 0x08,
+    //     repeatedStartTransmitted = 0x10,
+    //     slawTransmittedAck = 0x18,
+    //     slawTransmittedNack = 0x20,
+    //     dataTransmittedAck = 0x28,
+    //     dataTransmittedNack = 0x30,
+    //     arbitrationLost = 0x38,
+    //     slarTransmittedAck = 0x40,
+    //     slarTransmittedNack = 0x48,
+    //     dataReceivedAck = 0x50,
+    //     dataReceivedNack = 0x58,
+    //     ownSlawReceivedAck = 0x60,
+    //     arbitrationLostOwnSlawAck = 0x68,
+    //     generalCallAddressReceivedAck = 0x70,
+    //     arbitrationLostGeneralCallAddressReceivedAck = 0x78,
+    //     prevAddressedOwnSlawDataReceivedAck = 0x80,
+    //     prevAddressedOwnSlawDataReceivedNack = 0x88,
+    //     prevAddressedGeneralCallDataReceivedAck = 0x90,
+    //     prevAddressedGeneralCallDataReceivedNack = 0x98,
+    //     stopOrRepeatedStartWhileAddressedAsSlave = 0xA0,
+    //     ownSlarReceivedAck = 0xA8,
+    //     arbitrationLostOwnSLARAck = 0xB0,
+    //     dataInTwdrTransmittedAck = 0xB8,
+    //     dataInTwdrTransmittedNack = 0xC0,
+    //     lastDataTransmittedAck = 0xC8,
+    //     noState = 0xF8,
+    // };
 
     /// #### static [[HardwareType]] getHardwareType()
     /// Get the type of hardware that this class represents.
@@ -107,136 +123,114 @@ struct TwiN {
         return HardwareType::twi;
     }
 
-    /// #### static void enable(bool e)
-    /// Enable/disable the Twi.
-    static force_inline void enable(bool e) {
-        setBit_(REG(TWI_N(ENABLE_REG)), TWI_N(ENABLE_BIT), e);
-    }
+    #if REG_DEFINED(TWI_N(ENABLE_REG))
+        /// #### static void enable(bool)
+        static force_inline void enable(bool e) {
+            TWI_N(ENABLE_REG)::setBit(TWI_N(ENABLE_BIT), e);
+        }
+    #endif
 
-    /// #### static void sendStart(bool intEnable = true)
-    /// Send a start condition.
-    static force_inline void sendStart(bool intEnable = true) {
-        using T = REG_TYPE(TWI_N(CONTROL_REG));
+    #if REG_DEFINED(TWI_N(ENABLE_ACK_REG))
+        /// #### static void enableAck(bool)
+        static force_inline void enableAck(bool e) {
+            TWI_N(ENABLE_ACK_REG)::setBit(TWI_N(ENABLE_ACK_BIT), e);
+        }
+    #endif
 
-        const T enable = bv<T>(TWI_N(ENABLE_BIT));
-        const T start = bv<T>(TWI_N(START_CONDITION_BIT));
-        const T flagClear = bv<T>(TWI_N(INT_FLAG_BIT));
-        const T interrupt = intEnable ? bv<T>(TWI_N(INT_ENABLE_BIT)) : 0;
+    #if REG_DEFINED(TWI_N(START_CONDITION_REG))
+        /// #### static void startCondition(bool)
+        static force_inline void startCondition(bool e) {
+            TWI_N(START_CONDITION_REG)::setBit(TWI_N(START_CONDITION_BIT), e);
+        }
+    #endif
 
-        setReg_(REG(TWI_N(CONTROL_REG)), T(enable | start | flagClear | interrupt));
-    }
+    #if REG_DEFINED(TWI_N(STOP_CONDITION_REG))
+        /// #### static void stopCondition(bool)
+        static force_inline void stopCondition(bool e) {
+            TWI_N(STOP_CONDITION_REG)::setBit(TWI_N(STOP_CONDITION_BIT), e);
+        }
+    #endif
 
-    /// #### static void sendStop(bool intEnable = true)
-    /// Send stop condition.
-    static force_inline void sendStop() {
-        using T = REG_TYPE(TWI_N(CONTROL_REG));
+    #if REG_DEFINED(TWI_N(BIT_RATE_REG))
+        /// #### static void bitRate(uint8_t b)
+        static force_inline void bitRate(uint8_t b) {
+            TWI_N(BIT_RATE_REG)::setReg(b);
+        }
+    #endif
 
-        const T enable = bv<T>(TWI_N(ENABLE_BIT));
-        const T stop = bv<T>(TWI_N(STOP_CONDITION_BIT));
-        const T flagClear = bv<T>(TWI_N(INT_FLAG_BIT));
+    #if REG_DEFINED(TWI_N(INT_ENABLE_REG))
+        /// #### static void intEnable(bool e)
+        static force_inline void intEnable(bool e) {
+            TWI_N(INT_ENABLE_REG)::setBit(TWI_N(INT_ENABLE_BIT), e);
+        }
+    #endif
 
-        setReg_(REG(TWI_N(CONTROL_REG)), T(enable | stop | flagClear));
-    }
+    #if REG_DEFINED(TWI_N(INT_FLAG_REG))
+        /// #### static bool intFlag()
+        static force_inline bool intFlag() {
+            return TWI_N(INT_FLAG_REG)::getBit(TWI_N(INT_FLAG_BIT));
+        }
 
-    /// #### static void sendAck(bool intEnable = true)
-    /// Send acknowledge condition.
-    static force_inline void sendAck(bool intEnable = true) {
-        using T = REG_TYPE(TWI_N(CONTROL_REG));
+        /// #### static bool intFlagClear()
+        static force_inline void intFlagClear() {
+            TWI_N(INT_FLAG_REG)::setBit(TWI_N(INT_FLAG_BIT), true);
+        }
+    #endif
 
-        const T enable = bv<T>(TWI_N(ENABLE_BIT));
-        const T ack = bv<T>(TWI_N(ENABLE_ACK_BIT));
-        const T flagClear = bv<T>(TWI_N(INT_FLAG_BIT));
-        const T interrupt = intEnable ? bv<T>(TWI_N(INT_ENABLE_BIT)) : 0;
+    #if REG_DEFINED(TWI_N(WRITE_COLLISION_FLAG_REG))
+        /// #### static bool writeCollisionFlag()
+        static force_inline bool writeCollisionFlag() {
+            return TWI_N(WRITE_COLLISION_FLAG_REG)::getBit(TWI_N(WRITE_COLLISION_FLAG_BIT));
+        }
+    #endif
 
-        setReg_(REG(TWI_N(CONTROL_REG)), T(enable | ack | flagClear | interrupt));
-    }
+    #if REG_DEFINED(TWI_N(STATUS_REG))
+        // /// #### static [[TwiN::Status]] status()
+        /// #### static uint8_t status()
+        static force_inline uint8_t status() {
+            return TWI_N(STATUS_REG)::getReg() & TWI_N(STATUS_MASK);
+        }
+    #endif
 
-    /// #### static void sendNack(bool intEnable = true)
-    /// Send not acknowledge condition.
-    static force_inline void sendNack(bool intEnable = true) {
-        using T = REG_TYPE(TWI_N(CONTROL_REG));
+    #if REG_DEFINED(TWI_N(PRESCALER_REG))
+        /// #### static void prescaler([[TwiN::Prescaler]] p)
+        static force_inline void prescaler(Prescaler p) {
+            TWI_N(PRESCALER_REG)::setBits(TWI_N(PRESCALER_MASK), p);
+        }
+    #endif
 
-        const T enable = bv<T>(TWI_N(ENABLE_BIT));
-        const T flagClear = bv<T>(TWI_N(INT_FLAG_BIT));
-        const T interrupt = intEnable ? bv<T>(TWI_N(INT_ENABLE_BIT)) : 0;
+    #if REG_DEFINED(TWI_N(ADDRESS_REG))
+        /// #### static void data(uint8_t b)
+        static force_inline void data(uint8_t b) {
+            TWI_N(DATA_REG)::setReg(b);
+        }
 
-        setReg_(REG(TWI_N(CONTROL_REG)), T(enable | flagClear | interrupt));
-    }
+        /// #### static uint8_t data()
+        static force_inline uint8_t data() {
+            return TWI_N(DATA_REG)::getReg();
+        }
+    #endif
 
-    /// #### static void bitRate(uint8_t b)
-    /// Set Twi bitRate.
-    static force_inline void bitRate(uint8_t b) {
-        setReg_(REG(TWI_N(BIT_RATE_REG)), b);
-    }
+    #if REG_DEFINED(TWI_N(ADDRESS_REG))
+        /// #### static void address(uint8_t b)
+        static force_inline void address(uint8_t b) {
+            TWI_N(ADDRESS_REG)::setReg(b & TWI_N(ADDRESS_MASK));
+        }
+    #endif
 
-    /// #### static bool intFlag()
-    /// Returns true if the interrupt flag is set.
-    static force_inline bool intFlag() {
-        return getBit_(REG(TWI_N(INT_FLAG_REG)), TWI_N(INT_FLAG_BIT));
-    }
+    #if REG_DEFINED(TWI_N(ADDRESS_MASK_REG))
+        /// #### static void addressMask(uint8_t b)
+        static force_inline void addressMask(uint8_t b) {
+            TWI_N(ADDRESS_MASK_REG)::setReg(b & TWI_N(ADDRESS_MASK_MASK));
+        }
+    #endif
 
-    /// #### static bool active()
-    /// Returns true if the twi hardware is busy.
-    static force_inline bool active() {
-        return getBit_(REG(TWI_N(CONTROL_REG)), TWI_N(ENABLE_BIT))
-            && (getBit_(REG(TWI_N(CONTROL_REG)), TWI_N(START_CONDITION_BIT))
-            || getBit_(REG(TWI_N(CONTROL_REG)), TWI_N(STOP_CONDITION_BIT)));
-    }
-
-    /// #### static bool writeCollisionFlag()
-    /// Returns true if the write collision flag is set.
-    static force_inline bool writeCollisionFlag() {
-        return getBit_(REG(TWI_N(WRITE_COLLISION_FLAG_REG)), TWI_N(WRITE_COLLISION_FLAG_BIT));
-    }
-
-    /// #### static void intEnable(bool e)
-    /// Enable/disable the Twi interrupt.
-    static force_inline void intEnable(bool e) {
-        setBit_(REG(TWI_N(INT_ENABLE_REG)), TWI_N(INT_ENABLE_BIT), e);
-    }
-
-    /// #### static [[TwiN::Status]] status()
-    /// Get the Twi status.
-    static force_inline Status status() {
-        return Status(int(getReg_(REG(TWI_N(STATUS_REG))) & 0xF8));
-    }
-
-    /// #### static void prescaler([[TwiN::Prescaler]] p)
-    /// Set the prescaler.
-    static force_inline void prescaler(Prescaler p) {
-        setBit_(REG(TWI_N(PRESCALER_BIT_0_REG)), TWI_N(PRESCALER_BIT_0_BIT), int(p) & 0x01);
-        setBit_(REG(TWI_N(PRESCALER_BIT_1_REG)), TWI_N(PRESCALER_BIT_1_BIT), int(p) & 0x02);
-    }
-
-    /// #### static void push(uint8_t b)
-    /// Put byte in data buffer.
-    static force_inline void push(uint8_t b) {
-        setReg_(REG(TWI_N(DATA_REG)), b);
-    }
-
-    /// #### static uint8_t pop()
-    /// Get byte from data buffer.
-    static force_inline uint8_t pop() {
-        return getReg_(REG(TWI_N(DATA_REG)));
-    }
-
-    /// #### static void slaveAddress(uint8_t b)
-    /// Set the address for transmitting and receiving as a slave.
-    static force_inline void slaveAddress(uint8_t b) {
-        setReg_(REG(TWI_N(SLAVE_ADDRESS_REG)), uint8_t(b & 0xfe));
-    }
-
-    /// #### static void slaveAddressMask(uint8_t b)
-    /// Set the slave address mask.
-    static force_inline void slaveAddressMask(uint8_t b) {
-        setReg_(REG(TWI_N(SLAVE_ADDRESS_MASK_REG)), uint8_t(b & 0xfe));
-    }
-
-    /// #### static void generalCallRecognitionEnable(bool e)
-    /// Enable/disable the recognition of a Twi general call.
-    static force_inline void generalCallRecognitionEnable(bool e) {
-        setBit_(REG(TWI_N(GEN_CALL_REC_ENABLE_REG)), TWI_N(GEN_CALL_REC_ENABLE_BIT), e);
-    }
+    #if REG_DEFINED(TWI_N(GEN_CALL_REC_ENABLE_REG))
+        /// #### static void generalCallRecognitionEnable(bool e)
+        static force_inline void generalCallRecognitionEnable(bool e) {
+            TWI_N(GEN_CALL_REC_ENABLE_REG)::setBit(TWI_N(GEN_CALL_REC_ENABLE_BIT), e);
+        }
+    #endif
 };
 
 #ifdef TEST
@@ -245,82 +239,103 @@ TEST(TwiN, getHardwareType) {
     ASSERT_EQ(TwiN::getHardwareType(), HardwareType::twi);
 }
 
-TEST(TwiN, enable) {
-    TEST_REG_WRITE(TwiN::enable(true));
-    TEST_REG_WRITE(TwiN::enable(false));
-}
+#if REG_DEFINED(TWI_N(ENABLE_REG))
+    TEST(TwiN, enable) {
+        TEST_REG_WRITE(TwiN::enable(true));
+        TEST_REG_WRITE(TwiN::enable(false));
+    }
+#endif
 
-TEST(TwiN, sendStart) {
-    TEST_REG_WRITE(TwiN::sendStart(true));
-    TEST_REG_WRITE(TwiN::sendStart(false));
-}
+#if REG_DEFINED(TWI_N(ENABLE_ACK_REG))
+    TEST(TwiN, enableAck) {
+        TEST_REG_WRITE(TwiN::enableAck(true));
+        TEST_REG_WRITE(TwiN::enableAck(false));
+    }
+#endif
 
-TEST(TwiN, sendStop) {
-    TEST_REG_WRITE(TwiN::sendStop());
-}
+#if REG_DEFINED(TWI_N(START_CONDITION_REG))
+    TEST(TwiN, startCondition) {
+        TEST_REG_WRITE(TwiN::startCondition(true));
+        TEST_REG_WRITE(TwiN::startCondition(false));
+    }
+#endif
 
-TEST(TwiN, sendAck) {
-    TEST_REG_WRITE(TwiN::sendAck(true));
-    TEST_REG_WRITE(TwiN::sendAck(false));
-}
+#if REG_DEFINED(TWI_N(STOP_CONDITION_REG))
+    TEST(TwiN, stopCondition) {
+        TEST_REG_WRITE(TwiN::stopCondition(true));
+        TEST_REG_WRITE(TwiN::stopCondition(false));
+    }
+#endif
 
-TEST(TwiN, sendNack) {
-    TEST_REG_WRITE(TwiN::sendNack(true));
-    TEST_REG_WRITE(TwiN::sendNack(false));
-}
+#if REG_DEFINED(TWI_N(BIT_RATE_REG))
+    TEST(TwiN, bitRate) {
+        TEST_REG_WRITE(TwiN::bitRate(0x12));
+    }
+#endif
 
-TEST(TwiN, bitRate) {
-    TEST_REG_WRITE(TwiN::bitRate(0x12));
-}
+#if REG_DEFINED(TWI_N(INT_ENABLE_REG))
+    TEST(TwiN, intEnable) {
+        TEST_REG_WRITE(TwiN::intEnable(true));
+        TEST_REG_WRITE(TwiN::intEnable(false));
+    }
+#endif
 
-TEST(TwiN, intFlag) {
-    TEST_REG_READ_WRITE(TwiN::intFlag());
-}
+#if REG_DEFINED(TWI_N(INT_FLAG_REG))
+    TEST(TwiN, intFlag) {
+        TEST_REG_READ_WRITE(TwiN::intFlag());
+    }
 
-TEST(TwiN, active) {
-    TEST_REG_READ_WRITE(TwiN::active());
-}
+    TEST(TwiN, intFlagClear) {
+        TEST_REG_WRITE(TwiN::intFlagClear());
+    }
+#endif
 
-TEST(TwiN, writeCollisionFlag) {
-    TEST_REG_READ_WRITE(TwiN::writeCollisionFlag());
-}
+#if REG_DEFINED(TWI_N(WRITE_COLLISION_FLAG_REG))
+    TEST(TwiN, writeCollisionFlag) {
+        TEST_REG_READ_WRITE(TwiN::writeCollisionFlag());
+    }
+#endif
 
-TEST(TwiN, intEnable) {
-    TEST_REG_WRITE(TwiN::intEnable(true));
-    TEST_REG_WRITE(TwiN::intEnable(false));
-}
+#if REG_DEFINED(TWI_N(STATUS_REG))
+    TEST(TwiN, status) {
+        TEST_REG_READ_WRITE(TwiN::status());
+    }
+#endif
 
-TEST(TwiN, status) {
-    TEST_REG_READ_WRITE(TwiN::status());
-}
+#if REG_DEFINED(TWI_N(PRESCALER_REG))
+    TEST(TwiN, prescaler) {
+        TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div1));
+        TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div4));
+        TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div16));
+        TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div64));
+    }
+#endif
 
-TEST(TwiN, prescaler) {
-    TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div1));
-    TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div4));
-    TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div16));
-    TEST_REG_WRITE(TwiN::prescaler(TwiN::Prescaler::div64));
-}
+#if REG_DEFINED(TWI_N(ADDRESS_REG))
+    TEST(TwiN, data) {
+        TEST_REG_WRITE(TwiN::data(0x12));
+        TEST_REG_READ_WRITE(TwiN::data());
+    }
+#endif
 
-TEST(TwiN, push) {
-    TEST_REG_WRITE(TwiN::push(0x12));
-}
+#if REG_DEFINED(TWI_N(ADDRESS_REG))
+    TEST(TwiN, address) {
+        TEST_REG_WRITE(TwiN::address(0x12));
+    }
+#endif
 
-TEST(TwiN, pop) {
-    TEST_REG_READ_WRITE(TwiN::pop());
-}
+#if REG_DEFINED(TWI_N(ADDRESS_MASK_REG))
+    TEST(TwiN, addressMask) {
+        TEST_REG_WRITE(TwiN::addressMask(0x12));
+    }
+#endif
 
-TEST(TwiN, slaveAddress) {
-    TEST_REG_WRITE(TwiN::slaveAddress(0x12));
-}
-
-TEST(TwiN, slaveAddressMask) {
-    TEST_REG_WRITE(TwiN::slaveAddressMask(0x12));
-}
-
-TEST(TwiN, generalCallRecognitionEnable) {
-    TEST_REG_WRITE(TwiN::generalCallRecognitionEnable(true));
-    TEST_REG_WRITE(TwiN::generalCallRecognitionEnable(false));
-}
+#if REG_DEFINED(TWI_N(GEN_CALL_REC_ENABLE_REG))
+    TEST(TwiN, generalCallRecognitionEnable) {
+        TEST_REG_WRITE(TwiN::generalCallRecognitionEnable(true));
+        TEST_REG_WRITE(TwiN::generalCallRecognitionEnable(false));
+    }
+#endif
 
 #endif // TEST
 

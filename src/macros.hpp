@@ -221,9 +221,14 @@
 /// #### REG_DEFINED(A)
 /// If A evaluates to a register -> true<br>
 /// e.g. REG_DEFINED(CHIP_REG_ADC) -> true (On devices with that register.)<br>
-/// Note: Register at address 0x00 will always return false.
-#define REG_DEFINED(A) REG_DEFINED_(A)
-#define REG_DEFINED_(A) A ## _ADDR
+
+#define REG_DEFINED(...) REG_DEFINED_N(__VA_ARGS__, REG_DEFINED_4, REG_DEFINED_3, REG_DEFINED_2, REG_DEFINED_1, REG_DEFINED_0)(__VA_ARGS__)
+#define REG_DEFINED_N(_0, _1, _2, _3, NAME, ...) NAME
+#define REG_DEFINED_0() 0
+#define REG_DEFINED_1(A) 0
+#define REG_DEFINED_2(A, B) 1
+#define REG_DEFINED_3(A, B, C) 1
+#define REG_DEFINED_4(A, B, C, D) 1
 
 #define FIRST(A, ...) A
 #define SECOND(A, B, ...) B

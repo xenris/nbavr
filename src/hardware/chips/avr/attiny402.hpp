@@ -5,11 +5,8 @@
 
 // TODO
 // 402 404 406 202 204 and others seem to be all nearly the same.
-// Remove CHIP_RAM_SIZE (maybe use the linker defined version, if needed.)
-// Then all the hardware descriptions should be very similar for these
-// chips, allowing for reuse of hardware descriptions.
 
-// TODO Voltage Reference, Usart, Port Multiplexer
+// TODO Port Multiplexer. Should this be its own hardware, or part of the relevant hardware?
 
 //------------------------------------------------
 // Modules
@@ -45,6 +42,158 @@
 #define CHIP_MODULE_USERROW_ADDR                                    0x1300
 
 //------------------------------------------------
+// Registers
+
+#define CHIP_REG_VPORT_A_DIR                                        Register<uint8_t, CHIP_MODULE_VPORT_A_ADDR + 0x00>
+#define CHIP_REG_VPORT_A_OUT                                        Register<uint8_t, CHIP_MODULE_VPORT_A_ADDR + 0x01>
+#define CHIP_REG_VPORT_A_IN                                         Register<uint8_t, CHIP_MODULE_VPORT_A_ADDR + 0x02>
+#define CHIP_REG_VPORT_A_INTFLAGS                                   Register<uint8_t, CHIP_MODULE_VPORT_A_ADDR + 0x03, 0xFF>
+
+// TODO GPIO
+
+#define CHIP_REG_CPU_CCP                                            Register<uint8_t, CHIP_MODULE_CPU_ADDR + 0x04>
+#define CHIP_REG_CPU_SP                                             Register<uint16_t, CHIP_MODULE_CPU_ADDR + 0x0D>
+#define CHIP_REG_CPU_SREG                                           Register<uint8_t, CHIP_MODULE_CPU_ADDR + 0x0F>
+
+#define CHIP_REG_RSTCTRL_RSTFR                                      Register<uint8_t, CHIP_MODULE_RSTCTRL_ADDR + 0x00>
+#define CHIP_REG_RSTCTRL_SWRR                                       Register<uint8_t, CHIP_MODULE_RSTCTRL_ADDR + 0x01>
+
+#define CHIP_REG_SLPCTRL_CTRLA                                      Register<uint8_t, CHIP_MODULE_SLPCTRL_ADDR + 0x00>
+
+#define CHIP_REG_CLKCTRL_MCLKCTRLA                                  Register<uint8_t, CHIP_MODULE_CLKCTRL_ADDR + 0x00, 0xFC, Ccp::ioReg>
+#define CHIP_REG_CLKCTRL_MCLKCTRLB                                  Register<uint8_t, CHIP_MODULE_CLKCTRL_ADDR + 0x01, 0xE0, Ccp::ioReg>
+#define CHIP_REG_CLKCTRL_MCLKLOCK                                   Register<uint8_t, CHIP_MODULE_CLKCTRL_ADDR + 0x02, 0xFE, Ccp::ioReg>
+#define CHIP_REG_CLKCTRL_MCLKSTATUS                                 Register<uint8_t, CHIP_MODULE_CLKCTRL_ADDR + 0x03, 0xFF>
+#define CHIP_REG_CLKCTRL_OSC20MCTRLA                                Register<uint8_t, CHIP_MODULE_CLKCTRL_ADDR + 0x10, 0xFD>
+#define CHIP_REG_CLKCTRL_OSC20MCALIBA                               Register<uint8_t, CHIP_MODULE_CLKCTRL_ADDR + 0x11, 0xC0>
+#define CHIP_REG_CLKCTRL_OSC20MCALIBB                               Register<uint8_t, CHIP_MODULE_CLKCTRL_ADDR + 0x12, 0xF0>
+#define CHIP_REG_CLKCTRL_OSC32KCTRLA                                Register<uint8_t, CHIP_MODULE_CLKCTRL_ADDR + 0x18, 0xFD>
+
+// TODO BOD
+
+#define CHIP_REG_VREF_CTRLA                                         Register<uint8_t, CHIP_MODULE_VREF_ADDR + 0x00>
+#define CHIP_REG_VREF_CTRLB                                         Register<uint8_t, CHIP_MODULE_VREF_ADDR + 0x01>
+
+// TODO WDT
+// TODO CPUINT
+// TODO CRCSCAN
+// TODO RTC
+// TODO EVSYS
+// TODO CCL
+
+#define CHIP_REG_PORTMUX_CTRLA                                      Register<uint8_t, CHIP_MODULE_PORTMUX_ADDR + 0x00>
+#define CHIP_REG_PORTMUX_CTRLB                                      Register<uint8_t, CHIP_MODULE_PORTMUX_ADDR + 0x01>
+#define CHIP_REG_PORTMUX_CTRLC                                      Register<uint8_t, CHIP_MODULE_PORTMUX_ADDR + 0x02>
+
+#define CHIP_REG_PORT_A_DIR                                         Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x00>
+#define CHIP_REG_PORT_A_DIRSET                                      Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x01, 0xFF>
+#define CHIP_REG_PORT_A_DIRCLR                                      Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x02, 0xFF>
+#define CHIP_REG_PORT_A_DIRTGL                                      Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x03, 0xFF>
+#define CHIP_REG_PORT_A_OUT                                         Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x04>
+#define CHIP_REG_PORT_A_OUTSET                                      Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x05, 0xFF>
+#define CHIP_REG_PORT_A_OUTCLR                                      Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x06, 0xFF>
+#define CHIP_REG_PORT_A_OUTTGL                                      Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x07, 0xFF>
+#define CHIP_REG_PORT_A_IN                                          Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x08>
+#define CHIP_REG_PORT_A_INTFLAGS                                    Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x09, 0xFF>
+#define CHIP_REG_PORT_A_PIN0CTRL                                    Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x10>
+#define CHIP_REG_PORT_A_PIN1CTRL                                    Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x11>
+#define CHIP_REG_PORT_A_PIN2CTRL                                    Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x12>
+#define CHIP_REG_PORT_A_PIN3CTRL                                    Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x13>
+#define CHIP_REG_PORT_A_PIN4CTRL                                    Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x14>
+#define CHIP_REG_PORT_A_PIN5CTRL                                    Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x15>
+#define CHIP_REG_PORT_A_PIN6CTRL                                    Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x16>
+#define CHIP_REG_PORT_A_PIN7CTRL                                    Register<uint8_t, CHIP_MODULE_PORT_A_ADDR + 0x17>
+
+#define CHIP_REG_ADC_0_CTRLA                                        Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x00>
+#define CHIP_REG_ADC_0_CTRLB                                        Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x01>
+#define CHIP_REG_ADC_0_CTRLC                                        Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x02>
+#define CHIP_REG_ADC_0_CTRLD                                        Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x03>
+#define CHIP_REG_ADC_0_CTRLE                                        Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x04>
+#define CHIP_REG_ADC_0_SAMPCTRL                                     Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x05>
+#define CHIP_REG_ADC_0_MUXPOS                                       Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x06>
+#define CHIP_REG_ADC_0_COMMAND                                      Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x08>
+#define CHIP_REG_ADC_0_EVCTRL                                       Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x09>
+#define CHIP_REG_ADC_0_INTCTRL                                      Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x0A>
+#define CHIP_REG_ADC_0_INTFLAGS                                     Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x0B, 0xFF>
+#define CHIP_REG_ADC_0_DBGCTRL                                      Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x0C>
+#define CHIP_REG_ADC_0_TEMP                                         Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x0D>
+#define CHIP_REG_ADC_0_RES                                          Register<uint16_t, CHIP_MODULE_ADC0_ADDR + 0x10>
+#define CHIP_REG_ADC_0_WINLT                                        Register<uint16_t, CHIP_MODULE_ADC0_ADDR + 0x12>
+#define CHIP_REG_ADC_0_WINHT                                        Register<uint16_t, CHIP_MODULE_ADC0_ADDR + 0x14>
+#define CHIP_REG_ADC_0_CALIB                                        Register<uint8_t, CHIP_MODULE_ADC0_ADDR + 0x16>
+
+// TODO AC0
+
+#define CHIP_REG_USART_0_RXDATAL                                    Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x00, 0xFF>
+#define CHIP_REG_USART_0_RXDATAH                                    Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x01, 0xC7>
+#define CHIP_REG_USART_0_TXDATAL                                    Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x02>
+#define CHIP_REG_USART_0_TXDATAH                                    Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x03>
+#define CHIP_REG_USART_0_STATUS                                     Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x04, 0xFF>
+#define CHIP_REG_USART_0_CTRLA                                      Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x05>
+#define CHIP_REG_USART_0_CTRLB                                      Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x06>
+#define CHIP_REG_USART_0_CTRLC                                      Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x07>
+#define CHIP_REG_USART_0_BAUD                                       Register<uint16_t, CHIP_MODULE_USART0_ADDR + 0x08>
+#define CHIP_REG_USART_0_DBGCTRL                                    Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x0B>
+#define CHIP_REG_USART_0_EVCTRL                                     Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x0C>
+#define CHIP_REG_USART_0_TXPLCTRL                                   Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x0D>
+#define CHIP_REG_USART_0_RXPLCTRL                                   Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x0E>
+
+// TODO TWI0
+// TODO SPI0
+
+#define CHIP_REG_TCA0_CTRLA                                         Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x00>
+#define CHIP_REG_TCA0_CTRLB                                         Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x01>
+#define CHIP_REG_TCA0_CTRLC                                         Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x02>
+#define CHIP_REG_TCA0_CTRLD                                         Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x03>
+#define CHIP_REG_TCA0_CTRLECLR                                      Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x04, 0xFF>
+#define CHIP_REG_TCA0_CTRLESET                                      Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x05, 0xFF>
+#define CHIP_REG_TCA0_CTRLFCLR                                      Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x06, 0xFF>
+#define CHIP_REG_TCA0_CTRLFSET                                      Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x07, 0xFF>
+#define CHIP_REG_TCA0_EVCTRL                                        Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x09>
+#define CHIP_REG_TCA0_INTCTRL                                       Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x0A>
+#define CHIP_REG_TCA0_INTFLAGS                                      Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x0B, 0xFF>
+#define CHIP_REG_TCA0_DBGCTRL                                       Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x0E>
+#define CHIP_REG_TCA0_TEMP                                          Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x0F>
+#define CHIP_REG_TCA0_CNT                                           Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x20>
+#define CHIP_REG_TCA0_PER                                           Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x26>
+#define CHIP_REG_TCA0_CMP0                                          Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x28>
+#define CHIP_REG_TCA0_CMP1                                          Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x2A>
+#define CHIP_REG_TCA0_CMP2                                          Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x2C>
+#define CHIP_REG_TCA0_PERBUF                                        Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x36>
+#define CHIP_REG_TCA0_CMP0nBUF                                      Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x38>
+#define CHIP_REG_TCA0_CMP1nBUF                                      Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x3A>
+#define CHIP_REG_TCA0_CMP2nBUF                                      Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x3C>
+
+#define CHIP_REG_TCA0_LCNT                                          Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x20>
+#define CHIP_REG_TCA0_HCNT                                          Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x21>
+#define CHIP_REG_TCA0_LPER                                          Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x26>
+#define CHIP_REG_TCA0_HPER                                          Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x27>
+#define CHIP_REG_TCA0_HPER                                          Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x27>
+#define CHIP_REG_TCA0_LCMP0                                         Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x28>
+#define CHIP_REG_TCA0_HCMP0                                         Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x29>
+#define CHIP_REG_TCA0_LCMP1                                         Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x2A>
+#define CHIP_REG_TCA0_HCMP1                                         Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x2B>
+#define CHIP_REG_TCA0_LCMP2                                         Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x2C>
+#define CHIP_REG_TCA0_HCMP2                                         Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x2D>
+
+#define CHIP_REG_TCB0_CTRLA                                         Register<uint8_t, CHIP_MODULE_TCB0_ADDR + 0x00>
+#define CHIP_REG_TCB0_CTRLB                                         Register<uint8_t, CHIP_MODULE_TCB0_ADDR + 0x01>
+#define CHIP_REG_TCB0_EVCTRL                                        Register<uint8_t, CHIP_MODULE_TCB0_ADDR + 0x04>
+#define CHIP_REG_TCB0_INTCTRL                                       Register<uint8_t, CHIP_MODULE_TCB0_ADDR + 0x05>
+#define CHIP_REG_TCB0_INTFLAGS                                      Register<uint8_t, CHIP_MODULE_TCB0_ADDR + 0x06, 0xFF>
+#define CHIP_REG_TCB0_STATUS                                        Register<uint8_t, CHIP_MODULE_TCB0_ADDR + 0x07>
+#define CHIP_REG_TCB0_DBGCTRL                                       Register<uint8_t, CHIP_MODULE_TCB0_ADDR + 0x08>
+#define CHIP_REG_TCB0_TEMP                                          Register<uint8_t, CHIP_MODULE_TCB0_ADDR + 0x09>
+#define CHIP_REG_TCB0_CNT                                           Register<uint16_t, CHIP_MODULE_TCB0_ADDR + 0x0A>
+#define CHIP_REG_TCB0_CCMP                                          Register<uint16_t, CHIP_MODULE_TCB0_ADDR + 0x0C>
+
+// TODO SYSCFG
+// TODO NVMCTRL
+// TODO SIGROW
+// TODO FUSES
+// TODO USERROW
+
+//------------------------------------------------
 // Vectors
 
 #define vectorCrcFailure                                            ISR(__vector_1)
@@ -73,792 +222,362 @@
 //------------------------------------------------
 // System
 
-#define CHIP_REG_ALLOW_CONFIG_CHANGE_ADDR                           (CHIP_MODULE_CPU_ADDR + 0x04)
-#define CHIP_REG_ALLOW_CONFIG_CHANGE_TYPE                           uint8_t
-#define CHIP_REG_SREG_ADDR                                          (CHIP_MODULE_CPU_ADDR + 0x0F)
-#define CHIP_REG_SREG_TYPE                                          uint8_t
-
-#define CHIP_SYSTEM_STATUS                                          CHIP_REG_SREG
-
-#define CHIP_SYSTEM_ALLOW_CONFIG_CHANGE_REG                         CHIP_REG_ALLOW_CONFIG_CHANGE
+#define CHIP_SYSTEM_ALLOW_CONFIG_CHANGE_REG                         CHIP_REG_CPU_CCP
 #define CHIP_SYSTEM_ALLOW_CONFIG_CHANGE_SELF_PROGRAM_ID             0x9D
 #define CHIP_SYSTEM_ALLOW_CONFIG_CHANGE_IO_REG_ID                   0xD8
-#define CHIP_SYSTEM_ALLOW_CONFIG_CHANGE_MASK                        0xFF
 
-// Possibly need IDs for chips which have inhibit instead of enable.
-#define CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_REG                      CHIP_REG_SREG
-#define CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT_0_BIT                      7
+#define CHIP_SYSTEM_GLOBAL_INTERRUPT_REG                            CHIP_REG_CPU_SREG
+#define CHIP_SYSTEM_GLOBAL_INTERRUPT_BIT                            7
 
 //------------------------------------------------
 // Clock
 
-#define CHIP_CLOCK_MCLKCTRLA_ADDR                                   (CHIP_MODULE_CLKCTRL_ADDR + 0x00)
-#define CHIP_CLOCK_MCLKCTRLA_TYPE                                   uint8_t
-#define CHIP_CLOCK_MCLKCTRLB_ADDR                                   (CHIP_MODULE_CLKCTRL_ADDR + 0x01)
-#define CHIP_CLOCK_MCLKCTRLB_TYPE                                   uint8_t
-#define CHIP_CLOCK_MCLKLOCK_ADDR                                    (CHIP_MODULE_CLKCTRL_ADDR + 0x02)
-#define CHIP_CLOCK_MCLKLOCK_TYPE                                    uint8_t
-#define CHIP_CLOCK_MCLKSTATUS_ADDR                                  (CHIP_MODULE_CLKCTRL_ADDR + 0x03)
-#define CHIP_CLOCK_MCLKSTATUS_TYPE                                  uint8_t
-#define CHIP_CLOCK_OSC20MCTRLA_ADDR                                 (CHIP_MODULE_CLKCTRL_ADDR + 0x10)
-#define CHIP_CLOCK_OSC20MCTRLA_TYPE                                 uint8_t
-#define CHIP_CLOCK_OSC20MCALIBA_ADDR                                (CHIP_MODULE_CLKCTRL_ADDR + 0x11)
-#define CHIP_CLOCK_OSC20MCALIBA_TYPE                                uint8_t
-#define CHIP_CLOCK_OSC20MCALIBB_ADDR                                (CHIP_MODULE_CLKCTRL_ADDR + 0x12)
-#define CHIP_CLOCK_OSC20MCALIBB_TYPE                                uint8_t
-#define CHIP_CLOCK_OSC32KCTRLA_ADDR                                 (CHIP_MODULE_CLKCTRL_ADDR + 0x18)
-#define CHIP_CLOCK_OSC32KCTRLA_TYPE                                 uint8_t
-
-#define CHIP_CLOCK_SOURCE_REG                                       CHIP_CLOCK_MCLKCTRLA
+#define CHIP_CLOCK_SOURCE_REG                                       CHIP_REG_CLKCTRL_MCLKCTRLA
 #define CHIP_CLOCK_SOURCE_MASK                                      0x03
-#define CHIP_CLOCK_SOURCE_16M20M_ID                                 0
-#define CHIP_CLOCK_SOURCE_32K_ID                                    1
-#define CHIP_CLOCK_SOURCE_EXTERNAL_ID                               3
-#define CHIP_CLOCK_SOURCE_CONFIG_CHANGE_PROTECTION
+#define CHIP_CLOCK_SOURCE_16M20M_ID                                 0x00
+#define CHIP_CLOCK_SOURCE_32K_ID                                    0x01
+#define CHIP_CLOCK_SOURCE_EXTERNAL_ID                               0x03
 
-#define CHIP_CLOCK_PRESCALER_REG                                    CHIP_CLOCK_MCLKCTRLB
+#define CHIP_CLOCK_PRESCALER_REG                                    CHIP_REG_CLKCTRL_MCLKCTRLB
 #define CHIP_CLOCK_PRESCALER_MASK                                   0x1E
-#define CHIP_CLOCK_PRESCALER_2_ID                                   0
-#define CHIP_CLOCK_PRESCALER_4_ID                                   2
-#define CHIP_CLOCK_PRESCALER_8_ID                                   4
-#define CHIP_CLOCK_PRESCALER_16_ID                                  6
-#define CHIP_CLOCK_PRESCALER_32_ID                                  8
-#define CHIP_CLOCK_PRESCALER_64_ID                                  10
-#define CHIP_CLOCK_PRESCALER_6_ID                                   16
-#define CHIP_CLOCK_PRESCALER_10_ID                                  18
-#define CHIP_CLOCK_PRESCALER_12_ID                                  20
-#define CHIP_CLOCK_PRESCALER_24_ID                                  22
-#define CHIP_CLOCK_PRESCALER_48_ID                                  24
-#define CHIP_CLOCK_PRESCALER_CONFIG_CHANGE_PROTECTION
+#define CHIP_CLOCK_PRESCALER_2_ID                                   0x00
+#define CHIP_CLOCK_PRESCALER_4_ID                                   0x02
+#define CHIP_CLOCK_PRESCALER_8_ID                                   0x04
+#define CHIP_CLOCK_PRESCALER_16_ID                                  0x06
+#define CHIP_CLOCK_PRESCALER_32_ID                                  0x08
+#define CHIP_CLOCK_PRESCALER_64_ID                                  0x0A
+#define CHIP_CLOCK_PRESCALER_6_ID                                   0x10
+#define CHIP_CLOCK_PRESCALER_10_ID                                  0x12
+#define CHIP_CLOCK_PRESCALER_12_ID                                  0x14
+#define CHIP_CLOCK_PRESCALER_24_ID                                  0x16
+#define CHIP_CLOCK_PRESCALER_48_ID                                  0x18
 
-#define CHIP_CLOCK_PRESCALER_ENABLE_REG                             CHIP_CLOCK_MCLKCTRLB
+#define CHIP_CLOCK_PRESCALER_ENABLE_REG                             CHIP_REG_CLKCTRL_MCLKCTRLB
 #define CHIP_CLOCK_PRESCALER_ENABLE_BIT                             0
-#define CHIP_CLOCK_PRESCALER_ENABLE_CONFIG_CHANGE_PROTECTION
 
-#define CHIP_CLOCK_LOCK_REG                                         CHIP_CLOCK_MCLKLOCK
+#define CHIP_CLOCK_LOCK_REG                                         CHIP_REG_CLKCTRL_MCLKLOCK
 #define CHIP_CLOCK_LOCK_BIT                                         0
-#define CHIP_CLOCK_LOCK_CONFIG_CHANGE_PROTECTION
 
 // ...
 
 //------------------------------------------------
 // Sleep
 
-#define CHIP_REG_SLEEP_CTRLA_ADDR                                   (CHIP_MODULE_SLPCTRL_ADDR + 0)
-#define CHIP_REG_SLEEP_CTRLA_TYPE                                   uint8_t
+#define CHIP_SLEEP_MODE_REG                                         CHIP_REG_SLPCTRL_CTRLA
+#define CHIP_SLEEP_MODE_MASK                                        0x06
+#define CHIP_SLEEP_MODE_IDLE_ID                                     0x00
+#define CHIP_SLEEP_MODE_STANDBY_ID                                  0x02
+#define CHIP_SLEEP_MODE_POWER_DOWN_ID                               0x04
 
-#define CHIP_SLEEP_MODE_IDLE_ID                                     0
-#define CHIP_SLEEP_MODE_STANDBY_ID                                  1
-#define CHIP_SLEEP_MODE_POWER_DOWN_ID                               2
+#define CHIP_SLEEP_ENABLE_REG                                       CHIP_REG_SLPCTRL_CTRLA
+#define CHIP_SLEEP_ENABLE_BIT                                       0
 
-#define CHIP_SLEEP_MODE_BIT_0_REG                                   CHIP_REG_SLEEP_CTRLA
-#define CHIP_SLEEP_MODE_BIT_0_BIT                                   1
-#define CHIP_SLEEP_MODE_BIT_1_REG                                   CHIP_REG_SLEEP_CTRLA
-#define CHIP_SLEEP_MODE_BIT_1_BIT                                   2
-
-#define CHIP_SLEEP_ENABLE_BIT_0_REG                                 CHIP_REG_SLEEP_CTRLA
-#define CHIP_SLEEP_ENABLE_BIT_0_BIT                                 0
-
-// // //------------------------------------------------
-// // // Status Register
-
-// // #define CHIP_STATUS_REG                                                 REG8(CHIP_ADDR_SREG)
-
-// // //------------------------------------------------
-// // // Reset Status Register
-
-// // #define CHIP_RESET_STATUS_REG                                           REG8(CHIP_ADDR_MCUSR)
-
-// // //------------------------------------------------
-// // // Watchdog Timer
-
-// // #define CHIP_WATCHDOG_TIMER_CONTROL_REG                                 REG8(CHIP_ADDR_WDTCR)
-// // #define CHIP_WATCHDOG_TIMER_PRESCALER_BIT_0_BIT                         0
-// // #define CHIP_WATCHDOG_TIMER_PRESCALER_BIT_1_BIT                         1
-// // #define CHIP_WATCHDOG_TIMER_PRESCALER_BIT_2_BIT                         2
-// // #define CHIP_WATCHDOG_TIMER_ENABLE_BIT                                  3
-// // #define CHIP_WATCHDOG_TIMER_CHANGE_ENABLE_BIT                           4
-// // #define CHIP_WATCHDOG_TIMER_PRESCALER_BIT_3_BIT                         5
-// // #define CHIP_WATCHDOG_TIMER_INT_ENABLE_BIT                              6
-// // #define CHIP_WATCHDOG_TIMER_INT_FLAG_BIT                                7
 
 //------------------------------------------------
 // IO ports
 
-#define CHIP_REG_PORT_DIR_OFFSET                                    0x00
-#define CHIP_REG_PORT_DIRSET_OFFSET                                 0x01
-#define CHIP_REG_PORT_DIRCLR_OFFSET                                 0x02
-#define CHIP_REG_PORT_DIRTGL_OFFSET                                 0x03
-#define CHIP_REG_PORT_OUT_OFFSET                                    0x04
-#define CHIP_REG_PORT_OUTSET_OFFSET                                 0x05
-#define CHIP_REG_PORT_OUTCLR_OFFSET                                 0x06
-#define CHIP_REG_PORT_OUTTGL_OFFSET                                 0x07
-#define CHIP_REG_PORT_IN_OFFSET                                     0x08
-#define CHIP_REG_PORT_INTFLAGS_OFFSET                               0x09
-#define CHIP_REG_PORT_PIN0CTRL_OFFSET                               0x10
-#define CHIP_REG_PORT_PIN1CTRL_OFFSET                               0x11
-#define CHIP_REG_PORT_PIN2CTRL_OFFSET                               0x12
-#define CHIP_REG_PORT_PIN3CTRL_OFFSET                               0x13
-#define CHIP_REG_PORT_PIN4CTRL_OFFSET                               0x14
-#define CHIP_REG_PORT_PIN5CTRL_OFFSET                               0x15
-#define CHIP_REG_PORT_PIN6CTRL_OFFSET                               0x16
-#define CHIP_REG_PORT_PIN7CTRL_OFFSET                               0x17
-
-#define CHIP_REG_PORT_A_DIR_ADDR                                    (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_DIR_OFFSET)
-#define CHIP_REG_PORT_A_DIR_TYPE                                    uint8_t
-#define CHIP_REG_PORT_A_DIRSET_ADDR                                 (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_DIRSET_OFFSET)
-#define CHIP_REG_PORT_A_DIRSET_TYPE                                 uint8_t
-#define CHIP_REG_PORT_A_DIRCLR_ADDR                                 (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_DIRCLR_OFFSET)
-#define CHIP_REG_PORT_A_DIRCLR_TYPE                                 uint8_t
-#define CHIP_REG_PORT_A_DIRTGL_ADDR                                 (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_DIRTGL_OFFSET)
-#define CHIP_REG_PORT_A_DIRTGL_TYPE                                 uint8_t
-#define CHIP_REG_PORT_A_OUT_ADDR                                    (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_OUT_OFFSET)
-#define CHIP_REG_PORT_A_OUT_TYPE                                    uint8_t
-#define CHIP_REG_PORT_A_OUTSET_ADDR                                 (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_OUTSET_OFFSET)
-#define CHIP_REG_PORT_A_OUTSET_TYPE                                 uint8_t
-#define CHIP_REG_PORT_A_OUTCLR_ADDR                                 (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_OUTCLR_OFFSET)
-#define CHIP_REG_PORT_A_OUTCLR_TYPE                                 uint8_t
-#define CHIP_REG_PORT_A_OUTTGL_ADDR                                 (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_OUTTGL_OFFSET)
-#define CHIP_REG_PORT_A_OUTTGL_TYPE                                 uint8_t
-#define CHIP_REG_PORT_A_IN_ADDR                                     (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_IN_OFFSET)
-#define CHIP_REG_PORT_A_IN_TYPE                                     uint8_t
-#define CHIP_REG_PORT_A_INTFLAGS_ADDR                               (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_INTFLAGS_OFFSET)
-#define CHIP_REG_PORT_A_INTFLAGS_TYPE                               uint8_t
-#define CHIP_REG_PORT_A_PIN0CTRL_ADDR                               (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_PIN0CTRL_OFFSET)
-#define CHIP_REG_PORT_A_PIN0CTRL_TYPE                               uint8_t
-#define CHIP_REG_PORT_A_PIN1CTRL_ADDR                               (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_PIN1CTRL_OFFSET)
-#define CHIP_REG_PORT_A_PIN1CTRL_TYPE                               uint8_t
-#define CHIP_REG_PORT_A_PIN2CTRL_ADDR                               (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_PIN2CTRL_OFFSET)
-#define CHIP_REG_PORT_A_PIN2CTRL_TYPE                               uint8_t
-#define CHIP_REG_PORT_A_PIN3CTRL_ADDR                               (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_PIN3CTRL_OFFSET)
-#define CHIP_REG_PORT_A_PIN3CTRL_TYPE                               uint8_t
-#define CHIP_REG_PORT_A_PIN4CTRL_ADDR                               (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_PIN4CTRL_OFFSET)
-#define CHIP_REG_PORT_A_PIN4CTRL_TYPE                               uint8_t
-#define CHIP_REG_PORT_A_PIN5CTRL_ADDR                               (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_PIN5CTRL_OFFSET)
-#define CHIP_REG_PORT_A_PIN5CTRL_TYPE                               uint8_t
-#define CHIP_REG_PORT_A_PIN6CTRL_ADDR                               (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_PIN6CTRL_OFFSET)
-#define CHIP_REG_PORT_A_PIN6CTRL_TYPE                               uint8_t
-#define CHIP_REG_PORT_A_PIN7CTRL_ADDR                               (CHIP_MODULE_PORT_A_ADDR + CHIP_REG_PORT_PIN7CTRL_OFFSET)
-#define CHIP_REG_PORT_A_PIN7CTRL_TYPE                               uint8_t
-
-#define CHIP_REG_VPORT_DIR_OFFSET                                    0x00
-#define CHIP_REG_VPORT_OUT_OFFSET                                    0x01
-#define CHIP_REG_VPORT_IN_OFFSET                                     0x02
-#define CHIP_REG_VPORT_INTFLAGS_OFFSET                               0x03
-
-#define CHIP_REG_VPORT_A_DIR_ADDR                                   (CHIP_MODULE_VPORT_A_ADDR + CHIP_REG_VPORT_DIR_OFFSET)
-#define CHIP_REG_VPORT_A_DIR_TYPE                                   uint8_t
-#define CHIP_REG_VPORT_A_OUT_ADDR                                   (CHIP_MODULE_VPORT_A_ADDR + CHIP_REG_VPORT_OUT_OFFSET)
-#define CHIP_REG_VPORT_A_OUT_TYPE                                   uint8_t
-#define CHIP_REG_VPORT_A_IN_ADDR                                    (CHIP_MODULE_VPORT_A_ADDR + CHIP_REG_VPORT_IN_OFFSET)
-#define CHIP_REG_VPORT_A_IN_TYPE                                    uint8_t
-#define CHIP_REG_VPORT_A_INTFLAGS_ADDR                              (CHIP_MODULE_VPORT_A_ADDR + CHIP_REG_VPORT_INTFLAGS_OFFSET)
-#define CHIP_REG_VPORT_A_INTFLAGS_TYPE                              uint8_t
-
-#define CHIP_PORT_A                                                 true
-// #define CHIP_PORT_A_DIRECTION_REG
+#define CHIP_PORT_A
+#define CHIP_PORT_A_DIRECTION_REG                                   CHIP_REG_VPORT_A_DIR
 // #define CHIP_PORT_A_DIRECTION_SET_REG
 // #define CHIP_PORT_A_DIRECTION_CLEAR_REG
-// #define CHIP_PORT_A_DIRECTION_TOGGLE_REG
-// #define CHIP_PORT_A_OUTPUT_REG                                      CHIP_REG_PORT_A_OUT
+// #define CHIP_PORT_A_DIRECTION_TOGGLE_REG                            CHIP_REG_PORT_A_DIRTGL
+#define CHIP_PORT_A_OUTPUT_REG                                      CHIP_REG_VPORT_A_OUT
 // #define CHIP_PORT_A_OUTPUT_SET_REG
 // #define CHIP_PORT_A_OUTPUT_CLEAR_REG
-// #define CHIP_PORT_A_OUTPUT_TOGGLE_REG
-// #define CHIP_PORT_A_INPUT_REG
-// #define CHIP_PORT_A_INT_FLAG_REG
-
-// #define CHIP_PORT_A                                                 true
-// #define CHIP_PORT_A_CLOCK_ENABLE_REG                                CHIP_REG_APB2
-// #define CHIP_PORT_A_CLOCK_ENABLE_BIT                                2
-// #define CHIP_PORT_A_OUTPUT_REG                                      CHIP_REG_PORT_A_ODR
-// #define CHIP_PORT_A_SET_OUTPUTS_REG                                 CHIP_REG_PORT_A_BSRR_SET
-// #define CHIP_PORT_A_CLEAR_OUTPUTS_REG                               CHIP_REG_PORT_A_BSRR_CLEAR
-// #define CHIP_PORT_A_INPUT_REG                                       CHIP_REG_PORT_A_IDR
+#define CHIP_PORT_A_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
+#define CHIP_PORT_A_INPUT_REG                                       CHIP_REG_VPORT_A_IN
+#define CHIP_PORT_A_INT_FLAG_REG                                    CHIP_REG_VPORT_A_INTFLAGS
 
 //------------------------------------------------
 // IO pins
 
-#define CHIP_PIN_A0                                                 true
-#define CHIP_PIN_A0_DIRECTION_BIT_0_BIT                             0
-#define CHIP_PIN_A0_DIRECTION_BIT_0_REG                             CHIP_REG_VPORT_A_DIR
-#define CHIP_PIN_A0_OUTPUT_BIT_0_BIT                                0
-#define CHIP_PIN_A0_OUTPUT_BIT_0_REG                                CHIP_REG_VPORT_A_OUT
-#define CHIP_PIN_A0_INPUT_BIT_0_BIT                                 0
-#define CHIP_PIN_A0_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
-#define CHIP_PIN_A0_PULLUP_BIT_0_BIT                                3
-#define CHIP_PIN_A0_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN0CTRL
-#define CHIP_PIN_A0_OUTPUT_TOGGLE_BIT                               0
+#define CHIP_PIN_A0
+#define CHIP_PIN_A0_DIRECTION_REG                                   CHIP_REG_VPORT_A_DIR
+#define CHIP_PIN_A0_DIRECTION_BIT                                   0
+#define CHIP_PIN_A0_OUTPUT_REG                                      CHIP_REG_VPORT_A_OUT
+#define CHIP_PIN_A0_OUTPUT_BIT                                      0
+#define CHIP_PIN_A0_INPUT_REG                                       CHIP_REG_VPORT_A_IN
+#define CHIP_PIN_A0_INPUT_BIT                                       0
+#define CHIP_PIN_A0_PULLUP_REG                                      CHIP_REG_PORT_A_PIN0CTRL
+#define CHIP_PIN_A0_PULLUP_BIT                                      3
 #define CHIP_PIN_A0_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
-#define CHIP_PIN_A0_OUTPUT_TOGGLE_PURE
+#define CHIP_PIN_A0_OUTPUT_TOGGLE_BIT                               0
+// TODO Add int flag.
 
-#define CHIP_PIN_A1                                                 true
-#define CHIP_PIN_A1_DIRECTION_BIT_0_BIT                             1
-#define CHIP_PIN_A1_DIRECTION_BIT_0_REG                             CHIP_REG_VPORT_A_DIR
-#define CHIP_PIN_A1_OUTPUT_BIT_0_BIT                                1
-#define CHIP_PIN_A1_OUTPUT_BIT_0_REG                                CHIP_REG_VPORT_A_OUT
-#define CHIP_PIN_A1_INPUT_BIT_0_BIT                                 1
-#define CHIP_PIN_A1_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
-#define CHIP_PIN_A1_PULLUP_BIT_0_BIT                                3
-#define CHIP_PIN_A1_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN1CTRL
-#define CHIP_PIN_A1_OUTPUT_TOGGLE_BIT                               1
+#define CHIP_PIN_A1
+#define CHIP_PIN_A1_DIRECTION_REG                                   CHIP_REG_VPORT_A_DIR
+#define CHIP_PIN_A1_DIRECTION_BIT                                   1
+#define CHIP_PIN_A1_OUTPUT_REG                                      CHIP_REG_VPORT_A_OUT
+#define CHIP_PIN_A1_OUTPUT_BIT                                      1
+#define CHIP_PIN_A1_INPUT_REG                                       CHIP_REG_VPORT_A_IN
+#define CHIP_PIN_A1_INPUT_BIT                                       1
+#define CHIP_PIN_A1_PULLUP_REG                                      CHIP_REG_PORT_A_PIN1CTRL
+#define CHIP_PIN_A1_PULLUP_BIT                                      3
 #define CHIP_PIN_A1_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
-#define CHIP_PIN_A1_OUTPUT_TOGGLE_PURE
+#define CHIP_PIN_A1_OUTPUT_TOGGLE_BIT                               1
 
-#define CHIP_PIN_A2                                                 true
-#define CHIP_PIN_A2_DIRECTION_BIT_0_BIT                             2
-#define CHIP_PIN_A2_DIRECTION_BIT_0_REG                             CHIP_REG_VPORT_A_DIR
-#define CHIP_PIN_A2_OUTPUT_BIT_0_BIT                                2
-#define CHIP_PIN_A2_OUTPUT_BIT_0_REG                                CHIP_REG_VPORT_A_OUT
-#define CHIP_PIN_A2_INPUT_BIT_0_BIT                                 2
-#define CHIP_PIN_A2_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
-#define CHIP_PIN_A2_PULLUP_BIT_0_BIT                                3
-#define CHIP_PIN_A2_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN2CTRL
-#define CHIP_PIN_A2_OUTPUT_TOGGLE_BIT                               2
+#define CHIP_PIN_A2
+#define CHIP_PIN_A2_DIRECTION_REG                                   CHIP_REG_VPORT_A_DIR
+#define CHIP_PIN_A2_DIRECTION_BIT                                   2
+#define CHIP_PIN_A2_OUTPUT_REG                                      CHIP_REG_VPORT_A_OUT
+#define CHIP_PIN_A2_OUTPUT_BIT                                      2
+#define CHIP_PIN_A2_INPUT_REG                                       CHIP_REG_VPORT_A_IN
+#define CHIP_PIN_A2_INPUT_BIT                                       2
+#define CHIP_PIN_A2_PULLUP_REG                                      CHIP_REG_PORT_A_PIN2CTRL
+#define CHIP_PIN_A2_PULLUP_BIT                                      3
 #define CHIP_PIN_A2_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
-#define CHIP_PIN_A2_OUTPUT_TOGGLE_PURE
+#define CHIP_PIN_A2_OUTPUT_TOGGLE_BIT                               2
 
-#define CHIP_PIN_A3                                                 true
-#define CHIP_PIN_A3_DIRECTION_BIT_0_BIT                             3
-#define CHIP_PIN_A3_DIRECTION_BIT_0_REG                             CHIP_REG_VPORT_A_DIR
-#define CHIP_PIN_A3_OUTPUT_BIT_0_BIT                                3
-#define CHIP_PIN_A3_OUTPUT_BIT_0_REG                                CHIP_REG_VPORT_A_OUT
-#define CHIP_PIN_A3_INPUT_BIT_0_BIT                                 3
-#define CHIP_PIN_A3_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
-#define CHIP_PIN_A3_PULLUP_BIT_0_BIT                                3
-#define CHIP_PIN_A3_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN3CTRL
-#define CHIP_PIN_A3_OUTPUT_TOGGLE_BIT                               3
+#define CHIP_PIN_A3
+#define CHIP_PIN_A3_DIRECTION_REG                                   CHIP_REG_VPORT_A_DIR
+#define CHIP_PIN_A3_DIRECTION_BIT                                   3
+#define CHIP_PIN_A3_OUTPUT_REG                                      CHIP_REG_VPORT_A_OUT
+#define CHIP_PIN_A3_OUTPUT_BIT                                      3
+#define CHIP_PIN_A3_INPUT_REG                                       CHIP_REG_VPORT_A_IN
+#define CHIP_PIN_A3_INPUT_BIT                                       3
+#define CHIP_PIN_A3_PULLUP_REG                                      CHIP_REG_PORT_A_PIN3CTRL
+#define CHIP_PIN_A3_PULLUP_BIT                                      3
 #define CHIP_PIN_A3_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
-#define CHIP_PIN_A3_OUTPUT_TOGGLE_PURE
+#define CHIP_PIN_A3_OUTPUT_TOGGLE_BIT                               3
 
-#define CHIP_PIN_A6                                                 true
-#define CHIP_PIN_A6_DIRECTION_BIT_0_BIT                             6
-#define CHIP_PIN_A6_DIRECTION_BIT_0_REG                             CHIP_REG_VPORT_A_DIR
-#define CHIP_PIN_A6_OUTPUT_BIT_0_BIT                                6
-#define CHIP_PIN_A6_OUTPUT_BIT_0_REG                                CHIP_REG_VPORT_A_OUT
-#define CHIP_PIN_A6_INPUT_BIT_0_BIT                                 6
-#define CHIP_PIN_A6_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
-#define CHIP_PIN_A6_PULLUP_BIT_0_BIT                                3
-#define CHIP_PIN_A6_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN6CTRL
-#define CHIP_PIN_A6_OUTPUT_TOGGLE_BIT                               6
+#define CHIP_PIN_A6
+#define CHIP_PIN_A6_DIRECTION_REG                                   CHIP_REG_VPORT_A_DIR
+#define CHIP_PIN_A6_DIRECTION_BIT                                   6
+#define CHIP_PIN_A6_OUTPUT_REG                                      CHIP_REG_VPORT_A_OUT
+#define CHIP_PIN_A6_OUTPUT_BIT                                      6
+#define CHIP_PIN_A6_INPUT_REG                                       CHIP_REG_VPORT_A_IN
+#define CHIP_PIN_A6_INPUT_BIT                                       6
+#define CHIP_PIN_A6_PULLUP_REG                                      CHIP_REG_PORT_A_PIN6CTRL
+#define CHIP_PIN_A6_PULLUP_BIT                                      3
 #define CHIP_PIN_A6_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
-#define CHIP_PIN_A6_OUTPUT_TOGGLE_PURE
+#define CHIP_PIN_A6_OUTPUT_TOGGLE_BIT                               6
 
-#define CHIP_PIN_A7                                                 true
-#define CHIP_PIN_A7_DIRECTION_BIT_0_BIT                             7
-#define CHIP_PIN_A7_DIRECTION_BIT_0_REG                             CHIP_REG_VPORT_A_DIR
-#define CHIP_PIN_A7_OUTPUT_BIT_0_BIT                                7
-#define CHIP_PIN_A7_OUTPUT_BIT_0_REG                                CHIP_REG_VPORT_A_OUT
-#define CHIP_PIN_A7_INPUT_BIT_0_BIT                                 7
-#define CHIP_PIN_A7_INPUT_BIT_0_REG                                 CHIP_REG_VPORT_A_IN
-#define CHIP_PIN_A7_PULLUP_BIT_0_BIT                                3
-#define CHIP_PIN_A7_PULLUP_BIT_0_REG                                CHIP_REG_PORT_A_PIN7CTRL
-#define CHIP_PIN_A7_OUTPUT_TOGGLE_BIT                               7
+#define CHIP_PIN_A7
+#define CHIP_PIN_A7_DIRECTION_REG                                   CHIP_REG_VPORT_A_DIR
+#define CHIP_PIN_A7_DIRECTION_BIT                                   7
+#define CHIP_PIN_A7_OUTPUT_REG                                      CHIP_REG_VPORT_A_OUT
+#define CHIP_PIN_A7_OUTPUT_BIT                                      7
+#define CHIP_PIN_A7_INPUT_REG                                       CHIP_REG_VPORT_A_IN
+#define CHIP_PIN_A7_INPUT_BIT                                       7
+#define CHIP_PIN_A7_PULLUP_REG                                      CHIP_REG_PORT_A_PIN7CTRL
+#define CHIP_PIN_A7_PULLUP_BIT                                      3
 #define CHIP_PIN_A7_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
-#define CHIP_PIN_A7_OUTPUT_TOGGLE_PURE
+#define CHIP_PIN_A7_OUTPUT_TOGGLE_BIT                               7
 
 //------------------------------------------------
 // Voltage References
 
-#define CHIP_REG_VREF_CTRLA_ADDR                                    (CHIP_MODULE_VREF_ADDR + 0x00)
-#define CHIP_REG_VREF_CTRLA_TYPE                                    uint8_t
-#define CHIP_REG_VREF_CTRLB_ADDR                                    (CHIP_MODULE_VREF_ADDR + 0x01)
-#define CHIP_REG_VREF_CTRLB_TYPE                                    uint8_t
-
 #define CHIP_VREF_0
 
 #define CHIP_VREF_0_VOLTAGE_REG                                     CHIP_REG_VREF_CTRLA
-#define CHIP_VREF_0_VOLTAGE_MASK                                    0x70
+#define CHIP_VREF_0_VOLTAGE_MASK                                    0x07
 #define CHIP_VREF_0_VOLTAGE_0_55_V_ID                               0x00
-#define CHIP_VREF_0_VOLTAGE_1_1_V_ID                                0x10
-#define CHIP_VREF_0_VOLTAGE_2_5_V_ID                                0x20
-#define CHIP_VREF_0_VOLTAGE_4_3_V_ID                                0x30
-#define CHIP_VREF_0_VOLTAGE_1_5_V_ID                                0x40
+#define CHIP_VREF_0_VOLTAGE_1_1_V_ID                                0x01
+#define CHIP_VREF_0_VOLTAGE_2_5_V_ID                                0x02
+#define CHIP_VREF_0_VOLTAGE_4_3_V_ID                                0x03
+#define CHIP_VREF_0_VOLTAGE_1_5_V_ID                                0x04
 
 #define CHIP_VREF_1
 
 #define CHIP_VREF_1_VOLTAGE_REG                                     CHIP_REG_VREF_CTRLA
-#define CHIP_VREF_1_VOLTAGE_MASK                                    0x07
+#define CHIP_VREF_1_VOLTAGE_MASK                                    0x70
 #define CHIP_VREF_1_VOLTAGE_0_55_V_ID                               0x00
-#define CHIP_VREF_1_VOLTAGE_1_1_V_ID                                0x01
-#define CHIP_VREF_1_VOLTAGE_2_5_V_ID                                0x02
-#define CHIP_VREF_1_VOLTAGE_4_3_V_ID                                0x03
-#define CHIP_VREF_1_VOLTAGE_1_5_V_ID                                0x04
+#define CHIP_VREF_1_VOLTAGE_1_1_V_ID                                0x10
+#define CHIP_VREF_1_VOLTAGE_2_5_V_ID                                0x20
+#define CHIP_VREF_1_VOLTAGE_4_3_V_ID                                0x30
+#define CHIP_VREF_1_VOLTAGE_1_5_V_ID                                0x40
 
 //------------------------------------------------
 // Analog to digital converters
 
-#define CHIP_ADC_0_CTRLA_ADDR                                       (CHIP_MODULE_ADC0_ADDR + 0x00)
-#define CHIP_ADC_0_CTRLA_TYPE                                       uint8_t
-#define CHIP_ADC_0_CTRLB_ADDR                                       (CHIP_MODULE_ADC0_ADDR + 0x01)
-#define CHIP_ADC_0_CTRLB_TYPE                                       uint8_t
-#define CHIP_ADC_0_CTRLC_ADDR                                       (CHIP_MODULE_ADC0_ADDR + 0x02)
-#define CHIP_ADC_0_CTRLC_TYPE                                       uint8_t
-#define CHIP_ADC_0_CTRLD_ADDR                                       (CHIP_MODULE_ADC0_ADDR + 0x03)
-#define CHIP_ADC_0_CTRLD_TYPE                                       uint8_t
-#define CHIP_ADC_0_CTRLE_ADDR                                       (CHIP_MODULE_ADC0_ADDR + 0x04)
-#define CHIP_ADC_0_CTRLE_TYPE                                       uint8_t
-#define CHIP_ADC_0_SAMPCTRL_ADDR                                    (CHIP_MODULE_ADC0_ADDR + 0x05)
-#define CHIP_ADC_0_SAMPCTRL_TYPE                                    uint8_t
-#define CHIP_ADC_0_MUXPOS_ADDR                                      (CHIP_MODULE_ADC0_ADDR + 0x06)
-#define CHIP_ADC_0_MUXPOS_TYPE                                      uint8_t
-#define CHIP_ADC_0_COMMAND_ADDR                                     (CHIP_MODULE_ADC0_ADDR + 0x08)
-#define CHIP_ADC_0_COMMAND_TYPE                                     uint8_t
-#define CHIP_ADC_0_EVCTRL_ADDR                                      (CHIP_MODULE_ADC0_ADDR + 0x09)
-#define CHIP_ADC_0_EVCTRL_TYPE                                      uint8_t
-#define CHIP_ADC_0_INTCTRL_ADDR                                     (CHIP_MODULE_ADC0_ADDR + 0x0A)
-#define CHIP_ADC_0_INTCTRL_TYPE                                     uint8_t
-#define CHIP_ADC_0_INTFLAGS_ADDR                                    (CHIP_MODULE_ADC0_ADDR + 0x0B)
-#define CHIP_ADC_0_INTFLAGS_TYPE                                    uint8_t
-#define CHIP_ADC_0_DBGCTRL_ADDR                                     (CHIP_MODULE_ADC0_ADDR + 0x0C)
-#define CHIP_ADC_0_DBGCTRL_TYPE                                     uint8_t
-#define CHIP_ADC_0_TEMP_ADDR                                        (CHIP_MODULE_ADC0_ADDR + 0x0D)
-#define CHIP_ADC_0_TEMP_TYPE                                        uint8_t
-#define CHIP_ADC_0_RES_ADDR                                         (CHIP_MODULE_ADC0_ADDR + 0x10)
-#define CHIP_ADC_0_RES_TYPE                                         uint16_t
-#define CHIP_ADC_0_WINLT_ADDR                                       (CHIP_MODULE_ADC0_ADDR + 0x12)
-#define CHIP_ADC_0_WINLT_TYPE                                       uint16_t
-#define CHIP_ADC_0_WINHT_ADDR                                       (CHIP_MODULE_ADC0_ADDR + 0x14)
-#define CHIP_ADC_0_WINHT_TYPE                                       uint16_t
-#define CHIP_ADC_0_CALIB_ADDR                                       (CHIP_MODULE_ADC0_ADDR + 0x16)
-#define CHIP_ADC_0_CALIB_TYPE                                       uint8_t
+#define CHIP_ADC_0
 
-#define CHIP_ADC_0                                                  true
+#define CHIP_ADC_0_RESULT_REG                                       CHIP_REG_ADC_0_RES
 
-#define CHIP_ADC_0_RESULT_REG                                       CHIP_ADC_0_RES
+#define CHIP_ADC_0_ENABLE_REG                                       CHIP_REG_ADC_0_CTRLA
+#define CHIP_ADC_0_ENABLE_BIT                                       0
 
-#define CHIP_ADC_0_ENABLE_BIT_0_REG                                 CHIP_ADC_0_CTRLA
-#define CHIP_ADC_0_ENABLE_BIT_0_BIT                                 0
+#define CHIP_ADC_0_START_REG                                        CHIP_REG_ADC_0_COMMAND
+#define CHIP_ADC_0_START_BIT                                        0
 
-#define CHIP_ADC_0_START_BIT_0_REG                                  CHIP_ADC_0_COMMAND
-#define CHIP_ADC_0_START_BIT_0_BIT                                  0
+#define CHIP_ADC_0_REFERENCE_REG                                    CHIP_REG_ADC_0_CTRLC
+#define CHIP_ADC_0_REFERENCE_MASK                                   0x30
+#define CHIP_ADC_0_REFERENCE_INTERNAL_ID                            0x00
+#define CHIP_ADC_0_REFERENCE_VDD_ID                                 0x10
 
-#define CHIP_ADC_0_REFERENCE_BIT_0_REG                              CHIP_ADC_0_CTRLC
-#define CHIP_ADC_0_REFERENCE_BIT_1_REG                              CHIP_ADC_0_CTRLC
-#define CHIP_ADC_0_REFERENCE_BIT_0_BIT                              4
-#define CHIP_ADC_0_REFERENCE_BIT_1_BIT                              5
-#define CHIP_ADC_0_REFERENCE_INTERNAL_ID                            0
-#define CHIP_ADC_0_REFERENCE_VDD_ID                                 1
+#define CHIP_ADC_0_CHANNEL_REG                                      CHIP_REG_ADC_0_MUXPOS
+#define CHIP_ADC_0_CHANNEL_MASK                                     0x1F
+#define CHIP_ADC_0_CHANNEL_0_ID                                     0x00
+#define CHIP_ADC_0_CHANNEL_1_ID                                     0x01
+#define CHIP_ADC_0_CHANNEL_2_ID                                     0x02
+#define CHIP_ADC_0_CHANNEL_3_ID                                     0x03
+#define CHIP_ADC_0_CHANNEL_6_ID                                     0x06
+#define CHIP_ADC_0_CHANNEL_7_ID                                     0x07
+#define CHIP_ADC_0_CHANNEL_INTERNAL_ID                              0x1D
+#define CHIP_ADC_0_CHANNEL_TEMPERATURE_ID                           0x1E
+#define CHIP_ADC_0_CHANNEL_GND_ID                                   0x1F
 
-#define CHIP_ADC_0_CHANNEL_BIT_0_REG                                CHIP_ADC_0_MUXPOS
-#define CHIP_ADC_0_CHANNEL_BIT_1_REG                                CHIP_ADC_0_MUXPOS
-#define CHIP_ADC_0_CHANNEL_BIT_2_REG                                CHIP_ADC_0_MUXPOS
-#define CHIP_ADC_0_CHANNEL_BIT_3_REG                                CHIP_ADC_0_MUXPOS
-#define CHIP_ADC_0_CHANNEL_BIT_4_REG                                CHIP_ADC_0_MUXPOS
-#define CHIP_ADC_0_CHANNEL_BIT_0_BIT                                0
-#define CHIP_ADC_0_CHANNEL_BIT_1_BIT                                1
-#define CHIP_ADC_0_CHANNEL_BIT_2_BIT                                2
-#define CHIP_ADC_0_CHANNEL_BIT_3_BIT                                3
-#define CHIP_ADC_0_CHANNEL_BIT_4_BIT                                4
-#define CHIP_ADC_0_CHANNEL_0_ID                                     0
-#define CHIP_ADC_0_CHANNEL_1_ID                                     1
-#define CHIP_ADC_0_CHANNEL_2_ID                                     2
-#define CHIP_ADC_0_CHANNEL_3_ID                                     3
-#define CHIP_ADC_0_CHANNEL_6_ID                                     6
-#define CHIP_ADC_0_CHANNEL_7_ID                                     7
-#define CHIP_ADC_0_CHANNEL_INTERNAL_ID                              29
-#define CHIP_ADC_0_CHANNEL_TEMPERATURE_ID                           30
-#define CHIP_ADC_0_CHANNEL_GND_ID                                   31
+#define CHIP_ADC_0_FREE_RUNNING_REG                                 CHIP_REG_ADC_0_CTRLA
+#define CHIP_ADC_0_FREE_RUNNING_BIT                                 1
 
-#define CHIP_ADC_0_TRIGGER_BIT_0_REG                                CHIP_ADC_0_CTRLA
-#define CHIP_ADC_0_TRIGGER_BIT_1_REG                                CHIP_ADC_0_EVCTRL
-#define CHIP_ADC_0_TRIGGER_BIT_0_BIT                                1
-#define CHIP_ADC_0_TRIGGER_BIT_1_BIT                                0
-#define CHIP_ADC_0_TRIGGER_SINGLE_CONVERSION_ID                     0
-#define CHIP_ADC_0_TRIGGER_FREE_RUNNING_ID                          1
-#define CHIP_ADC_0_TRIGGER_EVENT_ID                                 2
+#define CHIP_ADC_0_TRIGGER_ENABLE_REG                               CHIP_REG_ADC_0_EVCTRL
+#define CHIP_ADC_0_TRIGGER_ENABLE_BIT                               0
 
-#define CHIP_ADC_0_INT_FLAG_BIT_0_REG                               CHIP_ADC_0_INTFLAGS
-#define CHIP_ADC_0_INT_FLAG_BIT_0_BIT                               0
+#define CHIP_ADC_0_INT_FLAG_REG                                     CHIP_REG_ADC_0_INTFLAGS
+#define CHIP_ADC_0_INT_FLAG_BIT                                     0
 
-#define CHIP_ADC_0_INT_ENABLE_BIT_0_REG                             CHIP_ADC_0_INTCTRL
-#define CHIP_ADC_0_INT_ENABLE_BIT_0_BIT                             0
+#define CHIP_ADC_0_INT_ENABLE_REG                                   CHIP_REG_ADC_0_INTCTRL
+#define CHIP_ADC_0_INT_ENABLE_BIT                                   0
 
-#define CHIP_ADC_0_PRESCALER_BIT_0_REG                              CHIP_ADC_0_CTRLC
-#define CHIP_ADC_0_PRESCALER_BIT_1_REG                              CHIP_ADC_0_CTRLC
-#define CHIP_ADC_0_PRESCALER_BIT_2_REG                              CHIP_ADC_0_CTRLC
-#define CHIP_ADC_0_PRESCALER_BIT_0_BIT                              0
-#define CHIP_ADC_0_PRESCALER_BIT_1_BIT                              1
-#define CHIP_ADC_0_PRESCALER_BIT_2_BIT                              2
-#define CHIP_ADC_0_PRESCALER_2_ID                                   0
-#define CHIP_ADC_0_PRESCALER_4_ID                                   1
-#define CHIP_ADC_0_PRESCALER_8_ID                                   2
-#define CHIP_ADC_0_PRESCALER_16_ID                                  3
-#define CHIP_ADC_0_PRESCALER_32_ID                                  4
-#define CHIP_ADC_0_PRESCALER_64_ID                                  5
-#define CHIP_ADC_0_PRESCALER_128_ID                                 6
-#define CHIP_ADC_0_PRESCALER_256_ID                                 7
-
-// //------------------------------------------------
-// // External interrupts
-
-// #define CHIP_EXINT_0                                                true
-// #define CHIP_EXINT_0_ENABLE_BIT_0_REG                               CHIP_REG_GIMSK
-// #define CHIP_EXINT_0_ENABLE_BIT_0_BIT                               6
-// #define CHIP_EXINT_0_INT_FLAG_BIT_0_REG                             CHIP_REG_GIFR
-// #define CHIP_EXINT_0_INT_FLAG_BIT_0_BIT                             6
-// #define CHIP_EXINT_0_TRIGGER_BIT_0_REG                              CHIP_REG_MCUCR
-// #define CHIP_EXINT_0_TRIGGER_BIT_1_REG                              CHIP_REG_MCUCR
-// #define CHIP_EXINT_0_TRIGGER_BIT_0_BIT                              0
-// #define CHIP_EXINT_0_TRIGGER_BIT_1_BIT                              1
-// #define CHIP_EXINT_0_TRIGGER_LOW_ID                                 0
-// #define CHIP_EXINT_0_TRIGGER_CHANGE_ID                              1
-// #define CHIP_EXINT_0_TRIGGER_FALLING_ID                             2
-// #define CHIP_EXINT_0_TRIGGER_RISING_ID                              3
-// #define CHIP_EXINT_0_INT_VECTOR                                     VECT(CHIP_VECT_INT0)
-
-// //------------------------------------------------
-// // Pin change interrupts
-
-// #define CHIP_PCINT_0                                                true
-// #define CHIP_PCINT_0_ENABLE_BIT_0_REG                               CHIP_REG_GIMSK
-// #define CHIP_PCINT_0_ENABLE_BIT_0_BIT                               5
-// #define CHIP_PCINT_0_INT_FLAG_BIT_0_REG                             CHIP_REG_GIFR
-// #define CHIP_PCINT_0_INT_FLAG_BIT_0_BIT                             6
-// #define CHIP_PCINT_0_MASK_REG                                       CHIP_REG_PCMSK
-// #define CHIP_PCINT_0_INT_VECTOR                                     VECT(CHIP_VECT_PCINT0)
+#define CHIP_ADC_0_PRESCALER_REG                                    CHIP_REG_ADC_0_CTRLC
+#define CHIP_ADC_0_PRESCALER_MASK                                   0x07
+#define CHIP_ADC_0_PRESCALER_2_ID                                   0x00
+#define CHIP_ADC_0_PRESCALER_4_ID                                   0x01
+#define CHIP_ADC_0_PRESCALER_8_ID                                   0x02
+#define CHIP_ADC_0_PRESCALER_16_ID                                  0x03
+#define CHIP_ADC_0_PRESCALER_32_ID                                  0x04
+#define CHIP_ADC_0_PRESCALER_64_ID                                  0x05
+#define CHIP_ADC_0_PRESCALER_128_ID                                 0x06
+#define CHIP_ADC_0_PRESCALER_256_ID                                 0x07
 
 //------------------------------------------------
 // Timers
 
-#define CHIP_REG_TIMER_0_CTRLA_ADDR                                 (CHIP_MODULE_TCA0_ADDR + 0x00)
-#define CHIP_REG_TIMER_0_CTRLA_TYPE                                 uint8_t
-#define CHIP_REG_TIMER_0_CTRLB_ADDR                                 (CHIP_MODULE_TCA0_ADDR + 0x01)
-#define CHIP_REG_TIMER_0_CTRLB_TYPE                                 uint8_t
-#define CHIP_REG_TIMER_0_CTRLC_ADDR                                 (CHIP_MODULE_TCA0_ADDR + 0x02)
-#define CHIP_REG_TIMER_0_CTRLC_TYPE                                 uint8_t
-#define CHIP_REG_TIMER_0_CTRLD_ADDR                                 (CHIP_MODULE_TCA0_ADDR + 0x03)
-#define CHIP_REG_TIMER_0_CTRLD_TYPE                                 uint8_t
-#define CHIP_REG_TIMER_0_CTRLECLR_ADDR                              (CHIP_MODULE_TCA0_ADDR + 0x04)
-#define CHIP_REG_TIMER_0_CTRLECLR_TYPE                              uint8_t
-#define CHIP_REG_TIMER_0_CTRLESET_ADDR                              (CHIP_MODULE_TCA0_ADDR + 0x05)
-#define CHIP_REG_TIMER_0_CTRLESET_TYPE                              uint8_t
-#define CHIP_REG_TIMER_0_CTRLFCLR_ADDR                              (CHIP_MODULE_TCA0_ADDR + 0x06)
-#define CHIP_REG_TIMER_0_CTRLFCLR_TYPE                              uint8_t
-#define CHIP_REG_TIMER_0_CTRLFSET_ADDR                              (CHIP_MODULE_TCA0_ADDR + 0x07)
-#define CHIP_REG_TIMER_0_CTRLFSET_TYPE                              uint8_t
-#define CHIP_REG_TIMER_0_EVCTRL_ADDR                                (CHIP_MODULE_TCA0_ADDR + 0x09)
-#define CHIP_REG_TIMER_0_EVCTRL_TYPE                                uint8_t
-#define CHIP_REG_TIMER_0_INTCTRL_ADDR                               (CHIP_MODULE_TCA0_ADDR + 0x0A)
-#define CHIP_REG_TIMER_0_INTCTRL_TYPE                               uint8_t
-#define CHIP_REG_TIMER_0_INTFLAGS_ADDR                              (CHIP_MODULE_TCA0_ADDR + 0x0B)
-#define CHIP_REG_TIMER_0_INTFLAGS_TYPE                              uint8_t
-#define CHIP_REG_TIMER_0_DBGCTRL_ADDR                               (CHIP_MODULE_TCA0_ADDR + 0x0E)
-#define CHIP_REG_TIMER_0_DBGCTRL_TYPE                               uint8_t
-#define CHIP_REG_TIMER_0_TEMP_ADDR                                  (CHIP_MODULE_TCA0_ADDR + 0x0F)
-#define CHIP_REG_TIMER_0_TEMP_TYPE                                  uint8_t
-#define CHIP_REG_TIMER_0_CNT_ADDR                                   (CHIP_MODULE_TCA0_ADDR + 0x20)
-#define CHIP_REG_TIMER_0_CNT_TYPE                                   uint16_t
-#define CHIP_REG_TIMER_0_PER_ADDR                                   (CHIP_MODULE_TCA0_ADDR + 0x26)
-#define CHIP_REG_TIMER_0_PER_TYPE                                   uint16_t
-#define CHIP_REG_TIMER_0_CMP0_ADDR                                  (CHIP_MODULE_TCA0_ADDR + 0x28)
-#define CHIP_REG_TIMER_0_CMP0_TYPE                                  uint16_t
-#define CHIP_REG_TIMER_0_CMP1_ADDR                                  (CHIP_MODULE_TCA0_ADDR + 0x2A)
-#define CHIP_REG_TIMER_0_CMP1_TYPE                                  uint16_t
-#define CHIP_REG_TIMER_0_CMP2_ADDR                                  (CHIP_MODULE_TCA0_ADDR + 0x2C)
-#define CHIP_REG_TIMER_0_CMP2_TYPE                                  uint16_t
-#define CHIP_REG_TIMER_0_PERBUF_ADDR                                (CHIP_MODULE_TCA0_ADDR + 0x36)
-#define CHIP_REG_TIMER_0_PERBUF_TYPE                                uint16_t
-#define CHIP_REG_TIMER_0_CMP0nBUF_ADDR                              (CHIP_MODULE_TCA0_ADDR + 0x38)
-#define CHIP_REG_TIMER_0_CMP0nBUF_TYPE                              uint16_t
-#define CHIP_REG_TIMER_0_CMP1nBUF_ADDR                              (CHIP_MODULE_TCA0_ADDR + 0x3A)
-#define CHIP_REG_TIMER_0_CMP1nBUF_TYPE                              uint16_t
-#define CHIP_REG_TIMER_0_CMP2nBUF_ADDR                              (CHIP_MODULE_TCA0_ADDR + 0x3C)
-#define CHIP_REG_TIMER_0_CMP2nBUF_TYPE                              uint16_t
+#define CHIP_TIMER_0
 
-#define CHIP_TIMER_0                                                true
+#define CHIP_TIMER_0_COUNTER_REG                                    CHIP_REG_TCA0_CNT
 
-#define CHIP_TIMER_0_COUNTER_REG                                    CHIP_REG_TIMER_0_CNT
+#define CHIP_TIMER_0_TOP_REG                                        CHIP_REG_TCA0_PER
 
-#define CHIP_TIMER_0_TOP_REG                                        CHIP_REG_TIMER_0_PER
+#define CHIP_TIMER_0_WAVEFORM_REG                                   CHIP_REG_TCA0_CTRLB
+#define CHIP_TIMER_0_WAVEFORM_MASK                                  0x07
+#define CHIP_TIMER_0_WAVEFORM_NORMAL_ID                             0x00
+#define CHIP_TIMER_0_WAVEFORM_FREQUENCY_ID                          0x01
+#define CHIP_TIMER_0_WAVEFORM_SINGLE_SLOPE_PWM_ID                   0x03
+#define CHIP_TIMER_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_TOP_ID             0x05
+#define CHIP_TIMER_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTH_ID            0x06
+#define CHIP_TIMER_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTTOM_ID          0x07
 
-#define CHIP_TIMER_0_WAVEFORM_BIT_0_REG                             CHIP_REG_TIMER_0_CTRLB
-#define CHIP_TIMER_0_WAVEFORM_BIT_1_REG                             CHIP_REG_TIMER_0_CTRLB
-#define CHIP_TIMER_0_WAVEFORM_BIT_2_REG                             CHIP_REG_TIMER_0_CTRLB
-#define CHIP_TIMER_0_WAVEFORM_BIT_0_BIT                             0
-#define CHIP_TIMER_0_WAVEFORM_BIT_1_BIT                             1
-#define CHIP_TIMER_0_WAVEFORM_BIT_2_BIT                             2
-#define CHIP_TIMER_0_WAVEFORM_NORMAL_ID                             0
-#define CHIP_TIMER_0_WAVEFORM_FREQUENCY_ID                          1
-#define CHIP_TIMER_0_WAVEFORM_SINGLE_SLOPE_PWM_ID                   3
-#define CHIP_TIMER_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_TOP_ID             5
-#define CHIP_TIMER_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTH_ID            6
-#define CHIP_TIMER_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTTOM_ID          7
+#define CHIP_TIMER_0_CLOCK_REG                                      CHIP_REG_TCA0_CTRLA
+#define CHIP_TIMER_0_CLOCK_MASK                                     0x0E
+#define CHIP_TIMER_0_CLOCK_1_ID                                     0x00
+#define CHIP_TIMER_0_CLOCK_2_ID                                     0x02
+#define CHIP_TIMER_0_CLOCK_4_ID                                     0x04
+#define CHIP_TIMER_0_CLOCK_8_ID                                     0x06
+#define CHIP_TIMER_0_CLOCK_16_ID                                    0x08
+#define CHIP_TIMER_0_CLOCK_64_ID                                    0x0A
+#define CHIP_TIMER_0_CLOCK_256_ID                                   0x0C
+#define CHIP_TIMER_0_CLOCK_1024_ID                                  0x0E
 
-#define CHIP_TIMER_0_CLOCK_1_ID                                     0
-#define CHIP_TIMER_0_CLOCK_2_ID                                     1
-#define CHIP_TIMER_0_CLOCK_4_ID                                     2
-#define CHIP_TIMER_0_CLOCK_8_ID                                     3
-#define CHIP_TIMER_0_CLOCK_16_ID                                    4
-#define CHIP_TIMER_0_CLOCK_64_ID                                    5
-#define CHIP_TIMER_0_CLOCK_256_ID                                   6
-#define CHIP_TIMER_0_CLOCK_1024_ID                                  7
-#define CHIP_TIMER_0_CLOCK_BIT_0_REG                                CHIP_REG_TIMER_0_CTRLA
-#define CHIP_TIMER_0_CLOCK_BIT_1_REG                                CHIP_REG_TIMER_0_CTRLA
-#define CHIP_TIMER_0_CLOCK_BIT_2_REG                                CHIP_REG_TIMER_0_CTRLA
-#define CHIP_TIMER_0_CLOCK_BIT_0_BIT                                1
-#define CHIP_TIMER_0_CLOCK_BIT_1_BIT                                2
-#define CHIP_TIMER_0_CLOCK_BIT_2_BIT                                3
-
-#define CHIP_TIMER_0_ENABLE_REG                                     CHIP_REG_TIMER_0_CTRLA
+#define CHIP_TIMER_0_ENABLE_REG                                     CHIP_REG_TCA0_CTRLA
 #define CHIP_TIMER_0_ENABLE_BIT                                     0
 
-#define CHIP_TIMER_0_COMPARE_A_OUTPUT_ENABLE_REG                    CHIP_REG_TIMER_0_CTRLB
+#define CHIP_TIMER_0_COMPARE_A_REG                                  CHIP_REG_TCA0_CMP0
+#define CHIP_TIMER_0_COMPARE_A_OUTPUT_ENABLE_REG                    CHIP_REG_TCA0_CTRLB
 #define CHIP_TIMER_0_COMPARE_A_OUTPUT_ENABLE_BIT                    4
-#define CHIP_TIMER_0_COMPARE_B_OUTPUT_ENABLE_REG                    CHIP_REG_TIMER_0_CTRLB
-#define CHIP_TIMER_0_COMPARE_B_OUTPUT_ENABLE_BIT                    5
-#define CHIP_TIMER_0_COMPARE_C_OUTPUT_ENABLE_REG                    CHIP_REG_TIMER_0_CTRLB
-#define CHIP_TIMER_0_COMPARE_C_OUTPUT_ENABLE_BIT                    6
-
-#define CHIP_TIMER_0_COMPARE_A_INT_ENABLE_REG                       CHIP_REG_TIMER_0_INTCTRL
+#define CHIP_TIMER_0_COMPARE_A_INT_ENABLE_REG                       CHIP_REG_TCA0_INTCTRL
 #define CHIP_TIMER_0_COMPARE_A_INT_ENABLE_BIT                       4
-#define CHIP_TIMER_0_COMPARE_B_INT_ENABLE_REG                       CHIP_REG_TIMER_0_INTCTRL
-#define CHIP_TIMER_0_COMPARE_B_INT_ENABLE_BIT                       5
-#define CHIP_TIMER_0_COMPARE_C_INT_ENABLE_REG                       CHIP_REG_TIMER_0_INTCTRL
-#define CHIP_TIMER_0_COMPARE_C_INT_ENABLE_BIT                       6
-
-#define CHIP_TIMER_0_OVERFLOW_INT_ENABLE_REG                        CHIP_REG_TIMER_0_INTCTRL
-#define CHIP_TIMER_0_OVERFLOW_INT_ENABLE_BIT                        0
-
-#define CHIP_TIMER_0_COMPARE_A_INT_FLAG_REG                         CHIP_REG_TIMER_0_INTFLAGS
+#define CHIP_TIMER_0_COMPARE_A_INT_FLAG_REG                         CHIP_REG_TCA0_INTFLAGS
 #define CHIP_TIMER_0_COMPARE_A_INT_FLAG_BIT                         4
-#define CHIP_TIMER_0_COMPARE_B_INT_FLAG_REG                         CHIP_REG_TIMER_0_INTFLAGS
+
+#define CHIP_TIMER_0_COMPARE_B_REG                                  CHIP_REG_TCA0_CMP1
+#define CHIP_TIMER_0_COMPARE_B_OUTPUT_ENABLE_REG                    CHIP_REG_TCA0_CTRLB
+#define CHIP_TIMER_0_COMPARE_B_OUTPUT_ENABLE_BIT                    5
+#define CHIP_TIMER_0_COMPARE_B_INT_ENABLE_REG                       CHIP_REG_TCA0_INTCTRL
+#define CHIP_TIMER_0_COMPARE_B_INT_ENABLE_BIT                       5
+#define CHIP_TIMER_0_COMPARE_B_INT_FLAG_REG                         CHIP_REG_TCA0_INTFLAGS
 #define CHIP_TIMER_0_COMPARE_B_INT_FLAG_BIT                         5
-#define CHIP_TIMER_0_COMPARE_C_INT_FLAG_REG                         CHIP_REG_TIMER_0_INTFLAGS
+
+#define CHIP_TIMER_0_COMPARE_C_REG                                  CHIP_REG_TCA0_CMP2
+#define CHIP_TIMER_0_COMPARE_C_OUTPUT_ENABLE_REG                    CHIP_REG_TCA0_CTRLB
+#define CHIP_TIMER_0_COMPARE_C_OUTPUT_ENABLE_BIT                    6
+#define CHIP_TIMER_0_COMPARE_C_INT_ENABLE_REG                       CHIP_REG_TCA0_INTCTRL
+#define CHIP_TIMER_0_COMPARE_C_INT_ENABLE_BIT                       6
+#define CHIP_TIMER_0_COMPARE_C_INT_FLAG_REG                         CHIP_REG_TCA0_INTFLAGS
 #define CHIP_TIMER_0_COMPARE_C_INT_FLAG_BIT                         6
 
-#define CHIP_TIMER_0_OVERFLOW_INT_FLAG_REG                          CHIP_REG_TIMER_0_INTFLAGS
+#define CHIP_TIMER_0_OVERFLOW_INT_ENABLE_REG                        CHIP_REG_TCA0_INTCTRL
+#define CHIP_TIMER_0_OVERFLOW_INT_ENABLE_BIT                        0
+
+#define CHIP_TIMER_0_OVERFLOW_INT_FLAG_REG                          CHIP_REG_TCA0_INTFLAGS
 #define CHIP_TIMER_0_OVERFLOW_INT_FLAG_BIT                          0
-
-#define CHIP_TIMER_0_COMPARE_A_REG                                  CHIP_REG_TIMER_0_CMP0
-#define CHIP_TIMER_0_COMPARE_B_REG                                  CHIP_REG_TIMER_0_CMP1
-#define CHIP_TIMER_0_COMPARE_C_REG                                  CHIP_REG_TIMER_0_CMP2
-
-// //------------------------------------------------
-
-// #define CHIP_TIMER_1                                                true
-
-// #define CHIP_TIMER_1_TYPE                                           uint8_t
-
-// #define CHIP_TIMER_1_WAVEFORM_BIT_0_REG                             CHIP_REG_TCCR1
-// #define CHIP_TIMER_1_WAVEFORM_BIT_1_REG                             CHIP_REG_TCCR1
-// #define CHIP_TIMER_1_WAVEFORM_BIT_2_REG                             CHIP_REG_GTCCR
-// #define CHIP_TIMER_1_WAVEFORM_BIT_0_BIT                             6
-// #define CHIP_TIMER_1_WAVEFORM_BIT_1_BIT                             7
-// #define CHIP_TIMER_1_WAVEFORM_BIT_2_BIT                             6
-// #define CHIP_TIMER_1_WAVEFORM_NORMAL_ID                             0
-// #define CHIP_TIMER_1_WAVEFORM_FAST_PWM_A_OCRC_ID                    1
-// #define CHIP_TIMER_1_WAVEFORM_CTC_OCRC_ID                           2
-// #define CHIP_TIMER_1_WAVEFORM_FAST_PWM_B_OCRC_ID                    4
-// #define CHIP_TIMER_1_WAVEFORM_FAST_PWM_A_B_OCRC_ID                  5
-
-// #define CHIP_TIMER_1_CLOCK_BIT_0_REG                                CHIP_REG_TCCR1
-// #define CHIP_TIMER_1_CLOCK_BIT_1_REG                                CHIP_REG_TCCR1
-// #define CHIP_TIMER_1_CLOCK_BIT_2_REG                                CHIP_REG_TCCR1
-// #define CHIP_TIMER_1_CLOCK_BIT_3_REG                                CHIP_REG_TCCR1
-// #define CHIP_TIMER_1_CLOCK_BIT_0_BIT                                0
-// #define CHIP_TIMER_1_CLOCK_BIT_1_BIT                                1
-// #define CHIP_TIMER_1_CLOCK_BIT_2_BIT                                2
-// #define CHIP_TIMER_1_CLOCK_BIT_3_BIT                                3
-// #define CHIP_TIMER_1_CLOCK_NONE_ID                                  0
-// #define CHIP_TIMER_1_CLOCK_1_ID                                     1
-// #define CHIP_TIMER_1_CLOCK_2_ID                                     2
-// #define CHIP_TIMER_1_CLOCK_4_ID                                     3
-// #define CHIP_TIMER_1_CLOCK_8_ID                                     4
-// #define CHIP_TIMER_1_CLOCK_16_ID                                    5
-// #define CHIP_TIMER_1_CLOCK_32_ID                                    6
-// #define CHIP_TIMER_1_CLOCK_64_ID                                    7
-// #define CHIP_TIMER_1_CLOCK_128_ID                                   8
-// #define CHIP_TIMER_1_CLOCK_256_ID                                   9
-// #define CHIP_TIMER_1_CLOCK_512_ID                                   10
-// #define CHIP_TIMER_1_CLOCK_1024_ID                                  11
-// #define CHIP_TIMER_1_CLOCK_2048_ID                                  12
-// #define CHIP_TIMER_1_CLOCK_4096_ID                                  13
-// #define CHIP_TIMER_1_CLOCK_8192_ID                                  14
-// #define CHIP_TIMER_1_CLOCK_16384_ID                                 15
-
-// #define CHIP_TIMER_1_COUNTER_REG                                    CHIP_REG_TCNT1
-
-// #define CHIP_TIMER_1_OUTPUT_A                                       true
-// #define CHIP_TIMER_1_OUTPUT_A_PIN                                   PortB::Pin1
-// #define CHIP_TIMER_1_OUTPUT_A_MODE_BIT_0_REG                        CHIP_REG_TCCR1
-// #define CHIP_TIMER_1_OUTPUT_A_MODE_BIT_1_REG                        CHIP_REG_TCCR1
-// #define CHIP_TIMER_1_OUTPUT_A_MODE_BIT_0_BIT                        4
-// #define CHIP_TIMER_1_OUTPUT_A_MODE_BIT_1_BIT                        5
-// #define CHIP_TIMER_1_OUTPUT_A_MODE_DISCONNECTED_ID                  0
-// #define CHIP_TIMER_1_OUTPUT_A_MODE_TOGGLE_ID                        1
-// #define CHIP_TIMER_1_OUTPUT_A_MODE_CLEAR_ID                         2
-// #define CHIP_TIMER_1_OUTPUT_A_MODE_SET_ID                           3
-// #define CHIP_TIMER_1_OUTPUT_A_REG                                   CHIP_REG_OCR1A
-// #define CHIP_TIMER_1_OUTPUT_A_INT_ENABLE_REG                        CHIP_REG_TIMSK
-// #define CHIP_TIMER_1_OUTPUT_A_INT_ENABLE_BIT                        6
-// #define CHIP_TIMER_1_OUTPUT_A_INT_FLAG_REG                          CHIP_REG_TIFR
-// #define CHIP_TIMER_1_OUTPUT_A_INT_FLAG_BIT                          6
-// #define CHIP_TIMER_1_OUTPUT_A_INT_VECTOR                            VECT(CHIP_VECT_TIMER1_COMPA)
-
-// #define CHIP_TIMER_1_OUTPUT_B                                       true
-// #define CHIP_TIMER_1_OUTPUT_B_PIN                                   PortB::Pin4
-// #define CHIP_TIMER_1_OUTPUT_B_MODE_BIT_0_REG                        CHIP_REG_GTCCR
-// #define CHIP_TIMER_1_OUTPUT_B_MODE_BIT_1_REG                        CHIP_REG_GTCCR
-// #define CHIP_TIMER_1_OUTPUT_B_MODE_BIT_0_BIT                        4
-// #define CHIP_TIMER_1_OUTPUT_B_MODE_BIT_1_BIT                        5
-// #define CHIP_TIMER_1_OUTPUT_B_MODE_DISCONNECTED_ID                  0
-// #define CHIP_TIMER_1_OUTPUT_B_MODE_TOGGLE_ID                        1
-// #define CHIP_TIMER_1_OUTPUT_B_MODE_CLEAR_ID                         2
-// #define CHIP_TIMER_1_OUTPUT_B_MODE_SET_ID                           3
-// #define CHIP_TIMER_1_OUTPUT_B_REG                                   CHIP_REG_OCR1B
-// #define CHIP_TIMER_1_OUTPUT_B_INT_ENABLE_REG                        CHIP_REG_TIMSK
-// #define CHIP_TIMER_1_OUTPUT_B_INT_ENABLE_BIT                        5
-// #define CHIP_TIMER_1_OUTPUT_B_INT_FLAG_REG                          CHIP_REG_TIFR
-// #define CHIP_TIMER_1_OUTPUT_B_INT_FLAG_BIT                          5
-// #define CHIP_TIMER_1_OUTPUT_B_INT_VECTOR                            VECT(CHIP_VECT_TIMER1_COMPB)
-
-// #define CHIP_TIMER_1_OUTPUT_C                                       true
-// #define CHIP_TIMER_1_OUTPUT_C_REG                                   CHIP_REG_OCR1C
-// #define CHIP_TIMER_1_OUTPUT_C_INT_FLAG_REG                          CHIP_REG_TIFR
-
-// #define CHIP_TIMER_1_OVERFLOW_INT_ENABLE_REG                        CHIP_REG_TIMSK
-// #define CHIP_TIMER_1_OVERFLOW_INT_ENABLE_BIT                        2
-// #define CHIP_TIMER_1_OVERFLOW_INT_FLAG_REG                          CHIP_REG_TIFR
-// #define CHIP_TIMER_1_OVERFLOW_INT_FLAG_BIT                          2
-// #define CHIP_TIMER_1_OVERFLOW_INT_VECTOR                            VECT(CHIP_VECT_TIMER1_OVF)
 
 //------------------------------------------------
 // Usarts
 
-#define CHIP_REG_USART_0_RXDATA_ADDR                                (CHIP_MODULE_USART0_ADDR + 0x00)
-#define CHIP_REG_USART_0_RXDATA_TYPE                                uint16_t
-#define CHIP_REG_USART_0_RXDATAL_ADDR                               (CHIP_MODULE_USART0_ADDR + 0x00)
-#define CHIP_REG_USART_0_RXDATAL_TYPE                               uint8_t
-#define CHIP_REG_USART_0_RXDATAH_ADDR                               (CHIP_MODULE_USART0_ADDR + 0x01)
-#define CHIP_REG_USART_0_RXDATAH_TYPE                               uint8_t
-#define CHIP_REG_USART_0_TXDATA_ADDR                                (CHIP_MODULE_USART0_ADDR + 0x02)
-#define CHIP_REG_USART_0_TXDATA_TYPE                                uint16_t
-#define CHIP_REG_USART_0_TXDATAL_ADDR                               (CHIP_MODULE_USART0_ADDR + 0x02)
-#define CHIP_REG_USART_0_TXDATAL_TYPE                               uint8_t
-#define CHIP_REG_USART_0_TXDATAH_ADDR                               (CHIP_MODULE_USART0_ADDR + 0x03)
-#define CHIP_REG_USART_0_TXDATAH_TYPE                               uint8_t
-#define CHIP_REG_USART_0_STATUS_ADDR                                (CHIP_MODULE_USART0_ADDR + 0x04)
-#define CHIP_REG_USART_0_STATUS_TYPE                                uint8_t
-#define CHIP_REG_USART_0_CTRLA_ADDR                                 (CHIP_MODULE_USART0_ADDR + 0x05)
-#define CHIP_REG_USART_0_CTRLA_TYPE                                 uint8_t
-#define CHIP_REG_USART_0_CTRLB_ADDR                                 (CHIP_MODULE_USART0_ADDR + 0x06)
-#define CHIP_REG_USART_0_CTRLB_TYPE                                 uint8_t
-#define CHIP_REG_USART_0_CTRLC_ADDR                                 (CHIP_MODULE_USART0_ADDR + 0x07)
-#define CHIP_REG_USART_0_CTRLC_TYPE                                 uint8_t
-#define CHIP_REG_USART_0_CTRLC_ADDR                                 (CHIP_MODULE_USART0_ADDR + 0x07)
-#define CHIP_REG_USART_0_CTRLC_TYPE                                 uint8_t
-#define CHIP_REG_USART_0_BAUD_ADDR                                  (CHIP_MODULE_USART0_ADDR + 0x08)
-#define CHIP_REG_USART_0_BAUD_TYPE                                  uint16_t
-#define CHIP_REG_USART_0_DBGCTRL_ADDR                               (CHIP_MODULE_USART0_ADDR + 0x0B)
-#define CHIP_REG_USART_0_DBGCTRL_TYPE                               uint8_t
-#define CHIP_REG_USART_0_EVCTRL_ADDR                                (CHIP_MODULE_USART0_ADDR + 0x0C)
-#define CHIP_REG_USART_0_EVCTRL_TYPE                                uint8_t
-#define CHIP_REG_USART_0_TXPLCTRL_ADDR                              (CHIP_MODULE_USART0_ADDR + 0x0D)
-#define CHIP_REG_USART_0_TXPLCTRL_TYPE                              uint8_t
-#define CHIP_REG_USART_0_RXPLCTRL_ADDR                              (CHIP_MODULE_USART0_ADDR + 0x0E)
-#define CHIP_REG_USART_0_RXPLCTRL_TYPE                              uint8_t
-
-#define CHIP_REG_MULTIPLEXER_CTRLB_ADDR                             (CHIP_MODULE_PORTMUX_ADDR + 0x01)
-#define CHIP_REG_MULTIPLEXER_CTRLB_TYPE                             uint8_t
-
-#define CHIP_USART_0                                                true
+#define CHIP_USART_0
 
 #define CHIP_USART_0_RX_DATA_REG                                    CHIP_REG_USART_0_RXDATAL
-#define CHIP_USART_0_RX_DATA9_REG                                   CHIP_REG_USART_0_RXDATA
+#define CHIP_USART_0_RX_DATA9_REG                                   CHIP_REG_USART_0_RXDATAH
+#define CHIP_USART_0_RX_DATA9_BIT                                   0
 
 #define CHIP_USART_0_TX_DATA_REG                                    CHIP_REG_USART_0_TXDATAL
-#define CHIP_USART_0_TX_DATA9_REG                                   CHIP_REG_USART_0_TXDATA
+#define CHIP_USART_0_TX_DATA9_REG                                   CHIP_REG_USART_0_TXDATAH
+#define CHIP_USART_0_TX_DATA9_BIT                                   0
 
-// TODO rename to just "baud" (not "baud rate").
-#define CHIP_USART_0_BAUD_RATE_REG                                  CHIP_REG_USART_0_BAUD
+#define CHIP_USART_0_BAUD_REG                                       CHIP_REG_USART_0_BAUD
 
-// #define CHIP_USART_0_FRAME_ERROR_BIT_0_REG                          CHIP_REG_UCSR0A
-// #define CHIP_USART_0_FRAME_ERROR_BIT_0_BIT                          4
-// #define CHIP_USART_0_DATA_OVERRUN_BIT_0_REG                         CHIP_REG_UCSR0A
-// #define CHIP_USART_0_DATA_OVERRUN_BIT_0_BIT                         3
-#define CHIP_USART_0_PARITY_ERROR_BIT_0_REG                         CHIP_REG_USART_0_RXDATAH
-#define CHIP_USART_0_PARITY_ERROR_BIT_0_BIT                         2
+#define CHIP_USART_0_PARITY_ERROR_REG                               CHIP_REG_USART_0_RXDATAH
+#define CHIP_USART_0_PARITY_ERROR_BIT                               2
 
-#define CHIP_USART_0_BAUD_MODE_NORMAL_ID                            0
-#define CHIP_USART_0_BAUD_MODE_DOUBLE_ID                            1
-#define CHIP_USART_0_BAUD_MODE_GENAUTO_ID                           2
-#define CHIP_USART_0_BAUD_MODE_LINAUTO_ID                           3
-#define CHIP_USART_0_BAUD_MODE_BIT_0_REG                            CHIP_REG_USART_0_CTRLB
-#define CHIP_USART_0_BAUD_MODE_BIT_1_REG                            CHIP_REG_USART_0_CTRLB
-#define CHIP_USART_0_BAUD_MODE_BIT_0_BIT                            1
-#define CHIP_USART_0_BAUD_MODE_BIT_1_BIT                            2
+#define CHIP_USART_0_BAUD_MODE_REG                                  CHIP_REG_USART_0_CTRLB
+#define CHIP_USART_0_BAUD_MODE_MASK                                 0x06
+#define CHIP_USART_0_BAUD_MODE_NORMAL_ID                            0x00
+#define CHIP_USART_0_BAUD_MODE_DOUBLE_ID                            0x02
+#define CHIP_USART_0_BAUD_MODE_GENAUTO_ID                           0x04
+#define CHIP_USART_0_BAUD_MODE_LINAUTO_ID                           0x06
 
-// #define CHIP_USART_0_MULTI_PROCESSOR_COMMUNICATION_BIT_0_REG        CHIP_REG_UCSR0A
-// #define CHIP_USART_0_MULTI_PROCESSOR_COMMUNICATION_BIT_0_BIT        0
+#define CHIP_USART_0_MULTI_PROCESSOR_COMMUNICATION_REG              CHIP_REG_USART_0_CTRLB
+#define CHIP_USART_0_MULTI_PROCESSOR_COMMUNICATION_BIT              0
 
-#define CHIP_USART_0_RX_COMPLETE_INT_ENABLE_BIT_0_REG               CHIP_REG_USART_0_CTRLA
-#define CHIP_USART_0_RX_COMPLETE_INT_ENABLE_BIT_0_BIT               7
-#define CHIP_USART_0_TX_COMPLETE_INT_ENABLE_BIT_0_REG               CHIP_REG_USART_0_CTRLA
-#define CHIP_USART_0_TX_COMPLETE_INT_ENABLE_BIT_0_BIT               6
-#define CHIP_USART_0_DATA_REG_EMPTY_INT_ENABLE_BIT_0_REG            CHIP_REG_USART_0_CTRLA
-#define CHIP_USART_0_DATA_REG_EMPTY_INT_ENABLE_BIT_0_BIT            5
+#define CHIP_USART_0_RX_COMPLETE_INT_ENABLE_REG                     CHIP_REG_USART_0_CTRLA
+#define CHIP_USART_0_RX_COMPLETE_INT_ENABLE_BIT                     7
+#define CHIP_USART_0_TX_COMPLETE_INT_ENABLE_REG                     CHIP_REG_USART_0_CTRLA
+#define CHIP_USART_0_TX_COMPLETE_INT_ENABLE_BIT                     6
+#define CHIP_USART_0_DATA_REG_EMPTY_INT_ENABLE_REG                  CHIP_REG_USART_0_CTRLA
+#define CHIP_USART_0_DATA_REG_EMPTY_INT_ENABLE_BIT                  5
 
-// #define CHIP_USART_0_RX_COMPLETE_INT_FLAG_IMPURE                    TRUE
-#define CHIP_USART_0_RX_COMPLETE_INT_FLAG_BIT_0_REG                 CHIP_REG_USART_0_STATUS
-#define CHIP_USART_0_RX_COMPLETE_INT_FLAG_BIT_0_BIT                 7
-#define CHIP_USART_0_TX_COMPLETE_INT_FLAG_BIT_0_REG                 CHIP_REG_USART_0_STATUS
-#define CHIP_USART_0_TX_COMPLETE_INT_FLAG_BIT_0_BIT                 6
-#define CHIP_USART_0_DATA_REG_EMPTY_INT_FLAG_BIT_0_REG              CHIP_REG_USART_0_STATUS
-#define CHIP_USART_0_DATA_REG_EMPTY_INT_FLAG_BIT_0_BIT              5
+#define CHIP_USART_0_RX_COMPLETE_INT_FLAG_REG                       CHIP_REG_USART_0_STATUS
+#define CHIP_USART_0_RX_COMPLETE_INT_FLAG_BIT                       7
+#define CHIP_USART_0_TX_COMPLETE_INT_FLAG_REG                       CHIP_REG_USART_0_STATUS
+#define CHIP_USART_0_TX_COMPLETE_INT_FLAG_BIT                       6
+#define CHIP_USART_0_DATA_REG_EMPTY_INT_FLAG_REG                    CHIP_REG_USART_0_STATUS
+#define CHIP_USART_0_DATA_REG_EMPTY_INT_FLAG_BIT                    5
 
-#define CHIP_USART_0_RX_ENABLE_BIT_0_REG                            CHIP_REG_USART_0_CTRLB
-#define CHIP_USART_0_RX_ENABLE_BIT_0_BIT                            7
-#define CHIP_USART_0_TX_ENABLE_BIT_0_REG                            CHIP_REG_USART_0_CTRLB
-#define CHIP_USART_0_TX_ENABLE_BIT_0_BIT                            6
+#define CHIP_USART_0_RX_ENABLE_REG                                  CHIP_REG_USART_0_CTRLB
+#define CHIP_USART_0_RX_ENABLE_BIT                                  7
+#define CHIP_USART_0_TX_ENABLE_REG                                  CHIP_REG_USART_0_CTRLB
+#define CHIP_USART_0_TX_ENABLE_BIT                                  6
 
-#define CHIP_USART_0_ENABLE_ALTERNATE_PINS_BIT_0_REG                CHIP_REG_MULTIPLEXER_CTRLB
-#define CHIP_USART_0_ENABLE_ALTERNATE_PINS_BIT_0_BIT                0
+#define CHIP_USART_0_ENABLE_ALTERNATE_PINS_REG                      CHIP_REG_PORTMUX_CTRLB
+#define CHIP_USART_0_ENABLE_ALTERNATE_PINS_BIT                      0
 
-// #define CHIP_USART_0_RX_DATA_BIT_8_REG                              CHIP_REG_UCSR0B
-// #define CHIP_USART_0_RX_DATA_BIT_8_BIT                              1
-// #define CHIP_USART_0_TX_DATA_BIT_8_REG                              CHIP_REG_UCSR0B
-// #define CHIP_USART_0_TX_DATA_BIT_8_BIT                              0
+#define CHIP_USART_0_MODE_REG                                       CHIP_REG_USART_0_CTRLC
+#define CHIP_USART_0_MODE_MASK                                      0xC0
+#define CHIP_USART_0_MODE_ASYNCHRONOUS_ID                           0x00
+#define CHIP_USART_0_MODE_SYNCHRONOUS_ID                            0x40
+#define CHIP_USART_0_MODE_IRCOM_ID                                  0x80
+#define CHIP_USART_0_MODE_MASTER_SPI_ID                             0xC0
 
-// #define CHIP_USART_0_MODE_ASYNCHRONOUS_ID                           0
-// #define CHIP_USART_0_MODE_SYNCHRONOUS_ID                            1
-// #define CHIP_USART_0_MODE_MASTER_SPI_ID                             3
-// #define CHIP_USART_0_MODE_BIT_0_REG                                 CHIP_REG_UCSR0C
-// #define CHIP_USART_0_MODE_BIT_1_REG                                 CHIP_REG_UCSR0C
-// #define CHIP_USART_0_MODE_BIT_0_BIT                                 6
-// #define CHIP_USART_0_MODE_BIT_1_BIT                                 7
+#define CHIP_USART_0_PARITY_REG                                     CHIP_REG_USART_0_CTRLC
+#define CHIP_USART_0_PARITY_MASK                                    0x30
+#define CHIP_USART_0_PARITY_DISABLE_ID                              0x00
+#define CHIP_USART_0_PARITY_EVEN_ID                                 0x20
+#define CHIP_USART_0_PARITY_ODD_ID                                  0x30
 
-#define CHIP_USART_0_PARITY_DISABLE_ID                              0
-#define CHIP_USART_0_PARITY_EVEN_ID                                 2
-#define CHIP_USART_0_PARITY_ODD_ID                                  3
-#define CHIP_USART_0_PARITY_BIT_0_REG                               CHIP_REG_USART_0_CTRLC
-#define CHIP_USART_0_PARITY_BIT_1_REG                               CHIP_REG_USART_0_CTRLC
-#define CHIP_USART_0_PARITY_BIT_0_BIT                               4
-#define CHIP_USART_0_PARITY_BIT_1_BIT                               5
+#define CHIP_USART_0_STOP_BITS_REG                                  CHIP_REG_USART_0_CTRLC
+#define CHIP_USART_0_STOP_BITS_MASK                                 0x08
+#define CHIP_USART_0_STOP_BITS_1_ID                                 0x00
+#define CHIP_USART_0_STOP_BITS_2_ID                                 0x08
 
-#define CHIP_USART_0_STOP_BITS_1_ID                                 0
-#define CHIP_USART_0_STOP_BITS_2_ID                                 1
-#define CHIP_USART_0_STOP_BITS_BIT_0_REG                            CHIP_REG_USART_0_CTRLC
-#define CHIP_USART_0_STOP_BITS_BIT_0_BIT                            3
-
-#define CHIP_USART_0_CHARACTER_SIZE_5_ID                            0
-#define CHIP_USART_0_CHARACTER_SIZE_6_ID                            1
-#define CHIP_USART_0_CHARACTER_SIZE_7_ID                            2
-#define CHIP_USART_0_CHARACTER_SIZE_8_ID                            3
-// #define CHIP_USART_0_CHARACTER_SIZE_9_ID                            7
-#define CHIP_USART_0_CHARACTER_SIZE_BIT_0_REG                       CHIP_REG_USART_0_CTRLC
-#define CHIP_USART_0_CHARACTER_SIZE_BIT_1_REG                       CHIP_REG_USART_0_CTRLC
-#define CHIP_USART_0_CHARACTER_SIZE_BIT_2_REG                       CHIP_REG_USART_0_CTRLC
-#define CHIP_USART_0_CHARACTER_SIZE_BIT_0_BIT                       0
-#define CHIP_USART_0_CHARACTER_SIZE_BIT_1_BIT                       1
-#define CHIP_USART_0_CHARACTER_SIZE_BIT_2_BIT                       2
-
-// #define CHIP_USART_0_POLARITY_TX_RISING_RX_FALLING_ID               0
-// #define CHIP_USART_0_POLARITY_TX_FALLING_RX_RISING_ID               1
-// #define CHIP_USART_0_POLARITY_BIT_0_REG                             CHIP_REG_UCSR0C
-// #define CHIP_USART_0_POLARITY_BIT_0_BIT                             0
-
-// #define CHIP_USART_0_RX_INT_VECTOR                                  VECT(CHIP_VECT_USART0_RX)
-// #define CHIP_USART_0_DE_INT_VECTOR                                  VECT(CHIP_VECT_USART0_UDRE)
-// #define CHIP_USART_0_TX_INT_VECTOR                                  VECT(CHIP_VECT_USART0_TX)
+#define CHIP_USART_0_CHARACTER_SIZE_REG                             CHIP_REG_USART_0_CTRLC
+#define CHIP_USART_0_CHARACTER_SIZE_MASK                            0x07
+#define CHIP_USART_0_CHARACTER_SIZE_5_ID                            0x00
+#define CHIP_USART_0_CHARACTER_SIZE_6_ID                            0x01
+#define CHIP_USART_0_CHARACTER_SIZE_7_ID                            0x02
+#define CHIP_USART_0_CHARACTER_SIZE_8_ID                            0x03
+#define CHIP_USART_0_CHARACTER_SIZE_9_ID                            0x06
+// #define CHIP_USART_0_CHARACTER_SIZE_9_LOW_ID                        0x06
+// #define CHIP_USART_0_CHARACTER_SIZE_9_HIGH_ID                       0x07
 
 #endif

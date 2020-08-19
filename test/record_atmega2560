@@ -1,5 +1,7 @@
 r Adc0::intFlag() 01011100011000000100110111101111
-r Adc0::value() fcb1748ad32d8959cf85173a19d1014e4442949a2c1a4139ca3f2363614b3e1b5e8eb7d203c7858a9a2dc307a5f55368b2171bca74611b61c85a4adb8017
+r Adc0::result() fcb1748ad32d8959cf85173a19d1014e4442949a2c1a4139ca3f2363614b3e1b5e8eb7d203c7858a9a2dc307a5f55368b2171bca74611b61c85a4adb8017
+r Eeprom0::data() 765f2b3933592403c30e0535016373dc5433dd7f33c70db57384233a94094
+r Eeprom0::writeEnabled() 00011110101101011100010110011110
 r ExInt0::intFlag() 00101001001001111101111100010100
 r ExInt1::intFlag() 00011111101000110011110111101011
 r ExInt2::intFlag() 00001010100000100010111111101100
@@ -11,406 +13,235 @@ r ExInt7::intFlag() 11100010111001110101000111110111
 r PcInt0::intFlag() 10101110101010100111110111111111
 r PcInt1::intFlag() 10011110010011000000001000000110
 r PcInt2::intFlag() 01110100110010001011000101110011
-r PortA::Pin0::direction() 11101000110010101011100100111011
 r PortA::Pin0::input() 01001101101110111000111011011010
-r PortA::Pin0::output() 01111010001110111010110101010001
-r PortA::Pin1::direction() 01001001001011000011100010011010
 r PortA::Pin1::input() 11000110001000011111000111111000
-r PortA::Pin1::output() 10100110101100000011011101101100
-r PortA::Pin2::direction() 10101110000100001100000111101110
 r PortA::Pin2::input() 10111101011010010111110111101010
-r PortA::Pin2::output() 00111101100100000111010100101101
-r PortA::Pin3::direction() 10101000111101101100001011101101
 r PortA::Pin3::input() 11000001011001110000101010011101
-r PortA::Pin3::output() 00100101011100110100001101010101
-r PortA::Pin4::direction() 11101101001000000111110010110011
 r PortA::Pin4::input() 10110111101010100000011000100011
-r PortA::Pin4::output() 00000101111000101110110011000100
-r PortA::Pin5::direction() 00000001111100101010010010100101
 r PortA::Pin5::input() 11111101110000010101100101001011
-r PortA::Pin5::output() 10001011100001001000001011010101
-r PortA::Pin6::direction() 01001110010101000001011110010101
 r PortA::Pin6::input() 11111000100010010110111000100001
-r PortA::Pin6::output() 11100101010001010010010001011011
-r PortA::Pin7::direction() 10001000001010000010001110101001
 r PortA::Pin7::input() 01101110011110100001100001101101
-r PortA::Pin7::output() 10010100101111101101001101010101
 r PortA::input() 7eebf474e5b7923d71ac9f81d58996f36646a6ed555926fa7d6baf8835f8
-r PortA::output() e2414f8525de237cb6589b8f81e09949b19c57861157aa8f30fb6e946be40ed
-r PortB::Pin0::direction() 11010111011011000011101011000010
 r PortB::Pin0::input() 01000100000101100000000110010110
-r PortB::Pin0::output() 01100110001000001001001010010111
-r PortB::Pin1::direction() 11011010011110001100100001001110
 r PortB::Pin1::input() 11111110111010100010101111100110
-r PortB::Pin1::output() 01010010111011010101010010111101
-r PortB::Pin2::direction() 11100100000100111011001100000100
 r PortB::Pin2::input() 00001110001110111100011001111010
-r PortB::Pin2::output() 00010011100100100001010111011111
-r PortB::Pin3::direction() 11100000001000001000011010101100
 r PortB::Pin3::input() 00010101101011001101011101001111
-r PortB::Pin3::output() 00100000011000101010111001011111
-r PortB::Pin4::direction() 00101000111100100111011100001110
 r PortB::Pin4::input() 10011101010101001111000010101101
-r PortB::Pin4::output() 00010101000101101010100100111000
-r PortB::Pin5::direction() 01010100101011010110011100110010
 r PortB::Pin5::input() 11000010001101011000110001001000
-r PortB::Pin5::output() 00010100000101000100010010101011
-r PortB::Pin6::direction() 10100011010011011100011111100111
 r PortB::Pin6::input() 00111001000101001011100000100011
-r PortB::Pin6::output() 00010010010110111001010010011110
-r PortB::Pin7::direction() 11011100110100000110101101001100
 r PortB::Pin7::input() 01011101011110110110100001111000
-r PortB::Pin7::output() 11101111001011110101000100111111
 r PortB::input() 32a342dad69f26d8a92aef58e7987a47c9cd258e22ceb13aed685bc1b4f58
-r PortB::output() 8083897680b1c79464a8b74c2b2dcc259a218c7186e99467cb2dffecfedaf
-r PortC::Pin0::direction() 01110111000110100011100001110110
 r PortC::Pin0::input() 00101100000110011110110111101101
-r PortC::Pin0::output() 01011110000010110001001010000001
-r PortC::Pin1::direction() 01111001011100101111101110000001
 r PortC::Pin1::input() 10101110011100100011100110100001
-r PortC::Pin1::output() 00111100110011110110111000011110
-r PortC::Pin2::direction() 01111101100000000111110101001111
 r PortC::Pin2::input() 00110110101000100101110110000100
-r PortC::Pin2::output() 01101001010101011010001101011111
-r PortC::Pin3::direction() 00010010111111100000001011010100
 r PortC::Pin3::input() 00101111010010000101101100100001
-r PortC::Pin3::output() 11001000101011001111000001111100
-r PortC::Pin4::direction() 01000111000110101111010001100011
 r PortC::Pin4::input() 11010010011110011100110100110011
-r PortC::Pin4::output() 10001111100000110011101111111001
-r PortC::Pin5::direction() 01100001101101001000111001101100
 r PortC::Pin5::input() 00011011000001001101110101010100
-r PortC::Pin5::output() 10011011101101001110101001110100
-r PortC::Pin6::direction() 10110111100100000000001011010101
 r PortC::Pin6::input() 10110001010010101111110100110010
-r PortC::Pin6::output() 00100010101011101011001101101100
+r PortC::Pin7::input() 00111000110001011110110011010110
 r PortC::input() 5210cff4abf3e6884da161359a04691f1fdc36efff587f87a15bf01a5d01b
-r PortC::output() b88dc6233f1371b4fa8668a4cb6ed317ecaa7ed93282f7d4117c783e5eee8695
-r PortD::Pin0::direction() 10100000110100000000101111101000
 r PortD::Pin0::input() 00101110101101001010111101110100
-r PortD::Pin0::output() 10011111110010011000010110000100
-r PortD::Pin1::direction() 10001010000001110111101001111110
 r PortD::Pin1::input() 10100011110001110111001100110111
-r PortD::Pin1::output() 01101110011000010011010101111000
-r PortD::Pin2::direction() 01101011011010000001000000101011
 r PortD::Pin2::input() 11000111110001110100110110011110
-r PortD::Pin2::output() 01111100001101111101100110111100
-r PortD::Pin3::direction() 01110010110010001110100000010110
 r PortD::Pin3::input() 10011000001110001110101110001011
-r PortD::Pin3::output() 00011101010000001010110000111101
-r PortD::Pin4::direction() 10000110111111111101000110100011
 r PortD::Pin4::input() 10111001011110000011100101001011
-r PortD::Pin4::output() 11001000010000111111110101100111
-r PortD::Pin5::direction() 01011110010010111010110000111111
 r PortD::Pin5::input() 00011101010111101110001011111011
-r PortD::Pin5::output() 00000011000101011101100000111001
-r PortD::Pin6::direction() 00011100100101011001111101111101
 r PortD::Pin6::input() 11001011000001010011101110011110
-r PortD::Pin6::output() 00111110010101100001111010111110
-r PortD::Pin7::direction() 00000000111101100011011110100101
 r PortD::Pin7::input() 11011110001011100011101000011001
-r PortD::Pin7::output() 10110001101101100011100000011001
 r PortD::input() dec413b8f9a5c7767369939b8e7a646292efbd2dd5eb5f6c3123e7fc477eba
-r PortD::output() 9116c6cd5f4f63a9815b86e41e4d4373d349af6fc5b401745127eeeee5d50b8
-r PortE::Pin0::direction() 00110111100110100010001000000011
 r PortE::Pin0::input() 10100100010111111000111011001010
-r PortE::Pin0::output() 01101110001001110110100010110000
-r PortE::Pin1::direction() 01010001001000010101101101011101
 r PortE::Pin1::input() 01010000110001100000011111011100
-r PortE::Pin1::output() 10110000100000011111100111010001
-r PortE::Pin2::direction() 00010111010001001110101111001101
 r PortE::Pin2::input() 00101101110000010011011111101011
-r PortE::Pin2::output() 10001001101110010001111101111101
-r PortE::Pin3::direction() 01101010011010011100000000001000
 r PortE::Pin3::input() 10001010011011101100000000101001
-r PortE::Pin3::output() 01111011111000011110111111110110
-r PortE::Pin4::direction() 10010010100100111100101010101001
 r PortE::Pin4::input() 11000001111101111000011101011011
-r PortE::Pin4::output() 00100111001111000111101001101011
-r PortE::Pin5::direction() 10010001010001100101000101111111
 r PortE::Pin5::input() 11010111000001000010001100001111
-r PortE::Pin5::output() 11011001011010001011110011111000
-r PortE::Pin6::direction() 11110000100101010000101010010011
 r PortE::Pin6::input() 00110010100100010001010001110101
-r PortE::Pin6::output() 11100011111010011101000000110000
-r PortE::Pin7::direction() 10101101110001110111101110010100
 r PortE::Pin7::input() 10110000000111101111000000101100
-r PortE::Pin7::output() 00010000001111111010110011010011
 r PortE::input() b932c5e2c256834561f18d189bb9b559988a4c41573736757cc52bfe2357c
-r PortE::output() 66695baa2d11597c4e68fd94f49181cfea5bbb76bfac1ceabbe7def34c9896
-r PortF::Pin0::direction() 00100000101001010000101000010111
 r PortF::Pin0::input() 00001110001001100110101110001011
-r PortF::Pin0::output() 01010010000110100111101000001111
-r PortF::Pin1::direction() 01000110010010011010011101011111
 r PortF::Pin1::input() 01011101000100000111100011010000
-r PortF::Pin1::output() 00110011111010000111011010011011
-r PortF::Pin2::direction() 00001111101010110101110111101111
 r PortF::Pin2::input() 00100001100000011101000100011010
-r PortF::Pin2::output() 10100010011111001110001111001010
-r PortF::Pin3::direction() 11101000000000110011111000101110
 r PortF::Pin3::input() 00100100011100000011000110100000
-r PortF::Pin3::output() 11010100100011001110100011010101
-r PortF::Pin4::direction() 00000110000011111110111011110011
 r PortF::Pin4::input() 11010101010011001101010101010101
-r PortF::Pin4::output() 00100010010000001100101010100110
-r PortF::Pin5::direction() 01010111001001100100101101000001
 r PortF::Pin5::input() 00010011111101000111000001110101
-r PortF::Pin5::output() 01100010001000110111010010100111
-r PortF::Pin6::direction() 00001011111101001011010111100111
 r PortF::Pin6::input() 11110111011011000101100100001000
-r PortF::Pin6::output() 01101011100011100110001110101100
-r PortF::Pin7::direction() 10111001100001001011011001010101
 r PortF::Pin7::input() 01101000111011100011100111100110
-r PortF::Pin7::output() 01101000000001010010001010101000
 r PortF::input() 50d2cc72835b6176a4f8e92ad0f18141477abfec3101dd8bb2a83645b08531
-r PortF::output() ce9f6bc0877424a162654fcc61a01c7fef231922d744fecf0ac779372b
-r PortG::Pin0::direction() 10010101011010111110101100001011
 r PortG::Pin0::input() 11111000010101110101001001001101
-r PortG::Pin0::output() 11000010110001111101100010111111
-r PortG::Pin1::direction() 11011000101001001001001101010110
 r PortG::Pin1::input() 10000111000010101111001101101110
-r PortG::Pin1::output() 10010100101011101010101110010111
-r PortG::Pin2::direction() 00001101001001010000101011011110
 r PortG::Pin2::input() 11001110001111100001010101100100
-r PortG::Pin2::output() 10010011101110110011101100000111
-r PortG::Pin3::direction() 11101011110101000001000010101001
 r PortG::Pin3::input() 10101101101001101011110111111101
-r PortG::Pin3::output() 00111001110100010100001110001000
-r PortG::Pin4::direction() 01110011111011000101011011011010
 r PortG::Pin4::input() 11100010100000000110001111000010
-r PortG::Pin4::output() 10001110011011110000001111001100
-r PortG::Pin5::direction() 00100010111010111001101010111010
 r PortG::Pin5::input() 01010001000101110011101101111000
-r PortG::Pin5::output() 10111111110001000100110101100000
-r PortG::Pin6::direction() 00001111111100011011111001110101
-r PortG::Pin6::input() 10111000101110101010110001000000
-r PortG::Pin6::output() 11110100000001111100001001101111
-r PortG::Pin7::direction() 11100011000001011010111111100011
-r PortG::Pin7::input() 11110110101101010110111111110110
-r PortG::Pin7::output() 00101000010001010011011011110111
 r PortG::input() dfb5d9e14d8e962ad81cce546ad6fa14a93fa2fe8ccb3be98ffaea82b8f929
-r PortG::output() 7741e86eb872352c2fb916c16f357dd4369868527a0de3e9bf0e18359d7c7c7
-r PortH::Pin0::direction() 10000010100101011111001100011111
 r PortH::Pin0::input() 01111010101110011011111000101100
-r PortH::Pin0::output() 11001000011011011110010010010100
-r PortH::Pin1::direction() 01011000100000110110101001000111
 r PortH::Pin1::input() 10010011001110010011000111100000
-r PortH::Pin1::output() 01101001010101100110111010111110
-r PortH::Pin2::direction() 00000011010001100001100101011111
 r PortH::Pin2::input() 10000000011110010001010100011001
-r PortH::Pin2::output() 10011110001101111011000011010001
-r PortH::Pin3::direction() 01000110001100100110010101000010
 r PortH::Pin3::input() 01111100011111100001100100001101
-r PortH::Pin3::output() 11110010100011000000001011000100
-r PortH::Pin4::direction() 11110110101000010000110101111010
 r PortH::Pin4::input() 11101100011000010000110000000100
-r PortH::Pin4::output() 11110100111011011101111111011100
-r PortH::Pin5::direction() 11001111001111000110111101010000
 r PortH::Pin5::input() 00111001100011011011011010111011
-r PortH::Pin5::output() 10011111010101100011110010000111
-r PortH::Pin6::direction() 01110101010111001101011111011110
 r PortH::Pin6::input() 11110000001001011010111011100110
-r PortH::Pin6::output() 00110111111111000011011000010110
-r PortH::Pin7::direction() 10100000110101010011110001110010
 r PortH::Pin7::input() 10111000110100001111110100110010
-r PortH::Pin7::output() 00010010010100001011100011100101
 r PortH::input() d659f9ebb918322a19c5f8f2f68877e180e3afd9f5618e6242e3a42d59e02c
-r PortH::output() 3d1b5afc2774ec6258f355e6597f26159513e7f4b2735a10bf9c825712fb62a4
-r PortJ::Pin0::direction() 00010111100011101010100010100111
 r PortJ::Pin0::input() 00100010010100001110000001111110
-r PortJ::Pin0::output() 10001001101111111100000101011111
-r PortJ::Pin1::direction() 11111101100001100110110111011000
 r PortJ::Pin1::input() 00011010100110010010101111110011
-r PortJ::Pin1::output() 11001110000001100010011101011000
-r PortJ::Pin2::direction() 01000001111000010101110010100010
 r PortJ::Pin2::input() 11100111110001110110100001010010
-r PortJ::Pin2::output() 10110100101010001101001110111100
-r PortJ::Pin3::direction() 01100100010010001000010000000010
 r PortJ::Pin3::input() 10010100011110110000100110111010
-r PortJ::Pin3::output() 01100010101111001100010100100100
-r PortJ::Pin4::direction() 10011011011011001100011010011111
 r PortJ::Pin4::input() 00000010000010110100010111111001
-r PortJ::Pin4::output() 00010111000001101010011110000010
-r PortJ::Pin5::direction() 10011001010011000000010010111001
 r PortJ::Pin5::input() 00011100110000010010100000111100
-r PortJ::Pin5::output() 10101100100111000110001100000101
-r PortJ::Pin6::direction() 10101010011100000010110101000011
 r PortJ::Pin6::input() 00101011101100100011011000110110
-r PortJ::Pin6::output() 01110111111010110111100011001111
-r PortJ::Pin7::direction() 00000100001001010110111101011010
 r PortJ::Pin7::input() 11010010011111101000100100000011
-r PortJ::Pin7::output() 01010101111010111011010100011111
 r PortJ::input() 8c8445aa622cd74466adc8cb9a84dc3e81156740ae50429a1a177b7f3961cf92
-r PortJ::output() 27ca6cd423f65ad1edc0cd29ed3bd3c19d6df2c4409a36bf5443c87c7edd1e1
-r PortK::Pin0::direction() 00110000111011110111110010001101
 r PortK::Pin0::input() 11110000111000000111011010111100
-r PortK::Pin0::output() 11000011000100000011001011110101
-r PortK::Pin1::direction() 01110111011111111011010001001110
 r PortK::Pin1::input() 11100010101000011111101111001011
-r PortK::Pin1::output() 10010111000101110010101000010001
-r PortK::Pin2::direction() 10000100011110110001001011010000
 r PortK::Pin2::input() 11011110001100101111110000000010
-r PortK::Pin2::output() 01000001110000111011011110100110
-r PortK::Pin3::direction() 10011111011100000000100000010000
 r PortK::Pin3::input() 11110100100100100100100010010001
-r PortK::Pin3::output() 11000010101100100001111100101100
-r PortK::Pin4::direction() 00001110011011000011100111110110
 r PortK::Pin4::input() 01101001100000100100111101110101
-r PortK::Pin4::output() 11010100011111001110111000111111
-r PortK::Pin5::direction() 00010100010001000000010110000100
 r PortK::Pin5::input() 00010011101000000011110100001100
-r PortK::Pin5::output() 10000001111000111100001000101101
-r PortK::Pin6::direction() 11111011100011110110001111001010
 r PortK::Pin6::input() 00001010101101001001011111101110
-r PortK::Pin6::output() 01010111001110101110110001101111
-r PortK::Pin7::direction() 00001010110100111101110010000110
 r PortK::Pin7::input() 01110110100100110010011100101010
-r PortK::Pin7::output() 01110001011001101110101001110110
 r PortK::input() f9f9bad548ce630fb167cc0409c82461fa7673ef5d3f24b52d119e371c61a
-r PortK::output() 3bdd80d20524be72cb4f85b5092ee26f4f0d7dda5cbfc5c1fd9378fdd473
-r PortL::Pin0::direction() 00110000010100100100101011100110
 r PortL::Pin0::input() 10010100111001111011111011010111
-r PortL::Pin0::output() 10101101111111000100101100110110
-r PortL::Pin1::direction() 10000111111101011010110010111101
 r PortL::Pin1::input() 00001011010000111110011001000000
-r PortL::Pin1::output() 00010011110001011011010111111111
-r PortL::Pin2::direction() 01111111010010111011110011110011
 r PortL::Pin2::input() 01010000001110011111000000011001
-r PortL::Pin2::output() 11000101010100001000011110100100
-r PortL::Pin3::direction() 10001110110101011000001101001000
 r PortL::Pin3::input() 11110111101101000111111010100111
-r PortL::Pin3::output() 11011000101001011111010000101011
-r PortL::Pin4::direction() 11000100010100101001100000010101
 r PortL::Pin4::input() 10110010101101011010000000101100
-r PortL::Pin4::output() 00000001100011110011010011100011
-r PortL::Pin5::direction() 10111100111110111111101101010111
 r PortL::Pin5::input() 10110010101111010001100011110110
-r PortL::Pin5::output() 01000010000100111100010011001010
-r PortL::Pin6::direction() 01100100011110110010010001010010
 r PortL::Pin6::input() 10111011001101011000001000110111
-r PortL::Pin6::output() 10001110011110011110001111100111
-r PortL::Pin7::direction() 00000010111110001100111010101011
 r PortL::Pin7::input() 11100110001011101000101100100101
-r PortL::Pin7::output() 00100111111000101110111100000111
 r PortL::input() f98cf87d4289fa4a393fd7ca4f98377d7e1f2da9bcb802923f86514f969cd
-r PortL::output() 4d2c81a49c5e2979bc7c965511bb07aeee9da1a81bec5c776725f32ac7fbda
-r Timer0::OutputA::intEnabled() 01011101001101010000100011101110
-r Timer0::OutputA::intFlag() 11111100101101001100101101110110
-r Timer0::OutputA::value() d2f6ac36799be05c79de7e225d2598d28e05cf35e8ad539631e5d9fea4af4bd
-r Timer0::OutputB::intEnabled() 11110111111100011001000000000011
-r Timer0::OutputB::intFlag() 11110100010000110110100111010000
-r Timer0::OutputB::value() 8937f7a6ee4a326ead947b251361f1c9272e3b4e3c9dfaacc257299d8b448
+r Sleep::isEnabled() 00000100110101111000010111011111
+r Spi0::collisionFlag() 11010000011010000100111101111100
+r Spi0::data() 3065a6ee3795c3679f208b1426b423e41e186c7b7fbc12aaffc26a669e51
+r Spi0::intFlag() 10100011111110110101110001111110
+r Timer0::compareA() d2f6ac36799be05c79de7e225d2598d28e05cf35e8ad539631e5d9fea4af4bd
+r Timer0::compareAIntFlag() 11111100101101001100101101110110
+r Timer0::compareB() 8937f7a6ee4a326ead947b251361f1c9272e3b4e3c9dfaacc257299d8b448
+r Timer0::compareBIntFlag() 11110100010000110110100111010000
 r Timer0::counter() e877c5297b7dd5609c62db43dd10495775bdf5f4eae79c9870027f814e8abda
-r Timer0::intFlag() 01111000011110110100110010111111
-r Timer1::OutputA::intEnabled() 11110011110000000000111010100011
-r Timer1::OutputA::intFlag() 10110111111011010111001100111011
-r Timer1::OutputA::value() afe8905beedf3f2814a437606a2ba48df889c5d7330785b038a1332624937ea4c16b9aaaa7b038c48122bbc8e23cd2520c042c4a37bebcd72c1c95381b2baa8
-r Timer1::OutputB::intEnabled() 01010101100011101000111001001001
-r Timer1::OutputB::intFlag() 00011010110010000110100001101000
-r Timer1::OutputB::value() fb887b8387be1e83885b953838fc65dfee81c79bcef926e41562b079de3f62d2d899b3eb40e5d2da1ddd138c8d57f2aaa99fe06749d7bccab07395b2dfc233a9
-r Timer1::OutputC::intEnabled() 11001010100110000000111011110010
-r Timer1::OutputC::intFlag() 10100100111010101001010001111100
-r Timer1::OutputC::value() 44f127685839798c49af6454e35ce12ad1be95b8f1c24d6b015d55ee9f8729ea71248fa517e1e4be6316df1c0a77504b2b32c5d39c4c36c1600f202a2f0
+r Timer0::overflowIntFlag() 01111000011110110100110010111111
+r Timer1::capture() 3ba7a0a5c32f54736267eaee42449706a66a70fbb934d11019224866520f2b75dac59edc3a5bef59da1d5a12ae0547a97f995a80fd94687aac20a1256e01
+r Timer1::captureIntFlag() 10010011011111100111101001011110
+r Timer1::compareA() afe8905beedf3f2814a437606a2ba48df889c5d7330785b038a1332624937ea4c16b9aaaa7b038c48122bbc8e23cd2520c042c4a37bebcd72c1c95381b2baa8
+r Timer1::compareAIntFlag() 10110111111011010111001100111011
+r Timer1::compareB() fb887b8387be1e83885b953838fc65dfee81c79bcef926e41562b079de3f62d2d899b3eb40e5d2da1ddd138c8d57f2aaa99fe06749d7bccab07395b2dfc233a9
+r Timer1::compareBIntFlag() 00011010110010000110100001101000
+r Timer1::compareC() 44f127685839798c49af6454e35ce12ad1be95b8f1c24d6b015d55ee9f8729ea71248fa517e1e4be6316df1c0a77504b2b32c5d39c4c36c1600f202a2f0
+r Timer1::compareCIntFlag() 10100100111010101001010001111100
 r Timer1::counter() 466f8cebbb84202c9ea2a8939a1c190e396adf6c0cc487c92701c3b38a177936b02749b7cbeaeef4766724372d73428bc058fe5de5e164c5122c605f6e6cf90
-r Timer1::intFlag() 10010100000011110111000111000011
-r Timer2::OutputA::intEnabled() 11101101010001010100000010101100
-r Timer2::OutputA::intFlag() 01011010011000111110011100111110
-r Timer2::OutputA::value() d4506f5c6067f0f280c981de7f24f4ba75a07cd4dd81a2aee78bf2498d287820
-r Timer2::OutputB::intEnabled() 11111101101010101110001010110010
-r Timer2::OutputB::intFlag() 11111010110011110001011000101011
-r Timer2::OutputB::value() e3569ad55ef6b4796f6a23cb284b9f5ab0848ac0d415855a16cdf3ec98a8b0
+r Timer1::overflowIntFlag() 10010100000011110111000111000011
+r Timer2::compareA() d4506f5c6067f0f280c981de7f24f4ba75a07cd4dd81a2aee78bf2498d287820
+r Timer2::compareAIntFlag() 01011010011000111110011100111110
+r Timer2::compareB() e3569ad55ef6b4796f6a23cb284b9f5ab0848ac0d415855a16cdf3ec98a8b0
+r Timer2::compareBIntFlag() 11111010110011110001011000101011
 r Timer2::counter() 26c8e630d098c37740da764c5947b6419af563b48aed426531d1227d3ca3e83
-r Timer2::intFlag() 10110000010111011001110010001101
-r Timer3::OutputA::intEnabled() 01100010100001010011011001010101
-r Timer3::OutputA::intFlag() 10001001100001011001111001110111
-r Timer3::OutputA::value() db947b4c26dcc7856802d01b9a0439e3737d5195d243ec8e3cd2332d292ee728606a436978243c3aa0c1cf2b524520e6fb66fc191f7107ea9e7e51723622b5
-r Timer3::OutputB::intEnabled() 00001100100000000111110100001110
-r Timer3::OutputB::intFlag() 11001100100110000000110111001100
-r Timer3::OutputB::value() 47a61a8c6eaee627d83c64b3bf4be4b4046fd3032a4bf1bbe71b1d543aeca3fc2a79749e9ce231db96b560a39e7f7b0366f44df26b5a28065bd796a4ba09
-r Timer3::OutputC::intEnabled() 00100111111110100000001000000011
-r Timer3::OutputC::intFlag() 01010010100001000110100111000100
-r Timer3::OutputC::value() 362e8a9b79a242f7829444ddada45d2a36f32978ed2cc0e22e62f39d1ff1b2b7ff4d1bfa86440b831f79e17dc18e5172cba7e6296e5eea6f214a0bccb9b05
+r Timer2::overflowIntFlag() 10110000010111011001110010001101
+r Timer3::capture() 27d03c88e1c8d3b24becc4d8460b3a34d0e32344c3b73c419151bce534e3920674ead2542ffbb8353d23759d3941a852228c20f6bd1265cf1efe1e2ebce93ed9
+r Timer3::captureIntFlag() 10110101001001111001011101110111
+r Timer3::compareA() db947b4c26dcc7856802d01b9a0439e3737d5195d243ec8e3cd2332d292ee728606a436978243c3aa0c1cf2b524520e6fb66fc191f7107ea9e7e51723622b5
+r Timer3::compareAIntFlag() 10001001100001011001111001110111
+r Timer3::compareB() 47a61a8c6eaee627d83c64b3bf4be4b4046fd3032a4bf1bbe71b1d543aeca3fc2a79749e9ce231db96b560a39e7f7b0366f44df26b5a28065bd796a4ba09
+r Timer3::compareBIntFlag() 11001100100110000000110111001100
+r Timer3::compareC() 362e8a9b79a242f7829444ddada45d2a36f32978ed2cc0e22e62f39d1ff1b2b7ff4d1bfa86440b831f79e17dc18e5172cba7e6296e5eea6f214a0bccb9b05
+r Timer3::compareCIntFlag() 01010010100001000110100111000100
 r Timer3::counter() a98c81ff52d29d379cf7f534ba0434288ab569e1e80738a6045f66349b9b3b7ee25d1e2ee25ec63c864a58e210b2bdbcad57c67d3dd785c1d9d1e27a3511a1
-r Timer3::intFlag() 01100100101110001000101010010000
-r Timer4::OutputA::intEnabled() 00011110100100011101001010001010
-r Timer4::OutputA::intFlag() 00011111000010100010100111010000
-r Timer4::OutputA::value() f9a6582d6825d0f61c6b3e7a6e3c9db2260b3c976fe717fa1f2e1859ce7d5ed20618a9f4e32715b90ab08987b48f985d6aa2701b7072452addfbd38d3232c5
-r Timer4::OutputB::intEnabled() 11111111000000100110001100000111
-r Timer4::OutputB::intFlag() 00001100110011001100000001010101
-r Timer4::OutputB::value() 1278519e90889403ecd138dad7a0a694cb1c6b1f99b67e75c8ecfb983b501cff8fc6cd05ef7d3ca28ab556dff5991319fdd573fc25a4ec1803d1619ad4
-r Timer4::OutputC::intEnabled() 00011111100101011100001011100110
-r Timer4::OutputC::intFlag() 10001110010001001001101100101100
-r Timer4::OutputC::value() 2dddd55671edd55a0f9aed48fcca99e2a63a1cc7061800973135a825f3a419c4f8573ab76531241f13d3ac32f783778df08311fbb6876d0a80359c112bd3916
+r Timer3::overflowIntFlag() 01100100101110001000101010010000
+r Timer4::capture() 480bbdb4d33a79fb3cbe2d00c77bdc7eca5630350205f81383965afd6b740705da4aa8f2cf2788e83d26524a04b82a7ee421c3cb4178e7c62845ef4695a
+r Timer4::captureIntFlag() 11010011111110001111010000001000
+r Timer4::compareA() f9a6582d6825d0f61c6b3e7a6e3c9db2260b3c976fe717fa1f2e1859ce7d5ed20618a9f4e32715b90ab08987b48f985d6aa2701b7072452addfbd38d3232c5
+r Timer4::compareAIntFlag() 00011111000010100010100111010000
+r Timer4::compareB() 1278519e90889403ecd138dad7a0a694cb1c6b1f99b67e75c8ecfb983b501cff8fc6cd05ef7d3ca28ab556dff5991319fdd573fc25a4ec1803d1619ad4
+r Timer4::compareBIntFlag() 00001100110011001100000001010101
+r Timer4::compareC() 2dddd55671edd55a0f9aed48fcca99e2a63a1cc7061800973135a825f3a419c4f8573ab76531241f13d3ac32f783778df08311fbb6876d0a80359c112bd3916
+r Timer4::compareCIntFlag() 10001110010001001001101100101100
 r Timer4::counter() a532e2a2594fc4f036d4ddecbaaf568dd2921d5fe0dfbff4da848572214c7dee01486303deb6b584a89b6f93f3c411fdcd3d4acd7c9c73bb5f6bef82d84bb9
-r Timer4::intFlag() 01000000000100001001001100000001
-r Timer5::OutputA::intEnabled() 00011010100111000011011010010010
-r Timer5::OutputA::intFlag() 01101101111111101111010110111010
-r Timer5::OutputA::value() 14303765c347dba7e42bca2dca8a0b1db829b44fa78bcd9f9e356228a6f71356b0716be9e942fc45cdf7b7b904834c2ebdbedbfa8b500b7676a7fd4908d85
-r Timer5::OutputB::intEnabled() 00111001000101101111000110000101
-r Timer5::OutputB::intFlag() 10100101110101011100010010011110
-r Timer5::OutputB::value() 9cdb7f5eafef0908e95a6be7c510fdf708b5e5b791c1455bfa06571aa1b949df9bf0e5d30b1d0d18d88745861e3e844874487eb49163620f487bce0ee985c
-r Timer5::OutputC::intEnabled() 00101000110110010111010100100010
-r Timer5::OutputC::intFlag() 01011101001001111100011011101011
-r Timer5::OutputC::value() 594c5b829108c6977642e3dac7b25fa811dbb220edbcf3b13c17fc3f747c7a22b0fc64151f35e4cca14bec68f7bbc99b8b498cd9c568efeb10276d76a28d30
+r Timer4::overflowIntFlag() 01000000000100001001001100000001
+r Timer5::capture() ee1151a69122a0058fae648463515de568d810eab5b40d43cbc8a408e9458d5b592778a6ce6fcbc805035bddfdb4ad418a52c355c8fa26d04b5a11c7d366d0
+r Timer5::captureIntFlag() 10010110101000000011011101001010
+r Timer5::compareA() 14303765c347dba7e42bca2dca8a0b1db829b44fa78bcd9f9e356228a6f71356b0716be9e942fc45cdf7b7b904834c2ebdbedbfa8b500b7676a7fd4908d85
+r Timer5::compareAIntFlag() 01101101111111101111010110111010
+r Timer5::compareB() 9cdb7f5eafef0908e95a6be7c510fdf708b5e5b791c1455bfa06571aa1b949df9bf0e5d30b1d0d18d88745861e3e844874487eb49163620f487bce0ee985c
+r Timer5::compareBIntFlag() 10100101110101011100010010011110
+r Timer5::compareC() 594c5b829108c6977642e3dac7b25fa811dbb220edbcf3b13c17fc3f747c7a22b0fc64151f35e4cca14bec68f7bbc99b8b498cd9c568efeb10276d76a28d30
+r Timer5::compareCIntFlag() 01011101001001111100011011101011
 r Timer5::counter() d97fdbbcc0d6d62c6443948eb733aa4e63aeb29da99264f75708aa64f0563eb7b60646d539f512c99bc9e9319dde81493fa7989b721dd1242bacb86adebf99d2
-r Timer5::intFlag() 01111110111110100001001011011111
+r Timer5::overflowIntFlag() 01111110111110100001001011011111
+r Twi0::data() bbd7fd3781013afb3586c7ac156fcf01ff631351029c075d8126359d57
+r Twi0::intFlag() 10001100010111000010110100010001
+r Twi0::status() 3883020b04090108860988980702886888c8602810a038388189810020
+r Twi0::writeCollisionFlag() 01011100011100011010111000111101
 r Usart0::dataOverRun() 10111111000010010110011011111101
 r Usart0::frameError() 10101101110001111110110001100100
 r Usart0::parityError() 10010010101001001001100010011001
-r Usart0::pop() 1f728c5f2f73ea75f04536a3af4416bde414f935378f39b2ca239d462eed7
-r Usart0::pop9() 1f17218c15f2f731ea175f010415316a3af44116bd1e414f9353718f391b2ca23109d4621ee1d7
+r Usart0::rx() 1f728c5f2f73ea75f04536a3af4416bde414f935378f39b2ca239d462eed7
+r Usart0::rx9() 01110011011100010100001010010011
 r Usart1::dataOverRun() 11001100010011010000011100011111
 r Usart1::frameError() 01010001101001000011110010000110
 r Usart1::parityError() 10101101010110001001011000100111
-r Usart1::pop() f3fb1b24d97aed22f1969cc8e612e68be1b8debe61ea2b051a9528b4828
-r Usart1::pop9() f3f1b1b24d917a1ed221f1109169cc18e6112e681be101b81debe611ea2b0511a95218b148128
+r Usart1::rx() f3fb1b24d97aed22f1969cc8e612e68be1b8debe61ea2b051a9528b4828
+r Usart1::rx9() 00100011011101010110100100010111
 r Usart2::dataOverRun() 01111001001101111001110111101110
 r Usart2::frameError() 01100011111110011000001011100001
 r Usart2::parityError() 11000010010000111111011000001110
-r Usart2::pop() c4633fbcba48ecd2cf19d52d9ea6c8d5b18b3c836be8d1772a6b143fac370
-r Usart2::pop9() 1c416313f1bcba148ecd12c1f119d52d9ea6c18d15b118b103c8361be18d1772a6b1143fac3170
+r Usart2::rx() c4633fbcba48ecd2cf19d52d9ea6c8d5b18b3c836be8d1772a6b143fac370
+r Usart2::rx9() 11110100111000011011001100001001
 r Usart3::dataOverRun() 10111010100010100110100100101000
 r Usart3::frameError() 11100000000101111010111000001110
 r Usart3::parityError() 00010011011011101100010010011111
-r Usart3::pop() 5a9d18f12b2c5b7590c1f213098feceaccd5835a4c83cf5d8fe932577c8d
-r Usart3::pop9() 5a9d181f12b2c5b751901c11f213100981fe10c1eaccd5835a14c1831cf15d8fe9312577c8d
-w Adc0::channel(Adc0::Channel::adc0) 7c:ff:f0:
-w Adc0::channel(Adc0::Channel::adc1) 7c:00:01:7c:ff:f1:
-w Adc0::channel(Adc0::Channel::adc2) 7c:00:02:7c:ff:f2:
-w Adc0::channel(Adc0::Channel::adc3) 7c:00:03:7c:ff:f3:
-w Adc0::channel(Adc0::Channel::adc4) 7c:00:04:7c:ff:f4:
-w Adc0::channel(Adc0::Channel::adc5) 7c:00:05:7c:ff:f5:
-w Adc0::channel(Adc0::Channel::adc6) 7c:00:06:7c:ff:f6:
-w Adc0::channel(Adc0::Channel::adc7) 7c:00:07:7c:ff:f7:
-w Adc0::enable(false) 7a:ff:7f:
-w Adc0::enable(true) 7a:00:80:
-w Adc0::intEnable(false) 7a:ff:f7:
-w Adc0::intEnable(true) 7a:00:08:
+r Usart3::rx() 5a9d18f12b2c5b7590c1f213098feceaccd5835a4c83cf5d8fe932577c8d
+r Usart3::rx9() 00010000111010111000011110001000
+w Adc0::channel(Adc0::Channel::adc0) 7c:ff:e0:
+w Adc0::channel(Adc0::Channel::adc1) 7c:00:01:7c:ff:e1:
+w Adc0::channel(Adc0::Channel::adc2) 7c:00:02:7c:ff:e2:
+w Adc0::channel(Adc0::Channel::adc3) 7c:00:03:7c:ff:e3:
+w Adc0::channel(Adc0::Channel::adc4) 7c:00:04:7c:ff:e4:
+w Adc0::channel(Adc0::Channel::adc5) 7c:00:05:7c:ff:e5:
+w Adc0::channel(Adc0::Channel::adc6) 7c:00:06:7c:ff:e6:
+w Adc0::channel(Adc0::Channel::adc7) 7c:00:07:7c:ff:e7:
+w Adc0::channel(Adc0::Channel::adc8) 7c:ff:e0:
+w Adc0::channel(Adc0::Channel::gnd) 7c:00:1f:
+w Adc0::channel(Adc0::Channel::vbg) 7c:00:1e:7c:ff:fe:
+w Adc0::enable(false) 7a:ff:2f:
+w Adc0::enable(true) 7a:00:80:7a:ff:af:
+w Adc0::intEnable(false) 7a:ff:a7:
+w Adc0::intEnable(true) 7a:00:08:7a:ff:af:
 w Adc0::intFlag()
-w Adc0::intFlagClear() 7a:00:10:
-w Adc0::leftAdjust(false) 7c:ff:df:
-w Adc0::leftAdjust(true) 7c:00:20:
-w Adc0::prescaler(Adc0::Prescaler::div128) 7a:00:07:
-w Adc0::prescaler(Adc0::Prescaler::div16) 7a:00:04:7a:ff:fc:
-w Adc0::prescaler(Adc0::Prescaler::div2) 7a:ff:f8:
-w Adc0::prescaler(Adc0::Prescaler::div32) 7a:00:05:7a:ff:fd:
-w Adc0::prescaler(Adc0::Prescaler::div4) 7a:00:02:7a:ff:fa:
-w Adc0::prescaler(Adc0::Prescaler::div64) 7a:00:06:7a:ff:fe:
-w Adc0::prescaler(Adc0::Prescaler::div8) 7a:00:03:7a:ff:fb:
+w Adc0::intFlagClear() 7a:00:10:7a:ff:bf:
+w Adc0::prescaler(Adc0::Prescaler::div128) 7a:00:07:7a:ff:af:
+w Adc0::prescaler(Adc0::Prescaler::div16) 7a:00:04:7a:ff:ac:
+w Adc0::prescaler(Adc0::Prescaler::div2) 7a:ff:a8:
+w Adc0::prescaler(Adc0::Prescaler::div32) 7a:00:05:7a:ff:ad:
+w Adc0::prescaler(Adc0::Prescaler::div4) 7a:00:02:7a:ff:aa:
+w Adc0::prescaler(Adc0::Prescaler::div64) 7a:00:06:7a:ff:ae:
+w Adc0::prescaler(Adc0::Prescaler::div8) 7a:00:03:7a:ff:ab:
 w Adc0::reference(Adc0::Reference::aref) 7c:ff:3f:
 w Adc0::reference(Adc0::Reference::avcc) 7c:00:40:7c:ff:7f:
-w Adc0::reference(Adc0::Reference::internal) 7c:00:c0:
-w Adc0::start() 7a:00:40:
-w Adc0::trigger(Adc0::Trigger::analogComparator) 7a:00:20:7b:00:01:7b:ff:f9:
-w Adc0::trigger(Adc0::Trigger::externalInt0) 7a:00:20:7b:00:02:7b:ff:fa:
-w Adc0::trigger(Adc0::Trigger::freeRunning) 7a:00:20:7b:ff:f8:
-w Adc0::trigger(Adc0::Trigger::singleConversion) 7a:ff:df:7b:ff:f8:
-w Adc0::trigger(Adc0::Trigger::timer0CompareMatchA) 7a:00:20:7b:00:03:7b:ff:fb:
-w Adc0::trigger(Adc0::Trigger::timer0Overflow) 7a:00:20:7b:00:04:7b:ff:fc:
-w Adc0::trigger(Adc0::Trigger::timer1CaptureEvent) 7a:00:20:7b:00:07:
-w Adc0::trigger(Adc0::Trigger::timer1CompareMatchB) 7a:00:20:7b:00:05:7b:ff:fd:
-w Adc0::trigger(Adc0::Trigger::timer1Overflow) 7a:00:20:7b:00:06:7b:ff:fe:
-w Adc0::value()
+w Adc0::reference(Adc0::Reference::internal_1_1) 7c:00:80:7c:ff:bf:
+w Adc0::reference(Adc0::Reference::internal_2_56) 7c:00:c0:
+w Adc0::result()
+w Adc0::start() 7a:00:40:7a:ff:ef:
+w Adc0::trigger(Adc0::Trigger::analogComparator) 7b:00:01:7b:ff:f9:
+w Adc0::trigger(Adc0::Trigger::externalInt0) 7b:00:02:7b:ff:fa:
+w Adc0::trigger(Adc0::Trigger::freeRunning) 7b:ff:f8:
+w Adc0::trigger(Adc0::Trigger::timer0CompareMatchA) 7b:00:03:7b:ff:fb:
+w Adc0::trigger(Adc0::Trigger::timer0Overflow) 7b:00:04:7b:ff:fc:
+w Adc0::trigger(Adc0::Trigger::timer1CaptureEvent) 7b:00:07:
+w Adc0::trigger(Adc0::Trigger::timer1CompareMatchB) 7b:00:05:7b:ff:fd:
+w Adc0::trigger(Adc0::Trigger::timer1Overflow) 7b:00:06:7b:ff:fe:
+w Adc0::triggerEnable(false) 7a:ff:8f:
+w Adc0::triggerEnable(true) 7a:00:20:7a:ff:af:
+w Eeprom0::address(0x1234) 41:00:34:42:00:12:41:ff:34:42:ff:12:
+w Eeprom0::data()
+w Eeprom0::data(0x12) 40:00:12:40:ff:12:
+w Eeprom0::intEnable(false) 3f:ff:f7:
+w Eeprom0::intEnable(true) 3f:00:08:
+w Eeprom0::masterWriteEnable() 3f:00:04:
+w Eeprom0::mode(Eeprom0::Mode::eraseOnly) 3f:00:10:3f:ff:df:
+w Eeprom0::mode(Eeprom0::Mode::eraseWrite) 3f:ff:cf:
+w Eeprom0::mode(Eeprom0::Mode::writeOnly) 3f:00:20:3f:ff:ef:
+w Eeprom0::readEnable() 3f:00:01:
+w Eeprom0::writeEnable() 3f:00:02:
+w Eeprom0::writeEnabled()
 w ExInt0::intEnable(false) 3d:ff:fe:
 w ExInt0::intEnable(true) 3d:00:01:
 w ExInt0::intFlag()
@@ -490,942 +321,781 @@ w PcInt2::intEnable(true) 68:00:04:
 w PcInt2::intFlag()
 w PcInt2::intFlagClear() 3b:00:04:3b:ff:04:
 w PcInt2::mask(0x12) 6d:00:12:6d:ff:12:
-w PortA::Pin0::direction()
 w PortA::Pin0::direction(Pin::Direction::input) 21:ff:fe:
 w PortA::Pin0::direction(Pin::Direction::output) 21:00:01:
 w PortA::Pin0::input()
-w PortA::Pin0::output()
 w PortA::Pin0::output(Pin::Value::high) 22:00:01:
 w PortA::Pin0::output(Pin::Value::low) 22:ff:fe:
+w PortA::Pin0::outputToggle() 20:00:01:20:ff:01:
 w PortA::Pin0::pullup(false) 22:ff:fe:
 w PortA::Pin0::pullup(true) 22:00:01:
-w PortA::Pin0::outputToggle() 20:00:01:
-w PortA::Pin1::direction()
 w PortA::Pin1::direction(Pin::Direction::input) 21:ff:fd:
 w PortA::Pin1::direction(Pin::Direction::output) 21:00:02:
 w PortA::Pin1::input()
-w PortA::Pin1::output()
 w PortA::Pin1::output(Pin::Value::high) 22:00:02:
 w PortA::Pin1::output(Pin::Value::low) 22:ff:fd:
+w PortA::Pin1::outputToggle() 20:00:02:20:ff:02:
 w PortA::Pin1::pullup(false) 22:ff:fd:
 w PortA::Pin1::pullup(true) 22:00:02:
-w PortA::Pin1::outputToggle() 20:00:02:
-w PortA::Pin2::direction()
 w PortA::Pin2::direction(Pin::Direction::input) 21:ff:fb:
 w PortA::Pin2::direction(Pin::Direction::output) 21:00:04:
 w PortA::Pin2::input()
-w PortA::Pin2::output()
 w PortA::Pin2::output(Pin::Value::high) 22:00:04:
 w PortA::Pin2::output(Pin::Value::low) 22:ff:fb:
+w PortA::Pin2::outputToggle() 20:00:04:20:ff:04:
 w PortA::Pin2::pullup(false) 22:ff:fb:
 w PortA::Pin2::pullup(true) 22:00:04:
-w PortA::Pin2::outputToggle() 20:00:04:
-w PortA::Pin3::direction()
 w PortA::Pin3::direction(Pin::Direction::input) 21:ff:f7:
 w PortA::Pin3::direction(Pin::Direction::output) 21:00:08:
 w PortA::Pin3::input()
-w PortA::Pin3::output()
 w PortA::Pin3::output(Pin::Value::high) 22:00:08:
 w PortA::Pin3::output(Pin::Value::low) 22:ff:f7:
+w PortA::Pin3::outputToggle() 20:00:08:20:ff:08:
 w PortA::Pin3::pullup(false) 22:ff:f7:
 w PortA::Pin3::pullup(true) 22:00:08:
-w PortA::Pin3::outputToggle() 20:00:08:
-w PortA::Pin4::direction()
 w PortA::Pin4::direction(Pin::Direction::input) 21:ff:ef:
 w PortA::Pin4::direction(Pin::Direction::output) 21:00:10:
 w PortA::Pin4::input()
-w PortA::Pin4::output()
 w PortA::Pin4::output(Pin::Value::high) 22:00:10:
 w PortA::Pin4::output(Pin::Value::low) 22:ff:ef:
+w PortA::Pin4::outputToggle() 20:00:10:20:ff:10:
 w PortA::Pin4::pullup(false) 22:ff:ef:
 w PortA::Pin4::pullup(true) 22:00:10:
-w PortA::Pin4::outputToggle() 20:00:10:
-w PortA::Pin5::direction()
 w PortA::Pin5::direction(Pin::Direction::input) 21:ff:df:
 w PortA::Pin5::direction(Pin::Direction::output) 21:00:20:
 w PortA::Pin5::input()
-w PortA::Pin5::output()
 w PortA::Pin5::output(Pin::Value::high) 22:00:20:
 w PortA::Pin5::output(Pin::Value::low) 22:ff:df:
+w PortA::Pin5::outputToggle() 20:00:20:20:ff:20:
 w PortA::Pin5::pullup(false) 22:ff:df:
 w PortA::Pin5::pullup(true) 22:00:20:
-w PortA::Pin5::outputToggle() 20:00:20:
-w PortA::Pin6::direction()
 w PortA::Pin6::direction(Pin::Direction::input) 21:ff:bf:
 w PortA::Pin6::direction(Pin::Direction::output) 21:00:40:
 w PortA::Pin6::input()
-w PortA::Pin6::output()
 w PortA::Pin6::output(Pin::Value::high) 22:00:40:
 w PortA::Pin6::output(Pin::Value::low) 22:ff:bf:
+w PortA::Pin6::outputToggle() 20:00:40:20:ff:40:
 w PortA::Pin6::pullup(false) 22:ff:bf:
 w PortA::Pin6::pullup(true) 22:00:40:
-w PortA::Pin6::outputToggle() 20:00:40:
-w PortA::Pin7::direction()
 w PortA::Pin7::direction(Pin::Direction::input) 21:ff:7f:
 w PortA::Pin7::direction(Pin::Direction::output) 21:00:80:
 w PortA::Pin7::input()
-w PortA::Pin7::output()
 w PortA::Pin7::output(Pin::Value::high) 22:00:80:
 w PortA::Pin7::output(Pin::Value::low) 22:ff:7f:
+w PortA::Pin7::outputToggle() 20:00:80:20:ff:80:
 w PortA::Pin7::pullup(false) 22:ff:7f:
 w PortA::Pin7::pullup(true) 22:00:80:
-w PortA::Pin7::outputToggle() 20:00:80:
+w PortA::direction(0x12) 21:00:12:21:ff:12:
 w PortA::input()
-w PortA::output()
 w PortA::output(0x12) 22:00:12:22:ff:12:
-w PortA::toggle(0x12) 20:00:12:20:ff:12:
-w PortB::Pin0::direction()
+w PortA::outputToggle(0x12) 20:00:12:20:ff:12:
+w PortA::pullup(0x23) 22:00:23:22:ff:23:
 w PortB::Pin0::direction(Pin::Direction::input) 24:ff:fe:
 w PortB::Pin0::direction(Pin::Direction::output) 24:00:01:
 w PortB::Pin0::input()
-w PortB::Pin0::output()
 w PortB::Pin0::output(Pin::Value::high) 25:00:01:
 w PortB::Pin0::output(Pin::Value::low) 25:ff:fe:
+w PortB::Pin0::outputToggle() 23:00:01:23:ff:01:
 w PortB::Pin0::pullup(false) 25:ff:fe:
 w PortB::Pin0::pullup(true) 25:00:01:
-w PortB::Pin0::outputToggle() 23:00:01:
-w PortB::Pin1::direction()
 w PortB::Pin1::direction(Pin::Direction::input) 24:ff:fd:
 w PortB::Pin1::direction(Pin::Direction::output) 24:00:02:
 w PortB::Pin1::input()
-w PortB::Pin1::output()
 w PortB::Pin1::output(Pin::Value::high) 25:00:02:
 w PortB::Pin1::output(Pin::Value::low) 25:ff:fd:
+w PortB::Pin1::outputToggle() 23:00:02:23:ff:02:
 w PortB::Pin1::pullup(false) 25:ff:fd:
 w PortB::Pin1::pullup(true) 25:00:02:
-w PortB::Pin1::outputToggle() 23:00:02:
-w PortB::Pin2::direction()
 w PortB::Pin2::direction(Pin::Direction::input) 24:ff:fb:
 w PortB::Pin2::direction(Pin::Direction::output) 24:00:04:
 w PortB::Pin2::input()
-w PortB::Pin2::output()
 w PortB::Pin2::output(Pin::Value::high) 25:00:04:
 w PortB::Pin2::output(Pin::Value::low) 25:ff:fb:
+w PortB::Pin2::outputToggle() 23:00:04:23:ff:04:
 w PortB::Pin2::pullup(false) 25:ff:fb:
 w PortB::Pin2::pullup(true) 25:00:04:
-w PortB::Pin2::outputToggle() 23:00:04:
-w PortB::Pin3::direction()
 w PortB::Pin3::direction(Pin::Direction::input) 24:ff:f7:
 w PortB::Pin3::direction(Pin::Direction::output) 24:00:08:
 w PortB::Pin3::input()
-w PortB::Pin3::output()
 w PortB::Pin3::output(Pin::Value::high) 25:00:08:
 w PortB::Pin3::output(Pin::Value::low) 25:ff:f7:
+w PortB::Pin3::outputToggle() 23:00:08:23:ff:08:
 w PortB::Pin3::pullup(false) 25:ff:f7:
 w PortB::Pin3::pullup(true) 25:00:08:
-w PortB::Pin3::outputToggle() 23:00:08:
-w PortB::Pin4::direction()
 w PortB::Pin4::direction(Pin::Direction::input) 24:ff:ef:
 w PortB::Pin4::direction(Pin::Direction::output) 24:00:10:
 w PortB::Pin4::input()
-w PortB::Pin4::output()
 w PortB::Pin4::output(Pin::Value::high) 25:00:10:
 w PortB::Pin4::output(Pin::Value::low) 25:ff:ef:
+w PortB::Pin4::outputToggle() 23:00:10:23:ff:10:
 w PortB::Pin4::pullup(false) 25:ff:ef:
 w PortB::Pin4::pullup(true) 25:00:10:
-w PortB::Pin4::outputToggle() 23:00:10:
-w PortB::Pin5::direction()
 w PortB::Pin5::direction(Pin::Direction::input) 24:ff:df:
 w PortB::Pin5::direction(Pin::Direction::output) 24:00:20:
 w PortB::Pin5::input()
-w PortB::Pin5::output()
 w PortB::Pin5::output(Pin::Value::high) 25:00:20:
 w PortB::Pin5::output(Pin::Value::low) 25:ff:df:
+w PortB::Pin5::outputToggle() 23:00:20:23:ff:20:
 w PortB::Pin5::pullup(false) 25:ff:df:
 w PortB::Pin5::pullup(true) 25:00:20:
-w PortB::Pin5::outputToggle() 23:00:20:
-w PortB::Pin6::direction()
 w PortB::Pin6::direction(Pin::Direction::input) 24:ff:bf:
 w PortB::Pin6::direction(Pin::Direction::output) 24:00:40:
 w PortB::Pin6::input()
-w PortB::Pin6::output()
 w PortB::Pin6::output(Pin::Value::high) 25:00:40:
 w PortB::Pin6::output(Pin::Value::low) 25:ff:bf:
+w PortB::Pin6::outputToggle() 23:00:40:23:ff:40:
 w PortB::Pin6::pullup(false) 25:ff:bf:
 w PortB::Pin6::pullup(true) 25:00:40:
-w PortB::Pin6::outputToggle() 23:00:40:
-w PortB::Pin7::direction()
 w PortB::Pin7::direction(Pin::Direction::input) 24:ff:7f:
 w PortB::Pin7::direction(Pin::Direction::output) 24:00:80:
 w PortB::Pin7::input()
-w PortB::Pin7::output()
 w PortB::Pin7::output(Pin::Value::high) 25:00:80:
 w PortB::Pin7::output(Pin::Value::low) 25:ff:7f:
+w PortB::Pin7::outputToggle() 23:00:80:23:ff:80:
 w PortB::Pin7::pullup(false) 25:ff:7f:
 w PortB::Pin7::pullup(true) 25:00:80:
-w PortB::Pin7::outputToggle() 23:00:80:
+w PortB::direction(0x12) 24:00:12:24:ff:12:
 w PortB::input()
-w PortB::output()
 w PortB::output(0x12) 25:00:12:25:ff:12:
-w PortB::toggle(0x12) 23:00:12:23:ff:12:
-w PortC::Pin0::direction()
+w PortB::outputToggle(0x12) 23:00:12:23:ff:12:
+w PortB::pullup(0x23) 25:00:23:25:ff:23:
 w PortC::Pin0::direction(Pin::Direction::input) 27:ff:fe:
 w PortC::Pin0::direction(Pin::Direction::output) 27:00:01:
 w PortC::Pin0::input()
-w PortC::Pin0::output()
 w PortC::Pin0::output(Pin::Value::high) 28:00:01:
 w PortC::Pin0::output(Pin::Value::low) 28:ff:fe:
+w PortC::Pin0::outputToggle() 26:00:01:26:ff:01:
 w PortC::Pin0::pullup(false) 28:ff:fe:
 w PortC::Pin0::pullup(true) 28:00:01:
-w PortC::Pin0::outputToggle() 26:00:01:
-w PortC::Pin1::direction()
 w PortC::Pin1::direction(Pin::Direction::input) 27:ff:fd:
 w PortC::Pin1::direction(Pin::Direction::output) 27:00:02:
 w PortC::Pin1::input()
-w PortC::Pin1::output()
 w PortC::Pin1::output(Pin::Value::high) 28:00:02:
 w PortC::Pin1::output(Pin::Value::low) 28:ff:fd:
+w PortC::Pin1::outputToggle() 26:00:02:26:ff:02:
 w PortC::Pin1::pullup(false) 28:ff:fd:
 w PortC::Pin1::pullup(true) 28:00:02:
-w PortC::Pin1::outputToggle() 26:00:02:
-w PortC::Pin2::direction()
 w PortC::Pin2::direction(Pin::Direction::input) 27:ff:fb:
 w PortC::Pin2::direction(Pin::Direction::output) 27:00:04:
 w PortC::Pin2::input()
-w PortC::Pin2::output()
 w PortC::Pin2::output(Pin::Value::high) 28:00:04:
 w PortC::Pin2::output(Pin::Value::low) 28:ff:fb:
+w PortC::Pin2::outputToggle() 26:00:04:26:ff:04:
 w PortC::Pin2::pullup(false) 28:ff:fb:
 w PortC::Pin2::pullup(true) 28:00:04:
-w PortC::Pin2::outputToggle() 26:00:04:
-w PortC::Pin3::direction()
 w PortC::Pin3::direction(Pin::Direction::input) 27:ff:f7:
 w PortC::Pin3::direction(Pin::Direction::output) 27:00:08:
 w PortC::Pin3::input()
-w PortC::Pin3::output()
 w PortC::Pin3::output(Pin::Value::high) 28:00:08:
 w PortC::Pin3::output(Pin::Value::low) 28:ff:f7:
+w PortC::Pin3::outputToggle() 26:00:08:26:ff:08:
 w PortC::Pin3::pullup(false) 28:ff:f7:
 w PortC::Pin3::pullup(true) 28:00:08:
-w PortC::Pin3::outputToggle() 26:00:08:
-w PortC::Pin4::direction()
 w PortC::Pin4::direction(Pin::Direction::input) 27:ff:ef:
 w PortC::Pin4::direction(Pin::Direction::output) 27:00:10:
 w PortC::Pin4::input()
-w PortC::Pin4::output()
 w PortC::Pin4::output(Pin::Value::high) 28:00:10:
 w PortC::Pin4::output(Pin::Value::low) 28:ff:ef:
+w PortC::Pin4::outputToggle() 26:00:10:26:ff:10:
 w PortC::Pin4::pullup(false) 28:ff:ef:
 w PortC::Pin4::pullup(true) 28:00:10:
-w PortC::Pin4::outputToggle() 26:00:10:
-w PortC::Pin5::direction()
 w PortC::Pin5::direction(Pin::Direction::input) 27:ff:df:
 w PortC::Pin5::direction(Pin::Direction::output) 27:00:20:
 w PortC::Pin5::input()
-w PortC::Pin5::output()
 w PortC::Pin5::output(Pin::Value::high) 28:00:20:
 w PortC::Pin5::output(Pin::Value::low) 28:ff:df:
+w PortC::Pin5::outputToggle() 26:00:20:26:ff:20:
 w PortC::Pin5::pullup(false) 28:ff:df:
 w PortC::Pin5::pullup(true) 28:00:20:
-w PortC::Pin5::outputToggle() 26:00:20:
-w PortC::Pin6::direction()
 w PortC::Pin6::direction(Pin::Direction::input) 27:ff:bf:
 w PortC::Pin6::direction(Pin::Direction::output) 27:00:40:
 w PortC::Pin6::input()
-w PortC::Pin6::output()
 w PortC::Pin6::output(Pin::Value::high) 28:00:40:
 w PortC::Pin6::output(Pin::Value::low) 28:ff:bf:
+w PortC::Pin6::outputToggle() 26:00:40:26:ff:40:
 w PortC::Pin6::pullup(false) 28:ff:bf:
 w PortC::Pin6::pullup(true) 28:00:40:
-w PortC::Pin6::outputToggle() 26:00:40:
+w PortC::Pin7::direction(Pin::Direction::input) 27:ff:7f:
+w PortC::Pin7::direction(Pin::Direction::output) 27:00:80:
+w PortC::Pin7::input()
+w PortC::Pin7::output(Pin::Value::high) 28:00:80:
+w PortC::Pin7::output(Pin::Value::low) 28:ff:7f:
+w PortC::Pin7::outputToggle() 26:00:80:26:ff:80:
+w PortC::Pin7::pullup(false) 28:ff:7f:
+w PortC::Pin7::pullup(true) 28:00:80:
+w PortC::direction(0x12) 27:00:12:27:ff:12:
 w PortC::input()
-w PortC::output()
 w PortC::output(0x12) 28:00:12:28:ff:12:
-w PortC::toggle(0x12) 26:00:12:26:ff:12:
-w PortD::Pin0::direction()
+w PortC::outputToggle(0x12) 26:00:12:26:ff:12:
+w PortC::pullup(0x23) 28:00:23:28:ff:23:
 w PortD::Pin0::direction(Pin::Direction::input) 2a:ff:fe:
 w PortD::Pin0::direction(Pin::Direction::output) 2a:00:01:
 w PortD::Pin0::input()
-w PortD::Pin0::output()
 w PortD::Pin0::output(Pin::Value::high) 2b:00:01:
 w PortD::Pin0::output(Pin::Value::low) 2b:ff:fe:
+w PortD::Pin0::outputToggle() 29:00:01:29:ff:01:
 w PortD::Pin0::pullup(false) 2b:ff:fe:
 w PortD::Pin0::pullup(true) 2b:00:01:
-w PortD::Pin0::outputToggle() 29:00:01:
-w PortD::Pin1::direction()
 w PortD::Pin1::direction(Pin::Direction::input) 2a:ff:fd:
 w PortD::Pin1::direction(Pin::Direction::output) 2a:00:02:
 w PortD::Pin1::input()
-w PortD::Pin1::output()
 w PortD::Pin1::output(Pin::Value::high) 2b:00:02:
 w PortD::Pin1::output(Pin::Value::low) 2b:ff:fd:
+w PortD::Pin1::outputToggle() 29:00:02:29:ff:02:
 w PortD::Pin1::pullup(false) 2b:ff:fd:
 w PortD::Pin1::pullup(true) 2b:00:02:
-w PortD::Pin1::outputToggle() 29:00:02:
-w PortD::Pin2::direction()
 w PortD::Pin2::direction(Pin::Direction::input) 2a:ff:fb:
 w PortD::Pin2::direction(Pin::Direction::output) 2a:00:04:
 w PortD::Pin2::input()
-w PortD::Pin2::output()
 w PortD::Pin2::output(Pin::Value::high) 2b:00:04:
 w PortD::Pin2::output(Pin::Value::low) 2b:ff:fb:
+w PortD::Pin2::outputToggle() 29:00:04:29:ff:04:
 w PortD::Pin2::pullup(false) 2b:ff:fb:
 w PortD::Pin2::pullup(true) 2b:00:04:
-w PortD::Pin2::outputToggle() 29:00:04:
-w PortD::Pin3::direction()
 w PortD::Pin3::direction(Pin::Direction::input) 2a:ff:f7:
 w PortD::Pin3::direction(Pin::Direction::output) 2a:00:08:
 w PortD::Pin3::input()
-w PortD::Pin3::output()
 w PortD::Pin3::output(Pin::Value::high) 2b:00:08:
 w PortD::Pin3::output(Pin::Value::low) 2b:ff:f7:
+w PortD::Pin3::outputToggle() 29:00:08:29:ff:08:
 w PortD::Pin3::pullup(false) 2b:ff:f7:
 w PortD::Pin3::pullup(true) 2b:00:08:
-w PortD::Pin3::outputToggle() 29:00:08:
-w PortD::Pin4::direction()
 w PortD::Pin4::direction(Pin::Direction::input) 2a:ff:ef:
 w PortD::Pin4::direction(Pin::Direction::output) 2a:00:10:
 w PortD::Pin4::input()
-w PortD::Pin4::output()
 w PortD::Pin4::output(Pin::Value::high) 2b:00:10:
 w PortD::Pin4::output(Pin::Value::low) 2b:ff:ef:
+w PortD::Pin4::outputToggle() 29:00:10:29:ff:10:
 w PortD::Pin4::pullup(false) 2b:ff:ef:
 w PortD::Pin4::pullup(true) 2b:00:10:
-w PortD::Pin4::outputToggle() 29:00:10:
-w PortD::Pin5::direction()
 w PortD::Pin5::direction(Pin::Direction::input) 2a:ff:df:
 w PortD::Pin5::direction(Pin::Direction::output) 2a:00:20:
 w PortD::Pin5::input()
-w PortD::Pin5::output()
 w PortD::Pin5::output(Pin::Value::high) 2b:00:20:
 w PortD::Pin5::output(Pin::Value::low) 2b:ff:df:
+w PortD::Pin5::outputToggle() 29:00:20:29:ff:20:
 w PortD::Pin5::pullup(false) 2b:ff:df:
 w PortD::Pin5::pullup(true) 2b:00:20:
-w PortD::Pin5::outputToggle() 29:00:20:
-w PortD::Pin6::direction()
 w PortD::Pin6::direction(Pin::Direction::input) 2a:ff:bf:
 w PortD::Pin6::direction(Pin::Direction::output) 2a:00:40:
 w PortD::Pin6::input()
-w PortD::Pin6::output()
 w PortD::Pin6::output(Pin::Value::high) 2b:00:40:
 w PortD::Pin6::output(Pin::Value::low) 2b:ff:bf:
+w PortD::Pin6::outputToggle() 29:00:40:29:ff:40:
 w PortD::Pin6::pullup(false) 2b:ff:bf:
 w PortD::Pin6::pullup(true) 2b:00:40:
-w PortD::Pin6::outputToggle() 29:00:40:
-w PortD::Pin7::direction()
 w PortD::Pin7::direction(Pin::Direction::input) 2a:ff:7f:
 w PortD::Pin7::direction(Pin::Direction::output) 2a:00:80:
 w PortD::Pin7::input()
-w PortD::Pin7::output()
 w PortD::Pin7::output(Pin::Value::high) 2b:00:80:
 w PortD::Pin7::output(Pin::Value::low) 2b:ff:7f:
+w PortD::Pin7::outputToggle() 29:00:80:29:ff:80:
 w PortD::Pin7::pullup(false) 2b:ff:7f:
 w PortD::Pin7::pullup(true) 2b:00:80:
-w PortD::Pin7::outputToggle() 29:00:80:
+w PortD::direction(0x12) 2a:00:12:2a:ff:12:
 w PortD::input()
-w PortD::output()
 w PortD::output(0x12) 2b:00:12:2b:ff:12:
-w PortD::toggle(0x12) 29:00:12:29:ff:12:
-w PortE::Pin0::direction()
+w PortD::outputToggle(0x12) 29:00:12:29:ff:12:
+w PortD::pullup(0x23) 2b:00:23:2b:ff:23:
 w PortE::Pin0::direction(Pin::Direction::input) 2d:ff:fe:
 w PortE::Pin0::direction(Pin::Direction::output) 2d:00:01:
 w PortE::Pin0::input()
-w PortE::Pin0::output()
 w PortE::Pin0::output(Pin::Value::high) 2e:00:01:
 w PortE::Pin0::output(Pin::Value::low) 2e:ff:fe:
+w PortE::Pin0::outputToggle() 2c:00:01:2c:ff:01:
 w PortE::Pin0::pullup(false) 2e:ff:fe:
 w PortE::Pin0::pullup(true) 2e:00:01:
-w PortE::Pin0::outputToggle() 2c:00:01:
-w PortE::Pin1::direction()
 w PortE::Pin1::direction(Pin::Direction::input) 2d:ff:fd:
 w PortE::Pin1::direction(Pin::Direction::output) 2d:00:02:
 w PortE::Pin1::input()
-w PortE::Pin1::output()
 w PortE::Pin1::output(Pin::Value::high) 2e:00:02:
 w PortE::Pin1::output(Pin::Value::low) 2e:ff:fd:
+w PortE::Pin1::outputToggle() 2c:00:02:2c:ff:02:
 w PortE::Pin1::pullup(false) 2e:ff:fd:
 w PortE::Pin1::pullup(true) 2e:00:02:
-w PortE::Pin1::outputToggle() 2c:00:02:
-w PortE::Pin2::direction()
 w PortE::Pin2::direction(Pin::Direction::input) 2d:ff:fb:
 w PortE::Pin2::direction(Pin::Direction::output) 2d:00:04:
 w PortE::Pin2::input()
-w PortE::Pin2::output()
 w PortE::Pin2::output(Pin::Value::high) 2e:00:04:
 w PortE::Pin2::output(Pin::Value::low) 2e:ff:fb:
+w PortE::Pin2::outputToggle() 2c:00:04:2c:ff:04:
 w PortE::Pin2::pullup(false) 2e:ff:fb:
 w PortE::Pin2::pullup(true) 2e:00:04:
-w PortE::Pin2::outputToggle() 2c:00:04:
-w PortE::Pin3::direction()
 w PortE::Pin3::direction(Pin::Direction::input) 2d:ff:f7:
 w PortE::Pin3::direction(Pin::Direction::output) 2d:00:08:
 w PortE::Pin3::input()
-w PortE::Pin3::output()
 w PortE::Pin3::output(Pin::Value::high) 2e:00:08:
 w PortE::Pin3::output(Pin::Value::low) 2e:ff:f7:
+w PortE::Pin3::outputToggle() 2c:00:08:2c:ff:08:
 w PortE::Pin3::pullup(false) 2e:ff:f7:
 w PortE::Pin3::pullup(true) 2e:00:08:
-w PortE::Pin3::outputToggle() 2c:00:08:
-w PortE::Pin4::direction()
 w PortE::Pin4::direction(Pin::Direction::input) 2d:ff:ef:
 w PortE::Pin4::direction(Pin::Direction::output) 2d:00:10:
 w PortE::Pin4::input()
-w PortE::Pin4::output()
 w PortE::Pin4::output(Pin::Value::high) 2e:00:10:
 w PortE::Pin4::output(Pin::Value::low) 2e:ff:ef:
+w PortE::Pin4::outputToggle() 2c:00:10:2c:ff:10:
 w PortE::Pin4::pullup(false) 2e:ff:ef:
 w PortE::Pin4::pullup(true) 2e:00:10:
-w PortE::Pin4::outputToggle() 2c:00:10:
-w PortE::Pin5::direction()
 w PortE::Pin5::direction(Pin::Direction::input) 2d:ff:df:
 w PortE::Pin5::direction(Pin::Direction::output) 2d:00:20:
 w PortE::Pin5::input()
-w PortE::Pin5::output()
 w PortE::Pin5::output(Pin::Value::high) 2e:00:20:
 w PortE::Pin5::output(Pin::Value::low) 2e:ff:df:
+w PortE::Pin5::outputToggle() 2c:00:20:2c:ff:20:
 w PortE::Pin5::pullup(false) 2e:ff:df:
 w PortE::Pin5::pullup(true) 2e:00:20:
-w PortE::Pin5::outputToggle() 2c:00:20:
-w PortE::Pin6::direction()
 w PortE::Pin6::direction(Pin::Direction::input) 2d:ff:bf:
 w PortE::Pin6::direction(Pin::Direction::output) 2d:00:40:
 w PortE::Pin6::input()
-w PortE::Pin6::output()
 w PortE::Pin6::output(Pin::Value::high) 2e:00:40:
 w PortE::Pin6::output(Pin::Value::low) 2e:ff:bf:
+w PortE::Pin6::outputToggle() 2c:00:40:2c:ff:40:
 w PortE::Pin6::pullup(false) 2e:ff:bf:
 w PortE::Pin6::pullup(true) 2e:00:40:
-w PortE::Pin6::outputToggle() 2c:00:40:
-w PortE::Pin7::direction()
 w PortE::Pin7::direction(Pin::Direction::input) 2d:ff:7f:
 w PortE::Pin7::direction(Pin::Direction::output) 2d:00:80:
 w PortE::Pin7::input()
-w PortE::Pin7::output()
 w PortE::Pin7::output(Pin::Value::high) 2e:00:80:
 w PortE::Pin7::output(Pin::Value::low) 2e:ff:7f:
+w PortE::Pin7::outputToggle() 2c:00:80:2c:ff:80:
 w PortE::Pin7::pullup(false) 2e:ff:7f:
 w PortE::Pin7::pullup(true) 2e:00:80:
-w PortE::Pin7::outputToggle() 2c:00:80:
+w PortE::direction(0x12) 2d:00:12:2d:ff:12:
 w PortE::input()
-w PortE::output()
 w PortE::output(0x12) 2e:00:12:2e:ff:12:
-w PortE::toggle(0x12) 2c:00:12:2c:ff:12:
-w PortF::Pin0::direction()
+w PortE::outputToggle(0x12) 2c:00:12:2c:ff:12:
+w PortE::pullup(0x23) 2e:00:23:2e:ff:23:
 w PortF::Pin0::direction(Pin::Direction::input) 30:ff:fe:
 w PortF::Pin0::direction(Pin::Direction::output) 30:00:01:
 w PortF::Pin0::input()
-w PortF::Pin0::output()
 w PortF::Pin0::output(Pin::Value::high) 31:00:01:
 w PortF::Pin0::output(Pin::Value::low) 31:ff:fe:
+w PortF::Pin0::outputToggle() 2f:00:01:2f:ff:01:
 w PortF::Pin0::pullup(false) 31:ff:fe:
 w PortF::Pin0::pullup(true) 31:00:01:
-w PortF::Pin0::outputToggle() 2f:00:01:
-w PortF::Pin1::direction()
 w PortF::Pin1::direction(Pin::Direction::input) 30:ff:fd:
 w PortF::Pin1::direction(Pin::Direction::output) 30:00:02:
 w PortF::Pin1::input()
-w PortF::Pin1::output()
 w PortF::Pin1::output(Pin::Value::high) 31:00:02:
 w PortF::Pin1::output(Pin::Value::low) 31:ff:fd:
+w PortF::Pin1::outputToggle() 2f:00:02:2f:ff:02:
 w PortF::Pin1::pullup(false) 31:ff:fd:
 w PortF::Pin1::pullup(true) 31:00:02:
-w PortF::Pin1::outputToggle() 2f:00:02:
-w PortF::Pin2::direction()
 w PortF::Pin2::direction(Pin::Direction::input) 30:ff:fb:
 w PortF::Pin2::direction(Pin::Direction::output) 30:00:04:
 w PortF::Pin2::input()
-w PortF::Pin2::output()
 w PortF::Pin2::output(Pin::Value::high) 31:00:04:
 w PortF::Pin2::output(Pin::Value::low) 31:ff:fb:
+w PortF::Pin2::outputToggle() 2f:00:04:2f:ff:04:
 w PortF::Pin2::pullup(false) 31:ff:fb:
 w PortF::Pin2::pullup(true) 31:00:04:
-w PortF::Pin2::outputToggle() 2f:00:04:
-w PortF::Pin3::direction()
 w PortF::Pin3::direction(Pin::Direction::input) 30:ff:f7:
 w PortF::Pin3::direction(Pin::Direction::output) 30:00:08:
 w PortF::Pin3::input()
-w PortF::Pin3::output()
 w PortF::Pin3::output(Pin::Value::high) 31:00:08:
 w PortF::Pin3::output(Pin::Value::low) 31:ff:f7:
+w PortF::Pin3::outputToggle() 2f:00:08:2f:ff:08:
 w PortF::Pin3::pullup(false) 31:ff:f7:
 w PortF::Pin3::pullup(true) 31:00:08:
-w PortF::Pin3::outputToggle() 2f:00:08:
-w PortF::Pin4::direction()
 w PortF::Pin4::direction(Pin::Direction::input) 30:ff:ef:
 w PortF::Pin4::direction(Pin::Direction::output) 30:00:10:
 w PortF::Pin4::input()
-w PortF::Pin4::output()
 w PortF::Pin4::output(Pin::Value::high) 31:00:10:
 w PortF::Pin4::output(Pin::Value::low) 31:ff:ef:
+w PortF::Pin4::outputToggle() 2f:00:10:2f:ff:10:
 w PortF::Pin4::pullup(false) 31:ff:ef:
 w PortF::Pin4::pullup(true) 31:00:10:
-w PortF::Pin4::outputToggle() 2f:00:10:
-w PortF::Pin5::direction()
 w PortF::Pin5::direction(Pin::Direction::input) 30:ff:df:
 w PortF::Pin5::direction(Pin::Direction::output) 30:00:20:
 w PortF::Pin5::input()
-w PortF::Pin5::output()
 w PortF::Pin5::output(Pin::Value::high) 31:00:20:
 w PortF::Pin5::output(Pin::Value::low) 31:ff:df:
+w PortF::Pin5::outputToggle() 2f:00:20:2f:ff:20:
 w PortF::Pin5::pullup(false) 31:ff:df:
 w PortF::Pin5::pullup(true) 31:00:20:
-w PortF::Pin5::outputToggle() 2f:00:20:
-w PortF::Pin6::direction()
 w PortF::Pin6::direction(Pin::Direction::input) 30:ff:bf:
 w PortF::Pin6::direction(Pin::Direction::output) 30:00:40:
 w PortF::Pin6::input()
-w PortF::Pin6::output()
 w PortF::Pin6::output(Pin::Value::high) 31:00:40:
 w PortF::Pin6::output(Pin::Value::low) 31:ff:bf:
+w PortF::Pin6::outputToggle() 2f:00:40:2f:ff:40:
 w PortF::Pin6::pullup(false) 31:ff:bf:
 w PortF::Pin6::pullup(true) 31:00:40:
-w PortF::Pin6::outputToggle() 2f:00:40:
-w PortF::Pin7::direction()
 w PortF::Pin7::direction(Pin::Direction::input) 30:ff:7f:
 w PortF::Pin7::direction(Pin::Direction::output) 30:00:80:
 w PortF::Pin7::input()
-w PortF::Pin7::output()
 w PortF::Pin7::output(Pin::Value::high) 31:00:80:
 w PortF::Pin7::output(Pin::Value::low) 31:ff:7f:
+w PortF::Pin7::outputToggle() 2f:00:80:2f:ff:80:
 w PortF::Pin7::pullup(false) 31:ff:7f:
 w PortF::Pin7::pullup(true) 31:00:80:
-w PortF::Pin7::outputToggle() 2f:00:80:
+w PortF::direction(0x12) 30:00:12:30:ff:12:
 w PortF::input()
-w PortF::output()
 w PortF::output(0x12) 31:00:12:31:ff:12:
-w PortF::toggle(0x12) 2f:00:12:2f:ff:12:
-w PortG::Pin0::direction()
+w PortF::outputToggle(0x12) 2f:00:12:2f:ff:12:
+w PortF::pullup(0x23) 31:00:23:31:ff:23:
 w PortG::Pin0::direction(Pin::Direction::input) 33:ff:fe:
 w PortG::Pin0::direction(Pin::Direction::output) 33:00:01:
 w PortG::Pin0::input()
-w PortG::Pin0::output()
 w PortG::Pin0::output(Pin::Value::high) 34:00:01:
 w PortG::Pin0::output(Pin::Value::low) 34:ff:fe:
+w PortG::Pin0::outputToggle() 32:00:01:32:ff:01:
 w PortG::Pin0::pullup(false) 34:ff:fe:
 w PortG::Pin0::pullup(true) 34:00:01:
-w PortG::Pin0::outputToggle() 32:00:01:
-w PortG::Pin1::direction()
 w PortG::Pin1::direction(Pin::Direction::input) 33:ff:fd:
 w PortG::Pin1::direction(Pin::Direction::output) 33:00:02:
 w PortG::Pin1::input()
-w PortG::Pin1::output()
 w PortG::Pin1::output(Pin::Value::high) 34:00:02:
 w PortG::Pin1::output(Pin::Value::low) 34:ff:fd:
+w PortG::Pin1::outputToggle() 32:00:02:32:ff:02:
 w PortG::Pin1::pullup(false) 34:ff:fd:
 w PortG::Pin1::pullup(true) 34:00:02:
-w PortG::Pin1::outputToggle() 32:00:02:
-w PortG::Pin2::direction()
 w PortG::Pin2::direction(Pin::Direction::input) 33:ff:fb:
 w PortG::Pin2::direction(Pin::Direction::output) 33:00:04:
 w PortG::Pin2::input()
-w PortG::Pin2::output()
 w PortG::Pin2::output(Pin::Value::high) 34:00:04:
 w PortG::Pin2::output(Pin::Value::low) 34:ff:fb:
+w PortG::Pin2::outputToggle() 32:00:04:32:ff:04:
 w PortG::Pin2::pullup(false) 34:ff:fb:
 w PortG::Pin2::pullup(true) 34:00:04:
-w PortG::Pin2::outputToggle() 32:00:04:
-w PortG::Pin3::direction()
 w PortG::Pin3::direction(Pin::Direction::input) 33:ff:f7:
 w PortG::Pin3::direction(Pin::Direction::output) 33:00:08:
 w PortG::Pin3::input()
-w PortG::Pin3::output()
 w PortG::Pin3::output(Pin::Value::high) 34:00:08:
 w PortG::Pin3::output(Pin::Value::low) 34:ff:f7:
+w PortG::Pin3::outputToggle() 32:00:08:32:ff:08:
 w PortG::Pin3::pullup(false) 34:ff:f7:
 w PortG::Pin3::pullup(true) 34:00:08:
-w PortG::Pin3::outputToggle() 32:00:08:
-w PortG::Pin4::direction()
 w PortG::Pin4::direction(Pin::Direction::input) 33:ff:ef:
 w PortG::Pin4::direction(Pin::Direction::output) 33:00:10:
 w PortG::Pin4::input()
-w PortG::Pin4::output()
 w PortG::Pin4::output(Pin::Value::high) 34:00:10:
 w PortG::Pin4::output(Pin::Value::low) 34:ff:ef:
+w PortG::Pin4::outputToggle() 32:00:10:32:ff:10:
 w PortG::Pin4::pullup(false) 34:ff:ef:
 w PortG::Pin4::pullup(true) 34:00:10:
-w PortG::Pin4::outputToggle() 32:00:10:
-w PortG::Pin5::direction()
 w PortG::Pin5::direction(Pin::Direction::input) 33:ff:df:
 w PortG::Pin5::direction(Pin::Direction::output) 33:00:20:
 w PortG::Pin5::input()
-w PortG::Pin5::output()
 w PortG::Pin5::output(Pin::Value::high) 34:00:20:
 w PortG::Pin5::output(Pin::Value::low) 34:ff:df:
+w PortG::Pin5::outputToggle() 32:00:20:32:ff:20:
 w PortG::Pin5::pullup(false) 34:ff:df:
 w PortG::Pin5::pullup(true) 34:00:20:
-w PortG::Pin5::outputToggle() 32:00:20:
-w PortG::Pin6::direction()
-w PortG::Pin6::direction(Pin::Direction::input) 33:ff:bf:
-w PortG::Pin6::direction(Pin::Direction::output) 33:00:40:
-w PortG::Pin6::input()
-w PortG::Pin6::output()
-w PortG::Pin6::output(Pin::Value::high) 34:00:40:
-w PortG::Pin6::output(Pin::Value::low) 34:ff:bf:
-w PortG::Pin6::pullup(false) 34:ff:bf:
-w PortG::Pin6::pullup(true) 34:00:40:
-w PortG::Pin6::outputToggle() 32:00:40:
-w PortG::Pin7::direction()
-w PortG::Pin7::direction(Pin::Direction::input) 33:ff:7f:
-w PortG::Pin7::direction(Pin::Direction::output) 33:00:80:
-w PortG::Pin7::input()
-w PortG::Pin7::output()
-w PortG::Pin7::output(Pin::Value::high) 34:00:80:
-w PortG::Pin7::output(Pin::Value::low) 34:ff:7f:
-w PortG::Pin7::pullup(false) 34:ff:7f:
-w PortG::Pin7::pullup(true) 34:00:80:
-w PortG::Pin7::outputToggle() 32:00:80:
+w PortG::direction(0x12) 33:00:12:33:ff:12:
 w PortG::input()
-w PortG::output()
 w PortG::output(0x12) 34:00:12:34:ff:12:
-w PortG::toggle(0x12) 32:00:12:32:ff:12:
-w PortH::Pin0::direction()
+w PortG::outputToggle(0x12) 32:00:12:32:ff:12:
+w PortG::pullup(0x23) 34:00:23:34:ff:23:
 w PortH::Pin0::direction(Pin::Direction::input) 101:ff:fe:
 w PortH::Pin0::direction(Pin::Direction::output) 101:00:01:
 w PortH::Pin0::input()
-w PortH::Pin0::output()
 w PortH::Pin0::output(Pin::Value::high) 102:00:01:
 w PortH::Pin0::output(Pin::Value::low) 102:ff:fe:
+w PortH::Pin0::outputToggle() 100:00:01:100:ff:01:
 w PortH::Pin0::pullup(false) 102:ff:fe:
 w PortH::Pin0::pullup(true) 102:00:01:
-w PortH::Pin0::outputToggle() 100:00:01:
-w PortH::Pin1::direction()
 w PortH::Pin1::direction(Pin::Direction::input) 101:ff:fd:
 w PortH::Pin1::direction(Pin::Direction::output) 101:00:02:
 w PortH::Pin1::input()
-w PortH::Pin1::output()
 w PortH::Pin1::output(Pin::Value::high) 102:00:02:
 w PortH::Pin1::output(Pin::Value::low) 102:ff:fd:
+w PortH::Pin1::outputToggle() 100:00:02:100:ff:02:
 w PortH::Pin1::pullup(false) 102:ff:fd:
 w PortH::Pin1::pullup(true) 102:00:02:
-w PortH::Pin1::outputToggle() 100:00:02:
-w PortH::Pin2::direction()
 w PortH::Pin2::direction(Pin::Direction::input) 101:ff:fb:
 w PortH::Pin2::direction(Pin::Direction::output) 101:00:04:
 w PortH::Pin2::input()
-w PortH::Pin2::output()
 w PortH::Pin2::output(Pin::Value::high) 102:00:04:
 w PortH::Pin2::output(Pin::Value::low) 102:ff:fb:
+w PortH::Pin2::outputToggle() 100:00:04:100:ff:04:
 w PortH::Pin2::pullup(false) 102:ff:fb:
 w PortH::Pin2::pullup(true) 102:00:04:
-w PortH::Pin2::outputToggle() 100:00:04:
-w PortH::Pin3::direction()
 w PortH::Pin3::direction(Pin::Direction::input) 101:ff:f7:
 w PortH::Pin3::direction(Pin::Direction::output) 101:00:08:
 w PortH::Pin3::input()
-w PortH::Pin3::output()
 w PortH::Pin3::output(Pin::Value::high) 102:00:08:
 w PortH::Pin3::output(Pin::Value::low) 102:ff:f7:
+w PortH::Pin3::outputToggle() 100:00:08:100:ff:08:
 w PortH::Pin3::pullup(false) 102:ff:f7:
 w PortH::Pin3::pullup(true) 102:00:08:
-w PortH::Pin3::outputToggle() 100:00:08:
-w PortH::Pin4::direction()
 w PortH::Pin4::direction(Pin::Direction::input) 101:ff:ef:
 w PortH::Pin4::direction(Pin::Direction::output) 101:00:10:
 w PortH::Pin4::input()
-w PortH::Pin4::output()
 w PortH::Pin4::output(Pin::Value::high) 102:00:10:
 w PortH::Pin4::output(Pin::Value::low) 102:ff:ef:
+w PortH::Pin4::outputToggle() 100:00:10:100:ff:10:
 w PortH::Pin4::pullup(false) 102:ff:ef:
 w PortH::Pin4::pullup(true) 102:00:10:
-w PortH::Pin4::outputToggle() 100:00:10:
-w PortH::Pin5::direction()
 w PortH::Pin5::direction(Pin::Direction::input) 101:ff:df:
 w PortH::Pin5::direction(Pin::Direction::output) 101:00:20:
 w PortH::Pin5::input()
-w PortH::Pin5::output()
 w PortH::Pin5::output(Pin::Value::high) 102:00:20:
 w PortH::Pin5::output(Pin::Value::low) 102:ff:df:
+w PortH::Pin5::outputToggle() 100:00:20:100:ff:20:
 w PortH::Pin5::pullup(false) 102:ff:df:
 w PortH::Pin5::pullup(true) 102:00:20:
-w PortH::Pin5::outputToggle() 100:00:20:
-w PortH::Pin6::direction()
 w PortH::Pin6::direction(Pin::Direction::input) 101:ff:bf:
 w PortH::Pin6::direction(Pin::Direction::output) 101:00:40:
 w PortH::Pin6::input()
-w PortH::Pin6::output()
 w PortH::Pin6::output(Pin::Value::high) 102:00:40:
 w PortH::Pin6::output(Pin::Value::low) 102:ff:bf:
+w PortH::Pin6::outputToggle() 100:00:40:100:ff:40:
 w PortH::Pin6::pullup(false) 102:ff:bf:
 w PortH::Pin6::pullup(true) 102:00:40:
-w PortH::Pin6::outputToggle() 100:00:40:
-w PortH::Pin7::direction()
 w PortH::Pin7::direction(Pin::Direction::input) 101:ff:7f:
 w PortH::Pin7::direction(Pin::Direction::output) 101:00:80:
 w PortH::Pin7::input()
-w PortH::Pin7::output()
 w PortH::Pin7::output(Pin::Value::high) 102:00:80:
 w PortH::Pin7::output(Pin::Value::low) 102:ff:7f:
+w PortH::Pin7::outputToggle() 100:00:80:100:ff:80:
 w PortH::Pin7::pullup(false) 102:ff:7f:
 w PortH::Pin7::pullup(true) 102:00:80:
-w PortH::Pin7::outputToggle() 100:00:80:
+w PortH::direction(0x12) 101:00:12:101:ff:12:
 w PortH::input()
-w PortH::output()
 w PortH::output(0x12) 102:00:12:102:ff:12:
-w PortH::toggle(0x12) 100:00:12:100:ff:12:
-w PortJ::Pin0::direction()
+w PortH::outputToggle(0x12) 100:00:12:100:ff:12:
+w PortH::pullup(0x23) 102:00:23:102:ff:23:
 w PortJ::Pin0::direction(Pin::Direction::input) 104:ff:fe:
 w PortJ::Pin0::direction(Pin::Direction::output) 104:00:01:
 w PortJ::Pin0::input()
-w PortJ::Pin0::output()
 w PortJ::Pin0::output(Pin::Value::high) 105:00:01:
 w PortJ::Pin0::output(Pin::Value::low) 105:ff:fe:
+w PortJ::Pin0::outputToggle() 103:00:01:103:ff:01:
 w PortJ::Pin0::pullup(false) 105:ff:fe:
 w PortJ::Pin0::pullup(true) 105:00:01:
-w PortJ::Pin0::outputToggle() 103:00:01:
-w PortJ::Pin1::direction()
 w PortJ::Pin1::direction(Pin::Direction::input) 104:ff:fd:
 w PortJ::Pin1::direction(Pin::Direction::output) 104:00:02:
 w PortJ::Pin1::input()
-w PortJ::Pin1::output()
 w PortJ::Pin1::output(Pin::Value::high) 105:00:02:
 w PortJ::Pin1::output(Pin::Value::low) 105:ff:fd:
+w PortJ::Pin1::outputToggle() 103:00:02:103:ff:02:
 w PortJ::Pin1::pullup(false) 105:ff:fd:
 w PortJ::Pin1::pullup(true) 105:00:02:
-w PortJ::Pin1::outputToggle() 103:00:02:
-w PortJ::Pin2::direction()
 w PortJ::Pin2::direction(Pin::Direction::input) 104:ff:fb:
 w PortJ::Pin2::direction(Pin::Direction::output) 104:00:04:
 w PortJ::Pin2::input()
-w PortJ::Pin2::output()
 w PortJ::Pin2::output(Pin::Value::high) 105:00:04:
 w PortJ::Pin2::output(Pin::Value::low) 105:ff:fb:
+w PortJ::Pin2::outputToggle() 103:00:04:103:ff:04:
 w PortJ::Pin2::pullup(false) 105:ff:fb:
 w PortJ::Pin2::pullup(true) 105:00:04:
-w PortJ::Pin2::outputToggle() 103:00:04:
-w PortJ::Pin3::direction()
 w PortJ::Pin3::direction(Pin::Direction::input) 104:ff:f7:
 w PortJ::Pin3::direction(Pin::Direction::output) 104:00:08:
 w PortJ::Pin3::input()
-w PortJ::Pin3::output()
 w PortJ::Pin3::output(Pin::Value::high) 105:00:08:
 w PortJ::Pin3::output(Pin::Value::low) 105:ff:f7:
+w PortJ::Pin3::outputToggle() 103:00:08:103:ff:08:
 w PortJ::Pin3::pullup(false) 105:ff:f7:
 w PortJ::Pin3::pullup(true) 105:00:08:
-w PortJ::Pin3::outputToggle() 103:00:08:
-w PortJ::Pin4::direction()
 w PortJ::Pin4::direction(Pin::Direction::input) 104:ff:ef:
 w PortJ::Pin4::direction(Pin::Direction::output) 104:00:10:
 w PortJ::Pin4::input()
-w PortJ::Pin4::output()
 w PortJ::Pin4::output(Pin::Value::high) 105:00:10:
 w PortJ::Pin4::output(Pin::Value::low) 105:ff:ef:
+w PortJ::Pin4::outputToggle() 103:00:10:103:ff:10:
 w PortJ::Pin4::pullup(false) 105:ff:ef:
 w PortJ::Pin4::pullup(true) 105:00:10:
-w PortJ::Pin4::outputToggle() 103:00:10:
-w PortJ::Pin5::direction()
 w PortJ::Pin5::direction(Pin::Direction::input) 104:ff:df:
 w PortJ::Pin5::direction(Pin::Direction::output) 104:00:20:
 w PortJ::Pin5::input()
-w PortJ::Pin5::output()
 w PortJ::Pin5::output(Pin::Value::high) 105:00:20:
 w PortJ::Pin5::output(Pin::Value::low) 105:ff:df:
+w PortJ::Pin5::outputToggle() 103:00:20:103:ff:20:
 w PortJ::Pin5::pullup(false) 105:ff:df:
 w PortJ::Pin5::pullup(true) 105:00:20:
-w PortJ::Pin5::outputToggle() 103:00:20:
-w PortJ::Pin6::direction()
 w PortJ::Pin6::direction(Pin::Direction::input) 104:ff:bf:
 w PortJ::Pin6::direction(Pin::Direction::output) 104:00:40:
 w PortJ::Pin6::input()
-w PortJ::Pin6::output()
 w PortJ::Pin6::output(Pin::Value::high) 105:00:40:
 w PortJ::Pin6::output(Pin::Value::low) 105:ff:bf:
+w PortJ::Pin6::outputToggle() 103:00:40:103:ff:40:
 w PortJ::Pin6::pullup(false) 105:ff:bf:
 w PortJ::Pin6::pullup(true) 105:00:40:
-w PortJ::Pin6::outputToggle() 103:00:40:
-w PortJ::Pin7::direction()
 w PortJ::Pin7::direction(Pin::Direction::input) 104:ff:7f:
 w PortJ::Pin7::direction(Pin::Direction::output) 104:00:80:
 w PortJ::Pin7::input()
-w PortJ::Pin7::output()
 w PortJ::Pin7::output(Pin::Value::high) 105:00:80:
 w PortJ::Pin7::output(Pin::Value::low) 105:ff:7f:
+w PortJ::Pin7::outputToggle() 103:00:80:103:ff:80:
 w PortJ::Pin7::pullup(false) 105:ff:7f:
 w PortJ::Pin7::pullup(true) 105:00:80:
-w PortJ::Pin7::outputToggle() 103:00:80:
+w PortJ::direction(0x12) 104:00:12:104:ff:12:
 w PortJ::input()
-w PortJ::output()
 w PortJ::output(0x12) 105:00:12:105:ff:12:
-w PortJ::toggle(0x12) 103:00:12:103:ff:12:
-w PortK::Pin0::direction()
+w PortJ::outputToggle(0x12) 103:00:12:103:ff:12:
+w PortJ::pullup(0x23) 105:00:23:105:ff:23:
 w PortK::Pin0::direction(Pin::Direction::input) 107:ff:fe:
 w PortK::Pin0::direction(Pin::Direction::output) 107:00:01:
 w PortK::Pin0::input()
-w PortK::Pin0::output()
 w PortK::Pin0::output(Pin::Value::high) 108:00:01:
 w PortK::Pin0::output(Pin::Value::low) 108:ff:fe:
+w PortK::Pin0::outputToggle() 106:00:01:106:ff:01:
 w PortK::Pin0::pullup(false) 108:ff:fe:
 w PortK::Pin0::pullup(true) 108:00:01:
-w PortK::Pin0::outputToggle() 106:00:01:
-w PortK::Pin1::direction()
 w PortK::Pin1::direction(Pin::Direction::input) 107:ff:fd:
 w PortK::Pin1::direction(Pin::Direction::output) 107:00:02:
 w PortK::Pin1::input()
-w PortK::Pin1::output()
 w PortK::Pin1::output(Pin::Value::high) 108:00:02:
 w PortK::Pin1::output(Pin::Value::low) 108:ff:fd:
+w PortK::Pin1::outputToggle() 106:00:02:106:ff:02:
 w PortK::Pin1::pullup(false) 108:ff:fd:
 w PortK::Pin1::pullup(true) 108:00:02:
-w PortK::Pin1::outputToggle() 106:00:02:
-w PortK::Pin2::direction()
 w PortK::Pin2::direction(Pin::Direction::input) 107:ff:fb:
 w PortK::Pin2::direction(Pin::Direction::output) 107:00:04:
 w PortK::Pin2::input()
-w PortK::Pin2::output()
 w PortK::Pin2::output(Pin::Value::high) 108:00:04:
 w PortK::Pin2::output(Pin::Value::low) 108:ff:fb:
+w PortK::Pin2::outputToggle() 106:00:04:106:ff:04:
 w PortK::Pin2::pullup(false) 108:ff:fb:
 w PortK::Pin2::pullup(true) 108:00:04:
-w PortK::Pin2::outputToggle() 106:00:04:
-w PortK::Pin3::direction()
 w PortK::Pin3::direction(Pin::Direction::input) 107:ff:f7:
 w PortK::Pin3::direction(Pin::Direction::output) 107:00:08:
 w PortK::Pin3::input()
-w PortK::Pin3::output()
 w PortK::Pin3::output(Pin::Value::high) 108:00:08:
 w PortK::Pin3::output(Pin::Value::low) 108:ff:f7:
+w PortK::Pin3::outputToggle() 106:00:08:106:ff:08:
 w PortK::Pin3::pullup(false) 108:ff:f7:
 w PortK::Pin3::pullup(true) 108:00:08:
-w PortK::Pin3::outputToggle() 106:00:08:
-w PortK::Pin4::direction()
 w PortK::Pin4::direction(Pin::Direction::input) 107:ff:ef:
 w PortK::Pin4::direction(Pin::Direction::output) 107:00:10:
 w PortK::Pin4::input()
-w PortK::Pin4::output()
 w PortK::Pin4::output(Pin::Value::high) 108:00:10:
 w PortK::Pin4::output(Pin::Value::low) 108:ff:ef:
+w PortK::Pin4::outputToggle() 106:00:10:106:ff:10:
 w PortK::Pin4::pullup(false) 108:ff:ef:
 w PortK::Pin4::pullup(true) 108:00:10:
-w PortK::Pin4::outputToggle() 106:00:10:
-w PortK::Pin5::direction()
 w PortK::Pin5::direction(Pin::Direction::input) 107:ff:df:
 w PortK::Pin5::direction(Pin::Direction::output) 107:00:20:
 w PortK::Pin5::input()
-w PortK::Pin5::output()
 w PortK::Pin5::output(Pin::Value::high) 108:00:20:
 w PortK::Pin5::output(Pin::Value::low) 108:ff:df:
+w PortK::Pin5::outputToggle() 106:00:20:106:ff:20:
 w PortK::Pin5::pullup(false) 108:ff:df:
 w PortK::Pin5::pullup(true) 108:00:20:
-w PortK::Pin5::outputToggle() 106:00:20:
-w PortK::Pin6::direction()
 w PortK::Pin6::direction(Pin::Direction::input) 107:ff:bf:
 w PortK::Pin6::direction(Pin::Direction::output) 107:00:40:
 w PortK::Pin6::input()
-w PortK::Pin6::output()
 w PortK::Pin6::output(Pin::Value::high) 108:00:40:
 w PortK::Pin6::output(Pin::Value::low) 108:ff:bf:
+w PortK::Pin6::outputToggle() 106:00:40:106:ff:40:
 w PortK::Pin6::pullup(false) 108:ff:bf:
 w PortK::Pin6::pullup(true) 108:00:40:
-w PortK::Pin6::outputToggle() 106:00:40:
-w PortK::Pin7::direction()
 w PortK::Pin7::direction(Pin::Direction::input) 107:ff:7f:
 w PortK::Pin7::direction(Pin::Direction::output) 107:00:80:
 w PortK::Pin7::input()
-w PortK::Pin7::output()
 w PortK::Pin7::output(Pin::Value::high) 108:00:80:
 w PortK::Pin7::output(Pin::Value::low) 108:ff:7f:
+w PortK::Pin7::outputToggle() 106:00:80:106:ff:80:
 w PortK::Pin7::pullup(false) 108:ff:7f:
 w PortK::Pin7::pullup(true) 108:00:80:
-w PortK::Pin7::outputToggle() 106:00:80:
+w PortK::direction(0x12) 107:00:12:107:ff:12:
 w PortK::input()
-w PortK::output()
 w PortK::output(0x12) 108:00:12:108:ff:12:
-w PortK::toggle(0x12) 106:00:12:106:ff:12:
-w PortL::Pin0::direction()
+w PortK::outputToggle(0x12) 106:00:12:106:ff:12:
+w PortK::pullup(0x23) 108:00:23:108:ff:23:
 w PortL::Pin0::direction(Pin::Direction::input) 10a:ff:fe:
 w PortL::Pin0::direction(Pin::Direction::output) 10a:00:01:
 w PortL::Pin0::input()
-w PortL::Pin0::output()
 w PortL::Pin0::output(Pin::Value::high) 10b:00:01:
 w PortL::Pin0::output(Pin::Value::low) 10b:ff:fe:
+w PortL::Pin0::outputToggle() 109:00:01:109:ff:01:
 w PortL::Pin0::pullup(false) 10b:ff:fe:
 w PortL::Pin0::pullup(true) 10b:00:01:
-w PortL::Pin0::outputToggle() 109:00:01:
-w PortL::Pin1::direction()
 w PortL::Pin1::direction(Pin::Direction::input) 10a:ff:fd:
 w PortL::Pin1::direction(Pin::Direction::output) 10a:00:02:
 w PortL::Pin1::input()
-w PortL::Pin1::output()
 w PortL::Pin1::output(Pin::Value::high) 10b:00:02:
 w PortL::Pin1::output(Pin::Value::low) 10b:ff:fd:
+w PortL::Pin1::outputToggle() 109:00:02:109:ff:02:
 w PortL::Pin1::pullup(false) 10b:ff:fd:
 w PortL::Pin1::pullup(true) 10b:00:02:
-w PortL::Pin1::outputToggle() 109:00:02:
-w PortL::Pin2::direction()
 w PortL::Pin2::direction(Pin::Direction::input) 10a:ff:fb:
 w PortL::Pin2::direction(Pin::Direction::output) 10a:00:04:
 w PortL::Pin2::input()
-w PortL::Pin2::output()
 w PortL::Pin2::output(Pin::Value::high) 10b:00:04:
 w PortL::Pin2::output(Pin::Value::low) 10b:ff:fb:
+w PortL::Pin2::outputToggle() 109:00:04:109:ff:04:
 w PortL::Pin2::pullup(false) 10b:ff:fb:
 w PortL::Pin2::pullup(true) 10b:00:04:
-w PortL::Pin2::outputToggle() 109:00:04:
-w PortL::Pin3::direction()
 w PortL::Pin3::direction(Pin::Direction::input) 10a:ff:f7:
 w PortL::Pin3::direction(Pin::Direction::output) 10a:00:08:
 w PortL::Pin3::input()
-w PortL::Pin3::output()
 w PortL::Pin3::output(Pin::Value::high) 10b:00:08:
 w PortL::Pin3::output(Pin::Value::low) 10b:ff:f7:
+w PortL::Pin3::outputToggle() 109:00:08:109:ff:08:
 w PortL::Pin3::pullup(false) 10b:ff:f7:
 w PortL::Pin3::pullup(true) 10b:00:08:
-w PortL::Pin3::outputToggle() 109:00:08:
-w PortL::Pin4::direction()
 w PortL::Pin4::direction(Pin::Direction::input) 10a:ff:ef:
 w PortL::Pin4::direction(Pin::Direction::output) 10a:00:10:
 w PortL::Pin4::input()
-w PortL::Pin4::output()
 w PortL::Pin4::output(Pin::Value::high) 10b:00:10:
 w PortL::Pin4::output(Pin::Value::low) 10b:ff:ef:
+w PortL::Pin4::outputToggle() 109:00:10:109:ff:10:
 w PortL::Pin4::pullup(false) 10b:ff:ef:
 w PortL::Pin4::pullup(true) 10b:00:10:
-w PortL::Pin4::outputToggle() 109:00:10:
-w PortL::Pin5::direction()
 w PortL::Pin5::direction(Pin::Direction::input) 10a:ff:df:
 w PortL::Pin5::direction(Pin::Direction::output) 10a:00:20:
 w PortL::Pin5::input()
-w PortL::Pin5::output()
 w PortL::Pin5::output(Pin::Value::high) 10b:00:20:
 w PortL::Pin5::output(Pin::Value::low) 10b:ff:df:
+w PortL::Pin5::outputToggle() 109:00:20:109:ff:20:
 w PortL::Pin5::pullup(false) 10b:ff:df:
 w PortL::Pin5::pullup(true) 10b:00:20:
-w PortL::Pin5::outputToggle() 109:00:20:
-w PortL::Pin6::direction()
 w PortL::Pin6::direction(Pin::Direction::input) 10a:ff:bf:
 w PortL::Pin6::direction(Pin::Direction::output) 10a:00:40:
 w PortL::Pin6::input()
-w PortL::Pin6::output()
 w PortL::Pin6::output(Pin::Value::high) 10b:00:40:
 w PortL::Pin6::output(Pin::Value::low) 10b:ff:bf:
+w PortL::Pin6::outputToggle() 109:00:40:109:ff:40:
 w PortL::Pin6::pullup(false) 10b:ff:bf:
 w PortL::Pin6::pullup(true) 10b:00:40:
-w PortL::Pin6::outputToggle() 109:00:40:
-w PortL::Pin7::direction()
 w PortL::Pin7::direction(Pin::Direction::input) 10a:ff:7f:
 w PortL::Pin7::direction(Pin::Direction::output) 10a:00:80:
 w PortL::Pin7::input()
-w PortL::Pin7::output()
 w PortL::Pin7::output(Pin::Value::high) 10b:00:80:
 w PortL::Pin7::output(Pin::Value::low) 10b:ff:7f:
+w PortL::Pin7::outputToggle() 109:00:80:109:ff:80:
 w PortL::Pin7::pullup(false) 10b:ff:7f:
 w PortL::Pin7::pullup(true) 10b:00:80:
-w PortL::Pin7::outputToggle() 109:00:80:
+w PortL::direction(0x12) 10a:00:12:10a:ff:12:
 w PortL::input()
-w PortL::output()
 w PortL::output(0x12) 10b:00:12:10b:ff:12:
-w PortL::toggle(0x12) 109:00:12:109:ff:12:
-w Timer0::OutputA::intEnable(false) 6e:ff:fd:
-w Timer0::OutputA::intEnable(true) 6e:00:02:
-w Timer0::OutputA::intEnabled()
-w Timer0::OutputA::intFlag()
-w Timer0::OutputA::intFlagClear() 35:00:02:35:ff:02:
-w Timer0::OutputA::mode(Timer0::OutputA::Mode::clear) 44:00:80:44:ff:bf:
-w Timer0::OutputA::mode(Timer0::OutputA::Mode::disconnected) 44:ff:3f:
-w Timer0::OutputA::mode(Timer0::OutputA::Mode::set) 44:00:c0:
-w Timer0::OutputA::mode(Timer0::OutputA::Mode::toggle) 44:00:40:44:ff:7f:
-w Timer0::OutputA::value()
-w Timer0::OutputA::value(0x12) 47:00:12:47:ff:12:
-w Timer0::OutputB::intEnable(false) 6e:ff:fb:
-w Timer0::OutputB::intEnable(true) 6e:00:04:
-w Timer0::OutputB::intEnabled()
-w Timer0::OutputB::intFlag()
-w Timer0::OutputB::intFlagClear() 35:00:04:35:ff:04:
-w Timer0::OutputB::mode(Timer0::OutputB::Mode::clear) 44:00:20:44:ff:ef:
-w Timer0::OutputB::mode(Timer0::OutputB::Mode::disconnected) 44:ff:cf:
-w Timer0::OutputB::mode(Timer0::OutputB::Mode::set) 44:00:30:
-w Timer0::OutputB::mode(Timer0::OutputB::Mode::toggle) 44:00:10:44:ff:df:
-w Timer0::OutputB::value()
-w Timer0::OutputB::value(0x12) 48:00:12:48:ff:12:
+w PortL::outputToggle(0x12) 109:00:12:109:ff:12:
+w PortL::pullup(0x23) 10b:00:23:10b:ff:23:
+w Sleep::enable(false) 53:ff:fe:
+w Sleep::enable(true) 53:00:01:
+w Sleep::isEnabled()
+w Sleep::mode(Sleep::Mode::adcNoiseReduction) 53:00:02:53:ff:f3:
+w Sleep::mode(Sleep::Mode::extendedStandby) 53:00:0e:
+w Sleep::mode(Sleep::Mode::idle) 53:ff:f1:
+w Sleep::mode(Sleep::Mode::powerDown) 53:00:04:53:ff:f5:
+w Sleep::mode(Sleep::Mode::powerSave) 53:00:06:53:ff:f7:
+w Sleep::mode(Sleep::Mode::standby) 53:00:0c:53:ff:fd:
+w Spi0::clock(Spi0::Clock::div128) 4c:00:03:4d:ff:3e:
+w Spi0::clock(Spi0::Clock::div16) 4c:00:01:4c:ff:fd:4d:ff:3e:
+w Spi0::clock(Spi0::Clock::div2) 4d:00:01:4c:ff:fc:4d:ff:3f:
+w Spi0::clock(Spi0::Clock::div32) 4c:00:02:4d:00:01:4c:ff:fe:4d:ff:3f:
+w Spi0::clock(Spi0::Clock::div4) 4c:ff:fc:4d:ff:3e:
+w Spi0::clock(Spi0::Clock::div64) 4c:00:02:4c:ff:fe:4d:ff:3e:
+w Spi0::clock(Spi0::Clock::div8) 4c:00:01:4d:00:01:4c:ff:fd:4d:ff:3f:
+w Spi0::collisionFlag()
+w Spi0::data()
+w Spi0::data(0x12) 4e:00:12:4e:ff:12:
+w Spi0::dataOrder(Spi0::DataOrder::lsbFirst) 4c:00:20:
+w Spi0::dataOrder(Spi0::DataOrder::msbFirst) 4c:ff:df:
+w Spi0::enable(false) 4c:ff:bf:
+w Spi0::enable(true) 4c:00:40:
+w Spi0::intEnable(false) 4c:ff:7f:
+w Spi0::intEnable(true) 4c:00:80:
+w Spi0::intFlag()
+w Spi0::masterSlave(Spi0::MasterSlave::master) 4c:00:10:
+w Spi0::masterSlave(Spi0::MasterSlave::slave) 4c:ff:ef:
+w Spi0::phase(Spi0::Phase::leadingSampleTrailingSetup) 4c:ff:fb:
+w Spi0::phase(Spi0::Phase::leadingSetupTrailingSample) 4c:00:04:
+w Spi0::polarity(Spi0::Polarity::leadingFallingTrailingRising) 4c:00:08:
+w Spi0::polarity(Spi0::Polarity::leadingRisingTrailingFalling) 4c:ff:f7:
 w Timer0::clock(Timer0::Clock::div1) 45:00:01:45:ff:f9:
 w Timer0::clock(Timer0::Clock::div1024) 45:00:05:45:ff:fd:
 w Timer0::clock(Timer0::Clock::div256) 45:00:04:45:ff:fc:
@@ -1434,51 +1104,51 @@ w Timer0::clock(Timer0::Clock::div8) 45:00:02:45:ff:fa:
 w Timer0::clock(Timer0::Clock::extFalling) 45:00:06:45:ff:fe:
 w Timer0::clock(Timer0::Clock::extRising) 45:00:07:
 w Timer0::clock(Timer0::Clock::none) 45:ff:f8:
+w Timer0::compareA()
+w Timer0::compareA(0x12) 47:00:12:47:ff:12:
+w Timer0::compareAIntEnable(false) 6e:ff:fd:
+w Timer0::compareAIntEnable(true) 6e:00:02:
+w Timer0::compareAIntFlag()
+w Timer0::compareAIntFlagClear() 35:00:02:35:ff:02:
+w Timer0::compareAOutput(Timer0::CompareAOutput::clear) 44:00:80:44:ff:bf:
+w Timer0::compareAOutput(Timer0::CompareAOutput::disconnected) 44:ff:3f:
+w Timer0::compareAOutput(Timer0::CompareAOutput::set) 44:00:c0:
+w Timer0::compareAOutput(Timer0::CompareAOutput::toggle) 44:00:40:44:ff:7f:
+w Timer0::compareB()
+w Timer0::compareB(0x12) 48:00:12:48:ff:12:
+w Timer0::compareBIntEnable(false) 6e:ff:fb:
+w Timer0::compareBIntEnable(true) 6e:00:04:
+w Timer0::compareBIntFlag()
+w Timer0::compareBIntFlagClear() 35:00:04:35:ff:04:
+w Timer0::compareBOutput(Timer0::CompareBOutput::clear) 44:00:20:44:ff:ef:
+w Timer0::compareBOutput(Timer0::CompareBOutput::disconnected) 44:ff:cf:
+w Timer0::compareBOutput(Timer0::CompareBOutput::set) 44:00:30:
+w Timer0::compareBOutput(Timer0::CompareBOutput::toggle) 44:00:10:44:ff:df:
 w Timer0::counter()
 w Timer0::counter(0x12) 46:00:12:46:ff:12:
-w Timer0::intEnable(false) 6e:ff:fe:
-w Timer0::intEnable(true) 6e:00:01:
-w Timer0::intFlag()
-w Timer0::intFlagClear() 35:00:01:35:ff:01:
+w Timer0::overflowIntEnable(false) 6e:ff:fe:
+w Timer0::overflowIntEnable(true) 6e:00:01:
+w Timer0::overflowIntFlag()
+w Timer0::overflowIntFlagClear() 35:00:01:35:ff:01:
+w Timer0::prescalerReset() 43:00:01:
+w Timer0::synchronizeMode(false) 43:ff:7f:
+w Timer0::synchronizeMode(true) 43:00:80:
 w Timer0::waveform(Timer0::Waveform::ctcOcra) 44:00:02:44:ff:fe:45:ff:f7:
 w Timer0::waveform(Timer0::Waveform::fastPwm) 44:00:03:45:ff:f7:
 w Timer0::waveform(Timer0::Waveform::fastPwmOcra) 44:00:03:45:00:08:
 w Timer0::waveform(Timer0::Waveform::normal) 44:ff:fc:45:ff:f7:
 w Timer0::waveform(Timer0::Waveform::pwm) 44:00:01:44:ff:fd:45:ff:f7:
 w Timer0::waveform(Timer0::Waveform::pwmOcra) 44:00:01:45:00:08:44:ff:fd:
-w Timer1::OutputA::intEnable(false) 6f:ff:fd:
-w Timer1::OutputA::intEnable(true) 6f:00:02:
-w Timer1::OutputA::intEnabled()
-w Timer1::OutputA::intFlag()
-w Timer1::OutputA::intFlagClear() 36:00:02:36:ff:02:
-w Timer1::OutputA::mode(Timer1::OutputA::Mode::clear) 80:00:80:80:ff:bf:
-w Timer1::OutputA::mode(Timer1::OutputA::Mode::disconnected) 80:ff:3f:
-w Timer1::OutputA::mode(Timer1::OutputA::Mode::set) 80:00:c0:
-w Timer1::OutputA::mode(Timer1::OutputA::Mode::toggle) 80:00:40:80:ff:7f:
-w Timer1::OutputA::value()
-w Timer1::OutputA::value(0x12) 88:00:12:88:ff:12:89:ff:00:
-w Timer1::OutputB::intEnable(false) 6f:ff:fb:
-w Timer1::OutputB::intEnable(true) 6f:00:04:
-w Timer1::OutputB::intEnabled()
-w Timer1::OutputB::intFlag()
-w Timer1::OutputB::intFlagClear() 36:00:04:36:ff:04:
-w Timer1::OutputB::mode(Timer1::OutputB::Mode::clear) 80:00:20:80:ff:ef:
-w Timer1::OutputB::mode(Timer1::OutputB::Mode::disconnected) 80:ff:cf:
-w Timer1::OutputB::mode(Timer1::OutputB::Mode::set) 80:00:30:
-w Timer1::OutputB::mode(Timer1::OutputB::Mode::toggle) 80:00:10:80:ff:df:
-w Timer1::OutputB::value()
-w Timer1::OutputB::value(0x12) 8a:00:12:8a:ff:12:8b:ff:00:
-w Timer1::OutputC::intEnable(false) 6f:ff:f7:
-w Timer1::OutputC::intEnable(true) 6f:00:08:
-w Timer1::OutputC::intEnabled()
-w Timer1::OutputC::intFlag()
-w Timer1::OutputC::intFlagClear() 36:00:08:36:ff:08:
-w Timer1::OutputC::mode(Timer1::OutputC::Mode::clear) 80:00:08:80:ff:fb:
-w Timer1::OutputC::mode(Timer1::OutputC::Mode::disconnected) 80:ff:f3:
-w Timer1::OutputC::mode(Timer1::OutputC::Mode::set) 80:00:0c:
-w Timer1::OutputC::mode(Timer1::OutputC::Mode::toggle) 80:00:04:80:ff:f7:
-w Timer1::OutputC::value()
-w Timer1::OutputC::value(0x12) 8c:00:12:8c:ff:12:8d:ff:00:
+w Timer1::capture()
+w Timer1::capture(0x1234) 86:00:34:87:00:12:86:ff:34:87:ff:12:
+w Timer1::captureEdge(Timer1::CaptureEdge::falling) 81:ff:bf:
+w Timer1::captureEdge(Timer1::CaptureEdge::rising) 81:00:40:
+w Timer1::captureIntEnable(false) 6f:ff:df:
+w Timer1::captureIntEnable(true) 6f:00:20:
+w Timer1::captureIntFlag()
+w Timer1::captureIntFlagClear() 36:00:20:36:ff:20:
+w Timer1::captureNoiseCancelEnable(false) 81:ff:7f:
+w Timer1::captureNoiseCancelEnable(true) 81:00:80:
 w Timer1::clock(Timer1::Clock::div1) 81:00:01:81:ff:f9:
 w Timer1::clock(Timer1::Clock::div1024) 81:00:05:81:ff:fd:
 w Timer1::clock(Timer1::Clock::div256) 81:00:04:81:ff:fc:
@@ -1487,12 +1157,46 @@ w Timer1::clock(Timer1::Clock::div8) 81:00:02:81:ff:fa:
 w Timer1::clock(Timer1::Clock::extFalling) 81:00:06:81:ff:fe:
 w Timer1::clock(Timer1::Clock::extRising) 81:00:07:
 w Timer1::clock(Timer1::Clock::none) 81:ff:f8:
+w Timer1::compareA()
+w Timer1::compareA(0x12) 88:00:12:88:ff:12:89:ff:00:
+w Timer1::compareAIntEnable(false) 6f:ff:fd:
+w Timer1::compareAIntEnable(true) 6f:00:02:
+w Timer1::compareAIntFlag()
+w Timer1::compareAIntFlagClear() 36:00:02:36:ff:02:
+w Timer1::compareAOutput(Timer1::CompareAOutput::clear) 80:00:80:80:ff:bf:
+w Timer1::compareAOutput(Timer1::CompareAOutput::disconnected) 80:ff:3f:
+w Timer1::compareAOutput(Timer1::CompareAOutput::set) 80:00:c0:
+w Timer1::compareAOutput(Timer1::CompareAOutput::toggle) 80:00:40:80:ff:7f:
+w Timer1::compareB()
+w Timer1::compareB(0x12) 8a:00:12:8a:ff:12:8b:ff:00:
+w Timer1::compareBIntEnable(false) 6f:ff:fb:
+w Timer1::compareBIntEnable(true) 6f:00:04:
+w Timer1::compareBIntFlag()
+w Timer1::compareBIntFlagClear() 36:00:04:36:ff:04:
+w Timer1::compareBOutput(Timer1::CompareBOutput::clear) 80:00:20:80:ff:ef:
+w Timer1::compareBOutput(Timer1::CompareBOutput::disconnected) 80:ff:cf:
+w Timer1::compareBOutput(Timer1::CompareBOutput::set) 80:00:30:
+w Timer1::compareBOutput(Timer1::CompareBOutput::toggle) 80:00:10:80:ff:df:
+w Timer1::compareC()
+w Timer1::compareC(0x12) 8c:00:12:8c:ff:12:8d:ff:00:
+w Timer1::compareCIntEnable(false) 6f:ff:f7:
+w Timer1::compareCIntEnable(true) 6f:00:08:
+w Timer1::compareCIntFlag()
+w Timer1::compareCIntFlagClear() 36:00:08:36:ff:08:
+w Timer1::compareCOutput(Timer1::CompareCOutput::clear) 80:00:08:80:ff:fb:
+w Timer1::compareCOutput(Timer1::CompareCOutput::disconnected) 80:ff:f3:
+w Timer1::compareCOutput(Timer1::CompareCOutput::set) 80:00:0c:
+w Timer1::compareCOutput(Timer1::CompareCOutput::toggle) 80:00:04:80:ff:f7:
 w Timer1::counter()
 w Timer1::counter(0x12) 84:00:12:84:ff:12:85:ff:00:
-w Timer1::intEnable(false) 6f:ff:fe:
-w Timer1::intEnable(true) 6f:00:01:
-w Timer1::intFlag()
-w Timer1::intFlagClear() 36:00:01:36:ff:01:
+w Timer1::overflowIntEnable(false) 6f:ff:fe:
+w Timer1::overflowIntEnable(true) 6f:00:01:
+w Timer1::overflowIntFlag()
+w Timer1::overflowIntFlagClear() 36:00:01:36:ff:01:
+w Timer1::prescalerReset() 43:00:01:
+w Timer1::synchronizeMode(false) 43:ff:7f:
+w Timer1::synchronizeMode(true) 43:00:80:
+w Timer1::waveform(Timer1::Waveform::ctcIcr) 81:00:18:80:ff:fc:
 w Timer1::waveform(Timer1::Waveform::ctcOcra) 81:00:08:80:ff:fc:81:ff:ef:
 w Timer1::waveform(Timer1::Waveform::fastPwm) 80:00:02:81:00:18:80:ff:fe:
 w Timer1::waveform(Timer1::Waveform::fastPwm10Bit) 80:00:03:81:00:08:81:ff:ef:
@@ -1505,28 +1209,6 @@ w Timer1::waveform(Timer1::Waveform::pwm10Bit) 80:00:03:81:ff:e7:
 w Timer1::waveform(Timer1::Waveform::pwm8Bit) 80:00:01:80:ff:fd:81:ff:e7:
 w Timer1::waveform(Timer1::Waveform::pwm9Bit) 80:00:02:80:ff:fe:81:ff:e7:
 w Timer1::waveform(Timer1::Waveform::pwmOcra) 80:00:03:81:00:10:81:ff:f7:
-w Timer2::OutputA::intEnable(false) 70:ff:fd:
-w Timer2::OutputA::intEnable(true) 70:00:02:
-w Timer2::OutputA::intEnabled()
-w Timer2::OutputA::intFlag()
-w Timer2::OutputA::intFlagClear() 37:00:02:37:ff:02:
-w Timer2::OutputA::mode(Timer2::OutputA::Mode::clear) b0:00:80:b0:ff:bf:
-w Timer2::OutputA::mode(Timer2::OutputA::Mode::disconnected) b0:ff:3f:
-w Timer2::OutputA::mode(Timer2::OutputA::Mode::set) b0:00:c0:
-w Timer2::OutputA::mode(Timer2::OutputA::Mode::toggle) b0:00:40:b0:ff:7f:
-w Timer2::OutputA::value()
-w Timer2::OutputA::value(0x12) b3:00:12:b3:ff:12:
-w Timer2::OutputB::intEnable(false) 70:ff:fb:
-w Timer2::OutputB::intEnable(true) 70:00:04:
-w Timer2::OutputB::intEnabled()
-w Timer2::OutputB::intFlag()
-w Timer2::OutputB::intFlagClear() 37:00:04:37:ff:04:
-w Timer2::OutputB::mode(Timer2::OutputB::Mode::clear) b0:00:20:b0:ff:ef:
-w Timer2::OutputB::mode(Timer2::OutputB::Mode::disconnected) b0:ff:cf:
-w Timer2::OutputB::mode(Timer2::OutputB::Mode::set) b0:00:30:
-w Timer2::OutputB::mode(Timer2::OutputB::Mode::toggle) b0:00:10:b0:ff:df:
-w Timer2::OutputB::value()
-w Timer2::OutputB::value(0x12) b4:00:12:b4:ff:12:
 w Timer2::clock(Timer2::Clock::div1) b1:00:01:b1:ff:f9:
 w Timer2::clock(Timer2::Clock::div1024) b1:00:07:
 w Timer2::clock(Timer2::Clock::div128) b1:00:05:b1:ff:fd:
@@ -1535,51 +1217,51 @@ w Timer2::clock(Timer2::Clock::div32) b1:00:03:b1:ff:fb:
 w Timer2::clock(Timer2::Clock::div64) b1:00:04:b1:ff:fc:
 w Timer2::clock(Timer2::Clock::div8) b1:00:02:b1:ff:fa:
 w Timer2::clock(Timer2::Clock::none) b1:ff:f8:
+w Timer2::compareA()
+w Timer2::compareA(0x12) b3:00:12:b3:ff:12:
+w Timer2::compareAIntEnable(false) 70:ff:fd:
+w Timer2::compareAIntEnable(true) 70:00:02:
+w Timer2::compareAIntFlag()
+w Timer2::compareAIntFlagClear() 37:00:02:37:ff:02:
+w Timer2::compareAOutput(Timer2::CompareAOutput::clear) b0:00:80:b0:ff:bf:
+w Timer2::compareAOutput(Timer2::CompareAOutput::disconnected) b0:ff:3f:
+w Timer2::compareAOutput(Timer2::CompareAOutput::set) b0:00:c0:
+w Timer2::compareAOutput(Timer2::CompareAOutput::toggle) b0:00:40:b0:ff:7f:
+w Timer2::compareB()
+w Timer2::compareB(0x12) b4:00:12:b4:ff:12:
+w Timer2::compareBIntEnable(false) 70:ff:fb:
+w Timer2::compareBIntEnable(true) 70:00:04:
+w Timer2::compareBIntFlag()
+w Timer2::compareBIntFlagClear() 37:00:04:37:ff:04:
+w Timer2::compareBOutput(Timer2::CompareBOutput::clear) b0:00:20:b0:ff:ef:
+w Timer2::compareBOutput(Timer2::CompareBOutput::disconnected) b0:ff:cf:
+w Timer2::compareBOutput(Timer2::CompareBOutput::set) b0:00:30:
+w Timer2::compareBOutput(Timer2::CompareBOutput::toggle) b0:00:10:b0:ff:df:
 w Timer2::counter()
 w Timer2::counter(0x12) b2:00:12:b2:ff:12:
-w Timer2::intEnable(false) 70:ff:fe:
-w Timer2::intEnable(true) 70:00:01:
-w Timer2::intFlag()
-w Timer2::intFlagClear() 37:00:01:37:ff:01:
+w Timer2::overflowIntEnable(false) 70:ff:fe:
+w Timer2::overflowIntEnable(true) 70:00:01:
+w Timer2::overflowIntFlag()
+w Timer2::overflowIntFlagClear() 37:00:01:37:ff:01:
+w Timer2::prescalerReset() 43:00:02:
+w Timer2::synchronizeMode(false) 43:ff:7f:
+w Timer2::synchronizeMode(true) 43:00:80:
 w Timer2::waveform(Timer2::Waveform::ctcOcra) b0:00:02:b0:ff:fe:b1:ff:f7:
 w Timer2::waveform(Timer2::Waveform::fastPwm) b0:00:03:b1:ff:f7:
 w Timer2::waveform(Timer2::Waveform::fastPwmOcra) b0:00:03:b1:00:08:
 w Timer2::waveform(Timer2::Waveform::normal) b0:ff:fc:b1:ff:f7:
 w Timer2::waveform(Timer2::Waveform::pwm) b0:00:01:b0:ff:fd:b1:ff:f7:
 w Timer2::waveform(Timer2::Waveform::pwmOcra) b0:00:01:b1:00:08:b0:ff:fd:
-w Timer3::OutputA::intEnable(false) 71:ff:fd:
-w Timer3::OutputA::intEnable(true) 71:00:02:
-w Timer3::OutputA::intEnabled()
-w Timer3::OutputA::intFlag()
-w Timer3::OutputA::intFlagClear() 38:00:02:38:ff:02:
-w Timer3::OutputA::mode(Timer3::OutputA::Mode::clear) 90:00:80:90:ff:bf:
-w Timer3::OutputA::mode(Timer3::OutputA::Mode::disconnected) 90:ff:3f:
-w Timer3::OutputA::mode(Timer3::OutputA::Mode::set) 90:00:c0:
-w Timer3::OutputA::mode(Timer3::OutputA::Mode::toggle) 90:00:40:90:ff:7f:
-w Timer3::OutputA::value()
-w Timer3::OutputA::value(0x12) 98:00:12:98:ff:12:99:ff:00:
-w Timer3::OutputB::intEnable(false) 71:ff:fb:
-w Timer3::OutputB::intEnable(true) 71:00:04:
-w Timer3::OutputB::intEnabled()
-w Timer3::OutputB::intFlag()
-w Timer3::OutputB::intFlagClear() 38:00:04:38:ff:04:
-w Timer3::OutputB::mode(Timer3::OutputB::Mode::clear) 90:00:20:90:ff:ef:
-w Timer3::OutputB::mode(Timer3::OutputB::Mode::disconnected) 90:ff:cf:
-w Timer3::OutputB::mode(Timer3::OutputB::Mode::set) 90:00:30:
-w Timer3::OutputB::mode(Timer3::OutputB::Mode::toggle) 90:00:10:90:ff:df:
-w Timer3::OutputB::value()
-w Timer3::OutputB::value(0x12) 9a:00:12:9a:ff:12:9b:ff:00:
-w Timer3::OutputC::intEnable(false) 71:ff:f7:
-w Timer3::OutputC::intEnable(true) 71:00:08:
-w Timer3::OutputC::intEnabled()
-w Timer3::OutputC::intFlag()
-w Timer3::OutputC::intFlagClear() 38:00:08:38:ff:08:
-w Timer3::OutputC::mode(Timer3::OutputC::Mode::clear) 90:00:08:90:ff:fb:
-w Timer3::OutputC::mode(Timer3::OutputC::Mode::disconnected) 90:ff:f3:
-w Timer3::OutputC::mode(Timer3::OutputC::Mode::set) 90:00:0c:
-w Timer3::OutputC::mode(Timer3::OutputC::Mode::toggle) 90:00:04:90:ff:f7:
-w Timer3::OutputC::value()
-w Timer3::OutputC::value(0x12) 9c:00:12:9c:ff:12:9d:ff:00:
+w Timer3::capture()
+w Timer3::capture(0x1234) 96:00:34:97:00:12:96:ff:34:97:ff:12:
+w Timer3::captureEdge(Timer3::CaptureEdge::falling) 91:ff:bf:
+w Timer3::captureEdge(Timer3::CaptureEdge::rising) 91:00:40:
+w Timer3::captureIntEnable(false) 71:ff:df:
+w Timer3::captureIntEnable(true) 71:00:20:
+w Timer3::captureIntFlag()
+w Timer3::captureIntFlagClear() 38:00:20:38:ff:20:
+w Timer3::captureNoiseCancelEnable(false) 91:ff:7f:
+w Timer3::captureNoiseCancelEnable(true) 91:00:80:
 w Timer3::clock(Timer3::Clock::div1) 91:00:01:91:ff:f9:
 w Timer3::clock(Timer3::Clock::div1024) 91:00:05:91:ff:fd:
 w Timer3::clock(Timer3::Clock::div256) 91:00:04:91:ff:fc:
@@ -1588,12 +1270,46 @@ w Timer3::clock(Timer3::Clock::div8) 91:00:02:91:ff:fa:
 w Timer3::clock(Timer3::Clock::extFalling) 91:00:06:91:ff:fe:
 w Timer3::clock(Timer3::Clock::extRising) 91:00:07:
 w Timer3::clock(Timer3::Clock::none) 91:ff:f8:
+w Timer3::compareA()
+w Timer3::compareA(0x12) 98:00:12:98:ff:12:99:ff:00:
+w Timer3::compareAIntEnable(false) 71:ff:fd:
+w Timer3::compareAIntEnable(true) 71:00:02:
+w Timer3::compareAIntFlag()
+w Timer3::compareAIntFlagClear() 38:00:02:38:ff:02:
+w Timer3::compareAOutput(Timer3::CompareAOutput::clear) 90:00:80:90:ff:bf:
+w Timer3::compareAOutput(Timer3::CompareAOutput::disconnected) 90:ff:3f:
+w Timer3::compareAOutput(Timer3::CompareAOutput::set) 90:00:c0:
+w Timer3::compareAOutput(Timer3::CompareAOutput::toggle) 90:00:40:90:ff:7f:
+w Timer3::compareB()
+w Timer3::compareB(0x12) 9a:00:12:9a:ff:12:9b:ff:00:
+w Timer3::compareBIntEnable(false) 71:ff:fb:
+w Timer3::compareBIntEnable(true) 71:00:04:
+w Timer3::compareBIntFlag()
+w Timer3::compareBIntFlagClear() 38:00:04:38:ff:04:
+w Timer3::compareBOutput(Timer3::CompareBOutput::clear) 90:00:20:90:ff:ef:
+w Timer3::compareBOutput(Timer3::CompareBOutput::disconnected) 90:ff:cf:
+w Timer3::compareBOutput(Timer3::CompareBOutput::set) 90:00:30:
+w Timer3::compareBOutput(Timer3::CompareBOutput::toggle) 90:00:10:90:ff:df:
+w Timer3::compareC()
+w Timer3::compareC(0x12) 9c:00:12:9c:ff:12:9d:ff:00:
+w Timer3::compareCIntEnable(false) 71:ff:f7:
+w Timer3::compareCIntEnable(true) 71:00:08:
+w Timer3::compareCIntFlag()
+w Timer3::compareCIntFlagClear() 38:00:08:38:ff:08:
+w Timer3::compareCOutput(Timer3::CompareCOutput::clear) 90:00:08:90:ff:fb:
+w Timer3::compareCOutput(Timer3::CompareCOutput::disconnected) 90:ff:f3:
+w Timer3::compareCOutput(Timer3::CompareCOutput::set) 90:00:0c:
+w Timer3::compareCOutput(Timer3::CompareCOutput::toggle) 90:00:04:90:ff:f7:
 w Timer3::counter()
 w Timer3::counter(0x12) 94:00:12:94:ff:12:95:ff:00:
-w Timer3::intEnable(false) 71:ff:fe:
-w Timer3::intEnable(true) 71:00:01:
-w Timer3::intFlag()
-w Timer3::intFlagClear() 38:00:01:38:ff:01:
+w Timer3::overflowIntEnable(false) 71:ff:fe:
+w Timer3::overflowIntEnable(true) 71:00:01:
+w Timer3::overflowIntFlag()
+w Timer3::overflowIntFlagClear() 38:00:01:38:ff:01:
+w Timer3::prescalerReset() 43:00:01:
+w Timer3::synchronizeMode(false) 43:ff:7f:
+w Timer3::synchronizeMode(true) 43:00:80:
+w Timer3::waveform(Timer3::Waveform::ctcIcr) 91:00:18:90:ff:fc:
 w Timer3::waveform(Timer3::Waveform::ctcOcra) 91:00:08:90:ff:fc:91:ff:ef:
 w Timer3::waveform(Timer3::Waveform::fastPwm) 90:00:02:91:00:18:90:ff:fe:
 w Timer3::waveform(Timer3::Waveform::fastPwm10Bit) 90:00:03:91:00:08:91:ff:ef:
@@ -1606,39 +1322,16 @@ w Timer3::waveform(Timer3::Waveform::pwm10Bit) 90:00:03:91:ff:e7:
 w Timer3::waveform(Timer3::Waveform::pwm8Bit) 90:00:01:90:ff:fd:91:ff:e7:
 w Timer3::waveform(Timer3::Waveform::pwm9Bit) 90:00:02:90:ff:fe:91:ff:e7:
 w Timer3::waveform(Timer3::Waveform::pwmOcra) 90:00:03:91:00:10:91:ff:f7:
-w Timer4::OutputA::intEnable(false) 72:ff:fd:
-w Timer4::OutputA::intEnable(true) 72:00:02:
-w Timer4::OutputA::intEnabled()
-w Timer4::OutputA::intFlag()
-w Timer4::OutputA::intFlagClear() 39:00:02:39:ff:02:
-w Timer4::OutputA::mode(Timer4::OutputA::Mode::clear) a0:00:80:a0:ff:bf:
-w Timer4::OutputA::mode(Timer4::OutputA::Mode::disconnected) a0:ff:3f:
-w Timer4::OutputA::mode(Timer4::OutputA::Mode::set) a0:00:c0:
-w Timer4::OutputA::mode(Timer4::OutputA::Mode::toggle) a0:00:40:a0:ff:7f:
-w Timer4::OutputA::value()
-w Timer4::OutputA::value(0x12) a8:00:12:a8:ff:12:a9:ff:00:
-w Timer4::OutputB::intEnable(false) 72:ff:fb:
-w Timer4::OutputB::intEnable(true) 72:00:04:
-w Timer4::OutputB::intEnabled()
-w Timer4::OutputB::intFlag()
-w Timer4::OutputB::intFlagClear() 39:00:04:39:ff:04:
-w Timer4::OutputB::mode(Timer4::OutputB::Mode::clear) a0:00:20:a0:ff:ef:
-w Timer4::OutputB::mode(Timer4::OutputB::Mode::disconnected) a0:ff:cf:
-w Timer4::OutputB::mode(Timer4::OutputB::Mode::set) a0:00:30:
-w Timer4::OutputB::mode(Timer4::OutputB::Mode::toggle) a0:00:10:a0:ff:df:
-w Timer4::OutputB::value()
-w Timer4::OutputB::value(0x12) aa:00:12:aa:ff:12:ab:ff:00:
-w Timer4::OutputC::intEnable(false) 72:ff:f7:
-w Timer4::OutputC::intEnable(true) 72:00:08:
-w Timer4::OutputC::intEnabled()
-w Timer4::OutputC::intFlag()
-w Timer4::OutputC::intFlagClear() 39:00:08:39:ff:08:
-w Timer4::OutputC::mode(Timer4::OutputC::Mode::clear) a0:00:08:a0:ff:fb:
-w Timer4::OutputC::mode(Timer4::OutputC::Mode::disconnected) a0:ff:f3:
-w Timer4::OutputC::mode(Timer4::OutputC::Mode::set) a0:00:0c:
-w Timer4::OutputC::mode(Timer4::OutputC::Mode::toggle) a0:00:04:a0:ff:f7:
-w Timer4::OutputC::value()
-w Timer4::OutputC::value(0x12) ac:00:12:ac:ff:12:ad:ff:00:
+w Timer4::capture()
+w Timer4::capture(0x1234) a6:00:34:a7:00:12:a6:ff:34:a7:ff:12:
+w Timer4::captureEdge(Timer4::CaptureEdge::falling) a1:ff:bf:
+w Timer4::captureEdge(Timer4::CaptureEdge::rising) a1:00:40:
+w Timer4::captureIntEnable(false) 72:ff:df:
+w Timer4::captureIntEnable(true) 72:00:20:
+w Timer4::captureIntFlag()
+w Timer4::captureIntFlagClear() 39:00:20:39:ff:20:
+w Timer4::captureNoiseCancelEnable(false) a1:ff:7f:
+w Timer4::captureNoiseCancelEnable(true) a1:00:80:
 w Timer4::clock(Timer4::Clock::div1) a1:00:01:a1:ff:f9:
 w Timer4::clock(Timer4::Clock::div1024) a1:00:05:a1:ff:fd:
 w Timer4::clock(Timer4::Clock::div256) a1:00:04:a1:ff:fc:
@@ -1647,12 +1340,46 @@ w Timer4::clock(Timer4::Clock::div8) a1:00:02:a1:ff:fa:
 w Timer4::clock(Timer4::Clock::extFalling) a1:00:06:a1:ff:fe:
 w Timer4::clock(Timer4::Clock::extRising) a1:00:07:
 w Timer4::clock(Timer4::Clock::none) a1:ff:f8:
+w Timer4::compareA()
+w Timer4::compareA(0x12) a8:00:12:a8:ff:12:a9:ff:00:
+w Timer4::compareAIntEnable(false) 72:ff:fd:
+w Timer4::compareAIntEnable(true) 72:00:02:
+w Timer4::compareAIntFlag()
+w Timer4::compareAIntFlagClear() 39:00:02:39:ff:02:
+w Timer4::compareAOutput(Timer4::CompareAOutput::clear) a0:00:80:a0:ff:bf:
+w Timer4::compareAOutput(Timer4::CompareAOutput::disconnected) a0:ff:3f:
+w Timer4::compareAOutput(Timer4::CompareAOutput::set) a0:00:c0:
+w Timer4::compareAOutput(Timer4::CompareAOutput::toggle) a0:00:40:a0:ff:7f:
+w Timer4::compareB()
+w Timer4::compareB(0x12) aa:00:12:aa:ff:12:ab:ff:00:
+w Timer4::compareBIntEnable(false) 72:ff:fb:
+w Timer4::compareBIntEnable(true) 72:00:04:
+w Timer4::compareBIntFlag()
+w Timer4::compareBIntFlagClear() 39:00:04:39:ff:04:
+w Timer4::compareBOutput(Timer4::CompareBOutput::clear) a0:00:20:a0:ff:ef:
+w Timer4::compareBOutput(Timer4::CompareBOutput::disconnected) a0:ff:cf:
+w Timer4::compareBOutput(Timer4::CompareBOutput::set) a0:00:30:
+w Timer4::compareBOutput(Timer4::CompareBOutput::toggle) a0:00:10:a0:ff:df:
+w Timer4::compareC()
+w Timer4::compareC(0x12) ac:00:12:ac:ff:12:ad:ff:00:
+w Timer4::compareCIntEnable(false) 72:ff:f7:
+w Timer4::compareCIntEnable(true) 72:00:08:
+w Timer4::compareCIntFlag()
+w Timer4::compareCIntFlagClear() 39:00:08:39:ff:08:
+w Timer4::compareCOutput(Timer4::CompareCOutput::clear) a0:00:08:a0:ff:fb:
+w Timer4::compareCOutput(Timer4::CompareCOutput::disconnected) a0:ff:f3:
+w Timer4::compareCOutput(Timer4::CompareCOutput::set) a0:00:0c:
+w Timer4::compareCOutput(Timer4::CompareCOutput::toggle) a0:00:04:a0:ff:f7:
 w Timer4::counter()
 w Timer4::counter(0x12) a4:00:12:a4:ff:12:a5:ff:00:
-w Timer4::intEnable(false) 72:ff:fe:
-w Timer4::intEnable(true) 72:00:01:
-w Timer4::intFlag()
-w Timer4::intFlagClear() 39:00:01:39:ff:01:
+w Timer4::overflowIntEnable(false) 72:ff:fe:
+w Timer4::overflowIntEnable(true) 72:00:01:
+w Timer4::overflowIntFlag()
+w Timer4::overflowIntFlagClear() 39:00:01:39:ff:01:
+w Timer4::prescalerReset() 43:00:01:
+w Timer4::synchronizeMode(false) 43:ff:7f:
+w Timer4::synchronizeMode(true) 43:00:80:
+w Timer4::waveform(Timer4::Waveform::ctcIcr) a1:00:18:a0:ff:fc:
 w Timer4::waveform(Timer4::Waveform::ctcOcra) a1:00:08:a0:ff:fc:a1:ff:ef:
 w Timer4::waveform(Timer4::Waveform::fastPwm) a0:00:02:a1:00:18:a0:ff:fe:
 w Timer4::waveform(Timer4::Waveform::fastPwm10Bit) a0:00:03:a1:00:08:a1:ff:ef:
@@ -1665,39 +1392,16 @@ w Timer4::waveform(Timer4::Waveform::pwm10Bit) a0:00:03:a1:ff:e7:
 w Timer4::waveform(Timer4::Waveform::pwm8Bit) a0:00:01:a0:ff:fd:a1:ff:e7:
 w Timer4::waveform(Timer4::Waveform::pwm9Bit) a0:00:02:a0:ff:fe:a1:ff:e7:
 w Timer4::waveform(Timer4::Waveform::pwmOcra) a0:00:03:a1:00:10:a1:ff:f7:
-w Timer5::OutputA::intEnable(false) 73:ff:fd:
-w Timer5::OutputA::intEnable(true) 73:00:02:
-w Timer5::OutputA::intEnabled()
-w Timer5::OutputA::intFlag()
-w Timer5::OutputA::intFlagClear() 3a:00:02:3a:ff:02:
-w Timer5::OutputA::mode(Timer5::OutputA::Mode::clear) 120:00:80:120:ff:bf:
-w Timer5::OutputA::mode(Timer5::OutputA::Mode::disconnected) 120:ff:3f:
-w Timer5::OutputA::mode(Timer5::OutputA::Mode::set) 120:00:c0:
-w Timer5::OutputA::mode(Timer5::OutputA::Mode::toggle) 120:00:40:120:ff:7f:
-w Timer5::OutputA::value()
-w Timer5::OutputA::value(0x12) 128:00:12:128:ff:12:129:ff:00:
-w Timer5::OutputB::intEnable(false) 73:ff:fb:
-w Timer5::OutputB::intEnable(true) 73:00:04:
-w Timer5::OutputB::intEnabled()
-w Timer5::OutputB::intFlag()
-w Timer5::OutputB::intFlagClear() 3a:00:04:3a:ff:04:
-w Timer5::OutputB::mode(Timer5::OutputB::Mode::clear) 120:00:20:120:ff:ef:
-w Timer5::OutputB::mode(Timer5::OutputB::Mode::disconnected) 120:ff:cf:
-w Timer5::OutputB::mode(Timer5::OutputB::Mode::set) 120:00:30:
-w Timer5::OutputB::mode(Timer5::OutputB::Mode::toggle) 120:00:10:120:ff:df:
-w Timer5::OutputB::value()
-w Timer5::OutputB::value(0x12) 12a:00:12:12a:ff:12:12b:ff:00:
-w Timer5::OutputC::intEnable(false) 73:ff:f7:
-w Timer5::OutputC::intEnable(true) 73:00:08:
-w Timer5::OutputC::intEnabled()
-w Timer5::OutputC::intFlag()
-w Timer5::OutputC::intFlagClear() 3a:00:08:3a:ff:08:
-w Timer5::OutputC::mode(Timer5::OutputC::Mode::clear) 120:00:08:120:ff:fb:
-w Timer5::OutputC::mode(Timer5::OutputC::Mode::disconnected) 120:ff:f3:
-w Timer5::OutputC::mode(Timer5::OutputC::Mode::set) 120:00:0c:
-w Timer5::OutputC::mode(Timer5::OutputC::Mode::toggle) 120:00:04:120:ff:f7:
-w Timer5::OutputC::value()
-w Timer5::OutputC::value(0x12) 12c:00:12:12c:ff:12:12d:ff:00:
+w Timer5::capture()
+w Timer5::capture(0x1234) 126:00:34:127:00:12:126:ff:34:127:ff:12:
+w Timer5::captureEdge(Timer5::CaptureEdge::falling) 121:ff:bf:
+w Timer5::captureEdge(Timer5::CaptureEdge::rising) 121:00:40:
+w Timer5::captureIntEnable(false) 73:ff:df:
+w Timer5::captureIntEnable(true) 73:00:20:
+w Timer5::captureIntFlag()
+w Timer5::captureIntFlagClear() 3a:00:20:3a:ff:20:
+w Timer5::captureNoiseCancelEnable(false) 121:ff:7f:
+w Timer5::captureNoiseCancelEnable(true) 121:00:80:
 w Timer5::clock(Timer5::Clock::div1) 121:00:01:121:ff:f9:
 w Timer5::clock(Timer5::Clock::div1024) 121:00:05:121:ff:fd:
 w Timer5::clock(Timer5::Clock::div256) 121:00:04:121:ff:fc:
@@ -1706,12 +1410,46 @@ w Timer5::clock(Timer5::Clock::div8) 121:00:02:121:ff:fa:
 w Timer5::clock(Timer5::Clock::extFalling) 121:00:06:121:ff:fe:
 w Timer5::clock(Timer5::Clock::extRising) 121:00:07:
 w Timer5::clock(Timer5::Clock::none) 121:ff:f8:
+w Timer5::compareA()
+w Timer5::compareA(0x12) 128:00:12:128:ff:12:129:ff:00:
+w Timer5::compareAIntEnable(false) 73:ff:fd:
+w Timer5::compareAIntEnable(true) 73:00:02:
+w Timer5::compareAIntFlag()
+w Timer5::compareAIntFlagClear() 3a:00:02:3a:ff:02:
+w Timer5::compareAOutput(Timer5::CompareAOutput::clear) 120:00:80:120:ff:bf:
+w Timer5::compareAOutput(Timer5::CompareAOutput::disconnected) 120:ff:3f:
+w Timer5::compareAOutput(Timer5::CompareAOutput::set) 120:00:c0:
+w Timer5::compareAOutput(Timer5::CompareAOutput::toggle) 120:00:40:120:ff:7f:
+w Timer5::compareB()
+w Timer5::compareB(0x12) 12a:00:12:12a:ff:12:12b:ff:00:
+w Timer5::compareBIntEnable(false) 73:ff:fb:
+w Timer5::compareBIntEnable(true) 73:00:04:
+w Timer5::compareBIntFlag()
+w Timer5::compareBIntFlagClear() 3a:00:04:3a:ff:04:
+w Timer5::compareBOutput(Timer5::CompareBOutput::clear) 120:00:20:120:ff:ef:
+w Timer5::compareBOutput(Timer5::CompareBOutput::disconnected) 120:ff:cf:
+w Timer5::compareBOutput(Timer5::CompareBOutput::set) 120:00:30:
+w Timer5::compareBOutput(Timer5::CompareBOutput::toggle) 120:00:10:120:ff:df:
+w Timer5::compareC()
+w Timer5::compareC(0x12) 12c:00:12:12c:ff:12:12d:ff:00:
+w Timer5::compareCIntEnable(false) 73:ff:f7:
+w Timer5::compareCIntEnable(true) 73:00:08:
+w Timer5::compareCIntFlag()
+w Timer5::compareCIntFlagClear() 3a:00:08:3a:ff:08:
+w Timer5::compareCOutput(Timer5::CompareCOutput::clear) 120:00:08:120:ff:fb:
+w Timer5::compareCOutput(Timer5::CompareCOutput::disconnected) 120:ff:f3:
+w Timer5::compareCOutput(Timer5::CompareCOutput::set) 120:00:0c:
+w Timer5::compareCOutput(Timer5::CompareCOutput::toggle) 120:00:04:120:ff:f7:
 w Timer5::counter()
 w Timer5::counter(0x12) 124:00:12:124:ff:12:125:ff:00:
-w Timer5::intEnable(false) 73:ff:fe:
-w Timer5::intEnable(true) 73:00:01:
-w Timer5::intFlag()
-w Timer5::intFlagClear() 3a:00:01:3a:ff:01:
+w Timer5::overflowIntEnable(false) 73:ff:fe:
+w Timer5::overflowIntEnable(true) 73:00:01:
+w Timer5::overflowIntFlag()
+w Timer5::overflowIntFlagClear() 3a:00:01:3a:ff:01:
+w Timer5::prescalerReset() 43:00:01:
+w Timer5::synchronizeMode(false) 43:ff:7f:
+w Timer5::synchronizeMode(true) 43:00:80:
+w Timer5::waveform(Timer5::Waveform::ctcIcr) 121:00:18:120:ff:fc:
 w Timer5::waveform(Timer5::Waveform::ctcOcra) 121:00:08:120:ff:fc:121:ff:ef:
 w Timer5::waveform(Timer5::Waveform::fastPwm) 120:00:02:121:00:18:120:ff:fe:
 w Timer5::waveform(Timer5::Waveform::fastPwm10Bit) 120:00:03:121:00:08:121:ff:ef:
@@ -1724,7 +1462,34 @@ w Timer5::waveform(Timer5::Waveform::pwm10Bit) 120:00:03:121:ff:e7:
 w Timer5::waveform(Timer5::Waveform::pwm8Bit) 120:00:01:120:ff:fd:121:ff:e7:
 w Timer5::waveform(Timer5::Waveform::pwm9Bit) 120:00:02:120:ff:fe:121:ff:e7:
 w Timer5::waveform(Timer5::Waveform::pwmOcra) 120:00:03:121:00:10:121:ff:f7:
-w Usart0::baud(0x1234) c4:00:34:c5:00:02:c4:ff:34:c5:ff:02:
+w Twi0::address(0x12) ba:00:12:ba:ff:12:
+w Twi0::addressMask(0x12) bd:00:12:bd:ff:12:
+w Twi0::bitRate(0x12) b8:00:12:b8:ff:12:
+w Twi0::data()
+w Twi0::data(0x12) bb:00:12:bb:ff:12:
+w Twi0::enable(false) bc:ff:73:
+w Twi0::enable(true) bc:00:04:bc:ff:77:
+w Twi0::enableAck(false) bc:ff:37:
+w Twi0::enableAck(true) bc:00:40:bc:ff:77:
+w Twi0::generalCallRecognitionEnable(false) ba:ff:fe:
+w Twi0::generalCallRecognitionEnable(true) ba:00:01:
+w Twi0::intEnable(false) bc:ff:76:
+w Twi0::intEnable(true) bc:00:01:bc:ff:77:
+w Twi0::intFlag()
+w Twi0::intFlagClear() bc:00:80:bc:ff:f7:
+w Twi0::prescaler(Twi0::Prescaler::div1) b9:ff:04:
+w Twi0::prescaler(Twi0::Prescaler::div16) b9:00:02:b9:ff:06:
+w Twi0::prescaler(Twi0::Prescaler::div4) b9:00:01:b9:ff:05:
+w Twi0::prescaler(Twi0::Prescaler::div64) b9:00:03:b9:ff:07:
+w Twi0::startCondition(false) bc:ff:57:
+w Twi0::startCondition(true) bc:00:20:bc:ff:77:
+w Twi0::status()
+w Twi0::stopCondition(false) bc:ff:67:
+w Twi0::stopCondition(true) bc:00:10:bc:ff:77:
+w Twi0::writeCollisionFlag()
+w Usart0::baud(0x1234) c4:00:34:c5:00:12:c4:ff:34:c5:ff:12:
+w Usart0::baudMode(Usart0::BaudMode::doubleSpeed) c0:00:02:c0:ff:03:
+w Usart0::baudMode(Usart0::BaudMode::normal) c0:ff:01:
 w Usart0::characterSize(Usart0::CharacterSize::size5) c1:ff:fb:c2:ff:f9:
 w Usart0::characterSize(Usart0::CharacterSize::size6) c2:00:02:c1:ff:fb:c2:ff:fb:
 w Usart0::characterSize(Usart0::CharacterSize::size7) c2:00:04:c1:ff:fb:c2:ff:fd:
@@ -1745,23 +1510,24 @@ w Usart0::parity(Usart0::Parity::odd) c2:00:30:
 w Usart0::parityError()
 w Usart0::polarity(Usart0::Polarity::txFallingRxRising) c2:00:01:
 w Usart0::polarity(Usart0::Polarity::txRisingRxFalling) c2:ff:fe:
-w Usart0::pop()
-w Usart0::pop9()
-w Usart0::push(0x12) c6:00:12:c6:ff:12:
-w Usart0::push9(0x1234) c6:00:34:c1:ff:fe:c6:ff:34:
 w Usart0::receiverEnable(false) c1:ff:ef:
 w Usart0::receiverEnable(true) c1:00:10:
+w Usart0::rx()
+w Usart0::rx9()
 w Usart0::rxCompleteIntEnable(false) c1:ff:7f:
 w Usart0::rxCompleteIntEnable(true) c1:00:80:
 w Usart0::stopBits(Usart0::StopBits::bits1) c2:ff:f7:
 w Usart0::stopBits(Usart0::StopBits::bits2) c2:00:08:
 w Usart0::transmitterEnable(false) c1:ff:f7:
 w Usart0::transmitterEnable(true) c1:00:08:
+w Usart0::tx(0x12) c6:00:12:c6:ff:12:
+w Usart0::tx9(false) c1:ff:fe:
+w Usart0::tx9(true) c1:00:01:
 w Usart0::txCompleteIntEnable(false) c1:ff:bf:
 w Usart0::txCompleteIntEnable(true) c1:00:40:
-w Usart0::use2X(false) c0:ff:01:
-w Usart0::use2X(true) c0:00:02:c0:ff:03:
-w Usart1::baud(0x1234) cc:00:34:cd:00:02:cc:ff:34:cd:ff:02:
+w Usart1::baud(0x1234) cc:00:34:cd:00:12:cc:ff:34:cd:ff:12:
+w Usart1::baudMode(Usart1::BaudMode::doubleSpeed) c8:00:02:c8:ff:03:
+w Usart1::baudMode(Usart1::BaudMode::normal) c8:ff:01:
 w Usart1::characterSize(Usart1::CharacterSize::size5) c9:ff:fb:ca:ff:f9:
 w Usart1::characterSize(Usart1::CharacterSize::size6) ca:00:02:c9:ff:fb:ca:ff:fb:
 w Usart1::characterSize(Usart1::CharacterSize::size7) ca:00:04:c9:ff:fb:ca:ff:fd:
@@ -1782,23 +1548,24 @@ w Usart1::parity(Usart1::Parity::odd) ca:00:30:
 w Usart1::parityError()
 w Usart1::polarity(Usart1::Polarity::txFallingRxRising) ca:00:01:
 w Usart1::polarity(Usart1::Polarity::txRisingRxFalling) ca:ff:fe:
-w Usart1::pop()
-w Usart1::pop9()
-w Usart1::push(0x12) ce:00:12:ce:ff:12:
-w Usart1::push9(0x1234) ce:00:34:c9:ff:fe:ce:ff:34:
 w Usart1::receiverEnable(false) c9:ff:ef:
 w Usart1::receiverEnable(true) c9:00:10:
+w Usart1::rx()
+w Usart1::rx9()
 w Usart1::rxCompleteIntEnable(false) c9:ff:7f:
 w Usart1::rxCompleteIntEnable(true) c9:00:80:
 w Usart1::stopBits(Usart1::StopBits::bits1) ca:ff:f7:
 w Usart1::stopBits(Usart1::StopBits::bits2) ca:00:08:
 w Usart1::transmitterEnable(false) c9:ff:f7:
 w Usart1::transmitterEnable(true) c9:00:08:
+w Usart1::tx(0x12) ce:00:12:ce:ff:12:
+w Usart1::tx9(false) c9:ff:fe:
+w Usart1::tx9(true) c9:00:01:
 w Usart1::txCompleteIntEnable(false) c9:ff:bf:
 w Usart1::txCompleteIntEnable(true) c9:00:40:
-w Usart1::use2X(false) c8:ff:01:
-w Usart1::use2X(true) c8:00:02:c8:ff:03:
-w Usart2::baud(0x1234) d4:00:34:d5:00:02:d4:ff:34:d5:ff:02:
+w Usart2::baud(0x1234) d4:00:34:d5:00:12:d4:ff:34:d5:ff:12:
+w Usart2::baudMode(Usart2::BaudMode::doubleSpeed) d0:00:02:d0:ff:03:
+w Usart2::baudMode(Usart2::BaudMode::normal) d0:ff:01:
 w Usart2::characterSize(Usart2::CharacterSize::size5) d1:ff:fb:d2:ff:f9:
 w Usart2::characterSize(Usart2::CharacterSize::size6) d2:00:02:d1:ff:fb:d2:ff:fb:
 w Usart2::characterSize(Usart2::CharacterSize::size7) d2:00:04:d1:ff:fb:d2:ff:fd:
@@ -1819,23 +1586,24 @@ w Usart2::parity(Usart2::Parity::odd) d2:00:30:
 w Usart2::parityError()
 w Usart2::polarity(Usart2::Polarity::txFallingRxRising) d2:00:01:
 w Usart2::polarity(Usart2::Polarity::txRisingRxFalling) d2:ff:fe:
-w Usart2::pop()
-w Usart2::pop9()
-w Usart2::push(0x12) d6:00:12:d6:ff:12:
-w Usart2::push9(0x1234) d6:00:34:d1:ff:fe:d6:ff:34:
 w Usart2::receiverEnable(false) d1:ff:ef:
 w Usart2::receiverEnable(true) d1:00:10:
+w Usart2::rx()
+w Usart2::rx9()
 w Usart2::rxCompleteIntEnable(false) d1:ff:7f:
 w Usart2::rxCompleteIntEnable(true) d1:00:80:
 w Usart2::stopBits(Usart2::StopBits::bits1) d2:ff:f7:
 w Usart2::stopBits(Usart2::StopBits::bits2) d2:00:08:
 w Usart2::transmitterEnable(false) d1:ff:f7:
 w Usart2::transmitterEnable(true) d1:00:08:
+w Usart2::tx(0x12) d6:00:12:d6:ff:12:
+w Usart2::tx9(false) d1:ff:fe:
+w Usart2::tx9(true) d1:00:01:
 w Usart2::txCompleteIntEnable(false) d1:ff:bf:
 w Usart2::txCompleteIntEnable(true) d1:00:40:
-w Usart2::use2X(false) d0:ff:01:
-w Usart2::use2X(true) d0:00:02:d0:ff:03:
-w Usart3::baud(0x1234) 134:00:34:135:00:02:134:ff:34:135:ff:02:
+w Usart3::baud(0x1234) 134:00:34:135:00:12:134:ff:34:135:ff:12:
+w Usart3::baudMode(Usart3::BaudMode::doubleSpeed) 130:00:02:130:ff:03:
+w Usart3::baudMode(Usart3::BaudMode::normal) 130:ff:01:
 w Usart3::characterSize(Usart3::CharacterSize::size5) 131:ff:fb:132:ff:f9:
 w Usart3::characterSize(Usart3::CharacterSize::size6) 132:00:02:131:ff:fb:132:ff:fb:
 w Usart3::characterSize(Usart3::CharacterSize::size7) 132:00:04:131:ff:fb:132:ff:fd:
@@ -1856,19 +1624,18 @@ w Usart3::parity(Usart3::Parity::odd) 132:00:30:
 w Usart3::parityError()
 w Usart3::polarity(Usart3::Polarity::txFallingRxRising) 132:00:01:
 w Usart3::polarity(Usart3::Polarity::txRisingRxFalling) 132:ff:fe:
-w Usart3::pop()
-w Usart3::pop9()
-w Usart3::push(0x12) 136:00:12:136:ff:12:
-w Usart3::push9(0x1234) 136:00:34:131:ff:fe:136:ff:34:
 w Usart3::receiverEnable(false) 131:ff:ef:
 w Usart3::receiverEnable(true) 131:00:10:
+w Usart3::rx()
+w Usart3::rx9()
 w Usart3::rxCompleteIntEnable(false) 131:ff:7f:
 w Usart3::rxCompleteIntEnable(true) 131:00:80:
 w Usart3::stopBits(Usart3::StopBits::bits1) 132:ff:f7:
 w Usart3::stopBits(Usart3::StopBits::bits2) 132:00:08:
 w Usart3::transmitterEnable(false) 131:ff:f7:
 w Usart3::transmitterEnable(true) 131:00:08:
+w Usart3::tx(0x12) 136:00:12:136:ff:12:
+w Usart3::tx9(false) 131:ff:fe:
+w Usart3::tx9(true) 131:00:01:
 w Usart3::txCompleteIntEnable(false) 131:ff:bf:
 w Usart3::txCompleteIntEnable(true) 131:00:40:
-w Usart3::use2X(false) 130:ff:01:
-w Usart3::use2X(true) 130:00:02:130:ff:03:

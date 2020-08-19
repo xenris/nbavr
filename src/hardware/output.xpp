@@ -27,12 +27,6 @@
 
 /// ## class {{TimerN::OutputX}}
 struct OutputX {
-    /// #### type Pin
-    /// The IO pin which relates to this output.
-    #if DEFINED(OUTPUT_X(MODE_TOGGLE_ID))
-        using Pin = OUTPUT_X(PIN);
-    #endif
-
     /// #### enum {{TimerN::Mode}}
     /// * disconnected
     /// * toggle

@@ -30,7 +30,7 @@
     #define PcIntN CAT(PcInt, N)
     #define PCINT_N(A) CAT(CHIP_PCINT_, N, _, A)
 
-    #if CAT(CHIP_PCINT_, N)
+    #if DEFINED(CAT(CHIP_PCINT_, N))
 
 //--------------------------------------------------------
 
@@ -45,10 +45,10 @@ struct PcIntN {
         return HardwareType::pcInt;
     }
 
-    #if DEFINED(PCINT_N(ENABLE_BIT_0_BIT))
+    #if REG_DEFINED(PCINT_N(ENABLE_REG))
         /// #### static void intEnable(bool e)
         static force_inline void intEnable(bool e) {
-            setBit_(REG(PCINT_N(ENABLE_BIT_0_REG)), PCINT_N(ENABLE_BIT_0_BIT), e);
+            PCINT_N(ENABLE_REG)::setBit(PCINT_N(ENABLE_BIT), e);
         }
     #endif
 
@@ -56,21 +56,19 @@ struct PcIntN {
         /// #### static void mask(uint8_t m)
         /// Set which pins trigger this interrupt.
         static force_inline void mask(uint8_t m) {
-            setReg_(REG(PCINT_N(MASK_REG)), m);
+            PCINT_N(MASK_REG)::setReg(m);
         }
     #endif
 
-    #if DEFINED(PCINT_N(INT_FLAG_BIT_0_BIT))
+    #if REG_DEFINED(PCINT_N(INT_FLAG_REG))
         /// #### static bool intFlag()
         static force_inline bool intFlag() {
-            return getBit_(REG(PCINT_N(INT_FLAG_BIT_0_REG)), PCINT_N(INT_FLAG_BIT_0_BIT));
+            return PCINT_N(INT_FLAG_REG)::getBit(PCINT_N(INT_FLAG_BIT));
         }
-    #endif
 
-    #if DEFINED(PCINT_N(INT_FLAG_BIT_0_BIT))
         /// #### static void intFlagClear()
         static force_inline void intFlagClear() {
-            clearFlagBit(REG(PCINT_N(INT_FLAG_BIT_0_REG)), PCINT_N(INT_FLAG_BIT_0_BIT));
+            PCINT_N(INT_FLAG_REG)::setBit(PCINT_N(INT_FLAG_BIT), true);
         }
     #endif
 };
@@ -81,22 +79,28 @@ TEST(PcIntN, getHardwareType) {
     ASSERT_EQ(PcIntN::getHardwareType(), HardwareType::pcInt);
 }
 
-TEST(PcIntN, intEnable) {
-    TEST_REG_WRITE(PcIntN::intEnable(true));
-    TEST_REG_WRITE(PcIntN::intEnable(false));
-}
+#if REG_DEFINED(PCINT_N(ENABLE_REG))
+    TEST(PcIntN, intEnable) {
+        TEST_REG_WRITE(PcIntN::intEnable(true));
+        TEST_REG_WRITE(PcIntN::intEnable(false));
+    }
+#endif
 
-TEST(PcIntN, mask) {
-    TEST_REG_WRITE(PcIntN::mask(0x12));
-}
+#if REG_DEFINED(PCINT_N(MASK_REG))
+    TEST(PcIntN, mask) {
+        TEST_REG_WRITE(PcIntN::mask(0x12));
+    }
+#endif
 
-TEST(PcIntN, intFlag) {
-    TEST_REG_READ_WRITE(PcIntN::intFlag());
-}
+#if REG_DEFINED(PCINT_N(INT_FLAG_REG))
+    TEST(PcIntN, intFlag) {
+        TEST_REG_READ_WRITE(PcIntN::intFlag());
+    }
 
-TEST(PcIntN, intFlagClear) {
-    TEST_REG_WRITE(PcIntN::intFlagClear());
-}
+    TEST(PcIntN, intFlagClear) {
+        TEST_REG_WRITE(PcIntN::intFlagClear());
+    }
+#endif
 
 #endif
 

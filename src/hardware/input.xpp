@@ -24,10 +24,6 @@
 
 /// ## class {{TimerN::Input}}
 struct Input {
-    /// #### type Pin
-    /// The IO pin which relates to this input.
-    using Pin = TIMER_N(INPUT_PIN);
-
     /// #### enum {{TimerN::Edge}}
     /// * rising
     /// * falling

@@ -13,12 +13,7 @@
 
 unsigned char register_memory[CHIP_REGISTER_SIZE];
 
-template <class T>
-void __sanitiseRegisterForTest(T** reg) {
-    *reg = (T*)((long(*reg) % CHIP_REGISTER_SIZE) + register_memory);
-}
-
-#define SANITISE_REG_FOR_TEST(REG) __sanitiseRegisterForTest(&REG)
+#define SANITISE_ADDR_FOR_TEST(ADDR) ((ADDR % CHIP_REGISTER_SIZE) + size_t(register_memory))
 
 // TODO Ensure correct program flow. (Tasks take turns. Halted tasks don't
 //  prevent other tasks.) This may need to be done on a real chip.

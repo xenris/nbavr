@@ -2,22 +2,6 @@
 
 /// # {{Eeprom}}
 
-/// ```c++
-/// atomic {
-///     nblib::hw::Eeprom0::address(0x00);
-///     nblib::hw::Eeprom0::data(0x01);
-///     nblib::hw::Eeprom0::masterWriteEnable();
-///     nblib::hw::Eeprom0::writeEnable();
-/// }
-///
-/// while(nblib::hw::Eeprom0::writeEnabled());
-///
-/// nblib::hw::Eeprom0::address(0x00);
-/// nblib::hw::Eeprom0::readEnable();
-///
-/// uint8_t n = nblib::hw::Eeprom0::data();
-/// ```
-
 #ifndef NBLIB_EEPROM_HPP
 
 #include "chip.hpp"
@@ -34,7 +18,7 @@
     #define EepromN CAT(Eeprom, N)
     #define EEPROM_N(A) CAT(CHIP_EEPROM_, N, _, A)
 
-    #if CAT(CHIP_EEPROM_, N)
+    #if DEFINED(CAT(CHIP_EEPROM_, N))
 
 //------------------------------------------------------------------
 
@@ -59,55 +43,70 @@ struct EepromN {
         return HardwareType::eeprom;
     }
 
-    /// #### static void mode([[AdcN::Mode]] m)
-    static force_inline void mode(Mode m) {
-        setBit_(REG(EEPROM_N(PROGRAMMING_MODE_BIT_0_REG)), EEPROM_N(PROGRAMMING_MODE_BIT_0_BIT), int(m) & 0x01);
-        setBit_(REG(EEPROM_N(PROGRAMMING_MODE_BIT_1_REG)), EEPROM_N(PROGRAMMING_MODE_BIT_1_BIT), int(m) & 0x02);
-    }
+    #if REG_DEFINED(EEPROM_N(PROGRAMMING_MODE_REG))
+        /// #### static void mode([[AdcN::Mode]] m)
+        static force_inline void mode(Mode m) {
+            EEPROM_N(PROGRAMMING_MODE_REG)::setBits(EEPROM_N(PROGRAMMING_MODE_MASK), m);
+        }
+    #endif
 
-    /// #### static void address(uint16_t a)
-    static force_inline void address(uint16_t a) {
-        setReg(REG(EEPROM_N(ADDRESS_REG)), a);
-    }
+    #if REG_DEFINED(EEPROM_N(ADDRESS_REG))
+        /// #### static void address(uint16_t a)
+        static force_inline void address(uint16_t a) {
+            EEPROM_N(ADDRESS_REG)::setReg(a);
+        }
+    #endif
 
-    /// #### static void data(uint8_t d)
-    static force_inline void data(uint8_t d) {
-        setReg_(REG(EEPROM_N(DATA_REG)), d);
-    }
+    #if REG_DEFINED(EEPROM_N(DATA_REG))
+        /// #### static void data(uint8_t d)
+        static force_inline void data(uint8_t d) {
+            EEPROM_N(DATA_REG)::setReg(d);
+        }
 
-    /// #### static uint8_t data()
-    static force_inline uint8_t data() {
-        return getReg_(REG(EEPROM_N(DATA_REG)));
-    }
+        /// #### static uint8_t data()
+        static force_inline uint8_t data() {
+            return EEPROM_N(DATA_REG)::getReg();
+        }
+    #endif
 
-    /// #### static void masterWriteEnable()
-    /// Enable the Eeprom write.
-    static force_inline void masterWriteEnable() {
-        setBit_(REG(EEPROM_N(MASTER_WRITE_ENABLE_REG)), EEPROM_N(MASTER_WRITE_ENABLE_BIT), true);
-    }
+    #if REG_DEFINED(EEPROM_N(MASTER_WRITE_ENABLE_REG))
+        /// #### static void masterWriteEnable()
+        /// Enable the Eeprom write.
+        static force_inline void masterWriteEnable() {
+            EEPROM_N(MASTER_WRITE_ENABLE_REG)::setBit(EEPROM_N(MASTER_WRITE_ENABLE_BIT), true);
+        }
+    #endif
 
-    /// #### static void writeEnable()
-    /// Start an Eeprom write.
-    static force_inline void writeEnable() {
-        setBit_(REG(EEPROM_N(WRITE_ENABLE_REG)), EEPROM_N(WRITE_ENABLE_BIT), true);
-    }
+    #if REG_DEFINED(EEPROM_N(WRITE_ENABLE_REG))
+        /// #### static void writeEnable()
+        /// Start an Eeprom write.
+        static force_inline void writeEnable() {
+            EEPROM_N(WRITE_ENABLE_REG)::setBit(EEPROM_N(WRITE_ENABLE_BIT), true);
+        }
+    #endif
 
-    /// #### static bool writeEnabled()
-    /// Returns true if Eeprom is currently writing.
-    static force_inline bool writeEnabled() {
-        return getBit_(REG(EEPROM_N(WRITE_ENABLE_REG)), EEPROM_N(WRITE_ENABLE_BIT));
-    }
+    #if REG_DEFINED(EEPROM_N(WRITE_ENABLE_REG))
+        /// #### static bool writeEnabled()
+        /// Returns true if Eeprom is currently writing.
+        static force_inline bool writeEnabled() {
+            return EEPROM_N(WRITE_ENABLE_REG)::getBit(EEPROM_N(WRITE_ENABLE_BIT));
+        }
+    #endif
 
-    /// #### static void readEnable()
-    /// Start an Eeprom read.
-    static force_inline void readEnable() {
-        setBit_(REG(EEPROM_N(READ_ENABLE_REG)), EEPROM_N(READ_ENABLE_BIT), true);
-    }
+    #if REG_DEFINED(EEPROM_N(READ_ENABLE_REG))
+        /// #### static void readEnable()
+        /// Start an Eeprom read.
+        static force_inline void readEnable() {
+            EEPROM_N(READ_ENABLE_REG)::setBit(EEPROM_N(READ_ENABLE_BIT), true);
+        }
+    #endif
 
-    /// #### static void intEnable(bool e)
-    static force_inline void intEnable(bool e) {
-        setBit_(REG(EEPROM_N(READY_INT_ENABLE_REG)), EEPROM_N(READY_INT_ENABLE_BIT), e);
-    }
+    #if REG_DEFINED(EEPROM_N(READY_INT_ENABLE_REG))
+        /// #### static void intEnable(bool e)
+        static force_inline void intEnable(bool e) {
+            EEPROM_N(READY_INT_ENABLE_REG)::setBit(EEPROM_N(READY_INT_ENABLE_BIT), e);
+        }
+    #endif
 };
 
 #ifdef TEST

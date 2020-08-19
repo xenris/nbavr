@@ -1,8 +1,23 @@
 r Adc0::intFlag() 11110010011011000100100001010001
+r Adc0::result() 478fd364286f2f50d5e15794bb48f220753762dde4fc1565aff24d35b9409132d882a905d661c4987d2a47b538e8549a9c85fd02cc02d4e697c62614c59c2745
+r PortA::Pin0::input() 10100011010111100000001111111100
+r PortA::Pin1::input() 01100011101110101101000111110111
+r PortA::Pin2::input() 00100011010000010101001100000111
+r PortA::Pin3::input() 11101010111011000101100111000110
+r PortA::Pin6::input() 10011100000001100011010111001101
+r PortA::Pin7::input() 11000110011000010001011110111111
+r PortA::input() d98af5068c09f272aad8a231b695384121e70fe28c095cfdb7bb393f1efbed6
 r Sleep::isEnabled() 11101101111111011100010111111011
+r Timer0::compareA() 4363ff24e3eaed1356948318c7f232a114c6669fd0a3b9034a7cb76239c7697f36918b5e30c815017b797dfc28d6e190d148f3e1eeca65867e7322867ec8937e
+r Timer0::compareAIntFlag() 00011111111010101110111001111110
+r Timer0::compareB() 68b47a13f6f562a7a4da10c28f64b556da9dd6902585d59b346f175c7d9d1c3a30d8beb125e7d42b6557afa3dac8da7eb04a3776244290c601dfec795c7870
+r Timer0::compareBIntFlag() 11001010111111100101010110101011
+r Timer0::compareC() 17347342483a2b801a2aeb65af64ac81e4c6de9513d8c4a3d398f8eb9fe7aa2f436b1fc3128cda230ba29d4eef959dc48099262978bbb1481d94211e4eb5d1
+r Timer0::compareCIntFlag() 11010000110101000010011110110110
 r Timer0::counter() 4f632cb1d180e1196607dc7c407e6dabb90cfed4c9b70cd96457c7f33597341f7124739bba9f2f3ea8a63ca75ddf00559c83523d3986b02b1d8937ef4d2bb
-r Timer0::intFlag() 10100100111111001111110110111110
+r Timer0::overflowIntFlag() 10100100111111001111110110111110
 r Usart0::parityError() 10111000111001000111001110001111
+r Usart0::rx() c19b3f728e2f2f051907b94d572f4796a3d1d1ad934337e783f9851d722b
 w Adc0::channel(Adc0::Channel::adc0) 606:ff:e0:
 w Adc0::channel(Adc0::Channel::adc1) 606:00:01:606:ff:e1:
 w Adc0::channel(Adc0::Channel::adc2) 606:00:02:606:ff:e2:
@@ -10,8 +25,12 @@ w Adc0::channel(Adc0::Channel::adc3) 606:00:03:606:ff:e3:
 w Adc0::channel(Adc0::Channel::adc6) 606:00:06:606:ff:e6:
 w Adc0::channel(Adc0::Channel::adc7) 606:00:07:606:ff:e7:
 w Adc0::channel(Adc0::Channel::gnd) 606:00:1f:
+w Adc0::channel(Adc0::Channel::internal) 606:00:1d:606:ff:fd:
+w Adc0::channel(Adc0::Channel::temperature) 606:00:1e:606:ff:fe:
 w Adc0::enable(false) 600:ff:fe:
 w Adc0::enable(true) 600:00:01:
+w Adc0::freeRunning(false) 600:ff:fd:
+w Adc0::freeRunning(true) 600:00:02:
 w Adc0::intEnable(false) 60a:ff:fe:
 w Adc0::intEnable(true) 60a:00:01:
 w Adc0::intFlag()
@@ -24,27 +43,80 @@ w Adc0::prescaler(Adc0::Prescaler::div4) 602:00:01:602:ff:f9:
 w Adc0::prescaler(Adc0::Prescaler::div64) 602:00:05:602:ff:fd:
 w Adc0::prescaler(Adc0::Prescaler::div8) 602:00:02:602:ff:fa:
 w Adc0::reference(Adc0::Reference::internal) 602:ff:cf:
+w Adc0::reference(Adc0::Reference::vdd) 602:00:10:602:ff:df:
+w Adc0::result()
 w Adc0::start() 608:00:01:
-w Adc0::trigger(Adc0::Trigger::freeRunning) 600:00:02:609:ff:fe:
-w Adc0::trigger(Adc0::Trigger::singleConversion) 600:ff:fd:609:ff:fe:
+w Adc0::triggerEnable(false) 609:ff:fe:
+w Adc0::triggerEnable(true) 609:00:01:
+w Clock::lock() 34:00:d8:62:00:01:34:ff:d8:62:ff:01:
+w Clock::prescaler(Clock::Prescaler::div10) 34:00:d8:61:00:12:34:ff:d8:61:ff:13:
+w Clock::prescaler(Clock::Prescaler::div12) 34:00:d8:61:00:14:34:ff:d8:61:ff:15:
+w Clock::prescaler(Clock::Prescaler::div16) 34:00:d8:61:00:06:34:ff:d8:61:ff:07:
+w Clock::prescaler(Clock::Prescaler::div2) 34:00:d8:34:ff:d8:61:ff:01:
+w Clock::prescaler(Clock::Prescaler::div24) 34:00:d8:61:00:16:34:ff:d8:61:ff:17:
+w Clock::prescaler(Clock::Prescaler::div32) 34:00:d8:61:00:08:34:ff:d8:61:ff:09:
+w Clock::prescaler(Clock::Prescaler::div4) 34:00:d8:61:00:02:34:ff:d8:61:ff:03:
+w Clock::prescaler(Clock::Prescaler::div48) 34:00:d8:61:00:18:34:ff:d8:61:ff:19:
+w Clock::prescaler(Clock::Prescaler::div6) 34:00:d8:61:00:10:34:ff:d8:61:ff:11:
+w Clock::prescaler(Clock::Prescaler::div64) 34:00:d8:61:00:0a:34:ff:d8:61:ff:0b:
+w Clock::prescaler(Clock::Prescaler::div8) 34:00:d8:61:00:04:34:ff:d8:61:ff:05:
+w Clock::prescalerEnable(false) 34:00:d8:34:ff:d8:61:ff:1e:
+w Clock::prescalerEnable(true) 34:00:d8:61:00:01:34:ff:d8:61:ff:1f:
+w Clock::source(Clock::Source::external) 34:00:d8:60:00:03:34:ff:d8:60:ff:03:
+w Clock::source(Clock::Source::internal16M20M) 34:00:d8:34:ff:d8:60:ff:00:
+w Clock::source(Clock::Source::internal32K) 34:00:d8:60:00:01:34:ff:d8:60:ff:01:
+w PortA::Pin0::direction(Pin::Direction::input) 00:ff:fe:
+w PortA::Pin0::direction(Pin::Direction::output) 00:00:01:
+w PortA::Pin0::input()
+w PortA::Pin0::output(Pin::Value::high) 01:00:01:
+w PortA::Pin0::output(Pin::Value::low) 01:ff:fe:
 w PortA::Pin0::outputToggle() 407:00:01:407:ff:01:
 w PortA::Pin0::pullup(false) 410:ff:f7:
 w PortA::Pin0::pullup(true) 410:00:08:
+w PortA::Pin1::direction(Pin::Direction::input) 00:ff:fd:
+w PortA::Pin1::direction(Pin::Direction::output) 00:00:02:
+w PortA::Pin1::input()
+w PortA::Pin1::output(Pin::Value::high) 01:00:02:
+w PortA::Pin1::output(Pin::Value::low) 01:ff:fd:
 w PortA::Pin1::outputToggle() 407:00:02:407:ff:02:
 w PortA::Pin1::pullup(false) 411:ff:f7:
 w PortA::Pin1::pullup(true) 411:00:08:
+w PortA::Pin2::direction(Pin::Direction::input) 00:ff:fb:
+w PortA::Pin2::direction(Pin::Direction::output) 00:00:04:
+w PortA::Pin2::input()
+w PortA::Pin2::output(Pin::Value::high) 01:00:04:
+w PortA::Pin2::output(Pin::Value::low) 01:ff:fb:
 w PortA::Pin2::outputToggle() 407:00:04:407:ff:04:
 w PortA::Pin2::pullup(false) 412:ff:f7:
 w PortA::Pin2::pullup(true) 412:00:08:
+w PortA::Pin3::direction(Pin::Direction::input) 00:ff:f7:
+w PortA::Pin3::direction(Pin::Direction::output) 00:00:08:
+w PortA::Pin3::input()
+w PortA::Pin3::output(Pin::Value::high) 01:00:08:
+w PortA::Pin3::output(Pin::Value::low) 01:ff:f7:
 w PortA::Pin3::outputToggle() 407:00:08:407:ff:08:
 w PortA::Pin3::pullup(false) 413:ff:f7:
 w PortA::Pin3::pullup(true) 413:00:08:
+w PortA::Pin6::direction(Pin::Direction::input) 00:ff:bf:
+w PortA::Pin6::direction(Pin::Direction::output) 00:00:40:
+w PortA::Pin6::input()
+w PortA::Pin6::output(Pin::Value::high) 01:00:40:
+w PortA::Pin6::output(Pin::Value::low) 01:ff:bf:
 w PortA::Pin6::outputToggle() 407:00:40:407:ff:40:
 w PortA::Pin6::pullup(false) 416:ff:f7:
 w PortA::Pin6::pullup(true) 416:00:08:
+w PortA::Pin7::direction(Pin::Direction::input) 00:ff:7f:
+w PortA::Pin7::direction(Pin::Direction::output) 00:00:80:
+w PortA::Pin7::input()
+w PortA::Pin7::output(Pin::Value::high) 01:00:80:
+w PortA::Pin7::output(Pin::Value::low) 01:ff:7f:
 w PortA::Pin7::outputToggle() 407:00:80:407:ff:80:
 w PortA::Pin7::pullup(false) 417:ff:f7:
 w PortA::Pin7::pullup(true) 417:00:08:
+w PortA::direction(0x12) 00:00:12:00:ff:12:
+w PortA::input()
+w PortA::output(0x12) 01:00:12:01:ff:12:
+w PortA::outputToggle(0x12) 407:00:12:407:ff:12:
 w Sleep::enable(false) 50:ff:fe:
 w Sleep::enable(true) 50:00:01:
 w Sleep::isEnabled()
@@ -59,43 +131,79 @@ w Timer0::clock(Timer0::Clock::div256) a00:00:0c:a00:ff:fd:
 w Timer0::clock(Timer0::Clock::div4) a00:00:04:a00:ff:f5:
 w Timer0::clock(Timer0::Clock::div64) a00:00:0a:a00:ff:fb:
 w Timer0::clock(Timer0::Clock::div8) a00:00:06:a00:ff:f7:
+w Timer0::compareA()
+w Timer0::compareA(0x12) a28:00:12:a28:ff:12:a29:ff:00:
+w Timer0::compareAIntEnable(false) a0a:ff:ef:
+w Timer0::compareAIntEnable(true) a0a:00:10:
+w Timer0::compareAIntFlag()
+w Timer0::compareAIntFlagClear() a0b:00:10:a0b:ff:10:
+w Timer0::compareAOutputEnable(false) a01:ff:ef:
+w Timer0::compareAOutputEnable(true) a01:00:10:
+w Timer0::compareB()
+w Timer0::compareB(0x12) a2a:00:12:a2a:ff:12:a2b:ff:00:
+w Timer0::compareBIntEnable(false) a0a:ff:df:
+w Timer0::compareBIntEnable(true) a0a:00:20:
+w Timer0::compareBIntFlag()
+w Timer0::compareBIntFlagClear() a0b:00:20:a0b:ff:20:
+w Timer0::compareBOutputEnable(false) a01:ff:df:
+w Timer0::compareBOutputEnable(true) a01:00:20:
+w Timer0::compareC()
+w Timer0::compareC(0x12) a2c:00:12:a2c:ff:12:a2d:ff:00:
+w Timer0::compareCIntEnable(false) a0a:ff:bf:
+w Timer0::compareCIntEnable(true) a0a:00:40:
+w Timer0::compareCIntFlag()
+w Timer0::compareCIntFlagClear() a0b:00:40:a0b:ff:40:
+w Timer0::compareCOutputEnable(false) a01:ff:bf:
+w Timer0::compareCOutputEnable(true) a01:00:40:
 w Timer0::counter()
 w Timer0::counter(0x12) a20:00:12:a20:ff:12:a21:ff:00:
-w Timer0::intEnable(false) a0a:ff:fe:
-w Timer0::intEnable(true) a0a:00:01:
-w Timer0::intFlag()
-w Timer0::intFlagClear() a0b:00:01:a0b:ff:01:
+w Timer0::overflowIntEnable(false) a0a:ff:fe:
+w Timer0::overflowIntEnable(true) a0a:00:01:
+w Timer0::overflowIntFlag()
+w Timer0::overflowIntFlagClear() a0b:00:01:a0b:ff:01:
 w Timer0::waveform(Timer0::Waveform::normal) a01:ff:f8:
-w Usart0::baud(0x1234) 808:00:34:809:00:02:808:ff:34:809:ff:02:
+w Usart0::baud(0x1234) 808:00:34:809:00:12:808:ff:34:809:ff:12:
+w Usart0::baudMode(Usart0::BaudMode::doubleSpeed) 806:00:02:806:ff:fb:
+w Usart0::baudMode(Usart0::BaudMode::genericAuto) 806:00:04:806:ff:fd:
+w Usart0::baudMode(Usart0::BaudMode::linAuto) 806:00:06:
+w Usart0::baudMode(Usart0::BaudMode::normal) 806:ff:f9:
 w Usart0::characterSize(Usart0::CharacterSize::size5) 807:ff:f8:
 w Usart0::characterSize(Usart0::CharacterSize::size6) 807:00:01:807:ff:f9:
 w Usart0::characterSize(Usart0::CharacterSize::size7) 807:00:02:807:ff:fa:
 w Usart0::characterSize(Usart0::CharacterSize::size8) 807:00:03:807:ff:fb:
+w Usart0::characterSize(Usart0::CharacterSize::size9) 807:00:06:807:ff:fe:
 w Usart0::dataRegisterEmptyIntEnable(false) 805:ff:df:
 w Usart0::dataRegisterEmptyIntEnable(true) 805:00:20:
 w Usart0::enableAlternatePins(false) 201:ff:fe:
 w Usart0::enableAlternatePins(true) 201:00:01:
+w Usart0::mode(Usart0::Mode::asynchronous) 807:ff:3f:
+w Usart0::mode(Usart0::Mode::masterSpi) 807:00:c0:
+w Usart0::mode(Usart0::Mode::synchronous) 807:00:40:807:ff:7f:
+w Usart0::multiprocessorCummunicationMode(false) 806:ff:fe:
+w Usart0::multiprocessorCummunicationMode(true) 806:00:01:
 w Usart0::parity(Usart0::Parity::disabled) 807:ff:cf:
 w Usart0::parity(Usart0::Parity::even) 807:00:20:807:ff:ef:
 w Usart0::parity(Usart0::Parity::odd) 807:00:30:
 w Usart0::parityError()
 w Usart0::receiverEnable(false) 806:ff:7f:
 w Usart0::receiverEnable(true) 806:00:80:
+w Usart0::rx()
 w Usart0::rxCompleteIntEnable(false) 805:ff:7f:
 w Usart0::rxCompleteIntEnable(true) 805:00:80:
 w Usart0::stopBits(Usart0::StopBits::bits1) 807:ff:f7:
 w Usart0::stopBits(Usart0::StopBits::bits2) 807:00:08:
 w Usart0::transmitterEnable(false) 806:ff:bf:
 w Usart0::transmitterEnable(true) 806:00:40:
+w Usart0::tx(0x12) 802:00:12:802:ff:12:
 w Usart0::txCompleteIntEnable(false) 805:ff:bf:
 w Usart0::txCompleteIntEnable(true) 805:00:40:
-w Vref0::voltage(Vref0::Voltage::v0_55) a0:ff:8f:
-w Vref0::voltage(Vref0::Voltage::v1_1) a0:00:10:a0:ff:9f:
-w Vref0::voltage(Vref0::Voltage::v1_5) a0:00:40:a0:ff:cf:
-w Vref0::voltage(Vref0::Voltage::v2_5) a0:00:20:a0:ff:af:
-w Vref0::voltage(Vref0::Voltage::v4_3) a0:00:30:a0:ff:bf:
-w Vref1::voltage(Vref1::Voltage::v0_55) a0:ff:f8:
-w Vref1::voltage(Vref1::Voltage::v1_1) a0:00:01:a0:ff:f9:
-w Vref1::voltage(Vref1::Voltage::v1_5) a0:00:04:a0:ff:fc:
-w Vref1::voltage(Vref1::Voltage::v2_5) a0:00:02:a0:ff:fa:
-w Vref1::voltage(Vref1::Voltage::v4_3) a0:00:03:a0:ff:fb:
+w Vref0::voltage(Vref0::Voltage::v0_55) a0:ff:f8:
+w Vref0::voltage(Vref0::Voltage::v1_1) a0:00:01:a0:ff:f9:
+w Vref0::voltage(Vref0::Voltage::v1_5) a0:00:04:a0:ff:fc:
+w Vref0::voltage(Vref0::Voltage::v2_5) a0:00:02:a0:ff:fa:
+w Vref0::voltage(Vref0::Voltage::v4_3) a0:00:03:a0:ff:fb:
+w Vref1::voltage(Vref1::Voltage::v0_55) a0:ff:8f:
+w Vref1::voltage(Vref1::Voltage::v1_1) a0:00:10:a0:ff:9f:
+w Vref1::voltage(Vref1::Voltage::v1_5) a0:00:40:a0:ff:cf:
+w Vref1::voltage(Vref1::Voltage::v2_5) a0:00:20:a0:ff:af:
+w Vref1::voltage(Vref1::Voltage::v4_3) a0:00:30:a0:ff:bf:

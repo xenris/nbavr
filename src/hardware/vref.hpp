@@ -8,6 +8,7 @@
 #ifndef NBLIB_VREF_HPP
 
 #include "chip.hpp"
+#include "register.hpp"
 #include "hardwaretype.hpp"
 #include "macros.hpp"
 #include "system.hpp"
@@ -64,14 +65,10 @@ struct VrefN {
         return HardwareType::vref;
     }
 
-    #if REG_DEFINED(VREF_N(VOLTAGE_REG))
-        /// #### static void voltage([[VrefN::Voltage]])
-        static force_inline void voltage(Voltage r) {
-            using T = REG_TYPE(VREF_N(VOLTAGE_REG));
-
-            System::setBits(REG(VREF_N(VOLTAGE_REG)), T(VREF_N(VOLTAGE_MASK)), T(r));
-        }
-    #endif
+    /// #### static void voltage([[VrefN::Voltage]])
+    static force_inline void voltage(Voltage r) {
+        VREF_N(VOLTAGE_REG)::setBits(VREF_N(VOLTAGE_MASK), r);
+    }
 };
 
 #ifdef TEST
@@ -80,29 +77,27 @@ TEST(VrefN, getHardwareType) {
     ASSERT_EQ(VrefN::getHardwareType(), HardwareType::vref);
 }
 
-#if REG_DEFINED(VREF_N(VOLTAGE_REG))
-    TEST(VrefN, voltage) {
-        #if DEFINED(VREF_N(VOLTAGE_0_55_V_ID))
-            TEST_REG_WRITE(VrefN::voltage(VrefN::Voltage::v0_55));
-        #endif
+TEST(VrefN, voltage) {
+    #if DEFINED(VREF_N(VOLTAGE_0_55_V_ID))
+        TEST_REG_WRITE(VrefN::voltage(VrefN::Voltage::v0_55));
+    #endif
 
-        #if DEFINED(VREF_N(VOLTAGE_1_1_V_ID))
-            TEST_REG_WRITE(VrefN::voltage(VrefN::Voltage::v1_1));
-        #endif
+    #if DEFINED(VREF_N(VOLTAGE_1_1_V_ID))
+        TEST_REG_WRITE(VrefN::voltage(VrefN::Voltage::v1_1));
+    #endif
 
-        #if DEFINED(VREF_N(VOLTAGE_1_5_V_ID))
-            TEST_REG_WRITE(VrefN::voltage(VrefN::Voltage::v2_5));
-        #endif
+    #if DEFINED(VREF_N(VOLTAGE_1_5_V_ID))
+        TEST_REG_WRITE(VrefN::voltage(VrefN::Voltage::v2_5));
+    #endif
 
-        #if DEFINED(VREF_N(VOLTAGE_2_5_V_ID))
-            TEST_REG_WRITE(VrefN::voltage(VrefN::Voltage::v4_3));
-        #endif
+    #if DEFINED(VREF_N(VOLTAGE_2_5_V_ID))
+        TEST_REG_WRITE(VrefN::voltage(VrefN::Voltage::v4_3));
+    #endif
 
-        #if DEFINED(VREF_N(VOLTAGE_4_3_V_ID))
-            TEST_REG_WRITE(VrefN::voltage(VrefN::Voltage::v1_5));
-        #endif
-    }
-#endif
+    #if DEFINED(VREF_N(VOLTAGE_4_3_V_ID))
+        TEST_REG_WRITE(VrefN::voltage(VrefN::Voltage::v1_5));
+    #endif
+}
 
 #endif // TEST
 

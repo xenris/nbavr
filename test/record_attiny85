@@ -1,48 +1,32 @@
 r Adc0::intFlag() 11010010011110011100110100110011
-r Adc0::value() 80cf83af895c76a38092b1a5c74394416b04ad38b3b7496c263b261dc14c264594ea2f218b5c71518836e789fd94f46749cc3b268df20fe9acfdeed73af40
+r Adc0::result() 80cf83af895c76a38092b1a5c74394416b04ad38b3b7496c263b261dc14c264594ea2f218b5c71518836e789fd94f46749cc3b268df20fe9acfdeed73af40
 r ExInt0::intFlag() 01111000111100010100011010001110
 r PcInt0::intFlag() 01111000111100010100011010001110
-r PortB::Pin0::direction() 10110000010111011001110010001101
 r PortB::Pin0::input() 10010100000011110111000111000011
-r PortB::Pin0::output() 01100100101110001000101010010000
-r PortB::Pin1::direction() 01011010011000111110011100111110
 r PortB::Pin1::input() 10110111111011010111001100111011
-r PortB::Pin1::output() 10001001100001011001111001110111
-r PortB::Pin2::direction() 11111010110011110001011000101011
 r PortB::Pin2::input() 00011010110010000110100001101000
-r PortB::Pin2::output() 11001100100110000000110111001100
-r PortB::Pin3::direction() 10101111101001100101101101110000
 r PortB::Pin3::input() 10100100111010101001010001111100
-r PortB::Pin3::output() 01010010100001000110100111000100
-r PortB::Pin4::direction() 00100000000000100010011011111000
 r PortB::Pin4::input() 01101011001110110110001011100111
-r PortB::Pin4::output() 01101111011001101010100010001100
-r PortB::Pin5::direction() 00011100010100001111111111111110
 r PortB::Pin5::input() 10010011011111100111101001011110
-r PortB::Pin5::output() 10110101001001111001011101110111
 r PortB::input() abd05a6714bf6b28eae7a70ff23f99348b7b7ebe488b283513ddeaa2e7833d3
-r PortB::output() a69d31e8d6359832f10f1545baf062f3898625f2663ac9d6e22a354fea262
 r Sleep::isEnabled() 10111110110110100111001111001001
-r Timer0::OutputA::intEnabled() 01110110001000010000111001000000
-r Timer0::OutputA::intFlag() 10001111000101100111000010111100
-r Timer0::OutputA::value() 59debb8b3a20f253239fbd417c4e20ffd84f5c1a27d38d5fa1207e9387f156
-r Timer0::OutputB::intEnabled() 11010110101000010000110010110101
-r Timer0::OutputB::intFlag() 01010101111111010111001000000101
-r Timer0::OutputB::value() 8937f7a6ee4a326ead947b251361f1c9272e3b4e3c9dfaacc257299d8b448
+r Timer0::compareA() 59debb8b3a20f253239fbd417c4e20ffd84f5c1a27d38d5fa1207e9387f156
+r Timer0::compareAIntFlag() 10001111000101100111000010111100
+r Timer0::compareB() 8937f7a6ee4a326ead947b251361f1c9272e3b4e3c9dfaacc257299d8b448
+r Timer0::compareBIntFlag() 01010101111111010111001000000101
 r Timer0::counter() be720a97566eb2a6cc15f7cdabd31f745d51f18e27cf97bb9219369496465f
-r Timer0::intFlag() 00101001110010110011111100110011
-r Timer1::OutputA::intEnabled() 11111101001111010010001110011101
-r Timer1::OutputA::intFlag() 01111000100011111100010111011010
-r Timer1::OutputA::value() 3065a6ee3795c3679f208b1426b423e41e186c7b7fbc12aaffc26a669e51
-r Timer1::OutputB::intEnabled() 10010011000010110001100010001001
-r Timer1::OutputB::intFlag() 00111010100101101001010101000100
-r Timer1::OutputB::value() 3b1c2ed82eac34815dcb71621a7682f7eea990b6aa85bb153f34564c4d8fd7da
-r Timer1::OutputC::value() dd79a446383293b3b6dbfd82ee398fac8e22481e8fb595027c4dfc7c6d59219
+r Timer0::overflowIntFlag() 00101001110010110011111100110011
+r Timer1::compareA() 3065a6ee3795c3679f208b1426b423e41e186c7b7fbc12aaffc26a669e51
+r Timer1::compareAIntFlag() 01111000100011111100010111011010
+r Timer1::compareB() 3b1c2ed82eac34815dcb71621a7682f7eea990b6aa85bb153f34564c4d8fd7da
+r Timer1::compareBIntFlag() 00111010100101101001010101000100
+r Timer1::compareC() dd79a446383293b3b6dbfd82ee398fac8e22481e8fb595027c4dfc7c6d59219
 r Timer1::counter() e1adb5b516bfa527b085559b3417da2f66e193e78451d956f51e83e1fd578c1
-r Timer1::intFlag() 11000110011110000000011101000111
+r Timer1::overflowIntFlag() 11000110011110000000011101000111
+r Usi0::buffer() 882a89a0cc3676e4c542654016f13c1fd234dacc3ddebb6654f65c93ecf5ff7
 r Usi0::collisionFlag() 00100111001111000111101001101011
 r Usi0::counter() 69bad19ce8d4411fabb6fccebedf4c86
-r Usi0::data() 882a89a0cc3676e4c542654016f13c1fd234dacc3ddebb6654f65c93ecf5ff7
+r Usi0::data() 50d2cc72835b6176a4f8e92ad0f18141477abfec3101dd8bb2a83645b08531
 r Usi0::overflowIntFlag() 11100011111010011101000000110000
 r Usi0::startIntFlag() 00010000001111111010110011010011
 r Usi0::stopIntFlag() 11011001011010001011110011111000
@@ -53,34 +37,33 @@ w Adc0::channel(Adc0::Channel::adc3) 27:00:03:27:ff:f3:
 w Adc0::channel(Adc0::Channel::adc4) 27:00:0f:
 w Adc0::channel(Adc0::Channel::gnd) 27:00:0d:27:ff:fd:
 w Adc0::channel(Adc0::Channel::vbg) 27:00:0c:27:ff:fc:
-w Adc0::enable(false) 26:ff:7f:
-w Adc0::enable(true) 26:00:80:
-w Adc0::intEnable(false) 26:ff:f7:
-w Adc0::intEnable(true) 26:00:08:
+w Adc0::enable(false) 26:ff:2f:
+w Adc0::enable(true) 26:00:80:26:ff:af:
+w Adc0::intEnable(false) 26:ff:a7:
+w Adc0::intEnable(true) 26:00:08:26:ff:af:
 w Adc0::intFlag()
-w Adc0::intFlagClear() 26:00:10:
-w Adc0::leftAdjust(false) 27:ff:df:
-w Adc0::leftAdjust(true) 27:00:20:
-w Adc0::prescaler(Adc0::Prescaler::div128) 26:00:07:
-w Adc0::prescaler(Adc0::Prescaler::div16) 26:00:04:26:ff:fc:
-w Adc0::prescaler(Adc0::Prescaler::div2) 26:ff:f8:
-w Adc0::prescaler(Adc0::Prescaler::div32) 26:00:05:26:ff:fd:
-w Adc0::prescaler(Adc0::Prescaler::div4) 26:00:02:26:ff:fa:
-w Adc0::prescaler(Adc0::Prescaler::div64) 26:00:06:26:ff:fe:
-w Adc0::prescaler(Adc0::Prescaler::div8) 26:00:03:26:ff:fb:
+w Adc0::intFlagClear() 26:00:10:26:ff:bf:
+w Adc0::prescaler(Adc0::Prescaler::div128) 26:00:07:26:ff:af:
+w Adc0::prescaler(Adc0::Prescaler::div16) 26:00:04:26:ff:ac:
+w Adc0::prescaler(Adc0::Prescaler::div2) 26:ff:a8:
+w Adc0::prescaler(Adc0::Prescaler::div32) 26:00:05:26:ff:ad:
+w Adc0::prescaler(Adc0::Prescaler::div4) 26:00:02:26:ff:aa:
+w Adc0::prescaler(Adc0::Prescaler::div64) 26:00:06:26:ff:ae:
+w Adc0::prescaler(Adc0::Prescaler::div8) 26:00:03:26:ff:ab:
 w Adc0::reference(Adc0::Reference::aref) 27:00:40:27:ff:6f:
-w Adc0::reference(Adc0::Reference::avcc) 27:ff:2f:
 w Adc0::reference(Adc0::Reference::internal_1_1) 27:00:80:27:ff:af:
 w Adc0::reference(Adc0::Reference::internal_2_56) 27:00:90:27:ff:bf:
 w Adc0::reference(Adc0::Reference::internal_2_56_cap) 27:00:d0:
-w Adc0::start() 26:00:40:
-w Adc0::trigger(Adc0::Trigger::analogComparator) 23:00:01:26:00:20:23:ff:f9:
-w Adc0::trigger(Adc0::Trigger::externalInt0) 23:00:02:26:00:20:23:ff:fa:
-w Adc0::trigger(Adc0::Trigger::freeRunning) 26:00:20:23:ff:f8:
-w Adc0::trigger(Adc0::Trigger::singleConversion) 23:ff:f8:26:ff:df:
-w Adc0::trigger(Adc0::Trigger::timer0CompareMatchA) 23:00:03:26:00:20:23:ff:fb:
-w Adc0::trigger(Adc0::Trigger::timer0Overflow) 23:00:04:26:00:20:23:ff:fc:
-w Adc0::value()
+w Adc0::reference(Adc0::Reference::vcc) 27:ff:2f:
+w Adc0::result()
+w Adc0::start() 26:00:40:26:ff:ef:
+w Adc0::trigger(Adc0::Trigger::analogComparator) 23:00:01:23:ff:f9:
+w Adc0::trigger(Adc0::Trigger::externalInt0) 23:00:02:23:ff:fa:
+w Adc0::trigger(Adc0::Trigger::freeRunning) 23:ff:f8:
+w Adc0::trigger(Adc0::Trigger::timer0CompareMatchA) 23:00:03:23:ff:fb:
+w Adc0::trigger(Adc0::Trigger::timer0Overflow) 23:00:04:23:ff:fc:
+w Adc0::triggerEnable(false) 26:ff:8f:
+w Adc0::triggerEnable(true) 26:00:20:26:ff:af:
 w ExInt0::intEnable(false) 5b:ff:bf:
 w ExInt0::intEnable(true) 5b:00:40:
 w ExInt0::intFlag()
@@ -94,98 +77,65 @@ w PcInt0::intEnable(true) 5b:00:20:
 w PcInt0::intFlag()
 w PcInt0::intFlagClear() 5a:00:40:5a:ff:40:
 w PcInt0::mask(0x12) 35:00:12:35:ff:12:
-w PortB::Pin0::direction()
 w PortB::Pin0::direction(Pin::Direction::input) 37:ff:fe:
 w PortB::Pin0::direction(Pin::Direction::output) 37:00:01:
 w PortB::Pin0::input()
-w PortB::Pin0::output()
 w PortB::Pin0::output(Pin::Value::high) 38:00:01:
 w PortB::Pin0::output(Pin::Value::low) 38:ff:fe:
+w PortB::Pin0::outputToggle() 36:00:01:36:ff:01:
 w PortB::Pin0::pullup(false) 38:ff:fe:
 w PortB::Pin0::pullup(true) 38:00:01:
-w PortB::Pin0::outputToggle() 36:00:01:
-w PortB::Pin1::direction()
 w PortB::Pin1::direction(Pin::Direction::input) 37:ff:fd:
 w PortB::Pin1::direction(Pin::Direction::output) 37:00:02:
 w PortB::Pin1::input()
-w PortB::Pin1::output()
 w PortB::Pin1::output(Pin::Value::high) 38:00:02:
 w PortB::Pin1::output(Pin::Value::low) 38:ff:fd:
+w PortB::Pin1::outputToggle() 36:00:02:36:ff:02:
 w PortB::Pin1::pullup(false) 38:ff:fd:
 w PortB::Pin1::pullup(true) 38:00:02:
-w PortB::Pin1::outputToggle() 36:00:02:
-w PortB::Pin2::direction()
 w PortB::Pin2::direction(Pin::Direction::input) 37:ff:fb:
 w PortB::Pin2::direction(Pin::Direction::output) 37:00:04:
 w PortB::Pin2::input()
-w PortB::Pin2::output()
 w PortB::Pin2::output(Pin::Value::high) 38:00:04:
 w PortB::Pin2::output(Pin::Value::low) 38:ff:fb:
+w PortB::Pin2::outputToggle() 36:00:04:36:ff:04:
 w PortB::Pin2::pullup(false) 38:ff:fb:
 w PortB::Pin2::pullup(true) 38:00:04:
-w PortB::Pin2::outputToggle() 36:00:04:
-w PortB::Pin3::direction()
 w PortB::Pin3::direction(Pin::Direction::input) 37:ff:f7:
 w PortB::Pin3::direction(Pin::Direction::output) 37:00:08:
 w PortB::Pin3::input()
-w PortB::Pin3::output()
 w PortB::Pin3::output(Pin::Value::high) 38:00:08:
 w PortB::Pin3::output(Pin::Value::low) 38:ff:f7:
+w PortB::Pin3::outputToggle() 36:00:08:36:ff:08:
 w PortB::Pin3::pullup(false) 38:ff:f7:
 w PortB::Pin3::pullup(true) 38:00:08:
-w PortB::Pin3::outputToggle() 36:00:08:
-w PortB::Pin4::direction()
 w PortB::Pin4::direction(Pin::Direction::input) 37:ff:ef:
 w PortB::Pin4::direction(Pin::Direction::output) 37:00:10:
 w PortB::Pin4::input()
-w PortB::Pin4::output()
 w PortB::Pin4::output(Pin::Value::high) 38:00:10:
 w PortB::Pin4::output(Pin::Value::low) 38:ff:ef:
+w PortB::Pin4::outputToggle() 36:00:10:36:ff:10:
 w PortB::Pin4::pullup(false) 38:ff:ef:
 w PortB::Pin4::pullup(true) 38:00:10:
-w PortB::Pin4::outputToggle() 36:00:10:
-w PortB::Pin5::direction()
 w PortB::Pin5::direction(Pin::Direction::input) 37:ff:df:
 w PortB::Pin5::direction(Pin::Direction::output) 37:00:20:
 w PortB::Pin5::input()
-w PortB::Pin5::output()
 w PortB::Pin5::output(Pin::Value::high) 38:00:20:
 w PortB::Pin5::output(Pin::Value::low) 38:ff:df:
+w PortB::Pin5::outputToggle() 36:00:20:36:ff:20:
 w PortB::Pin5::pullup(false) 38:ff:df:
 w PortB::Pin5::pullup(true) 38:00:20:
-w PortB::Pin5::outputToggle() 36:00:20:
+w PortB::direction(0x12) 37:00:12:37:ff:12:
 w PortB::input()
-w PortB::output()
 w PortB::output(0x12) 38:00:12:38:ff:12:
-w PortB::toggle(0x12) 36:00:12:36:ff:12:
+w PortB::outputToggle(0x12) 36:00:12:36:ff:12:
+w PortB::pullup(0x23) 38:00:23:38:ff:23:
 w Sleep::enable(false) 55:ff:df:
 w Sleep::enable(true) 55:00:20:
 w Sleep::isEnabled()
 w Sleep::mode(Sleep::Mode::adcNoiseReduction) 55:00:08:55:ff:ef:
 w Sleep::mode(Sleep::Mode::idle) 55:ff:e7:
 w Sleep::mode(Sleep::Mode::powerDown) 55:00:10:55:ff:f7:
-w Timer0::OutputA::intEnable(false) 59:ff:fb:
-w Timer0::OutputA::intEnable(true) 59:00:04:
-w Timer0::OutputA::intEnabled()
-w Timer0::OutputA::intFlag()
-w Timer0::OutputA::intFlagClear() 58:00:10:58:ff:10:
-w Timer0::OutputA::mode(Timer0::OutputA::Mode::clear) 4a:00:80:4a:ff:bf:
-w Timer0::OutputA::mode(Timer0::OutputA::Mode::disconnected) 4a:ff:3f:
-w Timer0::OutputA::mode(Timer0::OutputA::Mode::set) 4a:00:c0:
-w Timer0::OutputA::mode(Timer0::OutputA::Mode::toggle) 4a:00:40:4a:ff:7f:
-w Timer0::OutputA::value()
-w Timer0::OutputA::value(0x12) 49:00:12:49:ff:12:
-w Timer0::OutputB::intEnable(false) 59:ff:f7:
-w Timer0::OutputB::intEnable(true) 59:00:08:
-w Timer0::OutputB::intEnabled()
-w Timer0::OutputB::intFlag()
-w Timer0::OutputB::intFlagClear() 58:00:08:58:ff:08:
-w Timer0::OutputB::mode(Timer0::OutputB::Mode::clear) 4a:00:20:4a:ff:ef:
-w Timer0::OutputB::mode(Timer0::OutputB::Mode::disconnected) 4a:ff:cf:
-w Timer0::OutputB::mode(Timer0::OutputB::Mode::set) 4a:00:30:
-w Timer0::OutputB::mode(Timer0::OutputB::Mode::toggle) 4a:00:10:4a:ff:df:
-w Timer0::OutputB::value()
-w Timer0::OutputB::value(0x12) 48:00:12:48:ff:12:
 w Timer0::clock(Timer0::Clock::div1) 53:00:01:53:ff:f9:
 w Timer0::clock(Timer0::Clock::div1024) 53:00:05:53:ff:fd:
 w Timer0::clock(Timer0::Clock::div256) 53:00:04:53:ff:fc:
@@ -194,42 +144,41 @@ w Timer0::clock(Timer0::Clock::div8) 53:00:02:53:ff:fa:
 w Timer0::clock(Timer0::Clock::extFalling) 53:00:06:53:ff:fe:
 w Timer0::clock(Timer0::Clock::extRising) 53:00:07:
 w Timer0::clock(Timer0::Clock::none) 53:ff:f8:
+w Timer0::compareA()
+w Timer0::compareA(0x12) 49:00:12:49:ff:12:
+w Timer0::compareAIntEnable(false) 59:ff:ef:
+w Timer0::compareAIntEnable(true) 59:00:10:
+w Timer0::compareAIntFlag()
+w Timer0::compareAIntFlagClear() 58:00:10:58:ff:10:
+w Timer0::compareAOutput(Timer0::CompareAOutput::clear) 4a:00:80:4a:ff:bf:
+w Timer0::compareAOutput(Timer0::CompareAOutput::disconnected) 4a:ff:3f:
+w Timer0::compareAOutput(Timer0::CompareAOutput::set) 4a:00:c0:
+w Timer0::compareAOutput(Timer0::CompareAOutput::toggle) 4a:00:40:4a:ff:7f:
+w Timer0::compareB()
+w Timer0::compareB(0x12) 48:00:12:48:ff:12:
+w Timer0::compareBIntEnable(false) 59:ff:f7:
+w Timer0::compareBIntEnable(true) 59:00:08:
+w Timer0::compareBIntFlag()
+w Timer0::compareBIntFlagClear() 58:00:08:58:ff:08:
+w Timer0::compareBOutput(Timer0::CompareBOutput::clear) 4a:00:20:4a:ff:ef:
+w Timer0::compareBOutput(Timer0::CompareBOutput::disconnected) 4a:ff:cf:
+w Timer0::compareBOutput(Timer0::CompareBOutput::set) 4a:00:30:
+w Timer0::compareBOutput(Timer0::CompareBOutput::toggle) 4a:00:10:4a:ff:df:
 w Timer0::counter()
 w Timer0::counter(0x12) 52:00:12:52:ff:12:
-w Timer0::intEnable(false) 59:ff:fd:
-w Timer0::intEnable(true) 59:00:02:
-w Timer0::intFlag()
-w Timer0::intFlagClear() 58:00:02:58:ff:02:
+w Timer0::overflowIntEnable(false) 59:ff:fd:
+w Timer0::overflowIntEnable(true) 59:00:02:
+w Timer0::overflowIntFlag()
+w Timer0::overflowIntFlagClear() 58:00:02:58:ff:02:
+w Timer0::prescalerReset() 4c:00:01:
+w Timer0::synchronizeMode(false) 4c:ff:7f:
+w Timer0::synchronizeMode(true) 4c:00:80:
 w Timer0::waveform(Timer0::Waveform::ctcOcra) 4a:00:02:4a:ff:fe:53:ff:f7:
 w Timer0::waveform(Timer0::Waveform::fastPwm) 4a:00:03:53:ff:f7:
 w Timer0::waveform(Timer0::Waveform::fastPwmOcra) 4a:00:03:53:00:08:
 w Timer0::waveform(Timer0::Waveform::normal) 4a:ff:fc:53:ff:f7:
 w Timer0::waveform(Timer0::Waveform::pwm) 4a:00:01:4a:ff:fd:53:ff:f7:
 w Timer0::waveform(Timer0::Waveform::pwmOcra) 4a:00:01:53:00:08:4a:ff:fd:
-w Timer1::OutputA::intEnable(false) 59:ff:bf:
-w Timer1::OutputA::intEnable(true) 59:00:40:
-w Timer1::OutputA::intEnabled()
-w Timer1::OutputA::intFlag()
-w Timer1::OutputA::intFlagClear() 58:00:40:58:ff:40:
-w Timer1::OutputA::mode(Timer1::OutputA::Mode::clear) 50:00:20:50:ff:ef:
-w Timer1::OutputA::mode(Timer1::OutputA::Mode::disconnected) 50:ff:cf:
-w Timer1::OutputA::mode(Timer1::OutputA::Mode::set) 50:00:30:
-w Timer1::OutputA::mode(Timer1::OutputA::Mode::toggle) 50:00:10:50:ff:df:
-w Timer1::OutputA::value()
-w Timer1::OutputA::value(0x12) 4e:00:12:4e:ff:12:
-w Timer1::OutputB::intEnable(false) 59:ff:df:
-w Timer1::OutputB::intEnable(true) 59:00:20:
-w Timer1::OutputB::intEnabled()
-w Timer1::OutputB::intFlag()
-w Timer1::OutputB::intFlagClear() 58:00:20:58:ff:20:
-w Timer1::OutputB::mode(Timer1::OutputB::Mode::clear) 4c:00:20:4c:ff:ef:
-w Timer1::OutputB::mode(Timer1::OutputB::Mode::disconnected) 4c:ff:cf:
-w Timer1::OutputB::mode(Timer1::OutputB::Mode::set) 4c:00:30:
-w Timer1::OutputB::mode(Timer1::OutputB::Mode::toggle) 4c:00:10:4c:ff:df:
-w Timer1::OutputB::value()
-w Timer1::OutputB::value(0x12) 4b:00:12:4b:ff:12:
-w Timer1::OutputC::value()
-w Timer1::OutputC::value(0x12) 4d:00:12:4d:ff:12:
 w Timer1::clock(Timer1::Clock::div1) 50:00:01:50:ff:f1:
 w Timer1::clock(Timer1::Clock::div1024) 50:00:0b:50:ff:fb:
 w Timer1::clock(Timer1::Clock::div128) 50:00:08:50:ff:f8:
@@ -246,17 +195,41 @@ w Timer1::clock(Timer1::Clock::div64) 50:00:07:50:ff:f7:
 w Timer1::clock(Timer1::Clock::div8) 50:00:04:50:ff:f4:
 w Timer1::clock(Timer1::Clock::div8192) 50:00:0e:50:ff:fe:
 w Timer1::clock(Timer1::Clock::none) 50:ff:f0:
+w Timer1::compareA()
+w Timer1::compareA(0x12) 4e:00:12:4e:ff:12:
+w Timer1::compareAIntEnable(false) 59:ff:bf:
+w Timer1::compareAIntEnable(true) 59:00:40:
+w Timer1::compareAIntFlag()
+w Timer1::compareAIntFlagClear() 58:00:40:58:ff:40:
+w Timer1::compareAOutput(Timer1::CompareAOutput::clear) 50:00:20:50:ff:ef:
+w Timer1::compareAOutput(Timer1::CompareAOutput::disconnected) 50:ff:cf:
+w Timer1::compareAOutput(Timer1::CompareAOutput::set) 50:00:30:
+w Timer1::compareAOutput(Timer1::CompareAOutput::toggle) 50:00:10:50:ff:df:
+w Timer1::compareAPwmOutputEnable(false) 50:ff:bf:
+w Timer1::compareAPwmOutputEnable(true) 50:00:40:
+w Timer1::compareB()
+w Timer1::compareB(0x12) 4b:00:12:4b:ff:12:
+w Timer1::compareBIntEnable(false) 59:ff:df:
+w Timer1::compareBIntEnable(true) 59:00:20:
+w Timer1::compareBIntFlag()
+w Timer1::compareBIntFlagClear() 58:00:20:58:ff:20:
+w Timer1::compareBOutput(Timer1::CompareBOutput::clear) 4c:00:20:4c:ff:ef:
+w Timer1::compareBOutput(Timer1::CompareBOutput::disconnected) 4c:ff:cf:
+w Timer1::compareBOutput(Timer1::CompareBOutput::set) 4c:00:30:
+w Timer1::compareBOutput(Timer1::CompareBOutput::toggle) 4c:00:10:4c:ff:df:
+w Timer1::compareBPwmOutputEnable(false) 4c:ff:bf:
+w Timer1::compareBPwmOutputEnable(true) 4c:00:40:
+w Timer1::compareC()
+w Timer1::compareC(0x12) 4d:00:12:4d:ff:12:
 w Timer1::counter()
 w Timer1::counter(0x12) 4f:00:12:4f:ff:12:
-w Timer1::intEnable(false) 59:ff:fb:
-w Timer1::intEnable(true) 59:00:04:
-w Timer1::intFlag()
-w Timer1::intFlagClear() 58:00:04:58:ff:04:
-w Timer1::waveform(Timer1::Waveform::ctcOcrc) 50:00:80:4c:ff:bf:50:ff:bf:
-w Timer1::waveform(Timer1::Waveform::fastPwmABOcrc) 4c:00:40:50:00:40:50:ff:7f:
-w Timer1::waveform(Timer1::Waveform::fastPwmAOcrc) 50:00:40:4c:ff:bf:50:ff:7f:
-w Timer1::waveform(Timer1::Waveform::fastPwmBOcrc) 4c:00:40:50:ff:3f:
-w Timer1::waveform(Timer1::Waveform::normal) 4c:ff:bf:50:ff:3f:
+w Timer1::overflowIntEnable(false) 59:ff:fb:
+w Timer1::overflowIntEnable(true) 59:00:04:
+w Timer1::overflowIntFlag()
+w Timer1::overflowIntFlagClear() 58:00:04:58:ff:04:
+w Timer1::waveform(Timer1::Waveform::ctcOcrc) 50:00:80:
+w Timer1::waveform(Timer1::Waveform::normal) 50:ff:7f:
+w Usi0::buffer()
 w Usi0::clock(Usi0::Clock::externalNegativeEdge) 2d:00:0c:
 w Usi0::clock(Usi0::Clock::externalPositiveEdge) 2d:00:08:2d:ff:fb:
 w Usi0::clock(Usi0::Clock::none) 2d:ff:f3:
@@ -264,21 +237,21 @@ w Usi0::clock(Usi0::Clock::timer0CompareMatch) 2d:00:04:2d:ff:f7:
 w Usi0::clockStrobe() 2d:00:02:
 w Usi0::collisionFlag()
 w Usi0::counter()
-w Usi0::counter(0x12) 2e:00:02:2e:ff:f2:
+w Usi0::counter(0x12) 2e:00:02:2e:ff:02:
 w Usi0::data()
 w Usi0::data(0x12) 2f:00:12:2f:ff:12:
 w Usi0::overflowIntEnable(false) 2d:ff:bf:
 w Usi0::overflowIntEnable(true) 2d:00:40:
 w Usi0::overflowIntFlag()
-w Usi0::overflowIntFlagClear() 2e:00:40:
+w Usi0::overflowIntFlagClear() 2e:00:40:2e:ff:40:
 w Usi0::startIntEnable(false) 2d:ff:7f:
 w Usi0::startIntEnable(true) 2d:00:80:
 w Usi0::startIntFlag()
-w Usi0::startIntFlagClear() 2e:00:80:
+w Usi0::startIntFlagClear() 2e:00:80:2e:ff:80:
 w Usi0::stopIntFlag()
-w Usi0::stopIntFlagClear() 2e:00:20:
+w Usi0::stopIntFlagClear() 2e:00:20:2e:ff:20:
 w Usi0::toggleClockPin() 2d:00:01:
-w Usi0::wireMode(Usi0::WireMode::disabled) 2d:ff:e7:
-w Usi0::wireMode(Usi0::WireMode::threeWire) 2d:00:18:
-w Usi0::wireMode(Usi0::WireMode::twoWire) 2d:ff:e7:
-w Usi0::wireMode(Usi0::WireMode::twoWireOverflow) 2d:00:18:
+w Usi0::wireMode(Usi0::WireMode::disabled) 2d:ff:cf:
+w Usi0::wireMode(Usi0::WireMode::threeWire) 2d:00:10:2d:ff:df:
+w Usi0::wireMode(Usi0::WireMode::twoWire) 2d:00:20:2d:ff:ef:
+w Usi0::wireMode(Usi0::WireMode::twoWireOverflow) 2d:00:30:

@@ -34,7 +34,7 @@ struct Sleep {
     /// * powerSave
     /// * standby
     /// * extendedStandby
-    #if DEFINED(CHIP_SLEEP_MODE_BIT_0_BIT)
+    #if CHIP_SLEEP_MODE_MASK
         enum class Mode {
             #if DEFINED(CHIP_SLEEP_MODE_IDLE_ID)
                 idle = CHIP_SLEEP_MODE_IDLE_ID,
@@ -69,32 +69,24 @@ struct Sleep {
 
     /// #### static void mode([[Sleep::Mode]] m)
     /// Set the level of sleep that happens when sleep() is called.
-    #if DEFINED(CHIP_SLEEP_MODE_BIT_0_BIT)
+    #if CHIP_SLEEP_MODE_MASK
         static force_inline void mode(Mode m) {
-            setBit_(REG(CHIP_SLEEP_MODE_BIT_0_REG), CHIP_SLEEP_MODE_BIT_0_BIT, int(m) & 0x01);
-
-            #if DEFINED(CHIP_SLEEP_MODE_BIT_1_BIT)
-                setBit_(REG(CHIP_SLEEP_MODE_BIT_1_REG), CHIP_SLEEP_MODE_BIT_1_BIT, int(m) & 0x02);
-            #endif
-
-            #if DEFINED(CHIP_SLEEP_MODE_BIT_2_BIT)
-                setBit_(REG(CHIP_SLEEP_MODE_BIT_2_REG), CHIP_SLEEP_MODE_BIT_2_BIT, int(m) & 0x04);
-            #endif
+            CHIP_SLEEP_MODE_REG::setBits(CHIP_SLEEP_MODE_MASK, m);
         }
     #endif
 
     /// #### static void enable(bool b)
     /// Set this to true to let the CPU sleep when sleep() is called.
-    #if DEFINED(CHIP_SLEEP_ENABLE_BIT_0_BIT)
+    #if DEFINED(CHIP_SLEEP_ENABLE_BIT)
         static force_inline void enable(bool b) {
-            setBit_(REG(CHIP_SLEEP_ENABLE_BIT_0_REG), CHIP_SLEEP_ENABLE_BIT_0_BIT, b);
+            CHIP_SLEEP_ENABLE_REG::setBit(CHIP_SLEEP_ENABLE_BIT, b);
         }
     #endif
 
     /// #### static bool isEnabled()
-    #if DEFINED(CHIP_SLEEP_ENABLE_BIT_0_BIT)
+    #if DEFINED(CHIP_SLEEP_ENABLE_BIT)
         static force_inline bool isEnabled() {
-            return getBit_(REG(CHIP_SLEEP_ENABLE_BIT_0_REG), CHIP_SLEEP_ENABLE_BIT_0_BIT);
+            return CHIP_SLEEP_ENABLE_REG::getBit(CHIP_SLEEP_ENABLE_BIT);
         }
     #endif
 
@@ -119,7 +111,7 @@ TEST(Sleep, getHardwareType) {
     ASSERT_EQ(Sleep::getHardwareType(), HardwareType::sleep);
 }
 
-#if DEFINED(CHIP_SLEEP_ENABLE_BIT_0_BIT)
+#if DEFINED(CHIP_SLEEP_ENABLE_BIT)
     TEST(Sleep, enable) {
         TEST_REG_WRITE(Sleep::enable(true));
         TEST_REG_WRITE(Sleep::enable(false));
@@ -128,7 +120,7 @@ TEST(Sleep, getHardwareType) {
     }
 #endif
 
-#if DEFINED(CHIP_SLEEP_MODE_BIT_0_BIT)
+#if CHIP_SLEEP_MODE_MASK
     TEST(Sleep, mode) {
         #if DEFINED(CHIP_SLEEP_MODE_IDLE_ID)
             TEST_REG_WRITE(Sleep::mode(Sleep::Mode::idle));

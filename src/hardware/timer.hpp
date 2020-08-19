@@ -2,26 +2,6 @@
 
 /// # {{Timers}}
 
-/// ```c++
-/// // Constant interval.
-///
-/// using Timer = nblib::hw::Timer1;
-///
-/// nblib::hw::Pin::Value value = nblib::hw::Pin::Value::low;
-///
-/// const auto f = [](nblib::hw::Pin::Value* value) {
-///     *value = nblib::hw::PortB::Pin5::input();
-/// };
-///
-/// atomic([]() {
-///     Timer::waveform(Timer::Waveform::ctcOcra);
-///     Timer::OutputA::value(2036);
-///     Timer::clock(Timer::Clock::Div16);
-///     Timer::intEnable(true);
-///     Timer::callback((callback_t)f, &value);
-/// });
-/// ```
-
 #ifndef NBLIB_TIMER_HPP
 
 #include "isr.hpp"
@@ -31,6 +11,7 @@
 #include "macros.hpp"
 #include "system.hpp"
 #include "callback.hpp"
+#include "register.hpp"
 
 #include "loopi"
 
@@ -39,7 +20,7 @@
     #define TimerN CAT(Timer, N)
     #define TIMER_N(A) CAT(CHIP_TIMER_, N, _, A)
 
-    #if CAT(CHIP_TIMER_, N)
+    #if DEFINED(CAT(CHIP_TIMER_, N))
 
 //--------------------------------------------------------
 
@@ -250,262 +231,366 @@ struct TimerN {
         #endif
     };
 
+    /// #### enum {{TimerN::CompareXOutput}}
+    /// * disconnected
+    /// * toggle
+    /// * clear
+    /// * set
+    #if REG_DEFINED(TIMER_N(COMPARE_A_OUTPUT_REG))
+        enum class CompareAOutput {
+            #if DEFINED(TIMER_N(COMPARE_A_OUTPUT_DISCONNECTED_ID))
+                disconnected = TIMER_N(COMPARE_A_OUTPUT_DISCONNECTED_ID),
+            #endif
+
+            #if DEFINED(TIMER_N(COMPARE_A_OUTPUT_TOGGLE_ID))
+                toggle = TIMER_N(COMPARE_A_OUTPUT_TOGGLE_ID),
+            #endif
+
+            #if DEFINED(TIMER_N(COMPARE_A_OUTPUT_CLEAR_ID))
+                clear = TIMER_N(COMPARE_A_OUTPUT_CLEAR_ID),
+            #endif
+
+            #if DEFINED(TIMER_N(COMPARE_A_OUTPUT_SET_ID))
+                set = TIMER_N(COMPARE_A_OUTPUT_SET_ID),
+            #endif
+        };
+    #endif
+
+    #if REG_DEFINED(TIMER_N(COMPARE_B_OUTPUT_REG))
+        enum class CompareBOutput {
+            #if DEFINED(TIMER_N(COMPARE_B_OUTPUT_DISCONNECTED_ID))
+                disconnected = TIMER_N(COMPARE_B_OUTPUT_DISCONNECTED_ID),
+            #endif
+
+            #if DEFINED(TIMER_N(COMPARE_B_OUTPUT_TOGGLE_ID))
+                toggle = TIMER_N(COMPARE_B_OUTPUT_TOGGLE_ID),
+            #endif
+
+            #if DEFINED(TIMER_N(COMPARE_B_OUTPUT_CLEAR_ID))
+                clear = TIMER_N(COMPARE_B_OUTPUT_CLEAR_ID),
+            #endif
+
+            #if DEFINED(TIMER_N(COMPARE_B_OUTPUT_SET_ID))
+                set = TIMER_N(COMPARE_B_OUTPUT_SET_ID),
+            #endif
+        };
+    #endif
+
+    #if REG_DEFINED(TIMER_N(COMPARE_C_OUTPUT_REG))
+        enum class CompareCOutput {
+            #if DEFINED(TIMER_N(COMPARE_C_OUTPUT_DISCONNECTED_ID))
+                disconnected = TIMER_N(COMPARE_C_OUTPUT_DISCONNECTED_ID),
+            #endif
+
+            #if DEFINED(TIMER_N(COMPARE_C_OUTPUT_TOGGLE_ID))
+                toggle = TIMER_N(COMPARE_C_OUTPUT_TOGGLE_ID),
+            #endif
+
+            #if DEFINED(TIMER_N(COMPARE_C_OUTPUT_CLEAR_ID))
+                clear = TIMER_N(COMPARE_C_OUTPUT_CLEAR_ID),
+            #endif
+
+            #if DEFINED(TIMER_N(COMPARE_C_OUTPUT_SET_ID))
+                set = TIMER_N(COMPARE_C_OUTPUT_SET_ID),
+            #endif
+        };
+    #endif
+
+    #if REG_DEFINED(TIMER_N(CAPTURE_REG))
+        /// #### enum {{TimerN::CaptureEdge}}
+        /// * rising
+        /// * falling
+        enum class CaptureEdge {
+            rising = TIMER_N(CAPTURE_EDGE_RISING_ID),
+            falling = TIMER_N(CAPTURE_EDGE_FALLING_ID),
+        };
+    #endif
+
     /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::timer;
     }
 
-    #if REG_ADDR(TIMER_N(COUNTER_REG))
+    #if REG_DEFINED(TIMER_N(COUNTER_REG))
         /// #### static void counter(T value)
-        static force_inline void counter(REG_TYPE(TIMER_N(COUNTER_REG)) value) {
-            setReg_(REG(TIMER_N(COUNTER_REG)), value);
+        static force_inline void counter(TIMER_N(COUNTER_REG)::Type value) {
+            TIMER_N(COUNTER_REG)::setReg(value);
         }
-    #endif
 
-    #if REG_ADDR(TIMER_N(COUNTER_REG))
         /// #### static T counter()
-        static force_inline REG_TYPE(TIMER_N(COUNTER_REG)) counter() {
-            return getReg_(REG(TIMER_N(COUNTER_REG)));
+        static force_inline TIMER_N(COUNTER_REG)::Type counter() {
+            return TIMER_N(COUNTER_REG)::getReg();
         }
     #endif
 
-    #if REG_ADDR(TIMER_N(ENABLE_REG))
+    #if REG_DEFINED(TIMER_N(ENABLE_REG))
         /// #### static void enable(bool)
         static force_inline void enable(bool b) {
-            setBit_(REG(TIMER_N(ENABLE_REG)), TIMER_N(ENABLE_BIT), b);
+            TIMER_N(ENABLE_REG)::setBit(TIMER_N(ENABLE_BIT), b);
         }
     #endif
 
-    #if REG_ADDR(TIMER_N(TOP_REG))
+    #if REG_DEFINED(TIMER_N(TOP_REG))
         /// #### static void top(T value)
-        static force_inline void top(REG_TYPE(TIMER_N(TOP_REG)) value) {
-            setReg_(REG(TIMER_N(TOP_REG)), value);
+        static force_inline void top(TIMER_N(TOP_REG)::Type value) {
+            TIMER_N(TOP_REG)::setReg(value);
         }
-    #endif
 
-    #if REG_ADDR(TIMER_N(TOP_REG))
         /// #### static T top()
-        static force_inline REG_TYPE(TIMER_N(TOP_REG)) top() {
-            return getReg_(REG(TIMER_N(TOP_REG)));
+        static force_inline TIMER_N(TOP_REG)::Type top() {
+            return TIMER_N(TOP_REG)::getReg();
         }
     #endif
 
-    #if DEFINED(TIMER_N(CLOCK_BIT_0_BIT))
+    #if REG_DEFINED(TIMER_N(CLOCK_REG))
         /// #### static void clock([[TimerN::Clock]] c)
         static force_inline void clock(Clock c) {
-            setBit_(REG(TIMER_N(CLOCK_BIT_0_REG)), TIMER_N(CLOCK_BIT_0_BIT), int(c) & 0x01);
-            setBit_(REG(TIMER_N(CLOCK_BIT_1_REG)), TIMER_N(CLOCK_BIT_1_BIT), int(c) & 0x02);
-            setBit_(REG(TIMER_N(CLOCK_BIT_2_REG)), TIMER_N(CLOCK_BIT_2_BIT), int(c) & 0x04);
-
-            #if DEFINED(TIMER_N(CLOCK_BIT_3_BIT))
-                setBit_(REG(TIMER_N(CLOCK_BIT_3_REG)), TIMER_N(CLOCK_BIT_3_BIT), int(c) & 0x08);
-            #endif
+            TIMER_N(CLOCK_REG)::setBits(TIMER_N(CLOCK_MASK), c);
         }
     #endif
 
-    #if DEFINED(TIMER_N(WAVEFORM_BIT_0_BIT))
+    #if REG_DEFINED(TIMER_N(WAVEFORM_REG))
         /// #### static void waveform([[TimerN::Waveform]] w)
         static force_inline void waveform(Waveform w) {
-            setBit_(REG(TIMER_N(WAVEFORM_BIT_0_REG)), TIMER_N(WAVEFORM_BIT_0_BIT), int(w) & 0x01);
+            TIMER_N(WAVEFORM_REG)::setBits(TIMER_N(WAVEFORM_MASK), w);
 
-            #if DEFINED(TIMER_N(WAVEFORM_BIT_1_BIT))
-                setBit_(REG(TIMER_N(WAVEFORM_BIT_1_REG)), TIMER_N(WAVEFORM_BIT_1_BIT), int(w) & 0x02);
-            #endif
-
-            #if DEFINED(TIMER_N(WAVEFORM_BIT_2_BIT))
-                setBit_(REG(TIMER_N(WAVEFORM_BIT_2_REG)), TIMER_N(WAVEFORM_BIT_2_BIT), int(w) & 0x04);
-            #endif
-
-            #if DEFINED(TIMER_N(WAVEFORM_BIT_3_BIT))
-                setBit_(REG(TIMER_N(WAVEFORM_BIT_3_REG)), TIMER_N(WAVEFORM_BIT_3_BIT), int(w) & 0x08);
+            #if REG_DEFINED(TIMER_N(WAVEFORM_REG_EXTRA))
+                TIMER_N(WAVEFORM_REG_EXTRA)::setBits(TIMER_N(WAVEFORM_MASK_EXTRA), uint(w) >> 8);
             #endif
         }
     #endif
 
-    #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
+    #if REG_DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_REG))
         /// #### static void overflowIntEnable(bool)
         static force_inline void overflowIntEnable(bool b) {
-            setBit_(REG(TIMER_N(OVERFLOW_INT_ENABLE_REG)), TIMER_N(OVERFLOW_INT_ENABLE_BIT), b);
-        }
-
-        /// #### static void intEnable(bool b)
-        static force_inline void intEnable(bool b) {
-            setBit_(REG(TIMER_N(OVERFLOW_INT_ENABLE_REG)), TIMER_N(OVERFLOW_INT_ENABLE_BIT), b);
+            TIMER_N(OVERFLOW_INT_ENABLE_REG)::setBit(TIMER_N(OVERFLOW_INT_ENABLE_BIT), b);
         }
     #endif
 
-    #if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
+    #if REG_DEFINED(TIMER_N(OVERFLOW_INT_FLAG_REG))
         /// #### static bool overflowIntFlag()
         static force_inline bool overflowIntFlag() {
-            return getBit_(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT));
+            return TIMER_N(OVERFLOW_INT_FLAG_REG)::getBit(TIMER_N(OVERFLOW_INT_FLAG_BIT));
         }
 
-        /// #### static bool intFlag()
-        static force_inline bool intFlag() {
-            return getBit_(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT));
-        }
-    #endif
-
-    #if DEFINED(TIMER_N(OVERFLOW_INT_FLAG_BIT))
         /// #### static void overflowIntFlagClear()
         static force_inline void overflowIntFlagClear() {
-            clearFlagBit(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT));
-        }
-
-        /// #### static void intFlagClear()
-        static force_inline void intFlagClear() {
-            clearFlagBit(REG(TIMER_N(OVERFLOW_INT_FLAG_REG)), TIMER_N(OVERFLOW_INT_FLAG_BIT));
+            TIMER_N(OVERFLOW_INT_FLAG_REG)::setBit(TIMER_N(OVERFLOW_INT_FLAG_BIT), true);
         }
     #endif
 
-    #if DEFINED(TIMER_N(PRESCALER_RESET_BIT))
+    #if REG_DEFINED(TIMER_N(PRESCALER_RESET_REG))
         /// #### static void prescalerReset()
         /// Resets the *shared* timer prescaler to zero.
         static force_inline void prescalerReset() {
-            setBit_(REG(TIMER_N(PRESCALER_RESET_REG)), TIMER_N(PRESCALER_RESET_BIT), true);
+            TIMER_N(PRESCALER_RESET_REG)::setBit(TIMER_N(PRESCALER_RESET_BIT), true);
         }
     #endif
 
-    #if DEFINED(TIMER_N(SYNCHRONIZE_BIT))
+    #if REG_DEFINED(TIMER_N(SYNCHRONIZE_REG))
         /// #### static void synchronizeMode(bool b)
         /// Set to true then call prescalerReset() to hold the timers' prescalers at zero, effectively pausing the timers.
         /// Set back to false to start all timers at exactly the same time.
         static force_inline void synchronizeMode(bool b) {
-            setBit_(REG(TIMER_N(SYNCHRONIZE_REG)), TIMER_N(SYNCHRONIZE_BIT), b);
+            TIMER_N(SYNCHRONIZE_REG)::setBit(TIMER_N(SYNCHRONIZE_BIT), b);
         }
     #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_A_REG))
+    #if REG_DEFINED(TIMER_N(COMPARE_A_REG))
         /// #### static void compareA(T value)
-        static force_inline void compareA(REG_TYPE(TIMER_N(COMPARE_A_REG)) value) {
-            setReg_(REG(TIMER_N(COMPARE_A_REG)), value);
+        static force_inline void compareA(TIMER_N(COMPARE_A_REG)::Type value) {
+            TIMER_N(COMPARE_A_REG)::setReg(value);
         }
-    #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_A_REG))
         /// #### static T compareA()
-        static force_inline REG_TYPE(TIMER_N(COMPARE_A_REG)) compareA() {
-            return getReg_(REG(TIMER_N(COMPARE_A_REG)));
+        static force_inline TIMER_N(COMPARE_A_REG)::Type compareA() {
+            return TIMER_N(COMPARE_A_REG)::getReg();
         }
     #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_B_REG))
+    #if REG_DEFINED(TIMER_N(COMPARE_B_REG))
         /// #### static void compareB(T value)
-        static force_inline void compareB(REG_TYPE(TIMER_N(COMPARE_B_REG)) value) {
-            setReg_(REG(TIMER_N(COMPARE_B_REG)), value);
+        static force_inline void compareB(TIMER_N(COMPARE_B_REG)::Type value) {
+            TIMER_N(COMPARE_B_REG)::setReg(value);
         }
-    #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_B_REG))
         /// #### static T compareB()
-        static force_inline REG_TYPE(TIMER_N(COMPARE_B_REG)) compareB() {
-            return getReg_(REG(TIMER_N(COMPARE_B_REG)));
+        static force_inline TIMER_N(COMPARE_B_REG)::Type compareB() {
+            return TIMER_N(COMPARE_B_REG)::getReg();
         }
     #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_C_REG))
+    #if REG_DEFINED(TIMER_N(COMPARE_C_REG))
         /// #### static void compareC(T value)
-        static force_inline void compareC(REG_TYPE(TIMER_N(COMPARE_C_REG)) value) {
-            setReg_(REG(TIMER_N(COMPARE_C_REG)), value);
+        static force_inline void compareC(TIMER_N(COMPARE_C_REG)::Type value) {
+            TIMER_N(COMPARE_C_REG)::setReg(value);
         }
-    #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_C_REG))
         /// #### static T compareC()
-        static force_inline REG_TYPE(TIMER_N(COMPARE_C_REG)) compareC() {
-            return getReg_(REG(TIMER_N(COMPARE_C_REG)));
+        static force_inline TIMER_N(COMPARE_C_REG)::Type compareC() {
+            return TIMER_N(COMPARE_C_REG)::getReg();
         }
     #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_A_OUTPUT_ENABLE_REG))
+    #if REG_DEFINED(TIMER_N(COMPARE_A_OUTPUT_ENABLE_REG))
         /// #### static void compareAOutputEnable(bool)
         static force_inline void compareAOutputEnable(bool b) {
-            setBit_(REG(TIMER_N(COMPARE_A_OUTPUT_ENABLE_REG)), TIMER_N(COMPARE_A_OUTPUT_ENABLE_BIT), b);
+            TIMER_N(COMPARE_A_OUTPUT_ENABLE_REG)::setBit(TIMER_N(COMPARE_A_OUTPUT_ENABLE_BIT), b);
         }
     #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_B_OUTPUT_ENABLE_REG))
+    #if REG_DEFINED(TIMER_N(COMPARE_B_OUTPUT_ENABLE_REG))
         /// #### static void compareBOutputEnable(bool)
         static force_inline void compareBOutputEnable(bool b) {
-            setBit_(REG(TIMER_N(COMPARE_B_OUTPUT_ENABLE_REG)), TIMER_N(COMPARE_B_OUTPUT_ENABLE_BIT), b);
+            TIMER_N(COMPARE_B_OUTPUT_ENABLE_REG)::setBit(TIMER_N(COMPARE_B_OUTPUT_ENABLE_BIT), b);
         }
     #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_C_OUTPUT_ENABLE_REG))
+    #if REG_DEFINED(TIMER_N(COMPARE_C_OUTPUT_ENABLE_REG))
         /// #### static void compareCOutputEnable(bool)
         static force_inline void compareCOutputEnable(bool b) {
-            setBit_(REG(TIMER_N(COMPARE_C_OUTPUT_ENABLE_REG)), TIMER_N(COMPARE_C_OUTPUT_ENABLE_BIT), b);
+            TIMER_N(COMPARE_C_OUTPUT_ENABLE_REG)::setBit(TIMER_N(COMPARE_C_OUTPUT_ENABLE_BIT), b);
         }
     #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_A_INT_ENABLE_REG))
-        /// #### static void compareAIntEnable(bool)
+    #if REG_DEFINED(TIMER_N(COMPARE_A_PWM_OUTPUT_ENABLE_REG))
+        /// #### static void compareAPwmOutputEnable(bool)
+        static force_inline void compareAPwmOutputEnable(bool b) {
+            TIMER_N(COMPARE_A_PWM_OUTPUT_ENABLE_REG)::setBit(TIMER_N(COMPARE_A_PWM_OUTPUT_ENABLE_BIT), b);
+        }
+    #endif
+
+    #if REG_DEFINED(TIMER_N(COMPARE_B_PWM_OUTPUT_ENABLE_REG))
+        /// #### static void compareBPwmOutputEnable(bool)
+        static force_inline void compareBPwmOutputEnable(bool b) {
+            TIMER_N(COMPARE_B_PWM_OUTPUT_ENABLE_REG)::setBit(TIMER_N(COMPARE_B_PWM_OUTPUT_ENABLE_BIT), b);
+        }
+    #endif
+
+    #if REG_DEFINED(TIMER_N(COMPARE_C_PWM_OUTPUT_ENABLE_REG))
+        /// #### static void compareCPwmOutputEnable(bool)
+        static force_inline void compareCPwmOutputEnable(bool b) {
+            TIMER_N(COMPARE_C_PWM_OUTPUT_ENABLE_REG)::setBit(TIMER_N(COMPARE_C_PWM_OUTPUT_ENABLE_BIT), b);
+        }
+    #endif
+
+    /// #### static void compareXOutput(CompareXOutput)
+
+    #if REG_DEFINED(TIMER_N(COMPARE_A_OUTPUT_REG))
+        static force_inline void compareAOutput(CompareAOutput o) {
+            TIMER_N(COMPARE_A_OUTPUT_REG)::setBits(TIMER_N(COMPARE_A_OUTPUT_MASK), o);
+        }
+    #endif
+
+    #if REG_DEFINED(TIMER_N(COMPARE_B_OUTPUT_REG))
+        static force_inline void compareBOutput(CompareBOutput o) {
+            TIMER_N(COMPARE_B_OUTPUT_REG)::setBits(TIMER_N(COMPARE_B_OUTPUT_MASK), o);
+        }
+    #endif
+
+    #if REG_DEFINED(TIMER_N(COMPARE_C_OUTPUT_REG))
+        static force_inline void compareCOutput(CompareCOutput o) {
+            TIMER_N(COMPARE_C_OUTPUT_REG)::setBits(TIMER_N(COMPARE_C_OUTPUT_MASK), o);
+        }
+    #endif
+
+    /// #### static void compareXIntEnable(bool)
+
+    #if REG_DEFINED(TIMER_N(COMPARE_A_INT_ENABLE_REG))
         static force_inline void compareAIntEnable(bool b) {
-            setBit_(REG(TIMER_N(COMPARE_A_INT_ENABLE_REG)), TIMER_N(COMPARE_A_INT_ENABLE_BIT), b);
+            TIMER_N(COMPARE_A_INT_ENABLE_REG)::setBit(TIMER_N(COMPARE_A_INT_ENABLE_BIT), b);
         }
     #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_B_INT_ENABLE_REG))
-        /// #### static void compareBIntEnable(bool)
+    #if REG_DEFINED(TIMER_N(COMPARE_B_INT_ENABLE_REG))
         static force_inline void compareBIntEnable(bool b) {
-            setBit_(REG(TIMER_N(COMPARE_B_INT_ENABLE_REG)), TIMER_N(COMPARE_B_INT_ENABLE_BIT), b);
+            TIMER_N(COMPARE_B_INT_ENABLE_REG)::setBit(TIMER_N(COMPARE_B_INT_ENABLE_BIT), b);
         }
     #endif
 
-    #if REG_ADDR(TIMER_N(COMPARE_C_INT_ENABLE_REG))
-        /// #### static void compareCIntEnable(bool)
+    #if REG_DEFINED(TIMER_N(COMPARE_C_INT_ENABLE_REG))
         static force_inline void compareCIntEnable(bool b) {
-            setBit_(REG(TIMER_N(COMPARE_C_INT_ENABLE_REG)), TIMER_N(COMPARE_C_INT_ENABLE_BIT), b);
+            TIMER_N(COMPARE_C_INT_ENABLE_REG)::setBit(TIMER_N(COMPARE_C_INT_ENABLE_BIT), b);
         }
     #endif
+
+    /// #### static bool compareXIntFlag()
+
+    /// #### static void compareXIntFlagClear\(\)
 
     #if REG_DEFINED(TIMER_N(COMPARE_A_INT_FLAG_REG))
-        /// #### static void compareAIntFlagClear\(\)
+        static force_inline bool compareAIntFlag() {
+            return TIMER_N(COMPARE_A_INT_FLAG_REG)::getBit(TIMER_N(COMPARE_A_INT_FLAG_BIT));
+        }
+
         static force_inline void compareAIntFlagClear() {
-            clearFlagBit(REG(TIMER_N(COMPARE_A_INT_FLAG_REG)), TIMER_N(COMPARE_A_INT_FLAG_BIT));
+            TIMER_N(COMPARE_A_INT_FLAG_REG)::setBit(TIMER_N(COMPARE_A_INT_FLAG_BIT), true);
         }
     #endif
 
     #if REG_DEFINED(TIMER_N(COMPARE_B_INT_FLAG_REG))
-        /// #### static void compareBIntFlagClear\(\)
+        static force_inline bool compareBIntFlag() {
+            return TIMER_N(COMPARE_B_INT_FLAG_REG)::getBit(TIMER_N(COMPARE_B_INT_FLAG_BIT));
+        }
+
         static force_inline void compareBIntFlagClear() {
-            clearFlagBit(REG(TIMER_N(COMPARE_B_INT_FLAG_REG)), TIMER_N(COMPARE_B_INT_FLAG_BIT));
+            TIMER_N(COMPARE_B_INT_FLAG_REG)::setBit(TIMER_N(COMPARE_B_INT_FLAG_BIT), true);
         }
     #endif
 
     #if REG_DEFINED(TIMER_N(COMPARE_C_INT_FLAG_REG))
-        /// #### static void compareCIntFlagClear\(\)
+        static force_inline bool compareCIntFlag() {
+            return TIMER_N(COMPARE_C_INT_FLAG_REG)::getBit(TIMER_N(COMPARE_C_INT_FLAG_BIT));
+        }
+
         static force_inline void compareCIntFlagClear() {
-            clearFlagBit(REG(TIMER_N(COMPARE_C_INT_FLAG_REG)), TIMER_N(COMPARE_C_INT_FLAG_BIT));
+            TIMER_N(COMPARE_C_INT_FLAG_REG)::setBit(TIMER_N(COMPARE_C_INT_FLAG_BIT), true);
         }
     #endif
 
-    /// ## class OutputX
-    /// See [[TimerN::OutputX]]
+    #if REG_DEFINED(TIMER_N(CAPTURE_REG))
+        /// #### static void capture(T)
+        static force_inline void capture(TIMER_N(CAPTURE_REG)::Type t) {
+            TIMER_N(CAPTURE_REG)::setReg(t);
+        }
 
-    #if TIMER_N(OUTPUT_A)
-        #define ID A
-        #include "output.xpp"
-        #undef ID
+        /// #### static T capture()
+        static force_inline TIMER_N(CAPTURE_REG)::Type capture() {
+            return TIMER_N(CAPTURE_REG)::getReg();
+        }
     #endif
 
-    #if TIMER_N(OUTPUT_B)
-        #define ID B
-        #include "output.xpp"
-        #undef ID
+    #if REG_DEFINED(TIMER_N(CAPTURE_REG))
+        /// #### static void captureEdge([[TimerN::CaptureEdge]])
+        static force_inline void captureEdge(CaptureEdge e) {
+            TIMER_N(CAPTURE_EDGE_REG)::setBits(TIMER_N(CAPTURE_EDGE_MASK), e);
+        }
     #endif
 
-    #if TIMER_N(OUTPUT_C)
-        #define ID C
-        #include "output.xpp"
-        #undef ID
+    #if REG_DEFINED(TIMER_N(CAPTURE_NOISE_CANCEL_ENABLE_REG))
+        /// #### static void captureNoiseCancelEnable(bool)
+        static force_inline void captureNoiseCancelEnable(bool b) {
+            TIMER_N(CAPTURE_NOISE_CANCEL_ENABLE_REG)::setBit(TIMER_N(CAPTURE_NOISE_CANCEL_ENABLE_BIT), b);
+        }
     #endif
 
-    /// ## class Input
-    /// See [[TimerN::Input]]
+    #if REG_DEFINED(TIMER_N(CAPTURE_INT_ENABLE_REG))
+        /// #### static void captureIntEnable(bool)
+        static force_inline void captureIntEnable(bool b) {
+            TIMER_N(CAPTURE_INT_ENABLE_REG)::setBit(TIMER_N(CAPTURE_INT_ENABLE_BIT), b);
+        }
+    #endif
 
-    #if TIMER_N(INPUT)
-        #include "input.xpp"
+    #if REG_DEFINED(TIMER_N(CAPTURE_INT_FLAG_REG))
+        /// #### static bool captureIntFlag()
+        static force_inline bool captureIntFlag() {
+            return TIMER_N(CAPTURE_INT_FLAG_REG)::getBit(TIMER_N(CAPTURE_INT_FLAG_BIT));
+        }
+
+        /// #### static void captureIntFlagClear()
+        static force_inline void captureIntFlagClear() {
+            TIMER_N(CAPTURE_INT_FLAG_REG)::setBit(TIMER_N(CAPTURE_INT_FLAG_BIT), true);
+        }
     #endif
 };
 
@@ -515,12 +600,14 @@ TEST(TimerN, getHardwareType) {
     ASSERT_EQ(TimerN::getHardwareType(), HardwareType::timer);
 }
 
-TEST(TimerN, counter) {
-    TEST_REG_WRITE(TimerN::counter(0x12));
-    TEST_REG_READ_WRITE(TimerN::counter());
-}
+#if REG_DEFINED(TIMER_N(COUNTER_REG))
+    TEST(TimerN, counter) {
+        TEST_REG_WRITE(TimerN::counter(0x12));
+        TEST_REG_READ_WRITE(TimerN::counter());
+    }
+#endif
 
-#if DEFINED(TIMER_N(CLOCK_BIT_0_BIT))
+#if REG_DEFINED(TIMER_N(CLOCK_REG))
     TEST(TimerN, clock) {
         #if DEFINED(TIMER_N(CLOCK_NONE_ID))
             TEST_REG_WRITE(TimerN::clock(TimerN::Clock::none));
@@ -596,7 +683,7 @@ TEST(TimerN, counter) {
     }
 #endif
 
-#if DEFINED(TIMER_N(WAVEFORM_BIT_0_BIT))
+#if REG_DEFINED(TIMER_N(WAVEFORM_REG))
     TEST(TimerN, waveform) {
         #if DEFINED(TIMER_N(WAVEFORM_NORMAL_ID))
             TEST_REG_WRITE(TimerN::waveform(TimerN::Waveform::normal));
@@ -672,67 +759,247 @@ TEST(TimerN, counter) {
     }
 #endif
 
-#if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
-    TEST(TimerN, intEnable) {
-        TEST_REG_WRITE(TimerN::intEnable(true));
-        TEST_REG_WRITE(TimerN::intEnable(false));
+#if REG_DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_REG))
+    TEST(TimerN, overflowIntEnable) {
+        TEST_REG_WRITE(TimerN::overflowIntEnable(true));
+        TEST_REG_WRITE(TimerN::overflowIntEnable(false));
     }
 #endif
 
-#if DEFINED(TIMER_N(OVERFLOW_INT_ENABLE_BIT))
-    TEST(TimerN, intFlag) {
-        TEST_REG_READ_WRITE(TimerN::intFlag());
+#if REG_DEFINED(TIMER_N(OVERFLOW_INT_FLAG_REG))
+    TEST(TimerN, overflowIntFlag) {
+        TEST_REG_READ_WRITE(TimerN::overflowIntFlag());
+    }
+
+    TEST(TimerN, overflowIntFlagClear) {
+        TEST_REG_WRITE(TimerN::overflowIntFlagClear());
     }
 #endif
 
-#if DEFINED(TIMER_N(OVERFLOW_INT_FLAG_BIT))
-    TEST(TimerN, intFlagClear) {
-        TEST_REG_WRITE(TimerN::intFlagClear());
-    }
-#endif
-
-#if DEFINED(TIMER_N(PRESCALER_RESET_BIT))
+#if REG_DEFINED(TIMER_N(PRESCALER_RESET_REG))
     TEST(TimerN, prescalerReset) {
         TEST_REG_WRITE(TimerN::prescalerReset());
     }
 #endif
 
-#if DEFINED(TIMER_N(SYNCHRONIZE_BIT))
+#if REG_DEFINED(TIMER_N(SYNCHRONIZE_REG))
     TEST(TimerN, synchronizeMode) {
         TEST_REG_WRITE(TimerN::synchronizeMode(true));
         TEST_REG_WRITE(TimerN::synchronizeMode(false));
     }
 #endif
 
-#define OUTPUT_TESTS
-
-#if TIMER_N(OUTPUT_A)
-    #define ID A
-    #include "output.xpp"
-    #undef ID
+#if REG_DEFINED(TIMER_N(COMPARE_A_REG))
+    TEST(TimerN, compareA) {
+        TEST_REG_WRITE(TimerN::compareA(0x12));
+        TEST_REG_READ_WRITE(TimerN::compareA());
+    }
 #endif
 
-#if TIMER_N(OUTPUT_B)
-    #define ID B
-    #include "output.xpp"
-    #undef ID
+#if REG_DEFINED(TIMER_N(COMPARE_B_REG))
+    TEST(TimerN, compareB) {
+        TEST_REG_WRITE(TimerN::compareB(0x12));
+        TEST_REG_READ_WRITE(TimerN::compareB());
+    }
 #endif
 
-#if TIMER_N(OUTPUT_C)
-    #define ID C
-    #include "output.xpp"
-    #undef ID
+#if REG_DEFINED(TIMER_N(COMPARE_C_REG))
+    TEST(TimerN, compareC) {
+        TEST_REG_WRITE(TimerN::compareC(0x12));
+        TEST_REG_READ_WRITE(TimerN::compareC());
+    }
 #endif
 
-#undef OUTPUT_TESTS
-
-#define INPUT_TESTS
-
-#if TIMER_N(INPUT)
-    #include "input.xpp"
+#if REG_DEFINED(TIMER_N(COMPARE_A_OUTPUT_ENABLE_REG))
+    TEST(TimerN, compareAOutputEnable) {
+        TEST_REG_WRITE(TimerN::compareAOutputEnable(true));
+        TEST_REG_WRITE(TimerN::compareAOutputEnable(false));
+    }
 #endif
 
-#undef INPUT_TESTS
+#if REG_DEFINED(TIMER_N(COMPARE_B_OUTPUT_ENABLE_REG))
+    TEST(TimerN, compareBOutputEnable) {
+        TEST_REG_WRITE(TimerN::compareBOutputEnable(true));
+        TEST_REG_WRITE(TimerN::compareBOutputEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_C_OUTPUT_ENABLE_REG))
+    TEST(TimerN, compareCOutputEnable) {
+        TEST_REG_WRITE(TimerN::compareCOutputEnable(true));
+        TEST_REG_WRITE(TimerN::compareCOutputEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_A_PWM_OUTPUT_ENABLE_REG))
+    TEST(TimerN, compareAPwmOutputEnable) {
+        TEST_REG_WRITE(TimerN::compareAPwmOutputEnable(true));
+        TEST_REG_WRITE(TimerN::compareAPwmOutputEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_B_PWM_OUTPUT_ENABLE_REG))
+    TEST(TimerN, compareBPwmOutputEnable) {
+        TEST_REG_WRITE(TimerN::compareBPwmOutputEnable(true));
+        TEST_REG_WRITE(TimerN::compareBPwmOutputEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_C_PWM_OUTPUT_ENABLE_REG))
+    TEST(TimerN, compareCPwmOutputEnable) {
+        TEST_REG_WRITE(TimerN::compareCPwmOutputEnable(true));
+        TEST_REG_WRITE(TimerN::compareCPwmOutputEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_A_OUTPUT_REG))
+    TEST(TimerN, compareAOutput) {
+        #if DEFINED(TIMER_N(COMPARE_A_OUTPUT_DISCONNECTED_ID))
+            TEST_REG_WRITE(TimerN::compareAOutput(TimerN::CompareAOutput::disconnected));
+        #endif
+
+        #if DEFINED(TIMER_N(COMPARE_A_OUTPUT_TOGGLE_ID))
+            TEST_REG_WRITE(TimerN::compareAOutput(TimerN::CompareAOutput::toggle));
+        #endif
+
+        #if DEFINED(TIMER_N(COMPARE_A_OUTPUT_CLEAR_ID))
+            TEST_REG_WRITE(TimerN::compareAOutput(TimerN::CompareAOutput::clear));
+        #endif
+
+        #if DEFINED(TIMER_N(COMPARE_A_OUTPUT_SET_ID))
+            TEST_REG_WRITE(TimerN::compareAOutput(TimerN::CompareAOutput::set));
+        #endif
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_B_OUTPUT_REG))
+    TEST(TimerN, compareBOutput) {
+        #if DEFINED(TIMER_N(COMPARE_B_OUTPUT_DISCONNECTED_ID))
+            TEST_REG_WRITE(TimerN::compareBOutput(TimerN::CompareBOutput::disconnected));
+        #endif
+
+        #if DEFINED(TIMER_N(COMPARE_B_OUTPUT_TOGGLE_ID))
+            TEST_REG_WRITE(TimerN::compareBOutput(TimerN::CompareBOutput::toggle));
+        #endif
+
+        #if DEFINED(TIMER_N(COMPARE_B_OUTPUT_CLEAR_ID))
+            TEST_REG_WRITE(TimerN::compareBOutput(TimerN::CompareBOutput::clear));
+        #endif
+
+        #if DEFINED(TIMER_N(COMPARE_B_OUTPUT_SET_ID))
+            TEST_REG_WRITE(TimerN::compareBOutput(TimerN::CompareBOutput::set));
+        #endif
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_C_OUTPUT_REG))
+    TEST(TimerN, compareCOutput) {
+        #if DEFINED(TIMER_N(COMPARE_C_OUTPUT_DISCONNECTED_ID))
+            TEST_REG_WRITE(TimerN::compareCOutput(TimerN::CompareCOutput::disconnected));
+        #endif
+
+        #if DEFINED(TIMER_N(COMPARE_C_OUTPUT_TOGGLE_ID))
+            TEST_REG_WRITE(TimerN::compareCOutput(TimerN::CompareCOutput::toggle));
+        #endif
+
+        #if DEFINED(TIMER_N(COMPARE_C_OUTPUT_CLEAR_ID))
+            TEST_REG_WRITE(TimerN::compareCOutput(TimerN::CompareCOutput::clear));
+        #endif
+
+        #if DEFINED(TIMER_N(COMPARE_C_OUTPUT_SET_ID))
+            TEST_REG_WRITE(TimerN::compareCOutput(TimerN::CompareCOutput::set));
+        #endif
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_A_INT_ENABLE_REG))
+    TEST(TimerN, compareAIntEnable) {
+        TEST_REG_WRITE(TimerN::compareAIntEnable(true));
+        TEST_REG_WRITE(TimerN::compareAIntEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_B_INT_ENABLE_REG))
+    TEST(TimerN, compareBIntEnable) {
+        TEST_REG_WRITE(TimerN::compareBIntEnable(true));
+        TEST_REG_WRITE(TimerN::compareBIntEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_C_INT_ENABLE_REG))
+    TEST(TimerN, compareCIntEnable) {
+        TEST_REG_WRITE(TimerN::compareCIntEnable(true));
+        TEST_REG_WRITE(TimerN::compareCIntEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_A_INT_FLAG_REG))
+    TEST(TimerN, compareAIntFlag) {
+        TEST_REG_READ_WRITE(TimerN::compareAIntFlag());
+    }
+
+    TEST(TimerN, compareAIntFlagClear) {
+        TEST_REG_WRITE(TimerN::compareAIntFlagClear());
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_B_INT_FLAG_REG))
+    TEST(TimerN, compareBIntFlag) {
+        TEST_REG_READ_WRITE(TimerN::compareBIntFlag());
+    }
+
+    TEST(TimerN, compareBIntFlagClear) {
+        TEST_REG_WRITE(TimerN::compareBIntFlagClear());
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(COMPARE_C_INT_FLAG_REG))
+    TEST(TimerN, compareCIntFlag) {
+        TEST_REG_READ_WRITE(TimerN::compareCIntFlag());
+    }
+
+    TEST(TimerN, compareCIntFlagClear) {
+        TEST_REG_WRITE(TimerN::compareCIntFlagClear());
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(CAPTURE_REG))
+    TEST(TimerN, capture) {
+        TEST_REG_WRITE(TimerN::capture(0x1234));
+        TEST_REG_READ_WRITE(TimerN::capture());
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(CAPTURE_REG))
+    TEST(TimerN, captureEdge) {
+        TEST_REG_WRITE(TimerN::captureEdge(TimerN::CaptureEdge::rising));
+        TEST_REG_WRITE(TimerN::captureEdge(TimerN::CaptureEdge::falling));
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(CAPTURE_NOISE_CANCEL_ENABLE_REG))
+    TEST(TimerN, captureNoiseCancelEnable) {
+        TEST_REG_WRITE(TimerN::captureNoiseCancelEnable(true));
+        TEST_REG_WRITE(TimerN::captureNoiseCancelEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(CAPTURE_INT_ENABLE_REG))
+    TEST(TimerN, captureIntEnable) {
+        TEST_REG_WRITE(TimerN::captureIntEnable(true));
+        TEST_REG_WRITE(TimerN::captureIntEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(TIMER_N(CAPTURE_INT_FLAG_REG))
+    TEST(TimerN, captureIntFlag) {
+        TEST_REG_READ_WRITE(TimerN::captureIntFlag());
+    }
+
+    TEST(TimerN, captureIntFlagClear) {
+            TEST_REG_WRITE(TimerN::captureIntFlagClear());
+    }
+#endif
 
 #endif // TEST
 

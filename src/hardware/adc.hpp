@@ -2,22 +2,6 @@
 
 /// # {{Analog to Digital Converters}}
 
-/// ```c++
-/// atomic {
-///     nblib::hw::Adc0::reference(nblib::hw::Adc0::Reference::avcc);
-///     nblib::hw::Adc0::channel(nblib::hw::Adc0::Channel::adc1);
-///     nblib::hw::Adc0::prescaler(nblib::hw::Adc0::Prescaler::div128);
-///     nblib::hw::Adc0::trigger(nblib::hw::Adc0::Trigger::singleConversion);
-///     nblib::hw::Adc0::intFlagClear();
-/// }
-///
-/// nblib::hw::Adc0::start();
-///
-/// while(!nblib::hw::Adc0::intFlag());
-///
-/// const uint16_t value = nblib::hw::Adc0::value();
-/// ```
-
 #ifndef NBLIB_ADC_HPP
 
 #include "chip.hpp"
@@ -34,7 +18,7 @@
     #define AdcN CAT(Adc, N)
     #define ADC_N(A) CAT(CHIP_ADC_, N, _, A)
 
-    #if CAT(CHIP_ADC_, N)
+    #if DEFINED(CAT(CHIP_ADC_, N))
 
 //------------------------------------------------------------------
 
@@ -46,113 +30,121 @@ struct AdcN {
     AdcN& operator=(const AdcN&) = delete;
     AdcN(const AdcN&) = delete;
 
-    /// #### enum {{AdcN::Reference}}
-    /// * aref
-    /// * avcc
-    /// * vdd
-    /// * internal
-    /// * internal_1_1
-    /// * internal_2_56
-    /// * internal_2_56_cap
-    enum class Reference {
-        #if DEFINED(ADC_N(REFERENCE_AREF_ID))
-            aref = ADC_N(REFERENCE_AREF_ID),
-        #endif
+    #if REG_DEFINED(ADC_N(REFERENCE_REG))
+        /// #### enum {{AdcN::Reference}}
+        /// * aref
+        /// * avcc
+        /// * vdd
+        /// * internal
+        /// * internal_1_1
+        /// * internal_2_56
+        /// * internal_2_56_cap
+        enum class Reference {
+            #if DEFINED(ADC_N(REFERENCE_AREF_ID))
+                aref = ADC_N(REFERENCE_AREF_ID),
+            #endif
 
-        #if DEFINED(ADC_N(REFERENCE_AVCC_ID))
-            avcc = ADC_N(REFERENCE_AVCC_ID),
-        #endif
+            #if DEFINED(ADC_N(REFERENCE_AVCC_ID))
+                avcc = ADC_N(REFERENCE_AVCC_ID),
+            #endif
 
-        #if DEFINED(ADC_N(REFERENCE_INTERNAL_ID))
-            internal = ADC_N(REFERENCE_INTERNAL_ID),
-        #endif
+            #if DEFINED(ADC_N(REFERENCE_INTERNAL_ID))
+                internal = ADC_N(REFERENCE_INTERNAL_ID),
+            #endif
 
-        #if DEFINED(ADC_N(REFERENCE_INTERNAL_1_1_ID))
-            internal_1_1 = ADC_N(REFERENCE_INTERNAL_1_1_ID),
-        #endif
+            #if DEFINED(ADC_N(REFERENCE_INTERNAL_1_1_ID))
+                internal_1_1 = ADC_N(REFERENCE_INTERNAL_1_1_ID),
+            #endif
 
-        #if DEFINED(ADC_N(REFERENCE_INTERNAL_2_56_ID))
-            internal_2_56 = ADC_N(REFERENCE_INTERNAL_2_56_ID),
-        #endif
+            #if DEFINED(ADC_N(REFERENCE_INTERNAL_2_56_ID))
+                internal_2_56 = ADC_N(REFERENCE_INTERNAL_2_56_ID),
+            #endif
 
-        #if DEFINED(ADC_N(REFERENCE_INTERNAL_2_56_CAP_ID))
-            internal_2_56_cap = ADC_N(REFERENCE_INTERNAL_2_56_CAP_ID),
-        #endif
+            #if DEFINED(ADC_N(REFERENCE_INTERNAL_2_56_CAP_ID))
+                internal_2_56_cap = ADC_N(REFERENCE_INTERNAL_2_56_CAP_ID),
+            #endif
 
-        #if DEFINED(ADC_N(REFERENCE_VDD_ID))
-            vdd = ADC_N(REFERENCE_VDD_ID),
-        #endif
-    };
+            #if DEFINED(ADC_N(REFERENCE_VCC_ID))
+                vcc = ADC_N(REFERENCE_VCC_ID),
+            #endif
 
-    /// #### enum {{AdcN::Channel}}
-    /// * adc0
-    /// * adc1
-    /// * adc2
-    /// * adc3
-    /// * adc4
-    /// * adc5
-    /// * adc6
-    /// * adc7
-    /// * adc8
-    /// * vbg
-    /// * internal
-    /// * temperature
-    /// * gnd
-    enum class Channel {
-        #if DEFINED(ADC_N(CHANNEL_0_ID))
-            adc0 = ADC_N(CHANNEL_0_ID),
-        #endif
+            #if DEFINED(ADC_N(REFERENCE_VDD_ID))
+                vdd = ADC_N(REFERENCE_VDD_ID),
+            #endif
+        };
+    #endif
 
-        #if DEFINED(ADC_N(CHANNEL_1_ID))
-            adc1 = ADC_N(CHANNEL_1_ID),
-        #endif
+    #if REG_DEFINED(ADC_N(CHANNEL_REG))
+        /// #### enum {{AdcN::Channel}}
+        /// * adc0
+        /// * adc1
+        /// * adc2
+        /// * adc3
+        /// * adc4
+        /// * adc5
+        /// * adc6
+        /// * adc7
+        /// * adc8
+        /// * vbg
+        /// * internal
+        /// * temperature
+        /// * gnd
+        enum class Channel {
+            #if DEFINED(ADC_N(CHANNEL_0_ID))
+                adc0 = ADC_N(CHANNEL_0_ID),
+            #endif
 
-        #if DEFINED(ADC_N(CHANNEL_2_ID))
-            adc2 = ADC_N(CHANNEL_2_ID),
-        #endif
+            #if DEFINED(ADC_N(CHANNEL_1_ID))
+                adc1 = ADC_N(CHANNEL_1_ID),
+            #endif
 
-        #if DEFINED(ADC_N(CHANNEL_3_ID))
-            adc3 = ADC_N(CHANNEL_3_ID),
-        #endif
+            #if DEFINED(ADC_N(CHANNEL_2_ID))
+                adc2 = ADC_N(CHANNEL_2_ID),
+            #endif
 
-        #if DEFINED(ADC_N(CHANNEL_4_ID))
-            adc4 = ADC_N(CHANNEL_4_ID),
-        #endif
+            #if DEFINED(ADC_N(CHANNEL_3_ID))
+                adc3 = ADC_N(CHANNEL_3_ID),
+            #endif
 
-        #if DEFINED(ADC_N(CHANNEL_5_ID))
-            adc5 = ADC_N(CHANNEL_5_ID),
-        #endif
+            #if DEFINED(ADC_N(CHANNEL_4_ID))
+                adc4 = ADC_N(CHANNEL_4_ID),
+            #endif
 
-        #if DEFINED(ADC_N(CHANNEL_6_ID))
-            adc6 = ADC_N(CHANNEL_6_ID),
-        #endif
+            #if DEFINED(ADC_N(CHANNEL_5_ID))
+                adc5 = ADC_N(CHANNEL_5_ID),
+            #endif
 
-        #if DEFINED(ADC_N(CHANNEL_7_ID))
-            adc7 = ADC_N(CHANNEL_7_ID),
-        #endif
+            #if DEFINED(ADC_N(CHANNEL_6_ID))
+                adc6 = ADC_N(CHANNEL_6_ID),
+            #endif
 
-        #if DEFINED(ADC_N(CHANNEL_8_ID))
-            adc8 = ADC_N(CHANNEL_8_ID),
-        #endif
+            #if DEFINED(ADC_N(CHANNEL_7_ID))
+                adc7 = ADC_N(CHANNEL_7_ID),
+            #endif
 
-        #if DEFINED(ADC_N(CHANNEL_VBG_ID))
-            vbg = ADC_N(CHANNEL_VBG_ID),
-        #endif
+            #if DEFINED(ADC_N(CHANNEL_8_ID))
+                adc8 = ADC_N(CHANNEL_8_ID),
+            #endif
 
-        #if DEFINED(ADC_N(CHANNEL_INTERNAL_ID))
-            internal = ADC_N(CHANNEL_INTERNAL_ID),
-        #endif
+            #if DEFINED(ADC_N(CHANNEL_VBG_ID))
+                vbg = ADC_N(CHANNEL_VBG_ID),
+            #endif
 
-        #if DEFINED(ADC_N(CHANNEL_TEMPERATURE_ID))
-            temperature = ADC_N(CHANNEL_TEMPERATURE_ID),
-        #endif
+            #if DEFINED(ADC_N(CHANNEL_INTERNAL_ID))
+                internal = ADC_N(CHANNEL_INTERNAL_ID),
+            #endif
 
-        #if DEFINED(ADC_N(CHANNEL_GND_ID))
-            gnd = ADC_N(CHANNEL_GND_ID),
-        #endif
-    };
+            #if DEFINED(ADC_N(CHANNEL_TEMPERATURE_ID))
+                temperature = ADC_N(CHANNEL_TEMPERATURE_ID),
+            #endif
 
-    #if DEFINED(ADC_N(PRESCALER_BIT_0_BIT))
+            #if DEFINED(ADC_N(CHANNEL_GND_ID))
+                gnd = ADC_N(CHANNEL_GND_ID),
+            #endif
+        };
+    #endif
+
+    #if REG_DEFINED(ADC_N(PRESCALER_REG))
         /// #### enum {{AdcN::Prescaler}}
         /// * div2
         /// * div4
@@ -197,9 +189,8 @@ struct AdcN {
         };
     #endif
 
-    #if DEFINED(ADC_N(TRIGGER_BIT_0_BIT))
+    #if REG_DEFINED(ADC_N(TRIGGER_REG))
         /// #### enum {{AdcN::Trigger}}
-        /// * singleConversion
         /// * freeRunning
         /// * event
         /// * analogComparator
@@ -210,10 +201,6 @@ struct AdcN {
         /// * timer1Overflow
         /// * timer1CaptureEvent
         enum class Trigger {
-            #if DEFINED(ADC_N(TRIGGER_SINGLE_CONVERSION_ID))
-                singleConversion = ADC_N(TRIGGER_SINGLE_CONVERSION_ID),
-            #endif
-
             #if DEFINED(ADC_N(TRIGGER_FREE_RUNNING_ID))
                 freeRunning = ADC_N(TRIGGER_FREE_RUNNING_ID),
             #endif
@@ -257,134 +244,94 @@ struct AdcN {
         return HardwareType::adc;
     }
 
-    #if REG_ADDR(ADC_N(ENABLE_BIT_0_REG))
+    #if REG_DEFINED(ADC_N(ENABLE_REG))
         /// #### static void enable(bool e)
         static force_inline void enable(bool e) {
-            setBit_(REG(ADC_N(ENABLE_BIT_0_REG)), ADC_N(ENABLE_BIT_0_BIT), e);
+            ADC_N(ENABLE_REG)::setBit(ADC_N(ENABLE_BIT), e);
         }
     #endif
 
-    #if REG_ADDR(ADC_N(START_BIT_0_REG))
+    #if REG_DEFINED(ADC_N(START_REG))
         /// #### static void start()
         static force_inline void start() {
-            setBit_(REG(ADC_N(START_BIT_0_REG)), ADC_N(START_BIT_0_BIT), true);
+            ADC_N(START_REG)::setBit(ADC_N(START_BIT), true);
         }
     #endif
 
-    #if REG_DEFINED(ADC_N(DATA_REG))
-        /// #### static uint16_t value()
-        static force_inline uint16_t value() {
-            return getReg_(REG(ADC_N(DATA_REG)));
+    #if REG_DEFINED(ADC_N(FREE_RUNNING_REG))
+        /// #### static void freeRunning(bool e)
+        static force_inline void freeRunning(bool e) {
+            ADC_N(FREE_RUNNING_REG)::setBit(ADC_N(FREE_RUNNING_BIT), e);
         }
     #endif
 
-    #if REG_ADDR(ADC_N(RESULT_REG))
-        /// #### static uint8/16_t result()
-        static force_inline REG_TYPE(ADC_N(RESULT_REG)) result() {
-            return getReg_(REG(ADC_N(RESULT_REG)));
+    #if REG_DEFINED(ADC_N(TRIGGER_ENABLE_REG))
+        /// #### static void triggerEnable(bool e)
+        static force_inline void triggerEnable(bool e) {
+            ADC_N(TRIGGER_ENABLE_REG)::setBit(ADC_N(TRIGGER_ENABLE_BIT), e);
         }
     #endif
 
-    #if REG_ADDR(ADC_N(REFERENCE_BIT_0_REG))
+    #if REG_DEFINED(ADC_N(BIPOLAR_MODE_REG))
+        /// #### static void bipolarModeEnable(bool e)
+        static force_inline void bipolarModeEnable(bool e) {
+            ADC_N(BIPOLAR_MODE_REG)::setBit(ADC_N(BIPOLAR_MODE_BIT), e);
+        }
+    #endif
+
+    /// #### static uint8/16_t result()
+    static force_inline ADC_N(RESULT_REG)::Type result() {
+        return ADC_N(RESULT_REG)::getReg();
+    }
+
+    #if REG_DEFINED(ADC_N(REFERENCE_REG))
         /// #### static void reference([[AdcN::Reference]] r)
         static force_inline void reference(Reference r) {
-            setBit_(REG(ADC_N(REFERENCE_BIT_0_REG)), ADC_N(REFERENCE_BIT_0_BIT), int(r) & 0x01);
-
-            #if REG_ADDR(ADC_N(REFERENCE_BIT_1_REG))
-                setBit_(REG(ADC_N(REFERENCE_BIT_1_REG)), ADC_N(REFERENCE_BIT_1_BIT), int(r) & 0x02);
-            #endif
-
-            #if REG_ADDR(ADC_N(REFERENCE_BIT_2_REG))
-                setBit_(REG(ADC_N(REFERENCE_BIT_2_REG)), ADC_N(REFERENCE_BIT_2_BIT), int(r) & 0x04);
-            #endif
+            ADC_N(REFERENCE_REG)::setBits(ADC_N(REFERENCE_MASK), r);
         }
     #endif
 
-    #if REG_ADDR(ADC_N(CHANNEL_BIT_0_REG))
+    #if REG_DEFINED(ADC_N(CHANNEL_REG))
         /// #### static void channel([[AdcN::Channel]] c)
         static force_inline void channel(Channel c) {
-            setBit_(REG(ADC_N(CHANNEL_BIT_0_REG)), ADC_N(CHANNEL_BIT_0_BIT), int(c) & 0x01);
+            ADC_N(CHANNEL_REG)::setBits(ADC_N(CHANNEL_MASK), c);
 
-            #if REG_ADDR(ADC_N(CHANNEL_BIT_1_REG))
-                setBit_(REG(ADC_N(CHANNEL_BIT_1_REG)), ADC_N(CHANNEL_BIT_1_BIT), int(c) & 0x02);
-            #endif
-
-            #if REG_ADDR(ADC_N(CHANNEL_BIT_2_REG))
-                setBit_(REG(ADC_N(CHANNEL_BIT_2_REG)), ADC_N(CHANNEL_BIT_2_BIT), int(c) & 0x04);
-            #endif
-
-            #if REG_ADDR(ADC_N(CHANNEL_BIT_3_REG))
-                setBit_(REG(ADC_N(CHANNEL_BIT_3_REG)), ADC_N(CHANNEL_BIT_3_BIT), int(c) & 0x08);
-            #endif
-
-            #if REG_ADDR(ADC_N(CHANNEL_BIT_4_REG))
-                setBit_(REG(ADC_N(CHANNEL_BIT_4_REG)), ADC_N(CHANNEL_BIT_4_BIT), int(c) & 0x10);
+            #if REG_DEFINED(ADC_N(CHANNEL_REG_EXTRA))
+                ADC_N(CHANNEL_REG_EXTRA)::setBits(ADC_N(CHANNEL_MASK_EXTRA), c >> 8);
             #endif
         }
     #endif
 
-    #if REG_ADDR(ADC_N(PRESCALER_BIT_0_REG))
+    #if REG_DEFINED(ADC_N(PRESCALER_REG))
         /// #### static void prescaler([[AdcN::Prescaler]] p)
         static force_inline void prescaler(Prescaler p) {
-            setBit_(REG(ADC_N(PRESCALER_BIT_0_REG)), ADC_N(PRESCALER_BIT_0_BIT), int(p) & 0x01);
-
-            #if REG_ADDR(ADC_N(PRESCALER_BIT_1_REG))
-                setBit_(REG(ADC_N(PRESCALER_BIT_1_REG)), ADC_N(PRESCALER_BIT_1_BIT), int(p) & 0x02);
-            #endif
-
-            #if REG_ADDR(ADC_N(PRESCALER_BIT_2_REG))
-                setBit_(REG(ADC_N(PRESCALER_BIT_2_REG)), ADC_N(PRESCALER_BIT_2_BIT), int(p) & 0x04);
-            #endif
+            ADC_N(PRESCALER_REG)::setBits(ADC_N(PRESCALER_MASK), p);
         }
     #endif
 
-    #if DEFINED(ADC_N(LEFT_ADJUST_BIT_0_BIT))
-        /// #### static void leftAdjust(bool l)
-        static force_inline void leftAdjust(bool l) {
-            setBit_(REG(ADC_N(LEFT_ADJUST_BIT_0_REG)), ADC_N(LEFT_ADJUST_BIT_0_BIT), l);
-        }
-    #endif
-
-    #if REG_ADDR(ADC_N(TRIGGER_BIT_0_REG))
+    #if REG_DEFINED(ADC_N(TRIGGER_REG))
         /// #### static void trigger([[AdcN::Trigger]] t)
         static force_inline void trigger(Trigger t) {
-            setBit_(REG(ADC_N(TRIGGER_BIT_0_REG)), ADC_N(TRIGGER_BIT_0_BIT), int(t) & 0x01);
-
-            #if REG_ADDR(ADC_N(TRIGGER_BIT_1_REG))
-                setBit_(REG(ADC_N(TRIGGER_BIT_1_REG)), ADC_N(TRIGGER_BIT_1_BIT), int(t) & 0x02);
-            #endif
-
-            #if REG_ADDR(ADC_N(TRIGGER_BIT_2_REG))
-                setBit_(REG(ADC_N(TRIGGER_BIT_2_REG)), ADC_N(TRIGGER_BIT_2_BIT), int(t) & 0x04);
-            #endif
-
-            #if REG_ADDR(ADC_N(TRIGGER_BIT_3_REG))
-                setBit_(REG(ADC_N(TRIGGER_BIT_3_REG)), ADC_N(TRIGGER_BIT_3_BIT), int(t) & 0x08);
-            #endif
+            ADC_N(TRIGGER_REG)::setBits(ADC_N(TRIGGER_MASK), t);
         }
     #endif
 
-    #if REG_ADDR(ADC_N(INT_ENABLE_BIT_0_REG))
+    #if REG_DEFINED(ADC_N(INT_ENABLE_REG))
         /// #### static void intEnable(bool e)
         static force_inline void intEnable(bool e) {
-            setBit_(REG(ADC_N(INT_ENABLE_BIT_0_REG)), ADC_N(INT_ENABLE_BIT_0_BIT), e);
+            ADC_N(INT_ENABLE_REG)::setBit(ADC_N(INT_ENABLE_BIT), e);
         }
     #endif
 
-    #if REG_ADDR(ADC_N(INT_FLAG_BIT_0_REG))
+    #if REG_DEFINED(ADC_N(INT_FLAG_REG))
         /// #### static bool intFlag()
         static force_inline bool intFlag() {
-            return getBit_(REG(ADC_N(INT_FLAG_BIT_0_REG)), ADC_N(INT_FLAG_BIT_0_BIT));
+            return ADC_N(INT_FLAG_REG)::getBit(ADC_N(INT_FLAG_BIT));
         }
 
         /// #### static void intFlagClear()
         static force_inline void intFlagClear() {
-            // TODO Add IMPURE flag indicators to other hardware
-            #if ADC_N(INT_FLAG_IMPURE)
-                setBit_(REG(ADC_N(INT_FLAG_BIT_0_REG)), ADC_N(INT_FLAG_BIT_0_BIT), true);
-            #else
-                clearFlagBit(REG(ADC_N(INT_FLAG_BIT_0_REG)), ADC_N(INT_FLAG_BIT_0_BIT));
-            #endif
+            ADC_N(INT_FLAG_REG)::setBit(ADC_N(INT_FLAG_BIT), true);
         }
     #endif
 };
@@ -395,26 +342,47 @@ TEST(AdcN, getHardwareType) {
     ASSERT_EQ(AdcN::getHardwareType(), HardwareType::adc);
 }
 
-#if DEFINED(ADC_N(ENABLE_BIT_0_BIT))
+#if REG_DEFINED(ADC_N(ENABLE_REG))
     TEST(AdcN, enable) {
         TEST_REG_WRITE(AdcN::enable(true));
         TEST_REG_WRITE(AdcN::enable(false));
     }
 #endif
 
-#if DEFINED(ADC_N(START_BIT_0_BIT))
+#if REG_DEFINED(ADC_N(START_REG))
     TEST(AdcN, start) {
         TEST_REG_WRITE(AdcN::start());
     }
 #endif
 
-#if REG_DEFINED(ADC_N(DATA_REG))
-    TEST(AdcN, value) {
-        TEST_REG_READ_WRITE(AdcN::value());
+#if REG_DEFINED(ADC_N(FREE_RUNNING_REG))
+    TEST(AdcN, freeRunning) {
+        TEST_REG_WRITE(AdcN::freeRunning(true));
+        TEST_REG_WRITE(AdcN::freeRunning(false));
     }
 #endif
 
-#if DEFINED(ADC_N(REFERENCE_BIT_0_BIT))
+#if REG_DEFINED(ADC_N(TRIGGER_ENABLE_REG))
+    TEST(AdcN, triggerEnable) {
+        TEST_REG_WRITE(AdcN::triggerEnable(true));
+        TEST_REG_WRITE(AdcN::triggerEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(ADC_N(BIPOLAR_MODE_ENABLE_REG))
+    TEST(AdcN, bipolarModeEnable) {
+        TEST_REG_WRITE(AdcN::bipolarModeEnable(true));
+        TEST_REG_WRITE(AdcN::bipolarModeEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(ADC_N(RESULT_REG))
+    TEST(AdcN, result) {
+        TEST_REG_READ_WRITE(AdcN::result());
+    }
+#endif
+
+#if REG_DEFINED(ADC_N(REFERENCE_REG))
     TEST(AdcN, reference) {
         #if DEFINED(ADC_N(REFERENCE_AREF_ID))
             TEST_REG_WRITE(AdcN::reference(AdcN::Reference::aref));
@@ -439,10 +407,18 @@ TEST(AdcN, getHardwareType) {
         #if DEFINED(ADC_N(REFERENCE_INTERNAL_2_56_CAP_ID))
             TEST_REG_WRITE(AdcN::reference(AdcN::Reference::internal_2_56_cap));
         #endif
+
+        #if DEFINED(ADC_N(REFERENCE_VCC_ID))
+            TEST_REG_WRITE(AdcN::reference(AdcN::Reference::vcc));
+        #endif
+
+        #if DEFINED(ADC_N(REFERENCE_VDD_ID))
+            TEST_REG_WRITE(AdcN::reference(AdcN::Reference::vdd));
+        #endif
     }
 #endif
 
-#if DEFINED(ADC_N(CHANNEL_BIT_0_BIT))
+#if REG_DEFINED(ADC_N(CHANNEL_REG))
     TEST(AdcN, channel) {
         #if DEFINED(ADC_N(CHANNEL_0_ID))
             TEST_REG_WRITE(AdcN::channel(AdcN::Channel::adc0));
@@ -484,13 +460,21 @@ TEST(AdcN, getHardwareType) {
             TEST_REG_WRITE(AdcN::channel(AdcN::Channel::vbg));
         #endif
 
+        #if DEFINED(ADC_N(CHANNEL_INTERNAL_ID))
+            TEST_REG_WRITE(AdcN::channel(AdcN::Channel::internal));
+        #endif
+
+        #if DEFINED(ADC_N(CHANNEL_TEMPERATURE_ID))
+            TEST_REG_WRITE(AdcN::channel(AdcN::Channel::temperature));
+        #endif
+
         #if DEFINED(ADC_N(CHANNEL_GND_ID))
             TEST_REG_WRITE(AdcN::channel(AdcN::Channel::gnd));
         #endif
     }
 #endif
 
-#if DEFINED(ADC_N(PRESCALER_BIT_0_BIT))
+#if REG_DEFINED(ADC_N(PRESCALER_REG))
     TEST(AdcN, prescaler) {
         #if DEFINED(ADC_N(PRESCALER_2_ID))
             TEST_REG_WRITE(AdcN::prescaler(AdcN::Prescaler::div2));
@@ -522,19 +506,8 @@ TEST(AdcN, getHardwareType) {
     }
 #endif
 
-#if DEFINED(ADC_N(LEFT_ADJUST_BIT_0_BIT))
-    TEST(AdcN, leftAdjust) {
-        TEST_REG_WRITE(AdcN::leftAdjust(true));
-        TEST_REG_WRITE(AdcN::leftAdjust(false));
-    }
-#endif
-
-#if DEFINED(ADC_N(TRIGGER_BIT_0_BIT))
+#if REG_DEFINED(ADC_N(TRIGGER_REG))
     TEST(AdcN, trigger) {
-        #if DEFINED(ADC_N(TRIGGER_SINGLE_CONVERSION_ID))
-            TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::singleConversion));
-        #endif
-
         #if DEFINED(ADC_N(TRIGGER_FREE_RUNNING_ID))
             TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::freeRunning));
         #endif
@@ -569,20 +542,18 @@ TEST(AdcN, getHardwareType) {
     }
 #endif
 
-#if DEFINED(ADC_N(INT_ENABLE_BIT_0_BIT))
+#if REG_DEFINED(ADC_N(INT_ENABLE_REG))
     TEST(AdcN, intEnable) {
         TEST_REG_WRITE(AdcN::intEnable(false));
         TEST_REG_WRITE(AdcN::intEnable(true));
     }
 #endif
 
-#if DEFINED(ADC_N(INT_FLAG_BIT_0_BIT))
+#if REG_DEFINED(ADC_N(INT_FLAG_REG))
     TEST(AdcN, intFlag) {
         TEST_REG_READ_WRITE(AdcN::intFlag());
     }
-#endif
 
-#if DEFINED(ADC_N(INT_FLAG_BIT_0_BIT))
     TEST(AdcN, intFlagClear) {
         TEST_REG_WRITE(AdcN::intFlagClear());
     }

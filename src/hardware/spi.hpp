@@ -2,27 +2,6 @@
 
 /// # {{Serial Peripheral Interfaces}}
 
-/// ```c++
-/// atomic {
-///     nblib::hw::Spi0::PinMosi::mode(nblib::hw::Spi0::PinMosi::Mode::output);
-///     nblib::hw::Spi0::PinSck::mode(nblib::hw::Spi0::PinSck::Mode::output);
-/// });
-///
-/// atomic {
-///     nblib::hw::Spi0::clock(nblib::hw::Spi0::Clock::div16);
-///     nblib::hw::Spi0::masterSlave(nblib::hw::Spi0::MasterSlave::master);
-///     nblib::hw::Spi0::enable(true);
-/// });
-///
-/// nblib::hw::Spi0::data(0x31);
-///
-/// while(!nblib::hw::Spi0::intFlag());
-///
-/// nblib::hw::Spi0::data(0x44);
-///
-/// while(!nblib::hw::Spi0::intFlag());
-/// ```
-
 #ifndef NBLIB_SPI_HPP
 
 #include "isr.hpp"
@@ -40,7 +19,7 @@
     #define SpiN CAT(Spi,N)
     #define SPI_N(A) CAT(CHIP_SPI_, N, _, A)
 
-    #if CAT(CHIP_SPI_, N)
+    #if DEFINED(CAT(CHIP_SPI_, N))
 
 //------------------------------------------------------------------
 
@@ -52,19 +31,7 @@ struct SpiN {
     SpiN& operator=(const SpiN&) = delete;
     SpiN(const SpiN&) = delete;
 
-    /// #### type PinMiso
-    using PinMiso = SPI_N(PIN_MISO);
-
-    /// #### type PinMosi
-    using PinMosi = SPI_N(PIN_MOSI);
-
-    /// #### type PinSck
-    using PinSck = SPI_N(PIN_SCK);
-
-    /// #### type PinSs
-    using PinSs = SPI_N(PIN_SS);
-
-    #if DEFINED(SPI_N(DATA_ORDER_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(DATA_ORDER_REG))
         /// #### enum {{SpiN::DataOrder}}
         /// * msbFirst
         /// * lsbFirst
@@ -74,7 +41,7 @@ struct SpiN {
         };
     #endif
 
-    #if DEFINED(SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(MASTER_SLAVE_SELECT_REG))
         /// #### enum {{SpiN::MasterSlave}}
         /// * master
         /// * slave
@@ -84,7 +51,7 @@ struct SpiN {
         };
     #endif
 
-    #if DEFINED(SPI_N(POLARITY_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(POLARITY_REG))
         /// #### enum {{SpiN::Polarity}}
         /// * leadingRisingTrailingFalling
         /// * leadingFallingTrailingRising
@@ -94,7 +61,7 @@ struct SpiN {
         };
     #endif
 
-    #if DEFINED(SPI_N(PHASE_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(PHASE_REG))
         /// #### enum {{SpiN::Phase}}
         /// * leadingSampleTrailingSetup
         /// * leadingSetupTrailingSample
@@ -104,7 +71,7 @@ struct SpiN {
         };
     #endif
 
-    #if DEFINED(SPI_N(CLOCK_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(CLOCK_REG))
         /// #### enum {{SpiN::Clock}}
         /// * div2
         /// * div4
@@ -149,86 +116,82 @@ struct SpiN {
         return HardwareType::spi;
     }
 
-    #if DEFINED(SPI_N(ENABLE_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(ENABLE_REG))
         /// #### static void enable(bool b)
         static force_inline void enable(bool b) {
-            setBit_(REG(SPI_N(ENABLE_BIT_0_REG)), SPI_N(ENABLE_BIT_0_BIT), b);
+            SPI_N(ENABLE_REG)::setBit(SPI_N(ENABLE_BIT), b);
         }
     #endif
 
-    #if DEFINED(SPI_N(INT_ENABLE_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(INT_ENABLE_REG))
         /// #### static void intEnable(bool b)
         static force_inline void intEnable(bool b) {
-            setBit_(REG(SPI_N(INT_ENABLE_BIT_0_REG)), SPI_N(INT_ENABLE_BIT_0_BIT), b);
+            SPI_N(INT_ENABLE_REG)::setBit(SPI_N(INT_ENABLE_BIT), b);
         }
     #endif
 
-    #if DEFINED(SPI_N(DATA_ORDER_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(DATA_ORDER_REG))
         /// #### static void dataOrder([[SpiN::DataOrder]] d)
         static force_inline void dataOrder(DataOrder d) {
-            setBit_(REG(SPI_N(DATA_ORDER_BIT_0_REG)), SPI_N(DATA_ORDER_BIT_0_BIT), int(d) & 0x01);
+            SPI_N(DATA_ORDER_REG)::setBits(SPI_N(DATA_ORDER_MASK), d);
         }
     #endif
 
-    #if DEFINED(SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(MASTER_SLAVE_SELECT_REG))
         /// #### static void masterSlave([[SpiN::MasterSlave]] m)
         static force_inline void masterSlave(MasterSlave m) {
-            setBit_(REG(SPI_N(MASTER_SLAVE_SELECT_BIT_0_REG)), SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT), int(m) & 0x01);
+            SPI_N(MASTER_SLAVE_SELECT_REG)::setBits(SPI_N(MASTER_SLAVE_SELECT_MASK), m);
         }
     #endif
 
-    #if DEFINED(SPI_N(POLARITY_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(POLARITY_REG))
         /// #### static void polarity([[SpiN::Polarity]] p)
         static force_inline void polarity(Polarity p) {
-            setBit_(REG(SPI_N(POLARITY_BIT_0_REG)), SPI_N(POLARITY_BIT_0_BIT), int(p) & 0x01);
+            SPI_N(POLARITY_REG)::setBits(SPI_N(POLARITY_MASK), p);
         }
     #endif
 
-    #if DEFINED(SPI_N(PHASE_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(PHASE_REG))
         /// #### static void phase([[SpiN::Phase]] p)
         static force_inline void phase(Phase p) {
-            setBit_(REG(SPI_N(PHASE_BIT_0_REG)), SPI_N(PHASE_BIT_0_BIT), int(p) & 0x01);
+            SPI_N(PHASE_REG)::setBits(SPI_N(PHASE_MASK), p);
         }
     #endif
 
-    #if DEFINED(SPI_N(CLOCK_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(CLOCK_REG))
         /// #### static void clock([[SpiN::Clock]] c)
         static force_inline void clock(Clock c) {
-            setBit_(REG(SPI_N(CLOCK_BIT_0_REG)), SPI_N(CLOCK_BIT_0_BIT), int(c) & 0x01);
+            SPI_N(CLOCK_REG)::setBits(SPI_N(CLOCK_MASK), c);
 
-            #if DEFINED(SPI_N(CLOCK_BIT_1_BIT))
-                setBit_(REG(SPI_N(CLOCK_BIT_1_REG)), SPI_N(CLOCK_BIT_1_BIT), int(c) & 0x02);
-            #endif
-
-            #if DEFINED(SPI_N(CLOCK_BIT_2_BIT))
-                setBit_(REG(SPI_N(CLOCK_BIT_2_REG)), SPI_N(CLOCK_BIT_2_BIT), int(c) & 0x04);
+            #if REG_DEFINED(SPI_N(CLOCK_REG_EXTRA))
+                SPI_N(CLOCK_REG_EXTRA)::setBits(SPI_N(CLOCK_MASK_EXTRA), uint(c) >> 8);
             #endif
         }
     #endif
 
-    #if DEFINED(SPI_N(INT_FLAG_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(INT_FLAG_REG))
         /// #### static bool intFlag()
         static force_inline bool intFlag() {
-            return getBit(REG(SPI_N(INT_FLAG_BIT_0_REG)), SPI_N(INT_FLAG_BIT_0_BIT));
+            return SPI_N(INT_FLAG_REG)::getBit(SPI_N(INT_FLAG_BIT));
         }
     #endif
 
-    #if DEFINED(SPI_N(COLLISION_FLAG_BIT_0_BIT))
+    #if REG_DEFINED(SPI_N(COLLISION_FLAG_REG))
         /// #### static bool collisionFlag()
         static force_inline bool collisionFlag() {
-            return getBit(REG(SPI_N(COLLISION_FLAG_BIT_0_REG)), SPI_N(COLLISION_FLAG_BIT_0_BIT));
+            return SPI_N(COLLISION_FLAG_REG)::getBit(SPI_N(COLLISION_FLAG_BIT));
         }
     #endif
 
     #if REG_DEFINED(SPI_N(DATA_REG))
         /// #### static void data(uint8_t d)
         static force_inline void data(uint8_t d) {
-            setReg_(REG(SPI_N(DATA_REG)), d);
+            SPI_N(DATA_REG)::setReg(d);
         }
 
         /// #### static uint8_t data()
         static force_inline uint8_t data() {
-            return getReg_(REG(SPI_N(DATA_REG)));
+            return SPI_N(DATA_REG)::getReg();
         }
     #endif
 };
@@ -239,49 +202,49 @@ TEST(SpiN, getHardwareType) {
     ASSERT_EQ(SpiN::getHardwareType(), HardwareType::spi);
 }
 
-#if DEFINED(SPI_N(ENABLE_BIT_0_BIT))
+#if REG_DEFINED(SPI_N(ENABLE_REG))
     TEST(SpiN, enable) {
         TEST_REG_WRITE(SpiN::enable(true));
         TEST_REG_WRITE(SpiN::enable(false));
     }
 #endif
 
-#if DEFINED(SPI_N(INT_ENABLE_BIT_0_BIT))
+#if REG_DEFINED(SPI_N(INT_ENABLE_REG))
     TEST(SpiN, intEnable) {
         TEST_REG_WRITE(SpiN::intEnable(true));
         TEST_REG_WRITE(SpiN::intEnable(false));
     }
 #endif
 
-#if DEFINED(SPI_N(DATA_ORDER_BIT_0_BIT))
+#if REG_DEFINED(SPI_N(DATA_ORDER_REG))
     TEST(SpiN, dataOrder) {
         TEST_REG_WRITE(SpiN::dataOrder(SpiN::DataOrder::msbFirst));
         TEST_REG_WRITE(SpiN::dataOrder(SpiN::DataOrder::lsbFirst));
     }
 #endif
 
-#if DEFINED(SPI_N(MASTER_SLAVE_SELECT_BIT_0_BIT))
+#if REG_DEFINED(SPI_N(MASTER_SLAVE_SELECT_REG))
     TEST(SpiN, masterSlave) {
         TEST_REG_WRITE(SpiN::masterSlave(SpiN::MasterSlave::master));
         TEST_REG_WRITE(SpiN::masterSlave(SpiN::MasterSlave::slave));
     }
 #endif
 
-#if DEFINED(SPI_N(POLARITY_BIT_0_BIT))
+#if REG_DEFINED(SPI_N(POLARITY_REG))
     TEST(SpiN, polarity) {
         TEST_REG_WRITE(SpiN::polarity(SpiN::Polarity::leadingRisingTrailingFalling));
         TEST_REG_WRITE(SpiN::polarity(SpiN::Polarity::leadingFallingTrailingRising));
     }
 #endif
 
-#if DEFINED(SPI_N(PHASE_BIT_0_BIT))
+#if REG_DEFINED(SPI_N(PHASE_REG))
     TEST(SpiN, phase) {
         TEST_REG_WRITE(SpiN::phase(SpiN::Phase::leadingSampleTrailingSetup));
         TEST_REG_WRITE(SpiN::phase(SpiN::Phase::leadingSetupTrailingSample));
     }
 #endif
 
-#if DEFINED(SPI_N(CLOCK_BIT_0_BIT))
+#if REG_DEFINED(SPI_N(CLOCK_REG))
     TEST(SpiN, clock) { //(Clock c) {
         #if DEFINED(SPI_N(CLOCK_DIV_2_ID))
             TEST_REG_WRITE(SpiN::clock(SpiN::Clock::div2));
@@ -313,13 +276,13 @@ TEST(SpiN, getHardwareType) {
     }
 #endif
 
-#if DEFINED(SPI_N(INT_FLAG_BIT_0_BIT))
+#if REG_DEFINED(SPI_N(INT_FLAG_REG))
     TEST(SpiN, intFlag) {
         TEST_REG_READ_WRITE(SpiN::intFlag());
     }
 #endif
 
-#if DEFINED(SPI_N(COLLISION_FLAG_BIT_0_BIT))
+#if REG_DEFINED(SPI_N(COLLISION_FLAG_REG))
     TEST(SpiN, collisionFlag) {
         TEST_REG_READ_WRITE(SpiN::collisionFlag());
     }

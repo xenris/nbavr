@@ -30,7 +30,7 @@
 #include "loopi"
 
 #ifdef _I
-    #if CAT(CHIP_EXINT_, N)
+    #if DEFINED(CAT(CHIP_EXINT_, N))
 
 //--------------------------------------------------------
 
@@ -42,7 +42,7 @@ struct ExIntN {
     ExIntN& operator=(const ExIntN&) = delete;
     ExIntN(const ExIntN&) = delete;
 
-    #if DEFINED(EXINT_N(TRIGGER_BIT_0_BIT))
+    #if EXINT_N(TRIGGER_MASK)
         /// #### enum {{ExIntN::Trigger}}
         /// * low
         /// * change
@@ -61,32 +61,29 @@ struct ExIntN {
         return HardwareType::exInt;
     }
 
-    #if DEFINED(EXINT_N(ENABLE_BIT_0_BIT))
+    #if REG_DEFINED(EXINT_N(ENABLE_REG))
         /// #### static void intEnable(bool e)
         static force_inline void intEnable(bool e) {
-            setBit_(REG(EXINT_N(ENABLE_BIT_0_REG)), EXINT_N(ENABLE_BIT_0_BIT), e);
+            EXINT_N(ENABLE_REG)::setBit(EXINT_N(ENABLE_BIT), e);
         }
     #endif
 
-    #if DEFINED(EXINT_N(TRIGGER_BIT_0_BIT))
+    #if REG_DEFINED(EXINT_N(TRIGGER_REG))
         /// #### static void trigger([[ExIntN::Trigger]] t)
         static force_inline void trigger(Trigger t) {
-            setBit_(REG(EXINT_N(TRIGGER_BIT_0_REG)), EXINT_N(TRIGGER_BIT_0_BIT), int(t) & 0x01);
-            setBit_(REG(EXINT_N(TRIGGER_BIT_1_REG)), EXINT_N(TRIGGER_BIT_1_BIT), int(t) & 0x02);
+            EXINT_N(TRIGGER_REG)::setBits(EXINT_N(TRIGGER_MASK), t);
         }
     #endif
 
-    #if DEFINED(EXINT_N(INT_FLAG_BIT_0_BIT))
+    #if REG_DEFINED(EXINT_N(INT_FLAG_REG))
         /// #### static bool intFlag()
         static force_inline bool intFlag() {
-            return getBit_(REG(EXINT_N(INT_FLAG_BIT_0_REG)), EXINT_N(INT_FLAG_BIT_0_BIT));
+            return EXINT_N(INT_FLAG_REG)::getBit(EXINT_N(INT_FLAG_BIT));
         }
-    #endif
 
-    #if DEFINED(EXINT_N(INT_FLAG_BIT_0_BIT))
         /// #### static void intFlagClear()
         static force_inline void intFlagClear() {
-            clearFlagBit(REG(EXINT_N(INT_FLAG_BIT_0_REG)), EXINT_N(INT_FLAG_BIT_0_BIT));
+            EXINT_N(INT_FLAG_REG)::setBit(EXINT_N(INT_FLAG_BIT), true);
         }
     #endif
 };
@@ -97,25 +94,31 @@ TEST(ExIntN, getHardwareType) {
     ASSERT_EQ(ExIntN::getHardwareType(), HardwareType::exInt);
 }
 
-TEST(ExIntN, intEnable) {
-    TEST_REG_WRITE(ExIntN::intEnable(true));
-    TEST_REG_WRITE(ExIntN::intEnable(false));
-}
+#if REG_DEFINED(EXINT_N(ENABLE_REG))
+    TEST(ExIntN, intEnable) {
+        TEST_REG_WRITE(ExIntN::intEnable(true));
+        TEST_REG_WRITE(ExIntN::intEnable(false));
+    }
+#endif
 
-TEST(ExIntN, trigger) {
-    TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::low));
-    TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::change));
-    TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::falling));
-    TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::rising));
-}
+#if REG_DEFINED(EXINT_N(TRIGGER_REG))
+    TEST(ExIntN, trigger) {
+        TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::low));
+        TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::change));
+        TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::falling));
+        TEST_REG_WRITE(ExIntN::trigger(ExIntN::Trigger::rising));
+    }
+#endif
 
-TEST(ExIntN, intFlag) {
-    TEST_REG_READ_WRITE(ExIntN::intFlag());
-}
+#if REG_DEFINED(EXINT_N(INT_FLAG_REG))
+    TEST(ExIntN, intFlag) {
+        TEST_REG_READ_WRITE(ExIntN::intFlag());
+    }
 
-TEST(ExIntN, intFlagClear) {
-    TEST_REG_WRITE(ExIntN::intFlagClear());
-}
+    TEST(ExIntN, intFlagClear) {
+        TEST_REG_WRITE(ExIntN::intFlagClear());
+    }
+#endif
 
 #endif
 

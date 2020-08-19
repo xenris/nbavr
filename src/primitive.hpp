@@ -117,6 +117,11 @@ constexpr bool isSigned<char>() {
 }
 
 template <>
+constexpr bool isSigned<signed char>() {
+    return true;
+}
+
+template <>
 constexpr bool isSigned<short>() {
     return true;
 }
