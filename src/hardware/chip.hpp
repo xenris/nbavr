@@ -67,6 +67,8 @@ struct _reg {
     #include "chips/avr/atmega2560.hpp"
 #elif defined(__attiny402__)
     #include "chips/avr/attiny402.hpp"
+#elif defined(__attiny1614__)
+    #include "chips/avr/attiny1614.hpp"
 #elif defined(__stm32f103c8_md__)
     #include "chips/stm32/stm32f103c8_md.hpp"
 #else

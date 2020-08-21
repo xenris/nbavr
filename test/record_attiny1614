@@ -1,14 +1,28 @@
 r Ac0::intFlag() 00011011010010111101101011100100
 r Ac0::state() 11000001011111100010111111100000
+r Ac1::intFlag() 11111110010000111100010001111110
+r Ac1::state() 01001011011011110100011000001000
+r Ac2::intFlag() 10101000001101000000110000011011
+r Ac2::state() 00101100001100001000011101000000
 r Adc0::intFlag() 11110010011011000100100001010001
 r Adc0::result() 478fd364286f2f50d5e15794bb48f220753762dde4fc1565aff24d35b9409132d882a905d661c4987d2a47b538e8549a9c85fd02cc02d4e697c62614c59c2745
+r Adc1::intFlag() 11001000001101011010000000101101
+r Adc1::result() 1248e0b46213a6f6b7855d1639def6525c9de56418a5144d813452ad67415c6a2bbf7c2adae250ef5d4637d93eb679d649e61ccb174df7e4517a3deaba5923
 r PortA::Pin0::input() 10100011010111100000001111111100
 r PortA::Pin1::input() 01100011101110101101000111110111
 r PortA::Pin2::input() 00100011010000010101001100000111
 r PortA::Pin3::input() 11101010111011000101100111000110
+r PortA::Pin4::input() 10010010000010101111001011111011
+r PortA::Pin5::input() 00001001110101000011100001101110
 r PortA::Pin6::input() 10011100000001100011010111001101
 r PortA::Pin7::input() 11000110011000010001011110111111
 r PortA::input() d98af5068c09f272aad8a231b695384121e70fe28c095cfdb7bb393f1efbed6
+r PortB::Pin0::input() 01001110111001001010101011101100
+r PortB::Pin1::input() 10101101101111111100100001011000
+r PortB::Pin2::input() 00100111011111001001111001010100
+r PortB::Pin3::input() 01101110010100110011001011100100
+r PortB::input() 22298ec06b1f3d86d33df7fec6f72ada9752e9dc27d46d30493f5976e3fdc0a0
+r PortC::input() e92291d82e30f5ff8c45ab63a3c6b31ec8e41eb6e7d1d0b42bb13f55f508ac2
 r Sleep::isEnabled() 11101101111111011100010111111011
 r TcA0::compare0() 4363ff24e3eaed1356948318c7f232a114c6669fd0a3b9034a7cb76239c7697f36918b5e30c815017b797dfc28d6e190d148f3e1eeca65867e7322867ec8937e
 r TcA0::compare0IntFlag() 00011111111010101110111001111110
@@ -58,10 +72,54 @@ w Ac0::outputEnable(true) 680:00:40:
 w Ac0::outputInvert(false) 682:ff:7f:
 w Ac0::outputInvert(true) 682:00:80:
 w Ac0::state()
+w Ac1::enable(false) 688:ff:fe:
+w Ac1::enable(true) 688:00:01:
+w Ac1::hysteresis(Ac1::Hysteresis::_10mv) 688:00:02:688:ff:fb:
+w Ac1::hysteresis(Ac1::Hysteresis::_25mv) 688:00:04:688:ff:fd:
+w Ac1::hysteresis(Ac1::Hysteresis::_50mv) 688:00:06:
+w Ac1::hysteresis(Ac1::Hysteresis::off) 688:ff:f9:
+w Ac1::inputNegative(Ac1::InputNegative::dac) 68a:00:03:
+w Ac1::inputNegative(Ac1::InputNegative::n0) 68a:ff:fc:
+w Ac1::inputNegative(Ac1::InputNegative::n1) 68a:00:01:68a:ff:fd:
+w Ac1::inputNegative(Ac1::InputNegative::vref) 68a:00:02:68a:ff:fe:
+w Ac1::inputPositive(Ac1::InputPositive::p0) 68a:ff:e7:
+w Ac1::inputPositive(Ac1::InputPositive::p1) 68a:00:08:68a:ff:ef:
+w Ac1::inputPositive(Ac1::InputPositive::p2) 68a:00:10:68a:ff:f7:
+w Ac1::inputPositive(Ac1::InputPositive::p3) 68a:00:18:
+w Ac1::intFlag()
+w Ac1::intFlagClear() 68f:00:01:
+w Ac1::outputEnable(false) 688:ff:bf:
+w Ac1::outputEnable(true) 688:00:40:
+w Ac1::outputInvert(false) 68a:ff:7f:
+w Ac1::outputInvert(true) 68a:00:80:
+w Ac1::state()
+w Ac2::enable(false) 690:ff:fe:
+w Ac2::enable(true) 690:00:01:
+w Ac2::hysteresis(Ac2::Hysteresis::_10mv) 690:00:02:690:ff:fb:
+w Ac2::hysteresis(Ac2::Hysteresis::_25mv) 690:00:04:690:ff:fd:
+w Ac2::hysteresis(Ac2::Hysteresis::_50mv) 690:00:06:
+w Ac2::hysteresis(Ac2::Hysteresis::off) 690:ff:f9:
+w Ac2::inputNegative(Ac2::InputNegative::dac) 692:00:03:
+w Ac2::inputNegative(Ac2::InputNegative::n0) 692:ff:fc:
+w Ac2::inputNegative(Ac2::InputNegative::n1) 692:00:01:692:ff:fd:
+w Ac2::inputNegative(Ac2::InputNegative::vref) 692:00:02:692:ff:fe:
+w Ac2::inputPositive(Ac2::InputPositive::p0) 692:ff:e7:
+w Ac2::inputPositive(Ac2::InputPositive::p1) 692:00:08:692:ff:ef:
+w Ac2::inputPositive(Ac2::InputPositive::p2) 692:00:10:692:ff:f7:
+w Ac2::inputPositive(Ac2::InputPositive::p3) 692:00:18:
+w Ac2::intFlag()
+w Ac2::intFlagClear() 697:00:01:
+w Ac2::outputEnable(false) 690:ff:bf:
+w Ac2::outputEnable(true) 690:00:40:
+w Ac2::outputInvert(false) 692:ff:7f:
+w Ac2::outputInvert(true) 692:00:80:
+w Ac2::state()
 w Adc0::channel(Adc0::Channel::adc0) 606:ff:e0:
 w Adc0::channel(Adc0::Channel::adc1) 606:00:01:606:ff:e1:
 w Adc0::channel(Adc0::Channel::adc2) 606:00:02:606:ff:e2:
 w Adc0::channel(Adc0::Channel::adc3) 606:00:03:606:ff:e3:
+w Adc0::channel(Adc0::Channel::adc4) 606:00:04:606:ff:e4:
+w Adc0::channel(Adc0::Channel::adc5) 606:00:05:606:ff:e5:
 w Adc0::channel(Adc0::Channel::adc6) 606:00:06:606:ff:e6:
 w Adc0::channel(Adc0::Channel::adc7) 606:00:07:606:ff:e7:
 w Adc0::channel(Adc0::Channel::gnd) 606:00:1f:
@@ -88,6 +146,34 @@ w Adc0::result()
 w Adc0::start() 608:00:01:
 w Adc0::triggerEnable(false) 609:ff:fe:
 w Adc0::triggerEnable(true) 609:00:01:
+w Adc1::channel(Adc1::Channel::adc0) 646:ff:e0:
+w Adc1::channel(Adc1::Channel::adc1) 646:00:01:646:ff:e1:
+w Adc1::channel(Adc1::Channel::adc2) 646:00:02:646:ff:e2:
+w Adc1::channel(Adc1::Channel::adc3) 646:00:03:646:ff:e3:
+w Adc1::channel(Adc1::Channel::gnd) 646:00:1f:
+w Adc1::channel(Adc1::Channel::internal) 646:00:1d:646:ff:fd:
+w Adc1::channel(Adc1::Channel::temperature) 646:00:1e:646:ff:fe:
+w Adc1::enable(false) 640:ff:fe:
+w Adc1::enable(true) 640:00:01:
+w Adc1::freeRunning(false) 640:ff:fd:
+w Adc1::freeRunning(true) 640:00:02:
+w Adc1::intEnable(false) 64a:ff:fe:
+w Adc1::intEnable(true) 64a:00:01:
+w Adc1::intFlag()
+w Adc1::intFlagClear() 64b:00:01:64b:ff:01:
+w Adc1::prescaler(Adc1::Prescaler::div128) 642:00:06:642:ff:fe:
+w Adc1::prescaler(Adc1::Prescaler::div16) 642:00:03:642:ff:fb:
+w Adc1::prescaler(Adc1::Prescaler::div2) 642:ff:f8:
+w Adc1::prescaler(Adc1::Prescaler::div32) 642:00:04:642:ff:fc:
+w Adc1::prescaler(Adc1::Prescaler::div4) 642:00:01:642:ff:f9:
+w Adc1::prescaler(Adc1::Prescaler::div64) 642:00:05:642:ff:fd:
+w Adc1::prescaler(Adc1::Prescaler::div8) 642:00:02:642:ff:fa:
+w Adc1::reference(Adc1::Reference::internal) 642:ff:cf:
+w Adc1::reference(Adc1::Reference::vdd) 642:00:10:642:ff:df:
+w Adc1::result()
+w Adc1::start() 648:00:01:
+w Adc1::triggerEnable(false) 649:ff:fe:
+w Adc1::triggerEnable(true) 649:00:01:
 w Clock::lock() 34:00:d8:62:00:01:34:ff:d8:62:ff:01:
 w Clock::prescaler(Clock::Prescaler::div10) 34:00:d8:61:00:12:34:ff:d8:61:ff:13:
 w Clock::prescaler(Clock::Prescaler::div12) 34:00:d8:61:00:14:34:ff:d8:61:ff:15:
@@ -105,6 +191,21 @@ w Clock::prescalerEnable(true) 34:00:d8:61:00:01:34:ff:d8:61:ff:1f:
 w Clock::source(Clock::Source::external) 34:00:d8:60:00:03:34:ff:d8:60:ff:03:
 w Clock::source(Clock::Source::internal16M20M) 34:00:d8:34:ff:d8:60:ff:00:
 w Clock::source(Clock::Source::internal32K) 34:00:d8:60:00:01:34:ff:d8:60:ff:01:
+w Dac0::data(0x12) 6a1:00:12:6a1:ff:12:
+w Dac0::enable(false) 6a0:ff:fe:
+w Dac0::enable(true) 6a0:00:01:
+w Dac0::outputEnable(false) 6a0:ff:bf:
+w Dac0::outputEnable(true) 6a0:00:40:
+w Dac1::data(0x12) 6a1:00:12:6a1:ff:12:
+w Dac1::enable(false) 6a8:ff:fe:
+w Dac1::enable(true) 6a8:00:01:
+w Dac1::outputEnable(false) 6a8:ff:bf:
+w Dac1::outputEnable(true) 6a8:00:40:
+w Dac2::data(0x12) 6a1:00:12:6a1:ff:12:
+w Dac2::enable(false) 6b0:ff:fe:
+w Dac2::enable(true) 6b0:00:01:
+w Dac2::outputEnable(false) 6b0:ff:bf:
+w Dac2::outputEnable(true) 6b0:00:40:
 w PortA::Pin0::direction(Pin::Direction::input) 00:ff:fe:
 w PortA::Pin0::direction(Pin::Direction::output) 00:00:01:
 w PortA::Pin0::input()
@@ -137,6 +238,22 @@ w PortA::Pin3::output(Pin::Value::low) 01:ff:f7:
 w PortA::Pin3::outputToggle() 407:00:08:407:ff:08:
 w PortA::Pin3::pullup(false) 413:ff:f7:
 w PortA::Pin3::pullup(true) 413:00:08:
+w PortA::Pin4::direction(Pin::Direction::input) 00:ff:ef:
+w PortA::Pin4::direction(Pin::Direction::output) 00:00:10:
+w PortA::Pin4::input()
+w PortA::Pin4::output(Pin::Value::high) 01:00:10:
+w PortA::Pin4::output(Pin::Value::low) 01:ff:ef:
+w PortA::Pin4::outputToggle() 407:00:10:407:ff:10:
+w PortA::Pin4::pullup(false) 414:ff:f7:
+w PortA::Pin4::pullup(true) 414:00:08:
+w PortA::Pin5::direction(Pin::Direction::input) 00:ff:df:
+w PortA::Pin5::direction(Pin::Direction::output) 00:00:20:
+w PortA::Pin5::input()
+w PortA::Pin5::output(Pin::Value::high) 01:00:20:
+w PortA::Pin5::output(Pin::Value::low) 01:ff:df:
+w PortA::Pin5::outputToggle() 407:00:20:407:ff:20:
+w PortA::Pin5::pullup(false) 415:ff:f7:
+w PortA::Pin5::pullup(true) 415:00:08:
 w PortA::Pin6::direction(Pin::Direction::input) 00:ff:bf:
 w PortA::Pin6::direction(Pin::Direction::output) 00:00:40:
 w PortA::Pin6::input()
@@ -157,6 +274,46 @@ w PortA::direction(0x12) 00:00:12:00:ff:12:
 w PortA::input()
 w PortA::output(0x12) 01:00:12:01:ff:12:
 w PortA::outputToggle(0x12) 407:00:12:407:ff:12:
+w PortB::Pin0::direction(Pin::Direction::input) 04:ff:fe:
+w PortB::Pin0::direction(Pin::Direction::output) 04:00:01:
+w PortB::Pin0::input()
+w PortB::Pin0::output(Pin::Value::high) 05:00:01:
+w PortB::Pin0::output(Pin::Value::low) 05:ff:fe:
+w PortB::Pin0::outputToggle() 427:00:01:427:ff:01:
+w PortB::Pin0::pullup(false) 430:ff:f7:
+w PortB::Pin0::pullup(true) 430:00:08:
+w PortB::Pin1::direction(Pin::Direction::input) 04:ff:fd:
+w PortB::Pin1::direction(Pin::Direction::output) 04:00:02:
+w PortB::Pin1::input()
+w PortB::Pin1::output(Pin::Value::high) 05:00:02:
+w PortB::Pin1::output(Pin::Value::low) 05:ff:fd:
+w PortB::Pin1::outputToggle() 427:00:02:427:ff:02:
+w PortB::Pin1::pullup(false) 431:ff:f7:
+w PortB::Pin1::pullup(true) 431:00:08:
+w PortB::Pin2::direction(Pin::Direction::input) 04:ff:fb:
+w PortB::Pin2::direction(Pin::Direction::output) 04:00:04:
+w PortB::Pin2::input()
+w PortB::Pin2::output(Pin::Value::high) 05:00:04:
+w PortB::Pin2::output(Pin::Value::low) 05:ff:fb:
+w PortB::Pin2::outputToggle() 427:00:04:427:ff:04:
+w PortB::Pin2::pullup(false) 432:ff:f7:
+w PortB::Pin2::pullup(true) 432:00:08:
+w PortB::Pin3::direction(Pin::Direction::input) 04:ff:f7:
+w PortB::Pin3::direction(Pin::Direction::output) 04:00:08:
+w PortB::Pin3::input()
+w PortB::Pin3::output(Pin::Value::high) 05:00:08:
+w PortB::Pin3::output(Pin::Value::low) 05:ff:f7:
+w PortB::Pin3::outputToggle() 427:00:08:427:ff:08:
+w PortB::Pin3::pullup(false) 433:ff:f7:
+w PortB::Pin3::pullup(true) 433:00:08:
+w PortB::direction(0x12) 04:00:12:04:ff:12:
+w PortB::input()
+w PortB::output(0x12) 05:00:12:05:ff:12:
+w PortB::outputToggle(0x12) 427:00:12:427:ff:12:
+w PortC::direction(0x12) 08:00:12:08:ff:12:
+w PortC::input()
+w PortC::output(0x12) 09:00:12:09:ff:12:
+w PortC::outputToggle(0x12) 447:00:12:447:ff:12:
 w Sleep::enable(false) 50:ff:fe:
 w Sleep::enable(true) 50:00:01:
 w Sleep::isEnabled()
@@ -312,3 +469,18 @@ w Vref1::voltage(Vref1::Voltage::v1_1) a0:00:10:a0:ff:9f:
 w Vref1::voltage(Vref1::Voltage::v1_5) a0:00:40:a0:ff:cf:
 w Vref1::voltage(Vref1::Voltage::v2_5) a0:00:20:a0:ff:af:
 w Vref1::voltage(Vref1::Voltage::v4_3) a0:00:30:a0:ff:bf:
+w Vref2::voltage(Vref2::Voltage::v0_55) a2:ff:f8:
+w Vref2::voltage(Vref2::Voltage::v1_1) a2:00:01:a2:ff:f9:
+w Vref2::voltage(Vref2::Voltage::v1_5) a2:00:04:a2:ff:fc:
+w Vref2::voltage(Vref2::Voltage::v2_5) a2:00:02:a2:ff:fa:
+w Vref2::voltage(Vref2::Voltage::v4_3) a2:00:03:a2:ff:fb:
+w Vref3::voltage(Vref3::Voltage::v0_55) a2:ff:8f:
+w Vref3::voltage(Vref3::Voltage::v1_1) a2:00:10:a2:ff:9f:
+w Vref3::voltage(Vref3::Voltage::v1_5) a2:00:40:a2:ff:cf:
+w Vref3::voltage(Vref3::Voltage::v2_5) a2:00:20:a2:ff:af:
+w Vref3::voltage(Vref3::Voltage::v4_3) a2:00:30:a2:ff:bf:
+w Vref4::voltage(Vref4::Voltage::v0_55) a3:ff:f8:
+w Vref4::voltage(Vref4::Voltage::v1_1) a3:00:01:a3:ff:f9:
+w Vref4::voltage(Vref4::Voltage::v1_5) a3:00:04:a3:ff:fc:
+w Vref4::voltage(Vref4::Voltage::v2_5) a3:00:02:a3:ff:fa:
+w Vref4::voltage(Vref4::Voltage::v4_3) a3:00:03:a3:ff:fb:

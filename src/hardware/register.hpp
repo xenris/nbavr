@@ -51,14 +51,12 @@ enum class Ccp {
 // TODO Possibly use cbi and sbi if address is valid.
 template <class T, size_t addr, T writeZero = 0x00, Ccp ccp = Ccp::none>
 struct Register {
-    using Type = T;
-
     static_assert(isUnsigned<T>(), "Register type needs to be an unsigned integer");
 
+    using Type = T;
+
     Register() = delete;
-
     Register& operator=(const Register&) = delete;
-
     Register(const Register&) = delete;
 
     static force_inline void allowConfigChange() {

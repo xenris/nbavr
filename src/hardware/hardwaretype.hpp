@@ -9,21 +9,32 @@
 namespace nblib::hw {
 
 /// #### enum {{HardwareType}}
+/// * ac
 /// * adc
+/// * clock
+/// * dac
 /// * exInt
 /// * eeprom
 /// * pcInt
 /// * pin
 /// * port
 /// * spi
+/// * tc
+/// * tcA
+/// * tcB
+/// * tcC
+/// * tcD
 /// * timer
 /// * twi
 /// * usart
 /// * usi
+/// * vref
 /// * wdt
 enum class HardwareType {
+    ac,
     adc,
     clock,
+    dac,
     exInt,
     eeprom,
     pcInt,
@@ -31,6 +42,11 @@ enum class HardwareType {
     port,
     sleep,
     spi,
+    tc,
+    tcA,
+    tcB,
+    tcC,
+    tcD,
     timer,
     twi,
     usart,
