@@ -31,7 +31,7 @@ declare -a tests=($(find -name 'test_*'))
 set +e
 
 for test in "${tests[@]}" ; do
-    chip=$test
+    chip=${test:7}
 
     echo "############ $chip ############"
 
@@ -47,3 +47,13 @@ for test in "${tests[@]}" ; do
 done
 
 echo -e "\e[32mAll tests passed\e[0m"
+
+echo -n "("
+
+for test in "${tests[@]}" ; do
+    chip=${test:7}
+
+    echo -n "$chip "
+done
+
+echo -e "\b)"
