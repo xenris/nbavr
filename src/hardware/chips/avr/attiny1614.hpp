@@ -142,9 +142,9 @@
 
 #define vectorPortB                                                 ISR(__vector_4)
 #define vectorPortC                                                 ISR(__vector_5)
-#define vectorTimer2                                                ISR(__vector_14)
-#define vectorTimer3Overflow                                        ISR(__vector_15)
-#define vectorTimer3Trigger                                         ISR(__vector_16)
+#define vectorTc2                                                   ISR(__vector_14)
+#define vectorTc3Overflow                                           ISR(__vector_15)
+#define vectorTc3Trigger                                            ISR(__vector_16)
 #define vectorAc0                                                   ISR(__vector_17)
 #define vectorAc1                                                   ISR(__vector_18)
 #define vectorAc2                                                   ISR(__vector_19)
@@ -478,7 +478,7 @@
 #define CHIP_DAC_2_DATA_REG                                         CHIP_REG_DAC_0_DATA
 
 //------------------------------------------------
-// Timers
+// Timer/Counters
 
 // TODO
 

@@ -37,26 +37,26 @@ r Sleep::isEnabled() 00000100110101111000010111011111
 r Spi0::collisionFlag() 11010000011010000100111101111100
 r Spi0::data() 3065a6ee3795c3679f208b1426b423e41e186c7b7fbc12aaffc26a669e51
 r Spi0::intFlag() 10100011111110110101110001111110
-r Timer0::compareA() d2f6ac36799be05c79de7e225d2598d28e05cf35e8ad539631e5d9fea4af4bd
-r Timer0::compareAIntFlag() 11111100101101001100101101110110
-r Timer0::compareB() 8937f7a6ee4a326ead947b251361f1c9272e3b4e3c9dfaacc257299d8b448
-r Timer0::compareBIntFlag() 11110100010000110110100111010000
-r Timer0::counter() e877c5297b7dd5609c62db43dd10495775bdf5f4eae79c9870027f814e8abda
-r Timer0::overflowIntFlag() 01111000011110110100110010111111
-r Timer1::capture() 3ba7a0a5c32f54736267eaee42449706a66a70fbb934d11019224866520f2b75dac59edc3a5bef59da1d5a12ae0547a97f995a80fd94687aac20a1256e01
-r Timer1::captureIntFlag() 10010011011111100111101001011110
-r Timer1::compareA() afe8905beedf3f2814a437606a2ba48df889c5d7330785b038a1332624937ea4c16b9aaaa7b038c48122bbc8e23cd2520c042c4a37bebcd72c1c95381b2baa8
-r Timer1::compareAIntFlag() 10110111111011010111001100111011
-r Timer1::compareB() fb887b8387be1e83885b953838fc65dfee81c79bcef926e41562b079de3f62d2d899b3eb40e5d2da1ddd138c8d57f2aaa99fe06749d7bccab07395b2dfc233a9
-r Timer1::compareBIntFlag() 00011010110010000110100001101000
-r Timer1::counter() 466f8cebbb84202c9ea2a8939a1c190e396adf6c0cc487c92701c3b38a177936b02749b7cbeaeef4766724372d73428bc058fe5de5e164c5122c605f6e6cf90
-r Timer1::overflowIntFlag() 10010100000011110111000111000011
-r Timer2::compareA() d4506f5c6067f0f280c981de7f24f4ba75a07cd4dd81a2aee78bf2498d287820
-r Timer2::compareAIntFlag() 01011010011000111110011100111110
-r Timer2::compareB() e3569ad55ef6b4796f6a23cb284b9f5ab0848ac0d415855a16cdf3ec98a8b0
-r Timer2::compareBIntFlag() 11111010110011110001011000101011
-r Timer2::counter() 26c8e630d098c37740da764c5947b6419af563b48aed426531d1227d3ca3e83
-r Timer2::overflowIntFlag() 10110000010111011001110010001101
+r Tc0::compareA() d2f6ac36799be05c79de7e225d2598d28e05cf35e8ad539631e5d9fea4af4bd
+r Tc0::compareAIntFlag() 11111100101101001100101101110110
+r Tc0::compareB() 8937f7a6ee4a326ead947b251361f1c9272e3b4e3c9dfaacc257299d8b448
+r Tc0::compareBIntFlag() 11110100010000110110100111010000
+r Tc0::counter() e877c5297b7dd5609c62db43dd10495775bdf5f4eae79c9870027f814e8abda
+r Tc0::overflowIntFlag() 01111000011110110100110010111111
+r Tc1::capture() 3ba7a0a5c32f54736267eaee42449706a66a70fbb934d11019224866520f2b75dac59edc3a5bef59da1d5a12ae0547a97f995a80fd94687aac20a1256e01
+r Tc1::captureIntFlag() 10010011011111100111101001011110
+r Tc1::compareA() afe8905beedf3f2814a437606a2ba48df889c5d7330785b038a1332624937ea4c16b9aaaa7b038c48122bbc8e23cd2520c042c4a37bebcd72c1c95381b2baa8
+r Tc1::compareAIntFlag() 10110111111011010111001100111011
+r Tc1::compareB() fb887b8387be1e83885b953838fc65dfee81c79bcef926e41562b079de3f62d2d899b3eb40e5d2da1ddd138c8d57f2aaa99fe06749d7bccab07395b2dfc233a9
+r Tc1::compareBIntFlag() 00011010110010000110100001101000
+r Tc1::counter() 466f8cebbb84202c9ea2a8939a1c190e396adf6c0cc487c92701c3b38a177936b02749b7cbeaeef4766724372d73428bc058fe5de5e164c5122c605f6e6cf90
+r Tc1::overflowIntFlag() 10010100000011110111000111000011
+r Tc2::compareA() d4506f5c6067f0f280c981de7f24f4ba75a07cd4dd81a2aee78bf2498d287820
+r Tc2::compareAIntFlag() 01011010011000111110011100111110
+r Tc2::compareB() e3569ad55ef6b4796f6a23cb284b9f5ab0848ac0d415855a16cdf3ec98a8b0
+r Tc2::compareBIntFlag() 11111010110011110001011000101011
+r Tc2::counter() 26c8e630d098c37740da764c5947b6419af563b48aed426531d1227d3ca3e83
+r Tc2::overflowIntFlag() 10110000010111011001110010001101
 r Twi0::data() bbd7fd3781013afb3586c7ac156fcf01ff631351029c075d8126359d57
 r Twi0::intFlag() 10001100010111000010110100010001
 r Twi0::status() 3883020b04090108860988980702886888c8602810a038388189810020
@@ -98,11 +98,11 @@ w Adc0::start() 7a:00:40:7a:ff:ef:
 w Adc0::trigger(Adc0::Trigger::analogComparator) 7b:00:01:7b:ff:f9:
 w Adc0::trigger(Adc0::Trigger::externalInt0) 7b:00:02:7b:ff:fa:
 w Adc0::trigger(Adc0::Trigger::freeRunning) 7b:ff:f8:
-w Adc0::trigger(Adc0::Trigger::timer0CompareMatchA) 7b:00:03:7b:ff:fb:
-w Adc0::trigger(Adc0::Trigger::timer0Overflow) 7b:00:04:7b:ff:fc:
-w Adc0::trigger(Adc0::Trigger::timer1CaptureEvent) 7b:00:07:
-w Adc0::trigger(Adc0::Trigger::timer1CompareMatchB) 7b:00:05:7b:ff:fd:
-w Adc0::trigger(Adc0::Trigger::timer1Overflow) 7b:00:06:7b:ff:fe:
+w Adc0::trigger(Adc0::Trigger::tc0CompareMatchA) 7b:00:03:7b:ff:fb:
+w Adc0::trigger(Adc0::Trigger::tc0Overflow) 7b:00:04:7b:ff:fc:
+w Adc0::trigger(Adc0::Trigger::tc1CaptureEvent) 7b:00:07:
+w Adc0::trigger(Adc0::Trigger::tc1CompareMatchB) 7b:00:05:7b:ff:fd:
+w Adc0::trigger(Adc0::Trigger::tc1Overflow) 7b:00:06:7b:ff:fe:
 w Adc0::triggerEnable(false) 7a:ff:8f:
 w Adc0::triggerEnable(true) 7a:00:20:7a:ff:af:
 w Eeprom0::address(0x1234) 41:00:34:42:00:12:41:ff:34:42:ff:12:
@@ -379,152 +379,152 @@ w Spi0::phase(Spi0::Phase::leadingSampleTrailingSetup) 4c:ff:fb:
 w Spi0::phase(Spi0::Phase::leadingSetupTrailingSample) 4c:00:04:
 w Spi0::polarity(Spi0::Polarity::leadingFallingTrailingRising) 4c:00:08:
 w Spi0::polarity(Spi0::Polarity::leadingRisingTrailingFalling) 4c:ff:f7:
-w Timer0::clock(Timer0::Clock::div1) 45:00:01:45:ff:f9:
-w Timer0::clock(Timer0::Clock::div1024) 45:00:05:45:ff:fd:
-w Timer0::clock(Timer0::Clock::div256) 45:00:04:45:ff:fc:
-w Timer0::clock(Timer0::Clock::div64) 45:00:03:45:ff:fb:
-w Timer0::clock(Timer0::Clock::div8) 45:00:02:45:ff:fa:
-w Timer0::clock(Timer0::Clock::extFalling) 45:00:06:45:ff:fe:
-w Timer0::clock(Timer0::Clock::extRising) 45:00:07:
-w Timer0::clock(Timer0::Clock::none) 45:ff:f8:
-w Timer0::compareA()
-w Timer0::compareA(0x12) 47:00:12:47:ff:12:
-w Timer0::compareAIntEnable(false) 6e:ff:fd:
-w Timer0::compareAIntEnable(true) 6e:00:02:
-w Timer0::compareAIntFlag()
-w Timer0::compareAIntFlagClear() 35:00:02:35:ff:02:
-w Timer0::compareAOutput(Timer0::CompareAOutput::clear) 44:00:80:44:ff:bf:
-w Timer0::compareAOutput(Timer0::CompareAOutput::disconnected) 44:ff:3f:
-w Timer0::compareAOutput(Timer0::CompareAOutput::set) 44:00:c0:
-w Timer0::compareAOutput(Timer0::CompareAOutput::toggle) 44:00:40:44:ff:7f:
-w Timer0::compareB()
-w Timer0::compareB(0x12) 48:00:12:48:ff:12:
-w Timer0::compareBIntEnable(false) 6e:ff:fb:
-w Timer0::compareBIntEnable(true) 6e:00:04:
-w Timer0::compareBIntFlag()
-w Timer0::compareBIntFlagClear() 35:00:04:35:ff:04:
-w Timer0::compareBOutput(Timer0::CompareBOutput::clear) 44:00:20:44:ff:ef:
-w Timer0::compareBOutput(Timer0::CompareBOutput::disconnected) 44:ff:cf:
-w Timer0::compareBOutput(Timer0::CompareBOutput::set) 44:00:30:
-w Timer0::compareBOutput(Timer0::CompareBOutput::toggle) 44:00:10:44:ff:df:
-w Timer0::counter()
-w Timer0::counter(0x12) 46:00:12:46:ff:12:
-w Timer0::overflowIntEnable(false) 6e:ff:fe:
-w Timer0::overflowIntEnable(true) 6e:00:01:
-w Timer0::overflowIntFlag()
-w Timer0::overflowIntFlagClear() 35:00:01:35:ff:01:
-w Timer0::prescalerReset() 43:00:01:
-w Timer0::synchronizeMode(false) 43:ff:7f:
-w Timer0::synchronizeMode(true) 43:00:80:
-w Timer0::waveform(Timer0::Waveform::ctcOcra) 44:00:02:44:ff:fe:45:ff:f7:
-w Timer0::waveform(Timer0::Waveform::fastPwm) 44:00:03:45:ff:f7:
-w Timer0::waveform(Timer0::Waveform::fastPwmOcra) 44:00:03:45:00:08:
-w Timer0::waveform(Timer0::Waveform::normal) 44:ff:fc:45:ff:f7:
-w Timer0::waveform(Timer0::Waveform::pwm) 44:00:01:44:ff:fd:45:ff:f7:
-w Timer0::waveform(Timer0::Waveform::pwmOcra) 44:00:01:45:00:08:44:ff:fd:
-w Timer1::capture()
-w Timer1::capture(0x1234) 86:00:34:87:00:12:86:ff:34:87:ff:12:
-w Timer1::captureEdge(Timer1::CaptureEdge::falling) 81:ff:bf:
-w Timer1::captureEdge(Timer1::CaptureEdge::rising) 81:00:40:
-w Timer1::captureIntEnable(false) 6f:ff:df:
-w Timer1::captureIntEnable(true) 6f:00:20:
-w Timer1::captureIntFlag()
-w Timer1::captureIntFlagClear() 36:00:20:36:ff:20:
-w Timer1::captureNoiseCancelEnable(false) 81:ff:7f:
-w Timer1::captureNoiseCancelEnable(true) 81:00:80:
-w Timer1::clock(Timer1::Clock::div1) 81:00:01:81:ff:f9:
-w Timer1::clock(Timer1::Clock::div1024) 81:00:05:81:ff:fd:
-w Timer1::clock(Timer1::Clock::div256) 81:00:04:81:ff:fc:
-w Timer1::clock(Timer1::Clock::div64) 81:00:03:81:ff:fb:
-w Timer1::clock(Timer1::Clock::div8) 81:00:02:81:ff:fa:
-w Timer1::clock(Timer1::Clock::extFalling) 81:00:06:81:ff:fe:
-w Timer1::clock(Timer1::Clock::extRising) 81:00:07:
-w Timer1::clock(Timer1::Clock::none) 81:ff:f8:
-w Timer1::compareA()
-w Timer1::compareA(0x12) 88:00:12:88:ff:12:89:ff:00:
-w Timer1::compareAIntEnable(false) 6f:ff:fd:
-w Timer1::compareAIntEnable(true) 6f:00:02:
-w Timer1::compareAIntFlag()
-w Timer1::compareAIntFlagClear() 36:00:02:36:ff:02:
-w Timer1::compareAOutput(Timer1::CompareAOutput::clear) 80:00:80:80:ff:bf:
-w Timer1::compareAOutput(Timer1::CompareAOutput::disconnected) 80:ff:3f:
-w Timer1::compareAOutput(Timer1::CompareAOutput::set) 80:00:c0:
-w Timer1::compareAOutput(Timer1::CompareAOutput::toggle) 80:00:40:80:ff:7f:
-w Timer1::compareB()
-w Timer1::compareB(0x12) 8a:00:12:8a:ff:12:8b:ff:00:
-w Timer1::compareBIntEnable(false) 6f:ff:fb:
-w Timer1::compareBIntEnable(true) 6f:00:04:
-w Timer1::compareBIntFlag()
-w Timer1::compareBIntFlagClear() 36:00:04:36:ff:04:
-w Timer1::compareBOutput(Timer1::CompareBOutput::clear) 80:00:20:80:ff:ef:
-w Timer1::compareBOutput(Timer1::CompareBOutput::disconnected) 80:ff:cf:
-w Timer1::compareBOutput(Timer1::CompareBOutput::set) 80:00:30:
-w Timer1::compareBOutput(Timer1::CompareBOutput::toggle) 80:00:10:80:ff:df:
-w Timer1::counter()
-w Timer1::counter(0x12) 84:00:12:84:ff:12:85:ff:00:
-w Timer1::overflowIntEnable(false) 6f:ff:fe:
-w Timer1::overflowIntEnable(true) 6f:00:01:
-w Timer1::overflowIntFlag()
-w Timer1::overflowIntFlagClear() 36:00:01:36:ff:01:
-w Timer1::prescalerReset() 43:00:01:
-w Timer1::synchronizeMode(false) 43:ff:7f:
-w Timer1::synchronizeMode(true) 43:00:80:
-w Timer1::waveform(Timer1::Waveform::ctcIcr) 81:00:18:80:ff:fc:
-w Timer1::waveform(Timer1::Waveform::ctcOcra) 81:00:08:80:ff:fc:81:ff:ef:
-w Timer1::waveform(Timer1::Waveform::fastPwm) 80:00:02:81:00:18:80:ff:fe:
-w Timer1::waveform(Timer1::Waveform::fastPwm10Bit) 80:00:03:81:00:08:81:ff:ef:
-w Timer1::waveform(Timer1::Waveform::fastPwm8Bit) 80:00:01:81:00:08:80:ff:fd:81:ff:ef:
-w Timer1::waveform(Timer1::Waveform::fastPwm9Bit) 80:00:02:81:00:08:80:ff:fe:81:ff:ef:
-w Timer1::waveform(Timer1::Waveform::fastPwmOcra) 80:00:03:81:00:18:
-w Timer1::waveform(Timer1::Waveform::normal) 80:ff:fc:81:ff:e7:
-w Timer1::waveform(Timer1::Waveform::pwm) 80:00:02:81:00:10:80:ff:fe:81:ff:f7:
-w Timer1::waveform(Timer1::Waveform::pwm10Bit) 80:00:03:81:ff:e7:
-w Timer1::waveform(Timer1::Waveform::pwm8Bit) 80:00:01:80:ff:fd:81:ff:e7:
-w Timer1::waveform(Timer1::Waveform::pwm9Bit) 80:00:02:80:ff:fe:81:ff:e7:
-w Timer1::waveform(Timer1::Waveform::pwmOcra) 80:00:03:81:00:10:81:ff:f7:
-w Timer2::clock(Timer2::Clock::div1) b1:00:01:b1:ff:f9:
-w Timer2::clock(Timer2::Clock::div1024) b1:00:07:
-w Timer2::clock(Timer2::Clock::div128) b1:00:05:b1:ff:fd:
-w Timer2::clock(Timer2::Clock::div256) b1:00:06:b1:ff:fe:
-w Timer2::clock(Timer2::Clock::div32) b1:00:03:b1:ff:fb:
-w Timer2::clock(Timer2::Clock::div64) b1:00:04:b1:ff:fc:
-w Timer2::clock(Timer2::Clock::div8) b1:00:02:b1:ff:fa:
-w Timer2::clock(Timer2::Clock::none) b1:ff:f8:
-w Timer2::compareA()
-w Timer2::compareA(0x12) b3:00:12:b3:ff:12:
-w Timer2::compareAIntEnable(false) 70:ff:fd:
-w Timer2::compareAIntEnable(true) 70:00:02:
-w Timer2::compareAIntFlag()
-w Timer2::compareAIntFlagClear() 37:00:02:37:ff:02:
-w Timer2::compareAOutput(Timer2::CompareAOutput::clear) b0:00:80:b0:ff:bf:
-w Timer2::compareAOutput(Timer2::CompareAOutput::disconnected) b0:ff:3f:
-w Timer2::compareAOutput(Timer2::CompareAOutput::set) b0:00:c0:
-w Timer2::compareAOutput(Timer2::CompareAOutput::toggle) b0:00:40:b0:ff:7f:
-w Timer2::compareB()
-w Timer2::compareB(0x12) b4:00:12:b4:ff:12:
-w Timer2::compareBIntEnable(false) 70:ff:fb:
-w Timer2::compareBIntEnable(true) 70:00:04:
-w Timer2::compareBIntFlag()
-w Timer2::compareBIntFlagClear() 37:00:04:37:ff:04:
-w Timer2::compareBOutput(Timer2::CompareBOutput::clear) b0:00:20:b0:ff:ef:
-w Timer2::compareBOutput(Timer2::CompareBOutput::disconnected) b0:ff:cf:
-w Timer2::compareBOutput(Timer2::CompareBOutput::set) b0:00:30:
-w Timer2::compareBOutput(Timer2::CompareBOutput::toggle) b0:00:10:b0:ff:df:
-w Timer2::counter()
-w Timer2::counter(0x12) b2:00:12:b2:ff:12:
-w Timer2::overflowIntEnable(false) 70:ff:fe:
-w Timer2::overflowIntEnable(true) 70:00:01:
-w Timer2::overflowIntFlag()
-w Timer2::overflowIntFlagClear() 37:00:01:37:ff:01:
-w Timer2::prescalerReset() 43:00:02:
-w Timer2::synchronizeMode(false) 43:ff:7f:
-w Timer2::synchronizeMode(true) 43:00:80:
-w Timer2::waveform(Timer2::Waveform::ctcOcra) b0:00:02:b0:ff:fe:b1:ff:f7:
-w Timer2::waveform(Timer2::Waveform::fastPwm) b0:00:03:b1:ff:f7:
-w Timer2::waveform(Timer2::Waveform::fastPwmOcra) b0:00:03:b1:00:08:
-w Timer2::waveform(Timer2::Waveform::normal) b0:ff:fc:b1:ff:f7:
-w Timer2::waveform(Timer2::Waveform::pwm) b0:00:01:b0:ff:fd:b1:ff:f7:
-w Timer2::waveform(Timer2::Waveform::pwmOcra) b0:00:01:b1:00:08:b0:ff:fd:
+w Tc0::clock(Tc0::Clock::div1) 45:00:01:45:ff:f9:
+w Tc0::clock(Tc0::Clock::div1024) 45:00:05:45:ff:fd:
+w Tc0::clock(Tc0::Clock::div256) 45:00:04:45:ff:fc:
+w Tc0::clock(Tc0::Clock::div64) 45:00:03:45:ff:fb:
+w Tc0::clock(Tc0::Clock::div8) 45:00:02:45:ff:fa:
+w Tc0::clock(Tc0::Clock::extFalling) 45:00:06:45:ff:fe:
+w Tc0::clock(Tc0::Clock::extRising) 45:00:07:
+w Tc0::clock(Tc0::Clock::none) 45:ff:f8:
+w Tc0::compareA()
+w Tc0::compareA(0x12) 47:00:12:47:ff:12:
+w Tc0::compareAIntEnable(false) 6e:ff:fd:
+w Tc0::compareAIntEnable(true) 6e:00:02:
+w Tc0::compareAIntFlag()
+w Tc0::compareAIntFlagClear() 35:00:02:35:ff:02:
+w Tc0::compareAOutputMode(Tc0::CompareAOutputMode::clear) 44:00:80:44:ff:bf:
+w Tc0::compareAOutputMode(Tc0::CompareAOutputMode::disconnected) 44:ff:3f:
+w Tc0::compareAOutputMode(Tc0::CompareAOutputMode::set) 44:00:c0:
+w Tc0::compareAOutputMode(Tc0::CompareAOutputMode::toggle) 44:00:40:44:ff:7f:
+w Tc0::compareB()
+w Tc0::compareB(0x12) 48:00:12:48:ff:12:
+w Tc0::compareBIntEnable(false) 6e:ff:fb:
+w Tc0::compareBIntEnable(true) 6e:00:04:
+w Tc0::compareBIntFlag()
+w Tc0::compareBIntFlagClear() 35:00:04:35:ff:04:
+w Tc0::compareBOutputMode(Tc0::CompareBOutputMode::clear) 44:00:20:44:ff:ef:
+w Tc0::compareBOutputMode(Tc0::CompareBOutputMode::disconnected) 44:ff:cf:
+w Tc0::compareBOutputMode(Tc0::CompareBOutputMode::set) 44:00:30:
+w Tc0::compareBOutputMode(Tc0::CompareBOutputMode::toggle) 44:00:10:44:ff:df:
+w Tc0::counter()
+w Tc0::counter(0x12) 46:00:12:46:ff:12:
+w Tc0::overflowIntEnable(false) 6e:ff:fe:
+w Tc0::overflowIntEnable(true) 6e:00:01:
+w Tc0::overflowIntFlag()
+w Tc0::overflowIntFlagClear() 35:00:01:35:ff:01:
+w Tc0::prescalerReset() 43:00:01:
+w Tc0::synchronizeMode(false) 43:ff:7f:
+w Tc0::synchronizeMode(true) 43:00:80:
+w Tc0::waveform(Tc0::Waveform::ctcOcra) 44:00:02:44:ff:fe:45:ff:f7:
+w Tc0::waveform(Tc0::Waveform::fastPwm) 44:00:03:45:ff:f7:
+w Tc0::waveform(Tc0::Waveform::fastPwmOcra) 44:00:03:45:00:08:
+w Tc0::waveform(Tc0::Waveform::normal) 44:ff:fc:45:ff:f7:
+w Tc0::waveform(Tc0::Waveform::pwm) 44:00:01:44:ff:fd:45:ff:f7:
+w Tc0::waveform(Tc0::Waveform::pwmOcra) 44:00:01:45:00:08:44:ff:fd:
+w Tc1::capture()
+w Tc1::capture(0x1234) 86:00:34:87:00:12:86:ff:34:87:ff:12:
+w Tc1::captureEdge(Tc1::CaptureEdge::falling) 81:ff:bf:
+w Tc1::captureEdge(Tc1::CaptureEdge::rising) 81:00:40:
+w Tc1::captureIntEnable(false) 6f:ff:df:
+w Tc1::captureIntEnable(true) 6f:00:20:
+w Tc1::captureIntFlag()
+w Tc1::captureIntFlagClear() 36:00:20:36:ff:20:
+w Tc1::captureNoiseCancelEnable(false) 81:ff:7f:
+w Tc1::captureNoiseCancelEnable(true) 81:00:80:
+w Tc1::clock(Tc1::Clock::div1) 81:00:01:81:ff:f9:
+w Tc1::clock(Tc1::Clock::div1024) 81:00:05:81:ff:fd:
+w Tc1::clock(Tc1::Clock::div256) 81:00:04:81:ff:fc:
+w Tc1::clock(Tc1::Clock::div64) 81:00:03:81:ff:fb:
+w Tc1::clock(Tc1::Clock::div8) 81:00:02:81:ff:fa:
+w Tc1::clock(Tc1::Clock::extFalling) 81:00:06:81:ff:fe:
+w Tc1::clock(Tc1::Clock::extRising) 81:00:07:
+w Tc1::clock(Tc1::Clock::none) 81:ff:f8:
+w Tc1::compareA()
+w Tc1::compareA(0x12) 88:00:12:88:ff:12:89:ff:00:
+w Tc1::compareAIntEnable(false) 6f:ff:fd:
+w Tc1::compareAIntEnable(true) 6f:00:02:
+w Tc1::compareAIntFlag()
+w Tc1::compareAIntFlagClear() 36:00:02:36:ff:02:
+w Tc1::compareAOutputMode(Tc1::CompareAOutputMode::clear) 80:00:80:80:ff:bf:
+w Tc1::compareAOutputMode(Tc1::CompareAOutputMode::disconnected) 80:ff:3f:
+w Tc1::compareAOutputMode(Tc1::CompareAOutputMode::set) 80:00:c0:
+w Tc1::compareAOutputMode(Tc1::CompareAOutputMode::toggle) 80:00:40:80:ff:7f:
+w Tc1::compareB()
+w Tc1::compareB(0x12) 8a:00:12:8a:ff:12:8b:ff:00:
+w Tc1::compareBIntEnable(false) 6f:ff:fb:
+w Tc1::compareBIntEnable(true) 6f:00:04:
+w Tc1::compareBIntFlag()
+w Tc1::compareBIntFlagClear() 36:00:04:36:ff:04:
+w Tc1::compareBOutputMode(Tc1::CompareBOutputMode::clear) 80:00:20:80:ff:ef:
+w Tc1::compareBOutputMode(Tc1::CompareBOutputMode::disconnected) 80:ff:cf:
+w Tc1::compareBOutputMode(Tc1::CompareBOutputMode::set) 80:00:30:
+w Tc1::compareBOutputMode(Tc1::CompareBOutputMode::toggle) 80:00:10:80:ff:df:
+w Tc1::counter()
+w Tc1::counter(0x12) 84:00:12:84:ff:12:85:ff:00:
+w Tc1::overflowIntEnable(false) 6f:ff:fe:
+w Tc1::overflowIntEnable(true) 6f:00:01:
+w Tc1::overflowIntFlag()
+w Tc1::overflowIntFlagClear() 36:00:01:36:ff:01:
+w Tc1::prescalerReset() 43:00:01:
+w Tc1::synchronizeMode(false) 43:ff:7f:
+w Tc1::synchronizeMode(true) 43:00:80:
+w Tc1::waveform(Tc1::Waveform::ctcIcr) 81:00:18:80:ff:fc:
+w Tc1::waveform(Tc1::Waveform::ctcOcra) 81:00:08:80:ff:fc:81:ff:ef:
+w Tc1::waveform(Tc1::Waveform::fastPwm) 80:00:02:81:00:18:80:ff:fe:
+w Tc1::waveform(Tc1::Waveform::fastPwm10Bit) 80:00:03:81:00:08:81:ff:ef:
+w Tc1::waveform(Tc1::Waveform::fastPwm8Bit) 80:00:01:81:00:08:80:ff:fd:81:ff:ef:
+w Tc1::waveform(Tc1::Waveform::fastPwm9Bit) 80:00:02:81:00:08:80:ff:fe:81:ff:ef:
+w Tc1::waveform(Tc1::Waveform::fastPwmOcra) 80:00:03:81:00:18:
+w Tc1::waveform(Tc1::Waveform::normal) 80:ff:fc:81:ff:e7:
+w Tc1::waveform(Tc1::Waveform::pwm) 80:00:02:81:00:10:80:ff:fe:81:ff:f7:
+w Tc1::waveform(Tc1::Waveform::pwm10Bit) 80:00:03:81:ff:e7:
+w Tc1::waveform(Tc1::Waveform::pwm8Bit) 80:00:01:80:ff:fd:81:ff:e7:
+w Tc1::waveform(Tc1::Waveform::pwm9Bit) 80:00:02:80:ff:fe:81:ff:e7:
+w Tc1::waveform(Tc1::Waveform::pwmOcra) 80:00:03:81:00:10:81:ff:f7:
+w Tc2::clock(Tc2::Clock::div1) b1:00:01:b1:ff:f9:
+w Tc2::clock(Tc2::Clock::div1024) b1:00:07:
+w Tc2::clock(Tc2::Clock::div128) b1:00:05:b1:ff:fd:
+w Tc2::clock(Tc2::Clock::div256) b1:00:06:b1:ff:fe:
+w Tc2::clock(Tc2::Clock::div32) b1:00:03:b1:ff:fb:
+w Tc2::clock(Tc2::Clock::div64) b1:00:04:b1:ff:fc:
+w Tc2::clock(Tc2::Clock::div8) b1:00:02:b1:ff:fa:
+w Tc2::clock(Tc2::Clock::none) b1:ff:f8:
+w Tc2::compareA()
+w Tc2::compareA(0x12) b3:00:12:b3:ff:12:
+w Tc2::compareAIntEnable(false) 70:ff:fd:
+w Tc2::compareAIntEnable(true) 70:00:02:
+w Tc2::compareAIntFlag()
+w Tc2::compareAIntFlagClear() 37:00:02:37:ff:02:
+w Tc2::compareAOutputMode(Tc2::CompareAOutputMode::clear) b0:00:80:b0:ff:bf:
+w Tc2::compareAOutputMode(Tc2::CompareAOutputMode::disconnected) b0:ff:3f:
+w Tc2::compareAOutputMode(Tc2::CompareAOutputMode::set) b0:00:c0:
+w Tc2::compareAOutputMode(Tc2::CompareAOutputMode::toggle) b0:00:40:b0:ff:7f:
+w Tc2::compareB()
+w Tc2::compareB(0x12) b4:00:12:b4:ff:12:
+w Tc2::compareBIntEnable(false) 70:ff:fb:
+w Tc2::compareBIntEnable(true) 70:00:04:
+w Tc2::compareBIntFlag()
+w Tc2::compareBIntFlagClear() 37:00:04:37:ff:04:
+w Tc2::compareBOutputMode(Tc2::CompareBOutputMode::clear) b0:00:20:b0:ff:ef:
+w Tc2::compareBOutputMode(Tc2::CompareBOutputMode::disconnected) b0:ff:cf:
+w Tc2::compareBOutputMode(Tc2::CompareBOutputMode::set) b0:00:30:
+w Tc2::compareBOutputMode(Tc2::CompareBOutputMode::toggle) b0:00:10:b0:ff:df:
+w Tc2::counter()
+w Tc2::counter(0x12) b2:00:12:b2:ff:12:
+w Tc2::overflowIntEnable(false) 70:ff:fe:
+w Tc2::overflowIntEnable(true) 70:00:01:
+w Tc2::overflowIntFlag()
+w Tc2::overflowIntFlagClear() 37:00:01:37:ff:01:
+w Tc2::prescalerReset() 43:00:02:
+w Tc2::synchronizeMode(false) 43:ff:7f:
+w Tc2::synchronizeMode(true) 43:00:80:
+w Tc2::waveform(Tc2::Waveform::ctcOcra) b0:00:02:b0:ff:fe:b1:ff:f7:
+w Tc2::waveform(Tc2::Waveform::fastPwm) b0:00:03:b1:ff:f7:
+w Tc2::waveform(Tc2::Waveform::fastPwmOcra) b0:00:03:b1:00:08:
+w Tc2::waveform(Tc2::Waveform::normal) b0:ff:fc:b1:ff:f7:
+w Tc2::waveform(Tc2::Waveform::pwm) b0:00:01:b0:ff:fd:b1:ff:f7:
+w Tc2::waveform(Tc2::Waveform::pwmOcra) b0:00:01:b1:00:08:b0:ff:fd:
 w Twi0::address(0x12) ba:00:12:ba:ff:12:
 w Twi0::addressMask(0x12) bd:00:12:bd:ff:12:
 w Twi0::bitRate(0x12) b8:00:12:b8:ff:12:

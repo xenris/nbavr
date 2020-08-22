@@ -66,13 +66,13 @@
 
 #define vectorInt0                                                  ISR(__vector_1)
 #define vectorInt1                                                  ISR(__vector_2)
-#define vectorTimer2CompareA                                        ISR(__vector_3)
-#define vectorTimer2Overflow                                        ISR(__vector_4)
-#define vectorTimer1InputCapture                                    ISR(__vector_5)
-#define vectorTimer1CompareA                                        ISR(__vector_6)
-#define vectorTimer1CompareB                                        ISR(__vector_7)
-#define vectorTimer1Overflow                                        ISR(__vector_8)
-#define vectorTimer0Overflow                                        ISR(__vector_9)
+#define vectorTc2CompareA                                           ISR(__vector_3)
+#define vectorTc2Overflow                                           ISR(__vector_4)
+#define vectorTc1InputCapture                                       ISR(__vector_5)
+#define vectorTc1CompareA                                           ISR(__vector_6)
+#define vectorTc1CompareB                                           ISR(__vector_7)
+#define vectorTc1Overflow                                           ISR(__vector_8)
+#define vectorTc0Overflow                                           ISR(__vector_9)
 #define vectorSpi0                                                  ISR(__vector_10)
 #define vectorUsart0RxComplete                                      ISR(__vector_11)
 #define vectorUsart0DataRegEmpty                                    ISR(__vector_12)
@@ -472,155 +472,155 @@
 #define CHIP_EXINT_1_TRIGGER_RISING_ID                              0x0C
 
 //------------------------------------------------
-// Timers
+// Timer/Counters
 
-#define CHIP_TIMER_0
+#define CHIP_TC_0
 
-#define CHIP_TIMER_0_CLOCK_REG                                      CHIP_REG_TCCR0
-#define CHIP_TIMER_0_CLOCK_MASK                                     0x07
-#define CHIP_TIMER_0_CLOCK_NONE_ID                                  0x00
-#define CHIP_TIMER_0_CLOCK_1_ID                                     0x01
-#define CHIP_TIMER_0_CLOCK_8_ID                                     0x02
-#define CHIP_TIMER_0_CLOCK_64_ID                                    0x03
-#define CHIP_TIMER_0_CLOCK_256_ID                                   0x04
-#define CHIP_TIMER_0_CLOCK_1024_ID                                  0x05
-#define CHIP_TIMER_0_CLOCK_EXT_FALLING_ID                           0x06
-#define CHIP_TIMER_0_CLOCK_EXT_RISING_ID                            0x07
+#define CHIP_TC_0_CLOCK_REG                                         CHIP_REG_TCCR0
+#define CHIP_TC_0_CLOCK_MASK                                        0x07
+#define CHIP_TC_0_CLOCK_NONE_ID                                     0x00
+#define CHIP_TC_0_CLOCK_1_ID                                        0x01
+#define CHIP_TC_0_CLOCK_8_ID                                        0x02
+#define CHIP_TC_0_CLOCK_64_ID                                       0x03
+#define CHIP_TC_0_CLOCK_256_ID                                      0x04
+#define CHIP_TC_0_CLOCK_1024_ID                                     0x05
+#define CHIP_TC_0_CLOCK_EXT_FALLING_ID                              0x06
+#define CHIP_TC_0_CLOCK_EXT_RISING_ID                               0x07
 
-#define CHIP_TIMER_0_COUNTER_REG                                    CHIP_REG_TCNT0
+#define CHIP_TC_0_COUNTER_REG                                       CHIP_REG_TCNT0
 
-#define CHIP_TIMER_0_PRESCALER_RESET_REG                            CHIP_REG_SFIOR
-#define CHIP_TIMER_0_PRESCALER_RESET_BIT                            0
+#define CHIP_TC_0_PRESCALER_RESET_REG                               CHIP_REG_SFIOR
+#define CHIP_TC_0_PRESCALER_RESET_BIT                               0
 
-#define CHIP_TIMER_0_OVERFLOW_INT_ENABLE_REG                        CHIP_REG_TIMSK
-#define CHIP_TIMER_0_OVERFLOW_INT_ENABLE_BIT                        0
-#define CHIP_TIMER_0_OVERFLOW_INT_FLAG_REG                          CHIP_REG_TIFR
-#define CHIP_TIMER_0_OVERFLOW_INT_FLAG_BIT                          0
-
-//------------------------------------------------
-
-#define CHIP_TIMER_1
-
-#define CHIP_TIMER_1_WAVEFORM_REG                                   CHIP_REG_TCCR1A
-#define CHIP_TIMER_1_WAVEFORM_MASK                                  0x03
-#define CHIP_TIMER_1_WAVEFORM_REG_EXTRA                             CHIP_REG_TCCR1B
-#define CHIP_TIMER_1_WAVEFORM_MASK_EXTRA                            0x18
-#define CHIP_TIMER_1_WAVEFORM_NORMAL_ID                             0x0000
-#define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_CORRECT_8_ID                0x0001
-#define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_CORRECT_9_ID                0x0002
-#define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_CORRECT_10_ID               0x0003
-#define CHIP_TIMER_1_WAVEFORM_CTC_OCRA_ID                           0x0800
-#define CHIP_TIMER_1_WAVEFORM_FAST_PWM_8_ID                         0x0801
-#define CHIP_TIMER_1_WAVEFORM_FAST_PWM_9_ID                         0x0802
-#define CHIP_TIMER_1_WAVEFORM_FAST_PWM_10_ID                        0x0803
-#define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_FREQ_CORRECT_ID             0x1000
-#define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_FREQ_CORRECT_OCRA_ID        0x1001
-#define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_CORRECT_ID                  0x1002
-#define CHIP_TIMER_1_WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID             0x1003
-#define CHIP_TIMER_1_WAVEFORM_CTC_ICR_ID                            0x1800
-#define CHIP_TIMER_1_WAVEFORM_FAST_PWM_ID                           0x1802
-#define CHIP_TIMER_1_WAVEFORM_FAST_PWM_OCRA_ID                      0x1803
-
-#define CHIP_TIMER_1_CLOCK_REG                                      CHIP_REG_TCCR1B
-#define CHIP_TIMER_1_CLOCK_MASK                                     0x07
-#define CHIP_TIMER_1_CLOCK_NONE_ID                                  0x00
-#define CHIP_TIMER_1_CLOCK_1_ID                                     0x01
-#define CHIP_TIMER_1_CLOCK_8_ID                                     0x02
-#define CHIP_TIMER_1_CLOCK_64_ID                                    0x03
-#define CHIP_TIMER_1_CLOCK_256_ID                                   0x04
-#define CHIP_TIMER_1_CLOCK_1024_ID                                  0x05
-#define CHIP_TIMER_1_CLOCK_EXT_FALLING_ID                           0x06
-#define CHIP_TIMER_1_CLOCK_EXT_RISING_ID                            0x07
-
-#define CHIP_TIMER_1_COUNTER_REG                                    CHIP_REG_TCNT1
-
-#define CHIP_TIMER_1_PRESCALER_RESET_REG                            CHIP_REG_SFIOR
-#define CHIP_TIMER_1_PRESCALER_RESET_BIT                            0
-
-#define CHIP_TIMER_1_COMPARE_A_REG                                  CHIP_REG_OCR1A
-#define CHIP_TIMER_1_COMPARE_A_INT_ENABLE_REG                       CHIP_REG_TIMSK
-#define CHIP_TIMER_1_COMPARE_A_INT_ENABLE_BIT                       4
-#define CHIP_TIMER_1_COMPARE_A_INT_FLAG_REG                         CHIP_REG_TIFR
-#define CHIP_TIMER_1_COMPARE_A_INT_FLAG_BIT                         4
-#define CHIP_TIMER_1_COMPARE_A_OUTPUT_REG                           CHIP_REG_TCCR1A
-#define CHIP_TIMER_1_COMPARE_A_OUTPUT_MASK                          0xC0
-#define CHIP_TIMER_1_COMPARE_A_OUTPUT_DISCONNECTED_ID               0x00
-#define CHIP_TIMER_1_COMPARE_A_OUTPUT_TOGGLE_ID                     0x40
-#define CHIP_TIMER_1_COMPARE_A_OUTPUT_CLEAR_ID                      0x80
-#define CHIP_TIMER_1_COMPARE_A_OUTPUT_SET_ID                        0xC0
-
-#define CHIP_TIMER_1_COMPARE_B_REG                                  CHIP_REG_OCR1B
-#define CHIP_TIMER_1_COMPARE_B_INT_ENABLE_REG                       CHIP_REG_TIMSK
-#define CHIP_TIMER_1_COMPARE_B_INT_ENABLE_BIT                       3
-#define CHIP_TIMER_1_COMPARE_B_INT_FLAG_REG                         CHIP_REG_TIFR
-#define CHIP_TIMER_1_COMPARE_B_INT_FLAG_BIT                         3
-#define CHIP_TIMER_1_COMPARE_B_OUTPUT_REG                           CHIP_REG_TCCR1A
-#define CHIP_TIMER_1_COMPARE_B_OUTPUT_MASK                          0x30
-#define CHIP_TIMER_1_COMPARE_B_OUTPUT_DISCONNECTED_ID               0x00
-#define CHIP_TIMER_1_COMPARE_B_OUTPUT_TOGGLE_ID                     0x10
-#define CHIP_TIMER_1_COMPARE_B_OUTPUT_CLEAR_ID                      0x20
-#define CHIP_TIMER_1_COMPARE_B_OUTPUT_SET_ID                        0x30
-
-#define CHIP_TIMER_1_OVERFLOW_INT_ENABLE_REG                        CHIP_REG_TIMSK
-#define CHIP_TIMER_1_OVERFLOW_INT_ENABLE_BIT                        2
-#define CHIP_TIMER_1_OVERFLOW_INT_FLAG_REG                          CHIP_REG_TIFR
-#define CHIP_TIMER_1_OVERFLOW_INT_FLAG_BIT                          2
-
-#define CHIP_TIMER_1_CAPTURE_REG                                    CHIP_REG_ICR1
-#define CHIP_TIMER_1_CAPTURE_NOISE_CANCEL_ENABLE_REG                CHIP_REG_TCCR1B
-#define CHIP_TIMER_1_CAPTURE_NOISE_CANCEL_ENABLE_BIT                7
-#define CHIP_TIMER_1_CAPTURE_EDGE_REG                               CHIP_REG_TCCR1B
-#define CHIP_TIMER_1_CAPTURE_EDGE_MASK                              0x40
-#define CHIP_TIMER_1_CAPTURE_EDGE_FALLING_ID                        0x00
-#define CHIP_TIMER_1_CAPTURE_EDGE_RISING_ID                         0x40
-#define CHIP_TIMER_1_CAPTURE_INT_ENABLE_REG                         CHIP_REG_TIMSK
-#define CHIP_TIMER_1_CAPTURE_INT_ENABLE_BIT                         5
-#define CHIP_TIMER_1_CAPTURE_INT_FLAG_REG                           CHIP_REG_TIFR
-#define CHIP_TIMER_1_CAPTURE_INT_FLAG_BIT                           5
+#define CHIP_TC_0_OVERFLOW_INT_ENABLE_REG                           CHIP_REG_TIMSK
+#define CHIP_TC_0_OVERFLOW_INT_ENABLE_BIT                           0
+#define CHIP_TC_0_OVERFLOW_INT_FLAG_REG                             CHIP_REG_TIFR
+#define CHIP_TC_0_OVERFLOW_INT_FLAG_BIT                             0
 
 //------------------------------------------------
 
-#define CHIP_TIMER_2
+#define CHIP_TC_1
 
-#define CHIP_TIMER_2_WAVEFORM_REG                                   CHIP_REG_TCCR2
-#define CHIP_TIMER_2_WAVEFORM_MASK                                  0x48
-#define CHIP_TIMER_2_WAVEFORM_NORMAL_ID                             0x00
-#define CHIP_TIMER_2_WAVEFORM_PWM_PHASE_CORRECT_ID                  0x40
-#define CHIP_TIMER_2_WAVEFORM_CTC_OCRA_ID                           0x08
-#define CHIP_TIMER_2_WAVEFORM_FAST_PWM_ID                           0x48
+#define CHIP_TC_1_WAVEFORM_REG                                      CHIP_REG_TCCR1A
+#define CHIP_TC_1_WAVEFORM_MASK                                     0x03
+#define CHIP_TC_1_WAVEFORM_REG_EXTRA                                CHIP_REG_TCCR1B
+#define CHIP_TC_1_WAVEFORM_MASK_EXTRA                               0x18
+#define CHIP_TC_1_WAVEFORM_NORMAL_ID                                0x0000
+#define CHIP_TC_1_WAVEFORM_PWM_PHASE_CORRECT_8_ID                   0x0001
+#define CHIP_TC_1_WAVEFORM_PWM_PHASE_CORRECT_9_ID                   0x0002
+#define CHIP_TC_1_WAVEFORM_PWM_PHASE_CORRECT_10_ID                  0x0003
+#define CHIP_TC_1_WAVEFORM_CTC_OCRA_ID                              0x0800
+#define CHIP_TC_1_WAVEFORM_FAST_PWM_8_ID                            0x0801
+#define CHIP_TC_1_WAVEFORM_FAST_PWM_9_ID                            0x0802
+#define CHIP_TC_1_WAVEFORM_FAST_PWM_10_ID                           0x0803
+#define CHIP_TC_1_WAVEFORM_PWM_PHASE_FREQ_CORRECT_ID                0x1000
+#define CHIP_TC_1_WAVEFORM_PWM_PHASE_FREQ_CORRECT_OCRA_ID           0x1001
+#define CHIP_TC_1_WAVEFORM_PWM_PHASE_CORRECT_ID                     0x1002
+#define CHIP_TC_1_WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID                0x1003
+#define CHIP_TC_1_WAVEFORM_CTC_ICR_ID                               0x1800
+#define CHIP_TC_1_WAVEFORM_FAST_PWM_ID                              0x1802
+#define CHIP_TC_1_WAVEFORM_FAST_PWM_OCRA_ID                         0x1803
 
-#define CHIP_TIMER_2_CLOCK_REG                                      CHIP_REG_TCCR2
-#define CHIP_TIMER_2_CLOCK_MASK                                     0x07
-#define CHIP_TIMER_2_CLOCK_NONE_ID                                  0x00
-#define CHIP_TIMER_2_CLOCK_1_ID                                     0x01
-#define CHIP_TIMER_2_CLOCK_8_ID                                     0x02
-#define CHIP_TIMER_2_CLOCK_32_ID                                    0x03
-#define CHIP_TIMER_2_CLOCK_64_ID                                    0x04
-#define CHIP_TIMER_2_CLOCK_128_ID                                   0x05
-#define CHIP_TIMER_2_CLOCK_256_ID                                   0x06
-#define CHIP_TIMER_2_CLOCK_1024_ID                                  0x07
+#define CHIP_TC_1_CLOCK_REG                                         CHIP_REG_TCCR1B
+#define CHIP_TC_1_CLOCK_MASK                                        0x07
+#define CHIP_TC_1_CLOCK_NONE_ID                                     0x00
+#define CHIP_TC_1_CLOCK_1_ID                                        0x01
+#define CHIP_TC_1_CLOCK_8_ID                                        0x02
+#define CHIP_TC_1_CLOCK_64_ID                                       0x03
+#define CHIP_TC_1_CLOCK_256_ID                                      0x04
+#define CHIP_TC_1_CLOCK_1024_ID                                     0x05
+#define CHIP_TC_1_CLOCK_EXT_FALLING_ID                              0x06
+#define CHIP_TC_1_CLOCK_EXT_RISING_ID                               0x07
 
-#define CHIP_TIMER_2_COUNTER_REG                                    CHIP_REG_TCNT2
+#define CHIP_TC_1_COUNTER_REG                                       CHIP_REG_TCNT1
 
-#define CHIP_TIMER_2_PRESCALER_RESET_REG                            CHIP_REG_SFIOR
-#define CHIP_TIMER_2_PRESCALER_RESET_BIT                            1
+#define CHIP_TC_1_PRESCALER_RESET_REG                               CHIP_REG_SFIOR
+#define CHIP_TC_1_PRESCALER_RESET_BIT                               0
 
-#define CHIP_TIMER_2_COMPARE_A_REG                                  CHIP_REG_OCR2
-#define CHIP_TIMER_2_COMPARE_A_INT_ENABLE_REG                       CHIP_REG_TIMSK
-#define CHIP_TIMER_2_COMPARE_A_INT_ENABLE_BIT                       7
-#define CHIP_TIMER_2_COMPARE_A_INT_FLAG_REG                         CHIP_REG_TIFR
-#define CHIP_TIMER_2_COMPARE_A_INT_FLAG_BIT                         7
-#define CHIP_TIMER_2_COMPARE_A_OUTPUT_REG                           CHIP_REG_TCCR2
-#define CHIP_TIMER_2_COMPARE_A_OUTPUT_MASK                          0x30
-#define CHIP_TIMER_2_COMPARE_A_OUTPUT_DISCONNECTED_ID               0x00
-#define CHIP_TIMER_2_COMPARE_A_OUTPUT_TOGGLE_ID                     0x10
-#define CHIP_TIMER_2_COMPARE_A_OUTPUT_CLEAR_ID                      0x20
-#define CHIP_TIMER_2_COMPARE_A_OUTPUT_SET_ID                        0x30
+#define CHIP_TC_1_COMPARE_A_REG                                     CHIP_REG_OCR1A
+#define CHIP_TC_1_COMPARE_A_INT_ENABLE_REG                          CHIP_REG_TIMSK
+#define CHIP_TC_1_COMPARE_A_INT_ENABLE_BIT                          4
+#define CHIP_TC_1_COMPARE_A_INT_FLAG_REG                            CHIP_REG_TIFR
+#define CHIP_TC_1_COMPARE_A_INT_FLAG_BIT                            4
+#define CHIP_TC_1_COMPARE_A_OUTPUT_MODE_REG                         CHIP_REG_TCCR1A
+#define CHIP_TC_1_COMPARE_A_OUTPUT_MODE_MASK                        0xC0
+#define CHIP_TC_1_COMPARE_A_OUTPUT_MODE_DISCONNECTED_ID             0x00
+#define CHIP_TC_1_COMPARE_A_OUTPUT_MODE_TOGGLE_ID                   0x40
+#define CHIP_TC_1_COMPARE_A_OUTPUT_MODE_CLEAR_ID                    0x80
+#define CHIP_TC_1_COMPARE_A_OUTPUT_MODE_SET_ID                      0xC0
 
-#define CHIP_TIMER_2_OVERFLOW_INT_ENABLE_REG                        CHIP_REG_TIMSK
-#define CHIP_TIMER_2_OVERFLOW_INT_ENABLE_BIT                        6
-#define CHIP_TIMER_2_OVERFLOW_INT_FLAG_REG                          CHIP_REG_TIFR
-#define CHIP_TIMER_2_OVERFLOW_INT_FLAG_BIT                          6
+#define CHIP_TC_1_COMPARE_B_REG                                     CHIP_REG_OCR1B
+#define CHIP_TC_1_COMPARE_B_INT_ENABLE_REG                          CHIP_REG_TIMSK
+#define CHIP_TC_1_COMPARE_B_INT_ENABLE_BIT                          3
+#define CHIP_TC_1_COMPARE_B_INT_FLAG_REG                            CHIP_REG_TIFR
+#define CHIP_TC_1_COMPARE_B_INT_FLAG_BIT                            3
+#define CHIP_TC_1_COMPARE_B_OUTPUT_MODE_REG                         CHIP_REG_TCCR1A
+#define CHIP_TC_1_COMPARE_B_OUTPUT_MODE_MASK                        0x30
+#define CHIP_TC_1_COMPARE_B_OUTPUT_MODE_DISCONNECTED_ID             0x00
+#define CHIP_TC_1_COMPARE_B_OUTPUT_MODE_TOGGLE_ID                   0x10
+#define CHIP_TC_1_COMPARE_B_OUTPUT_MODE_CLEAR_ID                    0x20
+#define CHIP_TC_1_COMPARE_B_OUTPUT_MODE_SET_ID                      0x30
+
+#define CHIP_TC_1_OVERFLOW_INT_ENABLE_REG                           CHIP_REG_TIMSK
+#define CHIP_TC_1_OVERFLOW_INT_ENABLE_BIT                           2
+#define CHIP_TC_1_OVERFLOW_INT_FLAG_REG                             CHIP_REG_TIFR
+#define CHIP_TC_1_OVERFLOW_INT_FLAG_BIT                             2
+
+#define CHIP_TC_1_CAPTURE_REG                                       CHIP_REG_ICR1
+#define CHIP_TC_1_CAPTURE_NOISE_CANCEL_ENABLE_REG                   CHIP_REG_TCCR1B
+#define CHIP_TC_1_CAPTURE_NOISE_CANCEL_ENABLE_BIT                   7
+#define CHIP_TC_1_CAPTURE_EDGE_REG                                  CHIP_REG_TCCR1B
+#define CHIP_TC_1_CAPTURE_EDGE_MASK                                 0x40
+#define CHIP_TC_1_CAPTURE_EDGE_FALLING_ID                           0x00
+#define CHIP_TC_1_CAPTURE_EDGE_RISING_ID                            0x40
+#define CHIP_TC_1_CAPTURE_INT_ENABLE_REG                            CHIP_REG_TIMSK
+#define CHIP_TC_1_CAPTURE_INT_ENABLE_BIT                            5
+#define CHIP_TC_1_CAPTURE_INT_FLAG_REG                              CHIP_REG_TIFR
+#define CHIP_TC_1_CAPTURE_INT_FLAG_BIT                              5
+
+//------------------------------------------------
+
+#define CHIP_TC_2
+
+#define CHIP_TC_2_WAVEFORM_REG                                      CHIP_REG_TCCR2
+#define CHIP_TC_2_WAVEFORM_MASK                                     0x48
+#define CHIP_TC_2_WAVEFORM_NORMAL_ID                                0x00
+#define CHIP_TC_2_WAVEFORM_PWM_PHASE_CORRECT_ID                     0x40
+#define CHIP_TC_2_WAVEFORM_CTC_OCRA_ID                              0x08
+#define CHIP_TC_2_WAVEFORM_FAST_PWM_ID                              0x48
+
+#define CHIP_TC_2_CLOCK_REG                                         CHIP_REG_TCCR2
+#define CHIP_TC_2_CLOCK_MASK                                        0x07
+#define CHIP_TC_2_CLOCK_NONE_ID                                     0x00
+#define CHIP_TC_2_CLOCK_1_ID                                        0x01
+#define CHIP_TC_2_CLOCK_8_ID                                        0x02
+#define CHIP_TC_2_CLOCK_32_ID                                       0x03
+#define CHIP_TC_2_CLOCK_64_ID                                       0x04
+#define CHIP_TC_2_CLOCK_128_ID                                      0x05
+#define CHIP_TC_2_CLOCK_256_ID                                      0x06
+#define CHIP_TC_2_CLOCK_1024_ID                                     0x07
+
+#define CHIP_TC_2_COUNTER_REG                                       CHIP_REG_TCNT2
+
+#define CHIP_TC_2_PRESCALER_RESET_REG                               CHIP_REG_SFIOR
+#define CHIP_TC_2_PRESCALER_RESET_BIT                               1
+
+#define CHIP_TC_2_COMPARE_A_REG                                     CHIP_REG_OCR2
+#define CHIP_TC_2_COMPARE_A_INT_ENABLE_REG                          CHIP_REG_TIMSK
+#define CHIP_TC_2_COMPARE_A_INT_ENABLE_BIT                          7
+#define CHIP_TC_2_COMPARE_A_INT_FLAG_REG                            CHIP_REG_TIFR
+#define CHIP_TC_2_COMPARE_A_INT_FLAG_BIT                            7
+#define CHIP_TC_2_COMPARE_A_OUTPUT_MODE_REG                         CHIP_REG_TCCR2
+#define CHIP_TC_2_COMPARE_A_OUTPUT_MODE_MASK                        0x30
+#define CHIP_TC_2_COMPARE_A_OUTPUT_MODE_DISCONNECTED_ID             0x00
+#define CHIP_TC_2_COMPARE_A_OUTPUT_MODE_TOGGLE_ID                   0x10
+#define CHIP_TC_2_COMPARE_A_OUTPUT_MODE_CLEAR_ID                    0x20
+#define CHIP_TC_2_COMPARE_A_OUTPUT_MODE_SET_ID                      0x30
+
+#define CHIP_TC_2_OVERFLOW_INT_ENABLE_REG                           CHIP_REG_TIMSK
+#define CHIP_TC_2_OVERFLOW_INT_ENABLE_BIT                           6
+#define CHIP_TC_2_OVERFLOW_INT_FLAG_REG                             CHIP_REG_TIFR
+#define CHIP_TC_2_OVERFLOW_INT_FLAG_BIT                             6
 
 //------------------------------------------------
 // Usarts

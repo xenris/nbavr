@@ -198,13 +198,13 @@
 #define vectorPortA                                                 ISR(__vector_3)
 #define vectorRtc                                                   ISR(__vector_6)
 #define vectorRtcPit                                                ISR(__vector_7)
-#define vectorTimer0Overflow                                        ISR(__vector_8)
-#define vectorTimer0LowByteUnderflow                                ISR(__vector_8)
-#define vectorTimer0HighByteUnderflow                               ISR(__vector_9)
-#define vectorTimer0CompareA                                        ISR(__vector_10)
-#define vectorTimer0CompareB                                        ISR(__vector_11)
-#define vectorTimer0CompareC                                        ISR(__vector_12)
-#define vectorTimer1                                                ISR(__vector_13)
+#define vectorTc0Overflow                                           ISR(__vector_8)
+#define vectorTc0LowByteUnderflow                                   ISR(__vector_8)
+#define vectorTc0HighByteUnderflow                                  ISR(__vector_9)
+#define vectorTc0CompareA                                           ISR(__vector_10)
+#define vectorTc0CompareB                                           ISR(__vector_11)
+#define vectorTc0CompareC                                           ISR(__vector_12)
+#define vectorTc1                                                   ISR(__vector_13)
 #define vectorAc0                                                   ISR(__vector_16)
 #define vectorAdc0Result                                            ISR(__vector_17)
 #define vectorAdc0Window                                            ISR(__vector_18)
@@ -487,126 +487,124 @@
 #define CHIP_AC_0_INT_FLAG_BIT                                      0
 
 //------------------------------------------------
-// Timers
+// Timer/Counters
 
-#define CHIP_TCA_0
+#define CHIP_TC_0
 
-#define CHIP_TCA_0_COUNTER_REG                                      CHIP_REG_TCA0_CNT
+#define CHIP_TC_0_COUNTER_REG                                       CHIP_REG_TCA0_CNT
 
-#define CHIP_TCA_0_TOP_REG                                          CHIP_REG_TCA0_PER
-#define CHIP_TCA_0_TOP_BUFFER_REG                                   CHIP_REG_TCA0_PERBUF
+#define CHIP_TC_0_TOP_REG                                           CHIP_REG_TCA0_PER
+#define CHIP_TC_0_TOP_BUFFER_REG                                    CHIP_REG_TCA0_PERBUF
 
-#define CHIP_TCA_0_WAVEFORM_REG                                     CHIP_REG_TCA0_CTRLB
-#define CHIP_TCA_0_WAVEFORM_MASK                                    0x07
-#define CHIP_TCA_0_WAVEFORM_NORMAL_ID                               0x00
-#define CHIP_TCA_0_WAVEFORM_FREQUENCY_ID                            0x01
-#define CHIP_TCA_0_WAVEFORM_SINGLE_SLOPE_PWM_ID                     0x03
-#define CHIP_TCA_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_TOP_ID               0x05
-#define CHIP_TCA_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTH_ID              0x06
-#define CHIP_TCA_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTTOM_ID            0x07
+#define CHIP_TC_0_WAVEFORM_REG                                      CHIP_REG_TCA0_CTRLB
+#define CHIP_TC_0_WAVEFORM_MASK                                     0x07
+#define CHIP_TC_0_WAVEFORM_NORMAL_ID                                0x00
+#define CHIP_TC_0_WAVEFORM_FREQUENCY_ID                             0x01
+#define CHIP_TC_0_WAVEFORM_SINGLE_SLOPE_PWM_ID                      0x03
+#define CHIP_TC_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_TOP_ID                0x05
+#define CHIP_TC_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTH_ID               0x06
+#define CHIP_TC_0_WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTTOM_ID             0x07
 
-#define CHIP_TCA_0_CLOCK_REG                                        CHIP_REG_TCA0_CTRLA
-#define CHIP_TCA_0_CLOCK_MASK                                       0x0E
-#define CHIP_TCA_0_CLOCK_1_ID                                       0x00
-#define CHIP_TCA_0_CLOCK_2_ID                                       0x02
-#define CHIP_TCA_0_CLOCK_4_ID                                       0x04
-#define CHIP_TCA_0_CLOCK_8_ID                                       0x06
-#define CHIP_TCA_0_CLOCK_16_ID                                      0x08
-#define CHIP_TCA_0_CLOCK_64_ID                                      0x0A
-#define CHIP_TCA_0_CLOCK_256_ID                                     0x0C
-#define CHIP_TCA_0_CLOCK_1024_ID                                    0x0E
+#define CHIP_TC_0_CLOCK_REG                                         CHIP_REG_TCA0_CTRLA
+#define CHIP_TC_0_CLOCK_MASK                                        0x0E
+#define CHIP_TC_0_CLOCK_1_ID                                        0x00
+#define CHIP_TC_0_CLOCK_2_ID                                        0x02
+#define CHIP_TC_0_CLOCK_4_ID                                        0x04
+#define CHIP_TC_0_CLOCK_8_ID                                        0x06
+#define CHIP_TC_0_CLOCK_16_ID                                       0x08
+#define CHIP_TC_0_CLOCK_64_ID                                       0x0A
+#define CHIP_TC_0_CLOCK_256_ID                                      0x0C
+#define CHIP_TC_0_CLOCK_1024_ID                                     0x0E
 
-#define CHIP_TCA_0_ENABLE_REG                                       CHIP_REG_TCA0_CTRLA
-#define CHIP_TCA_0_ENABLE_BIT                                       0
+#define CHIP_TC_0_ENABLE_REG                                        CHIP_REG_TCA0_CTRLA
+#define CHIP_TC_0_ENABLE_BIT                                        0
 
-#define CHIP_TCA_0_COMPARE_0_REG                                    CHIP_REG_TCA0_CMP0
-#define CHIP_TCA_0_COMPARE_0_BUFFER_REG                             CHIP_REG_TCA0_CMP0BUF
-#define CHIP_TCA_0_COMPARE_0_OUTPUT_ENABLE_REG                      CHIP_REG_TCA0_CTRLB
-#define CHIP_TCA_0_COMPARE_0_OUTPUT_ENABLE_BIT                      4
-#define CHIP_TCA_0_COMPARE_0_INT_ENABLE_REG                         CHIP_REG_TCA0_INTCTRL
-#define CHIP_TCA_0_COMPARE_0_INT_ENABLE_BIT                         4
-#define CHIP_TCA_0_COMPARE_0_INT_FLAG_REG                           CHIP_REG_TCA0_INTFLAGS
-#define CHIP_TCA_0_COMPARE_0_INT_FLAG_BIT                           4
+#define CHIP_TC_0_COMPARE_A_REG                                     CHIP_REG_TCA0_CMP0
+#define CHIP_TC_0_COMPARE_A_BUFFER_REG                              CHIP_REG_TCA0_CMP0BUF
+#define CHIP_TC_0_COMPARE_A_OUTPUT_ENABLE_REG                       CHIP_REG_TCA0_CTRLB
+#define CHIP_TC_0_COMPARE_A_OUTPUT_ENABLE_BIT                       4
+#define CHIP_TC_0_COMPARE_A_INT_ENABLE_REG                          CHIP_REG_TCA0_INTCTRL
+#define CHIP_TC_0_COMPARE_A_INT_ENABLE_BIT                          4
+#define CHIP_TC_0_COMPARE_A_INT_FLAG_REG                            CHIP_REG_TCA0_INTFLAGS
+#define CHIP_TC_0_COMPARE_A_INT_FLAG_BIT                            4
 
-#define CHIP_TCA_0_COMPARE_1_REG                                    CHIP_REG_TCA0_CMP1
-#define CHIP_TCA_0_COMPARE_1_BUFFER_REG                             CHIP_REG_TCA0_CMP1BUF
-#define CHIP_TCA_0_COMPARE_1_OUTPUT_ENABLE_REG                      CHIP_REG_TCA0_CTRLB
-#define CHIP_TCA_0_COMPARE_1_OUTPUT_ENABLE_BIT                      5
-#define CHIP_TCA_0_COMPARE_1_INT_ENABLE_REG                         CHIP_REG_TCA0_INTCTRL
-#define CHIP_TCA_0_COMPARE_1_INT_ENABLE_BIT                         5
-#define CHIP_TCA_0_COMPARE_1_INT_FLAG_REG                           CHIP_REG_TCA0_INTFLAGS
-#define CHIP_TCA_0_COMPARE_1_INT_FLAG_BIT                           5
+#define CHIP_TC_0_COMPARE_B_REG                                     CHIP_REG_TCA0_CMP1
+#define CHIP_TC_0_COMPARE_B_BUFFER_REG                              CHIP_REG_TCA0_CMP1BUF
+#define CHIP_TC_0_COMPARE_B_OUTPUT_ENABLE_REG                       CHIP_REG_TCA0_CTRLB
+#define CHIP_TC_0_COMPARE_B_OUTPUT_ENABLE_BIT                       5
+#define CHIP_TC_0_COMPARE_B_INT_ENABLE_REG                          CHIP_REG_TCA0_INTCTRL
+#define CHIP_TC_0_COMPARE_B_INT_ENABLE_BIT                          5
+#define CHIP_TC_0_COMPARE_B_INT_FLAG_REG                            CHIP_REG_TCA0_INTFLAGS
+#define CHIP_TC_0_COMPARE_B_INT_FLAG_BIT                            5
 
-#define CHIP_TCA_0_COMPARE_2_REG                                    CHIP_REG_TCA0_CMP2
-#define CHIP_TCA_0_COMPARE_2_BUFFER_REG                             CHIP_REG_TCA0_CMP2BUF
-#define CHIP_TCA_0_COMPARE_2_OUTPUT_ENABLE_REG                      CHIP_REG_TCA0_CTRLB
-#define CHIP_TCA_0_COMPARE_2_OUTPUT_ENABLE_BIT                      6
-#define CHIP_TCA_0_COMPARE_2_INT_ENABLE_REG                         CHIP_REG_TCA0_INTCTRL
-#define CHIP_TCA_0_COMPARE_2_INT_ENABLE_BIT                         6
-#define CHIP_TCA_0_COMPARE_2_INT_FLAG_REG                           CHIP_REG_TCA0_INTFLAGS
-#define CHIP_TCA_0_COMPARE_2_INT_FLAG_BIT                           6
+#define CHIP_TC_0_COMPARE_C_REG                                     CHIP_REG_TCA0_CMP2
+#define CHIP_TC_0_COMPARE_C_BUFFER_REG                              CHIP_REG_TCA0_CMP2BUF
+#define CHIP_TC_0_COMPARE_C_OUTPUT_ENABLE_REG                       CHIP_REG_TCA0_CTRLB
+#define CHIP_TC_0_COMPARE_C_OUTPUT_ENABLE_BIT                       6
+#define CHIP_TC_0_COMPARE_C_INT_ENABLE_REG                          CHIP_REG_TCA0_INTCTRL
+#define CHIP_TC_0_COMPARE_C_INT_ENABLE_BIT                          6
+#define CHIP_TC_0_COMPARE_C_INT_FLAG_REG                            CHIP_REG_TCA0_INTFLAGS
+#define CHIP_TC_0_COMPARE_C_INT_FLAG_BIT                            6
 
-#define CHIP_TCA_0_OVERFLOW_INT_ENABLE_REG                          CHIP_REG_TCA0_INTCTRL
-#define CHIP_TCA_0_OVERFLOW_INT_ENABLE_BIT                          0
-#define CHIP_TCA_0_OVERFLOW_INT_FLAG_REG                            CHIP_REG_TCA0_INTFLAGS
-#define CHIP_TCA_0_OVERFLOW_INT_FLAG_BIT                            0
+#define CHIP_TC_0_OVERFLOW_INT_ENABLE_REG                           CHIP_REG_TCA0_INTCTRL
+#define CHIP_TC_0_OVERFLOW_INT_ENABLE_BIT                           0
+#define CHIP_TC_0_OVERFLOW_INT_FLAG_REG                             CHIP_REG_TCA0_INTFLAGS
+#define CHIP_TC_0_OVERFLOW_INT_FLAG_BIT                             0
 
-#define CHIP_TCA_0_SPLIT_MODE_ENABLE_REG                            CHIP_REG_TCA0_CTRLD
-#define CHIP_TCA_0_SPLIT_MODE_ENABLE_BIT                            0
+#define CHIP_TC_0_SPLIT_MODE_ENABLE_REG                             CHIP_REG_TCA0_CTRLD
+#define CHIP_TC_0_SPLIT_MODE_ENABLE_BIT                             0
 
-#define CHIP_TCA_0_LOW_COUNTER_REG                                  CHIP_REG_TCA0_LCNT
-#define CHIP_TCA_0_HIGH_COUNTER_REG                                 CHIP_REG_TCA0_HCNT
+#define CHIP_TC_0_LOW_COUNTER_REG                                   CHIP_REG_TCA0_LCNT
+#define CHIP_TC_0_HIGH_COUNTER_REG                                  CHIP_REG_TCA0_HCNT
 
-#define CHIP_TCA_0_LOW_TOP_REG                                      CHIP_REG_TCA0_LPER
-#define CHIP_TCA_0_HIGH_TOP_REG                                     CHIP_REG_TCA0_HPER
+#define CHIP_TC_0_LOW_TOP_REG                                       CHIP_REG_TCA0_LPER
+#define CHIP_TC_0_HIGH_TOP_REG                                      CHIP_REG_TCA0_HPER
 
-#define CHIP_TCA_0_LOW_COMPARE_0_REG                                CHIP_REG_TCA0_LCMP0
-#define CHIP_TCA_0_LOW_COMPARE_0_OUTPUT_ENABLE_REG                  CHIP_REG_TCA0_CTRLB
-#define CHIP_TCA_0_LOW_COMPARE_0_OUTPUT_ENABLE_BIT                  0
-#define CHIP_TCA_0_LOW_COMPARE_0_INT_ENABLE_REG                     CHIP_REG_TCA0_INTCTRL
-#define CHIP_TCA_0_LOW_COMPARE_0_INT_ENABLE_BIT                     4
-#define CHIP_TCA_0_LOW_COMPARE_0_INT_FLAG_REG                       CHIP_REG_TCA0_INTFLAGS
-#define CHIP_TCA_0_LOW_COMPARE_0_INT_FLAG_BIT                       4
+#define CHIP_TC_0_LOW_COMPARE_A_REG                                 CHIP_REG_TCA0_LCMP0
+#define CHIP_TC_0_LOW_COMPARE_A_OUTPUT_ENABLE_REG                   CHIP_REG_TCA0_CTRLB
+#define CHIP_TC_0_LOW_COMPARE_A_OUTPUT_ENABLE_BIT                   0
+#define CHIP_TC_0_LOW_COMPARE_A_INT_ENABLE_REG                      CHIP_REG_TCA0_INTCTRL
+#define CHIP_TC_0_LOW_COMPARE_A_INT_ENABLE_BIT                      4
+#define CHIP_TC_0_LOW_COMPARE_A_INT_FLAG_REG                        CHIP_REG_TCA0_INTFLAGS
+#define CHIP_TC_0_LOW_COMPARE_A_INT_FLAG_BIT                        4
 
-#define CHIP_TCA_0_HIGH_COMPARE_0_REG                               CHIP_REG_TCA0_HCMP0
-#define CHIP_TCA_0_HIGH_COMPARE_0_OUTPUT_ENABLE_REG                 CHIP_REG_TCA0_CTRLB
-#define CHIP_TCA_0_HIGH_COMPARE_0_OUTPUT_ENABLE_BIT                 4
+#define CHIP_TC_0_HIGH_COMPARE_A_REG                                CHIP_REG_TCA0_HCMP0
+#define CHIP_TC_0_HIGH_COMPARE_A_OUTPUT_ENABLE_REG                  CHIP_REG_TCA0_CTRLB
+#define CHIP_TC_0_HIGH_COMPARE_A_OUTPUT_ENABLE_BIT                  4
 
-#define CHIP_TCA_0_LOW_COMPARE_1_REG                                CHIP_REG_TCA0_LCMP1
-#define CHIP_TCA_0_LOW_COMPARE_1_OUTPUT_ENABLE_REG                  CHIP_REG_TCA0_CTRLB
-#define CHIP_TCA_0_LOW_COMPARE_1_OUTPUT_ENABLE_BIT                  1
-#define CHIP_TCA_0_LOW_COMPARE_1_INT_ENABLE_REG                     CHIP_REG_TCA0_INTCTRL
-#define CHIP_TCA_0_LOW_COMPARE_1_INT_ENABLE_BIT                     5
-#define CHIP_TCA_0_LOW_COMPARE_1_INT_FLAG_REG                       CHIP_REG_TCA0_INTFLAGS
-#define CHIP_TCA_0_LOW_COMPARE_1_INT_FLAG_BIT                       5
+#define CHIP_TC_0_LOW_COMPARE_B_REG                                 CHIP_REG_TCA0_LCMP1
+#define CHIP_TC_0_LOW_COMPARE_B_OUTPUT_ENABLE_REG                   CHIP_REG_TCA0_CTRLB
+#define CHIP_TC_0_LOW_COMPARE_B_OUTPUT_ENABLE_BIT                   1
+#define CHIP_TC_0_LOW_COMPARE_B_INT_ENABLE_REG                      CHIP_REG_TCA0_INTCTRL
+#define CHIP_TC_0_LOW_COMPARE_B_INT_ENABLE_BIT                      5
+#define CHIP_TC_0_LOW_COMPARE_B_INT_FLAG_REG                        CHIP_REG_TCA0_INTFLAGS
+#define CHIP_TC_0_LOW_COMPARE_B_INT_FLAG_BIT                        5
 
-#define CHIP_TCA_0_HIGH_COMPARE_1_REG                               CHIP_REG_TCA0_HCMP1
-#define CHIP_TCA_0_HIGH_COMPARE_1_OUTPUT_ENABLE_REG                 CHIP_REG_TCA0_CTRLB
-#define CHIP_TCA_0_HIGH_COMPARE_1_OUTPUT_ENABLE_BIT                 5
+#define CHIP_TC_0_HIGH_COMPARE_B_REG                                CHIP_REG_TCA0_HCMP1
+#define CHIP_TC_0_HIGH_COMPARE_B_OUTPUT_ENABLE_REG                  CHIP_REG_TCA0_CTRLB
+#define CHIP_TC_0_HIGH_COMPARE_B_OUTPUT_ENABLE_BIT                  5
 
-#define CHIP_TCA_0_LOW_COMPARE_2_REG                                CHIP_REG_TCA0_LCMP2
-#define CHIP_TCA_0_LOW_COMPARE_2_OUTPUT_ENABLE_REG                  CHIP_REG_TCA0_CTRLB
-#define CHIP_TCA_0_LOW_COMPARE_2_OUTPUT_ENABLE_BIT                  2
-#define CHIP_TCA_0_LOW_COMPARE_2_INT_ENABLE_REG                     CHIP_REG_TCA0_INTCTRL
-#define CHIP_TCA_0_LOW_COMPARE_2_INT_ENABLE_BIT                     6
-#define CHIP_TCA_0_LOW_COMPARE_2_INT_FLAG_REG                       CHIP_REG_TCA0_INTFLAGS
-#define CHIP_TCA_0_LOW_COMPARE_2_INT_FLAG_BIT                       6
+#define CHIP_TC_0_LOW_COMPARE_C_REG                                 CHIP_REG_TCA0_LCMP2
+#define CHIP_TC_0_LOW_COMPARE_C_OUTPUT_ENABLE_REG                   CHIP_REG_TCA0_CTRLB
+#define CHIP_TC_0_LOW_COMPARE_C_OUTPUT_ENABLE_BIT                   2
+#define CHIP_TC_0_LOW_COMPARE_C_INT_ENABLE_REG                      CHIP_REG_TCA0_INTCTRL
+#define CHIP_TC_0_LOW_COMPARE_C_INT_ENABLE_BIT                      6
+#define CHIP_TC_0_LOW_COMPARE_C_INT_FLAG_REG                        CHIP_REG_TCA0_INTFLAGS
+#define CHIP_TC_0_LOW_COMPARE_C_INT_FLAG_BIT                        6
 
-#define CHIP_TCA_0_HIGH_COMPARE_2_REG                               CHIP_REG_TCA0_HCMP2
-#define CHIP_TCA_0_HIGH_COMPARE_2_OUTPUT_ENABLE_REG                 CHIP_REG_TCA0_CTRLB
-#define CHIP_TCA_0_HIGH_COMPARE_2_OUTPUT_ENABLE_BIT                 6
+#define CHIP_TC_0_HIGH_COMPARE_C_REG                                CHIP_REG_TCA0_HCMP2
+#define CHIP_TC_0_HIGH_COMPARE_C_OUTPUT_ENABLE_REG                  CHIP_REG_TCA0_CTRLB
+#define CHIP_TC_0_HIGH_COMPARE_C_OUTPUT_ENABLE_BIT                  6
 
-#define CHIP_TCA_0_LOW_UNDERFLOW_INT_ENABLE_REG                     CHIP_REG_TCA0_INTCTRL
-#define CHIP_TCA_0_LOW_UNDERFLOW_INT_ENABLE_BIT                     0
-#define CHIP_TCA_0_LOW_UNDERFLOW_INT_FLAG_REG                       CHIP_REG_TCA0_INTFLAGS
-#define CHIP_TCA_0_LOW_UNDERFLOW_INT_FLAG_BIT                       0
+#define CHIP_TC_0_LOW_UNDERFLOW_INT_ENABLE_REG                      CHIP_REG_TCA0_INTCTRL
+#define CHIP_TC_0_LOW_UNDERFLOW_INT_ENABLE_BIT                      0
+#define CHIP_TC_0_LOW_UNDERFLOW_INT_FLAG_REG                        CHIP_REG_TCA0_INTFLAGS
+#define CHIP_TC_0_LOW_UNDERFLOW_INT_FLAG_BIT                        0
 
-#define CHIP_TCA_0_HIGH_UNDERFLOW_INT_ENABLE_REG                    CHIP_REG_TCA0_INTCTRL
-#define CHIP_TCA_0_HIGH_UNDERFLOW_INT_ENABLE_BIT                    1
-#define CHIP_TCA_0_HIGH_UNDERFLOW_INT_FLAG_REG                      CHIP_REG_TCA0_INTFLAGS
-#define CHIP_TCA_0_HIGH_UNDERFLOW_INT_FLAG_BIT                      1
-
-//------------------------------------------------
+#define CHIP_TC_0_HIGH_UNDERFLOW_INT_ENABLE_REG                     CHIP_REG_TCA0_INTCTRL
+#define CHIP_TC_0_HIGH_UNDERFLOW_INT_ENABLE_BIT                     1
+#define CHIP_TC_0_HIGH_UNDERFLOW_INT_FLAG_REG                       CHIP_REG_TCA0_INTFLAGS
+#define CHIP_TC_0_HIGH_UNDERFLOW_INT_FLAG_BIT                       1
 
 // TODO
 

@@ -10,31 +10,31 @@ r PortA::Pin6::input() 10011100000001100011010111001101
 r PortA::Pin7::input() 11000110011000010001011110111111
 r PortA::input() d98af5068c09f272aad8a231b695384121e70fe28c095cfdb7bb393f1efbed6
 r Sleep::isEnabled() 11101101111111011100010111111011
-r TcA0::compare0() 4363ff24e3eaed1356948318c7f232a114c6669fd0a3b9034a7cb76239c7697f36918b5e30c815017b797dfc28d6e190d148f3e1eeca65867e7322867ec8937e
-r TcA0::compare0IntFlag() 00011111111010101110111001111110
-r TcA0::compare1() 68b47a13f6f562a7a4da10c28f64b556da9dd6902585d59b346f175c7d9d1c3a30d8beb125e7d42b6557afa3dac8da7eb04a3776244290c601dfec795c7870
-r TcA0::compare1IntFlag() 11001010111111100101010110101011
-r TcA0::compare2() 17347342483a2b801a2aeb65af64ac81e4c6de9513d8c4a3d398f8eb9fe7aa2f436b1fc3128cda230ba29d4eef959dc48099262978bbb1481d94211e4eb5d1
-r TcA0::compare2IntFlag() 11010000110101000010011110110110
-r TcA0::counter() 4f632cb1d180e1196607dc7c407e6dabb90cfed4c9b70cd96457c7f33597341f7124739bba9f2f3ea8a63ca75ddf00559c83523d3986b02b1d8937ef4d2bb
-r TcA0::highCompare0() 43ffe3ed5683c7321466d0b94ab73969368b30157b7d28e1d1f3ee657e227e93
-r TcA0::highCompare1() 687af662a4108fb5dad625d534177d1c30be27db67a3d8deba3642c6df7978
-r TcA0::highCompare2() 1773482b1aebaface4de13c4d3fb97af4b131cd3029ee59489297bb8141eb5
-r TcA0::highCounter() 4f2cd1e167dc4e6bbcf4c70967c3373f747bbf2ea6375f05935d362d87ed2
-r TcA0::highTop() 7418e786886bddfe8e3d2d231be52bba366fa53dec42f60afa5b58a4757b4
-r TcA0::highUnderflowIntFlag() 01010011101000010110111100100000
-r TcA0::lowCompare0() 6324ea139418f2a1c69fa337c62c77f915ec8179fcd69048e1ca867386c87e
-r TcA0::lowCompare0IntFlag() 00011111111010101110111001111110
-r TcA0::lowCompare1() b413f5a7dac264569d90859b6f5c9d3ad8b15e4255faaca747724901ec5c70
-r TcA0::lowCompare1IntFlag() 11001010111111100101010110101011
-r TcA0::lowCompare2() 34423a802a656481c695d8a3988efea236fc28a2bad4f9dc9628b14d9214ed1
-r TcA0::lowCompare2IntFlag() 11010000110101000010011110110110
-r TcA0::lowCounter() 63b1801960c77da90ed9bcd457f59411239a9f38acadd5c82398b0b193f4bb
-r TcA0::lowTop() 5f35ca85a02ddd29ffa76a99f2d5e3d4cae063253417cc9c6dd7b3fe86ada
-r TcA0::lowUnderflowIntFlag() 10100100111111001111110110111110
-r TcA0::overflowIntFlag() 10100100111111001111110110111110
-r TcA0::top() 745f1835eca78856a0882d6bdddd29feff8ea73d062d0a23991bf2e5d52be3bad436ca6fe0a635302de53c4412f7c60c9afc6a5ddb57b8a3f47e8576ab4da
-r TcA0::topBuffer() d21f8722498073b9c7d8a3deade83a7c7fc05b3872654638795f97bb5ac8eff9c329d2eea0a3c2f579bc6de7ea9c9ea3a4067fcfa27e72cf42026901fcb
+r Tc0::compareA() 4363ff24e3eaed1356948318c7f232a114c6669fd0a3b9034a7cb76239c7697f36918b5e30c815017b797dfc28d6e190d148f3e1eeca65867e7322867ec8937e
+r Tc0::compareAIntFlag() 00011111111010101110111001111110
+r Tc0::compareB() 68b47a13f6f562a7a4da10c28f64b556da9dd6902585d59b346f175c7d9d1c3a30d8beb125e7d42b6557afa3dac8da7eb04a3776244290c601dfec795c7870
+r Tc0::compareBIntFlag() 11001010111111100101010110101011
+r Tc0::compareC() 17347342483a2b801a2aeb65af64ac81e4c6de9513d8c4a3d398f8eb9fe7aa2f436b1fc3128cda230ba29d4eef959dc48099262978bbb1481d94211e4eb5d1
+r Tc0::compareCIntFlag() 11010000110101000010011110110110
+r Tc0::counter() 4f632cb1d180e1196607dc7c407e6dabb90cfed4c9b70cd96457c7f33597341f7124739bba9f2f3ea8a63ca75ddf00559c83523d3986b02b1d8937ef4d2bb
+r Tc0::highCompareA() 43ffe3ed5683c7321466d0b94ab73969368b30157b7d28e1d1f3ee657e227e93
+r Tc0::highCompareB() 687af662a4108fb5dad625d534177d1c30be27db67a3d8deba3642c6df7978
+r Tc0::highCompareC() 1773482b1aebaface4de13c4d3fb97af4b131cd3029ee59489297bb8141eb5
+r Tc0::highCounter() 4f2cd1e167dc4e6bbcf4c70967c3373f747bbf2ea6375f05935d362d87ed2
+r Tc0::highTop() 7418e786886bddfe8e3d2d231be52bba366fa53dec42f60afa5b58a4757b4
+r Tc0::highUnderflowIntFlag() 01010011101000010110111100100000
+r Tc0::lowCompareA() 6324ea139418f2a1c69fa337c62c77f915ec8179fcd69048e1ca867386c87e
+r Tc0::lowCompareAIntFlag() 00011111111010101110111001111110
+r Tc0::lowCompareB() b413f5a7dac264569d90859b6f5c9d3ad8b15e4255faaca747724901ec5c70
+r Tc0::lowCompareBIntFlag() 11001010111111100101010110101011
+r Tc0::lowCompareC() 34423a802a656481c695d8a3988efea236fc28a2bad4f9dc9628b14d9214ed1
+r Tc0::lowCompareCIntFlag() 11010000110101000010011110110110
+r Tc0::lowCounter() 63b1801960c77da90ed9bcd457f59411239a9f38acadd5c82398b0b193f4bb
+r Tc0::lowTop() 5f35ca85a02ddd29ffa76a99f2d5e3d4cae063253417cc9c6dd7b3fe86ada
+r Tc0::lowUnderflowIntFlag() 10100100111111001111110110111110
+r Tc0::overflowIntFlag() 10100100111111001111110110111110
+r Tc0::top() 745f1835eca78856a0882d6bdddd29feff8ea73d062d0a23991bf2e5d52be3bad436ca6fe0a635302de53c4412f7c60c9afc6a5ddb57b8a3f47e8576ab4da
+r Tc0::topBuffer() d21f8722498073b9c7d8a3deade83a7c7fc05b3872654638795f97bb5ac8eff9c329d2eea0a3c2f579bc6de7ea9c9ea3a4067fcfa27e72cf42026901fcb
 r Usart0::parityError() 10111000111001000111001110001111
 r Usart0::rx() c19b3f728e2f2f051907b94d572f4796a3d1d1ad934337e783f9851d722b
 w Ac0::enable(false) 680:ff:fe:
@@ -163,110 +163,110 @@ w Sleep::isEnabled()
 w Sleep::mode(Sleep::Mode::idle) 50:ff:f9:
 w Sleep::mode(Sleep::Mode::powerDown) 50:00:04:50:ff:fd:
 w Sleep::mode(Sleep::Mode::standby) 50:00:02:50:ff:fb:
-w TcA0::clock(TcA0::Clock::div1) a00:ff:f1:
-w TcA0::clock(TcA0::Clock::div1024) a00:00:0e:
-w TcA0::clock(TcA0::Clock::div16) a00:00:08:a00:ff:f9:
-w TcA0::clock(TcA0::Clock::div2) a00:00:02:a00:ff:f3:
-w TcA0::clock(TcA0::Clock::div256) a00:00:0c:a00:ff:fd:
-w TcA0::clock(TcA0::Clock::div4) a00:00:04:a00:ff:f5:
-w TcA0::clock(TcA0::Clock::div64) a00:00:0a:a00:ff:fb:
-w TcA0::clock(TcA0::Clock::div8) a00:00:06:a00:ff:f7:
-w TcA0::compare0()
-w TcA0::compare0(0x12) a28:00:12:a28:ff:12:a29:ff:00:
-w TcA0::compare0IntEnable(false) a0a:ff:ef:
-w TcA0::compare0IntEnable(true) a0a:00:10:
-w TcA0::compare0IntFlag()
-w TcA0::compare0IntFlagClear() a0b:00:10:a0b:ff:10:
-w TcA0::compare0OutputEnable(false) a01:ff:ef:
-w TcA0::compare0OutputEnable(true) a01:00:10:
-w TcA0::compare1()
-w TcA0::compare1(0x12) a2a:00:12:a2a:ff:12:a2b:ff:00:
-w TcA0::compare1IntEnable(false) a0a:ff:df:
-w TcA0::compare1IntEnable(true) a0a:00:20:
-w TcA0::compare1IntFlag()
-w TcA0::compare1IntFlagClear() a0b:00:20:a0b:ff:20:
-w TcA0::compare1OutputEnable(false) a01:ff:df:
-w TcA0::compare1OutputEnable(true) a01:00:20:
-w TcA0::compare2()
-w TcA0::compare2(0x12) a2c:00:12:a2c:ff:12:a2d:ff:00:
-w TcA0::compare2IntEnable(false) a0a:ff:bf:
-w TcA0::compare2IntEnable(true) a0a:00:40:
-w TcA0::compare2IntFlag()
-w TcA0::compare2IntFlagClear() a0b:00:40:a0b:ff:40:
-w TcA0::compare2OutputEnable(false) a01:ff:bf:
-w TcA0::compare2OutputEnable(true) a01:00:40:
-w TcA0::counter()
-w TcA0::counter(0x12) a20:00:12:a20:ff:12:a21:ff:00:
-w TcA0::enable(false) a00:ff:fe:
-w TcA0::enable(true) a00:00:01:
-w TcA0::highCompare0()
-w TcA0::highCompare0(0x12) a29:00:12:a29:ff:12:
-w TcA0::highCompare0OutputEnable(false) a01:ff:ef:
-w TcA0::highCompare0OutputEnable(true) a01:00:10:
-w TcA0::highCompare1()
-w TcA0::highCompare1(0x12) a2b:00:12:a2b:ff:12:
-w TcA0::highCompare1OutputEnable(false) a01:ff:df:
-w TcA0::highCompare1OutputEnable(true) a01:00:20:
-w TcA0::highCompare2()
-w TcA0::highCompare2(0x12) a2d:00:12:a2d:ff:12:
-w TcA0::highCompare2OutputEnable(false) a01:ff:bf:
-w TcA0::highCompare2OutputEnable(true) a01:00:40:
-w TcA0::highCounter()
-w TcA0::highCounter(0x12) a21:00:12:a21:ff:12:
-w TcA0::highTop()
-w TcA0::highTop(0x12) a27:00:12:a27:ff:12:
-w TcA0::highUnderflowIntEnable(false) a0a:ff:fd:
-w TcA0::highUnderflowIntEnable(true) a0a:00:02:
-w TcA0::highUnderflowIntFlag()
-w TcA0::highUnderflowIntFlagClear() a0b:00:02:a0b:ff:02:
-w TcA0::lowCompare0()
-w TcA0::lowCompare0(0x12) a28:00:12:a28:ff:12:
-w TcA0::lowCompare0IntEnable(false) a0a:ff:ef:
-w TcA0::lowCompare0IntEnable(true) a0a:00:10:
-w TcA0::lowCompare0IntFlag()
-w TcA0::lowCompare0IntFlagClear() a0b:00:10:a0b:ff:10:
-w TcA0::lowCompare0OutputEnable(false) a01:ff:fe:
-w TcA0::lowCompare0OutputEnable(true) a01:00:01:
-w TcA0::lowCompare1()
-w TcA0::lowCompare1(0x12) a2a:00:12:a2a:ff:12:
-w TcA0::lowCompare1IntEnable(false) a0a:ff:df:
-w TcA0::lowCompare1IntEnable(true) a0a:00:20:
-w TcA0::lowCompare1IntFlag()
-w TcA0::lowCompare1IntFlagClear() a0b:00:20:a0b:ff:20:
-w TcA0::lowCompare1OutputEnable(false) a01:ff:fd:
-w TcA0::lowCompare1OutputEnable(true) a01:00:02:
-w TcA0::lowCompare2()
-w TcA0::lowCompare2(0x12) a2c:00:12:a2c:ff:12:
-w TcA0::lowCompare2IntEnable(false) a0a:ff:bf:
-w TcA0::lowCompare2IntEnable(true) a0a:00:40:
-w TcA0::lowCompare2IntFlag()
-w TcA0::lowCompare2IntFlagClear() a0b:00:40:a0b:ff:40:
-w TcA0::lowCompare2OutputEnable(false) a01:ff:fb:
-w TcA0::lowCompare2OutputEnable(true) a01:00:04:
-w TcA0::lowCounter()
-w TcA0::lowCounter(0x12) a20:00:12:a20:ff:12:
-w TcA0::lowTop()
-w TcA0::lowTop(0x12) a26:00:12:a26:ff:12:
-w TcA0::lowUnderflowIntEnable(false) a0a:ff:fe:
-w TcA0::lowUnderflowIntEnable(true) a0a:00:01:
-w TcA0::lowUnderflowIntFlag()
-w TcA0::lowUnderflowIntFlagClear() a0b:00:01:a0b:ff:01:
-w TcA0::overflowIntEnable(false) a0a:ff:fe:
-w TcA0::overflowIntEnable(true) a0a:00:01:
-w TcA0::overflowIntFlag()
-w TcA0::overflowIntFlagClear() a0b:00:01:a0b:ff:01:
-w TcA0::splitModeEnable(false) a03:ff:fe:
-w TcA0::splitModeEnable(true) a03:00:01:
-w TcA0::top()
-w TcA0::top(0x12) a26:00:12:a26:ff:12:a27:ff:00:
-w TcA0::topBuffer()
-w TcA0::topBuffer(0x12) a36:00:12:a36:ff:12:a37:ff:00:
-w TcA0::waveform(TcA0::Waveform::dualSlopePwmOverflowBoth) a01:00:06:a01:ff:fe:
-w TcA0::waveform(TcA0::Waveform::dualSlopePwmOverflowBottom) a01:00:07:
-w TcA0::waveform(TcA0::Waveform::dualSlopePwmOverflowTop) a01:00:05:a01:ff:fd:
-w TcA0::waveform(TcA0::Waveform::frequency) a01:00:01:a01:ff:f9:
-w TcA0::waveform(TcA0::Waveform::normal) a01:ff:f8:
-w TcA0::waveform(TcA0::Waveform::singleSlopePwm) a01:00:03:a01:ff:fb:
+w Tc0::clock(Tc0::Clock::div1) a00:ff:f1:
+w Tc0::clock(Tc0::Clock::div1024) a00:00:0e:
+w Tc0::clock(Tc0::Clock::div16) a00:00:08:a00:ff:f9:
+w Tc0::clock(Tc0::Clock::div2) a00:00:02:a00:ff:f3:
+w Tc0::clock(Tc0::Clock::div256) a00:00:0c:a00:ff:fd:
+w Tc0::clock(Tc0::Clock::div4) a00:00:04:a00:ff:f5:
+w Tc0::clock(Tc0::Clock::div64) a00:00:0a:a00:ff:fb:
+w Tc0::clock(Tc0::Clock::div8) a00:00:06:a00:ff:f7:
+w Tc0::compareA()
+w Tc0::compareA(0x12) a28:00:12:a28:ff:12:a29:ff:00:
+w Tc0::compareAIntEnable(false) a0a:ff:ef:
+w Tc0::compareAIntEnable(true) a0a:00:10:
+w Tc0::compareAIntFlag()
+w Tc0::compareAIntFlagClear() a0b:00:10:a0b:ff:10:
+w Tc0::compareAOutputEnable(false) a01:ff:ef:
+w Tc0::compareAOutputEnable(true) a01:00:10:
+w Tc0::compareB()
+w Tc0::compareB(0x12) a2a:00:12:a2a:ff:12:a2b:ff:00:
+w Tc0::compareBIntEnable(false) a0a:ff:df:
+w Tc0::compareBIntEnable(true) a0a:00:20:
+w Tc0::compareBIntFlag()
+w Tc0::compareBIntFlagClear() a0b:00:20:a0b:ff:20:
+w Tc0::compareBOutputEnable(false) a01:ff:df:
+w Tc0::compareBOutputEnable(true) a01:00:20:
+w Tc0::compareC()
+w Tc0::compareC(0x12) a2c:00:12:a2c:ff:12:a2d:ff:00:
+w Tc0::compareCIntEnable(false) a0a:ff:bf:
+w Tc0::compareCIntEnable(true) a0a:00:40:
+w Tc0::compareCIntFlag()
+w Tc0::compareCIntFlagClear() a0b:00:40:a0b:ff:40:
+w Tc0::compareCOutputEnable(false) a01:ff:bf:
+w Tc0::compareCOutputEnable(true) a01:00:40:
+w Tc0::counter()
+w Tc0::counter(0x12) a20:00:12:a20:ff:12:a21:ff:00:
+w Tc0::enable(false) a00:ff:fe:
+w Tc0::enable(true) a00:00:01:
+w Tc0::highCompareA()
+w Tc0::highCompareA(0x12) a29:00:12:a29:ff:12:
+w Tc0::highCompareAOutputEnable(false) a01:ff:ef:
+w Tc0::highCompareAOutputEnable(true) a01:00:10:
+w Tc0::highCompareB()
+w Tc0::highCompareB(0x12) a2b:00:12:a2b:ff:12:
+w Tc0::highCompareBOutputEnable(false) a01:ff:df:
+w Tc0::highCompareBOutputEnable(true) a01:00:20:
+w Tc0::highCompareC()
+w Tc0::highCompareC(0x12) a2d:00:12:a2d:ff:12:
+w Tc0::highCompareCOutputEnable(false) a01:ff:bf:
+w Tc0::highCompareCOutputEnable(true) a01:00:40:
+w Tc0::highCounter()
+w Tc0::highCounter(0x12) a21:00:12:a21:ff:12:
+w Tc0::highTop()
+w Tc0::highTop(0x12) a27:00:12:a27:ff:12:
+w Tc0::highUnderflowIntEnable(false) a0a:ff:fd:
+w Tc0::highUnderflowIntEnable(true) a0a:00:02:
+w Tc0::highUnderflowIntFlag()
+w Tc0::highUnderflowIntFlagClear() a0b:00:02:a0b:ff:02:
+w Tc0::lowCompareA()
+w Tc0::lowCompareA(0x12) a28:00:12:a28:ff:12:
+w Tc0::lowCompareAIntEnable(false) a0a:ff:ef:
+w Tc0::lowCompareAIntEnable(true) a0a:00:10:
+w Tc0::lowCompareAIntFlag()
+w Tc0::lowCompareAIntFlagClear() a0b:00:10:a0b:ff:10:
+w Tc0::lowCompareAOutputEnable(false) a01:ff:fe:
+w Tc0::lowCompareAOutputEnable(true) a01:00:01:
+w Tc0::lowCompareB()
+w Tc0::lowCompareB(0x12) a2a:00:12:a2a:ff:12:
+w Tc0::lowCompareBIntEnable(false) a0a:ff:df:
+w Tc0::lowCompareBIntEnable(true) a0a:00:20:
+w Tc0::lowCompareBIntFlag()
+w Tc0::lowCompareBIntFlagClear() a0b:00:20:a0b:ff:20:
+w Tc0::lowCompareBOutputEnable(false) a01:ff:fd:
+w Tc0::lowCompareBOutputEnable(true) a01:00:02:
+w Tc0::lowCompareC()
+w Tc0::lowCompareC(0x12) a2c:00:12:a2c:ff:12:
+w Tc0::lowCompareCIntEnable(false) a0a:ff:bf:
+w Tc0::lowCompareCIntEnable(true) a0a:00:40:
+w Tc0::lowCompareCIntFlag()
+w Tc0::lowCompareCIntFlagClear() a0b:00:40:a0b:ff:40:
+w Tc0::lowCompareCOutputEnable(false) a01:ff:fb:
+w Tc0::lowCompareCOutputEnable(true) a01:00:04:
+w Tc0::lowCounter()
+w Tc0::lowCounter(0x12) a20:00:12:a20:ff:12:
+w Tc0::lowTop()
+w Tc0::lowTop(0x12) a26:00:12:a26:ff:12:
+w Tc0::lowUnderflowIntEnable(false) a0a:ff:fe:
+w Tc0::lowUnderflowIntEnable(true) a0a:00:01:
+w Tc0::lowUnderflowIntFlag()
+w Tc0::lowUnderflowIntFlagClear() a0b:00:01:a0b:ff:01:
+w Tc0::overflowIntEnable(false) a0a:ff:fe:
+w Tc0::overflowIntEnable(true) a0a:00:01:
+w Tc0::overflowIntFlag()
+w Tc0::overflowIntFlagClear() a0b:00:01:a0b:ff:01:
+w Tc0::splitModeEnable(false) a03:ff:fe:
+w Tc0::splitModeEnable(true) a03:00:01:
+w Tc0::top()
+w Tc0::top(0x12) a26:00:12:a26:ff:12:a27:ff:00:
+w Tc0::topBuffer()
+w Tc0::topBuffer(0x12) a36:00:12:a36:ff:12:a37:ff:00:
+w Tc0::waveform(Tc0::Waveform::dualSlopePwmOverflowBoth) a01:00:06:a01:ff:fe:
+w Tc0::waveform(Tc0::Waveform::dualSlopePwmOverflowBottom) a01:00:07:
+w Tc0::waveform(Tc0::Waveform::dualSlopePwmOverflowTop) a01:00:05:a01:ff:fd:
+w Tc0::waveform(Tc0::Waveform::frequency) a01:00:01:a01:ff:f9:
+w Tc0::waveform(Tc0::Waveform::normal) a01:ff:f8:
+w Tc0::waveform(Tc0::Waveform::singleSlopePwm) a01:00:03:a01:ff:fb:
 w Usart0::baud(0x1234) 808:00:34:809:00:12:808:ff:34:809:ff:12:
 w Usart0::baudMode(Usart0::BaudMode::doubleSpeed) 806:00:02:806:ff:fb:
 w Usart0::baudMode(Usart0::BaudMode::genericAuto) 806:00:04:806:ff:fd:

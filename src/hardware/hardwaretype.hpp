@@ -20,11 +20,6 @@ namespace nblib::hw {
 /// * port
 /// * spi
 /// * tc
-/// * tcA
-/// * tcB
-/// * tcC
-/// * tcD
-/// * timer
 /// * twi
 /// * usart
 /// * usi
@@ -43,11 +38,6 @@ enum class HardwareType {
     sleep,
     spi,
     tc,
-    tcA,
-    tcB,
-    tcC,
-    tcD,
-    timer,
     twi,
     usart,
     usi,

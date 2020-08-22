@@ -195,11 +195,11 @@ struct AdcN {
         /// * event
         /// * analogComparator
         /// * externalInt0
-        /// * timer0CompareMatchA
-        /// * timer0Overflow
-        /// * timer1CompareMatchB
-        /// * timer1Overflow
-        /// * timer1CaptureEvent
+        /// * tc0CompareMatchA
+        /// * tc0Overflow
+        /// * tc1CompareMatchB
+        /// * tc1Overflow
+        /// * tc1CaptureEvent
         enum class Trigger {
             #if DEFINED(ADC_N(TRIGGER_FREE_RUNNING_ID))
                 freeRunning = ADC_N(TRIGGER_FREE_RUNNING_ID),
@@ -217,24 +217,24 @@ struct AdcN {
                 externalInt0 = ADC_N(TRIGGER_EXTERNAL_INT_0_ID),
             #endif
 
-            #if DEFINED(ADC_N(TRIGGER_TIMER0_COMPARE_MATCH_A_ID))
-                timer0CompareMatchA = ADC_N(TRIGGER_TIMER0_COMPARE_MATCH_A_ID),
+            #if DEFINED(ADC_N(TRIGGER_TC0_COMPARE_MATCH_A_ID))
+                tc0CompareMatchA = ADC_N(TRIGGER_TC0_COMPARE_MATCH_A_ID),
             #endif
 
-            #if DEFINED(ADC_N(TRIGGER_TIMER0_OVERFLOW_ID))
-                timer0Overflow = ADC_N(TRIGGER_TIMER0_OVERFLOW_ID),
+            #if DEFINED(ADC_N(TRIGGER_TC0_OVERFLOW_ID))
+                tc0Overflow = ADC_N(TRIGGER_TC0_OVERFLOW_ID),
             #endif
 
-            #if DEFINED(ADC_N(TRIGGER_TIMER1_COMPARE_MATCH_B_ID))
-                timer1CompareMatchB = ADC_N(TRIGGER_TIMER1_COMPARE_MATCH_B_ID),
+            #if DEFINED(ADC_N(TRIGGER_TC1_COMPARE_MATCH_B_ID))
+                tc1CompareMatchB = ADC_N(TRIGGER_TC1_COMPARE_MATCH_B_ID),
             #endif
 
-            #if DEFINED(ADC_N(TRIGGER_TIMER1_OVERFLOW_ID))
-                timer1Overflow = ADC_N(TRIGGER_TIMER1_OVERFLOW_ID),
+            #if DEFINED(ADC_N(TRIGGER_TC1_OVERFLOW_ID))
+                tc1Overflow = ADC_N(TRIGGER_TC1_OVERFLOW_ID),
             #endif
 
-            #if DEFINED(ADC_N(TRIGGER_TIMER1_CAPTURE_EVENT_ID))
-                timer1CaptureEvent = ADC_N(TRIGGER_TIMER1_CAPTURE_EVENT_ID),
+            #if DEFINED(ADC_N(TRIGGER_TC1_CAPTURE_EVENT_ID))
+                tc1CaptureEvent = ADC_N(TRIGGER_TC1_CAPTURE_EVENT_ID),
             #endif
         };
     #endif
@@ -520,24 +520,24 @@ TEST(AdcN, getHardwareType) {
             TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::externalInt0));
         #endif
 
-        #if DEFINED(ADC_N(TRIGGER_TIMER0_COMPARE_MATCH_A_ID))
-            TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::timer0CompareMatchA));
+        #if DEFINED(ADC_N(TRIGGER_TC0_COMPARE_MATCH_A_ID))
+            TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::tc0CompareMatchA));
         #endif
 
-        #if DEFINED(ADC_N(TRIGGER_TIMER0_OVERFLOW_ID))
-            TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::timer0Overflow));
+        #if DEFINED(ADC_N(TRIGGER_TC0_OVERFLOW_ID))
+            TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::tc0Overflow));
         #endif
 
-        #if DEFINED(ADC_N(TRIGGER_TIMER1_COMPARE_MATCH_B_ID))
-            TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::timer1CompareMatchB));
+        #if DEFINED(ADC_N(TRIGGER_TC1_COMPARE_MATCH_B_ID))
+            TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::tc1CompareMatchB));
         #endif
 
-        #if DEFINED(ADC_N(TRIGGER_TIMER1_OVERFLOW_ID))
-            TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::timer1Overflow));
+        #if DEFINED(ADC_N(TRIGGER_TC1_OVERFLOW_ID))
+            TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::tc1Overflow));
         #endif
 
-        #if DEFINED(ADC_N(TRIGGER_TIMER1_CAPTURE_EVENT_ID))
-            TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::timer1CaptureEvent));
+        #if DEFINED(ADC_N(TRIGGER_TC1_CAPTURE_EVENT_ID))
+            TEST_REG_WRITE(AdcN::trigger(AdcN::Trigger::tc1CaptureEvent));
         #endif
     }
 #endif

@@ -52,12 +52,12 @@ struct UsiN {
     #if REG_DEFINED(USI_N(CLOCK_SELECT_REG))
         /// #### enum Clock
         /// * none
-        /// * timer0CompareMatch
+        /// * tc0CompareMatch
         /// * externalPositiveEdge
         /// * externalNegativeEdge
         enum class Clock {
             none = USI_N(CLOCK_SELECT_NONE_ID),
-            timer0CompareMatch = USI_N(CLOCK_SELECT_TIMER_0_COMPARE_MATCH_ID),
+            tc0CompareMatch = USI_N(CLOCK_SELECT_TC_0_COMPARE_MATCH_ID),
             externalPositiveEdge = USI_N(CLOCK_SELECT_EXTERNAL_POSITIVE_EDGE_ID),
             externalNegativeEdge = USI_N(CLOCK_SELECT_EXTERNAL_NEGATIVE_EDGE_ID),
         };
@@ -232,7 +232,7 @@ TEST(UsiN, getHardwareType) {
 #if REG_DEFINED(USI_N(CLOCK_SELECT_REG))
     TEST(UsiN, clock) {
         TEST_REG_WRITE(UsiN::clock(UsiN::Clock::none));
-        TEST_REG_WRITE(UsiN::clock(UsiN::Clock::timer0CompareMatch));
+        TEST_REG_WRITE(UsiN::clock(UsiN::Clock::tc0CompareMatch));
         TEST_REG_WRITE(UsiN::clock(UsiN::Clock::externalPositiveEdge));
         TEST_REG_WRITE(UsiN::clock(UsiN::Clock::externalNegativeEdge));
     }
