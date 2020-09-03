@@ -4,7 +4,6 @@
 #include "algorithm.hpp"
 #include "array.hpp"
 #include "heap.hpp"
-#include "i2c.hpp"
 #include "initializer_list.hpp"
 #include "iterator.hpp"
 #include "macros.hpp"
