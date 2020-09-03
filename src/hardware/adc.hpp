@@ -334,6 +334,13 @@ struct AdcN {
             ADC_N(INT_FLAG_REG)::setBit(ADC_N(INT_FLAG_BIT), true);
         }
     #endif
+
+    #if REG_DEFINED(ADC_N(RUNNING_REG))
+        /// #### static bool running()
+        static force_inline bool running() {
+            return ADC_N(RUNNING_REG)::getBit(ADC_N(RUNNING_BIT));
+        }
+    #endif
 };
 
 #ifdef TEST
@@ -556,6 +563,12 @@ TEST(AdcN, getHardwareType) {
 
     TEST(AdcN, intFlagClear) {
         TEST_REG_WRITE(AdcN::intFlagClear());
+    }
+#endif
+
+#if REG_DEFINED(ADC_N(RUNNING_REG))
+    TEST(AdcN, running) {
+        TEST_REG_READ_WRITE(AdcN::running());
     }
 #endif
 

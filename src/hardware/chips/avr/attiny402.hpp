@@ -436,6 +436,9 @@
 #define CHIP_ADC_0_PRESCALER_128_ID                                 0x06
 #define CHIP_ADC_0_PRESCALER_256_ID                                 0x07
 
+#define CHIP_ADC_0_RUNNING_REG                                      CHIP_REG_ADC_0_COMMAND
+#define CHIP_ADC_0_RUNNING_BIT                                      0
+
 //------------------------------------------------
 // Comparator
 
