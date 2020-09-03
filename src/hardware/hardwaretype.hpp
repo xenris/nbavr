@@ -28,6 +28,7 @@ namespace nblib::hw {
 enum class HardwareType {
     ac,
     adc,
+    ccl,
     clock,
     dac,
     exInt,

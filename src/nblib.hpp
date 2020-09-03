@@ -23,6 +23,7 @@
 
 #include "hardware/ac.hpp"
 #include "hardware/adc.hpp"
+#include "hardware/ccl.hpp"
 #include "hardware/clock.hpp"
 #include "hardware/dac.hpp"
 #include "hardware/eeprom.hpp"

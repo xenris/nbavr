@@ -298,6 +298,39 @@
 #define CHIP_VREF_4_VOLTAGE_1_5_V_ID                                0x04
 
 //------------------------------------------------
+// Configurable Custom Logic
+
+#define CHIP_CCL_0_LUT_A_INPUT_0_TCD0_ID                            0x09
+#define CHIP_CCL_0_LUT_A_INPUT_0_AC1_ID                             0x0C
+#define CHIP_CCL_0_LUT_A_INPUT_0_TCB1_ID                            0x0D
+#define CHIP_CCL_0_LUT_A_INPUT_0_AC2_ID                             0x0E
+
+#define CHIP_CCL_0_LUT_A_INPUT_1_TCD0_ID                            0x90
+#define CHIP_CCL_0_LUT_A_INPUT_1_AC1_ID                             0xC0
+#define CHIP_CCL_0_LUT_A_INPUT_1_TCB1_ID                            0xD0
+#define CHIP_CCL_0_LUT_A_INPUT_1_AC2_ID                             0xE0
+
+#define CHIP_CCL_0_LUT_A_INPUT_2_TCD0_ID                            0x09
+#define CHIP_CCL_0_LUT_A_INPUT_2_AC1_ID                             0x0C
+#define CHIP_CCL_0_LUT_A_INPUT_2_TCB1_ID                            0x0D
+#define CHIP_CCL_0_LUT_A_INPUT_2_AC2_ID                             0x0E
+
+#define CHIP_CCL_0_LUT_B_INPUT_0_TCD0_ID                            0x09
+#define CHIP_CCL_0_LUT_B_INPUT_0_AC1_ID                             0x0C
+#define CHIP_CCL_0_LUT_B_INPUT_0_TCB1_ID                            0x0D
+#define CHIP_CCL_0_LUT_B_INPUT_0_AC2_ID                             0x0E
+
+#define CHIP_CCL_0_LUT_B_INPUT_1_TCD0_ID                            0x90
+#define CHIP_CCL_0_LUT_B_INPUT_1_AC1_ID                             0xC0
+#define CHIP_CCL_0_LUT_B_INPUT_1_TCB1_ID                            0xD0
+#define CHIP_CCL_0_LUT_B_INPUT_1_AC2_ID                             0xE0
+
+#define CHIP_CCL_0_LUT_B_INPUT_2_TCD0_ID                            0x09
+#define CHIP_CCL_0_LUT_B_INPUT_2_AC1_ID                             0x0C
+#define CHIP_CCL_0_LUT_B_INPUT_2_TCB1_ID                            0x0D
+#define CHIP_CCL_0_LUT_B_INPUT_2_AC2_ID                             0x0E
+
+//------------------------------------------------
 // Analog to digital converters
 
 #define CHIP_ADC_0_CHANNEL_4_ID                                     0x04

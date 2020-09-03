@@ -73,7 +73,17 @@
 // TODO CRCSCAN
 // TODO RTC
 // TODO EVSYS
-// TODO CCL
+
+#define CHIP_REG_CCL_CTRLA                                          Register<uint8_t, CHIP_MODULE_CCL_ADDR + 0x00>
+#define CHIP_REG_CCL_SEQCTRL0                                       Register<uint8_t, CHIP_MODULE_CCL_ADDR + 0x01>
+#define CHIP_REG_CCL_LUT0CTRLA                                      Register<uint8_t, CHIP_MODULE_CCL_ADDR + 0x05>
+#define CHIP_REG_CCL_LUT0CTRLB                                      Register<uint8_t, CHIP_MODULE_CCL_ADDR + 0x06>
+#define CHIP_REG_CCL_LUT0CTRLC                                      Register<uint8_t, CHIP_MODULE_CCL_ADDR + 0x07>
+#define CHIP_REG_CCL_TRUTH0                                         Register<uint8_t, CHIP_MODULE_CCL_ADDR + 0x08>
+#define CHIP_REG_CCL_LUT1CTRLA                                      Register<uint8_t, CHIP_MODULE_CCL_ADDR + 0x09>
+#define CHIP_REG_CCL_LUT1CTRLB                                      Register<uint8_t, CHIP_MODULE_CCL_ADDR + 0x0A>
+#define CHIP_REG_CCL_LUT1CTRLC                                      Register<uint8_t, CHIP_MODULE_CCL_ADDR + 0x0B>
+#define CHIP_REG_CCL_TRUTH1                                         Register<uint8_t, CHIP_MODULE_CCL_ADDR + 0x0C>
 
 #define CHIP_REG_PORTMUX_CTRLA                                      Register<uint8_t, CHIP_MODULE_PORTMUX_ADDR + 0x00>
 #define CHIP_REG_PORTMUX_CTRLB                                      Register<uint8_t, CHIP_MODULE_PORTMUX_ADDR + 0x01>
@@ -394,6 +404,112 @@
 #define CHIP_VREF_1_VOLTAGE_2_5_V_ID                                0x20
 #define CHIP_VREF_1_VOLTAGE_4_3_V_ID                                0x30
 #define CHIP_VREF_1_VOLTAGE_1_5_V_ID                                0x40
+
+//------------------------------------------------
+// Configurable Custom Logic
+
+#define CHIP_CCL_0
+
+#define CHIP_CCL_0_ENABLE_REG                                       CHIP_REG_CCL_CTRLA
+#define CHIP_CCL_0_ENABLE_BIT                                       0
+
+#define CHIP_CCL_0_LUT_A_ENABLE_REG                                 CHIP_REG_CCL_LUT0CTRLA
+#define CHIP_CCL_0_LUT_A_ENABLE_BIT                                 0
+
+#define CHIP_CCL_0_LUT_A_OUTPUT_ENABLE_REG                          CHIP_REG_CCL_LUT0CTRLA
+#define CHIP_CCL_0_LUT_A_OUTPUT_ENABLE_BIT                          3
+
+#define CHIP_CCL_0_LUT_A_TRUTH_REG                                  CHIP_REG_CCL_TRUTH0
+
+#define CHIP_CCL_0_LUT_A_INPUT_0_REG                                CHIP_REG_CCL_LUT0CTRLB
+#define CHIP_CCL_0_LUT_A_INPUT_0_MASK                               0x0F
+#define CHIP_CCL_0_LUT_A_INPUT_0_MASK_ID                            0x00
+#define CHIP_CCL_0_LUT_A_INPUT_0_FEEDBACK_ID                        0x01
+#define CHIP_CCL_0_LUT_A_INPUT_0_LINK_ID                            0x02
+#define CHIP_CCL_0_LUT_A_INPUT_0_EVENT0_ID                          0x03
+#define CHIP_CCL_0_LUT_A_INPUT_0_EVENT1_ID                          0x04
+#define CHIP_CCL_0_LUT_A_INPUT_0_IO_ID                              0x05
+#define CHIP_CCL_0_LUT_A_INPUT_0_AC0_ID                             0x06
+#define CHIP_CCL_0_LUT_A_INPUT_0_TCB0_ID                            0x07
+#define CHIP_CCL_0_LUT_A_INPUT_0_TCA0_ID                            0x08
+#define CHIP_CCL_0_LUT_A_INPUT_0_USART0_ID                          0x0A
+#define CHIP_CCL_0_LUT_A_INPUT_0_SPI0_ID                            0x0B
+
+#define CHIP_CCL_0_LUT_A_INPUT_1_REG                                CHIP_REG_CCL_LUT0CTRLB
+#define CHIP_CCL_0_LUT_A_INPUT_1_MASK                               0xF0
+#define CHIP_CCL_0_LUT_A_INPUT_1_MASK_ID                            0x00
+#define CHIP_CCL_0_LUT_A_INPUT_1_FEEDBACK_ID                        0x10
+#define CHIP_CCL_0_LUT_A_INPUT_1_LINK_ID                            0x20
+#define CHIP_CCL_0_LUT_A_INPUT_1_EVENT0_ID                          0x30
+#define CHIP_CCL_0_LUT_A_INPUT_1_EVENT1_ID                          0x40
+#define CHIP_CCL_0_LUT_A_INPUT_1_IO_ID                              0x50
+#define CHIP_CCL_0_LUT_A_INPUT_1_AC0_ID                             0x60
+#define CHIP_CCL_0_LUT_A_INPUT_1_TCB0_ID                            0x70
+#define CHIP_CCL_0_LUT_A_INPUT_1_TCA0_ID                            0x80
+#define CHIP_CCL_0_LUT_A_INPUT_1_USART0_ID                          0xA0
+#define CHIP_CCL_0_LUT_A_INPUT_1_SPI0_ID                            0xB0
+
+#define CHIP_CCL_0_LUT_A_INPUT_2_REG                                CHIP_REG_CCL_LUT0CTRLC
+#define CHIP_CCL_0_LUT_A_INPUT_2_MASK                               0x0F
+#define CHIP_CCL_0_LUT_A_INPUT_2_MASK_ID                            0x00
+#define CHIP_CCL_0_LUT_A_INPUT_2_FEEDBACK_ID                        0x01
+#define CHIP_CCL_0_LUT_A_INPUT_2_LINK_ID                            0x02
+#define CHIP_CCL_0_LUT_A_INPUT_2_EVENT0_ID                          0x03
+#define CHIP_CCL_0_LUT_A_INPUT_2_EVENT1_ID                          0x04
+#define CHIP_CCL_0_LUT_A_INPUT_2_IO_ID                              0x05
+#define CHIP_CCL_0_LUT_A_INPUT_2_AC0_ID                             0x06
+#define CHIP_CCL_0_LUT_A_INPUT_2_TCB0_ID                            0x07
+#define CHIP_CCL_0_LUT_A_INPUT_2_TCA0_ID                            0x08
+#define CHIP_CCL_0_LUT_A_INPUT_2_SPI0_ID                            0x0B
+
+#define CHIP_CCL_0_LUT_B_ENABLE_REG                                 CHIP_REG_CCL_LUT1CTRLA
+#define CHIP_CCL_0_LUT_B_ENABLE_BIT                                 0
+
+#define CHIP_CCL_0_LUT_B_OUTPUT_ENABLE_REG                          CHIP_REG_CCL_LUT1CTRLA
+#define CHIP_CCL_0_LUT_B_OUTPUT_ENABLE_BIT                          3
+
+#define CHIP_CCL_0_LUT_B_TRUTH_REG                                  CHIP_REG_CCL_TRUTH1
+
+#define CHIP_CCL_0_LUT_B_INPUT_0_REG                                CHIP_REG_CCL_LUT1CTRLB
+#define CHIP_CCL_0_LUT_B_INPUT_0_MASK                               0x0F
+#define CHIP_CCL_0_LUT_B_INPUT_0_MASK_ID                            0x00
+#define CHIP_CCL_0_LUT_B_INPUT_0_FEEDBACK_ID                        0x01
+#define CHIP_CCL_0_LUT_B_INPUT_0_LINK_ID                            0x02
+#define CHIP_CCL_0_LUT_B_INPUT_0_EVENT0_ID                          0x03
+#define CHIP_CCL_0_LUT_B_INPUT_0_EVENT1_ID                          0x04
+#define CHIP_CCL_0_LUT_B_INPUT_0_IO_ID                              0x05
+#define CHIP_CCL_0_LUT_B_INPUT_0_AC0_ID                             0x06
+#define CHIP_CCL_0_LUT_B_INPUT_0_TCB0_ID                            0x07
+#define CHIP_CCL_0_LUT_B_INPUT_0_TCA0_ID                            0x08
+#define CHIP_CCL_0_LUT_B_INPUT_0_USART0_ID                          0x0A
+#define CHIP_CCL_0_LUT_B_INPUT_0_SPI0_ID                            0x0B
+
+#define CHIP_CCL_0_LUT_B_INPUT_1_REG                                CHIP_REG_CCL_LUT1CTRLB
+#define CHIP_CCL_0_LUT_B_INPUT_1_MASK                               0xF0
+#define CHIP_CCL_0_LUT_B_INPUT_1_MASK_ID                            0x00
+#define CHIP_CCL_0_LUT_B_INPUT_1_FEEDBACK_ID                        0x10
+#define CHIP_CCL_0_LUT_B_INPUT_1_LINK_ID                            0x20
+#define CHIP_CCL_0_LUT_B_INPUT_1_EVENT0_ID                          0x30
+#define CHIP_CCL_0_LUT_B_INPUT_1_EVENT1_ID                          0x40
+#define CHIP_CCL_0_LUT_B_INPUT_1_IO_ID                              0x50
+#define CHIP_CCL_0_LUT_B_INPUT_1_AC0_ID                             0x60
+#define CHIP_CCL_0_LUT_B_INPUT_1_TCB0_ID                            0x70
+#define CHIP_CCL_0_LUT_B_INPUT_1_TCA0_ID                            0x80
+#define CHIP_CCL_0_LUT_B_INPUT_1_USART0_ID                          0xA0
+#define CHIP_CCL_0_LUT_B_INPUT_1_SPI0_ID                            0xB0
+
+#define CHIP_CCL_0_LUT_B_INPUT_2_REG                                CHIP_REG_CCL_LUT1CTRLC
+#define CHIP_CCL_0_LUT_B_INPUT_2_MASK                               0x0F
+#define CHIP_CCL_0_LUT_B_INPUT_2_MASK_ID                            0x00
+#define CHIP_CCL_0_LUT_B_INPUT_2_FEEDBACK_ID                        0x01
+#define CHIP_CCL_0_LUT_B_INPUT_2_LINK_ID                            0x02
+#define CHIP_CCL_0_LUT_B_INPUT_2_EVENT0_ID                          0x03
+#define CHIP_CCL_0_LUT_B_INPUT_2_EVENT1_ID                          0x04
+#define CHIP_CCL_0_LUT_B_INPUT_2_IO_ID                              0x05
+#define CHIP_CCL_0_LUT_B_INPUT_2_AC0_ID                             0x06
+#define CHIP_CCL_0_LUT_B_INPUT_2_TCB0_ID                            0x07
+#define CHIP_CCL_0_LUT_B_INPUT_2_TCA0_ID                            0x08
+#define CHIP_CCL_0_LUT_B_INPUT_2_SPI0_ID                            0x0B
 
 //------------------------------------------------
 // Analog to digital converters
