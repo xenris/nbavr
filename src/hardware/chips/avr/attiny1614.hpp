@@ -475,9 +475,6 @@
 #define CHIP_DAC_1_ENABLE_REG                                       CHIP_REG_DAC_1_CTRLA
 #define CHIP_DAC_1_ENABLE_BIT                                       0
 
-#define CHIP_DAC_1_OUTPUT_ENABLE_REG                                CHIP_REG_DAC_1_CTRLA
-#define CHIP_DAC_1_OUTPUT_ENABLE_BIT                                6
-
 #define CHIP_DAC_1_DATA_REG                                         CHIP_REG_DAC_0_DATA
 
 //------------------------------------------------
@@ -486,9 +483,6 @@
 
 #define CHIP_DAC_2_ENABLE_REG                                       CHIP_REG_DAC_2_CTRLA
 #define CHIP_DAC_2_ENABLE_BIT                                       0
-
-#define CHIP_DAC_2_OUTPUT_ENABLE_REG                                CHIP_REG_DAC_2_CTRLA
-#define CHIP_DAC_2_OUTPUT_ENABLE_BIT                                6
 
 #define CHIP_DAC_2_DATA_REG                                         CHIP_REG_DAC_0_DATA
 
