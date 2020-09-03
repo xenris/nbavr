@@ -24,7 +24,7 @@
 /// Disables interrupts while running a block of code.
 
 #ifdef __clang__
-    #define atomic(...) __VA_ARGS__
+    #define atomic(A, ...) A
 #else
     #define atomic(...) CAT(atomic_, LENGTH(__VA_ARGS__))(__VA_ARGS__)
     #define atomic_0() if(nblib::__Atomic __a; true)
