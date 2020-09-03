@@ -157,9 +157,9 @@
 #define CHIP_REG_TCA0_CMP1                                          Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x2A>
 #define CHIP_REG_TCA0_CMP2                                          Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x2C>
 #define CHIP_REG_TCA0_PERBUF                                        Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x36>
-#define CHIP_REG_TCA0_CMP0nBUF                                      Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x38>
-#define CHIP_REG_TCA0_CMP1nBUF                                      Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x3A>
-#define CHIP_REG_TCA0_CMP2nBUF                                      Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x3C>
+#define CHIP_REG_TCA0_CMP0BUF                                       Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x38>
+#define CHIP_REG_TCA0_CMP1BUF                                       Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x3A>
+#define CHIP_REG_TCA0_CMP2BUF                                       Register<uint16_t, CHIP_MODULE_TCA0_ADDR + 0x3C>
 
 #define CHIP_REG_TCA0_LCNT                                          Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x20>
 #define CHIP_REG_TCA0_HCNT                                          Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x21>
