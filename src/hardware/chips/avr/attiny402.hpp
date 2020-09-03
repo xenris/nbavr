@@ -298,6 +298,8 @@
 #define CHIP_PIN_A0_PULLUP_BIT                                      3
 #define CHIP_PIN_A0_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 #define CHIP_PIN_A0_OUTPUT_TOGGLE_BIT                               0
+#define CHIP_PIN_A0_INVERT_REG                                      CHIP_REG_PORT_A_PIN0CTRL
+#define CHIP_PIN_A0_INVERT_BIT                                      7
 // TODO Add int flag.
 
 #define CHIP_PIN_A1
@@ -311,6 +313,8 @@
 #define CHIP_PIN_A1_PULLUP_BIT                                      3
 #define CHIP_PIN_A1_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 #define CHIP_PIN_A1_OUTPUT_TOGGLE_BIT                               1
+#define CHIP_PIN_A1_INVERT_REG                                      CHIP_REG_PORT_A_PIN1CTRL
+#define CHIP_PIN_A1_INVERT_BIT                                      7
 
 #define CHIP_PIN_A2
 #define CHIP_PIN_A2_DIRECTION_REG                                   CHIP_REG_VPORT_A_DIR
@@ -323,6 +327,8 @@
 #define CHIP_PIN_A2_PULLUP_BIT                                      3
 #define CHIP_PIN_A2_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 #define CHIP_PIN_A2_OUTPUT_TOGGLE_BIT                               2
+#define CHIP_PIN_A2_INVERT_REG                                      CHIP_REG_PORT_A_PIN2CTRL
+#define CHIP_PIN_A2_INVERT_BIT                                      7
 
 #define CHIP_PIN_A3
 #define CHIP_PIN_A3_DIRECTION_REG                                   CHIP_REG_VPORT_A_DIR
@@ -335,6 +341,8 @@
 #define CHIP_PIN_A3_PULLUP_BIT                                      3
 #define CHIP_PIN_A3_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 #define CHIP_PIN_A3_OUTPUT_TOGGLE_BIT                               3
+#define CHIP_PIN_A3_INVERT_REG                                      CHIP_REG_PORT_A_PIN3CTRL
+#define CHIP_PIN_A3_INVERT_BIT                                      7
 
 #define CHIP_PIN_A6
 #define CHIP_PIN_A6_DIRECTION_REG                                   CHIP_REG_VPORT_A_DIR
@@ -347,6 +355,8 @@
 #define CHIP_PIN_A6_PULLUP_BIT                                      3
 #define CHIP_PIN_A6_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 #define CHIP_PIN_A6_OUTPUT_TOGGLE_BIT                               6
+#define CHIP_PIN_A6_INVERT_REG                                      CHIP_REG_PORT_A_PIN6CTRL
+#define CHIP_PIN_A6_INVERT_BIT                                      7
 
 #define CHIP_PIN_A7
 #define CHIP_PIN_A7_DIRECTION_REG                                   CHIP_REG_VPORT_A_DIR
@@ -359,6 +369,8 @@
 #define CHIP_PIN_A7_PULLUP_BIT                                      3
 #define CHIP_PIN_A7_OUTPUT_TOGGLE_REG                               CHIP_REG_PORT_A_OUTTGL
 #define CHIP_PIN_A7_OUTPUT_TOGGLE_BIT                               7
+#define CHIP_PIN_A7_INVERT_REG                                      CHIP_REG_PORT_A_PIN7CTRL
+#define CHIP_PIN_A7_INVERT_BIT                                      7
 
 //------------------------------------------------
 // Voltage References

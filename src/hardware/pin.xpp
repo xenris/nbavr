@@ -109,6 +109,13 @@ struct PinN : Pin {
             PIN_N(PULLDOWN_REG)::setBit(PIN_N(PULLDOWN_BIT), b);
         }
     #endif
+
+    #if REG_DEFINED(PIN_N(INVERT_REG))
+        /// #### static void invert(bool enable)
+        static force_inline void invert(bool b) {
+            PIN_N(INVERT_REG)::setBit(PIN_N(INVERT_BIT), b);
+        }
+    #endif
 };
 
 #else // PIN_TESTS
@@ -160,6 +167,13 @@ TEST(CAT(PortX, _, PinN), getHardwareType) {
 #if REG_DEFINED(PIN_N(OUTPUT_TOGGLE_REG))
     TEST(CAT(PortX, _, PinN), outputToggle) {
         TEST_REG_WRITE(PortX::PinN::outputToggle());
+    }
+#endif
+
+#if REG_DEFINED(PIN_N(INVERT_REG))
+    TEST(CAT(PortX, _, PinN), invert) {
+        TEST_REG_WRITE(PortX::PinN::invert(true));
+        TEST_REG_WRITE(PortX::PinN::invert(false));
     }
 #endif
 
