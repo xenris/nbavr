@@ -11,6 +11,9 @@ struct Tuple {
     A a;
     B b;
 
+    /// #### Tuple()
+    Tuple() {}
+
     /// #### Tuple(A a, B b)
     Tuple(A a, B b) : a(a), b(b) {}
 };
@@ -21,6 +24,9 @@ struct Tuple3 {
     A a;
     B b;
     C c;
+
+    /// #### Tuple3()
+    Tuple3() {}
 
     /// #### Tuple3(A a, B b, C c)
     Tuple3(A a, B b, C c) : a(a), b(b), c(c) {}
@@ -33,6 +39,9 @@ struct Tuple4 {
     B b;
     C c;
     D d;
+
+    /// #### Tuple4()
+    Tuple4() {}
 
     /// #### Tuple4(A a, B b, C c, D d)
     Tuple4(A a, B b, C c, D d) : a(a), b(b), c(c), d(d) {}
@@ -47,6 +56,9 @@ struct Tuple5 {
     D d;
     E e;
 
+    /// #### Tuple5()
+    Tuple5() {}
+
     /// #### Tuple5(A a, B b, C c, D d, E e)
     Tuple5(A a, B b, C c, D d, E e) : a(a), b(b), c(c), d(d), e(e) {}
 };
@@ -60,6 +72,9 @@ struct Tuple6 {
     D d;
     E e;
     F f;
+
+    /// #### Tuple6()
+    Tuple6() {}
 
     /// #### Tuple6(A a, B b, C c, D d, E e, F f)
     Tuple6(A a, B b, C c, D d, E e, F f) : a(a), b(b), c(c), d(d), e(e), f(f) {}
