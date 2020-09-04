@@ -2,6 +2,7 @@ r Ac0::intFlag() 00011011010010111101101011100100
 r Ac0::state() 11000001011111100010111111100000
 r Adc0::intFlag() 11110010011011000100100001010001
 r Adc0::result() 478fd364286f2f50d5e15794bb48f220753762dde4fc1565aff24d35b9409132d882a905d661c4987d2a47b538e8549a9c85fd02cc02d4e697c62614c59c2745
+r Adc0::running() 11001100010110111001011110000010
 r PortA::Pin0::input() 10100011010111100000001111111100
 r PortA::Pin1::input() 01100011101110101101000111110111
 r PortA::Pin2::input() 00100011010000010101001100000111
@@ -11,10 +12,13 @@ r PortA::Pin7::input() 11000110011000010001011110111111
 r PortA::input() d98af5068c09f272aad8a231b695384121e70fe28c095cfdb7bb393f1efbed6
 r Sleep::isEnabled() 11101101111111011100010111111011
 r Tc0::compareA() 4363ff24e3eaed1356948318c7f232a114c6669fd0a3b9034a7cb76239c7697f36918b5e30c815017b797dfc28d6e190d148f3e1eeca65867e7322867ec8937e
+r Tc0::compareABuffer() 7ac47de112de735314640acf4581504af1ed7e2b853152fde2ff2fee73aa408ac1d8585aac078e624c31af22a46ed5b7a4add53b54f920f43a37881485e0
 r Tc0::compareAIntFlag() 00011111111010101110111001111110
 r Tc0::compareB() 68b47a13f6f562a7a4da10c28f64b556da9dd6902585d59b346f175c7d9d1c3a30d8beb125e7d42b6557afa3dac8da7eb04a3776244290c601dfec795c7870
+r Tc0::compareBBuffer() 7ca55f37a263a60271d777cf5d935138abe970bed18d4bfc8e86066792e95631ad739b12e97818a4e2488644d6f0a5151f662431a95c7f2d06dc586d9c827
 r Tc0::compareBIntFlag() 11001010111111100101010110101011
 r Tc0::compareC() 17347342483a2b801a2aeb65af64ac81e4c6de9513d8c4a3d398f8eb9fe7aa2f436b1fc3128cda230ba29d4eef959dc48099262978bbb1481d94211e4eb5d1
+r Tc0::compareCBuffer() 268e536a3df6a85f199ec6c2469fc266d495b381da2844075396dd1021513e479a2f4f2101bb5f6bb1cb54a5f686a5e4c3b82a77cad2164e393468fa3b475
 r Tc0::compareCIntFlag() 11010000110101000010011110110110
 r Tc0::counter() 4f632cb1d180e1196607dc7c407e6dabb90cfed4c9b70cd96457c7f33597341f7124739bba9f2f3ea8a63ca75ddf00559c83523d3986b02b1d8937ef4d2bb
 r Tc0::highCompareA() 43ffe3ed5683c7321466d0b94ab73969368b30157b7d28e1d1f3ee657e227e93
@@ -35,6 +39,8 @@ r Tc0::lowUnderflowIntFlag() 10100100111111001111110110111110
 r Tc0::overflowIntFlag() 10100100111111001111110110111110
 r Tc0::top() 745f1835eca78856a0882d6bdddd29feff8ea73d062d0a23991bf2e5d52be3bad436ca6fe0a635302de53c4412f7c60c9afc6a5ddb57b8a3f47e8576ab4da
 r Tc0::topBuffer() d21f8722498073b9c7d8a3deade83a7c7fc05b3872654638795f97bb5ac8eff9c329d2eea0a3c2f579bc6de7ea9c9ea3a4067fcfa27e72cf42026901fcb
+r Tc1::capture() 6fa949413790686045108f38c853f60c54aa54b03a844a5548afc4f5afa2a858b27bc8e23da5a47fedd5b0852fa817e6635b895b805ef2be4e4a1a525e77eb
+r Tc1::counter() c516e17786884e1b6d3cbd98ce4f4fb89e4752c4b17b8eb0eca94976e6e4e7d4052f452049480e79f43b423ba3397f72935c15965977ec87150bb8bbee1b0
 r Usart0::parityError() 10111000111001000111001110001111
 r Usart0::rx() c19b3f728e2f2f051907b94d572f4796a3d1d1ad934337e783f9851d722b
 w Ac0::enable(false) 680:ff:fe:
@@ -51,6 +57,8 @@ w Ac0::inputPositive(Ac0::InputPositive::p0) 682:ff:e7:
 w Ac0::inputPositive(Ac0::InputPositive::p1) 682:00:08:682:ff:ef:
 w Ac0::inputPositive(Ac0::InputPositive::p2) 682:00:10:682:ff:f7:
 w Ac0::inputPositive(Ac0::InputPositive::p3) 682:00:18:
+w Ac0::intEnable(false) 686:ff:fe:
+w Ac0::intEnable(true) 686:00:01:
 w Ac0::intFlag()
 w Ac0::intFlagClear() 687:00:01:
 w Ac0::outputEnable(false) 680:ff:bf:
@@ -85,9 +93,88 @@ w Adc0::prescaler(Adc0::Prescaler::div8) 602:00:02:602:ff:fa:
 w Adc0::reference(Adc0::Reference::internal) 602:ff:cf:
 w Adc0::reference(Adc0::Reference::vdd) 602:00:10:602:ff:df:
 w Adc0::result()
+w Adc0::running()
 w Adc0::start() 608:00:01:
 w Adc0::triggerEnable(false) 609:ff:fe:
 w Adc0::triggerEnable(true) 609:00:01:
+w Ccl0::enable(false) 1c0:ff:fe:
+w Ccl0::enable(true) 1c0:00:01:
+w Ccl0::lutAEnable(false) 1c5:ff:fe:
+w Ccl0::lutAEnable(true) 1c5:00:01:
+w Ccl0::lutAInput0(Ccl0::LutAInput0::ac0) 1c6:00:06:1c6:ff:f6:
+w Ccl0::lutAInput0(Ccl0::LutAInput0::event0) 1c6:00:03:1c6:ff:f3:
+w Ccl0::lutAInput0(Ccl0::LutAInput0::event1) 1c6:00:04:1c6:ff:f4:
+w Ccl0::lutAInput0(Ccl0::LutAInput0::feedback) 1c6:00:01:1c6:ff:f1:
+w Ccl0::lutAInput0(Ccl0::LutAInput0::io) 1c6:00:05:1c6:ff:f5:
+w Ccl0::lutAInput0(Ccl0::LutAInput0::link) 1c6:00:02:1c6:ff:f2:
+w Ccl0::lutAInput0(Ccl0::LutAInput0::mask) 1c6:ff:f0:
+w Ccl0::lutAInput0(Ccl0::LutAInput0::spi0) 1c6:00:0b:1c6:ff:fb:
+w Ccl0::lutAInput0(Ccl0::LutAInput0::tca0) 1c6:00:08:1c6:ff:f8:
+w Ccl0::lutAInput0(Ccl0::LutAInput0::tcb0) 1c6:00:07:1c6:ff:f7:
+w Ccl0::lutAInput0(Ccl0::LutAInput0::usart0) 1c6:00:0a:1c6:ff:fa:
+w Ccl0::lutAInput1(Ccl0::LutAInput1::ac0) 1c6:00:60:1c6:ff:6f:
+w Ccl0::lutAInput1(Ccl0::LutAInput1::event0) 1c6:00:30:1c6:ff:3f:
+w Ccl0::lutAInput1(Ccl0::LutAInput1::event1) 1c6:00:40:1c6:ff:4f:
+w Ccl0::lutAInput1(Ccl0::LutAInput1::feedback) 1c6:00:10:1c6:ff:1f:
+w Ccl0::lutAInput1(Ccl0::LutAInput1::io) 1c6:00:50:1c6:ff:5f:
+w Ccl0::lutAInput1(Ccl0::LutAInput1::link) 1c6:00:20:1c6:ff:2f:
+w Ccl0::lutAInput1(Ccl0::LutAInput1::mask) 1c6:ff:0f:
+w Ccl0::lutAInput1(Ccl0::LutAInput1::spi0) 1c6:00:b0:1c6:ff:bf:
+w Ccl0::lutAInput1(Ccl0::LutAInput1::tca0) 1c6:00:80:1c6:ff:8f:
+w Ccl0::lutAInput1(Ccl0::LutAInput1::tcb0) 1c6:00:70:1c6:ff:7f:
+w Ccl0::lutAInput1(Ccl0::LutAInput1::usart0) 1c6:00:a0:1c6:ff:af:
+w Ccl0::lutAInput2(Ccl0::LutAInput2::ac0) 1c7:00:06:1c7:ff:f6:
+w Ccl0::lutAInput2(Ccl0::LutAInput2::event0) 1c7:00:03:1c7:ff:f3:
+w Ccl0::lutAInput2(Ccl0::LutAInput2::event1) 1c7:00:04:1c7:ff:f4:
+w Ccl0::lutAInput2(Ccl0::LutAInput2::feedback) 1c7:00:01:1c7:ff:f1:
+w Ccl0::lutAInput2(Ccl0::LutAInput2::io) 1c7:00:05:1c7:ff:f5:
+w Ccl0::lutAInput2(Ccl0::LutAInput2::link) 1c7:00:02:1c7:ff:f2:
+w Ccl0::lutAInput2(Ccl0::LutAInput2::mask) 1c7:ff:f0:
+w Ccl0::lutAInput2(Ccl0::LutAInput2::spi0) 1c7:00:0b:1c7:ff:fb:
+w Ccl0::lutAInput2(Ccl0::LutAInput2::tca0) 1c7:00:08:1c7:ff:f8:
+w Ccl0::lutAInput2(Ccl0::LutAInput2::tcb0) 1c7:00:07:1c7:ff:f7:
+w Ccl0::lutAOutputEnable(false) 1c5:ff:f7:
+w Ccl0::lutAOutputEnable(true) 1c5:00:08:
+w Ccl0::lutATruth(0x12) 1c8:00:12:1c8:ff:12:
+w Ccl0::lutATruth(0xED) 1c8:00:ed:1c8:ff:ed:
+w Ccl0::lutBEnable(false) 1c9:ff:fe:
+w Ccl0::lutBEnable(true) 1c9:00:01:
+w Ccl0::lutBInput0(Ccl0::LutBInput0::ac0) 1ca:00:06:1ca:ff:f6:
+w Ccl0::lutBInput0(Ccl0::LutBInput0::event0) 1ca:00:03:1ca:ff:f3:
+w Ccl0::lutBInput0(Ccl0::LutBInput0::event1) 1ca:00:04:1ca:ff:f4:
+w Ccl0::lutBInput0(Ccl0::LutBInput0::feedback) 1ca:00:01:1ca:ff:f1:
+w Ccl0::lutBInput0(Ccl0::LutBInput0::io) 1ca:00:05:1ca:ff:f5:
+w Ccl0::lutBInput0(Ccl0::LutBInput0::link) 1ca:00:02:1ca:ff:f2:
+w Ccl0::lutBInput0(Ccl0::LutBInput0::mask) 1ca:ff:f0:
+w Ccl0::lutBInput0(Ccl0::LutBInput0::spi0) 1ca:00:0b:1ca:ff:fb:
+w Ccl0::lutBInput0(Ccl0::LutBInput0::tca0) 1ca:00:08:1ca:ff:f8:
+w Ccl0::lutBInput0(Ccl0::LutBInput0::tcb0) 1ca:00:07:1ca:ff:f7:
+w Ccl0::lutBInput0(Ccl0::LutBInput0::usart0) 1ca:00:0a:1ca:ff:fa:
+w Ccl0::lutBInput1(Ccl0::LutBInput1::ac0) 1ca:00:60:1ca:ff:6f:
+w Ccl0::lutBInput1(Ccl0::LutBInput1::event0) 1ca:00:30:1ca:ff:3f:
+w Ccl0::lutBInput1(Ccl0::LutBInput1::event1) 1ca:00:40:1ca:ff:4f:
+w Ccl0::lutBInput1(Ccl0::LutBInput1::feedback) 1ca:00:10:1ca:ff:1f:
+w Ccl0::lutBInput1(Ccl0::LutBInput1::io) 1ca:00:50:1ca:ff:5f:
+w Ccl0::lutBInput1(Ccl0::LutBInput1::link) 1ca:00:20:1ca:ff:2f:
+w Ccl0::lutBInput1(Ccl0::LutBInput1::mask) 1ca:ff:0f:
+w Ccl0::lutBInput1(Ccl0::LutBInput1::spi0) 1ca:00:b0:1ca:ff:bf:
+w Ccl0::lutBInput1(Ccl0::LutBInput1::tca0) 1ca:00:80:1ca:ff:8f:
+w Ccl0::lutBInput1(Ccl0::LutBInput1::tcb0) 1ca:00:70:1ca:ff:7f:
+w Ccl0::lutBInput1(Ccl0::LutBInput1::usart0) 1ca:00:a0:1ca:ff:af:
+w Ccl0::lutBInput2(Ccl0::LutBInput2::ac0) 1cb:00:06:1cb:ff:f6:
+w Ccl0::lutBInput2(Ccl0::LutBInput2::event0) 1cb:00:03:1cb:ff:f3:
+w Ccl0::lutBInput2(Ccl0::LutBInput2::event1) 1cb:00:04:1cb:ff:f4:
+w Ccl0::lutBInput2(Ccl0::LutBInput2::feedback) 1cb:00:01:1cb:ff:f1:
+w Ccl0::lutBInput2(Ccl0::LutBInput2::io) 1cb:00:05:1cb:ff:f5:
+w Ccl0::lutBInput2(Ccl0::LutBInput2::link) 1cb:00:02:1cb:ff:f2:
+w Ccl0::lutBInput2(Ccl0::LutBInput2::mask) 1cb:ff:f0:
+w Ccl0::lutBInput2(Ccl0::LutBInput2::spi0) 1cb:00:0b:1cb:ff:fb:
+w Ccl0::lutBInput2(Ccl0::LutBInput2::tca0) 1cb:00:08:1cb:ff:f8:
+w Ccl0::lutBInput2(Ccl0::LutBInput2::tcb0) 1cb:00:07:1cb:ff:f7:
+w Ccl0::lutBOutputEnable(false) 1c9:ff:f7:
+w Ccl0::lutBOutputEnable(true) 1c9:00:08:
+w Ccl0::lutBTruth(0x12) 1cc:00:12:1cc:ff:12:
+w Ccl0::lutBTruth(0xED) 1cc:00:ed:1cc:ff:ed:
 w Clock::lock() 34:00:d8:62:00:01:34:ff:d8:62:ff:01:
 w Clock::prescaler(Clock::Prescaler::div10) 34:00:d8:61:00:12:34:ff:d8:61:ff:13:
 w Clock::prescaler(Clock::Prescaler::div12) 34:00:d8:61:00:14:34:ff:d8:61:ff:15:
@@ -108,6 +195,8 @@ w Clock::source(Clock::Source::internal32K) 34:00:d8:60:00:01:34:ff:d8:60:ff:01:
 w PortA::Pin0::direction(Pin::Direction::input) 00:ff:fe:
 w PortA::Pin0::direction(Pin::Direction::output) 00:00:01:
 w PortA::Pin0::input()
+w PortA::Pin0::invert(false) 410:ff:7f:
+w PortA::Pin0::invert(true) 410:00:80:
 w PortA::Pin0::output(Pin::Value::high) 01:00:01:
 w PortA::Pin0::output(Pin::Value::low) 01:ff:fe:
 w PortA::Pin0::outputToggle() 407:00:01:407:ff:01:
@@ -116,6 +205,8 @@ w PortA::Pin0::pullup(true) 410:00:08:
 w PortA::Pin1::direction(Pin::Direction::input) 00:ff:fd:
 w PortA::Pin1::direction(Pin::Direction::output) 00:00:02:
 w PortA::Pin1::input()
+w PortA::Pin1::invert(false) 411:ff:7f:
+w PortA::Pin1::invert(true) 411:00:80:
 w PortA::Pin1::output(Pin::Value::high) 01:00:02:
 w PortA::Pin1::output(Pin::Value::low) 01:ff:fd:
 w PortA::Pin1::outputToggle() 407:00:02:407:ff:02:
@@ -124,6 +215,8 @@ w PortA::Pin1::pullup(true) 411:00:08:
 w PortA::Pin2::direction(Pin::Direction::input) 00:ff:fb:
 w PortA::Pin2::direction(Pin::Direction::output) 00:00:04:
 w PortA::Pin2::input()
+w PortA::Pin2::invert(false) 412:ff:7f:
+w PortA::Pin2::invert(true) 412:00:80:
 w PortA::Pin2::output(Pin::Value::high) 01:00:04:
 w PortA::Pin2::output(Pin::Value::low) 01:ff:fb:
 w PortA::Pin2::outputToggle() 407:00:04:407:ff:04:
@@ -132,6 +225,8 @@ w PortA::Pin2::pullup(true) 412:00:08:
 w PortA::Pin3::direction(Pin::Direction::input) 00:ff:f7:
 w PortA::Pin3::direction(Pin::Direction::output) 00:00:08:
 w PortA::Pin3::input()
+w PortA::Pin3::invert(false) 413:ff:7f:
+w PortA::Pin3::invert(true) 413:00:80:
 w PortA::Pin3::output(Pin::Value::high) 01:00:08:
 w PortA::Pin3::output(Pin::Value::low) 01:ff:f7:
 w PortA::Pin3::outputToggle() 407:00:08:407:ff:08:
@@ -140,6 +235,8 @@ w PortA::Pin3::pullup(true) 413:00:08:
 w PortA::Pin6::direction(Pin::Direction::input) 00:ff:bf:
 w PortA::Pin6::direction(Pin::Direction::output) 00:00:40:
 w PortA::Pin6::input()
+w PortA::Pin6::invert(false) 416:ff:7f:
+w PortA::Pin6::invert(true) 416:00:80:
 w PortA::Pin6::output(Pin::Value::high) 01:00:40:
 w PortA::Pin6::output(Pin::Value::low) 01:ff:bf:
 w PortA::Pin6::outputToggle() 407:00:40:407:ff:40:
@@ -148,6 +245,8 @@ w PortA::Pin6::pullup(true) 416:00:08:
 w PortA::Pin7::direction(Pin::Direction::input) 00:ff:7f:
 w PortA::Pin7::direction(Pin::Direction::output) 00:00:80:
 w PortA::Pin7::input()
+w PortA::Pin7::invert(false) 417:ff:7f:
+w PortA::Pin7::invert(true) 417:00:80:
 w PortA::Pin7::output(Pin::Value::high) 01:00:80:
 w PortA::Pin7::output(Pin::Value::low) 01:ff:7f:
 w PortA::Pin7::outputToggle() 407:00:80:407:ff:80:
@@ -173,6 +272,8 @@ w Tc0::clock(Tc0::Clock::div64) a00:00:0a:a00:ff:fb:
 w Tc0::clock(Tc0::Clock::div8) a00:00:06:a00:ff:f7:
 w Tc0::compareA()
 w Tc0::compareA(0x12) a28:00:12:a28:ff:12:a29:ff:00:
+w Tc0::compareABuffer()
+w Tc0::compareABuffer(0x12) a38:00:12:a38:ff:12:a39:ff:00:
 w Tc0::compareAIntEnable(false) a0a:ff:ef:
 w Tc0::compareAIntEnable(true) a0a:00:10:
 w Tc0::compareAIntFlag()
@@ -181,6 +282,8 @@ w Tc0::compareAOutputEnable(false) a01:ff:ef:
 w Tc0::compareAOutputEnable(true) a01:00:10:
 w Tc0::compareB()
 w Tc0::compareB(0x12) a2a:00:12:a2a:ff:12:a2b:ff:00:
+w Tc0::compareBBuffer()
+w Tc0::compareBBuffer(0x12) a3a:00:12:a3a:ff:12:a3b:ff:00:
 w Tc0::compareBIntEnable(false) a0a:ff:df:
 w Tc0::compareBIntEnable(true) a0a:00:20:
 w Tc0::compareBIntFlag()
@@ -189,6 +292,8 @@ w Tc0::compareBOutputEnable(false) a01:ff:df:
 w Tc0::compareBOutputEnable(true) a01:00:20:
 w Tc0::compareC()
 w Tc0::compareC(0x12) a2c:00:12:a2c:ff:12:a2d:ff:00:
+w Tc0::compareCBuffer()
+w Tc0::compareCBuffer(0x12) a3c:00:12:a3c:ff:12:a3d:ff:00:
 w Tc0::compareCIntEnable(false) a0a:ff:bf:
 w Tc0::compareCIntEnable(true) a0a:00:40:
 w Tc0::compareCIntFlag()
@@ -267,6 +372,19 @@ w Tc0::waveform(Tc0::Waveform::dualSlopePwmOverflowTop) a01:00:05:a01:ff:fd:
 w Tc0::waveform(Tc0::Waveform::frequency) a01:00:01:a01:ff:f9:
 w Tc0::waveform(Tc0::Waveform::normal) a01:ff:f8:
 w Tc0::waveform(Tc0::Waveform::singleSlopePwm) a01:00:03:a01:ff:fb:
+w Tc1::capture()
+w Tc1::capture(0x1234) a4c:00:34:a4d:00:12:a4c:ff:34:a4d:ff:12:
+w Tc1::captureNoiseCancelEnable(false) a44:ff:bf:
+w Tc1::captureNoiseCancelEnable(true) a44:00:40:
+w Tc1::clock(Tc1::Clock::div1) a40:ff:f9:
+w Tc1::clock(Tc1::Clock::div2) a40:00:02:a40:ff:fb:
+w Tc1::clock(Tc1::Clock::tc0) a40:00:04:a40:ff:fd:
+w Tc1::counter()
+w Tc1::counter(0x12) a4a:00:12:a4a:ff:12:a4b:ff:00:
+w Tc1::enable(false) a40:ff:fe:
+w Tc1::enable(true) a40:00:01:
+w Usart0::alternatePinsEnable(false) 201:ff:fe:
+w Usart0::alternatePinsEnable(true) 201:00:01:
 w Usart0::baud(0x1234) 808:00:34:809:00:12:808:ff:34:809:ff:12:
 w Usart0::baudMode(Usart0::BaudMode::doubleSpeed) 806:00:02:806:ff:fb:
 w Usart0::baudMode(Usart0::BaudMode::genericAuto) 806:00:04:806:ff:fd:
