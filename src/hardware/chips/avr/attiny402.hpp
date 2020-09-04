@@ -608,8 +608,8 @@
 #define CHIP_AC_0_MUX_NEG_VREF_ID                                   0x02
 #define CHIP_AC_0_MUX_NEG_DAC_ID                                    0x03
 
-#define CHIP_AC_0_ENABLE_INT_REG                                    CHIP_REG_AC_0_INTCTRL
-#define CHIP_AC_0_ENABLE_INT_BIT                                    0
+#define CHIP_AC_0_INT_ENABLE_REG                                    CHIP_REG_AC_0_INTCTRL
+#define CHIP_AC_0_INT_ENABLE_BIT                                    0
 
 #define CHIP_AC_0_STATE_REG                                         CHIP_REG_AC_0_STATUS
 #define CHIP_AC_0_STATE_BIT                                         4
