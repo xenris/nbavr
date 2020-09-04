@@ -378,6 +378,13 @@ struct UsartN {
             return USART_N(PARITY_ERROR_REG)::getBit(USART_N(PARITY_ERROR_BIT));
         }
     #endif
+
+    #if REG_DEFINED(USART_N(ALTERNATE_PINS_ENABLE_REG))
+        /// #### static void alternatePinsEnable(bool e)
+        static force_inline void alternatePinsEnable(bool e) {
+            USART_N(ALTERNATE_PINS_ENABLE_REG)::setBit(USART_N(ALTERNATE_PINS_ENABLE_BIT), e);
+        }
+    #endif
 };
 
 #ifdef TEST
@@ -546,6 +553,13 @@ TEST(UsartN, getHardwareType) {
 #if REG_DEFINED(USART_N(PARITY_ERROR_REG))
     TEST(UsartN, parityError) {
         TEST_REG_READ_WRITE(UsartN::parityError());
+    }
+#endif
+
+#if REG_DEFINED(USART_N(ALTERNATE_PINS_ENABLE_REG))
+    TEST(UsartN, alternatePinsEnable) {
+        TEST_REG_WRITE(UsartN::alternatePinsEnable(true));
+        TEST_REG_WRITE(UsartN::alternatePinsEnable(false));
     }
 #endif
 

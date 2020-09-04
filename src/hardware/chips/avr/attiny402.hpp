@@ -865,6 +865,9 @@
 // #define CHIP_USART_0_CHARACTER_SIZE_9_LOW_ID                        0x06
 // #define CHIP_USART_0_CHARACTER_SIZE_9_HIGH_ID                       0x07
 
+#define CHIP_USART_0_ALTERNATE_PINS_ENABLE_REG                      CHIP_REG_PORTMUX_CTRLB
+#define CHIP_USART_0_ALTERNATE_PINS_ENABLE_BIT                      0
+
 //------------------------------------------------
 // Two wire serial interfaces
 
