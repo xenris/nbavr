@@ -145,7 +145,21 @@
 #define CHIP_REG_USART_0_TXPLCTRL                                   Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x0D>
 #define CHIP_REG_USART_0_RXPLCTRL                                   Register<uint8_t, CHIP_MODULE_USART0_ADDR + 0x0E>
 
-// TODO TWI0
+#define CHIP_REG_TWI_0_CTRLA                                        Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x00>
+#define CHIP_REG_TWI_0_DBGCTRL                                      Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x02>
+#define CHIP_REG_TWI_0_MCTRLA                                       Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x03>
+#define CHIP_REG_TWI_0_MCTRLB                                       Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x04>
+#define CHIP_REG_TWI_0_MSTATUS                                      Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x05, 0xFF>
+#define CHIP_REG_TWI_0_MBAUD                                        Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x06>
+#define CHIP_REG_TWI_0_MADDR                                        Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x07>
+#define CHIP_REG_TWI_0_MDATA                                        Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x08>
+#define CHIP_REG_TWI_0_SCTRLA                                       Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x09>
+#define CHIP_REG_TWI_0_SCTRLB                                       Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x0A>
+#define CHIP_REG_TWI_0_SSTATUS                                      Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x0B, 0xFF>
+#define CHIP_REG_TWI_0_SADDR                                        Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x0C>
+#define CHIP_REG_TWI_0_SDATA                                        Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x0D>
+#define CHIP_REG_TWI_0_SADDRMASK                                    Register<uint8_t, CHIP_MODULE_TWI0_ADDR + 0x0E>
+
 // TODO SPI0
 
 #define CHIP_REG_TCA0_CTRLA                                         Register<uint8_t, CHIP_MODULE_TCA0_ADDR + 0x00>
@@ -816,5 +830,112 @@
 #define CHIP_USART_0_CHARACTER_SIZE_9_ID                            0x06
 // #define CHIP_USART_0_CHARACTER_SIZE_9_LOW_ID                        0x06
 // #define CHIP_USART_0_CHARACTER_SIZE_9_HIGH_ID                       0x07
+
+//------------------------------------------------
+// Two wire serial interfaces
+
+#define CHIP_TWI_0
+
+#define CHIP_TWI_0_BAUD_REG                                         CHIP_REG_TWI_0_MBAUD
+
+#define CHIP_TWI_0_MASTER_ENABLE_REG                                CHIP_REG_TWI_0_MCTRLA
+#define CHIP_TWI_0_MASTER_ENABLE_BIT                                0
+
+#define CHIP_TWI_0_MASTER_DATA_REG                                  CHIP_REG_TWI_0_MDATA
+
+#define CHIP_TWI_0_MASTER_SMART_MODE_ENABLE_REG                     CHIP_REG_TWI_0_MCTRLA
+#define CHIP_TWI_0_MASTER_SMART_MODE_ENABLE_BIT                     1
+
+#define CHIP_TWI_0_MASTER_ACK_ACTION_REG                            CHIP_REG_TWI_0_MCTRLB
+#define CHIP_TWI_0_MASTER_ACK_ACTION_MASK                           0x04
+#define CHIP_TWI_0_MASTER_ACK_ACTION_ACK_ID                         0x00
+#define CHIP_TWI_0_MASTER_ACK_ACTION_NACK_ID                        0x04
+
+#define CHIP_TWI_0_MASTER_COMMAND_REG                               CHIP_REG_TWI_0_MCTRLB
+#define CHIP_TWI_0_MASTER_COMMAND_MASK                              0x03
+#define CHIP_TWI_0_MASTER_COMMAND_NO_ACTION_ID                      0x00
+#define CHIP_TWI_0_MASTER_COMMAND_REPEAT_START_ID                   0x01
+#define CHIP_TWI_0_MASTER_COMMAND_RECEIVE_TRANSMIT_ID               0x02
+#define CHIP_TWI_0_MASTER_COMMAND_ACKNOWLEDGE_ID                    0x02
+#define CHIP_TWI_0_MASTER_COMMAND_STOP_ID                           0x03
+
+#define CHIP_TWI_0_MASTER_READ_INT_ENABLE_REG                       CHIP_REG_TWI_0_MCTRLA
+#define CHIP_TWI_0_MASTER_READ_INT_ENABLE_BIT                       7
+
+#define CHIP_TWI_0_MASTER_WRITE_INT_ENABLE_REG                      CHIP_REG_TWI_0_MCTRLA
+#define CHIP_TWI_0_MASTER_WRITE_INT_ENABLE_BIT                      6
+
+#define CHIP_TWI_0_MASTER_READ_INT_FLAG_REG                         CHIP_REG_TWI_0_MSTATUS
+#define CHIP_TWI_0_MASTER_READ_INT_FLAG_BIT                         7
+
+#define CHIP_TWI_0_MASTER_WRITE_INT_FLAG_REG                        CHIP_REG_TWI_0_MSTATUS
+#define CHIP_TWI_0_MASTER_WRITE_INT_FLAG_BIT                        6
+
+#define CHIP_TWI_0_MASTER_NACK_RECEIVED_REG                         CHIP_REG_TWI_0_MSTATUS
+#define CHIP_TWI_0_MASTER_NACK_RECEIVED_BIT                         4
+
+#define CHIP_TWI_0_MASTER_ARBITRATION_LOST_FLAG_REG                 CHIP_REG_TWI_0_MSTATUS
+#define CHIP_TWI_0_MASTER_ARBITRATION_LOST_FLAG_BIT                 3
+
+#define CHIP_TWI_0_MASTER_BUS_ERROR_FLAG_REG                        CHIP_REG_TWI_0_MSTATUS
+#define CHIP_TWI_0_MASTER_BUS_ERROR_FLAG_BIT                        2
+
+#define CHIP_TWI_0_MASTER_ADDRESS_REG                               CHIP_REG_TWI_0_MADDR
+
+#define CHIP_TWI_0_TIMEOUT_REG                                      CHIP_REG_TWI_0_MCTRLA
+#define CHIP_TWI_0_TIMEOUT_MASK                                     0x0C
+#define CHIP_TWI_0_TIMEOUT_DISABLED_ID                              0x00
+#define CHIP_TWI_0_TIMEOUT_50_US_ID                                 0x04
+#define CHIP_TWI_0_TIMEOUT_100_US_ID                                0x08
+#define CHIP_TWI_0_TIMEOUT_200_US_ID                                0x0C
+
+#define CHIP_TWI_0_BUS_STATE_REG                                    CHIP_REG_TWI_0_MSTATUS
+#define CHIP_TWI_0_BUS_STATE_MASK                                   0x03
+#define CHIP_TWI_0_BUS_STATE_UNKNOWN_ID                             0x00
+#define CHIP_TWI_0_BUS_STATE_IDLE_ID                                0x01
+#define CHIP_TWI_0_BUS_STATE_OWNER_ID                               0x02
+#define CHIP_TWI_0_BUS_STATE_BUSY_ID                                0x03
+
+#define CHIP_TWI_0_SLAVE_DATA_REG                                   CHIP_REG_TWI_0_SDATA
+
+#define CHIP_TWI_0_SLAVE_ENABLE_REG                                 CHIP_REG_TWI_0_SCTRLA
+#define CHIP_TWI_0_SLAVE_ENABLE_BIT                                 0
+
+#define CHIP_TWI_0_SLAVE_SMART_MODE_ENABLE_REG                      CHIP_REG_TWI_0_SCTRLA
+#define CHIP_TWI_0_SLAVE_SMART_MODE_ENABLE_BIT                      1
+
+#define CHIP_TWI_0_SLAVE_ACK_ACTION_REG                             CHIP_REG_TWI_0_SCTRLB
+#define CHIP_TWI_0_SLAVE_ACK_ACTION_MASK                            0x04
+#define CHIP_TWI_0_SLAVE_ACK_ACTION_ACK_ID                          0x00
+#define CHIP_TWI_0_SLAVE_ACK_ACTION_NACK_ID                         0x04
+
+#define CHIP_TWI_0_SLAVE_COMMAND_REG                                CHIP_REG_TWI_0_SCTRLB
+#define CHIP_TWI_0_SLAVE_COMMAND_MASK                               0x03
+#define CHIP_TWI_0_SLAVE_COMMAND_NO_ACTION_ID                       0x00
+#define CHIP_TWI_0_SLAVE_COMMAND_COMPLETE_TRANSACTION_ID            0x02
+#define CHIP_TWI_0_SLAVE_COMMAND_RESPONSE_ID                        0x03
+
+#define CHIP_TWI_0_SLAVE_DATA_INT_ENABLE_REG                        CHIP_REG_TWI_0_SCTRLA
+#define CHIP_TWI_0_SLAVE_DATA_INT_ENABLE_BIT                        7
+
+#define CHIP_TWI_0_SLAVE_ADDR_INT_ENABLE_REG                        CHIP_REG_TWI_0_SCTRLA
+#define CHIP_TWI_0_SLAVE_ADDR_INT_ENABLE_BIT                        6
+
+#define CHIP_TWI_0_SLAVE_STOP_INT_ENABLE_REG                        CHIP_REG_TWI_0_SCTRLA
+#define CHIP_TWI_0_SLAVE_STOP_INT_ENABLE_BIT                        5
+
+#define CHIP_TWI_0_SLAVE_DATA_INT_FLAG_REG                          CHIP_REG_TWI_0_SSTATUS
+#define CHIP_TWI_0_SLAVE_DATA_INT_FLAG_BIT                          7
+
+#define CHIP_TWI_0_SLAVE_ADDR_INT_FLAG_REG                          CHIP_REG_TWI_0_SSTATUS
+#define CHIP_TWI_0_SLAVE_ADDR_INT_FLAG_BIT                          6
+
+#define CHIP_TWI_0_SLAVE_ADDR_OR_STOP_FLAG_REG                      CHIP_REG_TWI_0_SSTATUS
+#define CHIP_TWI_0_SLAVE_ADDR_OR_STOP_FLAG_BIT                      0
+
+#define CHIP_TWI_0_SLAVE_ADDRESS_REG                                CHIP_REG_TWI_0_SADDR
+
+#define CHIP_TWI_0_ALTERNATE_PINS_ENABLE_REG                        CHIP_REG_PORTMUX_CTRLB
+#define CHIP_TWI_0_ALTERNATE_PINS_ENABLE_BIT                        4
 
 #endif
