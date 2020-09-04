@@ -432,31 +432,358 @@ struct CclN {
 
 #ifdef TEST
 
-// TEST(CclN, getHardwareType) {
-//     ASSERT_EQ(CclN::getHardwareType(), HardwareType::ccl);
-// }
+TEST(CclN, getHardwareType) {
+    ASSERT_EQ(CclN::getHardwareType(), HardwareType::ccl);
+}
 
-// TEST(CclN, voltage) {
-//     #if DEFINED(CCL_N(VOLTAGE_0_55_V_ID))
-//         TEST_REG_WRITE(CclN::voltage(CclN::Voltage::v0_55));
-//     #endif
+#if REG_DEFINED(CCL_N(ENABLE_REG))
+    TEST(CclN, enable) {
+        TEST_REG_WRITE(CclN::enable(true));
+        TEST_REG_WRITE(CclN::enable(false));
+    }
+#endif
 
-//     #if DEFINED(CCL_N(VOLTAGE_1_1_V_ID))
-//         TEST_REG_WRITE(CclN::voltage(CclN::Voltage::v1_1));
-//     #endif
+#if REG_DEFINED(CCL_N(LUT_A_ENABLE_REG))
+    TEST(CclN, lutAEnable) {
+        TEST_REG_WRITE(CclN::lutAEnable(true));
+        TEST_REG_WRITE(CclN::lutAEnable(false));
+    }
+#endif
 
-//     #if DEFINED(CCL_N(VOLTAGE_1_5_V_ID))
-//         TEST_REG_WRITE(CclN::voltage(CclN::Voltage::v2_5));
-//     #endif
+#if REG_DEFINED(CCL_N(LUT_B_ENABLE_REG))
+    TEST(CclN, lutBEnable) {
+        TEST_REG_WRITE(CclN::lutBEnable(true));
+        TEST_REG_WRITE(CclN::lutBEnable(false));
+    }
+#endif
 
-//     #if DEFINED(CCL_N(VOLTAGE_2_5_V_ID))
-//         TEST_REG_WRITE(CclN::voltage(CclN::Voltage::v4_3));
-//     #endif
+#if REG_DEFINED(CCL_N(LUT_A_OUTPUT_ENABLE_REG))
+    TEST(CclN, lutAOutputEnable) {
+        TEST_REG_WRITE(CclN::lutAOutputEnable(true));
+        TEST_REG_WRITE(CclN::lutAOutputEnable(false));
+    }
+#endif
 
-//     #if DEFINED(CCL_N(VOLTAGE_4_3_V_ID))
-//         TEST_REG_WRITE(CclN::voltage(CclN::Voltage::v1_5));
-//     #endif
-// }
+#if REG_DEFINED(CCL_N(LUT_B_OUTPUT_ENABLE_REG))
+    TEST(CclN, lutBOutputEnable) {
+        TEST_REG_WRITE(CclN::lutBOutputEnable(true));
+        TEST_REG_WRITE(CclN::lutBOutputEnable(false));
+    }
+#endif
+
+#if REG_DEFINED(CCL_N(LUT_A_TRUTH_REG))
+    TEST(CclN, lutATruth) {
+        TEST_REG_WRITE(CclN::lutATruth(0x12));
+        TEST_REG_WRITE(CclN::lutATruth(0xED));
+    }
+#endif
+
+#if REG_DEFINED(CCL_N(LUT_B_TRUTH_REG))
+    TEST(CclN, lutBTruth) {
+        TEST_REG_WRITE(CclN::lutBTruth(0x12));
+        TEST_REG_WRITE(CclN::lutBTruth(0xED));
+    }
+#endif
+
+#if REG_DEFINED(CCL_N(LUT_A_INPUT_0_REG))
+    TEST(CclN, lutAInput0) {
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_MASK_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::mask));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_FEEDBACK_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::feedback));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_LINK_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::link));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_EVENT0_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::event0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_EVENT1_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::event1));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_IO_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::io));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_AC0_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::ac0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_TCB0_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::tcb0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_TCA0_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::tca0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_USART0_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::usart0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_SPI0_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::spi0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_TCD0_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::tcd0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_AC1_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::ac1));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_TCB1_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::tcb1));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_0_AC2_ID))
+            TEST_REG_WRITE(CclN::lutAInput0(CclN::LutAInput0::ac2));
+        #endif
+    }
+#endif
+
+#if REG_DEFINED(CCL_N(LUT_A_INPUT_1_REG))
+    TEST(CclN, lutAInput1) {
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_MASK_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::mask));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_FEEDBACK_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::feedback));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_LINK_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::link));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_EVENT0_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::event0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_EVENT1_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::event1));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_IO_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::io));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_AC0_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::ac0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_TCB0_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::tcb0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_TCA0_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::tca0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_USART0_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::usart0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_SPI0_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::spi0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_TCD0_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::tcd0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_AC1_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::ac1));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_TCB1_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::tcb1));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_1_AC2_ID))
+            TEST_REG_WRITE(CclN::lutAInput1(CclN::LutAInput1::ac2));
+        #endif
+    }
+#endif
+
+#if REG_DEFINED(CCL_N(LUT_A_INPUT_2_REG))
+    TEST(CclN, lutAInput2) {
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_MASK_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::mask));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_FEEDBACK_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::feedback));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_LINK_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::link));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_EVENT0_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::event0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_EVENT1_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::event1));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_IO_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::io));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_AC0_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::ac0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_TCB0_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::tcb0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_TCA0_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::tca0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_USART0_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::usart0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_SPI0_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::spi0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_TCD0_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::tcd0));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_AC1_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::ac1));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_TCB1_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::tcb1));
+        #endif
+        #if DEFINED(CCL_N(LUT_A_INPUT_2_AC2_ID))
+            TEST_REG_WRITE(CclN::lutAInput2(CclN::LutAInput2::ac2));
+        #endif
+    }
+#endif
+
+#if REG_DEFINED(CCL_N(LUT_B_INPUT_0_REG))
+    TEST(CclN, lutBInput0) {
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_MASK_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::mask));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_FEEDBACK_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::feedback));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_LINK_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::link));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_EVENT0_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::event0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_EVENT1_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::event1));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_IO_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::io));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_AC0_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::ac0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_TCB0_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::tcb0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_TCA0_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::tca0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_USART0_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::usart0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_SPI0_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::spi0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_TCD0_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::tcd0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_AC1_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::ac1));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_TCB1_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::tcb1));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_0_AC2_ID))
+            TEST_REG_WRITE(CclN::lutBInput0(CclN::LutBInput0::ac2));
+        #endif
+    }
+#endif
+
+#if REG_DEFINED(CCL_N(LUT_B_INPUT_1_REG))
+    TEST(CclN, lutBInput1) {
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_MASK_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::mask));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_FEEDBACK_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::feedback));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_LINK_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::link));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_EVENT0_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::event0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_EVENT1_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::event1));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_IO_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::io));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_AC0_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::ac0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_TCB0_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::tcb0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_TCA0_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::tca0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_USART0_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::usart0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_SPI0_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::spi0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_TCD0_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::tcd0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_AC1_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::ac1));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_TCB1_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::tcb1));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_1_AC2_ID))
+            TEST_REG_WRITE(CclN::lutBInput1(CclN::LutBInput1::ac2));
+        #endif
+    }
+#endif
+
+#if REG_DEFINED(CCL_N(LUT_B_INPUT_2_REG))
+    TEST(CclN, lutBInput2) {
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_MASK_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::mask));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_FEEDBACK_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::feedback));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_LINK_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::link));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_EVENT0_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::event0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_EVENT1_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::event1));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_IO_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::io));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_AC0_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::ac0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_TCB0_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::tcb0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_TCA0_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::tca0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_USART0_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::usart0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_SPI0_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::spi0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_TCD0_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::tcd0));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_AC1_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::ac1));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_TCB1_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::tcb1));
+        #endif
+        #if DEFINED(CCL_N(LUT_B_INPUT_2_AC2_ID))
+            TEST_REG_WRITE(CclN::lutBInput2(CclN::LutBInput2::ac2));
+        #endif
+    }
+#endif
 
 #endif // TEST
 
