@@ -751,7 +751,41 @@
 #define CHIP_TC_0_HIGH_UNDERFLOW_INT_FLAG_REG                       CHIP_REG_TCA0_INTFLAGS
 #define CHIP_TC_0_HIGH_UNDERFLOW_INT_FLAG_BIT                       1
 
-// TODO
+//------------------------------------------------
+
+#define CHIP_TC_1
+
+#define CHIP_TC_1_COUNTER_REG                                       CHIP_REG_TCB0_CNT
+
+#define CHIP_TC_1_WAVEFORM_REG                                      CHIP_REG_TCB0_CTRLB
+#define CHIP_TC_1_WAVEFORM_MASK                                     0x07
+#define CHIP_TC_1_WAVEFORM_PERIODIC_INT_ID                          0x00
+#define CHIP_TC_1_WAVEFORM_TIMEOUT_CHECK_ID                         0x01
+#define CHIP_TC_1_WAVEFORM_CAPTURE_ON_EVENT_ID                      0x02
+#define CHIP_TC_1_WAVEFORM_CAPTURE_FREQ_ID                          0x03
+#define CHIP_TC_1_WAVEFORM_CAPTURE_PULSE_WIDTH_ID                   0x04
+#define CHIP_TC_1_WAVEFORM_CAPTURE_FREQ_AND_PULSE_WIDTH_ID          0x05
+#define CHIP_TC_1_WAVEFORM_SINGLE_SHOT_ID                           0x06
+#define CHIP_TC_1_WAVEFORM_PWM_8_BIT_ID                             0x07
+
+#define CHIP_TC_1_CLOCK_REG                                         CHIP_REG_TCB0_CTRLA
+#define CHIP_TC_1_CLOCK_MASK                                        0x06
+#define CHIP_TC_1_CLOCK_1_ID                                        0x00
+#define CHIP_TC_1_CLOCK_2_ID                                        0x02
+#define CHIP_TC_1_CLOCK_TC0_ID                                      0x04
+
+#define CHIP_TC_1_ENABLE_REG                                        CHIP_REG_TCB0_CTRLA
+#define CHIP_TC_1_ENABLE_BIT                                        0
+
+#define CHIP_TC_1_INT_ENABLE_REG                                    CHIP_REG_TCB0_INTCTRL
+#define CHIP_TC_1_INT_ENABLE_BIT                                    0
+#define CHIP_TC_1_INT_FLAG_REG                                      CHIP_REG_TCB0_INTFLAGS
+#define CHIP_TC_1_INT_FLAG_BIT                                      0
+
+#define CHIP_TC_1_CAPTURE_REG                                       CHIP_REG_TCB0_CCMP
+#define CHIP_TC_1_CAPTURE_NOISE_CANCEL_ENABLE_REG                   CHIP_REG_TCB0_EVCTRL
+#define CHIP_TC_1_CAPTURE_NOISE_CANCEL_ENABLE_BIT                   6
+// TODO More of this timer/counter.
 
 //------------------------------------------------
 // Usarts

@@ -50,79 +50,67 @@ struct TcN {
     /// * div16384
     /// * extFalling
     /// * extRising
+    #if REG_DEFINED(TC_N(CLOCK_REG))
     enum class Clock {
         #if DEFINED(TC_N(CLOCK_NONE_ID))
             none = TC_N(CLOCK_NONE_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_1_ID))
             div1 = TC_N(CLOCK_1_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_2_ID))
             div2 = TC_N(CLOCK_2_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_4_ID))
             div4 = TC_N(CLOCK_4_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_8_ID))
             div8 = TC_N(CLOCK_8_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_16_ID))
             div16 = TC_N(CLOCK_16_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_32_ID))
             div32 = TC_N(CLOCK_32_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_64_ID))
             div64 = TC_N(CLOCK_64_ID),
         #endif
-
         #if TC_N(CLOCK_128_ID)
             div128 = TC_N(CLOCK_128_ID),
         #endif
-
         #if TC_N(CLOCK_256_ID)
             div256 = TC_N(CLOCK_256_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_512_ID))
             div512 = TC_N(CLOCK_512_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_1024_ID))
             div1024 = TC_N(CLOCK_1024_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_2048_ID))
             div2048 = TC_N(CLOCK_2048_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_4096_ID))
             div4096 = TC_N(CLOCK_4096_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_8192_ID))
             div8192 = TC_N(CLOCK_8192_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_16384_ID))
             div16384 = TC_N(CLOCK_16384_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_EXT_FALLING_ID))
             extFalling = TC_N(CLOCK_EXT_FALLING_ID),
         #endif
-
         #if DEFINED(TC_N(CLOCK_EXT_RISING_ID))
             extRising = TC_N(CLOCK_EXT_RISING_ID),
         #endif
+        #if DEFINED(TC_N(CLOCK_TC0_ID))
+            tc0 = TC_N(CLOCK_TC0_ID),
+        #endif
     };
+    #endif
 
     /// #### enum {{TcN::Waveform}}
     /// * normal
@@ -148,100 +136,111 @@ struct TcN {
     /// * dualSlopePwmOverflowTop
     /// * dualSlopePwmOverflowBottom
     /// * dualSlopePwmOverflowBoth
+    /// * periodicInt
+    /// * timeoutCheck
+    /// * captureOnEvent
+    /// * captureFreq
+    /// * capturePulseWidth
+    /// * captureFreqAndPulseWidth
+    /// * singleShot
+    /// * pwm8Bit
+    #if REG_DEFINED(TC_N(WAVEFORM_REG))
     enum class Waveform {
         #if DEFINED(TC_N(WAVEFORM_NORMAL_ID))
             normal = TC_N(WAVEFORM_NORMAL_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_PWM_PHASE_CORRECT_ID))
             pwm = TC_N(WAVEFORM_PWM_PHASE_CORRECT_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_PWM_PHASE_CORRECT_8_ID))
             pwm8Bit = TC_N(WAVEFORM_PWM_PHASE_CORRECT_8_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_PWM_PHASE_CORRECT_9_ID))
             pwm9Bit = TC_N(WAVEFORM_PWM_PHASE_CORRECT_9_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_PWM_PHASE_CORRECT_10_ID))
             pwm10Bit = TC_N(WAVEFORM_PWM_PHASE_CORRECT_10_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_CTC_OCRA_ID))
             ctcOcra = TC_N(WAVEFORM_CTC_OCRA_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_CTC_OCRC_ID))
             ctcOcrc = TC_N(WAVEFORM_CTC_OCRC_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_CTC_ICR_ID))
             ctcIcr = TC_N(WAVEFORM_CTC_ICR_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_FAST_PWM_8_ID))
             fastPwm8Bit = TC_N(WAVEFORM_FAST_PWM_8_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_FAST_PWM_9_ID))
             fastPwm9Bit = TC_N(WAVEFORM_FAST_PWM_9_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_FAST_PWM_10_ID))
             fastPwm10Bit = TC_N(WAVEFORM_FAST_PWM_10_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_FAST_PWM_ID))
             fastPwm = TC_N(WAVEFORM_FAST_PWM_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID))
             pwmOcra = TC_N(WAVEFORM_PWM_PHASE_CORRECT_OCRA_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_FAST_PWM_OCRA_ID))
             fastPwmOcra = TC_N(WAVEFORM_FAST_PWM_OCRA_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_FAST_PWM_OCRC_ID))
             fastPwmOcrc = TC_N(WAVEFORM_FAST_PWM_OCRC_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_FAST_PWM_A_OCRC_ID))
             fastPwmAOcrc = TC_N(WAVEFORM_FAST_PWM_A_OCRC_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_FAST_PWM_B_OCRC_ID))
             fastPwmBOcrc = TC_N(WAVEFORM_FAST_PWM_B_OCRC_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_FAST_PWM_A_B_OCRC_ID))
             fastPwmABOcrc = TC_N(WAVEFORM_FAST_PWM_A_B_OCRC_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_FREQUENCY_ID))
             frequency = TC_N(WAVEFORM_FREQUENCY_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_SINGLE_SLOPE_PWM_ID))
             singleSlopePwm = TC_N(WAVEFORM_SINGLE_SLOPE_PWM_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_TOP_ID))
             dualSlopePwmOverflowTop = TC_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_TOP_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTTOM_ID))
             dualSlopePwmOverflowBottom = TC_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTTOM_ID),
         #endif
-
         #if DEFINED(TC_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTH_ID))
             dualSlopePwmOverflowBoth = TC_N(WAVEFORM_DUAL_SLOPE_PWM_OVF_BOTH_ID),
         #endif
+        #if DEFINED(TC_N(WAVEFORM_PERIODIC_INT_ID))
+            periodicInt = TC_N(WAVEFORM_PERIODIC_INT_ID),
+        #endif
+        #if DEFINED(TC_N(WAVEFORM_TIMEOUT_CHECK_ID))
+            timeoutCheck = TC_N(WAVEFORM_TIMEOUT_CHECK_ID),
+        #endif
+        #if DEFINED(TC_N(WAVEFORM_CAPTURE_ON_EVENT_ID))
+            captureOnEvent = TC_N(WAVEFORM_CAPTURE_ON_EVENT_ID),
+        #endif
+        #if DEFINED(TC_N(WAVEFORM_CAPTURE_FREQ_ID))
+            captureFreq = TC_N(WAVEFORM_CAPTURE_FREQ_ID),
+        #endif
+        #if DEFINED(TC_N(WAVEFORM_CAPTURE_PULSE_WIDTH_ID))
+            capturePulseWidth = TC_N(WAVEFORM_CAPTURE_PULSE_WIDTH_ID),
+        #endif
+        #if DEFINED(TC_N(WAVEFORM_CAPTURE_FREQ_AND_PULSE_WIDTH_ID))
+            captureFreqAndPulseWidth = TC_N(WAVEFORM_CAPTURE_FREQ_AND_PULSE_WIDTH_ID),
+        #endif
+        #if DEFINED(TC_N(WAVEFORM_SINGLE_SHOT_ID))
+            singleShot = TC_N(WAVEFORM_SINGLE_SHOT_ID),
+        #endif
+        #if DEFINED(TC_N(WAVEFORM_PWM_8_BIT_ID))
+            pwm8Bit = TC_N(WAVEFORM_PWM_8_BIT_ID),
+        #endif
     };
-
+    #endif
     /// #### enum {{TcN::CompareXOutputMode}}
     /// * disconnected
     /// * toggle
@@ -252,15 +251,12 @@ struct TcN {
             #if DEFINED(TC_N(COMPARE_A_OUTPUT_MODE_DISCONNECTED_ID))
                 disconnected = TC_N(COMPARE_A_OUTPUT_MODE_DISCONNECTED_ID),
             #endif
-
             #if DEFINED(TC_N(COMPARE_A_OUTPUT_MODE_TOGGLE_ID))
                 toggle = TC_N(COMPARE_A_OUTPUT_MODE_TOGGLE_ID),
             #endif
-
             #if DEFINED(TC_N(COMPARE_A_OUTPUT_MODE_CLEAR_ID))
                 clear = TC_N(COMPARE_A_OUTPUT_MODE_CLEAR_ID),
             #endif
-
             #if DEFINED(TC_N(COMPARE_A_OUTPUT_MODE_SET_ID))
                 set = TC_N(COMPARE_A_OUTPUT_MODE_SET_ID),
             #endif
@@ -272,15 +268,12 @@ struct TcN {
             #if DEFINED(TC_N(COMPARE_B_OUTPUT_MODE_DISCONNECTED_ID))
                 disconnected = TC_N(COMPARE_B_OUTPUT_MODE_DISCONNECTED_ID),
             #endif
-
             #if DEFINED(TC_N(COMPARE_B_OUTPUT_MODE_TOGGLE_ID))
                 toggle = TC_N(COMPARE_B_OUTPUT_MODE_TOGGLE_ID),
             #endif
-
             #if DEFINED(TC_N(COMPARE_B_OUTPUT_MODE_CLEAR_ID))
                 clear = TC_N(COMPARE_B_OUTPUT_MODE_CLEAR_ID),
             #endif
-
             #if DEFINED(TC_N(COMPARE_B_OUTPUT_MODE_SET_ID))
                 set = TC_N(COMPARE_B_OUTPUT_MODE_SET_ID),
             #endif
@@ -292,15 +285,12 @@ struct TcN {
             #if DEFINED(TC_N(COMPARE_C_OUTPUT_MODE_DISCONNECTED_ID))
                 disconnected = TC_N(COMPARE_C_OUTPUT_MODE_DISCONNECTED_ID),
             #endif
-
             #if DEFINED(TC_N(COMPARE_C_OUTPUT_MODE_TOGGLE_ID))
                 toggle = TC_N(COMPARE_C_OUTPUT_MODE_TOGGLE_ID),
             #endif
-
             #if DEFINED(TC_N(COMPARE_C_OUTPUT_MODE_CLEAR_ID))
                 clear = TC_N(COMPARE_C_OUTPUT_MODE_CLEAR_ID),
             #endif
-
             #if DEFINED(TC_N(COMPARE_C_OUTPUT_MODE_SET_ID))
                 set = TC_N(COMPARE_C_OUTPUT_MODE_SET_ID),
             #endif
@@ -399,6 +389,25 @@ struct TcN {
         /// #### static void overflowIntFlagClear()
         static force_inline void overflowIntFlagClear() {
             TC_N(OVERFLOW_INT_FLAG_REG)::setBit(TC_N(OVERFLOW_INT_FLAG_BIT), true);
+        }
+    #endif
+
+    #if REG_DEFINED(TC_N(INT_ENABLE_REG))
+        /// #### static void intEnable(bool)
+        static force_inline void intEnable(bool b) {
+            TC_N(INT_ENABLE_REG)::setBit(TC_N(INT_ENABLE_BIT), b);
+        }
+    #endif
+
+    #if REG_DEFINED(TC_N(INT_FLAG_REG))
+        /// #### static bool intFlag()
+        static force_inline bool intFlag() {
+            return TC_N(INT_FLAG_REG)::getBit(TC_N(INT_FLAG_BIT));
+        }
+
+        /// #### static void intFlagClear()
+        static force_inline void intFlagClear() {
+            TC_N(INT_FLAG_REG)::setBit(TC_N(INT_FLAG_BIT), true);
         }
     #endif
 
@@ -593,7 +602,7 @@ struct TcN {
         }
     #endif
 
-    #if REG_DEFINED(TC_N(CAPTURE_REG))
+    #if REG_DEFINED(TC_N(CAPTURE_EDGE_REG))
         /// #### static void captureEdge([[TcN::CaptureEdge]])
         static force_inline void captureEdge(CaptureEdge e) {
             TC_N(CAPTURE_EDGE_REG)::setBits(TC_N(CAPTURE_EDGE_MASK), e);
@@ -989,6 +998,10 @@ TEST(TcN, getHardwareType) {
         #if DEFINED(TC_N(CLOCK_EXT_RISING_ID))
             TEST_REG_WRITE(TcN::clock(TcN::Clock::extRising));
         #endif
+
+        #if DEFINED(TC_N(CLOCK_TC0_ID))
+            TEST_REG_WRITE(TcN::clock(TcN::Clock::tc0));
+        #endif
     }
 #endif
 
@@ -1299,7 +1312,7 @@ TEST(TcN, getHardwareType) {
     }
 #endif
 
-#if REG_DEFINED(TC_N(CAPTURE_REG))
+#if REG_DEFINED(TC_N(CAPTURE_EDGE_REG))
     TEST(TcN, captureEdge) {
         TEST_REG_WRITE(TcN::captureEdge(TcN::CaptureEdge::rising));
         TEST_REG_WRITE(TcN::captureEdge(TcN::CaptureEdge::falling));
