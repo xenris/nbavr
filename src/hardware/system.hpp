@@ -68,21 +68,21 @@ force_inline void nop() {
 /// Is limited further by faster clock speeds. e.g. at 100MHz it will be limited to 2621434ns.
 template <uint64_t cpuFreq, uint64_t ns>
 force_inline void delay() {
-    static_assert(ns <= 10000000, "Delay limited to 10 milliseconds (10000000 ns)");
-
     // Ensure that this delay separates hardware actions, even when 0ns.
     block() {}
 
-    constexpr uint64_t clocks = (uint64_t(ns) * cpuFreq + 500000000) / 1000000000;
-    constexpr uint64_t clocksPerLoop = 4;
-
-    // TODO Handle higher cpu frequencies.
-    static_assert(clocks / 4 <= uint64_t(max<uint16_t>()), "Cannot handle this length of delay at this cpu frequency");
-
-    constexpr uint16_t loops = uint16_t((clocks <= 0) ? (0) : ((clocks - 1) / clocksPerLoop));
-    constexpr uint16_t nops = uint16_t((clocks <= 4) ? (clocks) : ((clocks - 1) % clocksPerLoop));
-
     #if defined(__AVR__)
+        static_assert(ns <= 10000000, "Delay limited to 10 milliseconds (10000000 ns)");
+
+        constexpr uint64_t clocks = (uint64_t(ns) * cpuFreq + 500000000) / 1000000000;
+        constexpr uint64_t clocksPerLoop = 4;
+
+        // TODO Handle higher cpu frequencies.
+        static_assert(clocks / 4 <= uint64_t(max<uint16_t>()), "Cannot handle this length of delay at this cpu frequency");
+
+        constexpr uint16_t loops = uint16_t((clocks <= 0) ? (0) : ((clocks - 1) / clocksPerLoop));
+        constexpr uint16_t nops = uint16_t((clocks <= 4) ? (clocks) : ((clocks - 1) % clocksPerLoop));
+
         if constexpr (loops != 0) {
             const uint16_t c = loops;
 
@@ -96,24 +96,31 @@ force_inline void delay() {
                 : "r30", "r31"
             );
         }
-    #elif defined(__ARM__)
 
+        if constexpr (nops == 1) {
+            nop();
+        } else if constexpr (nops == 2) {
+            nop(); nop();
+        } else if constexpr (nops == 3) {
+            nop(); nop(); nop();
+        } else if constexpr (nops == 4) {
+            nop(); nop(); nop(); nop();
+        }
+    #elif defined(__ARM__)
+        // TODO Currently this is only an approximation and only works under -Os.
+        // Need inline assembly.
+        constexpr uint64_t clocks = (uint64_t(ns) * cpuFreq + 500000000) / 1000000000;
+        constexpr uint64_t clocksPerLoop = 3;
+
+        constexpr uint32_t loops = uint32_t((clocks == 0) ? (0) : ((clocks - 1) / clocksPerLoop));
+
+        for(uint32_t i = 0; i < loops; ++i) {
+            block() {}
+        }
     #elif defined(TEST)
-        (void)loops;
     #else
 
     #endif
-
-
-    if constexpr (nops == 1) {
-        nop();
-    } else if constexpr (nops == 2) {
-        nop(); nop();
-    } else if constexpr (nops == 3) {
-        nop(); nop(); nop();
-    } else if constexpr (nops == 4) {
-        nop(); nop(); nop(); nop();
-    }
 }
 
 // TODO Check that these functions work for arm.

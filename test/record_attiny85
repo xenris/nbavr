@@ -77,51 +77,51 @@ w PcInt0::intEnable(true) 5b:00:20:
 w PcInt0::intFlag()
 w PcInt0::intFlagClear() 5a:00:40:5a:ff:40:
 w PcInt0::mask(0x12) 35:00:12:35:ff:12:
-w PortB::Pin0::direction(Pin::Direction::input) 37:ff:fe:
-w PortB::Pin0::direction(Pin::Direction::output) 37:00:01:
+w PortB::Pin0::direction(PortB::Pin0::Direction::input) 37:ff:fe:
+w PortB::Pin0::direction(PortB::Pin0::Direction::output) 37:00:01:
 w PortB::Pin0::input()
-w PortB::Pin0::output(Pin::Value::high) 38:00:01:
-w PortB::Pin0::output(Pin::Value::low) 38:ff:fe:
+w PortB::Pin0::output(PortB::Pin0::Value::high) 38:00:01:
+w PortB::Pin0::output(PortB::Pin0::Value::low) 38:ff:fe:
 w PortB::Pin0::outputToggle() 36:00:01:36:ff:01:
 w PortB::Pin0::pullup(false) 38:ff:fe:
 w PortB::Pin0::pullup(true) 38:00:01:
-w PortB::Pin1::direction(Pin::Direction::input) 37:ff:fd:
-w PortB::Pin1::direction(Pin::Direction::output) 37:00:02:
+w PortB::Pin1::direction(PortB::Pin1::Direction::input) 37:ff:fd:
+w PortB::Pin1::direction(PortB::Pin1::Direction::output) 37:00:02:
 w PortB::Pin1::input()
-w PortB::Pin1::output(Pin::Value::high) 38:00:02:
-w PortB::Pin1::output(Pin::Value::low) 38:ff:fd:
+w PortB::Pin1::output(PortB::Pin1::Value::high) 38:00:02:
+w PortB::Pin1::output(PortB::Pin1::Value::low) 38:ff:fd:
 w PortB::Pin1::outputToggle() 36:00:02:36:ff:02:
 w PortB::Pin1::pullup(false) 38:ff:fd:
 w PortB::Pin1::pullup(true) 38:00:02:
-w PortB::Pin2::direction(Pin::Direction::input) 37:ff:fb:
-w PortB::Pin2::direction(Pin::Direction::output) 37:00:04:
+w PortB::Pin2::direction(PortB::Pin2::Direction::input) 37:ff:fb:
+w PortB::Pin2::direction(PortB::Pin2::Direction::output) 37:00:04:
 w PortB::Pin2::input()
-w PortB::Pin2::output(Pin::Value::high) 38:00:04:
-w PortB::Pin2::output(Pin::Value::low) 38:ff:fb:
+w PortB::Pin2::output(PortB::Pin2::Value::high) 38:00:04:
+w PortB::Pin2::output(PortB::Pin2::Value::low) 38:ff:fb:
 w PortB::Pin2::outputToggle() 36:00:04:36:ff:04:
 w PortB::Pin2::pullup(false) 38:ff:fb:
 w PortB::Pin2::pullup(true) 38:00:04:
-w PortB::Pin3::direction(Pin::Direction::input) 37:ff:f7:
-w PortB::Pin3::direction(Pin::Direction::output) 37:00:08:
+w PortB::Pin3::direction(PortB::Pin3::Direction::input) 37:ff:f7:
+w PortB::Pin3::direction(PortB::Pin3::Direction::output) 37:00:08:
 w PortB::Pin3::input()
-w PortB::Pin3::output(Pin::Value::high) 38:00:08:
-w PortB::Pin3::output(Pin::Value::low) 38:ff:f7:
+w PortB::Pin3::output(PortB::Pin3::Value::high) 38:00:08:
+w PortB::Pin3::output(PortB::Pin3::Value::low) 38:ff:f7:
 w PortB::Pin3::outputToggle() 36:00:08:36:ff:08:
 w PortB::Pin3::pullup(false) 38:ff:f7:
 w PortB::Pin3::pullup(true) 38:00:08:
-w PortB::Pin4::direction(Pin::Direction::input) 37:ff:ef:
-w PortB::Pin4::direction(Pin::Direction::output) 37:00:10:
+w PortB::Pin4::direction(PortB::Pin4::Direction::input) 37:ff:ef:
+w PortB::Pin4::direction(PortB::Pin4::Direction::output) 37:00:10:
 w PortB::Pin4::input()
-w PortB::Pin4::output(Pin::Value::high) 38:00:10:
-w PortB::Pin4::output(Pin::Value::low) 38:ff:ef:
+w PortB::Pin4::output(PortB::Pin4::Value::high) 38:00:10:
+w PortB::Pin4::output(PortB::Pin4::Value::low) 38:ff:ef:
 w PortB::Pin4::outputToggle() 36:00:10:36:ff:10:
 w PortB::Pin4::pullup(false) 38:ff:ef:
 w PortB::Pin4::pullup(true) 38:00:10:
-w PortB::Pin5::direction(Pin::Direction::input) 37:ff:df:
-w PortB::Pin5::direction(Pin::Direction::output) 37:00:20:
+w PortB::Pin5::direction(PortB::Pin5::Direction::input) 37:ff:df:
+w PortB::Pin5::direction(PortB::Pin5::Direction::output) 37:00:20:
 w PortB::Pin5::input()
-w PortB::Pin5::output(Pin::Value::high) 38:00:20:
-w PortB::Pin5::output(Pin::Value::low) 38:ff:df:
+w PortB::Pin5::output(PortB::Pin5::Value::high) 38:00:20:
+w PortB::Pin5::output(PortB::Pin5::Value::low) 38:ff:df:
 w PortB::Pin5::outputToggle() 36:00:20:36:ff:20:
 w PortB::Pin5::pullup(false) 38:ff:df:
 w PortB::Pin5::pullup(true) 38:00:20:

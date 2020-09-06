@@ -1,0 +1,53 @@
+r PortA::Pin0::input() 11110011010000001111110011001101
+r PortA::input() 53487345bdd29813c79fb73d3391c7cb6078c7f4fa89c865f7a580713d6795b747d5762751057b9f38ca303a201180914cff3c5d679fac5997b38e61750fdc9f381347fcb445491c9fe0ed40043eb94ba9e9e35a1ed93b5edabf245ee75c0ebfc0ca15ab48f12d5e45ade631112798a67496d595f4504bc604f458128f2683
+r PortB::input() ed6116bc9d84202db4955d9db3d1ab3845c5bf42e0e02aa4e26ca6c68e3eba511265bc6238c495894df8ea40f077ea4d5ad8c2ceda73e852d5e880e46fe156ea25c04b1ff2b1332c24772bd14964fd05136e08ece0c40dcdfc4d89039980c6a40c3c8eb28ed58d067fda61412e28ba3278838fc10d1c8f9bf7a3fe3ea3d36
+r PortC::Pin13::input() 11001100101010011011010011001000
+r PortC::input() 47397af33df76906624cc4bdf3d04e6567ffafb4d35288d6a0941054ba0d5a0ab9db5c15cdf436f3322e76577f9d13ca287009d07e5cd3de3128297290f4d22c0fc60bd19e8a66eb7fae4afa615ba429d823eff051ba38a4d824c94cbd5807d3aeac8a9433480c25b8d35e3e609a395c22ed1305ec3ac0e6740513a9
+w PortA::Pin0::direction(PortA::Pin0::Direction::alternateOutputOpenDrain10MHz) 137d:00:0d:137d:ff:fd:
+w PortA::Pin0::direction(PortA::Pin0::Direction::alternateOutputOpenDrain2MHz) 137d:00:0e:137d:ff:fe:
+w PortA::Pin0::direction(PortA::Pin0::Direction::alternateOutputOpenDrain50MHz) 137d:00:0f:
+w PortA::Pin0::direction(PortA::Pin0::Direction::alternateOutputPushPull10MHz) 137d:00:09:137d:ff:f9:
+w PortA::Pin0::direction(PortA::Pin0::Direction::alternateOutputPushPull2MHz) 137d:00:0a:137d:ff:fa:
+w PortA::Pin0::direction(PortA::Pin0::Direction::alternateOutputPushPull50MHz) 137d:00:0b:137d:ff:fb:
+w PortA::Pin0::direction(PortA::Pin0::Direction::analog) 137d:ff:f0:
+w PortA::Pin0::direction(PortA::Pin0::Direction::inputFloat) 137d:00:04:137d:ff:f4:
+w PortA::Pin0::direction(PortA::Pin0::Direction::inputPull) 137d:00:08:137d:ff:f8:
+w PortA::Pin0::direction(PortA::Pin0::Direction::outputOpenDrain10MHz) 137d:00:05:137d:ff:f5:
+w PortA::Pin0::direction(PortA::Pin0::Direction::outputOpenDrain2MHz) 137d:00:06:137d:ff:f6:
+w PortA::Pin0::direction(PortA::Pin0::Direction::outputOpenDrain50MHz) 137d:00:07:137d:ff:f7:
+w PortA::Pin0::direction(PortA::Pin0::Direction::outputPushPull10MHz) 137d:00:01:137d:ff:f1:
+w PortA::Pin0::direction(PortA::Pin0::Direction::outputPushPull2MHz) 137d:00:02:137d:ff:f2:
+w PortA::Pin0::direction(PortA::Pin0::Direction::outputPushPull50MHz) 137d:00:03:137d:ff:f3:
+w PortA::Pin0::input()
+w PortA::Pin0::output(PortA::Pin0::Value::high) 138d:00:01:138d:ff:01:138e:ff:00:138f:ff:00:1390:ff:00:
+w PortA::Pin0::output(PortA::Pin0::Value::low) 1391:00:01:1391:ff:01:1392:ff:00:1393:ff:00:1394:ff:00:
+w PortA::enableClock(false) 380:ff:fb:
+w PortA::enableClock(true) 380:00:04:
+w PortA::input()
+w PortA::output(0x12) 1389:00:12:1389:ff:12:138a:ff:00:138b:ff:00:138c:ff:00:
+w PortB::enableClock(false) 380:ff:f7:
+w PortB::enableClock(true) 380:00:08:
+w PortB::input()
+w PortB::output(0x12) 1789:00:12:1789:ff:12:178a:ff:00:178b:ff:00:178c:ff:00:
+w PortC::Pin13::direction(PortC::Pin13::Direction::alternateOutputOpenDrain10MHz) 1b83:00:d0:1b83:ff:df:
+w PortC::Pin13::direction(PortC::Pin13::Direction::alternateOutputOpenDrain2MHz) 1b83:00:e0:1b83:ff:ef:
+w PortC::Pin13::direction(PortC::Pin13::Direction::alternateOutputOpenDrain50MHz) 1b83:00:f0:
+w PortC::Pin13::direction(PortC::Pin13::Direction::alternateOutputPushPull10MHz) 1b83:00:90:1b83:ff:9f:
+w PortC::Pin13::direction(PortC::Pin13::Direction::alternateOutputPushPull2MHz) 1b83:00:a0:1b83:ff:af:
+w PortC::Pin13::direction(PortC::Pin13::Direction::alternateOutputPushPull50MHz) 1b83:00:b0:1b83:ff:bf:
+w PortC::Pin13::direction(PortC::Pin13::Direction::analog) 1b83:ff:0f:
+w PortC::Pin13::direction(PortC::Pin13::Direction::inputFloat) 1b83:00:40:1b83:ff:4f:
+w PortC::Pin13::direction(PortC::Pin13::Direction::inputPull) 1b83:00:80:1b83:ff:8f:
+w PortC::Pin13::direction(PortC::Pin13::Direction::outputOpenDrain10MHz) 1b83:00:50:1b83:ff:5f:
+w PortC::Pin13::direction(PortC::Pin13::Direction::outputOpenDrain2MHz) 1b83:00:60:1b83:ff:6f:
+w PortC::Pin13::direction(PortC::Pin13::Direction::outputOpenDrain50MHz) 1b83:00:70:1b83:ff:7f:
+w PortC::Pin13::direction(PortC::Pin13::Direction::outputPushPull10MHz) 1b83:00:10:1b83:ff:1f:
+w PortC::Pin13::direction(PortC::Pin13::Direction::outputPushPull2MHz) 1b83:00:20:1b83:ff:2f:
+w PortC::Pin13::direction(PortC::Pin13::Direction::outputPushPull50MHz) 1b83:00:30:1b83:ff:3f:
+w PortC::Pin13::input()
+w PortC::Pin13::output(PortC::Pin13::Value::high) 1b8e:00:20:1b8d:ff:00:1b8e:ff:20:1b8f:ff:00:1b90:ff:00:
+w PortC::Pin13::output(PortC::Pin13::Value::low) 1b92:00:20:1b91:ff:00:1b92:ff:20:1b93:ff:00:1b94:ff:00:
+w PortC::enableClock(false) 380:ff:ef:
+w PortC::enableClock(true) 380:00:10:
+w PortC::input()
+w PortC::output(0x12) 1b89:00:12:1b89:ff:12:1b8a:ff:00:1b8b:ff:00:1b8c:ff:00:

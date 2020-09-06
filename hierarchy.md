@@ -49,7 +49,7 @@ Levels can include lower levels (smaller number), but *not* higher or equal leve
 * atmega48.hpp
 * atmega8.hpp
 * attiny85.hpp
-* stm32f103c8_md.hpp
+* stm32f103c8.hpp
 
 ## Level 4 - Hardware implementations
 

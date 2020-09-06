@@ -17,14 +17,6 @@ struct Pin {
     Pin& operator=(const Pin&) = delete;
     Pin(const Pin&) = delete;
 
-    /// #### enum {{Pin::Direction}}
-    /// * input
-    /// * output
-    enum class Direction {
-        input = 0,
-        output = 1,
-    };
-
     /// #### enum {{Pin::Value}}
     /// * low
     /// * high
@@ -34,9 +26,9 @@ struct Pin {
     };
 };
 
-force_inline Pin::Value operator !(Pin::Value value) {
-    return (value == Pin::Value::high) ? Pin::Value::low : Pin::Value::high;
-}
+// force_inline Pin::Value operator !(Pin::Value value) {
+//     return (value == Pin::Value::high) ? Pin::Value::low : Pin::Value::high;
+// }
 
 } // nblib::hw
 
@@ -63,6 +55,59 @@ struct PinN : Pin {
     PinN& operator=(const PinN&) = delete;
     PinN(const PinN&) = delete;
 
+    enum class Direction {
+        #if DEFINED(PIN_N(DIRECTION_BIT))
+            input = 0,
+            output = 1,
+        #elif DEFINED(PIN_N(DIRECTION_MASK))
+            #if DEFINED(PIN_N(DIRECTION_ANALOG_ID))
+                analog = PIN_N(DIRECTION_ANALOG_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_INPUT_FLOAT_ID))
+                inputFloat = PIN_N(DIRECTION_INPUT_FLOAT_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_INPUT_PULL_ID))
+                inputPull = PIN_N(DIRECTION_INPUT_PULL_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_OUTPUT_PUSH_PULL_2MHZ_ID))
+                outputPushPull2MHz = PIN_N(DIRECTION_OUTPUT_PUSH_PULL_2MHZ_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_OUTPUT_OPEN_DRAIN_2MHZ_ID))
+                outputOpenDrain2MHz = PIN_N(DIRECTION_OUTPUT_OPEN_DRAIN_2MHZ_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_OUTPUT_PUSH_PULL_10MHZ_ID))
+                outputPushPull10MHz = PIN_N(DIRECTION_OUTPUT_PUSH_PULL_10MHZ_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_OUTPUT_OPEN_DRAIN_10MHZ_ID))
+                outputOpenDrain10MHz = PIN_N(DIRECTION_OUTPUT_OPEN_DRAIN_10MHZ_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_OUTPUT_PUSH_PULL_50MHZ_ID))
+                outputPushPull50MHz = PIN_N(DIRECTION_OUTPUT_PUSH_PULL_50MHZ_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_OUTPUT_OPEN_DRAIN_50MHZ_ID))
+                outputOpenDrain50MHz = PIN_N(DIRECTION_OUTPUT_OPEN_DRAIN_50MHZ_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_PUSH_PULL_2MHZ_ID))
+                alternateOutputPushPull2MHz = PIN_N(DIRECTION_ALT_OUTPUT_PUSH_PULL_2MHZ_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_OPEN_DRAIN_2MHZ_ID))
+                alternateOutputOpenDrain2MHz = PIN_N(DIRECTION_ALT_OUTPUT_OPEN_DRAIN_2MHZ_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_PUSH_PULL_10MHZ_ID))
+                alternateOutputPushPull10MHz = PIN_N(DIRECTION_ALT_OUTPUT_PUSH_PULL_10MHZ_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_OPEN_DRAIN_10MHZ_ID))
+                alternateOutputOpenDrain10MHz = PIN_N(DIRECTION_ALT_OUTPUT_OPEN_DRAIN_10MHZ_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_PUSH_PULL_50MHZ_ID))
+                alternateOutputPushPull50MHz = PIN_N(DIRECTION_ALT_OUTPUT_PUSH_PULL_50MHZ_ID),
+            #endif
+            #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_OPEN_DRAIN_50MHZ_ID))
+                alternateOutputOpenDrain50MHz = PIN_N(DIRECTION_ALT_OUTPUT_OPEN_DRAIN_50MHZ_ID),
+            #endif
+        #endif
+    };
+
     /// #### static [[HardwareType]] getHardwareType()
     static constexpr HardwareType getHardwareType() {
         return HardwareType::pin;
@@ -71,14 +116,27 @@ struct PinN : Pin {
     #if REG_DEFINED(PIN_N(DIRECTION_REG))
         /// #### static void direction([[Pin::Direction]])
         static force_inline void direction(Direction d) {
-            PIN_N(DIRECTION_REG)::setBit(PIN_N(DIRECTION_BIT), bool(d));
+            #if DEFINED(PIN_N(DIRECTION_BIT))
+                PIN_N(DIRECTION_REG)::setBit(PIN_N(DIRECTION_BIT), bool(d));
+            #elif DEFINED(PIN_N(DIRECTION_MASK))
+                using T = PIN_N(DIRECTION_REG)::Type;
+                PIN_N(DIRECTION_REG)::setBits(PIN_N(DIRECTION_MASK), T(d));
+            #endif
         }
     #endif
 
-    #if REG_DEFINED(PIN_N(OUTPUT_REG))
+    #if REG_DEFINED(PIN_N(OUTPUT_REG)) || REG_DEFINED(PIN_N(OUTPUT_SET_REG))
         /// #### static void output([[Pin::Value]])
         static force_inline void output(Value v) {
-            PIN_N(OUTPUT_REG)::setBit(PIN_N(OUTPUT_BIT), bool(v));
+            #if REG_DEFINED(PIN_N(OUTPUT_REG))
+                PIN_N(OUTPUT_REG)::setBit(PIN_N(OUTPUT_BIT), bool(v));
+            #else
+                if(bool(v)) {
+                    PIN_N(OUTPUT_SET_REG)::setBit(PIN_N(OUTPUT_SET_BIT), true);
+                } else {
+                    PIN_N(OUTPUT_CLEAR_REG)::setBit(PIN_N(OUTPUT_CLEAR_BIT), true);
+                }
+            #endif
         }
     #endif
 
@@ -126,8 +184,56 @@ TEST(CAT(PortX, _, PinN), getHardwareType) {
 
 #if REG_DEFINED(PIN_N(DIRECTION_REG))
     TEST(CAT(PortX, _, PinN), direction) {
-        TEST_REG_WRITE(PortX::PinN::direction(Pin::Direction::input));
-        TEST_REG_WRITE(PortX::PinN::direction(Pin::Direction::output));
+        #if DEFINED(PIN_N(DIRECTION_BIT))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::input));
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::output));
+        #endif
+
+        #if DEFINED(PIN_N(DIRECTION_ANALOG_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::analog));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_INPUT_FLOAT_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::inputFloat));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_INPUT_PULL_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::inputPull));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_OUTPUT_PUSH_PULL_2MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::outputPushPull2MHz));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_OUTPUT_OPEN_DRAIN_2MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::outputOpenDrain2MHz));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_OUTPUT_PUSH_PULL_10MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::outputPushPull10MHz));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_OUTPUT_OPEN_DRAIN_10MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::outputOpenDrain10MHz));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_OUTPUT_PUSH_PULL_50MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::outputPushPull50MHz));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_OUTPUT_OPEN_DRAIN_50MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::outputOpenDrain50MHz));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_PUSH_PULL_2MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::alternateOutputPushPull2MHz));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_OPEN_DRAIN_2MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::alternateOutputOpenDrain2MHz));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_PUSH_PULL_10MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::alternateOutputPushPull10MHz));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_OPEN_DRAIN_10MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::alternateOutputOpenDrain10MHz));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_PUSH_PULL_50MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::alternateOutputPushPull50MHz));
+        #endif
+        #if DEFINED(PIN_N(DIRECTION_ALT_OUTPUT_OPEN_DRAIN_50MHZ_ID))
+            TEST_REG_WRITE(PortX::PinN::direction(PortX::PinN::Direction::alternateOutputOpenDrain50MHz));
+        #endif
     }
 #endif
 
@@ -147,8 +253,8 @@ TEST(CAT(PortX, _, PinN), getHardwareType) {
 
 #if REG_DEFINED(PORT_X(OUTPUT_REG))
     TEST(CAT(PortX, _, PinN), output) {
-        TEST_REG_WRITE(PortX::PinN::output(Pin::Value::low));
-        TEST_REG_WRITE(PortX::PinN::output(Pin::Value::high));
+        TEST_REG_WRITE(PortX::PinN::output(PortX::PinN::Value::low));
+        TEST_REG_WRITE(PortX::PinN::output(PortX::PinN::Value::high));
     }
 #endif
 

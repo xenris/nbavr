@@ -9,25 +9,28 @@
 
 using uint = unsigned int;
 
-using int8_t = signed char;
-using int16_t = If<sizeof(int) == 2, int, short>::Value;
-using int32_t = If<sizeof(int) == 4, int, long>::Value;
-using int64_t = If<sizeof(long) == 8, long, long long>::Value;
+#if defined(__AVR__) || defined(__ARM__)
+    using int8_t = signed char;
+    using int16_t = If<sizeof(int) == 2, int, short>::Value;
+    using int32_t = If<sizeof(int) == 4, int, long>::Value;
+    using int64_t = If<sizeof(long) == 8, long, long long>::Value;
 
-using uint8_t = unsigned char;
-using uint16_t = If<sizeof(unsigned int) == 2, unsigned int, unsigned short>::Value;
-using uint32_t = If<sizeof(unsigned int) == 4, unsigned int, unsigned long>::Value;
-using uint64_t = If<sizeof(unsigned long) == 8, unsigned long, unsigned long long>::Value;
+    using uint8_t = unsigned char;
+    using uint16_t = If<sizeof(unsigned int) == 2, unsigned int, unsigned short>::Value;
+    using uint32_t = If<sizeof(unsigned int) == 4, unsigned int, unsigned long>::Value;
+    using uint64_t = If<sizeof(unsigned long) == 8, unsigned long, unsigned long long>::Value;
 
-using size_t = If<sizeof(unsigned int) == 2, unsigned int, unsigned long>::Value;
-using ssize_t = If<sizeof(int) == 2, int, long>::Value;
+    using size_t = unsigned int;
+    using ssize_t = int;
+#endif
 
-#ifdef __avr__
+#ifdef __AVR__
     using int24_t = __int24;
     using uint24_t = __uint24;
 #endif
 
 #ifdef __clang__
+    #include <cstdint>
     using int24_t = int;
     using uint24_t = uint;
 #endif

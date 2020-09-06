@@ -1,3 +1,5 @@
+#ifdef __AVR__
+
 // std::initializer_list support -*- C++ -*-
 
 // Copyright (C) 2008-2018 Free Software Foundation, Inc.
@@ -109,12 +111,8 @@ namespace std
 
 #endif // _INITIALIZER_LIST
 
-// Make initializer_list available without std namespace.
-#ifndef NBLIB_INITIALIZER_LIST
-#define NBLIB_INITIALIZER_LIST
+#else
 
-template <class T>
-using initializer_list = std::initializer_list<T>;
+#include <initializer_list>
 
-#endif // NBLIB_INITIALIZER_LIST
-
+#endif

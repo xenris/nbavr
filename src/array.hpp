@@ -58,7 +58,7 @@ public:
     Array(Type* buffer, int size) : _buffer(buffer), _size(size) {
     }
 
-    Array(initializer_list<Type> buffer) : _buffer(buffer), _size(size) {
+    Array(std::initializer_list<Type> buffer) : _buffer(buffer), _size(size) {
     }
 
     /// #### void fill(Type t)

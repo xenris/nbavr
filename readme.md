@@ -48,7 +48,7 @@ See [nblib-script](https://github.com/xenris/nblib-script)
 * atmega8
 * attiny402
 * attiny85
-* stm32f103c8_md
+* stm32f103c8
 
 ## License
 

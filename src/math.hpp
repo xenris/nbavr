@@ -29,7 +29,7 @@ constexpr force_inline T clip(T n, T l, T h) {
 /// #### T abs(T a)
 template<class T>
 constexpr force_inline T abs(T a) {
-    return a >= 0 ? a : -a;
+    return T(a >= 0 ? a : -a);
 }
 
 // Used to stop clang complaining about non constexpr built in functions.
@@ -41,27 +41,39 @@ constexpr force_inline T abs(T a) {
 
 /// #### float sin(float n)
 constexpr force_inline float sin(float n) {
-    return BUILTIN(sin(n));
+    #ifdef __AVR__
+        return BUILTIN(sin(n));
+    #else
+        return BUILTIN(sinf(n));
+    #endif
 }
 
 /// #### double sin(double n)
 constexpr force_inline double sin(double n) {
-        return BUILTIN(sin(n));
+    return BUILTIN(sin(n));
 }
 
 /// #### float cos(float n)
 constexpr force_inline float cos(float n) {
+    #ifdef __AVR__
         return BUILTIN(cos(n));
+    #else
+        return BUILTIN(cosf(n));
+    #endif
 }
 
 /// #### double cos(double n)
 constexpr force_inline double cos(double n) {
-        return BUILTIN(cos(n));
+    return BUILTIN(cos(n));
 }
 
 /// #### float tan(float n)
 constexpr force_inline float tan(float n) {
+    #ifdef __AVR__
+        return BUILTIN(tan(n));
+    #else
         return BUILTIN(tanf(n));
+    #endif
 }
 
 /// #### double tan(double n)
